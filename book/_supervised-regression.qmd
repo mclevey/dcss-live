@@ -1,0 +1,520 @@
+# Supervised Learning with Regression and Cross-Validation
+
+## LEARNING OBJECTIVES
+
+- Develop, evaluate, and improve machine learning models using Sklearn
+- Compare the supervised learning algorithms used in regression and similarity-based models
+- Develop and interpret regression and similarity-based models for supervised learning
+- Explain the logic of cross-validation 
+
+## LEARNING MATERIALS
+
+You can find the online learning materials for this chapter in `doing_computational_social_science/Chapter_21`. `cd` into the directory and launch your Jupyter Server.
+
+## INTRODUCTION
+
+This chapter provides a very brief summary of statistical models, introduces and compares two types of supervised learning models -- regression and similarity-based -- and introduces the logic of cross-validation in supervised learning. We will begin by setting up a minimal supervised learning environment by pre-processing our data, creating arrays for our response and explanatory variables, and splitting the data into a training set and a test set. Then we will build, fit, and draw conclusions from a variety of models using Python's Sklearn package. In this chapter, we will cover Ordinary Least-Squares, Ridge, and Lasso linear regression models; and logistic regression. Throughout, we will employ cross-validation, taking pains to explain its role in model evaluation and selection. 
+
+### Imports
+
+```python
+import pandas as pd 
+import numpy as np
+
+import matplotlib.pyplot as plt
+import matplotlib as mpl
+import seaborn as sns
+from sklearn.model_selection import train_test_split
+
+from dcss import download_dataset
+from dcss.plots import plot_knn_decision_boundaries
+
+from dcss import set_style
+set_style()
+```
+
+### A Very Brief Refresher on Linear and Logistic Regression Models:
+
+In this chapter, we discuss machine learning models that are based on linear and logistic regression models common to traditional statistics. As this book covers computational social science, I assume that you have at least a passing familiarity with these tools. However, if your memory could do with some jogging, I will very briefly outline them here.
+
+Linear regression models attempt to produce a line that minimizes the distance between itself and the scattered observations in a dataset. For a visual example, recall the "line of best fit" from Chapter 8, where we visualized a scatterplot and the line that best describes the relationship between the variables. When all we have is a set of data and we want to run a model with $n$ variables, we know that a line of best fit must take the form:
+
+$$
+y = a_1 x_1 + a_2 x_2 + ... + a_n x_n + b
+$$
+
+where $x_1$ represents one of our model's variables, $x_2$ represents the next, and so on for each variable in the model, and $b$ is the y-intercept. We don't actually know the values of $a_1$ through $a_n$, nor the intercept, $v$. A linear regression model will estimate these "coefficients," or values.
+
+If we want to create a model to understand the yearly divorce rate in Maine, $y$ (the outcome, or dependent variable), we might include average age of marriage, $x_1$, Maine's unemployment rate, $x_2$, and its per capita cheese consumption, $x_3$. A linear regression would provide the coefficients that would allow us to say: 
+"If Maine has a year with an average age of marriage of __, and unemployment rate of __, and a per capita cheese consumption of __, then we might expect a divorce rate of __." We simply plug those values into $x_1$ through $x_3$, multiplied by the model's coefficients, $a_1$ through $a_3$, add them together, and that is $y$, the estimated divorce rate.
+
+A logistic regression is similar, but it predicts a binary outcome (0 or 1), rather than a continuous outcome. In this case, the prediction takes the form of log-odds; the outcome reflects the probability that an event will occur. "I estimate that, if Toronto has a yearly rainfall of __mm, __ days with snowfall, and __ dollars spent on youth hockey programs, the log-odds of the Toronto Maple Leafs winning the Stanley Cup are __."
+
+Again, this is meant to be the barest refresher of the form and interpretation of these models. If these models are completely unfamiliar to you, I recommend reading consulting an introduction to linear and logistic regression to better acquaint yourself with traditional statistical models. No need to go too deep, we'll cover (Bayesian) regression analysis extensively later in the book.) 
+
+### Preparing the Data
+
+In this chapter, we're going to create a series of regression models using data on a country's political and electoral freedoms to predict their Internet freedoms. We will use data from the VDEM project and from Freedom House's (FH) "Freedom on the Net" dataset, which is an annual report on the online freedoms, or lack thereof, present in countries around the world.
+
+As always, we start by reading in and pre-processing our data. For the VDEM data, we're going to work with a subset of the full dataset that contains variables for: 
+
+- country name (`country_name`), 
+- A 4-Part Regime Classification (0 = Closed Autocracy, 3 = Liberal Democracy) (`v2x_regime`),
+- year (`year`), 
+- the 5 high-level democracy indices, 
+    - polyarchy (`v2x_polyarchy`),
+    - liberal democracy (`v2x_libdem`), 
+    - participatory democracy (`v2x_partipdem`), 
+    - deliberative democracy (`v2x_delibdem`), 
+    - egalitarian democracy (`v2x_egaldem`), and 
+- 5 measures of internet freedom in the VDEM data that we will use in addition to the variables from Freedom House. 
+    - Government dissemination of false information domestic (`v2smgovdom_osp`)
+    - Government internet filtering in practice (`v2smgovfilprc_osp`)
+    - Government social media censorship in practice (`v2smgovsmcenprc_osp`)
+    - Diversity of online media perspectives (0 = gov't only, 4 = any perspective)(`v2smonper_osp`)
+    - Arrests for political content disseminated online(`v2smarrest_osp`)
+
+I encourage you to read about these variables in the VDEM codebook, which is available online. 
+
+The Freedom House data contains two variables of interest for us:
+
+- `Status`, a categorical variable which indicates the status of a nation's internet freedoms. It has three levels: "Free", "Partly Free", and "Not Free".
+- `Total Score`, a continuous numerical measure of a nation's internet freedoms. 
+
+Fortunately for us, most of the variables we're loading from the VDEM and Freedom House datasets are already in the form of a floating point number (`float` for short), and can be fed into our models without any further preparation or alteration. There are a few categorical variables which must be pre-processed before.
+
+We'll start by loading the data:
+
+```python
+vif_combo_link = "https://www.dropbox.com/scl/fo/q66z60y6r3ql8tnl9stp7/APPon9yB-tJEm_zq-JCdqcA?rlkey=hrac95v1zcdy3wur86dujtpxw&st=5v1od1f1&dl=0"
+
+download_dataset(
+    vif_combo_link, 'data/vdem_internet_freedom_combined/'
+)
+```
+
+```python
+vdem_fh_df = pd.read_csv(
+    "data/vdem_internet_freedom_combined/vdem_fh_combined.csv"
+)
+
+vdem_df = pd.read_csv(
+    "data/vdem_internet_freedom_combined/vdem_only.csv"
+)
+
+vdem_df.head()
+```
+
+### The Train-Test Split
+
+Developing supervised machine learning models requires that splitting our data: some for training the model, others for testing and validating the model. This is extremely important: without splitting our data, our model will simply learn to retrodict data that is has already seen, rather than accurately predict data that it has not. To make sure that our machine learning models aren't memorizing the data, we allow our model to train on the training set, tweak hyperparameters and check for overfitting using the validation set, and then assess overall performance using the test set.
+
+Every time you split your data, you remove some of the information your model has available to it; if you remove too much of the data (or don't have much data to begin with), a full train/validation/test split might negatively impact your model's performance. Fortunately, we can sidestep this issue without sacrificing any principles. The process is:
+
+1. Split your data into train and test sets. All of the training data will be fully available to train on. The test set will not be used in any way until a final model has been selected.
+2. Use Cross-Validation (explained below) to produce an optimal set of training hyperparameters.
+3. Select best Cross-Validated model and evaluate using test data.  
+
+We can easily complete this first step in Sklearn using the `train_test_split()` function. Below, we separate our data into two variables: `X` and `y`. Doing so brings us in line with a long-standing convention that the predictor data are stored in an upper-case `X`, indicating a matrix of covariates, or 'design matrix'. The lower case `y`, or the target', indicates a vector of outcome values. The machine learning models we employ will learn how to predict the `y` values using the `X` values.
+
+In our case, we're going to use the 5 high-level VDEM indices as our independent variables (which will collectively comprise our design matrix, `X`), and we'll use the continuous `Total Score` as our `y` target.
+
+```python
+X = vdem_fh_df[[
+    'v2x_polyarchy', 
+    'v2x_libdem', 
+    'v2x_partipdem', 
+    'v2x_delibdem', 
+    'v2x_egaldem'
+]]
+
+y = vdem_fh_df[['Total Score']]
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, shuffle=True, random_state=23
+)
+```
+
+## SUPERVISED LEARNING WITH LINEAR REGRESSION
+
+The linear regression model is about as transparent and interpretable as machine learning gets. Linear regression models are algorithmically simple, and because they have been widely used in the social sciences, your peers who don't know machine learning can follow along. 
+
+### Ordinary Least Squares (OLS) Regression
+
+In an OLS regression, we model an outcome of interest ($y$) as a function of a weighted sum of input features ($X$) and random error. The "weights" in a linear models are the coefficients, which are "learned" during training. For example, we might predict the degree of internet freedom in a country as a linear function of other regime characteristics, such as whether they hold open elections, the amount of the population with suffrage, and so on. 
+
+In the context of machine learning, the goal with a regression model such as this is to find a line (if you have one feature), a plane (if you have two features), or a hyperplane (if you have three or more features) that best fits the data. When we fit our model to the training data, it "learns" the best value for the intercept and slope by minimizing the **mean-squared error**, which is the sum of the squared differences between each observed value in the data and the predicted value from the model. 
+
+We now need to create an instance of the machine learning model class we plan to use. In this case: `LinearRegression`. Since we are developing an OLS model, we will call the instance `ols`. 
+
+
+```python
+from sklearn.linear_model import LinearRegression
+ols = LinearRegression()
+```
+
+Once we have initialized our model, we can learn the model parameters by fitting the model to our training data. In Sklearn, we do this using the `.fit()` method.
+
+
+```python
+ols.fit(X_train, y_train)
+```
+
+
+The intercept and coefficient (slope) are now accessible as attributes of the `ols` object and can be accessed using dot notation. Because these are learned parameters, Sklearn uses `_` at the end of the attribute. 
+
+
+```python
+print("Intercept", list(X_train.columns))
+print(ols.intercept_, ols.coef_)
+```
+
+
+While the coefficients might be useful later, we first need asses how well the model managed to fit our data. For that, we can use the `.score()` method to get the $R^2$. Very briefly, the $R^2$ score measures how much of the variance in the dependent variable can be explained by the model. A score of 1 indicates a perfect fit: the model is capable of making exact predictions of the outcome variable.  Let's see what our $R^2$ score from training was:
+
+
+```python
+ols.score(X_train, y_train)
+```
+
+Wow! That is an *extremely* high $R^2$ score. That means that our trained OLS model is capable of accouting for roughly 80% of the variance in the training data with just six parameters (including the intercept). While it's *possible* that our model has teased out the nuance behind our data, it's more likely to have learned to reproduce the training data, like firing an arrow into a wall, painting a target around the arrow, and calling it a bullseye. To get a better picture of how our model is performing, we're going use **cross-validation**. 
+
+### CROSS-VALIDATION
+
+Throughout the remainder of this chapter, I'll show you how to use **cross-validation** for model evaluation and selection. Doing so enables us to compute accuracy measures that give us some sense of how well our model can generalize to unseen data. 
+
+Cross-validation builds on the intuition behind training and testing sets, but does so repeatedly, training and assessing models each time. The most common type of cross-validation in machine learning is $k$-fold cross-validation, which splits our data into a number of equally-sized **folds**. The number of folds ($k$) varies but is generally 5 or 10 [@muller2016introduction, page 254]. We then use these folds as a sliding window of training-validation splits. If we are doing 5-fold cross-validation, we segment our dataset into 5 folds and fit and assess 5 models. The first model is trained using the data contained in folds 2 - 5 and then validated on the data on in fold 1. The second model is trained on the data in fold 1 and 3-5 and validated on the data in fold 2, and so on. The model evaluation scores are computed for all five and then examined together, or summarized as an average. If we are using accuracy as our evaluation score, ideally we would see that all five accuracy measures are high and reliable; if there is a lot of variation in our accuracy scores, then the model is likely over-relying on characteristics of data in some of the folds. 
+
+Sklearn simplifies cross-validation with the `model_selection` module, and in particular the `cross_val_score()` function, which computes accuracy rates appropriately. To use it, we need to provide it with the model to evaluate as well as the training data for that model. It will perform 5-fold cross-validation by default, though we can increase the value of $k$ using an additional parameter, `cv`. 
+
+#### Putting The Two Together: OLS and CV
+
+The code below is going to produce 5 scores from the 5 training-validations splits it produces internally. We're primarily interested in the stability of the score (how much it fluctuates betwwen folds).
+
+If our model is consistent in its performance but not as accurate as we would like, then we have to improve our analysis. We might improve the quality of the input data or by make improvements to the model itself. If we see a lot of variation in the model accuracy on different folds, then we have a different problem and we need to change how we segment our data into folds. 
+
+Here's a fairly standard cross-validation setup:  
+
+
+```python
+from sklearn.model_selection import cross_val_score
+
+cross_val_score(ols, X_train, y_train, cv=5)
+```
+
+Three of the scores are excellent, falling somehwere in the high .7 to low .8 range. The remaining two are far worse. Our model's performance seems to depend on which data it trains on (and, equivalently, the data upon which it must validate itself). 
+
+The gap between our high and low cross-validation scores might indicate that our data is ordered or clustered in some way. It could be that our observations appear in alphabetical order by country name, or something similar. In such cases, it can be useful to *shuffle* the data before we split it to ensure that we are not simply rolling over one group at a time. Doing this is as simple as using Sklearn's `ShuffleSplit()`, which takes two arguments: the number (supplied as an integer) or percentage (supplied as a float) of instances to sample for the training and test sets, and the number of iterations, or splits, to perform. You can then pass the resulting object into `cross_val_score`'s `cv` argument, and Sklearn smoothly handles the rest.
+
+
+```python
+from sklearn.model_selection import ShuffleSplit
+
+shuffsplit = ShuffleSplit(
+    n_splits=5, test_size=0.2, random_state=42
+)
+
+olscv_score = cross_val_score(ols, X_train, y_train, cv=shuffsplit)
+olscv_score
+```
+
+Much, much better. Simply by randomizing the order in which our observations appear, we were able to smooth out our $R^2$ scores. There's still room for improvement, but the results are stable enough that we can proceed.
+
+Shuffling won't always solve the issue; in such cases, stratified $k$-fold cross-validation is an excellent choice. Conceptually, this like the $k$-fold approach we just learned, but when it splits the data, it retains the proportions of data belonging to different classes in both the test and training sets for each fold (to the best of its ability). For example, if 35% of the cases in our dataset are autocratic and 65% are democratic, and we are trying to predict regime type, then each fold will preserve that 35/65% split. This ensures some balance in the distributions of observations across class labels in both the training and test sets, which eliminates the possibility of limited class diversity in any given fold. 
+
+#### Cheating on the Test
+
+Now Let's take the mean value across all folds and use that as a point of comparison:
+
+```python
+olscv_score.mean()
+```
+
+The score from our cross validation (\~0.78) is a little lower than the one we initially receieved by training on the entire dataset (\~0.80), but that's to be expected. We can think of the CV score as a 'validation score' in the sense that it measures our model's performance on data it wasn't able to train on (averaged across 5 different configurations of that setup). Our original OLS model, by comparison, was able to train on the entire dataset at once; its score represents how well it fit the data it trained on. 
+
+There's one last piece of the puzzle here, and that's how well our model fits the test data. Normally, assessing your validated model's performance on test data should only be done *once you are completely finished developing your models*. The impetus here is that the test data is there to assess how **generalizable** a model is by mimicking real-world conditions: by the time your model has been used 'in production' or to inform policy decisions, it will be working off completely novel data that it hasn't seen before, and you won't be able to tweak/change its hyperparameters anymore. If you use your test data to help you improve your model, you're causing 'data leakage', wherein knowledge your model shouldn't have access to is being used to improve it. At best, the model is suspect. At worst, the model will be prone to overfitting and could produce hopelessly inept predictions in real world settings. 
+
+I cannot stress enough that *in the real world, it is vitally important that you do not view your test score until after you are finished training and validating all of your candidate models*.
+
+So now we're going to cheat by doing exactly what I just told you never to do. 
+
+```python
+ols.score(X_test, y_test)
+```
+
+Oof. While that $R^2$ is relatively good by OLS standards, the score from our 5-fold CV model is substantially higher than the test score. We might say that our model is overfitting the training data. Overfitting occurs when your model is capable of learning to identify features from your training data and use them to improve prediction; of course, this strategy only works for data the model is capable of learning from, and falls apart when applied to data it hasn't seen before. This typically happens when your model is given too much leeway and/or statistical power (in the form of tunable parameters). 
+
+Counter-intuitively, the remedy to this issue is often to make your model *less* powerful, or to use some kind of regularization technique. Remember, though, that under normal circumstances, we wouldn't be able to see our model's test score. In an attempt to wean ourselves off of test scores, we're going to spend the next few sections creating regularized models *without* examining the test scores (we'll save that for the very end). Let's begin.
+
+### Regularization via Ridge Regression 
+
+We recognize an overfitting problem when the quality of a model drops when making predictions on the test set. To address this, we could provide some additional constraints to prevent our model from learning too much from the training data. One method is Ridge regression, which uses **L2 regularization** to make the coefficients as close to 0 as possible while still making good predictions. In effect, L2 regularization applies a penalty to model parameters that scales with their magnitude. That means that your model is incentivized to keep each parameter value as small as possible. This tension is useful for preventing overfitting. 
+
+To fit a Ridge regression model, we follow the same process. However, unlike our OLS model, Ridge regression accepts one significant hyperparameter. The 'alpha' ($\alpha$) hyperparameter determines the strength of the regularizing penalty the Ridge regression applies to each of our parameters; the higher it is, the stronger it is. It defaults to a value of 1, which is generally a good starting point. We'll start by creating a fresh set of training and test data (with a new random seed):
+
+```python
+from sklearn.linear_model import Ridge
+
+X = vdem_fh_df[[
+    'v2x_polyarchy', 
+    'v2x_libdem', 
+    'v2x_partipdem', 
+    'v2x_delibdem', 
+    'v2x_egaldem'
+]]
+
+y = vdem_fh_df[['Total Score']]
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, shuffle=True, random_state=2
+)
+
+shuffsplit = ShuffleSplit(n_splits=15, test_size=0.2, random_state=2)
+
+ridgereg = Ridge(1)
+ridgecv_score = cross_val_score(
+    ridgereg, X_train, y_train, cv=shuffsplit
+)
+
+print(ridgecv_score)
+print(f"Mean: {ridgecv_score.mean()}")
+```
+
+We can see that the use of Ridge regression has left us very slightly better off than our original OLS regression, but not by much. It might be possible to improve the cross-validation scores by modifying the alpha parameter, but let's try another regularization.
+
+### Regularization via Lasso Regression
+
+We could use **L1 regularization**, which penalizes coefficient values that are close to 0 much more harshly than the comparatively light treatment that L2 regularization offers. The result is that the model is forced to use only a subset of the available features, which it selects automatically. All other coefficients are set to 0. This approach is called **Lasso regression**. As with Ridge, Lasso takes an 'alpha' ($\alpha$) parameter that determines how aggressive the regularization is. If we have an underfitting problem, then we want to decrease $\alpha$ to soften the constraints and let the model learn more from the training data. Conversely, if we have an overfitting problem we want to increase 'alpha' to more aggressively push the coefficients towards 0 and learn less from the training data. 
+
+Creating a Lasso regression model is the same process as before.
+
+```python
+from sklearn.linear_model import Lasso
+
+lassoreg = Lasso(1)
+lassocv_score = cross_val_score(
+    lassoreg, X_train, y_train, cv=shuffsplit
+)
+
+print(lassocv_score)
+print(f"Mean: {lassocv_score.mean()}")
+```
+
+Our CV $R^2$ score is a good deal lower than our score from Ridge regression.
+
+We might be able to squeeze a bit more life out of our regularized models by tweaking the 'alpha' hyperparameter. If not specified, 'alpha' defaults to 1. As $\alpha$ increases, the model becomes more simple, more constrained, and more regularized. As it decreases, the model becomes more complex, less constrained, less regularized.
+
+Let's compare the results of a series of Ridge and Lasso regressions on this data using different 'alpha' parameters. We will define a set of 'alpha' values, estimate a series of ridge and lasso regressions, and then plot their $R^2$ scores for comparison (Figure @fig-20_01).
+
+```python
+alphas = np.linspace(0.01, 2, 50)
+
+ridge_r2s = []
+lasso_r2s = []
+
+olscv_score = cross_val_score(
+    LinearRegression(), X_train, y_train, cv=shuffsplit
+)
+
+for alpha in alphas:
+    new_ridge = Ridge(alpha)
+    ridge_r2s.append(
+        cross_val_score(
+            new_ridge, X_train, y_train, cv=shuffsplit
+        ).mean()
+    )
+    
+    new_lasso = Lasso(alpha)
+    new_lasso.fit(X_train, y_train)
+    lasso_r2s.append(
+        cross_val_score(
+            new_lasso, X_train, y_train, cv=shuffsplit
+        ).mean()
+    )
+    
+r2s = pd.DataFrame(
+    zip(alphas, ridge_r2s, lasso_r2s), 
+    columns = ["alpha", "Ridge Regression", "Lasso Regression"]
+)
+```
+
+```python
+fig, ax = plt.subplots()
+
+sns.lineplot(
+    x="alpha", 
+    y="Ridge Regression", 
+    data = r2s, 
+    label="Ridge", 
+    linestyle='solid'
+)
+
+sns.lineplot(
+    x="alpha", 
+    y="Lasso Regression", 
+    data = r2s, 
+    label = "Lasso", 
+    linestyle='dashed'
+)
+
+ax.axhline(
+    olscv_score.mean(), 
+    label="OLS", 
+    linestyle='dotted', 
+    color="darkgray"
+)
+
+ax.set(
+    xlabel='alpha values for Ridge and Lasso Regressions', ylabel='R2'
+)
+
+sns.despine()
+ax.legend()
+plt.savefig('figures/20_01.png', dpi=300)
+```
+
+![png](figures/20_01.png){#fig-20_01}
+
+Here, we can see that all three of the model types we're testing - Ridge, Lasso, and OLS, converge as 'alpha' approaches 0 (we didn't actually fit any of the models with an `alpha` of zero, since the models only accept non-negative, non-zero values for `alpha`), but rapidly diverge thereafter. As `alpha` increases, Lasso regression's performance increases, falters, and begins a nosedive as 'alpha' approaches 0.5. Ridge regression rises and falls like Lasso regression, but over a much larger scale of `alpha`. 
+
+Although the peaks of Ridge and Lasso are close, it would appear that Ridge regression with a haphazardly optimized 'alpha' parameter is our best fit for this model. We'll retrieve that value of 'alpha', fit a new model, and interpret the results: 
+
+```python
+best_alpha = alphas[ridge_r2s.index(max(ridge_r2s))]
+best_alpha
+```
+
+Let's use this to fit a ridge regression and get the coefficients.
+
+```python
+best_ridgereg = Ridge(best_alpha)
+best_ridgereg.fit(X_train, y_train)
+
+md = pd.DataFrame(
+    [*best_ridgereg.intercept_, *np.ravel(best_ridgereg.coef_)],
+    index=['Intercept', *X_test.columns],
+    columns=['best_ridgereg_coeff']
+).to_markdown()
+
+print(md)
+```
+
+Now that we've developed a candidate model, validated it, and fit it to the available data, we can assess its performance on the test data. 
+
+```python
+best_ridgereg.score(X_test, y_test)
+```
+
+Not bad! Using weak regularization, we've created a Ridge regression model that outperforms our OLS model on the test data. The gains are modest, but measurable. 
+
+### Model Interpretation
+
+Let's set aside more rigorous assessment for now and use our model to make predictions on new data, or **out-of-sample data**. We do this using the `.predict()` method of the trained model. Below, we use our model to make predictions on the test data, which we split away from the training data earlier.
+
+```python
+predictions = np.round(
+    best_ridgereg.predict(X_test)
+)
+```
+
+```python
+np.ravel(predictions)
+```
+
+```python
+preds = {
+    "Total Score": y_test['Total Score'], 
+    "Predicted Score": np.ravel(predictions), 
+    "Country":  vdem_fh_df.loc[y_test.index]['Country']
+}
+
+preds = pd.DataFrame(preds)
+preds
+```
+
+Not bad! Each of the predictions is off by a modest amount, but there's a only one truly off-base prediction, Angola, with a difference of 23. Many predictions are very close! Like most aspects of machine learning, linear regression isn't a one-size-fits-all solution. It's a family of models with a variety of tweakable hyperparameters that deserve your attention. If you put in the effort, you'll likely be rewarded with a model that fits the data well and is highly interpretable. That said, linear regression is not suitable for all tasks; let's look at a model better-suited to classification tasks: logistic regression.
+
+## CLASSIFICATION WITH LOGISTIC REGRESSION
+
+When the goal is classification, logistic regression provides better results than the models in the previous section. Itss also highly interpretable, and can be used for binary or multi-class classification problems. It's a very flexible model, in part because it doesn't assume a linear relationship between the response variable and our explanatory feature matrix. While similar to linear regression in many ways, rather than predict a numerical outcome for a variable, logistic regression describes the probability that an observation would have a particular value in a categorical variable. Logistic regression is typically conducted using two classes, but it can be extended to multiple classes. 
+
+Given that logistic regression is designed to answer different kinds of questions than linear regression, we're going to have to create a new set of training and test data. Let's say we want to predict whether a given country is governed democratically, as opposed to autocratically. We have a variable from the VDEM dataset that will serve for this purpose: it is a 4-point scale, with 
+
+- `0` representing closed autocracies,
+- `1` representing electoral autocracies, 
+- `2` representing electoral democracies, and 
+- `3` representing liberal democracies.
+
+We're going to simplify this down to a 2-point scale, with 0 indicating autocracies, and 1 indicating democracies. Using this re-coding, we can use binary logistic regression to predict the probability that any given country in our dataset belongs to one of the two categories. Our predictions will be based on the 5 measures of internet freedom drawn from the VDEM dataset, briefly discussed when importing our data. I recommend refreshing yourself with them. Let's create our new `X` and `y`.
+
+```python
+y = np.where(vdem_df["v2x_regime"] <= 1, 0, 1).copy()
+
+X = vdem_df[[
+    'v2smgovdom_osp',
+    "v2smgovfilprc_osp",
+    "v2smgovsmcenprc_osp",
+    "v2smonper_osp", 
+    "v2smarrest_osp", 
+]]
+```
+
+Now we perform a new train test split and estimate our binary logistic regression.
+
+```python
+from sklearn.linear_model import LogisticRegression
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, random_state=23
+)
+
+shuffsplit = ShuffleSplit(
+    n_splits=5, 
+    test_size=0.2, 
+    random_state=42
+)
+
+log_reg = cross_val_score(
+    LogisticRegression(), 
+    X_train, 
+    y_train, 
+    cv=shuffsplit)
+
+print(log_reg)
+print(f"Mean: {log_reg.mean()}")
+```
+
+As before, we could use regularization to deal with underfitting and overfitting problems. In this case, the parameter that controls regularization is called `C`. The logic is similar to when we used `alpha`, but unfortunately goes in the opposite direction. Increasing the value of `C` reduces regularization and results in more complex models that can learn more from the training data. Decreasing `C` results in more regularization that constrains how much the model can learn from the training data. So when we set a low value for `C`, the logistic regression model will force the coefficients to be closer to 0, but not exactly 0. We'll show you the code for accomplishing this below:
+
+
+```python
+log_reg_regularized = cross_val_score(
+    LogisticRegression(C=0.5), 
+    X_train, 
+    y_train, 
+    cv=shuffsplit)
+
+print(log_reg_regularized)
+print(f"Mean: {log_reg_regularized.mean()}")
+```
+
+In this case, altering our regularization parameter didn't help at all. Rather than bury this result or massage it to produce a desirable outcome, we're going to preserve this as a reminder that using reasonable techniques in machine learning can often produce uninteresting, uninformative, or confusing results. 
+
+Despite the roadblock we encountered here, it should be clear that it is relatively straightforward to use linear and logistic regression models, with and without regularization to prevent overfitting, within a supervised machine learning framework. You might also have noticed that we did not need to write very much code to do the actual learning. 
+
+The next chapter will discuss some supervised machine learning algorithms that are probably less familiar, and finish with a discussion of evaluation metrics for machine learning.
+
+  
+> **Further Reading**    
+>   
+> If you want to learn more about doing supervised machine learning with regression models, I recommend consulting the relevant chapters from Andreas M{\"u}ller and Sarah Guido's [-@muller2016introduction] *Introduction to Machine Learning with Python: A Guide for Data Scientists* or Aur{\'e}lien G{\'e}ron's [-@geron2019hands] *Hands-on machine learning with Scikit-Learn, Keras, and TensorFlow: Concepts, tools, and techniques to build intelligent systems*.
+>
+
+
+## CONCLUSION
+
+### Key Points 
+
+- Used Sklearn to set up, build, fit, and interpret supervised machine learning models 
+- Learned how to prepare data by splitting our features into two different arrays, one containing the labels we want to predict (quantitative or categorical) and the other containing the values we want to use in our predictions
+- Learned how to use cross-validation to remove the need for a separate validation split, and to harness the entire training set when tuning hyperparameters

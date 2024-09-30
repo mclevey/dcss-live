@@ -1,0 +1,111 @@
+# Courses and Workshops
+
+In this appendix, I offer some advice on chapter sequences that work well for different kinds of courses. In general, I assume 12-week courses, but I also include suggestions for other scenarios.
+
+---
+
+## Quantitative Research Methods 
+
+- **12 Weeks**
+- **Adaptable for Undergraduate or Graduate**
+
+@tbl-quant recommends a sequence of chapters suitable for a generic course in quantitative research methods at the undergraduate or graduate level. For an undergraduate course, I would rarely assign additional readings and would not emphasize coding skills or advanced computational methods and models. The content would be more or less the same as other quantitative methods courses, only taught in Python instead of R, Stata, or GUI applications like SPSS (which should be avoided, of course). 
+
+This schedule could easily be adapted. For example, more or less time could be spent introducing Python at the start of the course, or on collecting data from the web. The chapters on text analysis could be swapped out for network analysis instead, but my recommendation would be to stick with text as data in a course like this. Alternatively, those weeks could be cut entirely to create more time for teaching linear regression and multilevel models (considering that these chapters cover the full workflow for developing, assessing, and comparing models), or to create room for generalized linear models or causal analysis with observational data. 
+
+I prefer to teach research ethics throughout the course and reserve dedicated space for deep discussions about the ethics and politics of research at the end of the course, when students have a bit of experience. However, this is just a personal preference—you could teach that content anywhere in the course sequence.
+
+| Week | Topic | Chapters |
+|:----:|-------|----------|
+| 01   | Introduction | "Introduction" and "Getting started with research computing" | 
+| 02   | Python for researchers | "Python 101" and "Python 102" | 
+| 03   | Sampling and survey data | "Sampling and survey data" | 
+| 04   | Data from the web | "Web data (APIs)" and "Web data (Scraping)" | 
+| 05   | Exploratory data analysis (EDA) | "Processing structured data" and "Exploratory data analysis and visualization" | 
+| 06   | Exploratory data analysis (EDA) | "Association and latent factors" | 
+| 07   | Text as data | "Text as data" and "Text similarity and latent semantic space" | 
+| 08   | Inference | "Prediction", "Probability", and "Credibility" | 
+| 09   | Inference | "Causality" | 
+| 10   | Linear models | "Linear regression" | 
+| 11   | Multilevel models | "Multilevel regression" and/or "Generalized linear models" | 
+| 12   | Research ethics | "Research ethics, politics, and practices" | 
+
+: Recommended Chapter Sequence for a Quantitative Research Methods course. {#tbl-quant}
+
+---
+
+## Introduction to Computational Social Science (Undergraduate, 12 Weeks)
+
+- **12 Weeks**
+- **Undergraduate**
+
+This sequence introduces undergraduates to computational social science by blending foundational coding skills, data collection techniques, and an introduction to core computational methods. The course focuses on simple but powerful methods that build the foundation for more advanced work later. Depending on the focus of the course, the instructor could switch out the chapters on text or networks, and more time could be allocated to specific areas like machine learning or causal inference.
+
+| Week | Topic | Chapters |
+|:----:|-------|----------|
+| 01   | Introduction | "Introduction" and "Getting started with research computing" |
+| 02   | Python basics | "Python 101" and "Python 102" |
+| 03   | Data collection | "Sampling and survey data" |
+| 04   | Web data | "Web data (APIs)" and "Web data (Scraping)" |
+| 05   | Exploratory data analysis | "Exploratory data analysis and visualization" |
+| 06   | Working with structured data | "Processing structured data" |
+| 07   | Text analysis introduction | "Text as data" |
+| 08   | Text analysis advanced | "Text similarity and latent semantic space" |
+| 09   | Introduction to networks | "Social networks and relational thinking" |
+| 10   | Machine learning basics | "Machine and statistical learning" |
+| 11   | Prediction and inference | "Prediction" and "Probability" |
+| 12   | Research ethics | "Research ethics, politics, and practices" |
+
+: Recommended Chapter Sequence for an Undergraduate Introduction to Computational Social Science course. {#tbl-comp-undergrad}
+
+---
+
+## Introduction to Computational Social Science (Graduate, 12 Weeks)
+
+- **12 Weeks**
+- **Graduate**
+
+This sequence is designed for a graduate-level introduction to computational social science. While many of the topics overlap with the undergraduate version, this course delves deeper into advanced methods, placing a stronger emphasis on model-based inference, causality, and latent structure analysis. Instructors may want to adjust the number of weeks spent on programming based on the cohort's experience level.
+
+| Week | Topic | Chapters |
+|:----:|-------|----------|
+| 01   | Introduction | "Introduction" and "Getting started with research computing" |
+| 02   | Python for researchers | "Python 101" and "Python 102" |
+| 03   | Data collection | "Sampling and survey data" |
+| 04   | Web data | "Web data (APIs)" and "Web data (Scraping)" |
+| 05   | Exploratory data analysis | "Exploratory data analysis and visualization" |
+| 06   | Latent factors | "Association and latent factors" |
+| 07   | Text analysis | "Text as data" and "Text similarity and latent semantic space" |
+| 08   | Network analysis | "Social networks and relational thinking" and "Structural similarity and latent social space" |
+| 09   | Machine learning | "Machine and statistical learning" |
+| 10   | Prediction and inference | "Prediction", "Probability", and "Credibility" |
+| 11   | Causal inference | "Causality" and "Causal analysis" |
+| 12   | Research ethics | "Research ethics, politics, and practices" |
+
+: Recommended Chapter Sequence for a Graduate Introduction to Computational Social Science course. {#tbl-comp-grad}
+
+---
+
+## Text as Data / Computational Text Analysis (12 Weeks)
+
+- **12 Weeks**
+- **Adaptable for Undergraduate or Graduate**
+
+This course focuses on computational text analysis. It is suitable for both undergraduate and graduate students, though graduate students might dive more deeply into advanced modeling techniques such as Structural Topic Models (STM) and transformer-based models. Instructors may want to adjust the depth of machine learning content based on the course's focus.
+
+| Week | Topic | Chapters |
+|:----:|-------|----------|
+| 01   | Introduction to text analysis | "Introduction" and "Text as data" |
+| 02   | Python basics for text | "Python 101" and "Python 102" |
+| 03   | Text pre-processing | "Text as data" |
+| 04   | Exploratory text analysis | "Text similarity and latent semantic space" |
+| 05   | Topic modeling with LDA | "Latent topics in text (LDA)" |
+| 06   | Structural topic models (STM) | "Latent topics in text (STM)" |
+| 07   | Machine learning for text | "Machine and statistical learning" |
+| 08   | Neural networks for NLP | "Artificial neural networks (FNN, RNN, CNN)" |
+| 09   | Transformers and self-attention | "Transformers and self-attention" |
+| 10   | Advanced applications | "Latent topics in text and images using transformers" |
+| 11   | Inference and causality | "Prediction", "Probability", "Credibility", and "Causality" |
+| 12   | Research ethics | "Research ethics, politics, and practices" |
+
+: Recommended Chapter Sequence for a Text as Data course. {#tbl-text}

@@ -1,0 +1,556 @@
+# Developing Neural Network Models with Keras and Tensorflow
+
+## LEARNING OBJECTIVES
+
+- Explain how Tensorflow and Keras are related
+- Describe how to build a neural network using the Keras Sequential API
+- Recognize when a model is overfitting and take steps to regularize the model
+- Use diagnostic tools, such as the confusion matrix, to assess model fit 
+
+## INTRODUCTION
+
+In this chapter, we're going to use Artificial Neural Networks (ANNs) to predict the political affiliation of a politician based on the content of their parliamentary speeches. We'll tackle this problem by developing and training a very simple Artifical Neural Network on the UK Hansard data; in so doing, we'll explore the issues surrounding model construction and overfitting. 
+
+### Imports
+
+As always, let's begin by importing packages and our dataset. The data we are using is a little large, so be aware that it might take a few minutes for Pandas to load the entire dataframe into memory. To help cut down on the amount of data we're loading, we'll only use a subset of the columns present in the raw dataset and pre-filter the data by dropping any columns that have a null value in the `party`, `speakername`, or `speech` columns.
+```python
+import pandas as pd
+
+import seaborn as sns
+import matplotlib.pyplot as plt
+from dcss import set_style, download_dataset
+set_style()
+
+from numpy.random import seed
+from tensorflow.random import set_seed
+set_seed(42)
+seed(42)
+```
+
+We are working with a very large dataset here; be patient as it downloads and loads.
+
+```python
+hansard_url = 'https://www.dropbox.com/scl/fi/2ix3dpyirxg6zq53la6vz/hansard-speeches-v301.csv?rlkey=phee5td1qx33t9asu8ykpve2j&st=l29rbiki&dl=0'
+
+download_dataset(hansard_url, 'data/british_hansard_full/')
+```
+
+```python
+columns = ['speech', 'speakername', 'party', 'constituency', 'year']
+
+uk_df = pd.read_csv(
+    "data/british_hansard_full/hansard-speeches-v301.csv", 
+    usecols=columns
+).dropna(subset=['party', 'speakername', 'speech'])
+```
+
+```python
+uk_df.info()
+```
+
+We now have a dataframe of more than 2,000,000 rows representing individual speeches given in the British House of Commons, and each of the 5 columns beyond the first provides metadata about that speech (who was speaking, what party they belong to, etc.). 
+
+There's a LOT of data to work with, and as useful as such an abundance could be, working with such a large dataset might pose a bit of a challenge to older or less-powerful computing setups. As such, we'll filter our dataframe so that it only includes speeches delivered from 2015 to 2019, inclusive.
+
+```python
+uk_df = uk_df[uk_df['year'].isin([2015, 2016, 2017, 2018, 2019])]
+```
+
+#### Filtering The Data
+
+From the general view of the dataframe alone, we can already see some places where it may be prudent to trim the data down. Since we're interested in predicting party affiliation, we should ensure that each of the rows in our dataset - and, hence, every speech we consider - was spoken by someone who belonged to a person we can identify as belonging to a political party (or, more restrictively, was speaking in an overtly partisan capacity). Let's summarize the 'party' column:
+
+
+```python
+uk_df['party'].value_counts()
+```
+
+A significant portion of the speeches in our dataset were delivered by a party known as the 'Speaker' party. There is no 'speaker' party in the UK. This is what our dataset uses to indicate that a speech was delivered by the Speaker of the House. The Speaker is ostensibly a non-partisan position, and so we would do well to exclude all of the speaker's speeches from consideration.
+
+```python
+uk_df = uk_df.drop(uk_df[uk_df['party'] == 'Speaker'].index)
+uk_df['party'].value_counts()
+```
+
+We also want to limit our analysis to those speeches which impart some kind of substantive information; there are many 'speeches' that consist of only 1-2 words. We can see some of them by sorting the list of speeches by the number of characters they contain and returning 20 of the smallest:
+
+```python
+sorted(list(uk_df['speech']), key=lambda x: len(x))[10:20]
+```
+
+A significant portion of our corpus is comprised of vanishingly brief utterances. Rather than spend hours sleuthing through the data to find the perfect cutoff point, let's assume that any 'speech' which contains fewer than 200 characters is unlikely to be of much value in determining the political leaning of the person who delivered it. 
+
+```python
+uk_df.drop(uk_df[uk_df['speech'].apply(
+    lambda x: len(x)) < 200].axes[0], inplace=True
+)
+```
+
+#### Categorizing Affiliation
+
+Now, we're ready to categorize our data. We'll do this by adding a new column to our dataframe indicating the political affiliation of the politician giving the speech. There are a few parties, such as 'Labour (Co-op)' and 'Liberal', which we will combine with their 'parent' party. The 'Liberal' party was the senior partner in the 1988 merger which created the Liberal-Democratic party, and 'Labour (Co-op)' is a special appelation applied to MPs elected under the auspices of a cooperation agreement between the Labour and the (aptly named) Co-Operation Party. 
+
+We also create an 'other' category containing the names of all the parties that aren't included in one of the other lists (right, centre, left, national).  
+
+```python
+right = ['Conservative']
+centre = ['Liberal Democrat']
+left = ['Labour', 'Labour (Co-op)']
+national = ['Scottish National Party']
+
+other = list(
+    uk_df['party'].value_counts().axes[0].drop(
+        [*right, *left, *centre, *national]
+    )
+)
+
+uk_df.loc[uk_df['party'].isin(right), 'affiliation'] = "centre-right"
+uk_df.loc[uk_df['party'].isin(centre), 'affiliation'] = "centre"
+uk_df.loc[uk_df['party'].isin(left), 'affiliation'] = "centre-left"
+uk_df.loc[uk_df['party'].isin(national), 'affiliation'] = "national"
+uk_df.loc[uk_df['party'].isin(other), 'affiliation'] = "other"
+```
+
+
+```python
+uk_df['affiliation'].value_counts()
+```
+
+#### Taking a Stratified Sample
+
+There are a couple more issues we should tackle before going any further. The first is that we have a large imbalance between the various categories; the centre-right dominates the data to the extent that all of the other speeches combined only amount to about 2/3rds of the Conservative party's tally. The second issue is that we simply have too many speeches! We can solve both problems simultaneously by taking a stratified random sample, where we ensure we draw an equal number of speeches from each of the five categories. In order to keep run times modest, let's draw 3,000 speeches from each category:
+
+```python
+uk_df_strat = uk_df.groupby(
+    "affiliation", group_keys=False
+).apply(lambda x: x.sample(3000))
+
+uk_df_strat.affiliation.value_counts()
+```
+
+#### Lemmatizing Speech
+
+Finally, machine learning algorithms and statistical models alike can get tripped up on trivial differences between semantically similar words. You've already used `spaCy` to lemmatize a series of documents, intelligently reducing each word (or token) to a basic form that's identical across all tenses, conjugations, and contexts. We'll do the same here (depending on the computing power available to you, this cell might take a while to run):
+
+
+```python
+import spacy 
+from tqdm import tqdm
+
+nlp = spacy.load(
+    'en_core_web_sm', disable=['ner', 'textcat', 'parser']
+)
+
+lem_speeches = []
+
+for doc in tqdm(nlp.pipe(uk_df_strat['speech']), total=15000):
+    lem_speeches.append(
+        [tok.lemma_ for tok in doc if not tok.is_punct]
+    )
+
+lem_speeches_joined = []
+for speech in lem_speeches:
+    lem_speeches_joined.append(" ".join(speech))
+```
+
+With our categories in place, our sample stratified, and our speeches lemmatized, we're ready to get started with Artificial Neural Networks! In the next section, we'll start by covering some of the Keras API's basics, emphasizing how it helps users build fast, efficient ANNs from scratch. 
+
+## GETTING STARTED WITH `KERAS`
+
+We're going to be using a combination of TensorFlow and Keras. TensorFlow is a tensor-processing library developed and maintained by Google; it has a wide variety of uses, but it is best-known for its neural network applications. Tensorflow is powerful and widely applicable, but it can also be prohibitively difficult to pick up, learn, and use. This is where Keras comes in: formerly, **Keras** served as a dedicated network API capable of using its comparatively simple ANN syntax to power model training using a wide variety of computational backends (Theano, MXnet, R, etc.). As of Keras's June 2020 release (version 2.4.0), it is a dedicated interface for Tensorflow exclusively.
+
+For the purposes of this chapter, we'll mostly be working with Keras. When using Keras to build a typical ANN from scratch, you'll generally work your way through the following stages of development:
+
+1. Load, clean, and pre-process data 
+2. Define a Keras model and add layers to it
+3. Select a loss function, optimizer, and output metrics for our model
+4. Train and evaluate our model
+5. Model selection
+6. Use final selected model to make predictions
+
+Progress through the six steps described above is usually non-linear (save for the final two); when training and evaluating a model, for example, we might find that the model is underperforming or behaving erratically -- this might prompt us to return to the third step (e.g. using a different loss function) or the second step (e.g. reconfiguring our model's layers) multiple times.
+
+### Pre-processing / Prep Work
+
+Even though we pre-processed our data when we first imported, there are a few additional hurdles before we proceed. First, we need to explicitly think through what our inputs and our outputs are going to look like. Conceptually, this should be simple: we want our Artificial Neural Network to take in the full text of a speech delivered in the British House of Commons (our input), and spit out the political leaning of the person who wrote and/or delivered the speech (our output). Thus, we have a classification task.
+
+Now we can start thinking building a model for our data. ANNs are mathematical constructs, and don't generally handle non-numerical input or output values smoothly. We're going to have to use some techniques to transform our data into something our ANN can use. We'll start with the outputs:
+
+#### Encoding the 'Affiliation' Column
+
+Currently, the 'Affiliation' column in our dataframe is human-readable. 
+
+```python
+uk_df_strat[['affiliation']].sample(5, random_state=1)
+```
+
+This is convenient for us, but we need to create a numerical representation for the ANN. We can do this using Scikit-Learn's **`LabelBinarizer`**. The `LabelBinarizer` will take in the entire 'affiliation' column and return a series of vectors, each of which will contain 5 integers - one for each of the categories we defined above. In each of these vectors, one of the integers will be a 1, and the rest will be 0. You might be wondering why we don't just convert the column into a series of numbers ranging from 0 to 4. Doing so would not be in our model's interests; the party classifications are **categorical**, and even though we've decided to describe them using a left-right continuum, using a numerical scale in our model would implicitly cast the Liberal Democrats as being 'one point' more right-leaning than the Labour Party. We don't want that. 
+
+
+```python
+from sklearn.preprocessing import LabelBinarizer
+
+affiliation_encoder = LabelBinarizer()
+affiliation_encoder.fit(uk_df_strat['affiliation'])
+
+aff_transformed = affiliation_encoder.transform(
+    uk_df_strat['affiliation']
+)
+
+pd.DataFrame(aff_transformed).sample(5, random_state=1)
+```
+
+Compare the first five rows of the 'affiliation' column with the first five rows of our transformed affiliation data. You'll see the entries in each row of our `aff_transformed` variable correspond with one of the five 'affiliation' categories. When there's a 1 in the leftmost position and 0 in every other position, that corresponds to the 'Centre' affiliation. 
+
+We're going to use Term Frequency-Inverse Document Frequency (which you've also encountered elsewhere in the book) on the entire corpus of speeches. Here again, we can use `Scikit-learn` to help us:
+
+```python
+from sklearn.feature_extraction.text import TfidfVectorizer
+
+speech_vectorizer = TfidfVectorizer(
+    strip_accents='unicode', stop_words='english', min_df=0.01
+)
+
+speech_transformed = speech_vectorizer.fit_transform(lem_speeches_joined)
+```
+
+
+```python
+speech_vectorizer.get_feature_names_out()[40:50]
+```
+
+We now have access to two numpy arrays - `aff_transformed` and `speech_transformed` - which contain numerical representations of political affiliation and word counts for each speech in our filtered dataset. There should be one entry (row) in `aff_transformed` for each entry (row) in `speech_transformed`. We can confirm this by comparing their 'shape' attributes:
+
+```python
+aff_transformed.shape
+```
+
+```python
+speech_transformed.shape
+```
+
+In both cases, the first number contained in the `shape` attribute is the number of rows in the array. Both should be the same. They should also have two entries in their `shape` attribute - this means that they are 2-dimensional arrays. We can think of the first value as the number of rows contained in the array and the second value as the number of columns. Even though `aff_transformed` and `speech_transformed` must have the same number of rows, they don't need to have the same number of columns. 
+
+The 'columns' correspond to the features we extracted. `aff_transform` has 5 columns because we defined 5 different categories of political affiliation. `speech_transform` has many, many more columns, because each column corresponds with a unique word which appears in at least one of the speeches in our dataset.
+
+It's time to move onto the last step before we dig into modelling: training, test, and validation splitting!
+
+### Training and Validation Sets
+
+In order to validate your results, you must split your data into training and test sets, and then split your training set into a training set (for real this time) and a validation set. We've covered this process before, but we used 'Cross-Validation' to achieve the training-validation split (dynamically, at runtime). Cross-validation isn't as common for neural networks, so we'll create these splits by hand:
+
+```python
+from sklearn.model_selection import train_test_split
+import numpy as np
+import tensorflow as tf
+from tensorflow import keras
+
+
+X_t, X_test, y_t, y_test = train_test_split(
+    speech_transformed,
+    aff_transformed,
+    test_size = 0.1,
+    shuffle = True,
+    stratify=aff_transformed
+)
+
+X_train, X_valid, y_train, y_valid = train_test_split(
+    X_t,
+    y_t,
+    test_size = 0.2,
+    shuffle = True,
+    stratify=y_t
+)
+
+# to make sparse numpy arrays tensorflow compatible tensors
+from dcss.utils import convert_sparse_matrix_to_sparse_tensor
+
+X_train = convert_sparse_matrix_to_sparse_tensor(X_train)
+X_valid = convert_sparse_matrix_to_sparse_tensor(X_valid)
+```
+
+Here again, we can take some time to check that everything is the correct shape. If our splits worked correctly, then `X_train` and `y_train` should have the same first dimension:
+
+```python
+import numpy as np
+X_train.shape
+```
+
+```python
+y_train.shape
+```
+
+We'll also take a moment to store the number of columns in our `X` data, as we'll need to provide Keras with that number shortly:
+
+```python
+words = X_train.shape[1]
+```
+
+Our data is now ready. I stress that this is a *very* basic approach to preparing the data. It is optimized for speed and ease of understanding, rather than scientific rigour. In the next section, we'll use Keras to build a Classification Neural Network, train it on the data, and evaluate its performance.
+
+## END-TO-END NEURAL NETWORK MODELLING
+
+#### Building the Sequential Model
+
+It's time to build a neural network! We're going to run through this from scratch so that you understand what goes into building a neural network from the ground up. In real-world settings, you'll often find yourself using pre-built architectures that require little-to-no assembly. We could just take some ready-made models off the shelf and show you how to get them running, but there's value in taking a peek under the hood.
+
+We can set aside our data for now; we won't need it until it we train our neural network. There are many ways to build an ANN using Keras; we're going to use the 'Sequential' API, which is one of the simpler methods. You start by instantiating `keras.models.Sequential()` and assigning it a variable name. We'll call this one the `uk_model`:
+
+```python
+uk_model = keras.models.Sequential()
+```
+
+Now that we've defined this model, we can start to add layers to it sequentially (hence its name). In ANNs, a 'layer' is simply a group of artifical neurons that share some attributes in common. In the previous chapter, we described various types of layers one might find in a network, so we won't cover them in much detail here. 
+
+We can add a layer to our sequential model by using the model's `add` method. This first layer is going to be a special layer called the input layer. It won't act on the data in any significant way, but it does play an important role in configuring the network overall, as we'll give it information about the shape of the data we plan to feed into it; we've already found and stored that number, which makes this process simple:
+
+```python
+uk_model.add(keras.layers.InputLayer(shape=(words,)))
+```
+
+The meat-and-potatoes of any basic ANN is the 'dense' layer. They're called 'dense' because they're fully-connected to the previous layer; every neuron in the input layer can potentially have some impact on any neuron in our first dense layer. Some more advanced forms of neural network architecture intentionally restrict which neurons can affect which other neurons, but that's a topic for another time. Let's add a dense layer now! We'll start with a fairly big one - say, 400 neurons or so:
+
+```python
+uk_model.add(keras.layers.Dense(400, activation = "relu"))
+```
+
+As a reminder, we discussed the 'ReLu' activation function in the previous chapter.  
+
+Keras features a useful method for quickly getting a sense of your ANN. It's a good idea to frequently use the `summary()` method on your model to keep tabs on what it looks like:
+
+```python
+uk_model.summary()
+```
+
+Let's add a few more identical layers:
+
+```python
+uk_model.add(keras.layers.Dense(400, activation="relu"))
+uk_model.add(keras.layers.Dense(400, activation="relu"))
+uk_model.add(keras.layers.Dense(400, activation="relu"))
+uk_model.add(keras.layers.Dense(400, activation="relu"))
+```
+
+Finally, we'll add an output layer designed to fit our output data. In most cases, the output layer of a Classification ANN should have a number of neurons equal to the number of categories in our output (5, in our case), and use an activation function capable of producing the output we expect to see (we only want our ANN to make one guess per speech). We'll use the 'softmax' activation function:
+
+```python
+uk_model.add(keras.layers.Dense(5, activation='softmax'))
+uk_model.summary()
+```
+
+The `softmax` activation function is useful for us because it produces a series of categorical probabilities: there will be one value for each of the political affiliation categories, all of the values across all of the categories will be non-negative, and they will sum to 1. This will be vitally important during the training stage.  
+
+Once we've added our output layer, our model is ready to be compiled!
+
+#### Compiling a Keras ANN
+
+Before a Keras model is ready to be trained, it must be compiled. Keras ANNs require you to provide them with a loss function and an optimizer. It's usually a good idea to include one or more metrics you'd like to have access to during training. 
+
+For this, our first ANN, we're going to use a standard lineup during compilation. Our loss function will be `sparse_categorical_crossentropy`, our optimizer will be `sgd`, and we'll use the `accuracy` metric. 
+
+
+```python
+uk_model.compile(
+    loss=keras.losses.categorical_crossentropy,
+    optimizer="sgd",
+    metrics=["accuracy"]
+)
+```
+
+#### Care, Feeding, and Training of your ANN
+
+Everything is ready; we can begin training! A word to the wise: don't expect your neural network to perform well at first, and this neural network will be no exception. Observe:
+
+```python
+history = uk_model.fit(
+    X_train, 
+    y_train, 
+    epochs=50, 
+    validation_data = (X_valid, y_valid), 
+    verbose=0
+)
+```
+
+Normally, fitting a Keras model will produce a *lot* of output! Since we don't want to devote multiple pages to this output, we've used the `verbose=0` argument. If you run the code yourself, you can see it all in full. What does it mean?
+
+On the left-hand side, our ANN lets us see how far along the model is in the training process. We asked the model to do 50 epochs of training; the current epoch is displayed at the top of the output. Below the epoch is a progress bar showing progress through the current epoch, alongside a constantly-updating estimate of how long the epoch will take to finish (for the current epoch, at least; finished epochs display the total time they took instead). 
+
+After the progress outputs, you should see four metrics: loss, accuracy, val_loss, and val_accuracy. Here's what each of them means:
+
+1. **`loss`** is simply the average value of the loss function across the entire epoch. The lower it is, the better our model is performing!
+2. **`accuracy`** is a simple measure of how well our model is performing in practical terms. It measures of the proportion of correct answers our model gave during that epoch.
+3. **`val_loss`** is the same as loss, except it's calculated for the 'validation' set of data, which our model isn't allowed to train on. 
+4. **`val_accuracy`** is the same as accuracy, except calculated for the 'validation' set. 
+
+We will discuss accuracy and some of its issues soon.
+
+Now that we know what these labels mean, we can take a look at the values they contain. Let's start by plotting all four of them by epoch (Figure @fig-23_01):
+
+```python
+pd.DataFrame(history.history).plot(
+    style=['*-','o-','^-'], 
+    linewidth=.5, markersize=3, figsize = (8, 8)
+)
+
+plt.grid(True)
+plt.gca().set_ylim(0, 2)
+plt.savefig('figures/23_01.png', dpi=300)
+```
+
+![png](figures/23_01.png){#fig-23_01}
+
+Looking at our model's history, it started out with a modest accuracy rate of ~22% (specific numbers may vary from computer to computer), which -- for a classification task with 5 labels, is about as good as randomly guessing. As our model trains, though, we can see it steadily improves until... Wow! Over 75% accuracy on the final epoch! That is an unreasonably high number. Is this cause for celebration? 
+
+Unfortunately, no. Recall that we care much more about our model's performance on the validation set. If we examine the progression of our `val_accuracy` score, we see no significant trend.  Despite our ANN's ability to accurately predict three-quarters of the training data, its performance on the validation data reached ~45% after the third epoch and stayed nearly stationary from there on out, except for the occasional plunge down into the low 30s. Things get even worse when we examine our `val_loss` scores across the epochs: as our training-set `loss` decreases (for loss, lower is better), our validation set `val_loss` shoots through the roof! The increasing loss indicates that our model is getting more and more confident in the incorrect predictions it is making on our validation set.
+
+Why is this happening? The most plausible explanation - and the *usually* correct one in most cases - is **overfitting**. 
+
+### Overfitting
+
+One of the problems with ANNs is that you can provide them with enough data and memory capacity to perform nearly perfectly at the task they're aware of (the training set), only to be utterly inept at tasks they're not aware of (the validation set). In other words, they are prone to **overfitting**. To successfully build and train neural networks, you have to walk a fine line. If you don't provide your ANN with enough neuron density and training data, it won't be able to effectively learn anything. If you provide it with too much, it'll become a near-perfect predictor of the training data, and -- barring a fluke -- will make negligible progress on the validation data.
+
+To demonstrate the influence of model specification on overfitting, we'll train another neural network using a very similar approach, except instead of using 5 hidden dense layers with 400 neurons each, we're only going to use 2 hidden dense layers -- one with 400 neurons and one with 10. We'll also take this opportunity to demonstrate a different way of specifying your Keras ANN model: rather than creating our layers one at a time by using the `model.add()` method, we can simply pass a list of layers as the first argument in our initial call to `keras.models.Sequential()`:
+
+```python
+uk_model_2 = keras.models.Sequential([
+    keras.layers.InputLayer(shape=(words,)), 
+    keras.layers.Dense(400, activation="relu"),
+    keras.layers.Dense(10, activation="relu"),
+    keras.layers.Dense(5, activation="softmax"),
+])
+```
+
+Now, let's compile and train our new model as before:
+
+```python
+uk_model_2.compile(
+    loss=keras.losses.categorical_crossentropy,
+    optimizer="sgd",
+    metrics=["accuracy"]
+)
+
+history2 = uk_model_2.fit(
+    X_train, 
+    y_train, 
+    epochs=50, 
+    validation_data = (X_valid, y_valid), 
+    verbose=0
+)
+```
+
+Keep in mind that we're primarily interested in our `val_accuracy` and `val_loss` scores, and we're especially interested in making sure that they don't wildly jump around or trend for the worse during training. It might be a good idea to directly compare our models' performances -- we'll do this by putting both of their history plots side-by-side (Figure @fig-23_02): 
+
+```python
+lims = (0, 2)
+
+fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(8,16))
+
+
+pd.DataFrame(history.history).plot(
+    ax=ax1, 
+    style=['*-','o-','^-'], 
+    linewidth=.5, 
+    markersize=3
+)
+
+ax1.grid(True)
+ax1.set_ylim(lims)
+ax1.title.set_text("5-Layer Model")
+
+pd.DataFrame(history2.history).plot(
+    ax=ax2, 
+    style=['*-','o-','^-'], 
+    linewidth=.5, 
+    markersize=3
+)
+
+ax2.grid(True)
+ax2.set_ylim(lims)
+ax2.title.set_text("2-Layer Model")
+
+plt.savefig('figures/23_02.png', dpi=300)
+```
+
+![png](figures/23_02){#fig-23_02}
+    
+When we compare the two plots, we can see that our `val_loss` and `val_accuracy` scores for the 2-layer model outperform those from the 5-layer model, both in terms of stability and trending in positive directions. The difference between them is slight, but made especially salient when one recalls that the better model is *far less complex* than its counterpart! 
+
+Reducing complexity isn't the only way to stave off overfitting; a variety of other techniques, such as '**dropouts**', can be used. We're not going to fit any models with dropouts in this chapter, but it's useful to know what the term means: instead of using all connections between all neurons for every training iteration, dropout forces your model to perform without a randomly-selected subset of connections between neurons. The group of dropped connections changes periodically, meaning that your network can't become too reliant on a comparatively small number of features; in essence, dropout uses a different approach to achieve the same end of preventing your model from simply learning the data. 
+
+There are two lessons to take away from the above examples:
+
+1. When it comes to training neural networks, less is often more. 
+2. Your neural network is only as good as the training data it has access to. 
+
+We've already talked at length about how adding more parameters to a model can degrade its performance on validation data, but we haven't discussed the second point yet. We mentioned when creating the training and validation sets that we chose to represent the text of the speeches in a very simple way. We just counted all of the words in a given speech and fed that information into our neural network (after some minor processing to use TF-IDF and remove stop words). There are far better ways to process text - this book has already covered various various approaches to doing so.
+
+### Confusion Matrices
+
+Throughout this chapter, we used 'accuracy' (alongside the categorical cross entropy loss function) as a means of assessing our models' performances. Accuracy may be the most easily-understood metric, but it doesn't provide a particularly complete picture of what the model is getting right and what it's getting wrong.  Rather than use one of those numerical assessments, I will introduce you to a graphical technique for classification tasks, regardless of the number of categories involved: **the confusion matrix**.
+
+You may have encountered simple 2x2 confusion matrices before, which are a simple way of assessing the balance between false positives and false negatives. In a 2x2 format, the first row of a confusion matrix shows the model predictions for the positive class, with $n$ correct predictions in the first cell and $n$ incorrect predictions in the second cell. The second row does the same for the negative class. The matrix diagonal (row 1 column 1 and row 2 column 2), then, shows the number of correct predictions, and the other two off-diagonal cells show the number of incorrect predictions. Some confusion matrices will be larger than the simple 2x2 tables, but the columns still represent 'ground truth' and the rows represent predictions. Since more categories result in larger confusion matrices, it can be helpful to visualize the matrix as a heatmap. The same premise applies to classification tasks with more than two categories: cells down the diagonal of the matrix are correct predictions, and anything off-diagonal is an incorrect prediction. 
+
+Confusion matrices help us put criteria other than overall accuracy in the foreground when evaluating machine learning models. Of course, the ratio of false positives and false negatives is one part of the larger concept of accuracy; accurate models should have relatively low numbers of both. But, by shifting the focus from a single accuracy score to this balance of errors, we can think about evaluating and improving our models with other criteria in the foreground, such as reducing the risk of potentially harmful false positives. 
+
+Let's take a look at the confusion matrix from our 2-layer model after 50 epochs of training. We'll use a heatmap from the `seaborn` package to make it easier to see what's going on. The results are shown in Figure @fig-23_03.
+
+
+```python
+y_pred = np.argmax(
+    uk_model_2.predict(
+        convert_sparse_matrix_to_sparse_tensor(X_test)), 
+    axis=1)
+
+y_true = np.argmax(y_test, axis=1)
+
+conf_mat = tf.math.confusion_matrix(y_true, y_pred)
+plt.figure()
+
+## GRAYSCALE FOR PRINTING
+cmap = sns.cubehelix_palette(
+    50, hue=0.05, rot=0, light=0.9, dark=0, as_cmap=True
+)
+
+sns.heatmap(
+    np.array(conf_mat).T,
+    xticklabels=affiliation_encoder.classes_,
+    yticklabels=affiliation_encoder.classes_,
+    annot=True,
+    fmt='g',
+    cmap=cmap
+)
+
+plt.xlabel("Observed")
+plt.xticks(rotation=45)
+plt.yticks(rotation=45)
+plt.ylabel("Predicted")
+plt.savefig('figures/23_03.png', dpi=300)
+```
+
+![png](figures/23_03.png){#fig-23_03}
+
+Along the x-axis, you have the 'Observed' classes; along the y-axis, you have the 'predicted' classes. Each of the columns sums to 300 observations (but the rows don't, necessarily). All things considered, our simple model didn't fare too badly! It was especially proficient at making accurate predictions about speeches delivered by the centre-right party (Conservatives), and the 'other' parties. In the centre-left (Labour) and national (SNP) categories, it's a bit more of a mixed bag: less than 50% correct. The real blemish here is in the 'centre' category (Liberal-Democrat): less than one third of the predictions were correct. our model was especially keen on mis-classifying Liberal-Democrats' speeches as belonging to Labour or the Conservatives. 
+
+At this point, you might be wondering why I have any praise at all for a model that barely managed to clear a 50% accuracy rate in two categories, didn't manage to clear 50% in another two, and completely botched the final one. I think there are a few reasons to look on the bright side here.
+
+1. This model managed to achieve fairly good results using complex, nuanced speech that was relatively un-processed. As I've said elsewhere, we did about as little as possible to the speeches before feeding them to the model: anything less would have been embarassing. There's a *lot* of room for improvement here before we even create the neural network. 
+2. A nearly-50% accuracy rate might be abysmal for a 2-label classification task, but it becomes a bit more of an impressive result when you consider that there were 5 labels competing for our model's attention. If our model were simply guessing randomly, we'd only expect it to be right 20% of the time. Viewed in that light, getting validation accuracy up to around 50% isn't bad at all! 
+3. The neural networks we used in these examples were about as simple as they come. Later in the book, we're going to start discussing more complicated NN architectures, such as Transformers and Recurrent Neural Networks, which have *way* more than 2,000 parameters. 
+
+The fact that an extremely simple neural network was able to make measurable gains after a relatively short training period should be all the proof you need that they represent a powerful arsenal of inferential tools. But for all the reasons we've already discussed, it is *very* important it is to understand them, to know their limitations, and use them correctly in contexts where they are appropriate.
+
+  
+> **Further Reading**    
+>   
+> Now that you've had an introduction to some very simple neural network models, you may want to start learning about more complex ones. To that end, I recommend the sections on neural network modelling in @geron2019hands, as well as Francois Chollet's [-@francois2017deep] *Deep Learning with Python*. These are more advanced materials, but now you've got a foundation to build on! 
+>
+
+
+## CONCLUSION
+
+### Key Points 
+
+- Neural networks are a vast, heterogeneous group of models, but even simple instantiations of a DNN can achieve unreasonably good results
+- Overfitting is a constant concern, and great pains should be taken to diagnose and correct for overfitting. Many techniques for accomplishing this exist, but even using a simpler model can be sufficient.
+- Accuracy and Loss metrics alone aren't reliable measures of your model's power; using other metrics and visualization techniques (such as confusion matrices) can help expose trends otherwise hidden 

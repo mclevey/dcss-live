@@ -1,0 +1,294 @@
+# Web data (Scraping)
+
+# Collecting Data from the Web: Scraping
+
+## LEARNING OBJECTIVES
+
+By the end of this chapter, you should be able to:
+
+- Learn how to study the source code for a website to make a plan for collecting the data you need.
+- Use the Requests package to programmatically make `GET` requests to web servers.
+- Use the BeautifulSoup package to parse HTML and CSS code to extract and clean data from webpage source code. 
+- Change URLs programmatically to scrape multiple pages of a website.
+- Explain the ethical and legal issues involved in web scraping projects.
+
+## LEARNING MATERIALS
+
+You can find the online learning materials for this chapter in `doing_computational_social_science/Chapter_06`. `cd` into the directory and launch your Jupyter Server.
+
+## INTRODUCTION
+
+This chapter introduces web scraping as a method of programmatically collecting data from the web. While Application Programming Interfaces (APIs) provide direct access to the data behind a website using documented protocols, web scraping requires studying the source code of a website as displayed in a browser, and then writing scripts that take advantage of HTML and CSS to extract specific pieces of data.
+
+We will begin by introducing the basics of HTML and CSS, which are essential to understand when developing a web scraper, followed by an explanation of how to use browser-based developer tools to study the source code of a website and isolate the data you want to extract. We will then work through several examples of scraping text data from websites using the packages `requests` and `BeautifulSoup`. These examples cover many common web scraping needs and can easily be extended to cover more.
+
+It is possible to collect virtually any data from the web by writing web scrapers, but that doesn't mean you should. As with APIs, you always need to ensure you that you are collecting data in a way that meets high ethical standards, and that you are respecting a website's Terms of Service. We'll discuss ethics, including for digital data collection, in detail in Chapter 19.
+
+## AN HTML AND CSS PRIMER FOR WEB SCRAPERS
+
+This chapter builds on the previous chapter's foundations; I will begin by describing how the content on webpages is structured using HTML and CSS, and then explain how to write web scrapers that take advantage of these types of markup to programmatically extract data from web pages. As you learn this material, keep in mind that *it takes far less knowledge to scrape a website than it does to develop it in the first place*. A little knowledge goes a long way.
+
+As someone who frequently reads and writes "documents" (news stories, blog posts, journal articles, Tweets, etc.), you are already familiar with the basics of structuring and organizing documents using headings, subheadings, and so on. This chapter, for example, has all those features and more. As humans, we parse these organizational features of documents *visually*.
+
+If you create a document using a WYSIWYG ("what you see is what you get") word processor like Open Office, Microsoft Word, or Google Docs, you apply different styles to parts of the text to indicate whether something is a title, a heading, a paragraph, a list, etc. HTML documents also have these organizational features but use special 'markup' to describe structural features of the document (HTML) as well as how things should appear (Cascading Style Sheets, or 'CSS').
+
+HTML consists of 'elements' (e.g. paragraphs) with opening and closing tags. You can think of these tags as containers. The tags tell your browser about the text that sits between the opening and closing tags (or "inside the container"). Here's an example:
+
+
+```html
+<html>
+    <head>
+        <title>This is a minimal example</title>
+    </head>
+    <body>
+        <h1>This is a first-level heading</h1>
+        <p>A paragraph with some <emph>italicized</emph> text.</p>
+        <img src="image.pdf" alt="This is an image">
+        <p>A paragraph with some <strong>bold</strong> text.</p>
+        <h2>This is a second-level heading</h2>
+        <ul>
+            <li>first list item</li>
+            <li>second list item</li>
+        </ul>
+    </body>
+</html>
+```
+
+In our example above, the `paragraph` element opens a paragraph with `<p>` and closes it with `</p>`. The actual text -- what you see in your browser -- lives between those tags. We can see examples of them on lines 7 and 9 in the HTML code above.
+
+The outermost element in any HTML document is the **`html` element**. Your browser knows that anything between `<html>` and `</html>` tags should be processed as HTML markup. Most of the time, the next element in an HTML page will be a `head` element. The text inside the `<head>` and `</head>` tags will not actually be rendered by your browser. Instead, it contains metadata about the page itself. This is where the page title is contained, which is displayed on the tab in your browser.
+
+Inside the HTML tags, you'll also find a **`body` element**. Anything inside the `<body>` and `</body>` tags will be displayed in the main browser window (e.g. the text of a news story). Inside the body tags, you will typically find elements for headings (e.g. `<h1>` and `</h1>`, `<h2>` and `</h2>`, and so on), paragraphs (`<p>` and `</p>`), bold text (`<strong>` and `</strong>` or `<b>` and `</b>`), italicized text `<i>` and `</i>` or `<em>` and `</em>`), as well as ordered and unordered lists, tables, images, and links.
+
+Sometimes elements include 'attributes,' which provide more information about the content of the text. For example, a paragraph element may specify that the text contained within its tags is American English. This information is contained inside the opening bracket. `<p lang="en-us">American English sentence here...</p>`. As you will soon learn, attributes can be *extremely* useful when scraping the web.
+
+Before moving on, it's important to understand one final type of HTML element you'll frequently encounter when developing web scrapers: **the division tag `div`**. This is simply a generic container that splits a website into smaller sections. Developers often use them to apply a particular style (e.g. switch to a `monospaced font` to display code) to some chunk of text in the HTML document, using CSS. Splitting webpages into these smaller pieces using `div` tags makes websites easier for developers to maintain and modify. They also make it easier for us web scrapers to drill down and grab the information we need. You'll see this in action in the examples to follow.
+
+When scraping the web you will also encounter CSS, which I previously mentioned is used to *style* websites. To properly understand how CSS works, remember that the vast majority of modern websites are designed to separate content (e.g. actual words that mean things to humans) from *structure* and *style*. HTML markup tells your browser what some piece of text is (e.g. a heading, a list item, a row in a table, a paragraph) and CSS tells your browser what it should look like when rendered in your browser (e.g. what font to use for subheadings, how big to make the text, what colour to make the text, and so on). If there is no CSS, then your browser will use an extremely minimal default style to render the text in your browser. In most cases, developing a good web scraper will require a deeper understanding of HTML than CSS, so we will set aside discussion of CSS for now, but will return later when knowledge of CSS can help us develop a better scraper.
+
+
+A full inventory of HTML and CSS elements is, of course, beyond the scope of this book. The good news is that you don't need exhaustive knowledge of either to write a good web scraper. You need to have a basic understanding of the key concepts and you need to know what the most common tags mean, but *more than anything else* you need to be willing to spend time investigating the source code for websites you want to scrape, attempt to solve problems creatively, and work interactively.
+
+  
+> **Further Reading**    
+>   
+> With this foundational knowledge, you'll be able fill gaps in your knowledge of HTML and CSS with web searches as you develop scrapers to collect data for a research project. Still, I recommend setting aside a bit of time to browse some basic tutorials. Better yet, spend some time browsing Jon Duckett's [-@duckett2011html] beautiful resource book *HTML & CSS: Design and Build Websites*, which is an excellent resource for learning the basics.
+> 
+
+
+### DEVELOPING YOUR FIRST WEB SCRAPER
+
+Now that you have a baseline understanding of how your computer retrieves and renders websites, and the role that HTML and CSS play in that process, we can demystify web scraping even further. First, we know that the information we want to retrieve from a website will be sent to our computer from a remote web server following a `GET` request. Webpages are provided as source code, which is parsed and rendered by our web browser of choice.
+
+Before jumping into coding a scraper, you need to familiarize yourself with the sources you plan to gather data from -- this is good advice to apply to any data you plan to use for research purposes. The best way to study the source code of a website is to use the **developer tools** built into browsers like Firefox, Chrome, or Brave. Here, and throughout the rest of this book, I will use Firefox, but the developer tools we use here are available in the other browsers as well. We'll start by learning how to study the source code of a webpage we want to scrape, and then move into writing the actual code for the scraper.
+
+#### Studying Website Source Code with Developer Tools
+
+First, navigate to a website in Firefox. I've selected a story from the front page of *The Guardian* on August 2nd 2019, "Charming but dishonest and duplicitous: Europe's verdict on Boris Johnson." The specific story you select doesn't really matter, however. If you are writing and executing code along with me as you read this book, and for some reason this story is no longer available, you could select another story from *The Guardian* instead and follow along just fine.
+
+Once the story is loaded in Firefox, I can right-click anywhere on the page and select "Inspect Element" to open a pane of developer tools. (You can also open this pane by selecting "Toggle Tools" from the "Web Developer" section of the "Tools" menu in the toolbar.) We can use these tools to study our target webpage interactively, viewing the rendered content and the raw source code of the webpage simultaneously.
+
+One especially useful strategy is to highlight some information of interest on the webpage and then right-click and select 'Inspect Source' (or 'View Selection Source' or 'Inspect Element' or similar). This will jump to that specific highlighted information in the HTML code, making it much easier to quickly find what tags the information you need is stored in. From here, we can strategize how best to retrieve the data we want.
+
+Figure @fig-06_01 is a screenshot of the developer tools pane open in a Firefox tab for the story about Boris Johnson. Unfortunately it might be a bit difficult to fully read on this printed page. If that's the case, you can consult the high resolution screenshot available in the online materials. The text "As the Brexit deadline looms, Europe remains wary of the poker player behind the clown mask" is highlighted and revealed in the inspector tool at the bottom of the page. We can see in the developer tools that the text we've highlighted is enclosed in simple paragraph tags (`<p>As the Brexit deadline looms, Europe remains wary of the poker player behind the clown mask</p>`). That's precisely the kind of information we can exploit when developing a web scraper. Let's see how exactly it's done.
+
+![A screenshot of the Firefox developer tools pane open for the story "Charming but dishonest: Europe's verdict on Boris Johnson," published in *The Guardian* on August 2, 2019.](figures/boris.pdf)
+
+As we develop our web scraper, we progressively narrow down to the information we need, clean it by stripping out unwanted information (e.g. white spaces, new line characters), and then write it to some sort of dataset for later use. Next, we'll cover the steps one might take to develop a functional scraper from the ground up.
+
+One very useful way to extract the data we want is to make use of Cascading Style Sheet (CSS) selectors. Many of the HTML elements on a website have `class attributes`, which allow web developers and designers to style specific chunks of content using styles defined in CSS. In addition to `class attributes`, we may encounter an `id` attribute for some `elements`. Unlike the `class attributes`, the `id` in an element is unique. It refers to that `element`, and that `element` only. If you're looking for a way to grab multiple elements that are some subset of all the elements of that type, then you want to use `class attributes`. But if you want a single element, and that element has an `id`, then use the `id`!
+
+One final thing that's very helpful to know here is that almost all web pages use a **'Document Object Model' (DOM)** to organize the elements they display. The DOM is a hierarchical structure resembling a tree, the trunk of which is the web page itself. In this model, all of the elements can be thought of as branches of the trunk, or branches of those branches, and so on. Many sources use language borrowed from family trees to describe elements' relationships to one another, as most elements in the page will have other elements nested within them. These nested elements are 'children' of the larger 'parent' element they are nested within. If we follow through with the metaphor, the nested elements can be thought of as each others' 'siblings'. 
+
+This family tree structure of the DOM is useful to understand, especially in cases when you need to grab data from an element that doesn't have an `id` and also doesn't have a unique `class attribute`, such as what you often find for the headlines of news stories. In such cases, we can exploit the nested, hierarchical structure of the DOM to find the information we want: all we need to do is locate the element's parent, at which point we can get information about all of its children and extract the data we need. 
+
+If you find that the website design is consistent across the pages you want to scrape, you could determine whether the element you want is always *nested* at the same level. If it is, you could provide a full path to the data you want to scrape, even when given the vaguest of elements. This might mean that you want to always grab the text located at `<body><div><div><article><div><h1>`. If you need to access the second of two `<div>` elements that are at the same depth (and, thus, a sibling of the first), it can be referred to in the same way you would access an element in aPython list, by `<div[1]>`. 
+
+#### Coding a Web Scraper for a Single Page
+
+In order to get our scraper operational, we'll need a way to actually get data from the web pages into Python. Normally, the process of requesting and rendering a page is handled by our browser, but as you learned in the previous chapter, this isn't the only way to request HTML documents from a web server. We can also connect to a web server from a Python script using a package such as **`requests`**, and load the HTML provided by the web server into our computer's memory. Once we have this HTML in memory (rather than rendered in a browser), we can move onto the next step, which is to start parsing the HTML and extracting the information we want.
+
+When we load an HTML document in Python, we're looking at the raw markup, not the rendered version we see when we load that file in a browser. If we're lucky, the information we want will be consistently stored in elements that are easy to isolate and don't contain a lot of irrelevant information. In order to get that information, we need to parse the HTML file, which can be done using a Python package called `BeautifulSoup`. Note that BeautifulSoup's naming conventions are a little confusing. The package is called **`BeautifulSoup`** but you have to install it using `beautifulsoup4` and import it into Python using `bs4`. Clear as mud. Let's make all of this a little less abstract by working through a specific example.
+
+To get started, let's grab the title and body text of the article on Boris Johnson mentioned previously. We will (1) request the HTML document from *The Guardian's* web server using the `requests` package, (2) feed that HTML data into `BeautifulSoup` to construct a `soup` object that we can parse, and then (3) extract the article title and text, then store them in a couple of lists.
+
+In the code block below, we import the three packages we will use, get the HTML, construct the soup object using an `lxml` parser, and then -- *just because we can* -- print the raw HTML DOM to our screen.
+
+
+```python
+import requests
+from bs4 import BeautifulSoup
+import pandas as pd
+
+url = 'https://www.theguardian.com/politics/2019/aug/02/europes-view-on-boris-johnson'
+
+r = requests.get(url)
+soup = BeautifulSoup(r.content, 'lxml')
+```
+
+To save space, I will not actually reproduce the DOM here, but you can do so by running:
+
+```python
+print(soup.prettify())
+```
+
+Now we need to get the title. I know that the article title is stored inside a `<title>` element. I use the `findAll` method from `BeautifulSoup` to retrieve that part of the text, which `BeautifulSoup` returns in the form of a list with one item. To get the string, I simply select the first item in the list using its index (`[0]`) and add `.text` to strip away the markup. Finally, although it is not strictly *necessary* at this point, I strip out any invisible new line characters by ending the line with `.replace('\\n', '')`.
+
+
+```python
+article_title = soup.findAll('title')[0].text.replace('\n', '')
+print(article_title)
+```
+
+Getting the body text is even easier, as all body text is contained inside `<p>` elements. We can construct a list of paragraphs with the `findAll` method.
+
+
+```python
+paragraphs = soup.findAll('p')
+```
+
+The ninth paragraph in the list is:
+
+
+```python
+paragraphs[8].text
+```
+
+Sometimes it's useful to combine all the text from an article into one long string (as we will discuss in the chapters on text analysis). We can do this by joining the items in the list, separated by white space.
+
+
+```python
+all_text = " ".join(para.text for para in paragraphs)
+```
+
+And with that, we have written our first scraper! It was a relatively simple one, in that our goal was simply to pull out a title and body text for an article in a newspaper. We could have collected a bit of other data if we wanted, such as the author of the page and the date it was published. However, one nice thing about our rather minimal scraper is that we can use it to grab text from other stories posted by *The Guardian* as well. In other words, simple web scrapers can be used in a broader variety of contexts, because they are not overly tailored to the content of any one specific page. The main takeaway here is that you should keep your web scrapers *as simple and portable as possible*. Avoid adding complexity unless it's necessary to retrieve the data you need.
+
+Let's wrap these steps up in a simple function, grab some text from a few more news stories, and then construct a `Pandas dataframe` with article titles in one column and article text in another. We will provide a much deeper explanation of the Pandas package and dataframes in the next chapter.
+
+
+```python
+def scrape_guardian_stories(url):
+    soup = BeautifulSoup(requests.get(url).content, 'lxml')
+    article_title = soup.find('title').text.replace('\n', '')
+    paras = " ".join(para.text.replace('\n', '') for para in soup.findAll('p'))
+    return [article_title, paras]
+```
+
+The function we just defined follows the same process we just used to scrape the text of the first story on Boris Johnson, but this time wraps the code up in a single function that returns a list containing two items: the title of a story and the main body text. To produce the `dataframe`, we will provide a list of urls and apply our function to each individual story. This will return a `list` of `lists` as a result, which we can then convert into a `dataframe`.
+
+In the code block below, I read in a text file called `guardian_story_links.txt`. This file containing four URLs, each saved on it's own line. When I read those lines in, each URL becomes an element in a list. I can then use list comprehension to iterate over the URLs and scrape their content.
+
+
+```python
+with open('data/guardian_story_links.txt') as f:
+    stories = [line.rstrip() for line in f]
+
+scraped = [scrape_guardian_stories(s) for s in stories]
+df_scraped = pd.DataFrame(scraped, columns=['Title', 'Article Text'])
+print(df_scraped.info())
+```
+
+We'll use a `dataframe` to summarize the result; `dataframes` are a form of structured data that we will be using frequently throughout the book; in the next chapter, we'll go over them in detail. In this `dataframe`, the titles appear in one column and the article text in another.
+
+Obviously, a simple script like this would not be especially helpful to us if we were only analyzing the text of three or four articles. But social scientists are almost *never* concerned with the content of just a few articles. With very little code, we can collect a lot of text very efficiently and store it in a dataset that we can analyze using a variety of methods, from traditional content analysis methods to applied natural language processing. All you need is a list of urls, which you can construct manually (although this is not the best approach), by scraping links from some sort of index page (or possibly the front page), or by writing a more complex web crawler (which is beyond the scope of this chapter but you can read about it in Ryan Mitchell's [-@mitchell2018web] excellent book *Web Scraping with Python*). 
+
+#### Working with Many Webpages
+
+In many cases, the data you want to scrape isn't neatly packaged for you on a single webpage but is instead spread out across several different pages on a single website. In most cases, there will be some kind of ordering principle that undergirds each of those webpages' URLs; we can take advantage of this to greatly simplify and expedite the scraping process. Just as we studied the source code for a webpage to determine how best to scrape it, we have to study how the website handles URLs to determine how best to get the data we want from multiple pages.
+
+Let's talk first about detecting patterns when you browse through pages on a website. This is as simple as navigating though your page, from some starting point (say the front page of `nytimes.com`), and then clicking through to different sections and news stories. As you do this, you'll notice that some parts of the URL change and other parts stay the same. For example, you might see that a new chunk of string is added to the URL when you navigate to parts of the website that cover international news, and a different string appears when you're reading op-eds or the lifestyle section.
+
+As you click through pages, make notes on how the URL changes. Then start simply entering new values into parts of the URL (such as different numbers for pages) and see what the results are. Does it return a valid page or not? Did it return what you expected? This is just one way of doing the necessary detective work -- both in terms of the webpage source code and how the website handles URLs -- to get the content we want from those pages. Figure @fig-06_02 below presents an overview of these two interconnected processes.
+
+![An overview of the front end investigatory work that goes into web scraping. You must spend time studying URLs and the source code of the pages you want to scrape.](figures/scraping.pdf)
+
+Let's make this all a little less abstract by looking at a specific example of programmatically iterating over URLs to scrape a page.
+
+Consider the United Nations' Sustainable Development Partnership Platform. This website contains a directory of sustainable development projects that the UN's Department of Economic and Social Affairs is supporting. Here's an example of one such project's page on the website: [https://sustainabledevelopment.un.org/partnership/?p=35711](https://sustainabledevelopment.un.org/partnership/?p=35711). Here, we can see that the 'Future Rangers Program' is an anti-poaching initiative designed to train a new generation of wildlife conservationists.
+
+Let's say you wanted to scrape information about 30 projects approved by this initiative. These project pages are informative but it will take a fair bit of time to find URLs for each of those 30 projects and then put them into a list (as we did with *The Guardian* in the examples above). Luckily for us, there's an easy way to iterate through the project pages on this website: the key can be found in the `?p=35711` at the trailing end of the URL we examined. Each of the projects listed on the website has a project number and each project's page can be accessed by replacing the number at the end of our example URL with the project number you want to access. Give it a try!
+
+After plugging in a few random numbers, you'll discover that not every 5-digit number has a corresponding project (you can use 35553, if you'd like to see one that works), and that continuing to use hand-typed numbers until we reach our desired threshold of 30 projects will take a very long time. Let's write some code to move things along:
+
+
+```python
+def scrape_UNSD_project(url):
+    result = requests.get(url)
+    if result.ok:
+        soup = BeautifulSoup(result.content, 'lxml')
+        headline = soup.find(id='headline').getText()
+        intro = " ".join(
+            [segment for segment in soup.find(id='intro').stripped_strings])
+        return [headline, intro]
+    else:
+        return None
+```
+
+In the above code block, we define a function that takes one parameter (a URL) and retrieves textual data about a project from its page on the UN Sustainable Development website (defined by the URL). This function does things a little differently than in previous examples, so it's worth going through it line by line. 
+
+The first thing the function does is pass the URL it was supplied to the `requests.get` function, which returns a result. Not all results are useful, though, and as you may have discovered while entering random numbers into the UNSD website, most project IDs don't have a publicly-visible project associated with them. Whenever an HTTP `GET` requests a page that the server can't find, it returns a `404` code, indicating that it couldn't locate what we were asking for. When it *can* find what we're looking for, the server will usually return a `200` code, indicating that everything is okay. There are a variety of HTTP Status Codes that a server can return and each of them carry a specific meaning (visit https://www.restapitutorial.com/httpstatuscodes.html for a list of what each code means). Generally speaking, codes from 0 to 399 indicate a successful `GET` request, whereas anything `400` or above indicates that something went wrong.
+
+Luckily for us, the Requests package was designed with ease-of-use in mind, and provides a convenient way of checking if our `GET` request was successful: `ok`. The `ok` attribute is `False` if something went wrong, and `True` in all other cases. As such, we can use `result.ok` to provide a boolean operator to an `if-else` statement; we'll cover how this fits into the larger picture a few paragraphs from now. If the `result` is `ok`, the function then uses `BeautifulSoup` to parse it. We'll use `find` to isolate the text we're interested in, but this time we'll use the named `id`s 'headline' and 'intro' to retrieve it.
+
+The next block of code simply sets the starting parameters for our scrape - we'll use them later on. In this case, we've used three variables to indicate to our scraper which URL we want it to start at (`base_url` and `starting_number`), and how many pages we want to collect (`target_records`).
+
+
+```python
+base_url = "https://sustainabledevelopment.un.org/partnership/?p={}"
+starting_number = 30000
+target_records = 30
+```
+
+We're going to get Python to repeatedly replace those curly braces (`{}`) in our URL with different numbers, corresponding to the project IDs we want to gather information about.
+
+The final code block of this section puts the pieces together, starting by defining a list, which we'll populate using our scraper. Then, it uses a `while` statement with the condition that the number of scraped documents contained in `scraped` is smaller than `target_records`; this means that the code inside the `while` block will repeat until the condition is no longer true.
+
+
+```python
+scraped = []
+
+current_number = starting_number
+
+while len(scraped) < target_records:
+    url = base_url.format(current_number)
+    try:
+        output = scrape_UNSD_project(url)
+        if output is not None:
+            print(f"scraping {current_number}")
+            scraped.append(output)
+    except AttributeError:
+        pass
+    current_number += 1
+
+df_scraped = pd.DataFrame(scraped, columns=['Headline', 'Introduction'])
+
+print(df_scraped.info())
+```
+
+When using `while` blocks, exercise caution! If you use a `while` loop with an end-state that isn't guaranteed to be met (or might not be met in a reasonable time-frame), your computer will keep executing the same code over and over until the end of time (or Windows forces your computer to update -- sorry, I couldn't resist). In our case, we've used a condition that will eventually be broken out of by the code inside the `while` block. Here's how: 
+
+- First, it uses `format` to replace the curly braces inside `base_url` with the current value of `starting_number`, giving us our `url`.
+- Second, it attempts to retrieve text data using the `url` and our `scrape_UNSD_project` function, storing the result in `output`. 
+- After checking to see if `output` contains anything (it can sometimes be empty, which we don't want), our code appends `output` to our `scraped` list. 
+- Finally, it increments `starting_number` by one and if the number of successful scrapes is fewer than 30, it uses the new `starting_number` to begin another scrape on the next project.
+
+So, now we have a `dataframe` containing text describing 30 different projects from the UNSD website and we've accomplished this without having to navigate the site using links or redirects -- we just changed one number! While such an approach is extremely useful, it isn't compatible with all websites. If the approaches we've covered thus far won't work (which can happen when a website is dynamically generated or interactive, for instance), then we'll have to call in the cavalry. In this case, the cavalry is a Python package called `selenium`. Since my publishers have unreasonably insisted that this book should be carryable without the assistance of a hydraulic lift, we're not going to have room to cover `selenium` in-text. If you want to read more about how to scrape the interactive web, we've prepared an online supplement that will guide you through the process. 
+
+### ETHICAL AND LEGAL ISSUES IN WEB SCRAPING
+
+While it's theoretically possible to systematically step through every page and element of a website and store it (sometimes called a site-dump), most websites would prefer you didn't, may forbid it in their Terms of Service, or in some cases, may seek legal recourse if you were to use that data anywhere. Thankfully, academic researchers are under greater scrutiny over the ethics of their work than your average web-hacker trying to harvest content, but you may not have your research plan vetted by people who understand the legal and ethical issues involved in web scraping, and even if you do, you shouldn't rely on them to tell you whether your plan is going to violate the Terms of Service for a website. You most definitely want to avoid a threat of legal action when web scraping, so be sure you are *always* checking the Terms of Service for any website you scrape. 
+
+A general rule to follow here is that if a website wants to provide users access to data at scale, they will setup an API to provide it. If they haven't, err on the side of *not* collecting data at scale, and limit your data collection efforts to what you need rather than gathering all of it and filtering later. You may recall that websites will sometimes deny service after receiving too many requests. Sometimes, their infrastructure can struggle to even send out the needed denials of service, and will crash. It's very unlikely that you could cause this type of problem, which is usually performed by many computers at once in a distributed denial of service (DDoS) attack that is either orchestrated or the product of computer viruses. That said, it is likely you will run across denial of service errors, perhaps when doing a more extensive URL iteration like in the example above, and may want to think about implementing a modest rate limit in your script.
+
+Finally, there is not yet a widely-held standard, in academia or elsewhere, for the boundaries between ethical and unethical web scraping. The most widely-held position seems to be that public content online should be treated with the same standards that one would apply when observing people in public settings, as ethnographers do. If this is the position you take, you may sometimes need to think very carefully about what types of online content is "reasonably public." If you were scraping some personal blog platform, for example, and found that you could iterate through URLs to access pages that aren't linked to anywhere, this likely would not be considered "reasonably public" because it's possible the blog owner thought they were no longer accessible. This ongoing debate will inevitably include web-scraping practices, so should be an important one to research and keep track of. We'll discuss these issues in more depth in Chapter 19.
+
+> **Box**. To further develop your web scraping skills, I strongly recommend Mitchell's [-@mitchell2018web] *Web Scraping with Python*. It covers a broader range of practical problems than I cover in this chapter, including parsing documents such as PDFs.
+
+## CONCLUSION
+
+### Key Points 
+
+- Web scraping is a powerful approach to collecting data from the web, useful for when data is not available in an API, but could still be obtained ethically and legally
+- BeautifulSoup is a very useful tool for processing HTML from websites, but cannot obviate the need to understand a web page's Document Object Model (DOM)
+- The "iron rule of web scraping": you must put in the proper time and energy to investigating the source code for the pages you want to scrape
+- The only true limits on the data you can collect from scraping the web are ethical and legal

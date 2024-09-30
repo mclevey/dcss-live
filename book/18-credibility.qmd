@@ -1,0 +1,293 @@
+# Credibility
+
+<!-- reallocation -->
+<!-- Posterior Inference -->
+
+## LEARNING OBJECTIVES
+
+- Understand the basic logic of developing a regression model within the Bayesian paradigm
+- Differentiate between variables in a Bayesian model based on their "origin"
+- Develop a Bayesian model by repeatedly asking yourself "what's that?"
+- Explain how stochastic sampling methods enable us to fit Bayesian models that would otherwise be intractable
+- Explain what a Markov chain is
+- Explain how Metropolis-Hastings and Hamiltonian Monte Carlo allow us to efficiently explore posterior distributions
+
+## LEARNING MATERIALS
+
+You can find the online learning materials for this chapter in `doing_computational_social_science/Chapter_27`. `cd` into the directory and launch your Jupyter Server.
+
+## INTRODUCTION
+
+Pierson Browne, one of my PhD students, was once sitting in on a "Mathematics for Statisticians" lecture at the University of Michigan when a professor of mathematics settled an in-class debate by boldly stating: "there are many, many more functions then there are formulae." He was trying to hammer home the idea that some numerical relationships are knowable, but cannot be readily described using a single algebraic equation. This might, at first, seem like a counterintuitive claim because much of our mathematical instruction is focused on manipulating functions whose behaviour can be precisely expressed using an equation (most of which are defined for inputs along the real number line). It may come as a surprise to you that there are some functions that cannot be accurately described using an equation. Form(ula) Follows Function.
+
+In the last chapter, we saw how the Bayesian paradigm uses statements of likelihood $P(\text{D | }\theta)$ and total probability $P(\text{D})$ to condition a prior $P(\theta)$ on data, producing a posterior probability $P(\theta \text{ | D})$. The function that describes this process, however, is not often accompanied by a well-behaved formula. Consequently, for the majority of the 20th century, the Bayesian paradigm required frequent use of daedal calculus and often produced algebraic dead-ends, all of which severely hampered the development and adoption of Bayesian methods. 
+
+Fortunately, recent advances in computational Bayesian statistics and probabilistic programming have allowed the Bayesian paradigm to largely slip free from intractable integrals by **approximating the posterior**. As far as this book is concerned, the two main ways of doing this are: 
+
+1. **stochastic sampling**, especially with the family of Markov Chain Monte Carlo (MCMC) methods, and 
+2. **variational inference**, which approximates the posterior by using a simpler but very similar distribution as a proxy.
+
+The primary purpose of this chapter is to demystify stochastic sampling with MCMC methods. We'll set variational inference aside until Chapter 31. 
+
+Understanding stochastic sampling with MCMC is our goal; we won't actually *start* there. Instead, I'll start by setting up a scenario that demonstrates the practical utility of MCMC methods with a detailed work-through of a hypothetical Bayesian regression model based on principles established in previous chapters. This will also help you understand how Bayesians approach regression analysis (which will be the focus of the next two chapters). Then, I'll introduce MCMC methods with the goal of helping you develop an intuitive understanding of how they work. 
+
+In this chapter, I assume that you've been introduced to linear regression (beyond its brief appearance in Chapter 21), and more specifically, the classic Frequentist approach of Ordinary Least Squares (OLS). A typical introductory quantitative methods class in the social sciences should suffice. If OLS is entirely new to you, it's worth taking a moment to familiarize yourself with the basic framework. 
+
+## BAYESIAN REGRESSION
+
+One of the models you're going to encounter *ad nauseum* in the social sciences is linear regression, often called '**ordinary least squares' (OLS)**. Linear regression is a workhorse in many fields, and is notable for its ease of computation and interpretation (categorical variables make a lot of intuitive sense in OLS, and do not in many other models). We're going to use it to deepen your understanding of Bayesian Data Analysis. 
+
+Tackling linear regression from a Bayesian perspective still involves using data to condition priors and turn them into posteriors. In doing so, we're going to use a *continuous range* of hypotheses about the numerical relationship between two or more variables (including exactly one 'dependent' variable and some number of 'independent' variables). As a result our "hypotheses" are going to become significantly more complex. We might ask a question like "how much does a 1,000-dollar increase in yearly salary affect a person's life span?" This requires a numerical answer. We will consider an infinite number of such answers at the same time. That might sound impressive, but isn't: it's the natural consequence of using continuous variables to describe hypotheses. 
+
+As with other chapters in this book, my goal is to build intuition and understanding with practical examples. However, this will mean I have to hand-wave the specifics of how Bayes theorem is being used at times. The basic logic is the same, but more complex, when we generalize it to multiple variables and higher dimensions. I don't think that it's necessary to have a deep understanding of the maths behind generalizing the theorem to these conditions, so when we get to places where there is a precise-yet-notationally-baffling explanation for the logical leaps we're making, I'm just going to mention that it **Just Works $^{(TM)}$**.
+
+### Playing the "What's That?" Game
+
+When developing a Bayesian regression model, you can get pretty far by asking a bunch of annoying "What's That?" questions. *Unleash your inner child!* I'll show you what I mean by walking through the development of a hypothetical regression model. This is not likely to be a *good* model; it's designed with pedagogical goals in mind, so there are some purposeful problems with the model. 
+
+Let's imagine we have a couple thousand observations about individual-level wealth around the world. Since wealth is a continuous variable (or nearly enough so that we can treat it as such), and can hypothetically take on any value on the real number line, it can be expressed as a random variable drawn from the Normal distribution. By doing this, we're effectively hypothesizing that individual wealth is distributed following a rough 'bell curve', with some mean $\mu$ (the Greek letter mu, pronounced 'mew') and some standard deviation $\sigma$ (the Greek letter sigma). This is, of course, a very naive hypothesis (remember, **model criticism** in the context of Box's loop, introduced in Chapter 8). 
+
+We can express the above using **model notation**, like so:
+
+$$
+\text{Wealth} \sim \text{Normal}(\mu, \sigma)
+$$
+
+In one line, we've concisely defined the relationship between our three variables, $\text{Wealth}$, $\mu$, and $\sigma$. The little squiggly line (called a tilde) separating  $\text{Wealth}$ from the rest of the model notation indicates "is distributed as". Using this notation, we're saying that "$\text{Wealth}$ has the same distribution as a Normal Distribution with mean $\mu$ and standard deviation $\sigma$".
+
+We don't yet have a complete model, though. For a Bayesian, you can't just conjure a variable out of thin air, it must have an origin of some sort. You should ask: *where did this variable come from?* There are, broadly speaking, three different types of origin for a variable. 
+
+1. A variable can be **observed**. In almost all cases, observed variables come from data. Their origin is the real world, or perhaps a simulation. 
+2. A variable can be **calculated**. Its origin is a combination of other variables.
+3. A variable can be **unobserved**. Unobservered variables are often referred to as **latent** or **hidden** variables, or **parameters**. If we haven't observed enough to know much about a variable, and the variable isn't calculated by mathematically combining other variables, then we must use our brains to produce a prior distribution for it (which serves as the origin).  
+
+  
+>   
+> This is not the place to belabour the point, but Bayesian statistics provides a powerful framework for working with unobserved variables in a wide variety of contexts. For now, we'll focus on regression problems and refer to 'parameters' since you're already acquiring a lot of new technical vocabulary very quickly, and discussing parameters in the context of regression modelling is likely more familiar that describing regression modelling in terms of latent or hidden variables. 
+> 
+> The downside of this approach is that 'parameter' generally implies a single value that estimated from some sort of model -- a '**point estimate**.' Whereas linear regression in the Frequentist paradigm produces point estimates with standard errors, Bayesian regression, produces a full distribution. It is possible to produce a point estimate from that distribution (which is almost always the same as what you would get from a Frequentist point estimate). 
+>
+> In later chapters, we'll drop the language of parameters to speak more generally about "latent" and "hidden variables." Mathematically and statistically nothing will change; what we are calling "parameters in Chapters 27-29 *are the same thing as latent and hidden variables*. But once you have a slightly firmer grasp on the logic of Bayesian data analysis and inference, switching up our language a bit will help you get your head around the wider world of Bayesian latent variable models. We'll focus on drawing inferences about latent structure in social networks and latent thematic structure (topics) in large text datasets, but these two are also only a small subset of what's possible. Once you 'get' the bigger picture of latent variable modelling in a Bayesian framework, you're well on you way to developing high-quality bespoke probabilistic models for all kinds of really interesting research problems. 
+>
+
+
+Our model has three variables. One is observed: $\text{Wealth}$. Both $\mu$ and $\sigma$ are not calculated anywhere in our model specification, and we don't have data on them, so -- by process of elimination -- they are unobserved, and we must imbue them with a prior. 
+
+You can probably see the value of interrogating your models with the "What's That?" game as you construct them. Every time you write down a variable, *make sure you ask yourself where it comes from*. If you can't identify a pre-existing origin, you must make one by supplying a prior. This will seem like a clunky and exhausting process at first, but it becomes second nature after a while. 
+
+Since both $\mu$ and $\sigma$ are unobserved, we're going to have to come up with priors for them. Since $\mu$ simply represents the middle point of our Normal distribution, we can probably come up with a sensible prior for it. If you take the total amount of wealth in the world, convert everything into USD, and divide the result by the number of humans on the planet, you get approximately 7,000. You might be tempted to update your model specification like so:
+
+\begin{align}
+\text{Wealth} &\sim \text{Normal}(\mu, \sigma) \\
+\mu &= 7000
+\end{align}
+
+While that might be a prior (of a sort), it's not a very good one. In fact, *it's a very, very bad one*. Among other things, it's equivalent to saying that you are perfectly confident that the value of $\mu$ is *exactly* 7,000 and will never change for any reason. 
+
+If we want our Bayesian model to be able to *update* our priors to produce the posteriors, we must inject some *uncertainty* into them. Rather than describing $\mu$ using an integer, we'll describe it using a full probability distribution. Since we know that $\mu$ represents the number of dollars per capita, and given that these dollars are the same unit (and thus follow the same rules) as our wealth variable, we might as well use a Normal distribution here, too. Since we're pretty sure of our mean value, we can afford to use a comparatively small value for the standard deviation of this distribution; if we use a value of 1,000, we're saying that about 68\% of the probability will lie between 6,000 and 8,000. If you're wondering why in the world it's permissible to pull numbers out of a hat like this, stay tuned: we'll cover the dark art of prior selection in more detail in the next chapter. If you're really concerned and can't wait, know that in most actual models with anything other than very small datasets, the evidence generally overwhelms the priors, and they have little effect. 
+
+We're going to have to go through the same process for $\sigma$ as we did for $\mu$. The standard deviation parameter in a normal distribution is a continuous variable that can take on any value from 0 to positive infinity. That means that we should be careful to assign a prior that can't produce negative values. There are many good candidates, but we'll use the exponential distribution, which covers the same domain (from 0 to positive infinity). The exponential distribution takes only one parameter - $\beta$. For simplicty's sake, let's assign a large value for $\beta$, which will help encode our lack of prior knowledge about the variability of wealth. When we put it all together, our model looks like this:
+
+\begin{align}
+\text{Wealth} &\sim \text{Normal}(\mu, \sigma)  &\text{[Likelihood]}\\  
+\mu &\sim \text{Normal}(7000, 1000) &[\mu \text{  Prior]}\\
+\sigma &\sim \text{Exponential}(4000) &[\sigma \text{  Prior]}
+\end{align}
+
+At this point, we have a complete model. You can play the "What's That?" game on any portion of it, and another part of the model definition will give you an answer. However, the model isn't very informative at this point. All we've done is lump all of our data into one big bin and described the shape of that bin by specifying where the middle is and how wide it is. If we had actual data, we could produce posterior probabilities for each of our priors and see how close our initial guesses were to the final answers (hint: they'd probably be *way, way off)*. For now, let's focus on two specific limitations with what we've done: 
+
+1. The model isn't even remotely interesting or informative.
+2. It isn't yet a linear model. (For it to be a linear model, we'd need to have an independent variable upon which wealth depends.)
+
+These two problems are related, and we'll attempt to solve them both in the subsequent section. 
+
+### Introducing a Predictor
+
+In order to turn our normal model into a linear model, we're going to need to introduce another variable. Let's say you've been reading some international development and globalization research and learn there is a correlation between the absolute value of latitude and wealth per capita (*after* the Industrial Revolution). Whether you go North or South, per capita wealth is higher the further you get from the equator. How strong is this relationship? Maybe you want to know, for example, how much of a difference a 10-degree shift of latitude has on wealth. To show how we'd go about modelling this, let's rebuild our model, starting from the likelihood:
+
+\begin{align}
+\text{Wealth}_i &\sim \text{Normal}(\mu_i, \sigma) &\text{[Likelihood]}\\  
+\end{align}
+
+That looks almost exactly the same as the Normal model we specified before! The only difference is that there are now subscripted 'i's after $\text{Wealth}$ and $\mu$ - what gives?" 
+
+The subscripted 'i' is a powerful clue. It means that rather than trying to find a single value for $\mu$ that applies to the entire dataset (which, in effect, gives us overall average wealth), we're going to be producing a different value of $\mu$ for each observation of $\text{Wealth}$ in our dataset. Pay attention to subscripts (like 'i' or 'j') going forward: their appearance in some part of the model indicates that we're going to be allowing that part of the model to take on many different values -- usually, one value for each observation in the data. 
+
+In this case, rather than plunking a normal distribution somewhere along the real number line and trying to configure it to best account for all of the data we have, we're going to let it move about. Every time we calculate a $\mu$ value for one of the observations in the data, we'll plug it in as a parameter in our Normal distribution, which will cause the distribution to scoot around the real number line in an attempt to get as close as possible to the observed data. 
+
+If we're serious about allowing our likelihood distribution to move, we can't put a prior directly on $\mu$. Instead, we're going to re-cast $\mu$ as a statistic, and calculate it as a combination of other variables. This is where our linear model comes in!
+
+\begin{align}
+\text{Wealth}_i &\sim \text{Normal}(\mu_i, \sigma)  &\text{[Likelihood]}\\
+\mu_i &= \alpha + (\beta \times \text{Latitude}_i)  &\text{[Linear Model]}\\
+\end{align}
+
+Note the new line uses $=$ rather than $\sim$. This indicates that the calculation of $\mu$ is now based on a *deterministic* combination of its constituent parts. This line is called the 'linear model,' and it's how we tell our Bayesian model that we want to use a line to approximate the relationship between latitude and wealth. If you squint and blur your eyes a bit, you might even begin to recognize similarities between the linear model and the equation for a straight line:
+
+$$
+y = mx + b 
+$$
+
+Where $m$ is the slope of the line and $b$ is the intercept. We're doing the exact same thing here, except rearranging things, using $\alpha$ instead of $b$, and using $\beta$ instead of $m$. It's a simple model, but simplicity is often a virtue in statistics. All we have to do to complete it is play the 'What's That?' game until we've covered all of our bases. Let's start from the top:
+
+- We already know that Wealth is observed, and so it doesn't need to appear anywhere else in the model. 
+- We know that $\mu_i$ is unobserved, but unlike the previous model we made, it is now calculated from other variables in the model. As such, it doesn't need a prior -- we already have a line telling us where it comes from. That line is a linear model.
+- No such luck with $\sigma$; we're going to need a prior just like before.
+- Similarly, we do not have information about $\alpha$ or $\beta$, and so they're both going to need priors.
+- Latitude is observed, so we can leave it as-is.
+
+Consider what these terms might mean in the model, and then to try and extrapolate some sensible priors. Pay attention to what values the parameters *can* take. Recall, that you can't have a negative standard error, and so it's vitally important that you assign a prior to $\sigma$ that can't take on any negative values. Conversely, it's important to make sure that you don't artificially limit what values a variable can take. If you assign a probability of 0 to a value, you've made that particular value impossible; from that point onward, it will never receive any probability from the model. If you ever assign any value a probability of 0, make sure that you've got *a really good reason for doing so* (a model predicting wealth using age probably shouldn't allow negative ages). If you think a particular value is unlikely *but still theoretically possible*, then it's far safer to use a distribution that will place a vanishingly small but still non-0 probability on those unlikely values. 
+
+**Prior specification** is a complex debate. Don't worry about about it for now; until you're comfortable with Bayesian analysis, your focus should be making sure that you don't unintentionally make the impossible possible, or vice versa. When you have lots of data and a simple model, the exact form of your priors won't matter because *they'll get overwhelmed by the evidence!* Even horrifically mis-specified priors will be "washed out" and have next-to-no impact on inference. 
+
+When you've thought this through a bit, feel free to take a look at what I've selected. Got any criticisms? Good. That's a *vital* part of the process. Write them down. 
+
+\begin{align}
+\text{Wealth}_i &\sim \text{Normal}(\mu_i, \sigma) &\text{[Likelihood]}\\  
+\mu_i &= \alpha + (\beta \times \text{Latitude}_i) &\text{[Linear Model]}\\
+\alpha &\sim \text{Normal}(4000, 2000)             &[\alpha\text{ Prior]}\\
+\beta &\sim \text{Normal}(1000, 500)               &[\beta\text{ Prior]}\\
+\sigma &\sim \text{Exponential}(1000)              &[\sigma\text{ Prior]} \\
+\end{align}
+
+And now, for the anticlimax: we don't have any data for this model, so we can't produce a posterior distribution. A shame, I know, but that wasn't the point. The point was to work through the process of developing a rudimentary Bayesian regression model using only hypotheticals to keep your focus as much as possible on the *structure* and *logic* of these regressions, including the use of a few priors that stretch credibility in order to emphasize the importance of *criticism* in model development. This is a theme we will return to often.
+
+Now that you've built a bivariate linear regression, you can easily extrapolate what you've learned to add more variables to your model. Suppose we wanted to add another variable to the model we just finished specifying. We could do so by simply adding another term to the linear model equation and creating another prior for the coefficient!
+
+\begin{align}
+\text{Wealth}_i &\sim \text{Normal}(\mu_i, \sigma)  &\text{[Likelihood]}\\                                              
+\mu_i &= \alpha + (\beta_1 \times \text{Latitude}_i) + (\beta_2 \times \text{NewVariable}_i) &\text{[Linear Model]}\\
+\alpha &\sim \text{Normal}(4000, 2000) &[\alpha\text{ Prior]}\\
+\beta_1 &\sim \text{Normal}(1000, 500) &[\beta_1\text{ Prior]}\\
+\beta_2 &\sim \text{Normal}(-150, 100) &[\beta_2\text{ Prior]}\\
+\sigma &\sim \text{Exponential}(1000) &[\sigma\text{ Prior]} \\
+\end{align}
+
+Rather take a deep dive into the mathematics of Bayesian inference we're going to skip to the cutting edge of Bayesian analysis and discuss the first of two computational approaches to approximating the posterior: stochastic sampling. Together with variational inference (introduced in Chapter 30), stochastic sampling has played a *major* role in the meteoric rise of Bayesian methods. 
+
+## STOCHASTIC SAMPLING METHODS
+
+Throughout the next few chapters, we're going to be making frequent use of stochastic sampling methods to produce posterior distributions for a variety of Bayesian models. **Stochastic sampling methods** represent the cutting-edge of a remarkably adaptable approach to fitting otherwise difficult or impossible models. What they are *not* is a one-size-fits-all panacea. Unlike many other approaches, we can't simply feed our data and model specification into a sampler and reliably get an intelligible answer. You're going to have to know:
+
+- how your sampler works, 
+- how to read and interpret the output it produces, and, most importantly, 
+- how to help a sampler that's fallen sick. 
+
+Fortunately, you don't need a rigorous understanding of the underlying math in order to become a pretty good sampler medic; you will, however, need a strong intuitive understanding of how they work. In what follows, and over the course of the next two chapters, my goal is to help you build that essential intuition. Rather than wasting your time starting from first principles and working our way up to something interesting, I'm going to briefly introduce an especially important concept, Markov Chains. Then we'll dive straight into the deep end of a grotesquely extended metaphor. We'll get into the details of diagnosing and fixing problems with samplers in the chapters to come. Let's begin.
+
+#### Markov Chains
+
+At the root of everything we're going to cover in this section is the **Markov Chain**. Named after Russian mathematician Andrey Markov, a Markov Chain is a simple machine that transitions from one state to another based on some pre-defined set of inter-state probabilities. Markov Chain models are 'memoryless,' which is a fancy way of saying that when they decide to switch states, they do so using information about the current state of the machine and nothing else. Figure @fig-26_01 is a model that describes (pretty accurately) how my two cats, Dorothy and Lando Catrissian, spend their days.
+
+![](figures/markov_chain_vis.png){#fig-26_01}
+
+All we have to do is choose an initial state and some kind of looping time interval which governs when we check for a state transition. Let's say we start on the 'Play' node, jumping in boxes and pawing at strings. Every 5 minutes, we'll check to see if we transition to a different node. No matter which node we're on, there's a non-zero chance that we'll end up on any of the nodes (including the one we're currently on). From the Play node, there's a 60% chance that we'll stay exactly where we are, a 20% chance that we'll end up on the 'Nap' node, and a 20% chance of wandering over to the food bowl for a snack. 
+
+```python
+import numpy as np
+np.random.seed(3)
+np.random.choice(['Play', 'Snack', 'Nap'], p=[0.6, 0.2, 0.2])
+```
+
+The choice is 'Play,' so we'll keep batting at strings. That was the most probable outcome (60% chance). After a further 5 minutes of wondering what you have to do to get a human to break out a laser pointer, we'll run the check once more: 
+
+
+```python
+np.random.seed(4)
+np.random.choice(
+    ['Play', 'Snack', 'Nap'], 
+    p=[0.6, 0.2, 0.2]
+)
+```
+
+
+Nap time! While on the Nap node, we're very likely to stay where we are: a 70% chance. Of the remaining probability, there's a 20% probability of getting up for another snack and a 10% chance of more play. Let's see what happens;
+
+
+```python
+np.random.seed(5)
+np.random.choice(['Play', 'Snack', 'Nap'], p=[0.1, 0.2, 0.7])
+```
+
+Sleeping is hard work! Time to reward all that effort with a well-deserved snack.
+
+At this point, the pattern should be pretty clear: a Markov Chain switches between some set of pre-defined states according to a set of probabilities that can be different for each of the nodes in the model. Crucially, Markov Chain models converge, over long periods of time, to a calculable equilibrium state. This feature will come in handy in just a moment...
+
+### Markov Chain Monte Carlo
+
+As it happens, we can fruitfully apply Markov Chains to probability distributions by replacing the bespoke probabilities we used in the previous section (Nap, Snack, Play) with probabilities computed on-the-fly based on a distribution. This is known as **Markov chain Monte Carlo** (MCMC), and is useful because it -- much like the simpler Markov Chains we already covered -- converges with the probability distribution it is being asked to traverse. Very useful!
+
+The issue with MCMC is that -- while simple and elegant in theory -- implementing them in practical settings involves a number of trade-offs. This has caused a plethora of specific implementations to emerge: one workhorse from among this stable is the "**Metropolis-Hastings Algorithm**", which uses a proposal distribution to quasi-randomly walk around the parameter space. Instead of transitioning between abstract 'states', as in the case of the pure Markov Chain above, we can imagine Metropolis-Hastings stepping between different parameter values. Let's say that we think a certain parameter in a model can only take on one of 5 discrete ordinal values (1 through 5), each of which might be more or less plausible. Metropolis-Hastings chooses a random parameter value to start with and then -- for a predetermined number of iterations -- starts stepping from value to value according to the following logic: 
+
+1. Randomly select an adjacent parameter value that's 1 higher or lower than the current parameter value. We'll call it the 'proposal'. If the proposal is outside the range of values (e.g., 0 or 6), wrap around to the other side of the value range.
+2. Calculate the  probability at the proposal, and compare it to the probability of the current parameter value. If the proposal has a higher probability, move to it immediately and return to step 1. Otherwise, move to step 3.
+3. Since the proposal's probability is equal to or lower than the current node's, randomly choose from between the two with a probability proportional to the difference between them. (For example, if the proposal has half the probability of the current value, then there's a 1/3 chance that the algorithm will move to the proposal, and a 2/3 chance it will stay where it is). 
+
+That's it! Collectively, these rules ensure that the Metropolis-Hastings algorithm will trend towards the parameter values with the highest posterior probability, but won't entirely ignore the ones with lower probability. 
+
+Despite the Metropolis-Hastings algorithm not knowing about the shape of the distributions it is tasked with exploring, its stochastic meandering will eventually cause it to visit every portion of a probability distribution *in proportion to the probability density at that location*. Thinking back to the hypothetical Bayesian model we created in the first half of this chapter, using a sampling method like Metropolis-Hastings would allow us to create reliable estimates of the posterior distributions for all of our unobserved parameters ($\alpha$, $\beta$, and $\sigma$), provided we had data to feed into our linear model/likelihood (which we don't). 
+
+Metropolis-Hastings "Just Works$^{(TM)}$," but sometimes it doesn't work quickly or efficiently enough for our purposes. It's not enough to employ an algorithm that will *eventually* provide us with a satisfactory approximation; we want to find one that will do so efficiently and in a reasonable amount of time, even when the shape of the posterior is irregular. 
+
+Rather than skipping straight to the answer, we're going to take a diversion into the realm of an extended thought experiment that will -- with luck -- provide you with an intuition for how one might go about efficiently exploring convoluted continuous parameter spaces. It's a bit of a weird thought experiment, but learning about stochastic sampling for the first time is a bit mind-bending anyway, so let's just have a bit of fun, shall we? 
+
+### Mapping a Skate Bowl
+
+Imagine we've made a bet with a friend that we can create a topographical map of the bottom of a skate bowl. The bowl is highly irregular in shape and depth, with several local minima scattered around, and there's no easy way to mathematically describe it. This poses a bit of a challenge already, but the *real* challenge is that the rules of the bet prevent us from ever seeing the skate park! All we know in advance is that there are several low areas scattered throughout the skate bowl (relative to their steeply sloping surroundings), and that our friend is more interested in the lower areas of the bowl than the steeply sloping sides of the bowl. They're completely uninterested in the completely flat, high area surrounding the bowl. The 3D plots in Figure @fig-26_02 offer three perspectives that are *similar*, but not the same, as the shape of the skate bowl we're trying to map in this example.
+
+![](figures/skate_bowl.png){#fig-26_02}
+
+This is already kind of a weird example, so let's just lean into the weird. Our friend has provided two unusual tools to help us: a frictionless, perfectly elastic marble which, once set into motion, will stop -- dead -- after a configurable length of time has elapsed. This marble is a marvel of modern engineering (and may potentially break several laws of physics), as it is capable of coming to an immediate and complete standstill whilst halfway up a slope that any other round object would immediately begin to roll down. What's more, the marble, once it has come to a complete stop, will send you an unnervingly accurate three-dimensional readout of its current position.
+
+The other tool is a robot. We're allowed to program the robot to traverse the skate park, find the physics-defying marble, and move the marble either by picking it up and putting it down elsewhere, or by imparting some kind of force onto the marble. The robot is always aware (relative to its current position) of where the marble is, where the marble last came to a stop, and where the skate park's walls are -- it is otherwise incapable of perceiving anything about its surroundings.
+
+Our objective is to use the robot and the marble to 'map' the contours of the skate bowl (but none of the surrounding area) as efficiently as possible. How might we approach such a task? Let's think it through.
+
+#### Gradient Descent
+
+Those of you who saw the 'efficiently as possible' qualifier above might have started thinking something akin to: "why not just instruct the robot to repeatedly roll the marble over very small intervals until it descends into the skate bowl, and keep going until it reaches the bottom? We could use the resulting data as an approximation of best fit!" That would be very similar to the "**Gradient Descent**" approach discussed in Chapter 23.
+
+While this technique certainly gets top marks for ease of implementation, our friend wouldn't be sufficiently impressed to concede the bet. For starters, short of conducting several such throws, we'd have no way of knowing whether or not the marble had ended up in a 'local minima,' i.e., one of the smaller sub-bowls in the diagram above that are quite a bit shallower than a nearby 'global minima,' which is the actual lowest point in the skate bowl. What's more, recall that to win the bet our friend expects us to describe low points throughout the entire bowl, not just an approximation of the single lowest point. 
+
+#### Quadratic Approximation
+
+Since having a single point isn't good enough, we could use the data gathered as our marble slowly descended into the bowl (remember, it stopped frequently on the way down) to estimate the curve it followed as it descended?" If you were thinking along these lines, it might be fair to say that you had hoped to employ a '**Quadratic Approximation**' which involves using a analytically-defined 'good-enough' parabolic curve to describe the shape of the bowl. 
+
+Since many statistical models make extensive use of the Normal distribution, and given that the Normal distribution can be fairly well-approximated using a parabola, Quadratic Approximation is commonly called upon to help provide useful approximations of posterior distributions in simple (and a few not-so-simple) Bayesian models. Unfortunately, based on the description of the bowl our friend provided us with (and the simulation of one possible bowl above), the skate bowl is not symmetric, has multiple 'lowest points' (multiple local minima), and undulates (not monotonic). Under such conditions, there's no easy way to produce an accurate quadratic approximation: the best-fitting curve will look nothing like the actual bowl.
+
+#### Grid Approximation
+
+You may now be thinking "okay, the quick-and-easy approach is out, so how about we double down on accuracy and try to systematically cover every inch of the skate park?" This is a method akin to '**Grid Approximation**' or '**Grid Search**', wherein we would systematically cover every part of the skate bowl by breaking the entire skate park into a regularly-spaced grid, and then taking a sample at each intersection in that grid. 
+
+Using this approach, you'd be guaranteed to map the entire skate bowl. The problem here, though, is that you're going to spend a whole lot of time -- a WHOLE lot -- exploring areas of the skate bowl that aren't of any interest. Let's say the park is 100 metres by 100 metres. Even if you only take one measurement every two metres, you're going to have to take 2,500 measurements to cover the entire park. If you double the resolution of your search to take one measurement every metre, the number of measurements balloons to 10,000. Further increases in resolution will result exponentially larger numbers of required measurements. 
+
+If we were immortal, fine, grid search can be usefully applied to complex, continuous spaces. If, however, you want to settle this bet sometime between now and the eventual heat death of the universe, you're going to have to find a faster way. 
+
+#### Randomly Whack The Marble Around
+
+Those of you with a keen sense of irony may have seen something like this coming: rather than employing sophisticated mathematical approximations of our skate bowl, our best option overall involves instructing our robot to give the marble a good thump in a random direction with a random force, wait until it stops (after a fixed period of time), and then repeat the process from the marble's new location. This "Randomly Whack The Marble Around" approach is known as **'Hamiltonian Monte Carlo' (HMC)**. The unusual thing about it is that -- with the exception of a few edge cases -- it is a reasonable, reliable, and comparatively efficient method for exploring the shape of a distribution, even if the distribution is very complex or has many different dimensions.
+
+Providing any form of rigorous proof - mathematical or otherwise - of the effectiveness of Hamiltonian Monte Carlo is FAR beyond the scope of this book. You'll have to take it for granted that this method Just Works$^{(TM)}$. You can get a good look under the hood with some of the recommended sources at the end of this chapter.
+
+> **Box**. If you want to learn more about HMC, and it's use in regression analysis, I recommend McElreath's [-@mcelreath2020statistical] classic Bayesian statistics textbook *Rethinking Statistics*. Note, however, that you'll want to build up more of a foundation before jumping into that book, or others like it. @lambert2018student and @kruschke2014doing are also excellent introductions to Bayesian statistics in the social and cognitive sciences that include discussions of various approaches to approximate and exact Bayesian inference. 
+
+#### Go See The Marbles Move
+
+I've tried to make everything we've just covered as concrete and easy-to-picture as possible, but obviously all of this remains *very* abstract. This material can be incredibly difficult to grasp, especially if you're encountering it for the first time, and dually so when we try to extend the intuitions we've built in 3 dimensions to higher number of dimensions. It is, sadly, impossible to imagine a marble rolling around in a 16-dimensional skate bowl. 
+
+It might be helpful to view an animated representation of what's happening. Since you're most likely reading this textbook on paper, I recommend reading Richard McElreath's blog post "Build a Better Markov Chain" [https://elevanth.org/blog/2017/11/28/build-a-better-markov-chain/](https://elevanth.org/blog/2017/11/28/build-a-better-markov-chain/). You can spend a bit of time observing and playing around with a few animated stochastic samplers to deepen your understanding. 
+
+In particular, we'd like to draw your attention to the section on the No-U-Turn-Sampler, or NUTS for short. NUTS is a sort of special case of HMC, wherein the marble is capable of intelligently detecting when it has pulled a U-turn and is headed back towards its starting location.
+
+When you're all done watching the imaginary marbles zip around the imaginary skate bowls, we can move on to specifying some models in the next chapter.
+
+## CONCLUSION
+
+### Key Points 
+
+- In this chapter, we developed an intuitive understanding of how Bayesian regression models are specified using a set of mathematical conventions 
+- Introduced the concept of Markov Chains and some of the sampling techniques based thereon
+- Used an extended metaphor to develop an intuitive understanding of how the Hamiltonian Monte Carlo sampling algorithm works
+
+    
+\part{Bayesian Data Analysis \& Latent Variable Modelling with Relational and Text Data}

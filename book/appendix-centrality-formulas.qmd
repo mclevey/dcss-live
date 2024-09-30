@@ -1,0 +1,53 @@
+# Centrality Formulas
+
+This appendix provides the formulas for centrality measures introduced in the book.
+
+#### Shortest Path Betweenness
+
+The shortest paths betweenness centrality of a node, $i$, is given by the following:
+
+$$B(i) = \sum_{i \neq j \neq k} \frac{\sigma_{j,k}(i)}{\sigma_{j,k}}$$
+
+Where: 
+
+* $B(i)$ is the betweenness centrality of $i$
+* $\sigma_{j,k}(i)$ is the number of shortest paths between node $j$ and node $k$ that pass through node $i$
+* $\sigma_{j,k}$ is the number of shortest pasts between node $j$ and node $k$
+
+#### Current Flow Betweenness
+
+The current flow betweenness centrality of a node, $i$, is given by the following: 
+
+$$ CFB(i) = \frac{\sum_{s,t}F_{i}^{s,t}}{\frac{1}{2}n(n-1)} $$
+
+Where: 
+
+* $F_{i}^{s,t}$ is the current flow through a node, $i$, for a source and target node $s$ and $t$. 
+* $s,t$ are all possible source and target pairs
+* $n$ is the number of nodes in the network
+
+Thus, $CFB(i)$ is the average current flow through a node $i$ averaged across all possible source-target pairings. 
+
+Current flow betweenness is mathematically very complex and an full explanation is beyond the scope of this book. For further details, see @brandes2005centrality. 
+
+
+#### Eigenvector Centrality
+
+The eigenvector centrality of a node, $i$, is given by: 
+
+$$ \lambda e_i = \sum_{j} A_{ij} e_j $$
+
+Where:
+
+* $\lambda$ is a constant that gives equations a non-zero solution
+* $e_i$ is the centrality of node $i$
+* $A$ is the adjacency matrix
+* $e_j$ is the centrality of node $j$
+
+Note that $e_j$ will also be defined in terms of $e_i$, so calculating eigenvector centrality involves multiple iterations to refine the values
+
+Using matrix notation, eigenvector centrality is given by:
+
+$$ \lambda e = A e $$
+
+Where $e$ is an eigenvector of the adjacency matrix $A$ and $\lambda$ is its associated (preferably largest) eigenvalue. This is where the term *eigenvector* centrality comes from.

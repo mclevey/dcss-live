@@ -1,0 +1,679 @@
+# Connection and Clustering in Social Networks
+
+::: {.callout-warning}
+## Planned Updates
+
+The chapters on network analysis are being actively revised in fall 2024. The primary change is that they will now be presented from a more fully-developed generative perspective. 
+
+The sections on detecting cohesive subgroups in networks will change the most. They will include strong criticism of Louvain and Leiden (modularity maximization approaches in general). The sections on $k$-clique communities, $k$-components and structural cohesion analysis, and $k$-core decomposition will be removed. I will introduce positional analysis and blockmodels, including a first stochastic blockmodel. I will set aside larger questions of inference with SBMs until later in the book.
+:::
+
+## LEARNING OBJECTIVES
+
+- Compare different microstructural configurations at the level of dyads and triads
+- Learn how to conduct a triad census
+- Detect subgroups in social networks using:
+    - $k$-clique communities
+    - Louvain community detection 
+    - Leiden community detection
+    - $k$-components and structural cohesion analysis 
+    - $k$-core decomposition
+
+## LEARNING MATERIALS
+
+You can find the online learning materials for this chapter in `doing_computational_social_science/Chapter_15`. `cd` into the directory and launch your Jupyter Server.
+
+## INTRODUCTION
+
+This chapter expands on the general introduction to social networks in the previous chapter by widening our discussion to micro- and meso-level structures in social networks. We begin with the building blocks of network structure: dyads. Dyads provide the basis for discussing triads, which are in turn the basis for the more complex meso-level structures we discuss afterwards: cohesive subgroups and communities. There are many ways of detecting cohesive subgroups in networks, some of which start with micro-level structural configurations that overlap to form larger and more complex structures, and others that start at the level of the network itself and work their way down to smaller structures. We will start with two common "bottom-up" approaches, (1) $k$-clique communities and (2) Louvain and Leiden community detection, followed by two "top-down" approaches to describing network structure, (3) $k$-component structural cohesion analysis and (4) $k$-core decomposition. While these ideas are not unique to "computational" approaches to network analysis, computational network analysis rests on top of these more general foundations, so they are essential to understand first.
+
+### Imports
+
+```python
+import pandas as pd
+import numpy as np
+
+from sklearn.metrics.pairwise import euclidean_distances
+from scipy.cluster import hierarchy
+
+import networkx as nx
+from networkx.algorithms.community import k_clique_communities
+from networkx.algorithms.triads import triadic_census
+import community
+
+import matplotlib
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+import random
+
+from dcss import set_style
+set_style()
+```
+
+### Data
+
+In this chapter, we'll use both randomly generated networks and the 2013 data on reported contacts collected from the high school students in Marseilles. Technically this is a directed network, but some of the methods we will cover in this chapter are not implemented for directed networks. Instead, we will treat it as an *undirected* network. 
+
+
+```python
+contact_diaries = pd.read_csv("data/SocioPatterns/Contact-diaries-network_data_2013.csv", sep=' ')
+
+G = nx.from_pandas_edgelist(contact_diaries, 'i', 'j', create_using=nx.Graph())
+G.name = 'Reported Contacts (Diary Data)'
+print(G)
+```
+
+```python
+contact_diaries.j.unique()[:5]
+```
+
+
+## MICRO-LEVEL NETWORK STRUCTURE AND PROCESSES
+
+The smallest *relational* units in a network are **dyads** (2 nodes) and **triads** (3 nodes). Much of network analysis rests on aggregations of these simple structures into more complex configurations, so it is important to understand the vocabulary that network analysts use to describe the different forms that dyads and triads take. Let's start with dyads.
+
+### Dyads and Reciprocity
+
+A dyad consists of the presence or absence of an edge between two nodes, the minimum number of nodes and edges that can define a relation. I say "presence or absence" because *absence matters*. Edges that do not exist are as informative as edges that do exist (the case of missing data leads to a very interesting literature including covert and illicit networks that is beyond our present scope). Whole networks are built up from the presence and absence of edges between every pair of nodes in the network. 
+
+If our network is directed, it is possible to observe dyads that differ from those in undirected networks. In Figure @fig-15_01, for example, we have two nodes $i$ and $j$. There are three possible configurations of nodes and the relationships between them: **mutual** ($i$ and $j$ both send edges to one another, $i \longleftrightarrow j$, which is an indication of reciprocity), **asymmetric** (one sends an unreciprocated edge to the other, either $i \rightarrow j$ or $j \leftarrow i$), and **null** (the absence of an edge between $i$ and $j$). The possibilities are summarized in the figure below. For obvious reasons, we refer to this as the MAN framework; **m**utual, **a**symmetric, **n**ull. 
+
+![](figures/dyads.pdf)
+
+In directed social networks, we may or may not expect to see **reciprocity**. This is one of many structural forms that we hypothesize about, *look for*, and model. For example, in interaction networks amoung friends, we should expect to see that when one friend sends another friend a message, *they respond*. However, in an advice giving network, we might expect to see more asymmetry; graduate students turn to their supervisors for career advice more often then supervisors turn to graduate students for advice. The key takeaway here is that there is a social process, *reciprocity*, that is reflected in the edges of directed networks. The social process *generates* the structural form. Other types of social processes manifest in other types of structural forms, and this is one reason why network analysis is a powerful tool for thinking systemically about our interdependencies with one another. 
+
+Dyads are foundational to social network analysis, though they tend to get less attention because they cannot by themselves speak to higher-order concepts such as community structure or network positions. In order to get at those ideas, we need to introduce another level of complexity. 
+
+### Triads and Triadic Closure
+
+The next micro-level structure is the **triad**, just one level up from the dyad. As the name would suggest, triads are the extension of dyads to three ordered nodes. Triads have an especially important place in network analysis, and theoretical work on their importance can be traced back to the classic works of the German sociologist Georg Simmel in 1901. Simmel observed that the addition of a third person to a triad has *far* more dramatic effects than adding a fourth person to a triad, or any other additions that increase the size of the group. The transition from 2 people to 3 people is a substantial qualitative change in the relationship and entirely changes what is possible [see excerpts in @wolff1950sociology]. One of Simmel's examples, that is by no means the most insightful but which drives the point home, is the difference between couples with and without a child. The difference between couples who have a child and those who are child-free is much bigger than the difference between a couple with one child and a couple with two. More generally, the introduction of a third person means that two people can ally themselves to pressure the third, and so on. 
+
+Because triads allow relations between two nodes to be understood within the context of a third person, and because of all the qualitative relational differences that the introduction of a third person poses, we can think of triads as the smallest structural elements of larger groups, communities, and societies. For example, when a dyad disagrees, there is no recourse to outside influence, be it mediators, tie-breaking votes, or the like. When a dyad disagrees within a triad, the third node has the opportunity to influence or be influenced by it. 
+
+### MAN for Triads
+
+Earlier, we introduced the MAN framework for differentiating between different types of dyads in a directed network: mutual, asymmetric, and null. The possibilities are fewer for an undirected network: present or absent. With an undirected network the possibilities for triads are also fairly straightforward. We can observe triads with no edges between the nodes, with one edge, with two edges, or with three edges. 
+
+Things become considerably more complex for directed networks. Whereas a dyad in a directed network has 3 possible configurations, a triad in a directed network has 16 possible configurations, and differentiating between them requires some specialized vocabulary. We'll use a framework proposed by @davis1967structure to describe every possible configuration of a triad with directed edges. This framework rests on the MAN framework for dyads, also introduced by @davis1967structure. 
+
+The description of a triad under the MAN framework takes the form of a three digit number, where each digit represents the number of mutual, asymmetric, and null relations within the triad. Thus, the triad described by 003 would be a triad with 0 mutual relations, 0 asymmetric relations, and 3 null relations. In short, it's a graph of 3 nodes with no edges. 300 describes a triad where each node has a mutual relation with the others. In other words, there are 3 dyads embedded in this triad. If we name the nodes $A$, $B$, and $C$, we have $A \longleftrightarrow B$, $A \longleftrightarrow C$, and $B \longleftrightarrow C$. 
+
+Since the MAN relations describe all possible edge configurations within a dyad, the sum of the three digits in a MAN triad will always be 3. That gives us the following possible configurations: `300`, `210`, `201`, `120`, `102`, `111`, `030`, `021`, `012`, and `003`.
+
+That might seem like a lot, but it describes only 10 of the 16 possible configurations for triads in a directed network. Consider the case of 030, the triad where each dyad has a single directed edge between them. This configuration might be **cyclical** or it might be **transitive**. A cyclical triad is simply a cycle (discussed in the previous chapter) made with three nodes. A transitive triad takes the form $A \rightarrow B$, $B \rightarrow C$, and $A \rightarrow C$. One node sends two edges. One node sends an edge and receives an edge. The last node receives two edges. 
+
+These two subconfigurations are given a capital letter to differentiate them, giving us 030C and 030T, respectively. The full set of 16 configurations is shown in Figure @fig-15_02. 
+
+![](figures/census.pdf)
+
+We can count the number of every one of these 16 configurations in a directed network by conducting a **triad census**. This gives us some insight into the kinds of micro-level structures that are more or less prevalent in the network we are analyzing. This requires examining *every combination of 3 nodes* in the network to identify which MAN triad they belong to. The number of such combinations in a network of any moderate size quickly becomes infeasible to conduct by hand, so we turn to computer algorithms. 
+
+To build a bit of intuition about the complexities involved here, and their implications for other network methods, we'll use a custom dcss function to simulate a network, execute a triad census, modify it a bit, and then conduct another census. Let's simulate a random network with 50 nodes using the `gn_graph()`, function, which creates a growing network (GN) with directed edges. 
+
+
+```python
+from networkx.algorithms.triads import triadic_census
+
+gn_50 = nx.gn_graph(50, seed = 42)
+sim_50 = pd.Series(triadic_census(gn_50))
+sim_50
+```
+
+While we might notice certain configurations are more prevalent than others, it's important to remember that interpreting and comparing these counts is not so straightforward. Two triads may overlap. The mutual relationship between the dyad of $A$ and $B$ will show up in the $ABC$ triad, but also the $ABD$ triad, and the $ABE$ triad, and so on. A triad census will *necessarily* count every dyad multiple times, and every triad will have multiple overlaps with others. Consider another issue. Network **density** is the proportion of *potential* connections in a network that are realized. As network density decreases, we would certainly expect to see a greater number of triads with more null relationships.
+
+Let's generate a new network with only 20 nodes. We will define another function that prints the number of nodes, edges, and network density. Finally, we will create a simple visualization of this network (Figure @fig-14_03).
+
+
+```python
+gn = nx.gn_graph(20, seed = 42)
+gn.name = "Simulated DiGraph with 20 Nodes"
+
+def describe_simulated_network(network):
+    print(f'Network: {network.name}')
+    print(f'Number of nodes: {network.number_of_nodes()}')
+    print(f'Number of edges: {network.number_of_edges()}')
+    print(f'Density: {nx.density(network)}')
+    
+describe_simulated_network(gn)
+```
+
+```python
+layout = nx.fruchterman_reingold_layout(gn, seed=12)
+
+nx.draw(gn, layout, node_color='darkgray',
+        edge_color='gray', node_size=100, width=1)
+
+plt.savefig('figures/14_03.png', dpi=300)
+```
+
+![png](figures/14_03.png){#fig-14_03}
+    
+Now let's conduct a triad census on the network.
+
+
+```python
+sim_20_a = pd.Series(triadic_census(gn))
+sim_20_a
+```
+
+Now, let's add a single node *with no edges* and see how it affects our triad census. 
+
+
+```python
+gn.add_node("an isolate")
+describe_simulated_network(gn)
+```
+
+We've added just a single new node with no edges, an "**isolate**". The number of edges in the network is the same, and the difference in the density is minor. But what happens when we run the triad census again?
+
+
+```python
+sim_20_b = pd.Series(triadic_census(gn))
+sim_20_b
+```
+
+We can simplify the comparison by making it visual. Below we'll plot the counts for each of the triadic configurations for both networks. The values for the original network are shown in Figure @fig-14_04 with grey points. The values for same simulation with a single isolate added are shown with crimson plus marks. 
+
+
+```python
+fig, ax = plt.subplots()
+sns.scatterplot(x=sim_20_a,
+                y=sim_20_a.index,
+                s=50,
+                alpha=.8,
+                label="Simulated network")
+sns.scatterplot(x=sim_20_b,
+                y=sim_20_b.index,
+                color='crimson',
+                marker="+",
+                s=80,
+                label="Simulated network + one isolate")
+ax.set(xlabel='Count', ylabel='Triad configurations')
+sns.despine()
+plt.legend()
+plt.savefig('figures/14_04.png', dpi=300)
+```
+
+![png](figures/14_04.png){#fig-14_04}
+    
+We've added quite a few new 003 triads (171 to be precise) and a non-trivial number of 012 triads (19). All this despite the fact that there has been no appreciable change in the structure of the network.
+
+Finally, let's consider two networks with the same number of nodes and edges. One network will contain a very dense group, while the other will not. 
+
+
+```python
+clustered_g = nx.null_graph(create_using=nx.DiGraph())
+nodes = range(0,20)
+
+for node in nodes:
+    clustered_g.add_node(str(node))
+
+for i in range(0,9):
+    for j in range(0,9):
+        if i != j:
+            clustered_g.add_edge(str(i), str(j))
+
+clustered_g.name = 'Simulated DiGraph, Clustered'
+describe_simulated_network(clustered_g)
+```
+
+```python
+not_clustered_g = nx.null_graph(create_using=nx.DiGraph())
+
+for node in nodes:
+    not_clustered_g.add_node(str(node))
+
+for i in range(0,72):
+    random_from = str(random.randint(0,19))
+    random_to = str(random.randint(0,19))
+    while not_clustered_g.has_edge(random_from, random_to):
+        random_from = str(random.randint(0,19))
+        random_to = str(random.randint(0,19))
+    not_clustered_g.add_edge(random_from, random_to)
+            
+not_clustered_g.name = 'Simulated DiGraph, Not Clustered'
+describe_simulated_network(not_clustered_g)
+```
+
+Now let's compute a census for both simulated networks and then compare the results visually (Figure @fig-14_05).
+
+```python
+tc_clustered = pd.Series(triadic_census(clustered_g))
+tc_not_clustered = pd.Series(triadic_census(not_clustered_g))
+```
+
+
+```python
+fig, ax = plt.subplots()
+sns.scatterplot(x=tc_clustered,
+                y=tc_clustered.index,
+                s=50,
+                alpha=.8,
+                label="Simulated network, clustered")
+sns.scatterplot(x=tc_not_clustered,
+                y=tc_not_clustered.index,
+                color='crimson',
+                marker="+",
+                s=80,
+                label="Simulated network, not clustered")
+ax.set(xlabel='Count', ylabel='Triad configurations')
+sns.despine()
+
+plt.legend()
+plt.savefig('figures/14_05.png', dpi=300)
+```
+
+![png](figures/14_05.png){#fig-14_05}
+    
+Remember, these two networks have the same number of nodes and edges, but one has a dense cluster and the other does not. What has happened is that the dense cluster has a monopoly on the edges, there is a large number of heavily overlapping `300` triads, a much greater number of `003` null triads created by there being more isolates, and there are many more `102` triads representing two isolates and a member of the dense cluster. 
+
+The key point to take away from these simple simulations is that raw counts of micro-structural configurations in a network, for example via a triad census, can be deceiving. They are nested and complex. However, a triad census can be part of an initial exploratory analysis if you are being careful *and intentional*. Among other things, they may help you think through what types of processes and mechanisms might be contributing to the specific structural forms a network takes. 
+
+Consider a network of journal articles that cite other journal articles. If we perform a triad census on a citation network, we should absolutely expect to see many more 030T triads than 030C triads. In fact, *we might see no 030C triads at all*, as such a triad suggests that a paper $A$ cited a paper $B$, that cited a paper $C$, that cited the original paper $A$. Given that most articles cite papers that have already been published, rather than papers that have yet to be published, such triads should be exceedingly rare, though technically not impossible.
+
+## DETECTING COHESIVE SUBGROUPS AND ASSORTATIVE STRUCTURE
+
+There are many ways of detecting **cohesive subgroups**, often called **communities**, in social networks. Some methods start with micro-level structural configurations that overlap to form larger and more complex structures, while others start at the level of the network itself and work their way down to smaller structures. In the subsections that follow, we will explore a variety of methods for such techniques.
+
+We will start with the $k$-clique communities approach, which starts by identifying small groups of densely connected nodes ($k$-cliques) and builds up to larger communities by combining adjacent groups of densely connected nodes. This approach is designed to allow nodes to belong to more than one community, as is the case in real life. We will then discuss Louvain and Leiden community detection, both of which partition networks into mutually-exclusive communities where nodes have more connections internally to one another than they do externally to other regions of the network. 
+
+The final approach we will cover -- $k$-core analysis -- identifies the most connected nodes in a component, revealing a component's 'core.' Other methods, like structural cohesion analysis, reveal the core of a component by progressively disconnecting components at their weakest points. Like $k$-clique communities, the $k$-core approach allows nodes to be part of multiple cohesive subgroups, but this means something a little different than what is meant by the $k$-clique communities approach. Here, cohesive subgroups are hierarchically nested, so one can be part of multiple cohesive subgroups in the sense that some subgroups are nested inside other, larger, subgroups. 
+
+Let's work our way through each of these approaches.
+
+### Cliques and $k$-Clique Communities 
+
+You are probably familiar with the idea of a clique from everyday. In network analysis, we use the term a little differently: a "**clique**" is a set of nodes that is *completely* connected, meaning that every node is connected to every other node in the clique. As this is the only requirement, cliques can vary in sizes. However, they tend not to be especially large, since most real social networks are fairly sparse, and *complete* connection is an extremely high bar. 
+
+The $k$-clique is a variation on this idea, where $k$ is the number of nodes in the clique. For example, if $k = 5$, we want to find all groups of 5 nodes where each node in the set of 5 is connected to all other nodes. If 4 of the 5 nodes are completely connected but the fifth node is missing a connection to one of the other nodes, it is *not* a 5-clique, it's a 4-clique. 
+
+The $k$-clique communities approach to detecting cohesive subgroups is based on the idea that larger "community" structures in a network are built up from overlapping lower-level structures, such as triads and cliques. This basic idea -- large overlapping communities composed of smaller overlapping structures -- is an extremely appealing one because it better fits how we view social relations (e.g., as overlapping groups, or intersecting social circles) than alternative approaches that require nodes to be members of only one community (such as Louvain, which we will discuss shortly). 
+
+How do we know whether two cliques sufficiently overlap to be considered a 'community?' Following @palla2005uncovering, we can say that two $k$-cliques overlap when they share at least $k-1$ nodes. In other words, if $k = 4$, then two cliques that have 3 nodes in common (again, $k-1$) are overlapping, or "adjacent." Those two cliques are then merged into one community. This process continues until there are no more overlapping cliques. 
+
+Detecting cliques can be very computationally intensive, especially for large networks. Fortunately, there are variations on the basic idea that make it possible to do this type of analysis on larger and more complex graphs. The most common approach is the clique percolation method. In short, clique percolation works by: 
+
+1. Finding all the maximal cliques in a network.
+2. Creating a *clique* adjacency matrix where the cells represent the number of nodes shared by two cliques. 
+3. Thresholding the matrix using the value $k - 1$ so as to prevent merging cliques that overlap but below the $k - 1$ threshold.
+4. Forming communities from the connected components that remain after thresholding.
+
+This clique percolation method is implemented in `NetworkX` and is used when we run the `k_clique_communities()` function. We can select any value for $k$, but remember that larger values will identify fewer cliques and fewer communities because large cliques are relatively rare in real world social networks and larger overlaps will be also be rare. Inversely, small values of $k$ will result in more cliques detected. The number of nodes required for communities to form from overlapping $k$-cliques is also smaller, so communities will be more diffuse.
+
+
+```python
+k = 5
+ccs = list(k_clique_communities(G, k))
+print(f'Identified {len(ccs)} {k}-clique communities.')
+```
+
+If we set $k = 5$, as we do above, we find $n$ clique communities in the graph. We can print the node IDs for each of the communities by iterating over the lists produced by the code in the previous cell. 
+
+
+```python
+communities = [list(c) for c in ccs]
+for c in communities:
+    print(c)
+```
+
+Remember, the central idea here is that communities are *overlapping*, so we should see some nodes that appear in multiple communities. Let's create a new dictionary where the keys are node IDs and the values are a list of the $k$-clique communities that the node is embedded in. If a node is not part of any $k$-clique communities, we will leave their list empty. We will just use numerical IDs (derived from the index in the outer list) for the community IDs.
+
+
+```python
+kccs = {}
+for node in G.nodes():
+    kcliques = [communities.index(c) for c in communities if node in list(c)]
+    kccs[node] = kcliques
+```
+
+We can print the list of overlapping nodes by simply checking for keys in the `dictionary` that have more than 1 $k$-clique community. We will also create another list that includes the node IDs for all nodes that are embedded in *any* $k$-clique component. This list can be used to determine the percentage of nodes in the network that are part of a community. We will also use it in a network visualization below.
+
+
+```python
+overlapping_nodes = []
+in_any_kclique = []
+
+for k, v in kccs.items():
+    if len(v) > 1:
+        overlapping_nodes.append(k)
+    if len(v) >= 1:
+        in_any_kclique.append(k)
+
+print(
+    f'{len(overlapping_nodes)} nodes belong to multiple $k$-clique communities: {overlapping_nodes}.'
+)
+print(
+    f'{len(in_any_kclique)} nodes ({np.round(len(in_any_kclique)/len(G), 2)*100}% of the network) are embedded in at least one $k$-clique community.'
+)
+```
+
+
+Again, we can use some simple network visualizations to help interpret the results of our $k$-clique analysis. This time, let's construct a visualization where all nodes and edges are initially grey. Then we will overlay a visualization of the nodes that are embedded in at least one $k$-clique component in crimson. Finally, we will print labels for nodes indicating the numerical ID of the community they are embedded in. The result is the network shown in Figure @fig-14_06.
+
+To do all of this, we need to do a little bit of prep work. Specifically, we need to get a list of tuples for the edges embedded in a $k$-clique community and we need to create a dictionary of node labels: in this case, the numerical IDs for each detected community. 
+
+
+```python
+layout = nx.nx_pydot.graphviz_layout(G)
+```
+
+
+```python
+edges_in_kcliques = [
+    e for e in G.edges() if e[0] in in_any_kclique and e[1] in in_any_kclique
+]
+
+labs = {}
+for k, v in kccs.items():
+    if len(v) == 1:
+        labs[k] = v[0]
+
+nx.draw(G,
+        layout,
+        node_color='darkgray',
+        edge_color='lightgray',
+        node_size=50,
+        width=.5)
+nx.draw_networkx_nodes(G,
+                       layout,
+                       node_color='crimson',
+                       node_size=50,
+                       nodelist=in_any_kclique)
+nx.draw_networkx_edges(G,
+                       layout,
+                       edge_color='crimson',
+                       edgelist=edges_in_kcliques)
+labs = nx.draw_networkx_labels(G,
+                               layout,
+                               labels=labs,
+                               font_size=6,
+                               font_color='white')
+plt.savefig('figures/14_06.png', dpi=300)
+```
+
+![png](figures/14_06.png){#fig-14_06}
+    
+In this particular network, the $k$-clique community approach has identified a few communities that do indeed seem to be very cohesive and cliquish relative to other nodes in the network. It also seems like our aggregation rules for going from small cliques to larger communities is preventing the algorithm from identifying some small clusters of nodes in the network that probably should be considered "cohesive".
+
+Let's flip the script a little and turn our attention to techniques that sort *everyone* in the network into one community or another. This solution may be a bit better, but the downside is that these approaches don't allow overlap; everyone is a member of 1 and only 1 community. 
+
+### Community Detection using Louvain and Leiden
+
+Identifying cliques in a network is useful, but there are times when we want to know more about how group membership is spread across all of the nodes in a network. In these cases, we typically turn to a **community detection algorithm**. One of the most widely-used in recent years is the 'Louvain' community detection algorithm.  
+
+The Louvain community detection algorithm relies on a measure called **modularity** (**$Q$**), which is a quantitative summary of how modular the structure of a given network is, and which is produced by analyzing the density of edges within a group relative to edges outside the group. The value of $Q$ ranges between a minimum of $-\frac{1}{2}$ and a maximum of 1. The more modular a network is (closer to 1), the more distinct "communities" it is composed of. In other words, networks with higher $Q$ are made up of communities that have many internal ties and relatively few external ties. To gloss over many details, the Louvain algorithm tries to optimize Q by checking how much moving a node into a community will increase Q, and moving it into the community that increases Q the most (if any move is positive). Once Q can't be improved my moving nodes between communities, creates a new representation of the graph where each community is a node. It then repeats the process of trying to improve Q until there is only a single node. 
+
+In the modularity algorithm world, each algorithm varyingly provides some kind of modularity "guarantee." For example, Louvain guarantees that when it is finished, no merging of communities can increase $Q$ further. If one iterates the algorithm, one can eventually guarantee that no nodes can be moved that would increase $Q$. However, it makes no guarantee that this unimprovable partition is the *best* partition. It also doesn't guarantee that moving a node to a different community will not disconnect an existing community. In short, this introduces a weakness, identified by @traag2019louvain, where a bridging node that holds two parts of a community together can be moved to another community. The result would be that the first community is now disconnected, in the sense that the only way to move from one part of it to the other is through a node that is now in an outside community. While this is particularly problematic, @traag2019louvain also point out that the less dramatic case of communities that are just poorly connected can be common. However, Louvain is very popular because it has outperformed many competing algorithms in producing better partitions and doing so faster. 
+
+The Louvain algorithm is implemented in the `best_partition()` method from the `community` package we imported earlier. Although the Louvain algorithm has been developed over time and is said to be adaptable to directed, weighted networks, the original implementation is for undirected binary networks and the python package doesn't have the extensions implemented. We will talk about an alternative shortly that can make full use of the contact diary data.
+
+
+```python
+part = community.best_partition(G)
+q = community.modularity(part, G)
+print(f"The modularity of the network is {np.round(q, 3)}.")
+```
+
+We can use this community membership data in a variety of ways. The code below, for example, shows community membership differentiated by color. Figure @fig-14_07 is printed in grayscale, but you can find the full color version in the online supplementary learning materials. 
+
+```python
+colors = [part[n] for n in G.nodes()]
+my_colors = plt.cm.Set2
+
+fig, ax = plt.subplots(figsize=(12, 8))
+nx.draw_networkx_nodes(G,
+                       pos=layout,
+                       node_size=100,
+                       node_color=colors,
+                       cmap=my_colors)
+nx.draw_networkx_edges(G, pos=layout, edge_color='lightgray', width=1)
+plt.axis('off')
+
+plt.savefig('figures/14_07.png', dpi=300)
+```
+
+![png](figures/14_07.png){#fig-14_07}
+    
+Louvain seems to have done a better job of identifying distinct clusters of densely connected nodes in this network than our $k$-clique community approach. There are, however, limitations. While some of the communities seem well-defined (the one on the right is clear-cut), others get a little messy and appear to be overlapping; these may not be good partitions, but in this case it's hard to tell because we have very limited information about the nodes, as this is an anonymized public dataset.
+
+Sometimes it is useful to bump things up a level of analysis, such as by looking at networks of cohesive subgroups rather than networks of individuals who cluster into groups. Once you have detected communities with the Louvain algorithm, you can aggregate the communities into single nodes and assign edges between them when a node from one community has a tie to a node in another community. This can be done by simply passing the Louvain partitions and the network object to the `induced_graph()` function from the `community` package. Note that we will also collect data on edge weights to size the thickness of the edges in this induced network, similar to how we sized nodes based on their centrality in the previous chapter. The result is Figure @fig-14_08.
+
+```python
+inet = community.induced_graph(part, G)
+inet.name = "Induced Ego Network"
+
+weights = [inet[u][v]['weight']  for u,v in inet.edges()]
+ipos = nx.nx_pydot.graphviz_layout(inet)
+
+nx.draw(inet, 
+        node_color = 'black',
+        pos = ipos,
+        with_labels = True, 
+        font_color = 'white', 
+        font_size = 8, 
+        width=np.array(weights)/6, # transform edge weights
+        edge_color = "gray")
+plt.savefig('figures/14_08.png', dpi=300)
+```
+
+![png](figures/14_08.png){#fig-14_08}
+    
+To help interpret this induced graph, we can look up the names of the nodes in each community. For example, if we wanted to know which nodes make up the Community 2 node:
+
+
+```python
+community = 14
+for k,v in part.items():
+    if v == community:
+        print(k)
+```
+
+The Louvain algorithm does a reasonably good job of identifying cohesive subgroups in networks, but there are some non-trivial limitations in the algorithm. The most obvious of these limitations are that (1) nodes must belong to one and only one community because communities can't overlap, and (2) small communities may not be accurately identified and may end up being merged into larger communities. Earlier, I discussed some issues with the algorithm, raised by @traag2019louvain. 
+
+#### From Louvain to Leiden
+
+To address the issues they identified with Louvain, @traag2019louvain propose the Leiden algorithm; it includes some additional processes that give it more flexibility about how it treats communities and the nodes within them. While Louvain optimizes modularity by moving individual nodes to other communities and then kicks off the aggregation step to choose community merges, Leiden adds a step in the middle where each community is considered in isolation and its modularity is maximized. In this way, a poorly connected community that should be split into multiple smaller communities doesn't end up swallowed up as a single unhappy unit in the aggregation stage that follows. Aside from guaranteeing that all of the communities identified will actually be connected, this optimal sub-community assignment also allows Leiden to find smaller, distinct communities. Leiden also implements a number of clever performance refinements that have been proposed to improve Louvain's often lengthy convergence time. These are less important to understanding how and when to use Leiden for community detection, so we don't need to get to the bottom of them here.^[If you are curious, I suggest consulting this blog post, which does a great job of explaining what Leiden is doing. [https://timoast.github.io/blog/community-detection/](https://timoast.github.io/blog/community-detection/)] Instead, let's see some example results from applying Leiden to the same data we used the Louvain algorithm on above! 
+
+Leiden is available for Python via pip, but it requires the package python-igraph as a dependency. igraph is substantially more performant than NetworkX due to the C++ backend that it's built around, but the documentation (for the Python implementation) is not nearly as extensive as NetworkX, which is one of the reasons why we have used NetworkX so far. 
+
+Let's start by building an iGraph undirected graph object, basically identical to the one above. Thankfully, our pandas dataframe is in exactly the format that iGraph expects, where the first two columns are the `from` and `to` nodes from NetworkX terminology.
+
+
+```python
+import igraph as ig
+import leidenalg as la
+```
+
+We create the network object, then use leidenalg to calculate the partition memberships for each node.
+
+
+```python
+H = ig.Graph.DataFrame(
+    contact_diaries, 
+    directed = False,
+    vertices=None
+)
+
+if 'name' not in H.vs.attributes():
+    H.vs['name'] = [str(i) for i in range(H.vcount())]
+
+part_leiden = la.find_partition(H, la.ModularityVertexPartition)
+```
+
+For consistency, it's nice to be able to use the same layout for a graph to compare the community detection results. Drawing graphs in networkx is also quite a lot more straightforward and the graphviz layout algorithm produces nice layouts. We can access attributes of the leidenalg `partition` class object to modify a copy of the networkx partition object, which is just a dictionary of `{node_name:community_id}`. The attribute `_graph` of the `partition` class is itself an iGraph `graph` class, from which we can access the `.vs['name']` attribute that is populated from the dataframe and will match the networkx node names.
+
+
+```python
+partition = part.copy()
+for membership, node in zip(part_leiden._membership, part_leiden._graph.vs['name']):
+    partition[node] = membership
+```
+
+Now we can draw the graph just as we did with the networks above. You will notice, from Figure @fig-14_09 (once again, printed in grayscale but with a full color version available in the online supplementary learning materials), that we end up with more communities here than we did with Louvain community detection, and some are considerably smaller. Also note that although the communities in the bottom left of the graph seem pretty intermingled, this is because the layout was calculated only by the connections between nodes, rather than any sophisticated community detection. Importantly, none of these communities have disconnected nodes despite being split into twice the communities detected by Louvain, which is a promise of the Leiden algorithm.
+
+
+```python
+colors = [partition[n] for n in G.nodes()]
+my_colors = plt.cm.Set2
+
+fig, ax = plt.subplots(figsize=(12, 8))
+nx.draw_networkx_nodes(G,
+                       pos=layout,
+                       node_size=100,
+                       node_color=colors,
+                       cmap=my_colors)
+nx.draw_networkx_edges(G, pos=layout, edge_color='lightgray', width=1)
+plt.axis('off')
+
+plt.savefig('figures/14_09.png', dpi=300)
+```
+
+![png](figures/14_09.png){#fig-14_09}
+    
+The leidenalg package also accepts directed networks with edge weights - we will provide those to the partition detection function and then see how much it changes the communities that are detected.
+
+```python
+dH = ig.Graph.DataFrame(contact_diaries, directed = True, vertices=None)
+
+if 'name' not in dH.vs.attributes():
+    dH.vs['name'] = [str(i) for i in range(dH.vcount())]
+
+
+part_leiden = la.find_partition(dH, la.ModularityVertexPartition, weights = dH.es['weight'])
+
+for membership, node in zip(part_leiden._membership, part_leiden._graph.vs['name']):
+    partition[node] = membership
+```
+
+In the resulting image (Figure @fig-14_10), it's possible to simply observe the changes because there's actually only one! The middle community at the top of the graph is split into two individual communities. 
+
+
+```python
+colors = [partition[n] for n in G.nodes()]
+my_colors = plt.cm.Set2
+
+fig, ax = plt.subplots(figsize=(12, 8))
+nx.draw_networkx_nodes(G,
+                       pos=layout,
+                       node_size=100,
+                       node_color=colors,
+                       cmap=my_colors)
+nx.draw_networkx_edges(G, pos=layout, edge_color='lightgray', width=1)
+plt.axis('off')
+
+plt.savefig('figures/14_10.png', dpi=300)
+```
+
+![png](figures/14_10.png){#fig-14_10}
+    
+### Components and $k$-cores
+
+#### Components
+
+The $k$-clique, Louvain, and Leiden approaches to subgroup detection that we have covered so far detect higher-level structures (communities) by working their way *up* from lower-level structures. Now we are going to switch our focus to another set of approaches that work the opposite way: from the top down. The first thing we need to do is discuss **components**. A component is simply a connected graph. Most of the networks we have seen so far have been single components, but we have seen a few examples where a few nodes exist off on their own, detached from the rest of the networks. In those cases, each connected group of nodes is a component. Components are generally not considered "communities" in and of themselves, but they are the starting point for community detection algorithms that start at the top level of a network and work their way down to the lower levels of a network, revealing increasingly cohesive subgroups of nodes along the way.
+
+Networkx makes it easy to figure out how many components a network has. In this case we already know the answer from the network visualizations above (3), but let's execute the code anyway.
+
+
+```python
+nx.number_connected_components(G)
+```
+
+We can use a bit of list comprehension to get the number of nodes in each component
+
+
+```python
+comps_sizes = [len(c) for c in sorted(nx.connected_components(G), key=len, reverse=True)]
+print(comps_sizes)
+```
+
+The largest component in this network has 128 nodes. Generally, we refer to the largest component in a network as the **giant component**.
+
+Many network methods require operating on a connected graph (i.e. a single component). We now know the network we are working with -- like many real world networks -- is not fully connected. If we need to use a method or a model that requires a fully connected network, there are a number of possible actions we could take. One would be to decompose the network into separate networks for each component and analyze each separately. Alternatively, we could extract the giant component by identifying all the components in the network ("connected component subgraphs") and then selecting the largest one. 
+
+As the first method conducts the same analysis as the second, in addition to the smaller components, working with only the giant component is best done when the non-giant components tend to be much smaller. For example, if your network contains a lot of isolated dyads separated from the giant component, there is little we that could be meaningfully done with their community structure.
+
+
+```python
+components = sorted(nx.connected_components(G), key=len, reverse=True)
+giant = G.subgraph(components[0])
+giant.name = "Communication Network, Giant Component"
+print(giant)
+```
+
+
+#### $k$-Cores
+
+From a top-down perspective on community structure, components are a bit like Russian nesting dolls; the component itself is "cohesive" insofar as it is, and stays, connected, but much *more* cohesive subgroups, such as cliques, are nested inside them. Just as we worked our way *up* to communities earlier, we can work out *down* from components to reveal more cohesive groups inside of components. 
+
+With social networks, it is common to find a set of nodes that are densely connected with one another. These often form **the "core" of a component**, and as you move further away from that densely connected core towards the edges of the network, you find nodes that are less densely connected. This is typically referred to as a **core-periphery structure**. 
+
+**$k$-cores** are one of the most common ways of identifying the cohesive group(s) of nodes at the core of a component. In this approach, $k$ represents a minimum degree value. For example, if $k$ = 5, then the $k$-core will consist of the largest connected subgraph where all nodes have *at least* a degree of 5. A $k$-core with $k=2$  would be made up of nodes with a degree of at least 2, and so on. As the value of $k$ increases, denser and more cohesive regions of the component are revealed. Note that the definition of $k$-core accounts for a node's degree before identifying the core, so such an analysis could reveal pockets of dense connections which are themselves only weakly connected. For example, imagine a long chain of nodes with a degree of 4: each node in the chain is connected to the next and has an additional 2 pendants hanging off. The backbone of this chain would be identified by a 4-core, while the pendants would not. 
+
+Let's extract a series of $k$-cores from the SocioPatterns contact diaries network (`G`) and compare the number of nodes and edges that are part of the $k$-core at different values for $k$.
+
+
+```python
+ks = [1,2,3,4,5,6,7,8]
+nnodes = []
+nedges = []
+
+for k in ks:
+    kcore = nx.k_core(G, k)
+    nnodes.append(kcore.number_of_nodes())
+    nedges.append(kcore.number_of_edges())
+    
+kdf = pd.DataFrame([ks,nnodes,nedges]).T
+kdf.columns = ['Value of K', 'Number of Nodes', 'Number of Edges']
+kdf
+```
+
+We can see here that *if there were isolates in this network*, they would have been dropped by $k$ = 1. The number of nodes and edges in the network drops slightly with $k$ = 2. There are fairly large drops in size for $k$ = 3 and 4. No nodes or edges are retained for $k$ = 8 in this particular network. 
+
+Let's see what the $k$-cores look like for $k=4$ and $k=5$. To do so, we will extract and then visualize the $k$-core subgraphs overlaid on the full network.
+
+
+```python
+kcore_4 = nx.k_core(G, 4)
+kcore_5 = nx.k_core(G, 5)
+```
+
+To emphasize the *nestedness* of these $k$-cores, let's layer visualizations of each. In the Figure below, we first draw our base graph, with all nodes and edges in the giant component in light gray. Then we overlay a visualization of the 4-core using the same layout coordinates, but coloring the nodes and edges dark gray (the color palette I can use for this book is highly constrained!). Finally, we overlay a visualization (Figure @fig-14_11) of the 5-core, again using the same layout coordinates but coloring the nodes and edges crimson. The resulting visualization shows how the most locally dense regions of the network are embedded in larger and less cohesive regions of the network, *much like the Russian nesting dolls previously mentioned*. 
+
+
+```python
+## BASE NETWORK
+nx.draw(G, layout, node_color = 'lightgray', edge_color = 'lightgray', node_size = 30)
+
+## DRAW THE NODES IN THE 4-CORE GRAY
+nx.draw_networkx_nodes(kcore_4, layout, node_size = 30, node_color = 'gray')
+nx.draw_networkx_edges(kcore_4, layout, node_size = 30, edge_color = 'gray')
+
+## DRAW THE NODES IN THE 5-CORE IN CRIMSON
+nx.draw_networkx_nodes(kcore_5, layout, node_size = 30, node_color = 'crimson')
+nx.draw_networkx_edges(kcore_5, layout, node_size = 30, edge_color = 'crimson')
+
+plt.savefig('figures/14_11.png', dpi=300)
+```
+    
+![png](figures/14_11.png){#fig-14_11}
+    
+These visualizations should help build some intuition for how $k$-cores work, and how they can help you uncover a particular type of network structure with a cohesive subgroup, or several groups, at the core of a component, and more peripheral nodes loosely connected to the core. 
+
+   
+> **Further Reading**    
+>
+> If you are looking to learn more on cohesive subgroups and community structure, Chapter 11 of Borgatti, Everett, and Johnson's [-@borgatti2018analyzing] *Analyzing Social Networks* provides a good overview. 
+> 
+
+
+## CONCLUSION
+
+### Key Points 
+
+- Dyads (two nodes) and triads (three nodes) are the primary micro-structures that are used to describe networks
+- Conducted a triad census
+- Learned how micro-structures combine to create larger macro-structures like cliques and communities (bottom-up)
+- Learned how network structure can be broken down to find smaller sub-groups (top-down)
+- Conducted a community analysis using $k$-clique communities, Louvain community detection algorithm, $k$-components, and $k$-core decomposition

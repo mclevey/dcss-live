@@ -1,0 +1,174 @@
+## LEARNING OBJECTIVES
+
+- Describe the difference between supervised and unsupervised learning
+- Describe how supervised classification and regression differ
+- Explain what unsupervised clustering and dimensionality reduction are useful for, and how they differ from supervised learning 
+- Describe the differences between the symbolic and connectionist paradigms in AI research
+
+## LEARNING MATERIALS
+
+You can find the online learning materials for this chapter in `doing_computational_social_science/Chapter_20`. `cd` into the directory and launch your Jupyter Server.
+
+## INTRODUCTION
+
+Most of what you have learned about using Python for data analysis has focused on description and exploration, both of which are integral to doing good computational social science. We will now focus more heavily on inferential modelling. This chapter and the four that follow are devoted to "supervised" machine learning models and neural networks (both defined below). This chapter sets the stage by explaining some of the salient differences between supervised and unsupervised learning, and by describing the types of problems that are typically associated with each type of learning.
+
+Understanding the differences between supervised and unsupervised learning is an important first step. But, once you start *doing* machine learning, you will encounter a host of methods and models that will need more of an organizing framework than these foundational distinctions. You can save yourself a lot of misplaced effort if you understand the paradigms that guided the development of specific families of machine learning models. The second part of this chapter provides some of the intellectual context necessary to develop that organizing framework. It is equally important to understand the relationship between machine learning and statistics, including the similarities and differences between machine learning models and more conventional statistical models. We will set that relationship aside until Chapter 26, where we will shift our attention to generative models and Bayesian data analysis.
+
+I've written this chapter assuming you have no prior knowledge of machine learning. We will take a top-down view from 10,000 feet, glossing over many important details in service of understanding the big picture. I'll fill in many of the missing details in the remaining chapters of this book.  
+
+## TYPES OF MACHINE LEARNING
+
+Machine Learning can be broadly divided into **supervised learning**, where machines are taught via example, and **unsupervised learning**, where machines use algorithms to uncover patterns on their own, which we then interpret or make use of in downstream analysis. What we call "learning" is not actually learning at all, it's just very sophisticated pattern recognition accomplished by running data through a series of mathematical functions. Let's build some intuition here with a few examples, starting with supervised learning.
+
+### Supervised Learning
+
+Let's imagine a hypothetical project using the political speeches data we've used in previous chapters. For the sake of simplicity, rather than ground-breaking discovery, our goal is to compare how supportive the politicians from our data are of renewable energy. 
+
+The data is organized into two types of files:
+
+- a collection of plain text files containing the actual content of the speeches, one file per speech; and 
+- a CSV file containing metadata about each speech, including 
+    - the date, time, and location of the speech, 
+    - the name of the politician who made it, and 
+    - their party affiliation. 
+
+Unfortunately, there is nothing in the data that tells us whether any given speech contains a discussion of transitions to renewable energy, let alone whether the speaker is supportive of such transitions. This is a fairly common scenario in machine learning: we have plenty of data, but it doesn't necessarily contain the specific information we need to do our job well. *There is no free lunch.*  
+
+In situations such as these, machine learning won't do our work for us. We need to find a way to label speeches as either: 
+
+- containing no references to renewable energy transitions,
+- containing negative references to renewable energy transitions, or
+- containing positive references to renewable energy transitions.
+
+It's unreasonable to label thousands of speeches, so we label a **sample** instead. (There are great tools for this. I prefer [Prodigy](https://prodi.gy), which is an efficient and beautiful annotation tool developed by the same people that make spaCy, and [tortus](https://github.com/SiphuLangeni/tortus), which is an annotation tool that runs in a Jupyter Notebook.) Then, if we plan to use a fairly simple model, we would do quite a lot of data pre-processing and cleaning using methods we learned in previous chapters.
+
+Having labeled our sample, we use it to train a supervised learning algorithm to model the relationship between **features** of the speeches, such as the specific words used, and the relevant label we assigned to the speech: no references, negative references, or positive references. We can then use the model to classify the **out of sample speeches** (i.e., all of the speeches that we did not label) according to our three part schema. 
+
+I described "labeling" a sample of speeches because it is a widely-used term in supervised learning. I could have also said "coding" or "annotating." **Labelled datasets** include information about whatever we want our machines to learn. It's common to refer to these labels as "**ground truth**," which simply means that we've observed what we know rather than inferred it; *you have read the speech and it contained negative references to energy transitions*. During learning, whatever algorithm you use will constantly compare its estimates (inferences) to the "ground truth" label (observations) until there are no examples left to learn from.
+
+We want our machine to learn whether a given speech should be **classified** as containing no references, negative references, or positive references to renewable energy transitions (a categorical outcome), which makes this a **classification problem**. If we were predicting the intensity of positive or negative support on a 10 point scale (a quantitative outcome), then we might model this as a kind of **regression problem** instead. This is true even if we don't make our quantitative predictions using a regression model, or if we make a categorical prediction using a regression model (e.g. multinomial logistic). In a situation such as this, where you are labeling the data yourself, you are free to treat this as either type of problem. The specific decision here is informed by good research design, not machine learning.
+
+Figure @fig-20_01 shows a simple framework for thinking about types of machine learning. It separates supervised learning into two general types of problems: regression problems and classification problems. Immediately under that distinction are two simplified representations of datasets organized for supervised machine learning. Let's start with the one on the top left, under supervised learning.
+
+![](figures/ml.png)
+
+**Features** in machine learning, and variables (or covariates) in applied statistics, are essentially the same thing: they are columns in a matrix that represent characteristics of observations, represented by rows. One important difference, however, is that a matrix contains the same type of data in every cell. You can still combine continuous and categorical data in your matrices, but you have to perform extra steps to ensure that all of your data is numerical and properly configured. 
+
+In machine learning, features are commonly low-level characteristics automatically extracted from the data, such as the presence or absence of specific words in a text or the intensity of a pixel in an image. This process is called **feature extraction**, and you've already conducted it with sklearn's `CountVectorizer()` and `TfidfVectorizr`. Like variables in statistical models, the features might need to be pre-processed and transformed before they can be used in a machine learning model. This process is called **feature engineering**. 
+
+Returning to our example, we need to perform some feature extraction on the text of the political speeches. We can use sklearn's vectorizers to create a Document-Term Matrix. In this matrix, the features would be individual tokens (primarily words), the total number of which will equal the number of unique tokens used in the entire corpus of speeches. Each speech will have a row in the matrix, and each cell of that row will simply record the number of times that word appeared in that document. This "**vectorization**" process of converting words to numbers is an essential step because we can only do machine learning with numbers. In Figure XXX above, we call this feature matrix with many thousands of low-level features **$X$**, and the labels, which we manually assigned to each sampled speech, are stored in the vector **$y$**. These are simply naming conventions, but you should use them because they make it easier for you to understand other people's machine learning code, and for them to understand yours. 
+
+Note that the data in our sample have labels in the $y$ vector, but the data that is **out of sample** does not. We don't know the ground truth labels for the out-of-sample data, so we are going to use the model to estimate those labels.
+
+In supervised machine learning, we slice our labeled samples many different ways, but the most important split is between the **training data** and the **testing data**, typically with roughly 80% of the data being used for training and the remaining data being used for testing. The iron rule of supervised machine learning is **never touch your testing data until you have finished developing all of the models you plan to consider**. 
+
+After all this, we have our final feature matrix. We train one of many supervised learning algorithms to learn the underlying patterns that differentiate speeches into three classifications, and we evaluate how well those models learned by computing various evaluation metrics, calculated using a further held-out portion of the data called the **validation data**. When we have a model that performs well on both the training and the validation data, we can use that model to classify all of the out of sample data. Pretty cool, right?
+
+Now, one thing I hope that you picked up on in this very high-level introduction is that the vast majority of the human work involved in all of this *is not actually the machine learning*; it's the often huge amounts of data processing that *precedes* the learning (which is one reason why I have devoted so much space in this book to developing these skills). The actual code that kicks off the learning process is often no more than a few lines. **That doesn't necessarily mean those few lines of code will be quick or easy to write, though.** They may include all kinds of complex **hyperparameters** to tune and configure, which is something we will return to later. The main point is that coding is, generally, not the challenging part. You need to think, interpret, and iterate.
+
+To wrap up this introduction to supervised learning, let me say that this process will vary a bit in different circumstances (some learning algorithms perform best with careful feature engineering, others perform best without it), but the *general* process of supervised learning is the same whether you are dealing with a regression problem or a classification problem. You'll see this demonstrated multiple times throughout the rest of the book.
+
+### Unsupervised Learning
+
+Now let's jump over to the other side of Figure XXX: unsupervised learning. Unsupervised learning is also just pattern recognition, but the conditions radically different because there are no "ground truth" labels to teach the machine with. That means there is no way for the machine to improve prediction by learning from mistaken predictions. Consequently, unsupervised learning is designed to make predictions about different kinds of things, and we analysts interpret the predictions with those differences in mind. The most common prediction tasks associated with unsupervised learning are (*i*) **data clustering**, and (*ii*) **dimensionality reduction** and analysis of **latent variables**. You've already seen how to do some of those things in earlier chapters. Still, let's briefly discuss these methods in relation to machine learning.
+
+Just as in supervised learning, unsupervised learning is performed on a feature matrix $X$, where observations are in the rows, and the *features* of those observations are recorded in the columns. Note that in the schematic representation of a dataset for unsupervised learning there is no vector of labels $y$, and there is no segmenting the data into sample and out-of-sample data, or training and test sets; there is only the feature matrix $X$.In our example, we classified speeches into one of three categories. This is not possible in the context of unsupervised learning. The closest thing to supervised classification is unsupervised clustering, but it would be a big mistake to conflate the two. Clusters are not classifications, but they can help shed light on latent structure and similarities in our data.
+
+While there is less setup in unsupervised learning than supervised learning, you pay for it with careful and sometimes painstaking interpretive work. In cluster analysis, as in all unsupervised learning, there is no avoiding interpretation and informed judgements about validity. Face validity is especially important, as good cluster analysis must always "make sense." Bad ones usually don't make sense. Never blindly trust the results of a cluster analysis as some sort of ground truth classification. While there are quantitative ways of assessing the quality of a data-driven cluster analysis, these assessments are not the same as the evaluation metrics used in supervised learning. They are tools you can use to strategically inform your decisions as you practice the dark arts of data clustering. Above all else, *use theory and your substantive knowledge and expertise!* 
+
+An alternative option to this bottom-up data-driven clustering approach is to use a top-down model-based approach, where we assume there is some latent structure in our data, and rather than attempting to reveal, assess, and interpret that structure using similarity measures, we leverage our substantive and theoretical knowledge to model that latent structure and make principled inferences about which group each observation belongs to. Because these are statistical models, we can assess their goodness-of-fit. We will discuss a variety of different types of latent variable models in later chapters of this book, including for networks and text. 
+
+Another common use of unsupervised learning is dimensionality reduction and analysis of latent factors and components. Dimensionality is just another way of referring to the number of features in a dataset, with each feature representing an additional dimension. Datasets with very large numbers of features are high-dimensional, which can cause a lot of trouble for statistical and machine learning models -- **the curse of dimensionality**. Dimensionality reduction is the process of reducing the number of features in a dataset while preserving as much variance as possible by combining highly covarying features into new composite variables. 
+
+As you learned in Chapter 9, there are theory-driven (e.g., exploratory factor analysis) and data-driven (e.g. principal component analysis) approaches to dimensionality reduction. In a theory-driven context, the idea is that some features are highly-covarying with each other because they share a common underlying latent factor, and the goal is to measure that underlying unobservable factor. In a data-driven context, we assume that there are latent variables, but we don't purport to measure them with factor analysis. Instead, we try to decompose our feature matrix into "**principal components**." The resulting components can then be used to improve the quality of some downstream analysis task, such as a cluster analysis, or can be analyzed inductively as part of a larger effort to understand latent structure in your data.
+
+Clustering, dimensionality reduction, and latent variable models are not new, nor are they are unique to machine learning. In fact, principal component analysis was invented in 1901 by Karl Pearson [-@pearson1901], whose influence on the history and development of statistics can hardly be overstated. The fact that these methods have such long histories in multivariate statistics and scientific research is one of several reasons why I introduced them prior to this discussion of machine learning. 
+
+Unsupervised learning has predominantly been used as a way to cluster or reduce the dimensions of data, to identify latent groups or segments in a dataset, or to measure latent variables. All of these methods can be very helpful in exploratory data analysis by making it easier to understand what's generally going on in very large datasets that are otherwise impossible to manage with the typical EDA tools. And what's good for exploratory data analysis is also good for modelling. 
+
+  
+> **Further Reading**    
+>   
+> James Evans and Pedro Aceves [-@evans2016machine] and Laura @nelson2021future both provide overviews of how supervised and unsupervised learning relate to computational text analysis. @molina2019machine provide a helpful overview of applications of machine learning in sociology more generally, including for understanding population heterogeniety and causal inference. 
+>
+
+
+### Looking for Supervision?
+
+The choice between using supervised and unsupervised learning, or between specific approaches within one or the other, depends first and foremost on the problem you are facing. Classification and clustering both assign labels to data, for example, but they are not interchangeable. If what you need is classification, clustering is a very poor substitute. It's highly valuable and useful, but not for the same reasons. If you need clustering, classification is likewise a poor choice. I must stress that using machine learning does not mean you are magically free from the challenges of designing good research projects, working hard to understand and clean your data, matching your methods to the problem at hand, and iteratively developing and improving models. 
+
+While research design considerations should always come first, your choices will of course be constrained by the resources available to you, the timeline you're working on, and the nature of the data you're working with. While it's typically possible to introduce some amount of supervision into an unsupervised learning process, and thereby exert more control, there are many tasks that can only be accomplished with supervised learning. However, advances in machine learning have begun to blur this distinction in some areas, as you will see in later chapters. 
+
+Finally, it's a mistake to view unsupervised learning as a less rigorous and trustworthy form of machine learning. Data clustering, dimensionality reduction, and latent variable modelling have long histories in applied multi-variate statistics, and recent advances in probabilistic modelling and computational methods of Bayesian inference have revolutionized what is possible with these types of methods. 
+
+By now, the main differences between supervised and unsupervised learning, and the most common problems associated with each, should be clear. In the next section, we will discuss how the families of machine learning models that are most widely-used have been influenced by two paradigms in artificial intelligence research. *These are not the only two paradigms in machine learning*, but like the distinction between supervised and unsupervised learning, they are foundational. We will introduce a third paradigm, and more specifically generative modelling and computational Bayesian inference, in Chapter 26.
+
+## SYMBOLIC AND CONNECTIONIST MACHINE LEARNING
+
+I've spilled little to no ink on the algorithms that do the actual "learning." I want to keep your focus on the big picture here; most of the chapters that follow this one are dedicated to filling in the details. I want to help you develop some understanding about different families of machine learning models, which I hope will help you understand the thinking behind how many of specific algorithms were designed, and what their strengths and limitations might be in different contexts. Most importantly, I hope to bring a bit of order to an area that can otherwise feel like it is simply bursting at the seams with inumerable models and algorithms. Let's now focus on two machine learning paradigms: symbolic and connectionist. We will set aside statistical / probabilistic machine learning until Chapter 25.
+
+  
+> **Further Reading**    
+>   
+> If you want to learn more about the paradigms that have shaped the development of artificial intelligence and machine learning, I recommend reading Melanie Mitchell's [-@mitchell2019artificial] *Artificial Intelligence for Thinking Humans* or Pedro Domingo's [-@domingos2015master] *The Master Algorithm: How the quest for the ultimate learning machine will remake our world*. 
+>
+
+
+### Machine Learning in Artificial Intelligence Research
+
+How do you teach a machine to ride an elevator? In the early days of AI, researchers thought that they could explicitly provide machines with the necessary rules to perform tasks like these. "When you get in the elevator, turn around and face the door rather than the back wall or other riders." Eventually they realized that there are an astounding number of rules, mostly tacit, that would have to be programmed to have a machine perform even the most mundane everyday tasks. This was not the first time the importance of these implicit rules was discovered. Mid-Twentieth century micro-sociologists like Erving Goffman demonstrated their existence and importance exhaustively, using, among other things, extensive ethnographic research. Both AI researchers and micro-sociologists, in different intellectual contexts and for different reasons, discovered what has come to be known as the **frame problem**: it is practically impossible to consciously know and explicate all of the rules that are relevant (i.e., in the frame) in any given situation, even as you use them effectively. 
+
+Early AI researchers abandoned the goal of explicating every symbol and rule for every situation, and instead developed machine learning models. This shift was a huge benefit to AI. You could celebrate several birthdays hardcoding a set of rules to differentiate spam from regular messages and still do a pretty poor job of things, or you could teach a machine to learn how to correctly and reliably classify messages using the supervised learning approach described earlier. The switch to empirical data-driven machine learning afforded AI researchers other advantages as well, as the programs that make it possible are much shorter and less complex, and thus easier for humans to read and understand; they are also easier to maintain, and the results are more accurate. If spammers start using new strategies, machine learning algorithms can pick up on those differences even if expert humans have not noticed them. 
+
+Under the broad umbrella of machine learning, AI researchers have imported or invented a variety of algorithms to teach machines. Most of these models are associated with one of two major paradigms in AI, the major proponents of which have historically been at odds with one another, with (a few notable exceptions aside) the general trend is that people move across these paradigmatic boundaries often, *especially outside of AI itself*. The two paradigms are **symbolic** and **connectionist** machine learning. A third paradigm, **statistical / probabilistic**, will be discussed in Chapter 25. 
+
+Each has a collection of models or model variants that are most closely associated with their paradigm. The symbolic and probabilistic paradigms tend to rely on more interpretable models while connectionist models (neural networks) are more 'black boxed' (meaning opaque and difficult to interpret directly). As a computational social scientist who prioritizes transparency, you should lean towards simple and interpretable models and avoid using black box models in most research contexts, but neural network models certainly have an important role to play in computational social science. I'll provide some guidelines to help you make those decisions later.
+
+The development of machine learning algorithms has been strongly influenced by analogies to human reasoning and critical thinking on the one hand, and biological cognition and perception on the other. These two inspirations are the intellectual foundations upon which the big machine learning paradigms are based. **Symbolic** (and most **probabilistic**) machine learning works at the level of concepts and symbols, which includes just about anything that we would think and reason about, and which we would theorize or measure. Class, gender, race, sexualities, financial markets, the global economy, political parties, social movements, emotions, pay gaps, and basically anything else you can think of in the social sciences are examples of symbols and concepts. If the features a machine learning model is using are symbols or concepts such as these, then you can consider it symbolic learning, and depending on the methods and models you are using, possibly statistical or probabilistic machine learning. 
+
+**Connectionism** is loosely inspired by perception and biological cognition. Like the biological brain, connectionist machine learning models are designed to work with data *below the level of explicit symbols and concepts*. Neural networks are the workhorse model of connectionist learning, and they have unlocked an enormous range of new possibilities when working with unstructured data, especially text and natural language data (to say nothing of the progress they have made in interpreting images and sound data).
+
+Probabilistic machine learning is the other major paradigm. It's generally closer to symbolic learning than connectionist learning (though there are exceptions, many fairly recent), and is generally considered the most interpretable of the three paradigms. It's also the least "home grown," as many important probabilists have been statisticians as much as they are computer scientists and AI researchers. We will discuss this further in Chapter 25.
+
+Figure @fig-20_02 below is a sketch of the types of models that are widely-used within the symbolic, probabilistic, and connectionist paradigms. Below, we will consider the "learning" analogies that inform these various different models to build an intuition of how they work, and how they relate to one another. 
+
+![](figures/machine_learning_paradigms.png)
+
+#### Symbolic Learning, Inspired by Rules-based Reasoning, Abstraction, and Analogy
+
+Some of the most widely-used models in symbolic machine learning were not developed within machine learning, and have long histories in many scientific fields. The best examples of such imported (and usually improved) models are linear and logistic regression, cluster analysis, and dimensionality reduction methods. Other models have a closer connection to artificial intelligence research and cognitive science. 
+
+##### Rules-based Reasoning, Abstraction, and Analogy
+
+Many early symbolic machine learning models were inspired by reasoning of two types: rules-based reasoning, and abstraction, analogy, and conceptualization. Rules are simply *if-then* statements such as: *if* I mindlessly scroll through social media while watching a movie, *then* I will miss what happened. As humans, we acquire if-then rules both consciously and unconsciously from experience, and we use and modify them constantly. From a symbolic learning perspective, learning is the outcome of *critical thinking* and *reasoning* such as the evaluation, modification, and application of acquired if-then rules. Do not fall into the trap of romanticizing rationality; these cognitive operations are rarely, if ever, as clean and elegant as formal logic. 
+
+When you find yourself in a novel situation, you need to acquire basic *if-then* rules to solve whatever problem you are facing, or simply to make sense of the situation at hand. Acquiring new *if-then* rules directly from experience like this is called "inductive generalization". Once you discover rules that seem to work reliably, then you can keep applying them. But across different situations, you encounter some scenarios where the rules you've acquired don't work as expected, so you modify and adapt them. Over time, *if-then* rules can also be synthesized with other rules (which is called **chunking**), enabling higher-order reasoning. The rules we learn can also become organized into **scripts** that we follow more or less automatically. When all goes well, we tend not to notice or realize that we are following scripts and acting on learned rules, but when things go wrong, *we notice*! 
+
+Another stylized model within the symbolic paradigm focuses instead on abstract concepts, associations, and analogical thought processes. **Abstraction** is the ability to recognize something as a specific instance of a more general concept, and it is the basis of all conceptualization [@mitchell2019artificial]. Analogical reasoning involves accessing knowledge acquired from previous situations; when we encounter a problem or a novel situation, we construct an analogical mapping between the present situations and some abstracted form of prior knowledge. If the mapping is based on relevant similarities, the analogy is good, but *irrelevant* similarities will be misleading. 
+
+Many symbolic machine learning models were initially inspired by these stylized models of thinking and reasoning. If two observations are very similar on the relevant features we know about, the more confident we can be that they will be similar in terms of what we *don't* know about them (i.e., whatever we are trying to predict). Similarly, rules-based models of thinking and reasoning have led others to develop models based on **decision trees** to automatically extract and modify rules from different empirical examples. A number of variations on the decision tree, such as **Random Forests** and **Gradient Boosted Machines** have been developed to address problems with overfitting. We will learn more about these models in Chapter 22.
+
+#### Connectionist Learning, Inspired by Perception and Biological Cognition
+
+Connectionist machine learning differs paradigmatically from symbolic learning, drawing inspiration from perception and biological cognition. In the early days of connectionist AI, researchers developed models of neurons and neural networks, **artificial neural networks (ANNs)** that sought to replicate biological learning processes. While most contemporary ANN modelling no longer strives to be biologically realistic, the influence endures.
+
+If you were to peek into a brain, you would'nt see any concepts. Instead, you would see a *massively* dense and complex network consisting of roughly 100 billion brain cells called neurons. More complex mental representations are **distributed** across many neurons, each of which contributes to many different mental representations. These clusters of neurons form and become stronger through repeated association. In the late 1940s, Canadian psychologist Donald Hebb first proposed a mechanism we often summarize as "neurons that fire together wire together." The connections between neurons that repeatedly fire together becomes stronger the more they are co-activated, forming clusters of neurons that enable higher-level and more complex mental representations. From a connectionist perspective, learning is largely a process of adjusting the weights of the relationships between neurons, or the strength of the signals that one neuron sends another, and the threshold at which the second neuron fires. 
+
+Contemporary ANNs are not designed to learn like brains any more than planes are designed to fly like birds, but these early inspirations are still relevant to understanding what makes the connectionist's neural network models so different than the families of models used in symbolic machine learning. We will get into the details in Chapters 23 and 24, but the key things to know are:
+
+- ANNs are designed to work with low level features extracted from the objects of interest without feature engineering; the idea is that information should enter into the model like information sent to your brain from your senses, at a very low level (e.g., pixels, not whole images; words in a sequence, not an entire document).
+- Higher-level learning (correctly classifying cats and dogs, autocracies and democracies) is the result of an astounding number of really simple computations at lower-levels.
+- Just as you can't point to a concept in a biological neural network, you can't point to a concept in an artificial neural network. Concepts are represented as many neurons firing together in different configurations. 
+- The complexity comes from the network itself, not from the individual neurons. 
+
+
+
+## CONCLUSION
+
+### Key Points 
+
+- Supervised learning involves splitting data into training and validation sets. Its goal is generally to make good predictions on data it has never seen before.
+- Unsupervised learning is run on the whole data. Its goal is generally to identify clusters of observations, reduce dimensionality, or analyze latent content.
+- Symbolic machine learning draws on rules-based decision-making, analogies, and abstraction.
+- Connectionist machine learning draws on biological neural networks. Complex networks of "neurons" are arranged in layers.

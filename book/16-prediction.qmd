@@ -1,0 +1,423 @@
+# Prediction
+
+<!-- Some of the regression stuff too, maybe -->
+<!-- Supervised Learning with Trees, Ensembles -->
+
+## LEARNING OBJECTIVES
+
+- Explain how Decision Trees classify data
+- Describe how to regularize (or trim) Decision Trees
+- Compare individual Decision Trees to ensemble classification methods
+- Explore how leveraging different metrics can help provide a better sense of how your classification models are performing
+
+## LEARNING MATERIALS
+
+You can find the online learning materials for this chapter in `doing_computational_social_science/Chapter_22`. `cd` into the directory and launch your Jupyter Server.
+
+## INTRODUCTION
+
+In the previous chapter, we worked on some supervised machine learning algorithms based on relatively familiar statistical models that arose out of the symbolic paradigm of machine learning, OLS, Lasso, and Ridge linear regression models, and logistic regression models. This chapter will continue that discussion with decision trees, ensemble learning, Random Forests, and gradient boosted machines. We will finish with a description of model evaluation metrics, comparing accuracy, Precision, Recall and some ways we can make better use of these metrics.
+
+### Imports
+
+```python
+import pandas as pd 
+import numpy as np
+
+import matplotlib.pyplot as plt
+import matplotlib as mpl
+import seaborn as sns
+import graphviz
+
+from dcss.plots import plot_knn_decision_boundaries
+from dcss import set_style
+
+set_style()
+```
+
+### Preparing the Data
+
+As in earlier chapters, we will be using the VDEM data on a country's political and electoral freedoms to predict Internet freedoms drawn from the Freeman House dataset. 
+
+```python
+# data downloaded in the previous chapter
+forml = pd.read_csv(
+    "data/vdem_internet_freedom_combined/vdem_fh_combined.csv"
+)
+```
+
+### The Train-Test Split and Cross-Validation
+
+As discussed in Chapter 21, developing supervised machine learning models requires splitting our data into different sets: some for training the model, others for testing and validating the model. The most practical way to perform this split involves using cross-validation (introduced in the previous chapter).
+
+```python
+from sklearn.model_selection import train_test_split
+
+X = forml[[
+    'v2x_polyarchy', 
+    'v2x_libdem', 
+    'v2x_partipdem', 
+    'v2x_delibdem', 
+    'v2x_egaldem'
+]]
+
+y = forml[['Total Score']]
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, random_state=23
+)
+```
+
+## RULES-BASED LEARNING WITH TREES
+
+### Decision Trees
+
+Decision trees, and some more sophisticated models based on decision trees that we will discuss shortly, are the workhorse models of rules-based learning. They can be used for classification and regression tasks. We will focus on a classification task in the example here, but the process is more or less the same for a regression problem.
+
+In machine learning, a decision tree is a directed network that starts with a single node 'containing' every instance in your dataset. From there on, it's like playing a *highly* skilled game of twenty questions, to borrow a clever analogy from Pedro Domingos [-@domingos2015master]. In this game, the model is going to 'ask' a series of 'questions' to figure out the correct label if it's a classification problem, or the correct value if it's a regression problem. In a moment, we will learn how the model decides which question to ask, but for now just know that the model will *always* ask the most informative question possible. The questions will always concern the value for some specific feature for each instance, such as 'does Canada hold free and fair elections' or 'is Canada's score for freedom on the press higher than the median score?' 
+
+Everytime the model asks a question, a node containing some subset of instances in our dataset splits off into two new nodes. Depending on the answer to the question, each observation moves from the parent node into one of the two child nodes. This process continues until (a) all of the observations contained in a node share the same value for the outcome you want the model to be able to predict, or (b) your tree model runs out of room to ask more questions. When one of these two conditions is met, the branch of the tree terminates in a node called a '**leaf**'. The path from the root node (every instance in the dataset) to each leaf in the tree constitutes a rule. We can collect all of these rules into a single hierarchical **rule base** that is relatively easy for humans to interpret and understand. 
+
+Now that we understand the basics, it's time to answer a critical question: *how does the model decide which question to ask next?* How does it know what the "most informative" question is? The most common method is to use the concept of **entropy** from **information theory**. In information theory, entropy is a measure of how much information something contains, expressed in terms of uncertainty. 
+
+To use a simplified example, let's say we want to figure out which of the nations in the vdem dataset are democracies. If you think elections are all you need to be considered a democracy, then you could just ask one question for each case -- do they hold elections? *However*, not all elections are the same, and democracies are about much more than elections. So you keep asking questions until you are confident you can make a judgement. The more questions you need to ask to arrive at a confident judgement, the more accurate your classificaiton of the observations into 'democracies' and 'autocracies' will be. The more purely separated those two classes become, the lower '**entropy**' in your model. In the context of a decision tree analysis, the model will *always* ask the question that will result in the biggest decrease in entropy, usually expressed in terms of '**information gain**', which quantifies the decrease in entropy that resulted from asking the question.
+
+At this point, there shouldn't be much doubt about how easily the VDEM dataset we've been using throughout the book can be classified; nevertheless, we're going to use it here again. We're not going to do so because it will provide us with a better classification (we already achieved very good scores using a logistic regression), but rather because the resultant decision tree model will allow us to easily see what information the model finds most useful when deciding whether a nation is an autocracy or a democracy. 
+
+We'll start, as usual, by splitting our dataset into a matrix, $X$, and an outcome vector, $y$. 
+
+```python
+from sklearn.tree import DecisionTreeClassifier, export_graphviz
+from graphviz import Source
+from sklearn.preprocessing import LabelEncoder
+
+dem_indices = pd.read_csv(
+    "data/vdem_internet_freedom_combined/dem_indices.csv"
+)
+
+X = dem_indices[[
+    'v2smgovdom_osp', # Government dissemination of false information domestic
+    "v2smgovfilprc_osp", # Government internet filtering in practice
+    "v2smgovsmcenprc_osp", # Government social media censorship in practice
+    "v2smonper_osp", # Diversity of online media perspectives (0 = gov't only, 4 = any perspective)
+    "v2smarrest_osp", # Arrests for political content disseminated online
+]]
+
+interpretable_names = [
+    'Domestic Misinformation',
+    'Internet Filtering',
+    'Social Media Censorship',
+    'Online Media Diversity',
+    'Arrests for Political Content'
+]
+
+regime_types = [
+    'Autocracy',
+    'Democracy',
+]
+
+le = LabelEncoder()
+labels = le.fit_transform(regime_types)
+
+y = np.where(dem_indices["v2x_regime"] <= 1, 0, 1).copy()
+```
+
+The technique we're using to convert the 4-point `v2x_regime` scale into a binary variable is identical to the one we employed in Chapter 21.
+
+With $X$ and $y$ created, we can create our training and test sets, and then create and fit our decision tree classifier using cross-validation (in much the same way as we did in the previous chapter; consult Chapter 21 for more detail on cross-validation).
+
+```python
+from sklearn.model_selection import cross_val_score
+from sklearn.model_selection import ShuffleSplit
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, random_state=23
+)
+
+shuffsplit = ShuffleSplit(n_splits=5, test_size=0.3, random_state=42)
+
+dtclass = DecisionTreeClassifier(random_state=0)
+dt_scores = cross_val_score(
+    dtclass, X_train, y_train, cv=shuffsplit
+)
+
+print(dt_scores)
+print(f"Mean: {dt_scores.mean()}")
+```
+
+Not bad! In order to get a sense of what our tree is doing under the hood, the below diagram represents our decision tree. You start at the top node, which contains all of the observations (countries in this case). The top line in that node (and every non-leaf node in the remainder of the tree) indicates the rule it will use to split the data. All of the countries for which that statement is true will travel along the 'True' path for further subdivision. All of the nations for whom this condition does not apply travel along the 'False' path.
+
+Figure @fig-21_01 shows the resulting image without color because it keeps the cost of the print book down. If you change the argument `filled=False` below to `True`, you can get a color version. In the color versions, the 'strength' of the colour represents how 'pure' each node is. If there's an equal mix of both classes, the colour should desaturate entirely. The code below also writes the figure to disk. To display it in a notebook, wrap the entire function in `graphviz.Source()`. The same is true for the other decision trees later in the chapter.
+
+- **TODO**: Update this.
+
+```python
+from sklearn import preprocessing
+
+dt_fitted = dtclass.fit(X_train, y_train)
+
+export_graphviz(
+    dtclass,
+    out_file='../graphical_models/classified_1.gv', 
+    filled=False,
+    rounded=True,
+    feature_names=interpretable_names,
+    class_names=le.classes_,
+)
+```
+
+![cap](figures/classified_1.png){#fig-21_01}
+
+
+#### What About Overfitting?
+
+As you may be starting to suspect, decision trees are prone to overfitting. The tree grows bigger with every question, and by the time we've reached the leaves, we know everything we need to know to make predictions that are 100% right 100% of the time... *for the data we trained the model on*. This extreme overfitting is sometimes called "memorizing" the training data. We don't want to do that. 
+
+One way to address the overfitting problem with decision trees is to "prune" them. Remember that the model *always* asks the most informative question first. This means that as the trees get deeper and deeper -- as we ask more questions -- each feature is weaker or less predictive than those that came before it. As we move further and further out, we risk making decisions based on noise and overfitting the model to the data we have. The full tree, then, is typically *worse* than a pruned tree because it includes weak features that could be specific to our dataset.
+
+We constrain the depth of the tree by restricting the number of questions or decisions that the model is allowed to ask, and in doing so, we improve the ability of our model to generalize to data it hasn't seen before. If we set the maximum depth of our tree to 6, for example, the models can only ask the 6 most informative questions, at which point it must make its prediction. Obviously this reduces the accuracy on the training data, but not as much as you might think. It's the unseen data we care most about, and the pruned model will make much better predictions when it is not overfitted. 
+
+In Sklearn, we specify the maximum depth of the tree in advance. This can be done using the `max_depth` argument for the `DecisionTreeClassifier()`. Let's set it to 3. This will produce a very shallow tree, but that's desirable; we want it to have to make the best decisions it can in broad strokes. This way, the model will be less likely to overfit the training data.
+
+```python
+dtclass_pruned = DecisionTreeClassifier(
+    max_depth=3, random_state=0
+)
+
+dt_scores = cross_val_score(
+    dtclass_pruned, X_train, y_train, cv=shuffsplit
+)
+
+print(dt_scores)
+print(f"Mean: {dt_scores.mean()}")
+```
+
+```python
+dtclass_pruned.fit(X_train, y_train)
+
+export_graphviz(
+    dtclass_pruned,
+    out_file='../graphical_models/pruned.gv',
+    filled=False,
+    rounded=True,
+    feature_names=interpretable_names,
+    class_names=le.classes_,
+)
+```
+
+```python
+dtclass_pruned.score(X_test, y_test)
+```
+
+Looking good! We've already seen a modest improvement, which probably represents a slight reduction in overfitting (something that cross-validation automatically assesses). Let's examine the tree again (Figure @fig-21_02):
+
+![cap](figures/pruned.png){#fig-21_02}
+
+You can see the influence of setting the `max_depth` parameter to 3 in the tree: rather than a sprawling monstrosity, we now have a tree that neatly terminates each branch at the same level. Decisioin Trees have other parameters you can tweak, such as `min_samples_leaf`; it's worth looking at the documentation to see the options available to you! Using only `max_depth`, we managed to get a good result, but we're unlikely to be able to do much better using regularization alone. As we saw with Ridge and Lasso regression, regularization usually reaches a 'sweet spot' at some modest value, but as the strength of the regularization increases, the model's performance nosedives. Decision trees have, by their nature, low granularity. You can't perform fine-grained regularization on a single decision tree the same way you could for an 'alpha' parameter on a Ridge or Lasso regression (what would a `max_depth` of 3.5 even look like?). It's likely that no regularization of a single-tree model will eliminate overfitting entirely. Instead, we'll have to turn to a method which will allow us to combine many, many trees.
+
+## ENSEMBLE LEARNING
+
+One very effective way to get around the over-fitting problem is to take an ensemble approach, which combines predictions from multiple models into a single prediction that is better than that of any individual model. As you will soon learn, this approach tends to produce excellent results and does not require any pruning. Ensembles of decision trees produce better results than any one decision tree, including any of the decision trees in the ensemble.
+
+To work with an ensemble of decision trees, we first draw many bootstrapped samples of instances from our overall dataset. In a bootstrapped sample, replacement is allowed, which means that the same instance can be sampled more than once. For each sample we fit a decision tree and record the model's predictions. The final predictions are made by an 'election' of sorts, where each tree 'votes' on the class they think each observation belongs to. If we take 200 samples, we would fit 200 decision trees. These modes are used collectively -- as an **ensemble** -- to make predictions on new instances by taking averages of the predictions made by the models that make up the ensemble. This process is called '**bagging**' or '**bootstrapped aggregation**', and it can be applied not only to decision trees, but to a wide variety of the classification models implemented in scikit learn! For now, we'll stick to applying it to decision trees. 
+
+Bagging / bootstrapped aggregation goes a very long way in addressing the overfitting problem. One major advantage is that we don't have to prune our decision trees. In fact, it's better if we don't! If we let each tree grow to be as deep and complex as it likes, we will end up with an ensemble that has high variance but low bias. That's exactly what we want when we go to make our final aggregated predictions. The important choice you must make is how many bags to use, or rather, how many bootstrapped samples of instances to draw, and the number of total trees we want to end up with. Let's see what the combination of 100 trees can bring us: 
+
+```python
+from sklearn.ensemble import BaggingClassifier
+
+bag_of_trees = BaggingClassifier(
+    DecisionTreeClassifier(),
+    n_estimators=100,
+    bootstrap=True,
+    random_state=0
+)
+
+bt_scores = cross_val_score(
+    bag_of_trees, X_train, y_train, cv=shuffsplit
+)
+
+print(bt_scores)
+print(f"Mean: {bt_scores.mean()}")
+```
+
+The unregularized bagging classifier has produced an even better score than regularized decision tree did! There may yet be more room for improvement if we alter how each of the trees functions using a Random Forest model.
+
+### Random Forests
+
+One issue with the bagging approach we just learned is that the resulting trees tend to be correlated with one another, mainly due to the fact that they are all trying to maximize the same thing when they ask questions -- information gain. If there are some very powerful attributes in our dataset, as there almost always are, the tree we fit for each bag will lean heavily on those features, which makes the whole ensemble approach a lot less useful and degrades the quality of the final prediction. It would be much better for us if the trees are not correlated, or are at best weakly correlated. 
+
+Random Forests accomplish this with one simple, but highly effective, modification: *they constrain the features that any given node is allowed to ask questions about*. The result is a collection of decision trees that are uncorrelated, or weakly correlated, with one another, and this leads to more accurate predictions when they are aggregated.  
+
+Random Forests are straightforward to train, and because of their clever design, they do a good job of dealing with noise and preventing overfitting, so it is not necessary to trim / prune our trees. They also only take two hyperparameters: the number of trees in your forest (i.e. the number of samples of instances to draw) and size of the random sample to draw when sampling the features that any given decision tree will select from. You can and should experiment with cross-validation to select values for these hyperparameters that result in the most accurate predictions (we're not doing so here because space is limited).
+
+
+```python
+from sklearn.ensemble import RandomForestClassifier
+
+rforest = RandomForestClassifier(
+    n_estimators=100,
+    max_features=2,
+    random_state=0
+)
+
+rforest_scores = cross_val_score(
+    rforest, X_train, y_train, cv=shuffsplit
+)
+
+print(rforest_scores)
+print(f"Mean: {rforest_scores.mean()}")
+```
+
+It would appear that our Random Forest model, with modest parameters, is producing the *exact same result* as we got with our bagging classifier. 
+
+The downside of Random Forests is that -- unlike garden-variety decision trees -- the results are not so easy to interpret. For this reason, Random Forests and other ensemble models are generally considered to be less "interpretable" than simple decision trees, linear and logistic regressions, or $k$-nearest neighbours. It's worth knowing that you can inspect any of the trees in your Random Forest Classifier! This process is complicated somewhat by the fact that our model contains 100 distinct trees, meaning that you can't easily determine how significant any one tree was to the overall decision making process. Nevertheless, it's a good idea to select a tree at random and take a look at what it has done with the data. Of course, you can do this many different times, if you like. Just select different trees each time. One such tree is shown in Figure @fig-21_03.
+
+```python
+rforest.fit(X_train, y_train)
+
+export_graphviz(
+    rforest.estimators_[6],
+    out_file='../graphical_models/rf_classified.gv',
+    filled=False,
+    rounded=True,
+    feature_names=interpretable_names,
+    class_names=le.classes_,
+)
+```
+
+![cap](figures/rf_classified.png){#fig-21_03}
+
+There are other ways you that can help you interpret your Random Forest models, such as using `rforest.feature_importances` to get a sense of which features in your dataset had the greatest impact on predictive power. 
+
+While our Random Forest classifier has outperformed decision trees, regularized decision trees, and tied the bagging classifier, there's one last technique we might use to squeeze out a bit more performance...
+
+### Gradient Boosted Machines
+
+While Random Forests remain one of the best and most widely-used approaches to supervised machine learning, a slightly newer approach to ensembling decision trees has recently started outperforming Random Forests and is widely considered to be one of the best algorithms for doing machine learning on anything other than image / perception data [@francois2017deep]. This technique is called "Gradient Boosting", and it differs from the Random Forest approach in that, rather than allowing all of the decision trees to randomly pursue the best answer possible in isolation (as Random Forest does), it attempts to fit trees that better account for the mis-classified observations from previous trees. In this way, each tree tackles the 'room for improvement' left behind by the tree that immediately preceded it. The effect here is that Gradient Boosted Trees can reach a remarkably high degree of accuracy using only a small handful of estimators (but are accordingly prone to overfitting). Let's try creating one now:
+
+```python
+from sklearn.ensemble import GradientBoostingClassifier
+
+gboost = GradientBoostingClassifier(
+    n_estimators=100,
+    random_state=0
+)
+
+gboost_scores = cross_val_score(
+    gboost, X_train, y_train, cv=shuffsplit
+)
+
+print(gboost_scores)
+print(f"Mean: {gboost_scores.mean()}")
+```
+
+The Gradient Boosted Trees achieved worse performance than our previous two models. Usually, we would expect a Gradient Boosted Trees model to outperform all of our other decision tree models (ensemble or otherwise), but that shouldn't be interpreted as a good reason to skip straight to Gradient Boost without bothering to specify and fit any other models. What we've seen here is evidence to that point; there's value in fitting 'intermediate' models to see how their performance and idiosyncracies compare to the cutting-edge techniques. There are a few reasons why this is a vital practice:
+
+**Advanced, complicated methods are not intrinsically better than simple methods:** Not only is this true in our example -- given that one of the most demonstrably powerful and widely-applicable algorithms, Gradient Boosting, failed to outperform Random Forests -- but it is often true in general. Cutting-edge methods are indispensible for their ability to tackle cutting-edge issues, but they're often overkill for the kinds of problems they get applied to.
+
+**Don't Sacrifice Interpretability Without Good Cause:** Explicable, interpretable, transparent models that slightly underperform are often more valuable than top-performing 'black-box' models that appear to be more accurate, but for reasons that are hard to establish. Gradient Boost models are more difficult to interpret than Decision Tree models, so the advantages of the former over the latter should be considered in light of the interpretability trade-off.
+
+**Any problem in machine learning should be tackled using multiple approaches.** Even if you feel like you can't improve on your model, there may be undiscovered issues lurking beneath the surface. Applying a multitude of modelling strategies to a problem -- even in cases where your first model is performing well -- may help confirm the defensibility of your primary approach, give you more inferential insight, or uncover contingencies that need to be addressed.
+
+One problem common to all tree-based models (ensemble or otherwise) is that they require an abundance of data and are especially prone to overfitting in cases where such data is not forthcoming. That said, there are many ways to make up for a lack of data; in future chapters, we'll explore methods you can use to get even more out of limited dataset.
+
+Before we move on, let's take a moment to compare how each of our tree-based models perform on the test set which we split off from the training data right at the beginning of this section and haven't touched since:
+
+```python
+model_list = [
+    dtclass,
+    dtclass_pruned,
+    bag_of_trees.fit(X_train, y_train),
+    rforest,
+    gboost.fit(X_train, y_train)
+]
+
+for model in model_list:
+    print(model.score(X_test, y_test))
+```
+
+## EVALUATION BEYOND ACCURACY
+
+So far, we have been using accuracy to evaluate the quality of our machine learning models. While accuracy is important, *it isn't everything*. Consider two issues. 
+
+First, bad models can have high accuracy rates. This can happen when the events we want to predict are rare, or the categories we want to classify instances into are very imbalanced. In such scenarios, we can achieve very high accuracy rates by making the same guess all the time. We haven't actually learned anything useful, we just learned that if something is rare, predicting the rare thing didn't happen is often correct. Similarly, bad models can achieve high accuracy rates by learning from the wrong things. For example, a deep learning model differentiating pictures of huskies from pictures of wolves -- with a high level of accuracy, of course -- was shown to be relying on whether or not the image contained snow. That's a *bad* model. We will return to this example later in the chapter. 
+
+Second, depending on the purpose of your machine learning, there may be aspects of your model's performance that are more important to optimize than accuracy.  Imagine you were tasked with designing a machine learning algorithm capable of detecting when a patient in a hospital requires a dose of analgesic medication; although false negatives in such a setting would be bad, false positives could be deadly and should be avoided at all costs. In that case, we could set a hard constraint on the ratio of false positives to false negatives and ignore any marginal increases that break that constraint.
+
+There are a number of useful measures we can use when accuracy is not ideal. Selecting the best from among them depends on factors such as the data you have, the types of question you are trying to answer, the consequences of false positives or false negatives, and so on. In other words, once again, you need to know what you are trying to do, why you are doing it, and where the risks are. Your evaluation measures should be aligned with those larger goals. 
+
+Let's work through some examples of other evaluation measures. In the examples below, we will focus primarily on evaluation measures for classification models, but we will also discuss evaluation for regression models.
+
+
+### Balancing False Positives and False Negatives in Classification Models
+
+We can evaluate the quality of a machine learning model in terms of the balance between false positives and false negatives, or Type I and Type II errors, respectively. In the context of binary classification, false positives are when we predict that a negative instance is positive, and false negatives are when we predict that a positive instance is negative. Imagine you have a binary classification model to predict whether any given country is an autocracy. In this model, 'autocracy' is the "positive" class and 'not autocracy' (i.e. democracy) is the "negative class." If your model predicted that New Zealand was an autocracy in 2020, that's a false positive / Type I error. If it predicted that North Korea was a not an autocracy in 2020, that's a false negative / Type II error. 
+
+In some cases, we may prefer a model with slightly lower accuracy if it minimizes false positives or false negatives while still having good overall accuracy. This is especially important in models that might have some kind of real-world impact. Think about whether there are any potentially negative consequences that could result from one type of error versus the other, and if so, how much overall accuracy would you be willing to accept to reduce the risk of false positives or negatives?
+
+Generally, it's easier to work with single score summaries-+ for evaluation metrics, like accuracy. The most common alternative single score evaluation metrics are Precision and Recall. 
+
+**Precision** is a measure of the number of predicted positive cases that are *actually* positive. Specifically, Precision is the number of **true** positives the model identified divided by the number of **total** positives (true and false) the model identified. Precision gives us the proportion of correct predictions (true positives). **Recall** is a measure of the number of true positives that the model identified divided by the total number of true positive cases (regardless of whether or not the model identified them as such). Recall is the number of true positives divided by the number of actual positives in the data. In other words, the proportion of positive cases that we were able to identify. 
+
+\begin{equation}
+Precision = \frac{True Postives}{True Positives + False Positives}
+\end{equation}
+
+\begin{equation}
+Recall = \frac{True Postives}{True Positives + False Negatives}
+\end{equation}
+
+Precision should be used when you are trying to reduce false positives, and Recall should be used when you are trying to limit false negatives. However, it is generally a bad idea to focus on one of these measures without considering the other. If you *only* care about avoiding false positives, the solution is trivial. You will never produce a false positives if you never predict the positive case! So while one type of error may be more serious than the other, you should consider them *together*. The goal is to strike an acceptable balance between the two types of errors. 
+
+One way of considering preciPrecisionsion and Recall together is to use a measure such as **F-Score**, which combines Precision and Recall into a single measure by computing their harmonic mean, shown below. 
+
+\begin{equation}
+F_1 = \frac{2}{Recall^{-1} + Precision^{-1}}
+\end{equation}
+
+Recalling that Precision and recall are proportions, and therefore range between 0 and 1, as Precision and recall improve (get closer to 1), the F-Score will approach 1. As Precision and recall get closer to 0, the sum of their inverses grows towards infinity and the F-score will approach 0. In short: F-Scores that are close to 0 are bad, close to 1 are good. 
+
+Sklearn's implementation can be imported from the `metrics` module. 
+Conveniently for us, Sklearn will report the Precision, Recall, and F-Score together in a `classification report`. The final column in the report -- 'support' -- is the number of true instances in that class, or the 'ground truth'. Each class category in the report has it's own line, as this is an example of binary classification.
+
+### Improving Binary Classification with Curves
+
+Predictions about class labels  -- was New Zealand an autocracy in 2020? -- depend on some underlying probability threshold. When our models classifies New Zealand as *not* an autocracy, it predicted the negative class because New Zealand is above some probability threshold that separates the boundaries between classes. In other words, the probability of it being a "not autocracy" is greater than the probability of it being an autocracy. For example, if the probability of a country being an autocracy is greater than .5, classify it as an autocracy, otherwise classify it as not an autocracy. 
+
+What if there was a different probability threshold? What if, instead, our model would only classify countries as autocracies if the probability of them being in the autocratic class was above .8 instead of above .5? Shifting the threshold in this way reduces the false positive rate because it would make it harder for any given case to be classified as positive, i.e. autocratic. But what would that do to our rate of false negatives? Does it really matter if we inaccurately classify some autocracies as not autocracies if we prevent our models from incorrectly classifying some non-autocracies as autocracies? 
+
+As always, it depends on your case, the questions you are trying to answer, the problems you are solving, and -- more than anything else -- the consequences of both types of error. You need to think carefully about these questions every time you begin a machine learning project. Once you have a sense of what an ideal model might look like (e.g. one with very few false positives), you can use Precision-Recall Curves to understand how different probability thresholds separating the positive and negative cases change the balance between false positives and false positives. We will briefly discuss these, as a full exploration is beyond the scope of this chapter.
+
+#### Precision-Recall Curves
+
+How good would your model be if you needed to ensure a minimum of 90% Recall -- that is, if you needed to correctly identify at least 90% of the true positives in the data? Again, depending on the specifics of your project, maximizing your models performance on one dimension, *while still being good enough on other dimensions*, is better than relentlessly pursuing small improvements in overall accuracy.
+
+Precision-Recall curves let us visualize the tradeoffs between these two metrics and understand their impact on the quality of our classifiers at various probability thresholds. Models with high Precision and high Recall are better, so what we are looking for is a model where the curve is as close as possible to 1 on both axes. Note, however, that we will never *actually* get to `1,1` because of the inherent tradeoff between these two measures.
+
+Alternatively, we can compute the area under the curve, or **AUC**, to get a one-number summary of the quality of this model. The AUC is not necessarily a better approach when we are assessing one model, but since it is a single number summary it does make it easier to compare the performance of multiple models. Very simply, consider a randomly chosen pair of a true positive $p$ and a true negative $q$: The AUC is a measure of how likely the model is to rank $p$ higher than $q$, ranging between 0 and 1. A perfect classifier would always rank true positives higher than true negatives, so scores closer to 1 are better. Precision-Recall Curves are very helpful and informative when the number of cases in each class label are imbalanced. 
+
+If you want further information and examples on Precision-Recall Curves, and ROC Curves, I suggest looking into [@geron2019hands] and [@muller2016introduction].
+
+#### Beyond Binary Classifiers 
+
+So far we have only considered measures for evaluating binary classifiers, but the evaluation metrics for multi-class predictions build on those of the binary tasks, so we can extend what we have just learned to these more complex models. We don't have the room to cover them here, but if you're interested in exploring multi-class evaluation metrics, feel free to check out our section on them which can be found in the *online supplemental material* for this textbook. 
+Looks like the training results match up nicely with the test results!
+
+  
+> **Further Reading**    
+>   
+> As with the previous chapter, if you want to learn more about doing supervised machine learning with the models covered in this chapter, and many others, I recommend consulting the relevant chapters from Andreas M{\"u}ller and Sarah Guido's [-@muller2016introduction] *Introduction to Machine Learning with Python: A Guide for Data Scientists* or Aur{\'e}lien G{\'e}ron's [-@geron2019hands] *Hands-on machine learning with Scikit-Learn, Keras, and TensorFlow: Concepts, tools, and techniques to build intelligent systems*.
+>
+
+
+## CONCLUSION
+
+
+### Key Points 
+
+- Learned how to set up, build, fit, and interpret supervised learning tree-based classifiers, including decision trees and ensemble classifiers
+- Explored how pipelines help prevent data leakage while also facilitating grid searches and cross-validation 
+- Demonstrated the use of parallel processing to expedite model fitting
+- Learned how to use a variety of performance metrics to balance between false positives and false negatives 
+- Created and interpreted graphical measures of threshold tradeoffs, including Precision-Recall and reciever operating characteristic curves

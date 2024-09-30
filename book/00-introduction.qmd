@@ -1,0 +1,287 @@
+# Learning to Do Computational Social Science {.unnumbered}
+
+::: {.callout-warning}
+## Planned Revisions
+
+Parts of this chapter -- specifically the roadmap -- will see some minor updates to reflect other changes in the book. I'll likely make those changes in late fall 2024 when the other revisions are complete. For now, this version is mostly the same as the print edition.
+:::
+
+<br>
+
+This book aims to **show** you how to **do** computational social science, and data science more generally, using the open source programming language Python and complex, imperfect datasets of the kind you might actually work with in your own research—messy real-world data. It differs from other books and learning materials in the field in many respects, the most salient three being:
+
+- It is designed to accommodate researchers with widely varying intellectual and technical backgrounds.
+- It covers a very broad range of methods and models while still emphasizing deep understanding.
+- It does so in an unapologetically practical way. I've tried to write as if we were sitting down at a computer looking at data and fitting models together.
+
+I start with the very basics (setting up a scientific computing environment and typing your first line of Python code) and end with in-depth examples of developing a variety of models that are currently at the cutting edge of machine learning and statistics, network science, and natural language processing. The content is cumulative and carefully scaffolded, provided you start at the beginning and work through each chapter sequentially. If you already have a good foundation and are looking to go further in one area or another, you can safely read chapters out of sequence. If you are starting with little to no prior experience to build on, the early chapters will help lay a foundation that subsequent chapters can build on, brick by brick.
+
+I've done my best to identify what you really need to know to go from a beginner to a highly skilled researcher with a good bit of breadth and depth. However, to learn effectively from this book—*to get the most from it*—you will need to honestly assess where you are and where you want to be, and plan your learning accordingly. Below, I'll outline some of the assumptions I make about what you already know. Then I'll offer some practical advice on how to learn to do computational social science from this book so that you can start using your new knowledge and skills in your own projects as quickly as possible.
+
+## Who Is This Book For?
+
+I have tried to write this book for as broad and diverse a readership as possible, but even with 200,000 words it can't cover everything, and it can't be a book for everyone. The type of person I have primarily kept in mind is a scientific researcher—regardless of their specific disciplinary background or research interests—with little to no computational experience or expertise. I have no specific career stage in mind; rather than writing for students of a particular level, I have tried to write for anyone who is new, or relatively new, to computational social science. That could be as true for a tenured professor as for a graduate student, or an advanced undergraduate student.
+
+What do I mean by "scientific researcher" or "scientist"? I use those terms a lot, and pretty casually, so it's worth taking a moment to clarify what I mean by them. I mean "scientist" in a very general sense, inclusive of all the social, cognitive, and communication sciences; applied health sciences; environmental sciences; and interdisciplinary fields like network science that cut across nearly every branch of science. While it is easy to enumerate dozens of things that make sociologists different from epidemiologists, economists different from biologists, and everyone different from physicists, my preference in writing this book has been to emphasize what we have in common: we all engage in efforts to honestly and systematically advance the state of general knowledge in our fields using a combination of empirical data, theory, and models. Given that you are currently reading this book, I assume you are interested in furthering your ability to do so using computational approaches.
+
+### Assumed Knowledge and Skills
+
+In this edition, I assume you have little to no previous experience with programming, scientific computing, or quantitative data analysis. The early chapters are designed to give you a foundation in these areas, which we will build on as we progress through more advanced methods. 
+
+When it comes to methodological background, I no longer assume that you are familiar with research design or conventional quantitative research methods in the social sciences. Instead, the first half of the book has been thoroughly revised to teach this content from the ground up, building up your skills incrementally. This shift marks a key difference from the print edition, where I expected readers to have already completed a course in quantitative research methods. Now, my goal is to guide you through the foundations, with a focus on concepts like causal inference and probabilistic modeling. While it may be a bit of an unconventional introduction to quantitative methods, I believe it will better prepare you for the present and future landscape of social science research. We'll focus on the present as well as the probable and preferable future instead of being beholden to the past.
+
+People enter computational social science with vastly different intellectual backgrounds. Some might have strong experience in quantitative methods, while others may come from a more qualitative or interpretive background. These differences can shape your learning process in important and perhaps unexpected ways.
+
+First, if you have some experience with quantitative data analysis—perhaps from a course in statistics or econometrics—you’re in a great position to build on that foundation. You may find the transition into computational methods easier because you're already comfortable with probabilistic thinking and model-based approaches. This prior knowledge will be an asset, especially as we delve into more complex models.
+
+However, if your background is more qualitative or interpretive, you also bring valuable skills to the table, even if they might not seem immediately relevant. Many computational methods, especially those used in fields like cultural sociology or political science, are designed to engage with the kinds of unstructured data—such as text and images—that qualitative researchers often work with. Moreover, your experience with abstract theoretical frameworks will help you develop a unique perspective on how to approach computational models. Over time, you'll learn to represent these theories within the models, turning your theoretical strengths into a modeling advantage.
+
+Finally, there is the matter of learning to program in the first place. While some quantitative researchers may enjoy an advantage here, the benefits are not ubiquitous. Having to write at least some code does not mean professional quantitative researchers adhere to best programming or scientific computing practices. Most of the time, the scripts they write get the job done in ugly and inefficient ways because they have acquired what programming knowledge they have in quantitative methods courses and/or by trying to solve specific data analysis problems rather than starting from the basics. I speak from personal experience.
+
+While problem-driven learning is excellent in general (it features heavily in this book), it can develop many bad habits that—all aesthetic judgments aside—are bad for science. Even the most impressive stats nerds tend to be pretty bad programmers and could benefit from learning some basics. This is not so easily done, though, because some things that are good practice in programming and software development are not necessarily good practice in science. While you don't have to become a professional programmer to do great computational social science, it is very important to fix bad habits.
+
+### Advice on Using This Book to Learn Efficiently
+
+When you are first learning computational social science or data science, it can feel like you are drinking from a firehose. If that's the case for you, I have a few pieces of general advice that might help.
+
+First, I recommend using a simplified version of Bloom's taxonomy of learning outcomes (just a web search away) to determine (a) where you are right now and (b) where you want to be. Don't skip steps in the taxonomy. If there are multiple steps between where you are and where you want to be, that's OK, but you need to take those steps one at a time. Work through the book slowly and deliberately. After each chapter, take stock of your cumulative knowledge. What have you learned, and how does it relate to what you learned previously? Can you *explain* what you've learned in your own words? Can you *do* the things that are introduced in each chapter on your own? In doing this, you may find that you understand something when you see it on the page but are unable to clearly explain that thing or do that thing yourself. You are experiencing the fuzzy threshold between different levels of competence: **understanding** (level 1 of Bloom's taxonomy), **explanation** (level 2), and **application** (level 3). If you have no previous experience of any kind, then your learning goals should focus on understanding before all else. Just make sense of what's going on. Once you have acquired understanding, then you can work on being able to correctly and clearly explain. The third step is competent application of your new knowledge and skills.
+
+The book supports this scaffolded approach to learning by design [inspired by @weinstein2018understanding; @brown2014science; @doyle2018new]. I recommend you read each chapter twice. Read it the first time on its own. Focus on understanding the concepts and see how each part of the chapter fits together into a coherent whole. Read the code and take notes. If something is unclear to you, write a reminder about what you don't understand *but keep reading*. Once you get to the end of the chapter, stop. If you have time, sleep on it. Give your brain a chance to process everything you've exposed it to. Let it move some of that content from short-term memory to long-term memory overnight! Then, without letting too much time pass, go back to the start of the chapter, but this time, *make sure you are sitting in front of a computer*. Type out the code in the chapter as you go, changing little things here and there to see how things work. Then, try to work through the problems and online learning materials associated with the chapter (described below). Whenever you encounter a gap in your knowledge, (i) explicitly make note of it and (ii) fill it by going back to the relevant part of the chapter or by searching online.
+
+My second piece of advice is to consider your learning process in computational social science as a kind of enculturation process (even though computational social science has many different communities and cultures). This is very different from the learning-with-a-checklist mindset. Checklists are helpful when they break complex things down into small manageable chunks, which is why each chapter starts with a (check)list of learning objectives. That said, checklists make it easy to forget that the individual items themselves are not really the point. The way I present computational social science is heavily focused on the underlying **principles** and **practices** of the field, as well as the shared conceptual underpinnings of a wide variety of methods and models (e.g., Bayesian inference).
+
+Learning to do computational social science in line with these principles usually requires slowing down at first to unlearn some deeply ingrained habits and replace them with others. It's less about "learning Python" or other specific skills than it is about enculturation into a culture of transparent, auditable, and reproducible scientific computing. To align yourself with these core principles, you must know how to write all of your data collection, cleaning, and analysis code in well-organized scripts or notebooks, managed using virtual environments and version control software, and executed from the command line. Knowing how to use each tool is just the first step; to subsume principle and practice is the end goal. Most social scientists are never taught this, and many well-intentioned efforts to share important "how-to" knowledge have the unintended consequence of disorienting and overwhelming highly capable newcomers who, through no fault of their own, can't see the point of doing things in such a seemingly byzantine fashion.
+
+My third piece of advice is to be kind to yourself. Regardless of how challenging you find the material, *there is a lot to learn*, and you can't learn it all at once. The knowledge and skills that are required to develop deep expertise are scattered throughout the entire book. Most of the foundational *technical* stuff you need to know to get started, however, is introduced in the earliest chapters. Everything else is about gradually layering more specific computing skills on top of the general foundation. As you progress, regularly and honestly assess the state of your knowledge: you will see progress over time.
+
+### Using Large Language Models to Enhance Your Learning
+
+In the few years since this book was published, Large language models (LLMs) like OpenAI's ChatGPT, GitHub's Copilot, Anthropic's Claude, Google's Gemini, and Meta's Llama (which is open source) have burst onto the scene. Everything is different now. If you choose to use them, these tools can be an invaluable learning resource or a major liability. Perhaps most importantly, you should use LLMs as learning aids rather than crutches. Here are a few examples of how you might do that: 
+
+- **Clarifying Concepts**: When you encounter a concept that is challenging to grasp, you can ask an LLM to provide explanations with more or less technical detail, with or without analogies, or by drawing connections to other concepts you already understand. 
+- **Clarifying Code**: When you are reading someone else's code -- mine, for example -- and something isn't quite making sense, you can ask an LLM to provide a detailed line-by-line explanation. After reviewing the explanation, you can ask follow up questions to clear up any lingering confusion. 
+- **Parsing Errors**: Debugging code is an important skills, but can be one of the most frustrating aspects of programming, especially when you're starting out. LLMs can help you interpret error messages and suggest potential fixes. For example, if you run some code and get a `TypeError`, you can input the error message into an LLM and ask for assistance: "I'm getting a 'TypeError: unsupported operand type(s) for +: 'int' and 'str'' in my code. What does this mean, and how can I fix it?" Instead of mindlessly copying code until it seems to work, treat the LLM like a tutor and make a sincere effort to understand the problem and proposed solution. 
+- **Exploring Alternative Approaches**: If you're thinking through ways to solve a problem, you can ask an LLM to critique your ideas or outline alternative methods. 
+- **Developing Tests**: As you develop as a computational social scientist, you'll reach a point where it is important to ensure your code works as intended by putting it through a battery of tests. However, writing tests can be tedious. LLMs can help you write better tests more efficiently, and can prompt you to consider scenarios that you may otherwise overlook.
+- **Drafting Documentation**: Similarly, writing clear documentation is essential for both your future self and others who might read your code. LLMs can assist in drafting and updating documentation to explain exactly what your code is designed to do.
+
+There are just a few examples of how LLMs can be a helpful tool in learning computational social science, but it's crucial to maintain some healthy skepticism. Always critically evaluate the responses you receive, cross-reference with reliable sources, and test any code or suggestions provided. Remember, the goal is not to have the LLM do the work for you but to use it as a tool to enhance your own understanding and problem-solving abilities. 
+
+By thoughtfully integrating LLMs into your learning process, you can overcome hurdles more efficiently and deepen your understanding of computational social science. But it's very important to use LLMs responsibly, and to disclose when and how you use them in your work. Be cautious about sharing sensitive data when using these models, especially if they are cloud-based services. Always adhere to ethical guidelines and data protection regulations relevant to your field and region.
+
+
+## Roadmap  {#sec-roadmap}
+
+::: {.callout-warning}
+## This Content Will Change!
+
+The roadmap below **will change.** Skim it if you want a general sense of what's to come, but know that I won't put much effort into changing this roadmap until the revisions are finished, or close to finished.
+:::
+
+This book is carefully structured so that a complete newcomer can start at the beginning and work through it step by step. It’s also flexible enough to allow readers with some background to jump to specific chapters depending on their needs. Here’s a preview of what you can expect, highlighting some important changes from the print edition.
+
+### Introduction
+
+The introduction sets the stage for your journey into computational social science. It includes:
+
+|     |                                             |
+|:---:|:--------------------------------------------|
+| 🏠  | About this edition                           |
+| 00  | Learning to do computational social science |
+
+: Introduction {.striped .hover .responsive tbl-colwidths="[10,90]"}
+
+I've updated this chapter to reflect changes in assumed backgrounds and added a new section offering guidance on using large language models (LLMs) like ChatGPT and GitHub Copilot for learning and doing computational social science.
+
+### Part I | Research Computing
+
+In Part I, we dive right into programming with Python, laying the groundwork for all the computational methods to come. These chapters have been revised to reflect current best practices, while keeping the core content similar to previous versions.
+
+|     |                                       |
+|:---:|:--------------------------------------|
+| 01  | Getting started with Python           |
+| 02  | Python 101                            |
+| 03  | Python 102                            |
+
+In **Chapter 1: Getting started with research computing**, we set up the computational environment and go over essential tools for research computing, such as version control and basic command-line skills. **Chapters 2 and 3** cover Python fundamentals, including basic data types, control flow, functions, data structures, and working with files.
+
+### Part II | Obtaining Data
+
+Part II focuses on acquiring and working with different types of data. This section includes updates and new chapters, making the learning experience more streamlined.
+
+|     |                                  |
+|:---:|:---------------------------------|
+| 04  | Sampling and survey data         |
+| 05  | Web data (APIs)                  |
+| 06  | Web data (Scraping)              |
+| 07  | Audio, image, and document data  |
+
+**Chapter 4** is a new chapter that introduces essential knowledge and skills for working with real world survey data using `Pandas`. We'll use several public opinion surveys, including the Eurobarometer and European Values surveys and a Canadian survey on attitudes about harm reduction initiatives for people who use drugs (PWUD).
+
+In **Chapter 5**, you'll learn how to collect data from APIs, with practical examples like *The Guardian* for news data and the YouTube Data API for social media data. **Chapter 6** focuses on web scraping, with updates to reflect changes in web technologies and ethical considerations. **Chapter 7** is a new chapter that introduces working with multimedia data, such as audio, images, and documents—an increasingly important skill in modern computational social science. This chapter is currently in development and should be publically available in winter 2025.
+
+### Part III | Exploring Data
+
+Part III delves into exploratory data analysis (EDA) and introduces a central theme in this book: latent factors, components, and variables. This content has been extensively revised to focus on the *process* of exploratory data analysis (EDA) with different types of data and research problems (rather than focusing on how to use Python for EDA, which was an unintended consequence of the approach I took in the print edition).
+
+|     |                                     |
+|:---:|:------------------------------------|
+| 08  | Processing structured data          |
+| 09  | Exploratory data analysis and visualization |
+| 10  | Association and latent factors      |
+| 11  | Text as data                        |
+| 12  | Text similarity and latent semantic space |
+| 13  | Social networks and relational thinking |
+| 14  | Structural similarity and latent social space |
+
+**Chapter 8** covers processing structured data like survey or readymade datasets. **Chapter 9: Exploratory data analysis and visualization** focuses on purposeful EDA as part of a broader workflow. **Chapter 10: Association and latent factors** introduces latent factors and components, preparing you for more complex models in later parts. **Chapters 11-14** introduce text analysis and network modeling, with an emphasis on latent structures in both text and social networks.
+
+### Part IV | Prediction and Inference
+
+This section has undergone significant changes, focusing more deeply on prediction in supervised machine learning, followed by probabilistic reasoning, Bayesian inference, and causal inference.
+
+|     |             |
+|:---:|:------------|
+| 15  | Machine and statistical learning |
+| 16  | Prediction                       |
+| 17  | Probability                      |
+| 18  | Credibility                      |
+| 19  | Causality                        |
+
+**Chapter 15: Machine and statistical learning** introduces supervised learning and prediction. **Chapters 16-18** develop a strong foundation in probabilistic reasoning and Bayesian inference. **Chapter 19: Causality** introduces causal inference with observational data using directed acyclic graphs (DAGs) and Bayesian causal models.
+
+### Part V | Generative Modeling
+
+Part V builds on the previous part by introduces generative models, including linear models, network models, text models, and agent-based simulations. All of these chapters have been extensively revised and explicitly build on one another.
+
+|     |                                |
+|:---:|:-------------------------------|
+| 20  | Linear regression              |
+| 21  | Multilevel regression with post-stratification |
+| 22  | Generalized linear models      |
+| 23  | Causal analysis                |
+| 24  | Latent structure in networks   |
+| 25  | Latent topics in text (LDA/STM) |
+| 26  | Complex adaptive systems       |
+| 27  | Developing agent-based models  |
+
+**Chapter 20-22** guide you through core statistical models in a Bayesian framework, emphasizing Bambi and PyMC integration. **Chapter 23** explains how to use these kinds of models for causal analysis, and **Chapters 24-27** take you into advanced generative modeling for networks, topics, and agent-based models.
+
+### Part VI | Deep Learning Demystified
+
+Part VI introduces neural networks, natural language processing (NLP), and transformer-based models.
+
+|     |                                                                   |
+|:---:|:------------------------------------------------------------------|
+| 28  | Artificial neural networks (FNN, RNN, CNN)                        |
+| 29  | Processing natural language data (SpaCy and embeddings)           |
+| 30  | Transformers and self-attention                                   |
+| 31  | Latent topics in text and images using transformers               |
+
+In **Chapter 28**, we cover neural networks with traditional feed-forward, recurrent, and convolutional architectures, which sets the stage for **Chapter 29** on processing natural language data and understanding word vectors / embeddings. **Chapter 30** introduces the attention architecture used by transformer models and demonstrates how to use transformers from HuggingFace for senitment analysis and named entity recognition. **Chapter 31** introduces transformer-based topic models for text and image data.
+
+### Part VII | Professional Responsibilities and Ethical Practice
+
+The final section of the book addresses our professional responsibilities as computational social scientists, specifically doing ethical research in reproducible, transparent, and accountable ways.
+
+|     |                                        |
+|:---:|:---------------------------------------|
+| 32  | Research ethics and politics           |
+| 33  | Next steps                             |
+
+**Chapter 32** retains it's original content, but has been expanded to include debates about LLMs, "alignment," and "uncensored" models. **Chapter 33** offers guidance on further developing your skills in computational social science.
+
+## Datasets Used in This Book
+
+As I mentioned previously, the examples in this book are based around a variety of real-world datasets that are likely more similar to what you would work with on a daily basis than the convenient toy datasets that are often used in other learning materials. These datasets generally fall into one of three categories:
+
+1. **"Structured" datasets**, for lack of a better term. If you've worked with real-world statistical data before, the format of these structured datasets is likely to be familiar to you: their rows represent observations (or cases), and their columns represent variables. We will make frequent use of four such datasets, each described in the subsection below.
+    - Varieties of Democracy
+    - European Values Study (EVS)
+    - Freedom House "Freedom on the Net"
+    - US 2020 Election Dataset
+2. **Relational/network datasets**. These are also "structured" data, but they differ from the structured data listed above in that they describe meaningful *relationships* between entities (e.g., people). We will make frequent use of four relational datasets, also described below.
+    - SocioPatterns friendship networks
+    - The Copenhagen Networks Study data
+    - The Enron email communication network
+    - A series of networks constructed by parsing information from text data
+3. **Text datasets**. We will make use of a number of text datasets throughout the book, but the two most important by far are datasets of millions of political speeches by Canadian and British politicians.
+    - The Canadian Hansards, 1867–2020
+    - The British Hansards, 1802–2020
+
+Below, I provide a general overview of these datasets and explain where to go if you want to learn more about them. You may want to come back to these descriptions as you work through the book.
+
+### "Structured" Datasets
+
+The **Varieties of Democracy (V-Dem)** dataset [@coppedge2020v] is the result of a massive project with collaborators from nearly every country in the world, headquartered at the V-Dem Institute at the University of Gothenburg, Sweden. It contains a dizzying array of data points that are, in aggregate, used to measure key aspects of political regimes for countries around the world along a continuum of democratic and autocratic, grounded in five major theoretical traditions in political science, political sociology, and political theory and philosophy. The dataset includes over 4,000 variables per country-year, including a set of five high-level scales used to assess the extent of electoral, liberal, participatory, deliberative, and egalitarian democracy in a given country per year, stretching back to the 1800s. We will be using subsets of the larger V-Dem dataset extensively, especially in the first half of the book. You can learn a *lot* about the V-Dem project, and everything you would ever want to know about this dataset and more, from @coppedge2020v, and from the codebook for Version 11 of the dataset [@coppedge2021v].
+
+The **European Values Study (EVS)** [@evs2017], housed at the Data Archive for the Social Sciences of GESIS – Leibniz Institute in Cologne, is a set of standardized surveys of participants across Europe on topics including religion, national identity, morality, politics, family, work, society, and the environment, among other things. Each survey dataset includes over 400 variables spanning demographics and the aforementioned focal areas. They are administered in the context of one-hour face-to-face interviews with an additional questionnaire. Participation in all EVS surveys is on the basis of informed consent and is completely voluntary. Participation in the study is confidential, all data is anonymized, and direct identifiers are never added to the EVS database.
+
+The **Freedom on the Net** dataset is created and maintained by Freedom House [-@fh2020], a U.S. nonprofit headquartered in Washington, D.C. Unlike the two massive datasets preceding this one, the Freedom on the Net dataset consists of five substantive variables for each of the 65 countries included. Three of those variables are sector scores, tracking 'Obstacles to Access', 'Limits on Content', and 'Violations of User Rights'. The final two are an overall numerical score measuring internet freedom and a categorical label derived from the overall numerical score that labels countries as having either 'Free', 'Partly Free', or 'Not Free' access to the internet. We primarily use the Freedom House dataset as a companion to the V-Dem dataset to see if it's possible to predict a country's internet freedoms using other (non-internet-related) democratic indices.
+
+The final "structured" dataset we will use in this book is a **US 2020 Election Dataset**, created by my PhD student Pierson Browne specifically for this book. The dataset was built from components of three different datasets:
+
+- 'Individual Contributions', from the U.S. Government's Federal Election Commission [-@us2020],
+- The 2017 Cook Partisan Voting Index [@cook2017], and
+- Raphael Fontes' "US Election 2020" dataset, publicly available on Kaggle [@Fontes2020].
+
+The dataset covers Campaign Spending Differential, Vote Differential, Cook Partisan Voting Index, Republican Incumbency, and Democratic Incumbency, for each of the 435 Federal Congressional Districts electing Voting Representatives contested in the 2020 U.S. General Election. We will use this dataset extensively throughout our chapters on Bayesian Regression and Bayesian Hierarchical Linear Regression.
+
+### Relational/Network Datasets
+
+The **Copenhagen Networks Study** dataset was created by Piotr Sapiezynski, Arkadiusz Stopczynski, David Dreyer Lassen, and Sune Lehmann [-@sapiezynski2019interaction]. It consists of a multi-layered relational network based on digital interactions between 700 undergraduate students from the Technical University of Denmark. We will use this dataset in the chapters that discuss contagion dynamics on social networks. The data was primarily collected from questionnaires, Facebook, and participants' smartphones. It includes measures of digital interaction, physical proximity, and online 'friendship.' There are too many details to fully recount here, but @sapiezynski2019interaction provide extensive details in their *Nature (Scientific Data)* article. All participants gave free and informed consent and were aware of their ability to withdraw from the study at any time and/or to have their data deleted. The authors took great pains to ensure participant privacy throughout. All of the automatically logged data was anonymized.
+
+The **Enron email communication network dataset** was collated by my PhD student Tyler Crick specifically for this book, once again by doing extensive work cleaning and augmenting existing datasets. The base download of the data came from a version with corrections made by Arne Ruhe [@ruhe_2016]. This version was later found to have inconsistencies with other available versions, such as the many available from EnronData.org under a Creative Commons Attribution 3.0 United States license. A significant number of job titles were still missing from these datasets, so thorough searches of LinkedIn, Google's web cache, and the Internet Archive were used to either verify the identified job titles and correct missing or vague ones ("Employee," for example, quite often was actually a trader). The data was used here only for social network analysis, so only the relational aspects (sender and receiver email address) were retained from the emails—no text content from the email bodies is reproduced here.
+
+The **SocioPatterns** dataset [@mastrandrea2015contact] is the result of a collaborative research project run by the ISI Foundation in Turin, Italy; the Centre de Physique Théorique in Marseille, France; and Bitmanufactory in Cambridge, United Kingdom. There are a number of datasets contained therein, but we will only use two:
+
+- A directed self-reported friendship network between high-school students in Marseille, France, in December 2013
+- A directed contact network constructed from students' contact diaries
+
+All participants were over 18 at the time of study deployment and offered free and informed consent. The *Commission Nationale de l’Informatique et des Libertés* approved the study, including its privacy measures.
+
+### Text Datasets
+
+Nearly all of the text analysis we do in this book will focus on examples from two massive text datasets: The Canadian Commons Hansard and the British Commons Hansard. Both are very similar but are unique to their national contexts. The **British Commons Hansard** is created by the British Government [@britHans] and contains transcripts (not verbatim, but close) of recorded speeches in British Parliament, dating back to 1802. It consists of all of the speeches made by politicians in Parliamentary sessions, recorded, transcribed, and entered into public record. Similarly, the **Canadian Commons Hansard** [@canHans] is created by the Canadian Government and consists of transcripts (not verbatim, but close) of recorded speeches in Canadian Parliament, dating back to 1867.
+
+There is, of course, much more to say about these datasets than what is included here, or in the specific chapters where we use these datasets. I encourage you to consult the citations for each dataset to learn more. There are also additional details available in the online supplementary materials (described below).
+
+## Learning Materials
+
+### Learning Objectives, Key Concepts, Recommended Content, and Key Points
+
+Each chapter in this book follows a few conventions to help you learn. First, each chapter starts with a set of itemized learning objectives and ends with a bulleted set of key points in the chapter. Of course, these are not meant to cover *everything*. The learning objectives highlight some of the key things you should ensure you understand before moving on to the next chapter. The key points that conclude each chapter are intended to help connect the end of each chapter with the start of the next; note that they are not detailed enough to stand in for carefully working your way through the chapter (by design).
+
+Throughout each chapter, you will find the first mention of all key concepts in bold text. That's where I define many key terms, so you'll want to be especially attentive to that content. Finally, each chapter also contains boxes that provide some additional advice and recommendations. Most of the time, I'll point you to other readings and resources that you can use to further develop your knowledge and skills.
+
+### Online Supplementary Learning Materials
+
+- **TODO**: Update this for the new and revised supplementary learning materials.
+
+The central design decision that has guided all other decisions in the creation of this book—to **show** you how to **do** computational social science—means that many of the additional learning materials are not well-suited to the printed page. Every chapter in this book is accompanied by a wide variety of supplementary materials created by myself, Pierson Browne, Tyler Crick, Alexander Graham, Jillian Anderson, and a number of other computational social scientists and data scientists. These materials are all provided as an **online** supplement because (1) it makes them vastly more useful to you, and (2) it frees up an astonishingly large number of words in the book that can be put to other uses, like teaching more methods and models in greater depth than otherwise possible.
+
+All of the supplementary learning materials for this book are provided in a git repository (which you will learn about shortly) available at [github.com/UWNETLAB/doing_computational_social_science](https://github.com/UWNETLAB/doing_computational_social_science). Among other things, you will find:
+
+1. A set of carefully scaffolded **problem sets** accompanying each chapter in the book. These problem sets are much more extensively developed than what you would typically find at the end of each chapter in books such as this one. These are the problems that I use in my own classes at the University of Waterloo. An answer key for instructors is available upon request.
+2. A copy of the **datasets** we use in this book, though filtered and subsetted to include only the portions I actually use in each chapter. You will also find instructions to secure the full datasets if you wish.
+3. A set of **perspectives and practical advice** from other computational social scientists and data scientists. Many of these were initially part of the book manuscript itself, but the combination of life interrupted via COVID-19 and with more than 100,000 words to cut from the penultimate draft, they've been moved to the online materials. An unintended benefit of this change is that more perspectives can be included afterwards. Expect this part of the online materials to grow over time.
+4. **High-resolution color images** of every one of the figures in this book, with file names that are easily matched back to images in the book.
+5. Instructions on how to download and use dozens of **large-scale pre-trained language models** trained by Tyler Crick and myself at the University of Waterloo.
+6. A wealth of **additional materials on scientific computing** that will take you *well* beyond the basics introduced in Chapter 2.
+7. **Course syllabi**.
+8. A **DCSS virtual environment** (explained below and in Chapter 2).
+9. And more...
+
+These supplementary materials are intended to help you work interactively through every chapter of the book, to test your knowledge and practice your skills, to share important views and experiences other than my own, and to provide some additional chapter-specific material that is worthwhile but doesn't 'fit' in this version of the book for one reason or another.
+
+Chapter 2 explains how to download these materials and get your scientific computing environment set up. Once you've done that, you'll be able to make extensive use of all of the accompanying materials as you work through the book.
+
+### The DCSS Computing Setup and Python Package
+
+Finally, this book also ships with its very own pre-built computing environment that ensures you will be able to use all the exact packages (with the exact same versions) that are used in this book no matter which operating system you are using, and no matter what changes occur between the time this book goes to the printers and when you pick it up to read it. It will make your life a *lot* more convenient, not to mention that of instructors who may assign this book in a course while looking to spend less time on technical support. Everything you need to know about this carefully crafted environment, including how to access it and use it, is provided in the next chapter. Note that this is setup is completely different than the one that was designed for the print edition.
+
+I've also created a Python package, appropriately called `dcss`, to accompany this book. It's been extensively redesigned and refactored since the initial release. It's included in the installations managed by the virtual environment, so you don't need to do anything special to install it.
+
+## CONCLUSION
+
+Now that you have a sense of what this book is about, how it's designed, and how you can get the most from it, it's time to start doing computational social science! Let's get started.

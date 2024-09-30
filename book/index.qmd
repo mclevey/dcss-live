@@ -1,0 +1,48 @@
+# 👋 Hello! {.unnumbered}
+
+::: {.callout-warning}
+## Under Construction
+
+You've found the **continuous development** edition of *[Doing Computational Social Science](https://www.amazon.ca/Doing-Computational-Social-Science-Introduction/dp/1526468182)*. This version contains numerous corrections, updates, and improvements, but **is still a work in progress!** Expect the content to evolve as I work through planned revisions. If you notice any issues or have feedback, I'd love to hear from you! Please use the "**Report an issue**" link in the right margin $\longrightarrow$ to open an issue on GitHub.
+
+John  
+September 2024
+:::
+
+## Updates to the Book
+
+I am thoroughly revising *Doing Computational Social Science*. Here's an overview of the most important changes I've made, with a note about what to expect in fall 2024 and winter 2025:
+
+1. In the print edition, I assumed that readers had already taken at least one course in quantitative research methods for the social sciences. In this edition, I've dropped that assumption. I now see the first half of this edition as an introduction to modern quantitative research methods, and the second half as an introduction to computational methods and models. Of course, it doesn't really matter where "quantitative" methods end and "computational" methods begin; these are just labels and symbolic boundaries. The appendix [Courses and chapter sequences](appendix-courses.qmd) outlines several proposed chapter sequences tailored for 12-week undergraduate and graduate-level courses in quantitative and/or computational methods, as well as for courses on specialized methods (like text or network analysis), substantive topics (e.g., culture, sociology of science), or short workshops.
+
+2. This edition introduces research workflows much earlier and emphasizes a "generative" modeling approach throughout. The basics of this approach are covered in the early chapters and gradually developed as the book progresses, resulting in a more streamlined learning experience that unfolds more deliberately and with greater depth.
+
+3. Computational social science, quantitative social science, and data science have evolved rapidly since the print edition, even though it's only been a couple of years. The most important shift is in natural language processing and text analysis, where transformers have completely revolutionized the game. In response, I've revised how machine learning and artificial intelligence are introduced, with significant changes to sections on text analysis and deep learning. Additionally, I've woven content throughout the book on the ethical use of large language models (LLMs) -- such as OpenAI's ChatGPT, Anthropic's Claude, Meta's LLaMA, Google's Gemini, and various open-source models available via Ollama -- in computational social science research.
+
+4. All code examples have been updated to use the latest versions of popular packages, ensuring compatibility with current tools and best practices.
+
+5. Finally, I've made numerous minor revisions and corrections to improve clarity and fix small errors.
+
+### Planned Updates
+
+Several changes are still in progress, including new chapters that I'll be working on through fall 2024 and early winter 2025. Pending updates are flagged throughout the book, but the impact on readers should be minimal. Stay tuned!
+
+## Updates to the Computing Setup
+
+My recommendations for setting up your computing environment have changed to reflect recent innovations in open-source scientific computing. The new approach is outlined in [Getting Started](01-getting-started.qmd). In short, you'll need to install Docker, VS Code, and git. Once you clone the course materials and open them in VS Code, you'll be prompted to reopen the files in a "Container." Simply say yes, and everything should work smoothly. Alternatively, you can skip local installation entirely and run everything in the cloud using GitHub Codespaces. Detailed instructions are provided in [Getting Started](01-getting-started.qmd).
+
+## Updates to the Python Package
+
+The `dcss` Python package has been completely redesigned and refactored. I've simplified the software dependencies, added unit tests, implemented type hinting (which enhances modern editor features like code auto-completion), and improved the package documentation. It's now easier to install, maintain, and update, and it's more efficient and broadly applicable to research problems beyond those covered in the book.
+
+## The Supplementary Learning Materials
+
+I'm in the process of redesigning and developing new supplementary materials, including problem sets and interactive learning tools like flashcards and quizzes for each chapter. I've updated the suggested chapter sequences for various university courses, and—most importantly—I've launched this "continuous development" edition. 🔥
+
+## About the Author
+
+**John McLevey (he/him)** is Professor and Chair of the Department of Sociology at Memorial University in St. John's, NL, Canada (since 2024). From 2013–2024, he was an Associate Professor in Knowledge Integration, Faculty of Environment, and Sociology & Legal Studies at the University of Waterloo (Waterloo, ON, Canada). His current research focuses on disinformation, censorship, and political polarization across a wide range of national contexts and political regimes. This book is informed by his experiences as a researcher, advisor, and teacher in computational social science, data science, and quantitative research methods, working with students from diverse disciplinary backgrounds at both undergraduate and graduate levels.
+
+## Dedication
+
+For Quinn and Nora.

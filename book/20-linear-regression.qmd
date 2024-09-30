@@ -1,0 +1,484 @@
+# Bayesian Regression Models with Probabilistic Programming
+
+## LEARNING OBJECTIVES
+
+- Specify a Bayesian linear regression model with PyMC
+- Understand the logic of using Python's context management to develop models with PyMC
+- Use PyMC to conduct a prior predictive check to ensure that our model is not overly influenced by our priors
+- Read a traceplot to assess the quality of a stochastic sampler
+- Assess and interpret models by 
+    - Constructing and interpreting credible intervals using the Highest Density Interval method
+    - Conducting Posterior Predictive Checks
+    - Plotting uncertainty
+
+## LEARNING MATERIALS
+
+You can find the online learning materials for this chapter in `doing_computational_social_science/Chapter_28`. `cd` into the directory and launch your Jupyter Server.
+
+## INTRODUCTION
+
+In this chapter, we'll actually develop some Bayesian regression models. We will slowly develop a simple linear model, explaining the ins and outs of the process using a package for probabilistic programming called PyMC. Then we'll criticize the model we've built and use those critiques to build a much better model in the next chapter. 
+
+Our example here, and in the next chapter, will be the influence of money on voting outcomes by state in the 2020 American General Election. Given that we would like data that is regionally representative and as numerous as possible, we're going to focus on the electoral contests that took place across America's 435 congressional districts. 
+
+It's almost a truism to state that money wins elections. In light of this fact, one of the most critical decisions a political party can make is where and how to allocate their funds. It's far from an easy problem to solve: every dollar spent on a race where the result is a foregone conclusion represents a dollar that might have helped shift the result in a more tightly-contested district. In the US, both the Democratic and Republican parties are perpetually attempting to outdo each other by allocating their limited resources more efficiently, but their task is an asymmetric one: Republicans might, for instance, get better returns (measured in votes) on their investment in Alabama than Democrats would in the same state for the same amount. Of course, given that Alabama swings so heavily Republican, it might be a mistake for any party to invest funds there, given that the races in most of Alabama's districts were probably over before they began. Let's see what we can learn. 
+
+### Imports
+
+```python
+import pandas as pd
+import numpy as np
+import seaborn as sns
+import pymc as pm
+import arviz as az
+
+import matplotlib as mpl
+from matplotlib import pyplot as plt
+
+from dcss.bayes import plot_2020_election_diff, plot_2020_election_fit
+
+from dcss import set_style, download_dataset
+set_style()
+```
+
+### Data
+
+The data we will use for this chapter is stored in a CSV called `2020_election/2020_districts_combined.csv`. Rather than take you through the entire process of cleaning and pre-processing the data, we've done it for you this time; it's ready to go! It's worth noting, however, that the cleaning and pre-processing steps we've taken for this data (and the models we're going to fit in this chapter) are *very* similar to those that we've taken in previous chapters.  
+
+
+```python
+us_election_2020_data_url = "https://www.dropbox.com/scl/fo/gcotab57xtv9a0ga5vums/ANB2gm71cIXW1NcLwA5ezXY?rlkey=nai1uun6mkl10a66ekzs692ux&st=rmbsufjx&dl=0"
+
+download_dataset(
+    us_election_2020_data_url, 'data/2020_election/'
+)
+```
+
+```python
+df = pd.read_csv('data/2020_election/2020_districts_combined.csv')
+df.head()
+```
+
+In this chapter, we're only going to be utilizing a small subset of the available variables: going forward, I'm going to restrict my discussion to only those that are pertinent to this chapter (the rest will come into play in the subsequent chapter). 
+
+### Checking and Cleaning the Data
+
+We'll start by summarizing the variables we intend to use. Doing so helps us get a sense of what those variables look like, where on the number line they lie, and how they might best be modelled. We can do this with using Panda's `.describe()` method.
+
+```python
+pd.options.display.float_format = "{:.2f}".format
+
+df[['vote', 'spend', 'districts']].describe()
+```
+
+The `state` and `districts` variables are straightforward: they represent the state and numerical identifier associated with the congressional district in question. The `vote` and `spend` columns are a little more involved. For the past 29 years, American federal elections have been an almost completely two-party affair. Almost all viable candidates at almost every level of government belong to either the Democratic or Republican parties. There are some notable exceptions (such as the technically independent senators Bernie Sanders and Angus King), but almost all politically viable independent politicians in the US are Democrats in all but name (they often even receive the official endorsement of the Democratic party, and are not opposed by any member). Given the ubiquity of this political duopoly, we can simplify our data by focusing solely on the differential in votes and spending between the two major parties. 
+
+We've decided to treat Republicans as our 'negative' case and the Democrats as our 'positive' case. Casting the two in diametric opposition allows the `vote` and `spend` variables to represent the *differential* between the two parties: when `vote` is positive, it means the Democrats received more votes than the Republicans. A negative `vote` value means the Republicans received more votes than the Democrats. Ditto for `spend`. 
+
+Although this helps us simplify our model immensely, it also comes at a cost: we can only include districts where both Democrats and Republicans *officially* ran, spent campaign funds, and received votes. This limitation has reduced our data from 435 districts to 371; a steep cost, but not an altogether unwarranted one. More advanced models could incorporate and model the dropped data, but we're keeping it simple.
+
+Now that the data is loaded, let's create a scatterplot so we can see how it is distributed (Figure @fig-26_01). 
+
+
+```python
+plot_2020_election_diff(df)
+plt.savefig('figures/27_01.png', dpi=300)
+```
+
+![png](figures/27_01.png){#fig-26_01}
+
+In the above scatterplot, each point represents a single congressional district in one of the 50 states. The x-axis represents the Democrats' 'spending differential', which is just the amount of money the Democrats spent in a congressional race minus the amount the Republicans spent in the same. The y-axis, 'vote differential', is similar: it represents the amount of votes the Democrats received minus the amount the Republicans received. 
+
+I've broken the plot into four quadrants and labelled them. The upper-left quadrant represents the best-case scenario for the Democrats: districts here were won by Democratic candidates despite the fact that the Republicans spent more money on the race. The lower-right is the inverse; it represents the worst-case scenario for the Democrats, wherein they outspent the Republicans yet still lost. You might notice that comparatively few districts fall into these two quadrants: this might imply that both parties are fairly adept at avoiding overspending in districts where they're unsure of victory. 
+
+The final two quadrants, upper-right and lower-left, contain the districts where the winning party spent more money than their opponents did (which, for the most part, is what we'd expect). Now let's prepare the model for inclusion in our model.
+
+#### Standardize Data, Process Categoricals
+
+Generally speaking, it's a good idea to standardize any non-categorical data you plan to use in a modelling context. We do this by first shifting the numerical value so that its mean is 0. Then, we divide each observation by the standard deviation of the data, which converts the variable into a value whose units are 'standard deviations', or z-scores. We're also going to tackle our non-numerical categorical variable, `state`, which is currently a list of strings (the `districts` variable is also categorical, but it's already numerical and is thus good-to-go as-is). We're going to use Pandas to convert `state` into an explicitly categorical object, extract numerical codes from it, and then use those codes to determine how many different states we're working with (remember, some may have been dropped when we cleansed our data of ~60 districts). The code cell below accomplishes all this; there are more efficient ways to accomplish our task, and we've even covered some of them elsewhere in the book. Nevertheless, we're going to do them manually here to help give you a better sense of what's going on.
+
+
+```python
+spend_std = (df.spend - np.mean(df.spend)) / np.std(df.spend)
+vote_std = (df.vote - np.mean(df.vote))/ np.std(df.vote)
+state_cat = pd.Categorical(df.state)
+state_idx = state_cat.codes
+n_states = len(set(state_idx))
+```
+
+## DEVELOPING OUR BAYESIAN MODEL
+
+Using the modelling language we established in the previous chapter, let's create a model that uses spending differential to predict vote differential in congressional districts:
+
+\begin{align}
+\text{vote}_i &\sim \text{Normal}(\mu_i, \sigma)\\
+\mu_i &= \alpha + (\beta \cdot \text{spend}_i)  
+\end{align}
+
+Based on the hypothetical model we developed last chapter, this format should look familiar: the top line is our likelihood, and the linear model on the second line determines where the mean of the likelihood function falls. Now that we have our likelihood and linear model specified, we can play the "What's That?" game, which will see us through to the creation of a fully-specified model. Let's look at our model definition again; we'll start with the data, which are the variables whose values we have observations of. They are:
+
+1. $\text{vote}_i$
+2. $\text{spend}_i$
+
+We have real, actual numerical values for both of the above, so we don't need to do any guessing about them. Next, let's turn our gaze to the statistics - the variables whose values are (at least in part) derived from other variables:
+
+1. $\mu_i$ - mean parameter for likelihood function
+2. $\alpha$ - the intercept
+3. $\beta$ - coefficient for `spend`
+1. $\sigma$ - standard deviation parameter for likelihood function
+
+Since we don't have any strong reasons to think that any of those variables should take on any particular values, we can use *uninformative priors* for each. We have a large amount of data to work with, so as long as our priors are not unduly mis-specified, they will likely be overwhelmed by the weight of evidence and have no noticeable impact on our posterior distributions. Here's what I've elected to use (feel free to play around with different priors at your leisure). The text on the right (Likelihood, Linear Model, etc.) is not necessary, but it's a nice reminder of what each line in the model represents.
+
+\begin{align}
+\text{vote}_i &\sim \text{Normal}(\mu_i, \sigma)& \text{[Likelihood]}  \\
+\mu_i &= \alpha + (\beta \cdot \text{spend}_i)  & \text{[Linear Model]} \\
+\alpha &\sim \text{Normal}(0, 2)                & \text{[alpha Prior]} \\
+\beta  &\sim \text{Normal}(1, 2)                & \text{[beta Prior]} \\
+\sigma &\sim \text{Exponential}(2)              & \text{[sigma Prior]} \\
+\end{align}
+
+### Making the Model with PyMC
+
+Since we've already discussed how and why to use stochastic samples to approximate the posterior distribution in a Bayesian model, we'll go straight into using stochastic samplers using a package called PyMC. PyMC is designed to facilitate the specification, fitting, and simulation of Bayesian models, and it includes state-of-the-art stochastic samplers. While far more sophisticated than anything we've described in this book thus far, PyMC is conceptually similar to -- and based upon -- the Markov Chain and related techniques covered in the previous chapter.
+
+PyMC is expansive and constantly evolving -- any attempt to capture even a modest percentage of its contents would be futile. As with other packages discussed in this book, you will likely use a very small portion of it extensively, and the rest much more rarely. I encourage you to avail yourselves of PyMC's extensive [documentation and helpful tutorials](https://www.pymc.io/projects/docs/en/latest/index.html). For now, we will focus on what you need to build your own Bayesian regression from scratch.
+
+Before we actually make the model, we have to introduce a bit of Python programming knowledge that we've *used* before but have not actually explained: context management. 
+
+  
+> **Further Reading**    
+>   
+> @salvatier2016probabilistic provide a detailed introduction to PyMC, and @martin2018bayesian provides an excellent in-depth introduction to statistical modelling and probabilistic programming with PyMC. If you want to go beyond the Bayesian methods we discuss in this book, I especially recommend working though @martin2018bayesian. 
+>
+
+
+#### Context Management for Modelling with PyMC
+
+Although the PyMC package has a wide variety of use cases, we'll exclusively use it for modelling. PyMC uses an unusual (though convenient) convention to simplify the necessary syntax for modelling. To understand it, we first have to briefly cover what a 'Context' is in Python.
+
+Python contexts are immediately recognizable by their use of the `with` statement, and are usually employed to manage system resources that are in limited supply. That's why you'll frequently see them used with I/O operations, where files are being read from or written to disk. Rather than leaving those files open and available for further editing, the `with` block ensures that the files are opened and closed in perfect lockstep with when they're needed. A typical I/O context might look like this: 
+
+```python
+with open("data/hello.txt", 'w') as file:
+    file.write("hello")
+```
+
+PyMC's approach to modelling seeks to simplify the syntax by requiring that their models be used within the bounds of a context. It looks something like this: 
+
+
+```python
+with pm.Model() as test_model: 
+    testPrior = pm.Normal("testPrior", mu=0, sigma=1)
+```
+
+Anytime you want to create a model, add variables to a model, or specify any other aspect of the model or how you plan to fit it, you can do so using PyMC's context management. In the code block above, we defined a new model and called it `test_model`. That object now persists in our global namespace, and we can call it directly, which will prompt PyMC to give us a (slightly confusing) printout of the model specification:
+
+
+```python
+test_model
+```
+
+We can also examine the individual variables, which also exist in the namespace by themselves:
+
+```python
+testPrior
+```
+
+Finally, we can also call the model directly with the `with` statement to add more variables (or do whatever else we please):
+
+```python
+with test_model:
+    anotherTest = pm.Normal("anotherTest", mu=2.5, sigma=10)
+        
+test_model
+```
+
+#### Specifying the Model in PyMC
+
+Now, we can start describing our model. We're going to do this in chunks, starting with the priors:
+
+```python
+with pm.Model() as pool_model:
+    # Priors
+    alpha = pm.Normal("alpha", mu=1, sigma=2)
+    beta = pm.Normal("beta", mu=1, sigma=2)
+    sigma = pm.Exponential("sigma", lam=2)
+```
+
+We used one line per prior to define a distribution for each. The distributions themselves were drawn from PyMC's library of distributions, which contains all of the distributions we discussed in Chapter 26 and other well-known distributions.
+
+Each call to `pm.Normal` in the code above included 3 arguments, the first of which is always a string representation of the variable's name. It's up to you how you name your variables. If at all possible, I prefer to name them so that they're a one-to-one match with their Python counterparts. Doing so makes it much easier to read model output without cross-referencing against your model specification. The second and third arguments were passed as keyword arguments (they don't need to be, but we wanted to make it explicit here); these are the $\mu$ and $\sigma$ we know and love, and they represent the mean and standard deviation for each of the Normal distributions we used. 
+
+There's only one exception to the pattern above, which comes in the form of the `pm.Exponential` distribution we used for the standard deviation of the outcome. It still took in a name as its first argument, but we provided a `lam` argument, which represents the distribution's 'rate' (and, conveniently, is also the inverse of its mean value). 
+
+Now, let's make another call to our model to add the line which represents the linear model -- the part that's responsible for combining all of the observed variables and priors we specified above:
+
+```python
+with pool_model:
+    # Linear Model
+    mu = alpha + beta * spend_std
+```
+
+The line we used to specify the linear model should look very familiar to you - it's nearly a dead ringer for the line we've been using in the formal model specification! The major difference is that we used `spend_std`, rather than `spend` -- the former is the standardized version of the latter, and PyMC almost always prefers standardized variables. At this point, all that remains is to add the likelihood:
+
+```python
+with pool_model:
+    # Likelihood
+    votes = pm.Normal("votes", mu=mu, sigma=sigma, observed=vote_std)
+```
+
+Our specification of the likelihood should appear as a straightforward representation of what we had built earlier, but with one major addition: **the 'observed' parameter**. When we pass data to this parameter, *PyMC knows to treat this variable as a likelihood as opposed to a prior*. Notice that if we were to remove the `observed=vote_std` argument, we would be supplying something that's functionally identical to the priors we added in step 1. 
+
+And that's it! We now have a fully-specified PyMC model! All we need to do to get it to run is to add one more line, which we'll do in the following major section. But before we do, we're going to take a brief detour to make sure that our model isn't totally off-base.
+
+### Prior Predictive Check
+
+One of the most oft-repeated criticisms of the Bayesian paradigm is the use of potentially indefensible prior distributions. Yeah, sounds bad. Is it?
+
+I've mentioned previously -- and, statisticians with far more expertise than I have have demonstrated elsewhere -- that most models are simple enough and are conditioned on large enough volumes of data that *any* combination of priors, regardless of how off-base they are, will be overwhelmed by the likelihood of the evidence, leaving inference more-or-less unaffected. The only really important exception here is an entirely off-base prior that assigns probabilities of 0 to important parts of the parameter space. Hopefully this is some cause for comfort, but the fact that our models are usually 'safe' from prior-based bias does *not* mean that we can become complacent. 
+
+One of the rituals we use to stave off complacency is the **Prior Predictive Check**. As we learned in previous chapters, one model's prior is another model's posterior; from a mathematical (but *not inferential*) standpoint, posteriors and priors are largely identical. This is convenient for us, because it means that we can draw samples from our model's prior distribution much the same way we'd draw samples from any other distribution. In so doing, we can give ourselves a picture of what our model thinks is likely to occur *before it has seen any data*.  
+
+Fortunately, PyMC has built-in functionality for sampling from the prior (which simply draws sample values from the distributions we've already defined). We'll re-use the model context to achieve this and save the results in a new variable:
+
+```python
+with pool_model:
+    prior_predictive = pm.sample_prior_predictive(
+        samples=50, var_names=['alpha', 'beta', 'sigma', 'votes'], random_seed=42)
+```
+
+The `prior_predictive` object that we just created is an `arviz.InferenceData` object. We can examine the groups available in this object:
+
+```python
+prior_predictive
+```
+
+We can see that it contains the groups: `prior`, `prior_predictive`, and `observed_data`. To access the samples of our priors and simulated observations, we can use the following:
+
+- Prior samples are in `prior_predictive.prior`
+- Simulated observations are in `prior_predictive.prior_predictive`
+
+For example, we can access the samples of `alpha` and `beta` from the prior:
+
+```python
+alpha_samples = prior_predictive.prior['alpha'].values.flatten()
+beta_samples = prior_predictive.prior['beta'].values.flatten()
+```
+
+Take some time to flip through the values in the `prior_predictive` object, and you'll notice that they're stored as xarray DataArrays. If you examine `alpha_samples.shape`, you'll see that there are 50 samples (the number of samples we asked for). Similarly for `beta_samples`.
+
+Now that that's done, we can just plug the parameter samples into a simple reproduction of our linear model.
+
+Results are shown in Figure @fig-26_02.
+
+```python
+spend_grid = np.linspace(-20, 20, 50)
+
+plt.xlim((-10, 10))
+plt.ylim((-10, 10))
+
+alpha_samples = prior_predictive.prior['alpha'].values.flatten()
+beta_samples = prior_predictive.prior['beta'].values.flatten()
+
+for a, b in zip(alpha_samples, beta_samples):
+    # This is the same linear model that appeared in our PyMC definition above
+    vote_sim = a + b * spend_grid 
+    plt.plot(spend_grid, vote_sim, c="k", alpha=0.4)
+
+plt.axhspan(-2, 2, facecolor='black', alpha=0.2)
+plt.axvspan(-2, 2, facecolor='black', alpha=0.2)
+    
+plt.xlabel("Expenditure differential (standard deviations)")
+plt.ylabel("Vote differential (standard deviations)")
+plt.savefig('figures/26_02.png', dpi=300)
+```
+
+![png](figures/26_02.png){#fig-26_02}
+
+The above plot contains 50 different regression lines drawn from our model's prior distributions -- a quick glance shows that our priors leave a whole lot of room for improvement. Here's how you can tell: the intersecting grey areas in the plot represent two standard deviations on both of our variables, which means that roughly 95% of our data points will fall somewhere within the darker grey area of overlap. We can see that the majority of the regression lines we sampled from our model cross through the darker grey area from the lower-left to the upper-right, albeit at slightly too sharp an angle. A great many of the lines, though, only barely skim the edges or corners of the box; some fail to cross it altogether. If your model produces one or two highly suspect regression lines, that's not a cause for concern. When your model produces a great many (as is the case with ours), it might be time to consider making your priors a little more informative.
+
+Take a look at what we can do by tightening our priors a little. The results are shown in Figure @fig-26_03.
+
+```python
+with pm.Model() as regularized_model:
+
+    # Priors
+    alpha = pm.Normal("alpha", mu=0, sigma=0.5)
+    beta = pm.Normal("beta", mu=0.5, sigma=1)
+    sigma = pm.Exponential("sigma", lam=1)
+
+    # Linear Model
+    mu = alpha + beta * spend_std
+
+    # Likelihood
+    votes = pm.Normal("votes", mu=mu, sigma=sigma, observed=vote_std)
+
+    reg_prior_pred = pm.sample_prior_predictive(
+        samples=50, var_names=['alpha', 'beta', 'sigma', 'votes'], random_seed=42)
+```
+
+```python
+spend_grid = np.linspace(-20, 20, 50)
+
+plt.xlim((-10, 10))
+plt.ylim((-10, 10))
+
+alpha_samples = reg_prior_pred.prior['alpha'].values.flatten()
+beta_samples = reg_prior_pred.prior['beta'].values.flatten()
+
+for a, b in zip(alpha_samples, beta_samples):
+    # This is the same linear model that appeared in our PyMC definition above
+    vote_sim = a + b * spend_grid 
+    plt.plot(spend_grid, vote_sim, c="k", alpha=0.4)
+
+plt.axhspan(-2, 2, facecolor='black', alpha=0.2)
+plt.axvspan(-2, 2, facecolor='black', alpha=0.2)
+    
+plt.xlabel("Expenditure differential (standard deviations)")
+plt.ylabel("Vote differential (standard deviations)")
+plt.savefig('figures/26_03.png', dpi=300)
+```
+
+![png](figures/26_03.png){#fig-26_03}
+
+Based on the above plot, we can see that our new regularized model has a very strong preference for regression lines that hem closely to the origin (0 on both axes), and feature a moderately positive relationship between `spend_std` and `vote_std` (most regression lines have a positive slope). There's still quite a bit of variability in the predictions: owing to their steeper incline, some of the regression lines travel through a limited span of the middle area. Others are more or less flat (predicting no relationship between spending and votes), and our model even permits a few of the lines to reverse the trend entirely and predict that increased spending is correlated with *fewer* votes received. All said, *MUCH better!*
+
+When selecting priors for a model, I like to use two simple heuristics:
+
+1. Priors shouldn't make the impossible possible
+2. Priors shouldn't make the possible impossible
+
+The process of setting good priors involves more than simply following these two heuristics of course, but this is a good starting point. Once you've gotten the hang of setting priors following basic guidelines, you should feel free to descend into the particulars at your leisure. A good place to start doing so is [**cite** this guide](https://github.com/stan-dev/stan/wiki/Prior-Choice-Recommendations) from the developers of another probabilistic programming tool for Bayesian data analysis called STAN.
+
+Now that we've created a better model using more sensible priors, we're going to abandon it and forge ahead using the worse one. *Why?* I've got two didactic reasons:
+
+1. By proceeding with the worse model, we'll be able to see how even modest amounts of evidence can overwhelm poorly-specified priors with ease.
+2. It won't happen until next chapter, but we'll see how models with poorly-specified priors can do ruinous things to more complex models.
+
+### Running Our Model
+
+Our model is ready to run -- all we need to do is to add one more line to get it started! This is where we tell PyMC to sample our model and produce a posterior distribution (which, in PyMC-speak, is contained in a 'trace' object). By default, PyMC draws 2,000 samples for each of the 4 chains, resulting in a grand total of 8,000 samples. The first 1,000 samples in each chain will be 'tuning' samples, used to get our proverbial marble into the right ballpark before we start drawing samples that we'll incorporate into the posterior. In terms of the skate bowl metaphor from the previous chapter, you can think of each of the different chains as representing a different marble-robot pair. Each of those 4 pairs will repeat the 'randomly whack the marble' process 1,000 times, and the result of all of the marble whacks in aggregate will form our posterior. Let's get a-whackin'!
+
+```python
+with pool_model:
+    # Run Sample Traces
+    trace_pool = pm.sample()
+```
+
+If everything's working correctly, our PyMC model should spit out a collection of preliminary text followed by a progress bar that should fill up in relatively short order. Running this last line of code hasn't actually done anything to our model proper, but it has produced a 'trace' object that contains all the information we need to see how our model performed under sampling. First, let's use the trace variable to produce a summary (for which we'll use the `arviz` package, which is a companion module to the PyMC package, and which facilitates diagnosis and inference). The standard `az.summary` printout provides an overwhelming amount of data, so we're going to artificially limit what it shows us for now. We'll get to the other important variables a little later:
+
+```python
+summary = az.summary(trace_pool, round_to=2)
+summary[['mean', 'sd', 'r_hat']]
+```
+
+Each of the rows in the dataframe above are dimensions of our posterior distribution and the three columns represent different summary statistics ArviZ has calculated for us.  The three statistics we care about right now are the mean, the standard deviation, and the 'r_hat' (or $\hat{r}$) of each dimension. 
+
+If you've fit and interpreted regression models before, you might find the mean and sd variables familiar: they simply represent the centre and width of the posterior distribution for that particular dimension. In a Frequentist regression, we would be implicitly comparing each of these hypotheses (one for each covariate) to the assumed 'null hypothesis' and deciding whether or not to reject the null hypothesis based on the strength of the evidence. You would usually look for a series of little stars to rapidly assess the statistical significance of each alternative hypothesis. Since this is a Bayesian regression, you'll find no such machinery here: the numbers we've printed here are just a summary of the full answer we've tasked ourselves with providing, *which is always the full shape of the entire posterior distribution*. A good Bayesian is obsessed with retaining as much information and uncertainty as possible throughout the modelling process.
+
+If you are not familiar, the r_hat statistic is a purely diagnostic statistic and is not normally interpreted. If all is well with your model, you would expect to see all of the r_hat values to be 1.00, or very close to. Anything higher than that (even 1.02 or greater) is a sign that something has gone wrong in your model.
+
+### Checking the Traceplot
+
+One of the most important steps in any Bayesian regression model involves checking your model's 'traces' to ensure that nothing went awry behind the scenes. ArviZ has some really nice built-in tools for this, shown for our trace pool model in Figure @fig-26_04.
+
+```python
+az.plot_trace(trace_pool, var_names=['alpha', 'beta', 'sigma'], compact=True)
+plt.savefig('figures/26_04.png', dpi=300)
+```
+
+![png](figures/26_04.png){#fig-26_04}
+
+Each row in the foregoing grid of plots corresponds to a row in the dataframe summary we produced above. The left column of plots presents you with the shape of the posterior distribution corresponding to one variable in the model (or, equivalently, one dimension of the posterior distribution). The right column of plots shows you the 'trace' of the PyMC sampler as it attempted to fit your model. You can think of each line in each traceplot representing a single marble being swatted around a high-dimensional skate bowl, and each row of the figure (there's one per parameter) is one of those dimensions. This might seem a bit unintuitive at first, but the x-axis in each of the plots on the left represents the exact same thing as the y-axis of their counterpart in the same row on the right! They both represent the parameter's value: the left is showing you the estimated posterior distribution of the parameter, and the right is showing you how the marbles moved to produce it (the x-axis for each plot on the right is the 'sample number'; you can think of the marbles as moving from left to right within each plot). 
+
+Another thing you might notice is that all of our parameters look normally distributed now; that isn't much of a surprise for $\alpha$ and $\beta$, but what about $\sigma$? Since we used the Exponential distribution as its prior, shouldn't we expect its posterior to be Exponentially distributed, too? Not at all; the only reason we were using the Exponential distribution was to prevent our model from making the mistake of using negative numbers as potential parameter values for our Normal distribution's $\sigma$ parameter (which is undefined for all numbers below 0). Even if you use a non-normal distribution for a prior, you'll often find that your posterior distribution for that parameter is Normal. Nothing to worry about.
+
+What you *should* be worried about is the shape of your traces. There are three things we want to see in a 'good' trace: 
+
+1. **We want to make sure that the algorithm is stationary**, meaning that it has located the area of highest posterior probability and is spending all of its time bouncing around near it. When chains wander around and never settle in one region of the parameter space, it's a bad sign. To spot a non-stationary trace, look for lines that spend a good amount of time in one part of the posterior and then suddenly switch to another area and stay there for an extended period. 
+2. **We want to make sure that our samplers are exploring the posterior space rapidly and efficiently**, which is called 'good mixing'. When a chain is mixing well, it will appear to be darting around from one side of the posterior distribution to the other rapidly. Chains that aren't mixing well might be stationary in the long run, but take a long time to move back and forth. To spot a poorly-mixed trace, look for lines that slowly and gradually move around (as opposed to the frenetic, zippy movement of the healthy lines we see above).
+3. **We want to make sure that each of the various chains we use have converged**, meaning they all spent most of their time in the same region of the posterior; if 3 chains are stationary in one area of the posterior, but the 4th chain is spending all of its time a good distance away, there's a problem afoot. It's often easier to spot non-stationary traces on the left-hand side of the trace plot, where it's easy to notice if one of the traces' distributions differs significantly from the others. The small amount of wiggliness we see in the $\sigma$ plot above is no big deal at all.
+
+The trace plots we've produced here are all ideal. Later on, we'll show you some that are *far* from ideal. If you can't wait to find out what bad trace plots look like, you can find lots of detail at this blog post: https://jpreszler.rbind.io/post/2019-09-28-bad-traceplots/. It features a bunch of examples that are more extreme than anything we're going to see in this book, but is worth taking a look at nonetheless!
+
+Let's return to those nice-looking distributions on the left-hand side of the diagram again. You might notice that there are a few different lines in each plot -- each of the 4 different chains we used to fit our model is separately represented, each with a different line pattern. In fact, those 4 separate lines appear in the trace plots on the right-hand side, too; they're just much harder to see individually (which is a good thing - that means our marbles were well-behaved). 
+
+Since each of the four lines in each of our distribution plots are in broad agreement (they differ slightly, but not even remotely enough to indicate any problems), we can use these distributions to get an accurate idea of where our model thinks the parameter values are most likely to fall. 
+
+### Establishing Credible Intervals
+
+Now, let's dig into each of our variables in a bit more detail; we can do so using ArviZ's `plot_posterior` function. Our focus will be on something called the '**HDI**', which stands for the '**Highest Density Interval**'. The HDI is the closest thing you're going to see to the Frequentist '95% confidence interval' (or similar) in Bayesian data analysis. Statistically, the HDI represents the shortest possible interval in one dimension of the posterior distribution which contains a predetermined amount of probability. We use the HDI interval to provide us a sense of the area in the distribution that we're confident (to a predetermined extent) contains the best-fitting parameter value. 
+
+It's up to us to determine how much of the posterior probability we want to appear inside our HDI. In his classic Bayesian text, Richard McElreath [-@mcelreath2020statistical] uses an abundance of cheek when suggesting that Bayesians should employ a prime number for no other reason than the fact that it is prime. He portrays this as a way of subtly jabbing Frequentists for their automatic use of an arbitrarily-set significance threshold of .05, whose progenitor specifically indicated should not be adopted as a default. Hilarious! (Though to be fair, many Frequentists are themselves trying to get other Frequentists to stop doing that.)
+
+We'll follow in McElreath's footsteps and use 0.89, but there's no good reason why we couldn't use something like 0.83 or 0.79. The default for most ArviZ plots is 94%; having made our point, we'll leave the HDI intervals at their defaults from here on out. Results are shown in Figure @fig-26_05.
+
+```python
+fig, axs = plt.subplots(3, 1, sharex=True, sharey=True, figsize=(6, 6))
+az.plot_posterior(trace_pool,
+                  ax=axs,
+                  var_names=['alpha', 'beta', 'sigma'],
+                  hdi_prob=0.89)
+fig.tight_layout()
+
+plt.savefig('figures/26_05.png', dpi=300)
+```
+
+![png](figures/26_05.png){#fig-26_05}
+
+We decided to force PyMC and ArviZ to plot all three posterior distributions (and their HDIs) on the same unified axis so you could directly compare their positions and widths. The black bars under each of the plotted distributions represent the span of our chosen HDI. The numbers that appear to the left and right of the black bar represent the HDI's upper and lower bounds -- this gives us a precise numerical range within which our chosen probability density can be found.
+
+Remember that unlike the Frequentist paradigm, the Bayesian paradigm allows us to apply probability and probabilistic statements to hypotheses. That's exactly what we're doing when we create a credible interval! The credible interval represents the region of the posterior probability within which we expect the underlying parameter value to fall, conditional on a predetermined amount of uncertainty. The lower we set our HDI interval, the tighter it becomes, but the less certain of it we are. In our example above, we used an 89% interval; had we set that interval to, say, 79%, it would occupy a smaller proportion of the number line, but we would also have less confidence that the interval contains the 'true' parameter value (if such a thing can be said to exist). 
+
+The more certain we are of a parameter's value (as a result of having a posterior distribution with a smaller standard deviation), the more narrow and concentrated our HDI becomes. But even if we had nearly limitless data to feed into our Bayesian machine, we'd never reach perfect certainty about a parameter value, at least not while using a continuous range of hypotheses. If you think back to our probability primer in Chapter 26, this is because our probability density is an integrated value, and the value of any integral on a span of 0 length is 0: thus, the probability of any single hypothesis (such as $\beta = 1$) will also be 0. We can only ever speak of probability as accumulating within a *range* of hypotheses.
+
+The HDI is a common and well-understood method of constructing a credible interval. It is not, however, the only means of doing so. We don't have the time to cover them in detail, but it's worth weighing the merits of HDI against other techniques for developing a credible interval. Some place more emphasis on ensuring that the credible interval has the same amount of probability on either side of it, ensuring that it is in the 'middle' of the posterior distribution. Others mimic the HDI, but allow it to split in the middle so as to cover a 2-humped posterior. Good options abound, many of which can be found in the details of the [ArviZ's `plot_posterior` documentation](https://arviz-devs.github.io/arviz/api/generated/arviz.plot_posterior.html). 
+
+### Posterior Predictive Checks
+
+Just in case you hadn't yet seen enough plots of roughly normal-looking distributions, we're going to do one more. In much the same way as we drew samples from our model's prior distribution to perform a prior predictive check, we can draw samples from our model's posterior distribution to perform a **posterior predictive check**. While the purpose of the prior predictive was to ensure that our model wasn't out to lunch, the posterior predictive is designed to see how well it performs at **retrodicting** the evidence we fed to it. 
+
+Just as with the prior predictive, we start by drawing samples from our model:
+
+```python
+with pool_model:
+    ppc = pm.sample_posterior_predictive(trace_pool, var_names=['votes', 'alpha', 'beta', 'sigma'])
+```
+
+If you inspect it, you'll find that the resulting `ppc` object is an `arviz.InferenceData` object. We can use this object directly with the `ArviZ` functions. In the code cell below, we use the `az.plot_ppc` function to produce a plot of our posterior predictive (Figure @fig-26_06):
+
+```python
+az.plot_ppc(ppc, num_pp_samples=100, legend=False)
+plt.savefig('figures/26_06.png', dpi=300)
+```
+
+![png](figures/26_06.png){#fig-26_06}
+
+In the above plot, observations from our outcome variable (the standardized vote differential) are arranged along the x-axis, and the frequency (or density) of an observation of that value is tracked along the y-axis. The light wispy lines represent all of the retrodictions made by one set of posterior parameter values (of which we sampled 100); the dashed line represents the overall average of each sample. The solid black line represents the observed data.
+
+Ideally, we'd want to see our model adhere more closely to the observed data: as it stands, our model tends to underpredict the number of congressional districts that the Republicans won by a single standard deviation and greatly overpredicts the number of extremely close races (in and around the origin).
+
+### Plotting Uncertainty
+
+I know I've said it quite a lot already, but one of the reasons why we use Bayesian methods in the first place is because we want to preserve uncertainty to the greatest extent possible throughout the entire modelling process. You'll often find that other approaches to regression analysis produce a 'line of best fit' or a 'predictor line' or something similar. In Bayesian analysis, we instead produce a *range* of such lines, each of which is probabilistically drawn from our posterior distribution, and each of which differs from the others. Since it's difficult to appreciate information at this scale directly, Bayesian regression leans heavily on visualization techniques to provide intuitive guides to inference. Here, we're going to draw samples of predicted outcomes and parameter values from our posterior distribution (using a PyMC function designed for just such a task), feed those sampled values through our linear model, and plot the 94% HDI range of the results (Figure @fig-26_07).
+
+```python
+plot_2020_election_fit(spend_std, vote_std, trace_pool, ppc)
+plt.savefig('figures/26_07.png', dpi=300)
+```
+
+![png](figures/26_07.png){#fig-26_07}
+
+In the above plot, the black line represents the mean (or average) predictor line. Its value was produced by averaging over thousands of such lines, 94% of which fall entirely within the smaller, darker band around the black line; that band represents our model's uncertainty in the regressor. Our model *also* models predictive uncertainty -- or, in simpler terms, the width of the band within which it expects 94% of the data to fall (which is controlled by our model's `sigma` parameter, which we also have some uncertainty about). It's uncertainty piled upon uncertainty (and so on *ad infinitum*), but it produces a set of results and visualizations that are remarkably intuitive to read and interpret.
+
+Nevertheless, we can now produce a preliminary interpretation of what our model is telling us: using the posterior predictive plot and the various parameters summaries from earlier, our model is indicating an increase of 1 standard deviation in spending differential tends to correlate with a roughly 0.45 standard deviation increase in vote differential.  
+
+There's just one catch, which you may or may not have noticed by looking at the plot. This model sucks. We can do better. That's what the next chapter is all about. 
+
+## CONCLUSION
+
+### Key Points 
+
+- Bayesian regression is a powerful, flexible approach to regression analysis
+- Just because simple Bayesian regression models with plenty of data aren't all that sensitive to the priors placed on their latent variables doesn't mean that you should be complacent about setting priors: a prior predictive check can be helpful in this regard 
+- Bayesian regression emphasizes preserving and visualizing uncertainty whenever and however possible

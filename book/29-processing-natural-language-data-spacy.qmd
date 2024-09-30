@@ -1,0 +1,1112 @@
+# Processing Natural Language Data
+
+- Note the word embeddings chapter is below this one; integrate them
+
+## LEARNING OBJECTIVES
+
+By the end of this chapter, you should be able to:
+
+- Describe the main components of SpaCy's natural language processing pipeline
+- Effectively use SpaCy's `doc`, `token`, and `span` data structures for working with text data
+- Describe why normalizing text data can improve the quality of downstream analyses 
+- Describe the difference between stemming and lemmatization 
+- Use part-of-speech labels to select and filter tokens from documents
+- Examine noun chunks (ie. phrases) that are detected by SpaCy's pipeline
+- Examine Subject, Verb, Object Triplets
+
+## LEARNING MATERIALS
+
+You can find the online learning materials for this chapter in `doing_computational_social_science/Chapter_10`. `cd` into the directory and launch your Jupyter Server.
+
+## INTRODUCTION
+
+In this chapter, we will shift our focus from working with structured quantitative data to natural language data stored in the form of unstructured text. We will begin by learning how to use the package SpaCy for common natural language processing (NLP) tasks, such as cleaning and normalizing text data, followed by a discussion of labeling words by their part-of-speech, manipulating syntactic dependencies betweens words, and using all of this to create a rough 3-word summary of the content in a sentence. Later, we will put this knowledge to use for custom text pre-processing functions to use for downstream tasks in other chapters of the book. 
+
+
+### Package Imports
+
+
+```python
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+import spacy
+from spacy import displacy
+from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
+from sklearn.decomposition import TruncatedSVD
+
+from dcss import set_style
+set_style()
+```
+
+## TEXT PROCESSING
+
+With the exception of some recent neural network and embedding-based text methods that we will consider later in this book, the quality of most text analyses can be dramatically improved with careful text processing prior to any modelling. For data cleaning, common text processing tasks include removing punctuation, converting to lower case, normalizing words using techniques like stemming or lemmatization, and selecting some subset of terms to use in the analysis. When selecting the subset of terms, it is possible to use a vocabulary that you curate yourself (in which case it is referred to as a **dictionary**) or to select terms based on some sort of criteria, such as their frequency or part-of-speech (e.g., noun, adjectives). 
+
+You can process your text data any number of ways in Python, but my advice is that you use a package called SpaCy. SpaCy is, to put it plainly, head and shoulders above the rest when it comes to processing natural language data in Python, or in any other language for that matter. If you are interested in natural language processing, SpaCy alone is reason to do your work entirely in Python. In this first part of the chapter, we will introduce SpaCy with an emphasis on its built in data processing pipelines and data structures, and then we will practice using it to process a data set consisting of political speeches. 
+
+### Getting to Know SpaCy
+
+One of the major benefits of using SpaCy is that it is tightly integrated with state-of-the-art statistical language models, trained using deep learning methods that you will start learning in later chapters. 
+
+We are not yet ready to get into the details of pre-trained statistical language models, but we will briefly touch on them here since knowing a *bit* about them is an important part of learning how to use SpaCy to process natural language data. 
+
+Some recent advances have begun revolutionizing natural language processing. To grossly oversimplify things, **transfer learning** means that the output of a machine learning model that was trained in one context is reused in another context. In fields like computer vision and natural language processing, we are almost always talking about deep learning models that take an enormous amount of time and energy to train. In NLP, the basic idea is to train such a model on truly massive datasets (e.g., crawls of the entire open web). In doing so, the model learns a lot about language *in general*, but perhaps not much about any specific domain. The output from the pre-trained model can be made available to researchers, who can update it using annotated data from the specific domain they are interested in, such as news stories reporting on the Black Lives Matter movement. For most tasks, this transfer learning approach outperforms models that have been trained on a massive dataset but have not been updated with domain-specific data, or models trained the other way around.
+
+While we haven't actually gotten into the machine learning (let alone deep neural networks and transfer learning), it is useful to keep this general idea of reusing models in a transfer learning framework in mind. In this chapter, for example, all of the methods you learn how to use are *informed* by a statistical language model that has been pre-trained on a massive general text corpus, including web data from [commoncrawl.org](https://commoncrawl.org) and the [OntoNotes 5](https://catalog.ldc.upenn.edu/LDC2013T19) corpus, which contains data from telephone conversations, newswire, newsgroups, broadcast news, broadcast conversation, and weblogs. The pre-trained language models that SpaCy provides can be used as is, or they can be updated with domain-specific annotated data. In the rest of this chapter, we will not update the pre-trained models.
+
+SpaCy's pre-trained models come in three sizes -- small, medium, and large. Each is available in multiple languages^[At the time of writing, SpaCy provides these models for English, German, Spanish, Portuguese, French, Italian, Dutch, Norwegian, and Lithuanian. It is also capable of processing multilingual documents and tokenization for over 50 languages to allow model training. In the rest of this chapter and those that follow, we will use English-language models.] and follows a simple naming convention: language + model name (which is the type of model + genre of text it was trained on + the model size). The medium core English model trained on news data is `en_core_news_md`, and the large English core model trained on web data (blogs, comments, and online news) is `en_core_web_lg`. 
+
+These models vary in what they do, how they do it, how fast they work, how much memory they require, and how accurate they are for various types of tasks. As we now know, it is important to pick the model that is best suited to the specific research application. The smaller models are of course faster and less memory-intensive but they tend to be a bit less accurate. For most general-purpose tasks they work fine, but your case is probably not "general purpose" -- it is probably fairly domain specific, in which case you may want to work with a larger model, or a model that you can train and update yourself.
+
+Models are not installed with SpaCy, so you will need to download them to your machine. You can do this on the command line with the following command:
+
+```bash
+python -m spacy download en_core_web_sm
+python -m spacy download en_core_web_md
+python -m spacy download en_core_web_lg
+```
+
+One they have been downloaded, we can use SpaCy's pre-trained models by loading them into memory using the `.load()` method and assigning the model to a language object, which is SpaCy's NLP "pipeline". As we will see below, this object contains everything needed to process our raw text. You can call it whatever you want, but the convention is to call it `nlp`. Once we have imported SpaCy and loaded one of the "core" models, we are ready to start processing text. We don't need the named entity recognition or syntactic dependency parser for this part, so we'll disable those components of the pipeline.
+
+
+```python
+# nlp = spacy.load("en_core_web_sm", disable=['ner', 'parser'])
+!python -m spacy download en_core_web_sm
+nlp = spacy.load("en_core_web_sm")
+```
+
+We've now created an instance of spaCy's text processing pipeline. Let's put it to use! 
+
+#### The SpaCy NLP Pipeline
+
+Once the language model has been loaded (`nlp`), we can start processing our raw text by passing it through SpaCy's default text processing pipeline, which is illustrated in Figure @fig-10_01. This is often the slowest part of a natural language processing workflow because SpaCy does a *lot* of heavy lifting right at the start. The result of this process will be something called a `Doc` object, which we will discuss momentarily; for now, let's focus on the big picture and then circle back and fill in the details on each pipeline component and data structure later.
+
+![](figures/spacy.pdf)
+
+As shown in Figure XXX, as soon as our original text enters SpaCy's pipeline, it encounters the **tokenizer**, which identifies the boundaries of words and sentences. Most of the time, punctuation makes it relatively simple for computers to detect sentence boundaries but periods in abbreviations and acronyms (e.g. U.K., U.S.A) can complicate this simple approach. Even tokenizing individual words can be tricky, as this process involves making decisions like whether to convert contractions to one token or two (e.g. it's vs. it is), or whether to tokenize special characters like emoji. SpaCy tokenizes text using language-specific rules, differentiating between punctuation marking the end of a sentence and punctuation used in acronyms and abbreviations. It will also use pre-defined language-specific rules to split tokens like `don't` into `do` and `n't`. Although these rules are language-specific, if SpaCy doesn't already have a tokenizer for a language you need, it is possible to add new languages. (Instructions on how to do this are available in the SpaCy documentation.)
+
+In the second step of the pipeline, SpaCy assigns each a tag based on its **part-of-speech** using its pre-trained statistical models. In doing so, SpaCy combines rules-based expertise from linguistics with supervised machine learning models. The third step maps syntactic dependencies between words (e.g., which words in a sentence depend on or modify other words in a sentence) using its neural network model. At its most basic, dependency parsing is the basis for accurate sentence segmentation in SpaCy, but it also enables more complex analysis typical to the field of linguistics. The fourth step in the processing pipeline is to recognize **named entities**. This is a very useful and important task for computational social scientists but is relatively complex and tends to be highly-dependent on the data used to train the model. Therefore, we will set named entity recognition aside until later, where we can explore it in more depth and learn how to train models that are customized to work best for our specific research applications (see Chapter 33). Note that when we loaded the pre-trained language model and initialized the `nlp` pipeline, we disabled the `ner` component. Since we are not going to use it here, disabling it in the pipeline speeds up text processing a noticeable amount because it means SpaCy won't spend time executing that part of the pipeline.
+
+The general processing pipeline I have just described is summarized in the Figure below, which is reproduced from [the spaCy documentation](https://spacy.io/usage/spacy-101). Note the "Custom Pipeline Components" on the right side of the processing pipeline. This indicates the option of adding additional steps to the pipeline, such as categorizing texts based on some pre-defined set of labels, assigning customized attributes to the `Doc`, `Token`, and `Span` objects, merging noun chunks or named entities into single tokens, and so on. Technically you can add your own custom steps to any part of the SpaCy pipeline, not just the end. These custom steps are beyond the scope of this chapter, but now you know it's possible to add them. 
+
+Now that we understand how to download, load, and use pre-trained statistical models as part of SpaCy's default text processing pipeline, it's time to learn about SpaCy's containers: `Doc`s, `token`s, and `span`s. 
+
+#### The SpaCy Containers
+
+We'll use a simple example to illustrate SpaCy's containers. We start by passing some raw input text into the processing pipeline and then demonstrate how to work with the containers that store the output of that pipeline. 
+
+As an example, let's consider the abstract for Bart Bonikowski's [-@bonikowski2017ethno] journal article "Ethno-nationalist populism and the mobilization of collective resentment" published in *The British Journal of Sociology*. Here is the raw text of the abstract:
+
+> Scholarly and journalistic accounts of the recent successes of radical-right politics in Europe and the United States, including the Brexit referendum and the Trump campaign, tend to conflate three phenomena: populism, ethno-nationalism and authoritarianism. While all three are important elements of the radical right, they are neither coterminous nor limited to the right. The resulting lack of analytical clarity has hindered accounts of the causes and consequences of ethno-nationalist populism. To address this problem, I bring together existing research on nationalism, populism and authoritarianism in contemporary democracies to precisely define these concepts and examine temporal patterns in their supply and demand, that is, politicians’ discursive strategies and the corresponding public attitudes. Based on the available evidence, I conclude that both the supply and demand sides of radical politics have been relatively stable over time, which suggests that in order to understand public support for radical politics, scholars should instead focus on the increased resonance between pre-existing attitudes and discursive frames. Drawing on recent research in cultural sociology, I argue that resonance is not only a function of the congruence between a frame and the beliefs of its audience, but also of shifting context. In the case of radical-right politics, a variety of social changes have engendered a sense of collective status threat among national ethnocultural majorities. Political and media discourse has channelled such threats into resentments toward elites, immigrants, and ethnic, racial and religious minorities, thereby activating previously latent attitudes and lending legitimacy to radical political campaigns that promise to return power and status to their aggrieved supporters. Not only does this form of politics threaten democratic institutions and inter-group relations, but it also has the potential to alter the contours of mainstream public discourse, thereby creating the conditions of possibility for future successes of populist, nationalist, and authoritarian politics.
+
+I have the abstract saved in a text file called "bonikowski_2017.txt". To feed this abstract into the SpaCy pipeline we'll read it into memory, assign it to a variable, and then call our `nlp()` object on it.
+
+
+```python
+with open('data/bonikowski_2017.txt', 'r') as f:
+    abstract = f.read()
+```
+
+##### `Doc`s
+
+In SpaCy, the first data structure to understand is the **`Doc`** object returned from the default processing pipeline indicated in the Figure above. The `Doc` object contains the linguistic annotations that we will use in our analyses, such as information about parts-of-speech. As indicated in the Figure above, we create the `Doc` object by running our data through the NLP pipeline. We'll call the `Doc` object `doc`, but of course we could call it pretty much anything we want.
+
+
+```python
+doc = nlp(abstract)
+print(f'There are {len(doc)} tokens in this document.')
+```
+
+SpaCy's `Doc` object is designed to facilitate *non-destructive* workflows. It's built around the principle of always being able to access the original input text. In SpaCy, no information is ever lost and the original text can always be reconstructed by accessing the `.text` attribute of a `Doc`, `Sentence`, or `Token` object. For example, `doc.text` recreates the exact text from the `abstract` object that we fed into the pipeline. Note that although we access `.text` as we would an attribute of an object, as though the text is stored plainly as a variable attached to it, `.text` is actually a class method that retrieves the original text from SpaCy's underlying C storage structure. 
+
+Each `Doc` object includes information about all of the individual `sentence`s and `token`s that are used in the raw text. For example, we can print each individual sentence in the `Doc`. In the code block below, we print each sentence from the abstract. I won't print the full text here, but you will see it on your screen if you follow along with the code.
+
+```python
+for sent in doc.sents:
+    print(sent, '\n')
+```
+
+Similarly, we can iterate over the `Doc` object and print out each `token`. Iterating tokens is the default behaviour of a `Doc` object, so we don't need to use `.tokens` to access them.
+
+```python
+for token in doc:
+    print(token)
+```
+
+The ability to iterate over tokens greatly simplifies the process of cleaning and extracting relevant information from our text data. In the sections below, we'll iterate over tokens for a variety of important text processing tasks, including normalizing text and extracting words based on their part-of-speech, two tasks we turn to shortly.
+
+The `Doc` object itself can be stored on disk and reloaded later, which can be very useful when working with large collections of text that take non-trivial amounts of time to pass through the default processing pipeline. This can be done a few different ways, including the new `DocBin` class for serializing and holding the contents of multiple `Doc` objects, which can then be saved as a `.spacy` file using `DocBin.to_disk()`. The `to_array()` method exports an individual `Doc` object to an `ndarray` (from `numpy`), where each token occupies a row and each token attribute is a column. These arrays can also be saved to disk using numpy, but the `DocBin` method is the most convenient.
+
+
+```python
+from spacy.tokens import DocBin
+
+doc_export = DocBin()
+doc_export.add(doc)
+doc_export.to_disk('data/bart_bonikowski_doc.spacy')
+```
+
+Of course, it is possible to read these `Doc`s back into memory using methods like `DocBin.from_disk()`, or loading the saved `ndarray` and using `Doc.from_array()`. Loading from `DocBin` is the most convenient, but keep in mind that you need a vocabulary from an `nlp()` object to recreate the `Doc` objects themselves.
+
+
+```python
+doc_import = DocBin().from_disk('data/bart_bonikowski_doc.spacy')
+docs = list(doc_import.get_docs(nlp.vocab))
+doc = docs[0]
+print(f'There are {len(doc)} tokens in this document.')
+```
+
+    There are 346 tokens in this document.
+
+
+##### `Token`
+
+The second type of object to know about is the **`Token`**. A token is each individual element of the raw text, such as words and punctuation. The `Token` object stores information about lexical types, adjacent whitespace, the parent `Doc` that a token belongs to, and "offsets" that index precisely where the token occurs within the parent `Doc`. As we will see in subsequent chapters, all of this `Token` metadata can be used to accomplish specific natural language processing tasks with a high-degree of accuracy, such as the information extraction tasks covered in later chapters. 
+
+`Tokens` are stored as hash values to save memory, but just as we can access the raw input text of a `Doc` object using `.text`, we can see the textual representation of a given token using `.text`. We can also access each token by specifying its index position in the `Doc` or by iterating over the `Doc`.
+
+```python
+for token in doc:
+    print(token.text)
+```
+
+An enormous amount of information is stored about each `Token`, most of which can be retrieved using methods discussed extensively in the documentation. We'll cover examples of some fairly important ones, including methods for accessing the normalized forms of the token such as a lemma, its part-of-speech, the dependency relations it's embedded in, and in some cases, even an estimate of the token's sentiment.
+
+###### `Span`
+
+The final data structure to understand before moving on is the **`Span`**, which is a slice of a `Doc` object that consists of multiple `tokens` but is smaller than the full `Doc`. When you iterate of sentences in a document, each of those is actually a `Span`. Knowing how spans work can be very useful for data exploration, as well as programmatically gathering contextual words that are adjacent to a target type of token, such as a type of named entity. We can specify a span by using slice notation. For example, we could define a `Span` by providing the range of token indexes from 5 to 15. Note that this span will include token 5 but not token 15! 
+
+```python 
+a_span = doc[5:15]
+```
+
+Given a span, we can use many of the same methods available for `Docs` and `Tokens`, as well as merging and splitting `Spans`, or copying them into their own `Doc` objects. 
+
+Now that we have a solid foundational understanding of SpaCy's statistical models, processing pipeline, and containers, we can take a closer look at two important components of the text processing pipeline that are *very* useful when pre-processing text data for the type of analyses we will perform in this chapter: (a) normalizing text via lemmatization, and (b) part-of-speech tagging.
+
+## NORMALIZING TEXT VIA LEMMATIZATION
+
+When we work with natural language data, we have to decide how to handle words that mean more or less the same thing but have different surface forms (e.g. compute, computing). On the one hand, leaving words as they appear preserves nuances in language that may be useful. However, those words are tokenized and counted separately, as if they had no semantic similarity. An alternative approach is to normalize the text by grouping together words that mean more or less the same thing and reducing them to the same token. The idea, in short, is to define classes of equivalent words and treat them as a single token. Doing so loses some of the nuance but can dramatically improve the results of most text analysis algorithms. The two most widely-used approaches to text normalization are stemming and lemmatization. 
+
+**Stemming** is a rule-based approach to normalizing words regardless of what role the word plays in a sentence (e.g. noun or verb), or of the surrounding context. For example, the Snowball stemmer takes in each individual word and follows rules about what parts of the word (e.g. "ing") should be cut off. As you might imagine, the results you get back are usually not themselves valid words.
+
+Rather than chopping off parts of tokens to get to a word stem, **lemmatization** normalizes words by reducing them to their dictionary form. As a result, it always returns valid words, which makes it considerably easier to interpret the results of almost any text analysis. In addition, lemmatization can be done either with a simple language-specific lookup table or in a rule-based way that considers a token's part-of-speech (discussed below), which enables it to differentiate between ways of using the same word (e.g. "meeting" as a noun, "meeting" as a verb) and identical words that have different normalisation rules in different contexts. Lemmatization is extremely accurate and is almost always going to be a better choice than stemming. It is also more widely used.
+
+Keeping in mind that our most common goal with computational text analysis is to see the shape and structure of the forest, not any individual tree, you can probably see why this is useful in the context of analyzing natural language data. Although we lose some nuance by normalizing the text, we improve our analysis of the corpus (i.e. the "forest") itself.
+
+As mentioned earlier, SpaCy's `nlp()` does most of the heavy computing up front. As a result, our `Doc` object already includes information about the lemmas of each token in our abstract. By default, the latest (3.0+) version of SpaCy uses the simpler lookup lemmatizer. To use the newer rule-based one that incorporates part-of-speech information, we'll install the additional data and modify the pipeline component to use the rule-based one.
+
+You can install the `spacy-lookups-data` package in a virtual environment with
+
+```sh
+pip install spacy-lookups-data
+```
+
+Alternatively, if you are not using a virtual environment for some reason, you can run:
+
+```sh
+pip install --user spacy-lookups-data
+```
+
+This new lemmatizer needs to replace the existing one, but it *also* needs to come after the other default pipeline components that assign part-of-speech tags. Unfortunately, simply using `nlp.replace()`, puts the new lemmatizer after the parser but before the tags are mapped by the `AttributeRuler` part of the pipeline. It's unclear whether this is intentional or a minor bug due to the fact that SpaCy is in the middle of a major transition to Version 3. The easiest approach currently is to exclude the default lemmatizer during loading, then add the new one back in at the end. The lemmatizer also needs to be initialized in order to load the data from `spacy-lookups-data`.
+
+
+```python
+# nlp = spacy.load('en_core_web_sm', disable=['ner'], exclude = ['lemmatizer'])
+# lemmatizer = nlp.add_pipe('lemmatizer', config = {'mode': 'rule'})
+# lemmatizer.initialize()
+nlp = spacy.load('en_core_web_sm')
+```
+
+We can iterate over each token in the `Doc` and add its lemma to a list. It's worth noting that using `.lemma_` on a token returns only the lemmatized text, not the original token, so the `lemmas` object we create here is a standard python list of strings. To do additional SpaCy-specific operations, we have to return to the original `doc` object.
+
+
+```python
+doc = nlp(abstract)
+lemmatized = [(token.text, token.lemma_) for token in doc]
+```
+
+The list we just created contains all the tokens in our original document as well as their lemmas *where appropriate*. If not appropriate, the same token is added twice. To get a sense of the difference between the original tokens and their lemmas, and how minimal (and yet helpful) this normalization can be, let's take a peek at the lemmas from the first 100 words of the abstract:
+
+
+```python
+for each in lemmatized[:100]:
+    if each[0].lower() != each[1].lower():
+        print(f'{each[0]} ({each[1]})')
+```
+
+    accounts (account)
+    successes (success)
+    politics (politic)
+    including (include)
+    phenomena (phenomenon)
+    are (be)
+    elements (element)
+    are (be)
+    resulting (result)
+    has (have)
+    hindered (hinder)
+    accounts (account)
+    causes (cause)
+    consequences (consequence)
+    existing (exist)
+
+
+This simple process of iterating over tokens and selecting some, but not all, is something we will do again and again in this chapter. There are more efficient ways to do this kind of pre-processing work -- specifically by writing a custom function -- but we will put that task on hold until we've covered each of the individual pieces.
+
+## PART-OF-SPEECH TAGGING
+
+In some research applications, you may want to restrict the subset of words that you include in your text analysis. For example, if you are primarily interested in understanding *what* people are writing or talking about (as opposed to *how* they are talking about something), then you may decide to include only nouns and proper nouns, or noun chunks (discussed below) in your analysis. In our example abstract, nouns and noun chunks like "Europe," "radical-right politics," "Brexit referendum," "Trump campaign," "causes and consequences," "ethno-nationalist populism," and so on tell us far more about the *content* of this abstract than words such as "and," "has," "recent," or "available." We can do this by filtering words based on their **part-of-speech**.
+
+If you're a little lost at this point, that's a good thing; it means you're  paying attention, and are justifiably struggling to conceptualize the reconstitution of language we've covered in the last few paragraphs. At this point, an example might help show how these processes play out in action. Returning to our example abstract, we'll start by examining each word and its part of speech.
+
+
+```python
+for item in doc[:20]:
+    print(f'{item.text} ({item.pos_})')
+```
+
+    Scholarly (ADJ)
+    and (CCONJ)
+    journalistic (ADJ)
+    accounts (NOUN)
+    of (ADP)
+    the (DET)
+    recent (ADJ)
+    successes (NOUN)
+    of (ADP)
+    radical (ADJ)
+    - (PUNCT)
+    right (NOUN)
+    politics (NOUN)
+    in (ADP)
+    Europe (PROPN)
+    and (CCONJ)
+    the (DET)
+    United (PROPN)
+    States (PROPN)
+    , (PUNCT)
+
+
+SpaCy classifies each word into one of 19 different parts-of-speech, each of which is defined in the [documentation](https://spacy.io/api/annotation#pos-tagging). However, if you are uncertain about what a part-of-speech tag is, you can also ask SpaCy to `explain()` it to you. For example, `spacy.explain('ADJ')` will return `adjective`, and `spacy.explain('ADP')` will return `adposition`. Because the part-of-speech a word plays can vary depending on the sentence -- 'meeting' can be a noun or a verb, depending on the context -- SpaCy's approach to part-of-speech tagging combines language-based rules and statistical knowledge from its trained models that can be used to estimate the best part-of-speech for a word given the words that appear before and after it.
+
+If these 19 parts-of-speech are not sufficient for your purposes, it is possible to access fine-grained parts-of-speech that include additional information, including verb tenses and specific types of pronouns. These fine-grained parts-of-speech can be accessed using the `.tag` attribute rather than `.pos_`. As you likely expect, there are far more fine-grained parts-of-speech than coarse-grained. Their meanings can all be found online in the SpaCy documentation. 
+
+Because SpaCy assigns a part-of-speech to each token when we initially call `nlp()`, we can iterate over the tokens in our abstract and extract those that match the part-of-speech we are most interested in. For example, the following code will identify the nouns in our abstract.
+
+
+```python
+nouns = [item.text for item in doc if item.pos_ == 'NOUN']
+print(nouns[:20])
+```
+
+    ['accounts', 'successes', 'right', 'politics', 'referendum', 'campaign', 'phenomena', 'populism', 'ethno', 'nationalism', 'authoritarianism', 'elements', 'right', 'right', 'lack', 'clarity', 'accounts', 'causes', 'consequences', 'ethno']
+
+
+We can do the same for other parts of speech, such as adjectives, or for multiple parts of speech.
+
+
+```python
+adjectives = [item.text for item in doc if item.pos_ == 'ADJ']
+adjectives[:20]
+```
+
+
+
+
+    ['Scholarly',
+     'journalistic',
+     'recent',
+     'radical',
+     'important',
+     'radical',
+     'coterminous',
+     'limited',
+     'analytical',
+     'nationalist',
+     'contemporary',
+     'temporal',
+     'discursive',
+     'public',
+     'available',
+     'radical',
+     'stable',
+     'public',
+     'radical',
+     'pre']
+
+
+
+
+```python
+parts = ['NOUN', 'ADJ']
+words = [item.text for item in doc if item.pos_ in parts]
+words[:20]
+```
+
+
+
+
+    ['Scholarly',
+     'journalistic',
+     'accounts',
+     'recent',
+     'successes',
+     'radical',
+     'right',
+     'politics',
+     'referendum',
+     'campaign',
+     'phenomena',
+     'populism',
+     'ethno',
+     'nationalism',
+     'authoritarianism',
+     'important',
+     'elements',
+     'radical',
+     'right',
+     'coterminous']
+
+
+
+The accuracy of the part-of-speech tagger in version 3 of SpaCy is 97% for the small English core model and 97.4% for the large English core models, both of which are trained using convolutional neural networks. As mentioned earlier, you will only see modest gains in accuracy by switching to a larger statistical model. Ultimately, as you will soon learn, the accuracy of these kinds of models depends in large part on the data they're trained on. The good news is that the accuracy rates for part-of-speech tagging are consistently high regardless of the corpus used for training, and for researchers like us who are more interested in applying these algorithms, rather than developing them, have nothing to gain from trying to beat 97% accuracy.
+
+## SYNTACTIC DEPENDENCY PARSING
+
+The third component of the SpaCy processing pipeline (see Figure 1) is the syntactic dependency parser. This rule-based parser rests on a solid foundation of linguistic research and, when combined with machine learning models, greatly increases the accuracy of a variety of important text processing tasks. It also makes it possible to extract meaningful sequences of words from texts, such as short phrases, or components of larger narratives and frames. We will consider the power of this approach by looking at how SpaCy extracts **noun chunks** from text, setting aside more complex manipulations of the dependency tree until later.
+
+When we communicate in natural languages such as English, we follow sets of commonly held rules that govern how we arrange words, clauses, and phrases in sentences. For the most part, we learn these rules -- **grammar** -- implicitly via socialization as children, and then more explicitly later in life. For non-linguists, some explicit forms of instruction about the "correct" and "incorrect" way of doing things in a language is what probably comes to mind when we think about grammar, but from a linguistic point of view grammatical rules should *not* be seen as proscriptive but rather as cultural and evolving in populations over time. Grammatical "rules" are about dominant patterns in usage in a population (linguists use the word 'rule' in the way sociologists and political scientists do, not the way physicists do). They are one of the best examples of shared culture and implicit cultural rules we have! Rather than proscription, linguists are focused on *description* and *explanation* of grammatical rules, and there is an enormous amount of formal linguistic theory and research on modelling grammar. In fact, Pãnini's study of the grammatical structure of Sanskrit was written in the 4th-century and is still discussed today [@jurafsky2000speech]! 
+
+One of the most enduring ways of modelling grammar is **dependency parsing**, which has its origins in ancient Greek and Indian linguistics [@jurafsky2000speech]. Dependency parsing is a rules-based approach that models the relationships between words in a sentence as a directed network. The edges in the network represent various kinds of grammatical relationships between pairs of words. You may already be able to think of some important grammatical relations, such as **clausal argument relations** (e.g. a word can be a *nominal subject* of another word, a *direct* or *indirect object*, or a *clausal complement*), **modifier relations** (e.g. *adjectives* that modify a noun, *adverbs* that modify a verb), or others such as **coordinating conjunctions** that connect phrases and clauses in sentences. Linguists have documented many important grammatical relations and have systematically compared how they operate across different languages [e.g. @nivre2017universal]. SpaCy combines this rules-based dependency parsing with machine learning models, which results in extremely high levels of accuracy for a broad range of NLP tasks, such as part-of-speech tagging, discussed earlier.
+
+There are some rules around how these dependency-relation networks are constructed that are helpful to understand. First, every sentence has one root word (i.e. node) that is not dependent on any other words. It's the starting point for our sentence from which *all* other words "grow". Second, with the single exception of the root word, every word has one and only one dependency relationship with another word. Finally, there is a path that starts at the root word and connects to every other word in the tree. This directed acyclic network is usually represented with the text written horizontally left to right, with arcs connecting and labeling specific dependency relationships between words.
+
+The syntactic dependency parser built into SpaCy is powerful, accurate, and relatively fast. SpaCy also simplifies the process of understanding these syntactic dependencies by using a visualization tool called displacy, which is especially useful for researchers with little background knowledge of formal linguistic theory. For example, let's use displacy to visualize the syntactic dependencies in a short sentence. Below, we do this for a short and simple sentence. If you're executing code from a script, you should use the `.serve()` method. If you're in a Jupyter Notebook, you should use `.render()` instead.
+
+
+```python
+sentence = nlp("This book is a practical guide to computational social science")
+```
+
+![A visualization of syntactic dependency relationships between words.](figures/displacy.pdf)
+
+The dependency relations that SpaCy identified in this simple sentence are shown in the Table below and in Figure @fig-10_02 (produced using displacy). As you can see, SpaCy has mapped each word in our document to another word, based on a specific type of dependency relationship. Those dependency types are actually labeled on the arcs in the visualization. In Figure XXX and Table XXX, each word has a "head" (which sends a directed link to the word as a "child") but only some have "children" (which receive an incoming link from a word if they depend on it). 
+
+| TEXT          | DEP   | HEAD TEXT | HEAD POS | CHILDREN                |
+| :------------ | :---- | :-------- | :------- | :---------------------- |
+| this          | det   | book      | NOUN     | []                      |
+| book          | nsubj | is        | AUX      | [this]                  |
+| is            | ROOT  | is        | AUX      | [book, guide, .]        |
+| a             | det   | guide     | NOUN     | []                      |
+| practical     | amod  | guide     | NOUN     | []                      |
+| guide         | attr  | is        | AUX      | [a, practical, to]      |
+| to            | prep  | guide     | NOUN     | [science]               |
+| computational | amod  | science   | NOUN     | []                      |
+| social        | amod  | science   | NOUN     | []                      |
+| science       | pobj  | to        | ADP      | [computational, social] |
+| .             | punct | is        | AUX      | []                      |
+
+Table: A table view of the syntactic dependencies shown in Figure @fig-10_02. 
+
+For now, what's important to understand is that SpaCy does this dependency parsing as part of the default processing pipeline (and like other parts of the pipeline, it is possible to disable it if you don't need it). However, we can extract information about these dependency relations directly from the syntactic tree, which in turn enables us to extract a variety of useful information from text with a very high degree of precision, and makes it possible to partially automate methods such as quantitative narrative analysis, briefly discussed below, which are otherwise very laborious and time consuming.
+
+### Noun Chunks 
+
+One substantial benefit of dependency parsing is the ability to extract coherent phrases and other sub-sentence chunks of meaning from text. We will learn a bit about how to navigate the dependency tree shortly, but for now we can get a sense of the power of dependency parsing by looking at the example of noun phrases, which SpaCy calls "noun chunks."
+
+**Noun chunks** consist of a single word (the noun) or a string of words including a noun and the words that modify that noun. These are usually "pre-modifiers," meaning words (e.g. adjectives) that appear *before* the focal noun, not after. A **base noun phrase** is a phrase that has a noun as its head, and which does not itself contain another noun phrase. 
+
+Below, we iterate over the `doc` containing the text of Bonikowski's article and print each noun chunk:
+
+
+```python
+for item in list(doc.noun_chunks)[:10]:
+    print(item.text)
+```
+
+
+Remember, the computer doesn't actually know the meaning of any of these words or phrases. Given that, the results are surprisingly accurate; it should be clear how useful this kind of simplification could be for working with large volumes of text! In a later chapter, we will take a closer look at detecting noun chunks, using a machine learning approach designed specifically for this task.
+
+### Extracting Words by Dependency Labels:  Subject, Verb, Object Triplets
+
+Earlier, you learned how to process a large collection of `Doc`s and extract `Token`s from each based on several criteria, including their part-of-speech. We can also extract tokens from documents based on other criteria, such as their dependency relationships with other words. For example, if we wanted to extract a very small representation of an action-object narrative from a sentence (e.g., "**Kat** (subject) **plays** (verb) **bass** (object)."), we could extract the transitive verb (i.e., a verb that takes an object, "plays") and the direct object of that transitive verb (i.e., "bass"). To do this, we simply check the `.dep_` tags for each token rather than the `.pos_` tags. For example, the loops below creates a list of tuples containing the transitive verbs and direct objects for each sentence in `doc`.
+
+
+```python
+for sent in doc.sents:
+    tvdo = [(token.head.text, token.text) for token in sent if token.dep_ == 'dobj']
+    print(tvdo)
+```
+
+When analyzing text in terms of these semantic dependencies, we are often looking to extract information in the form of a **semantic triplet** of subject-verb-object, also known as an **SVO**. In social scientific text analysis, these triplets are most closely associated with the quantitative narrative analysis framework developed by Roberto Fransozi [-@franzosi2004words]. The idea, in short, is that these SVOs contain crucial information about *who* did *what* to *whom*. We will see examples of working with this kind of data in later chapters, but let's take a preliminary look at what the kind of think we can expect when extracting SVOs.
+
+Walking through the linguistic technicalities of a fully functional SVO workflow is outside the scope of this chapter, but we can use the `subject_verb_object_triples()` function included in the `dcss` package to see the results of a reasonably complex implementation of the basic idea, as outlined by researchers such as Fransozi. 
+
+
+```python
+from dcss.text import subject_verb_object_triples
+
+list(subject_verb_object_triples(doc))
+```
+
+
+Some of these look pretty good, but others leave a little to be desired. As you can probably imagine, there are an enormous number of challenges involved in automating this kind of language processing. To get things *just right*, you have to consider how people write and speak in different contexts, how sentence construction varies (active, passive; formal, informal), how statements differ from questions, and so on. It is possible to get very high-quality results by building complex logic into the way you walk through the dependency trees, but in general you can expect to find that the signal-to-noise ratio in automated SVO analyses typically means you have to do a good amount of manual work to clean up the results.
+
+  
+> **Further Reading**    
+>   
+> @vasiliev2020natural provides a fairly deep dive into spaCy for a variety of natural language processing tasks. The spaCy documentation is itself also *very* good, although some parts of it might be a bit challenging to fully understand until you know a bit more about neural networks and large-scale pre-trained language models. Those topics are covered later in the book.
+>
+
+
+## CONCLUSION
+
+### Key Points 
+
+- We discussed a variety of common text processing tasks and demonstrated how to use them on a small text dataset and a very large one. 
+- Learned about how SpaCy's text processing pipeline is organized, and how to use its data structures
+- We used SpaCy's pipeline and data structures to normalize text via lemmatization
+- Filtered and selected words based on the part-of-speech and their syntactic dependencies
+- Learned how to approximately identify the subject, verb, and object in a sentence
+
+
+
+
+
+
+# Word vectors
+
+<!-- Can We Model Meaning? Contextual Representation and Neural Word Embeddings -->
+
+## LEARNING OBJECTIVES
+
+- Learn what word embeddings models are, and what they can be used for
+- Learn what Word2Vec is and how the CBOW and Skip-gram architectures differ
+- Understand why we should not trust intuitions about complex high-dimensional vector spaces
+
+## LEARNING MATERIALS
+
+You can find the online learning materials for this chapter in `doing_computational_social_science/Chapter_32`. `cd` into the directory and launch your Jupyter Server.
+
+## INTRODUCTION
+
+The text analysis models we've been working with to this point in the book have primarly been focused on fairly traditional content analytic tasks, such as describing and comparing the thematic content contained in a collection of text documents. Nearly all of these models have been based on long and sparse vector representations of text data, otherwise known as a "bag-of-words." In this chapter, we will learn how to represent text data with short dense vectors, otherwise known as word embeddings. Embeddings have interesting implications if used to understand how different words are used in similar contexts, giving us insights into patterns of language use. There is a tendency to think of embeddings are modelling meaning, but for reasons that will become clear in this chapter, we should be careful to avoid imputing meaning to embeddings. 
+
+In what follows, we'll discuss some of the challenges involved with modelling meaning in general, followed by an introduction to using neural word embedding models. As always, we'll break the models down to better understand how they work, and we'll spend a bit of time working with pre-trained embeddings to deepen your understanding of embeddings, and to get a feel for vector space. We'll emphasize fairly simple vector math operations with these embeddings to help you understand why we should *not* assume that embeddings are good proxies for meaning, and why we need to be very careful with how we interpret the results of analyses that bundle together many vector operations to construct larger "dimensions" of cultural meaning. Finally, I'll close the chapter by showing you how to train your own word embedding models, including how to train multiple models in a way that facilitates valid cross-sectional comparisons and historical / temporal analysis. 
+
+## CAN WE MODEL MEANING?
+
+Word embeddings have received a lot of interest as quantitative representations of what words "mean." It's an astoundingly complex problem, and we need to tread very carefully. So, before we get into the specifics of the models, let's take a moment to briefly consider some of the relevant theoretical background here. 
+
+Questions about *meaning* and its consequences for social scientific inquiry have been at the center of some of the biggest theoretical and methodological debates and divides in sociology and other social sciences since at least the early 20th century [see @mohr2020measuring for a fascinating discussion in the context of contemporary cultural sociology]. Researchers primarily concerned with understanding meaning have tended to prefer more qualitative and interpretivist approaches. Historically, this complexity has led many quantitatively-minded researchers to concede serious efforts to understand meaning to interpretivists, and to focus instead on describing and comparing *content*.
+
+Despite this longstanding paradigmatic and methodological fault line, these have never been the only two options for social scientific text analysis. For example, relational sociologists working at the intersection of cultural sociology and social network analysis have developed a wide variety of formal and mathematical models of the cultural-cognitive dimensions of institutions, and for inductively exploring and modelling "meaning structures" [@mohr1998measuring; @mohr2015toward; @edelmann2018formal; @mohr2013introduction]. Much of the theoretical and methodological considerations guiding text-analytic work in "relational sociology" have evolved in lockstep with network analysis [see @emirbayer1997manifesto; @crossley2010towards; @mische2011relational], and in particular with the evolution of network analytic methods that are focused on understanding relational identities, the cultural-cognitive dimensions of institutions, and the dynamics of socio-semantic networks (which combine network analysis with various kinds of natural language processing). These developments are interesting in part because much of 1970s and 80s-era network analysis energetically eschewed all questions of culture and meaning, considered intractable and unscientific, in pursuit of establishing a thoroughly *structural* paradigm. But from the 1990s onward, even the most fervent structuralists were taking culture and meaning seriously [e.g., @white1992identity], in search of a deeper understanding of the **co-constitution** of social structure (networks) and culture (meanings, practices, identities, etc.). Much has happened since then.
+
+As part of this larger effort to integrate relational theory and methods, we've seen a proliferation of new methodological tools and approaches for text analysis -- some developed "in-house," others imported -- that try to avoid counter-productive dichotomies (e.g., quantitative and qualitative, inductive and deductive, exploratory and confirmatory). The embedding methods I introduce in this chapter and the next can be seen as another contribution to efforts to measure and model meaning structures. They have opened up new discussions in computational research on culture, knowledge, and ideology [@kozlowski2019geometry; @linzhuo2020social; @stoltz2019concept; @taylor2020concept; @rheault2020word; @mclevey2021embeddings], including deeply embedded cultural stereotypes and collective biases [@garg2018word; @bolukbasi2016man; @jones2020stereotypical; @papakyriakopoulos2020bias]. There are also ongoing efforts to develop new methodological tools for using word embeddings to conduct research, informed by intersectionality theory [@collins2020intersectionality; @collins2015intersectionality; @crenshaw1989demarginalizing], on the social categories and institutions that intersect to create and maintain social inequality and systems of oppression [e.g., @nelson2021leveraging]. We will briefly discuss these and other applications below. It is important to keep in mind my earlier statement: these issues are *complex*. We need to be careful to exercise caution when presented with "easy" answers that draw the connection between embeddings and meaning. 
+
+Of course, sociologists and other social scientists are not the only ones who've struggled long and hard with the problem of measuring and modelling meaning. The dominant way of modelling meaning in the field of computational linguistics has deep affinities with social scientific paradigms. The branch of linguistics concerned with meaning is called **semantics**, and in many respects, its starting point is the failure of dictionary-based approaches for defining the meaning of words. Paul Elbourne's [-@elbourne2011meaning] book *Meaning: A Slim Guide to Semantics* starts with a thorough debunking of the dictionary approach to meaning, showing the limitations of everyday dictionary definitions when applied to the laborious work done by philosophers over thousands of years to define the meaning of specific words like "knowledge." Many social scientists who gripe about the lack of broadly-shared definitions of core concepts in our field -- e.g. culture, network, field, habitus, system, identity, class, gender, and so on -- will be comforted to know that similar concerns are raised in other sciences and in engineering, like metallurgists being unable to reach a consensus on an acceptable definition of metal [@elbourne2011meaning, page 9].
+
+We are used to the idea that dictionaries are an authority on meaning, but of course dictionary definitions change over time in response to how language is used. For example, Merriam-Webster recently added 'they' as a personal pronoun, reflecting large-scale social changes in how we think and talk about gender identities. Other new words, phrases, and concepts from popular culture have also been added, such as the Bechdel test, swole, on point, page view, screen time, cybersafety, bottle episode, go cup, gig economy, and climate change denial. Culture and language evolve. 
+
+@elbourne2011meaning provides many examples of the "mind-boggling complexity" involved in giving adequate definitions to the meanings of words. His larger point is that any definition-based approach to assigning meanings to words (including dictionaries) will *always* be unsatisfactory. A serious theory or approach to modelling meaning needs much more than definitions. His comparison of different cognitive and linguistic theories are well worth reading but are beyond the scope of this chapter, but one of the key take-aways is that meanings are *not definitions* and they are not determined by the characteristics of the things they refer to. Instead, meanings are concepts that reside in our heads and are generally attached to low-level units like words, which are strongly modified by the contexts in which they're used and scale up to higher-level units like sentences. These meanings are shared but not universal. When it comes to any given thing -- say the word "populist" -- the concept in my head is not *identical* to the concept in your head, but communication does not break down because our concepts are qualitatively similar. We might not mean *exactly* the same thing by the word populist, but our concepts overlap sufficiently enough that we can have a meaningful conversation and our interactions don't descend into conceptual chaos.
+
+The core sociological idea here is grounded in a critique of two extremes. Traditional philosophical approaches to cognition and meaning have been overly-focused on individual thinking and meaning. Conversely, neuroscience primarily focuses on processes presumed to be more-or-less universal, such as understanding the biological and chemical mechanisms that enable thought *in general* rather than explaining specific thoughts. But as Karen Cerulo and many others have pointed out, even if the cognitive *processes* are universal, cognitive *products* are not [@lizardo2019can; @cerulo2010mining; @cerulo2002culture; @ignatow2009culture]. There is variation in how groups of people -- societies, subcultures, whatever -- perceive the world, draw boundaries, employ metaphors and analogies, and so on [@dimaggio1997culture; @brekhus2019oxford]. These meaning structures are not reducible to concepts in individual people's heads; they are embedded in different cultural systems that are external to any individual person, and are *shared but not universal.* Given this variability and the staggering complexity of meaning *in general*, we can best understand *meaning* by understanding how people use language in context. 
+
+The idea that we could best understand shared but not necessarily universal meanings by studying how groups of people use language was, surprisingly, a revolutionary idea as recently as the 1950s. It was most famously posited by the famed philosopher Ludwig @anscombe1953philosophical, whose argument that 'meaning resides in use' was the inspiration behind the *specific* linguistic hypothesis that informs embedding models and is a common theme underlying many of the recent breakthroughs in natural language processing: the distributional hypothesis.
+
+### The Distributional Hypothesis
+
+Wittgenstein's [-@anscombe1953philosophical] proposal that empirical observations of how people actually use language could reveal far more about meaning than formal rules derived through logical analysis was taken up by a group of linguists in the 1950s [especially @joos1950description; @harris1954distributionalstructure; @firth1957synopsis] who first proposed **the distributional hypothesis**, which has informed approaches to measuring and modelling meaning in language data ever since.
+
+According to the **distributional hypothesis**, words that appear in similar semantic contexts, or "environments," will tend to have similar meanings.^[Context and environment can be used interchangeably in this case. (See what I did there?) For the sake of consistency, I will use the word context.] In one of the foundational statements of the idea, Zellig @harris1954distributionalstructure defined a word's context in terms of the other words that it *co-occurs* with, given some boundary such as a phrase or a sentence. For example, we can infer that "physician" and "doctor" mean similar things if we see that they tend to be used interchangeably in sentences like "Alondra is looking for a `[physician, doctor, ...]` specializing in pain management." Across many texts, we might also learn that "doctor" and "professor" are also more or less interchangeable but in different types of context. While the former pair of words might co-occur in contexts shared with words such as "pain", "medicine", "nurse", and "injury", the latter pair may co-occur in contexts shared with words like "university", "students", "research", "teaching", and "knowledge". "Professor" and "physician" may also co-occur, but more rarely. In any instance, the meaning of the words depends on the other words surrounding it. Words that have identical, or nearly identical contexts are synonyms. In fact, the distributional hypothesis bears a striking resemblance to the idea of structural equivalence in social network analysis, which was introduced in Chapter 30. (Like synonyms, people that are structurally similar tend to be connected to the same alters.)
+
+Distributionalists like Harris and Firth believe that formal theories of language should be kept to a minimum and knowledge should be produced by rigorous analysis of empirical data on language use. Given enough data on natural language use (e.g. in everyday interactions, in email messages and social media posts, in news stories and scientific publications, etc.), we can learn an enormous amount about the contextual relationships between words as they are actually used. In practice, this idea is operationalized in terms of **vector semantics**, and is the foundation of all modern natural language processing that is concerned with understanding *meaning* [@jurafsky2000speech]. 
+
+With that briefest of context introduced, let's turn our attention to word embeddings.
+
+## WHAT ARE NEURAL WORD EMBEDDINGS?
+
+In previous chapters, we used bag-of-words models to represent individual documents as *long* and *sparse* vectors, and document collections as *wide*, *sparse* matrices (i.e., DTMs). These matrices are long because each feature represents a unique word in the vocabulary, and each cell represents something like presence / absence, frequency, or some sort of weight such as TF-IDF for each word in each document. They are sparse because most words do not appear in most documents, which means that most cells have values of 0. This approach can be very powerful for modelling latent distributions of topical content, but we actually gain more insight into what words mean by using shorter, denser vector representations, generally referred as **word embeddings**. Words are just the beginning, though. They provide a foundation we can build on to explore and model meaning and larger cultural systems in ways that were not possible just a short time ago.
+
+In bag-of-word models, we represent *documents* with long sparse vectors indicating the presence or absence, frequency, or weight of a word in each document. Embeddings differ in that they represent *words* with short dense vectors that define the local semantic contexts within wich words are used. Figure @fig-32_01 illustrates this idea of local semantic contexts using a window of 5 words that slides over each word in sentence from @neblo2018politics. This sliding window approach gives us much deeper insight into how words relate to other words, but it comes at the cost of fine-grained information about how each word relates to the documents in which they appeared. 
+
+![](figures/word2vec.pdf)
+
+In addition to (1) assigning vectors to words instead of documents, (2) observing co-occurrences within small local contexts rather than entire documents, and (3) using short dense vectors instead of long spare vectors, embeddings are also different in that (4) the vector representation for any given word is *learned* by a neural network trained on positive and negative examples of co-occurrence data. (In fact, we could have extracted embeddings from the neural networks we trained in Chapter 24!) Words that tend to appear in the same contexts, but rarely with one another, tend to share meanings. The learned word embeddings put words with similar meanings close to one another in vector space. 
+
+<!-- ## What Can We Do with Embeddings?
+
+> **NOTE**: SAME CONTENT BUT WITH A DIFFERENT TONE
+
+- **TODO**: discussion of the social scientific literature, emphasis on GoC, bias, etc. 
+- **PIERSON: REVIEW CONTENT SHOULD BE WORKED IN HERE.**
+- **TODO: This tone will be different than I imagined originally. Instead of "the point is to do these larger things," it will be more like "there are some interesting proposals, but let's be careful and not leap to big interpretations here; this is some tricky shit. don't jump into just adding and subtracting vectors and pretend you've got a perfect mathematical model of meaning.** -->
+
+### Learning Embeddings with Word2Vec
+
+Now that we have some context for understanding embeddings, let's discuss one of the most important recent breakthroughs in *learning* word embeddings from text data -- **word2vec**. As with previous chapters, the goal here is mainly to clarify the way the models work at a relatively high-level. 
+
+The development of **word2vec** by Tomas Mikolov and a team of researchers at Google [@mikolov2013distributed; @mikolov2013efficient] was a transformative development in natural language processing. As we've already discussed, word embedding models in general are focused on the local semantic contexts that words are used in rather than the documents they appear in; they *learn* these short dense representations from the data rather than relying on count-based features. Let's break down the modelling process, as we have with previous models in the book. 
+
+Word2vec has two different architectures: **Continuous Bag-of-Words (CBOW)** and **Skip-gram**. Both use word co-occurrence data generated from local semantic contexts, such as a moving window of 5 words around a focal word as shown in the example in Figure XXX. However, CBOW and Skip-gram use this co-occurrence data differently; CBOW uses the *context words* (within each thin crimson box) in a shallow neural network model trained to predict the target word (in each thick crimson box), whereas skip-gram uses the target word to predict the context words. The interesting thing about the neural network model used in these two architectures is that *we don't actually care about their predictions*. What we care about are the feature weights that the neural networks learn in the context of figuring out how to make their predictions well. *Those feature weights are our word embeddings!* We only train the neural network models to obtain the embeddings. That's their raison d'etre. 
+
+The shallow neural network models that word2vec use to learn the embeddings, illustrated in Figure XXX (which is adapted from @mikolov2013distributed), have a few clever modifications. In CBOW, the *non-linear* hidden layer is replaced by a much simpler *linear* projection. For each token in the data, the feature vector of the underlying token is the target, while the input to the neural network is the average of the vectors for each of the individual context tokens (ie. the vectors of the surrounding words). It's worth mentioning briefly that the Gensim implementation of word2vec gives the option to sum the context vectors rather than average them. After the neural network tries to predict the target word, the resulting probabilities are used to update the feature weights for both the target token *and* the vectors of the context tokens that were averaged. Once training is done, these updated weights provide each word with a single, dense vector of feature weights. For Skip-gram, rather than sending an averaged context vector to the neural network objective function, the input is the token under consideration and the output is error (probability) vectors for *each* context word that are then added together, before being used to update feature weights. 
+
+Second, the functions used for the prediction in the output layer are different than what we might typically use in such a neural network. The CBOW architecture replaces the traditional softmax (log-linear) classifier for the output layer with a binary logistic regression classifier, and the Skip-gram architecture replaces it with a much more efficient hierarchical softmax variant. In Figure @fig-32_02, $T$ represents the target word, and the indices represent word position in relation to the target word. 
+
+![](figures/word2vec_models.pdf)
+
+For CBOW, the second innovation is especially valuable, as using a softmax classifier to make and evaluate predictions would require updating feature weights (i.g., embeddings) for every word in the vocabulary every time a prediction is made for a word in the corpus. Instead, word2vec uses a clever innovation called **negative sampling**, in which the target word is evaluated as either co-occurring with the context words from the moving window or not. This enables the use of binary logistic regression for the output layer. 
+
+If you're thinking "*hold up, won't the context words all have a score of 1?*," you're right! To deal with this problem, the model randomly selects the required number of negative samples from the rest of the corpus (i.e., not from the local semantic context) and assigns them all 0s for that particular batch. As a result, the weights (again, embeddings) only need to be slightly increased for the target and context words and slightly decreased for the words from the negative sample.
+
+The CBOW architecture is a variant of bag-of-words in that word sequence *within the local semantic context* does not have an impact on the prediction task described above. The similarities end there. Rather than creating one large static matrix, the 'continuous' part of CBOW refers to how the sliding window moves through the whole corpus, creating and then discarding a bag-of-words for each target word. Since the embeddings for each of the context words are averaged for the prediction task, the semantic context is flattened to a single vector regardless of the number of words in the semantic context. For this reason, it's better to keep the semantic contexts fairly small. Otherwise the summing of embeddings can result in a non-descript vector soup, with the subtleties of each word increasingly diminished by the inclusion of more distant words. The authors of word2vec report that a window size of 4 on each side of the target word produced the best results for them. 
+
+In the Skip-gram architecture, the input and prediction tasks are basically the inverse of CBOW. Rather than using the average of the embeddings of words around the target word to try to predict the target word, Skip-gram uses the target word to try to predict the co-occurring words in its semantic context. There is no **averaging** of vectors before training, and the training process focuses on the relationship between the target word and many different context words, so the embeddings learned by Skip-gram tend to be more subtle and lossless. Skip-gram has a much longer training time, though, because each word under consideration is used to predict multiple context words before the prediction vectors for each of those words are added together and then used to update the feature weight vectors for the context words. As with CBOW, we can improve the training runtime by using negative sampling. 
+
+Unlike CBOW, where the summing of embeddings prior to prediction can result in a less informative vector soup if the semantic contexts are too large, Skip-gram actually *benefits* from larger window sizes (at the expense of increased runtime). One benefit is that the lack of summing means any updates to the weights are specific to that word, and are therefore more precise. Second, there are far more updates to the embeddings, as each word is used in far more model predictions than would be the case in CBOW. Finally, Skip-gram models do consider word ordering *a bit*, in that they weight relationships between the target word and context words based on how far away they are within the semantic context, so a window of 10, for example, is a pretty good balance. 
+
+A discussion of the hierarchical softmax variant that word2vec uses is outside the scope of this chapter, but the simplified version is that words and their outputs are arranged in a tree-like pattern, such that many words (leaves) are often connected to the same output and their weights can all be updated from a single calculation. The more important thing to know is that hierarchical softmax tends to perform better on infrequent words whereas negative sampling performs better on frequent words. Either of these classifiers can be used for both the CBOW and Skip-gram options, and can actually be used at the same time.
+
+Both model architectures, then, have their strengths and weaknesses. The CBOW architecture is a bit better at learning syntactic relationships, so is likely to produce embeddings where word pairs like 'neuron' and 'neurons' or 'broken' and 'broke' will be very similar. CBOW also tends to better represent frequently appearing words and is faster to train, so is well-suited to large corpuses. Skip-gram models produce more precise word embeddings in general, and especially for rare words. The embeddings it produces can be especially good at finding words that are near-synonyms. The cost of these improvements are increases in runtime, but in cases where that is less of a concern (e.g., working with smaller datasets), the improvements can certainly be worth the wait. The differences between these architectures are less significant given the specific model parameters used and given enough iterations. 
+
+## CULTURAL CARTOGRAPHY: GETTING A FEEL FOR VECTOR SPACE
+
+Word embeddings are very powerful for many applications and sometimes the results are astonishing. But there are some very important caveats to keep in mind when using word2vec-style embeddings. We will illustrate those caveats with perhaps the most iconic and oft-referenced example of word embedding "analogies". 
+
+### King - Man + Woman $\neq$ Queen
+
+Recall that part of the CBOW training process is to average (or just sum) the context vectors. @mikolov2013linguistic found that if you take the word embedding vector for "king", add it to the vector for "woman", and then subtract the vector for "man", the resulting vector is "very close" to the vector for "queen". This example has been referenced countless times, from package documentation to social science papers that aim to measure and compare complex cultural concepts. 
+
+We will use the very convenient `whatlies` package to plot the iconic word embedding example. 
+
+
+```python
+from whatlies import Embedding
+from whatlies.embeddingset import EmbeddingSet
+from whatlies.language import SpacyLanguage
+lang = SpacyLanguage('en_core_web_md')
+
+import pandas as pd
+pd.set_option("display.notebook_repr_html", False)
+from dcss.utils import list_files, IterSents, mp_disk
+from dcss.text import bigram_process
+
+import gensim
+from multiprocessing import Process, Manager
+from gensim.utils import simple_preprocess
+
+import matplotlib.pyplot as plt
+from dcss import set_style
+set_style()
+```
+
+Using the `plot()` function, we can plot either a single word vector, or some mathematical combination of vectors enclosed in brackets (as shown in Figure @fig-32_03). If you call `plot()` multiple times in the same cell, all of the requested vectors will show up in the figure.
+
+
+```python
+(lang['queen'] - lang['king']).plot(kind='arrow', color='lightgray', show_ops=True)
+(lang['king'] + lang['woman'] - lang['man']).plot(kind='arrow', color='lightgray', show_ops=True)
+
+lang['man'].plot(kind='arrow', color='crimson')
+lang['woman'].plot(kind='arrow', color='crimson')
+
+lang['king'].plot(kind='arrow', color='black')
+lang['queen'].plot(kind='arrow', color='black')
+
+plt.axis('off');
+plt.show()
+```
+
+
+    
+![png](chapter_32_neural_word_embeddings_files/chapter_32_neural_word_embeddings_12_0.pdf)
+    
+
+
+The combination vector appears to be virtually identical to the vector for "queen". But there is more to this than meets the eye. Let's look at a few comparisons between the vectors with some useful vector combination and comparison functions built-in to whatlies.
+
+
+```python
+print("Queen and King: " + str(lang['queen'].distance(lang['king'])))
+print("Man and Woman: " + str(lang['man'].distance(lang['woman'])))
+print("Man and King: " + str(lang['man'].distance(lang['king'])))
+print("Woman and King: " + str(lang['woman'].distance(lang['king'])))
+```
+
+    Queen and King: 0.27473903
+    Man and Woman: 0.2598256
+    Man and King: 0.59115386
+    Woman and King: 0.7344341
+
+
+Take note that "queen" and "king" aren't very distant from each other (this is cosine distance). Neither are "man" and "woman". This is because they actually share a lot of the same semantic contexts; that is, they are used, conversationally, in very similar ways. With that said, "man" is definitely a bit closer to "king" than "woman" is. Let's do the vector math.
+
+
+```python
+king_woman_no_man = lang['king'] + lang['woman'] - lang['man']
+print("King and combo-vector:" + str(lang['king'].distance(king_woman_no_man)))
+print("Queen and combo-vector: " + str(lang['queen'].distance(king_woman_no_man)))
+```
+
+    King and combo-vector:0.19757414
+    Queen and combo-vector: 0.21191555
+
+
+The combined vector *that should be almost the same as "queen"* is actually still closer to the vector for "king". Given the plot above, how is this possible? This is the first caveat: word embedding vectors are *multi-dimensional* space - in this case, 300 dimensions. The best we can really plot is 3-dimensional space and the plot above is 2-dimensional. In either case, there is a LOT of data-reduction happening.
+
+Let's get a different perspective on things by using `plot_interactive()` (a screenshot of which is shown in Figure @fig-32_04). First, add the vectors to an `EmbeddingSet()` class instance. Then it's as simple as adding `.plot_interactive()` to that object, along with a few parameters, including the distance metric to use for the axes (cosine distance). 
+
+
+```python
+## RENAME THE COMBINATION VECTOR BECAUSE THE ORIGINAL ('MAN') WOULD BE USED FOR THE PLOT
+king_woman_no_man.orig = king_woman_no_man.name 
+
+king_queen_man_woman_plus = EmbeddingSet(lang['king'], lang['queen'], 
+                                         lang['man'], lang['woman'], king_woman_no_man)
+
+king_queen_man_woman_plus.plot_interactive(x_axis=lang["king"], 
+                                           y_axis=lang["queen"], 
+                                           axis_metric = 'cosine_similarity')
+```
+
+![](figures/king_queen.pdf)
+
+This helps put things into perspective. The combination vector is clearly a shift towards queen and away from king, but not dramatically considering that it's been influenced by *two* vectors, so the 'king' vector is actually only 1/3rd of the combination one. Recall how these words, which you might be tempted to consider opposites, actually share a lot of contexts. Their embeddings are all wrapped up with each other. When you remove the vector for 'man' from the vector for 'woman', you are actually taking some defining details away from the vector for 'woman' because you've removed parts of the contexts that they share! Here's an illustrative example.
+
+
+```python
+print("Woman and Queen: " + str(lang['woman'].distance(lang['queen'])))
+print("Woman and Queen without man: " + str((lang['woman']-lang['man']).distance(lang['queen'])))
+```
+
+    Woman and Queen: 0.5933935
+    Woman and Queen without man: 0.7745669
+
+
+The distance between "woman" and "queen" actually increases by about 18% if you subtract the vector for "man"! You can see why we need to be *extremely* careful and methodical in any research that relies on complex combinations of vectors, and in fact this may be a research path to avoid entirely. If you find yourself in a situation where one term is more central to the concept you're examining than others, for example, the other terms will outweigh the important one. However, remember that these vectors are just arrays -- you can weight the entire array if you want to change its contribution to the combined vector.
+
+In the next cell, we access the raw vectors for 'woman' and 'man', multiplying the latter by 0.5, before making them `Embedding` class objects again. 
+
+
+```python
+print("Woman and Queen without man: " + str(Embedding('halfway', lang['woman'].vector-lang['man'].vector*0.5).distance(lang['queen'])))
+```
+
+    Woman and Queen without man: 0.61308193
+
+
+As you can see, removing only half of the vector for 'man' dramatically reduces the amount of extra distance between 'woman' and 'queen'. In the section that follows, we'll take a bit of time to look at groups of embeddings for words that are not quite so universally used in most life contexts.
+
+You might also be wondering why the `king+woman-man` example has been used so frequently in the literature, given this issue. You will find that, in some implementations of word2vec, 'queen' will be returned as the "most similar" word to the combined vector. Typically, when you use an in-built function to combine words and then return the most similar words, the results returned will *not* include the constituent words! If they didn't, those functions would always return the word itself as the top similar word! This is understandable for a convenience function, but also important to be aware of when using embeddings for research. This issue has been noted and discussed in more detail previously, with some heavy caution about the use of word analogy tasks for any serious purposes [@nissim2020fair]. The authors also reference the introductory paper for transformer models, which we'll cover in detail in the next chapter, noting that they've completely eliminated the concept of analogy as either a training task, or model evaluation method.  
+
+With that said, if we're careful about how we use embeddings and the claims we make about them, it's hard to argue against the results of the embeddings, without manipulation, as indicators of patterns of text use. 
+
+## LEARNING EMBEDDINGS WITH GENSIM
+
+Now that you have some understanding of what word embeddings are, what they can be used for, and how the models that learn them work, let's get our hands dirty by actually training some models with Gensim. 
+
+### Data
+
+We'll use the Canadian Hansards dataset for the rest of this chapter (and the next). 
+
+
+```python
+datasets = list_files("data/canadian_hansards/lipad/", 'csv')
+len(datasets)
+```
+
+
+
+
+    3401
+
+
+
+Training good word embeddings requires a lot of text, and we want to avoid loading all that text into memory at once. Gensim's algorithm expects only a single sentence at a time, so a clever way to avoid consuming a lot of memory is to store each sentence from the data on its own line in a text file, and then read that enormous text file into memory one line at a time, passing just the sentence to Gensim. That way, we never have to hold all of our data in memory at the same time. 
+
+This requires some pre-processing. The Canadian Hansards data is provided as a large collection of CSV files, each containing a single `Series` with full text for a given speech. We want to get each sentence from each speech in each dataset, while working as efficiently as possible and minimizing the amount of data held in memory.
+
+The function below is one way to do this. It will take some time to run, but perhaps not as long as you would think, given how much data we are working with here, and given that we can use the `mp_disk` utility for multiprocessing to take advantage of available CPU cores. A less general version of the `mp` utility, `mp_disk`, accepts an iterable (e.g. a list) of the data that needs processing, the function you'll use to process it, a filename to write the results to, and any other arguments that the processing function needs. 
+
+You may notice the unexplained `q` object at the end of this function call. Although a full discussion of the ins and outs of multiprocessing is beyond the scope of this chapter, it is useful to understand what is going on here. The `q` and the `m` objects are specific instances of general classes in python's `multiprocessing` module that allow us to write to a text file from multiple parallel processes without having to worry about file access locks or file corruption. The iterable with the data in it will also be divided into multiple lists, so that each CPU core can work on its own subset, so it's important that the function is prepared to deal with a list of data and also return that data in a list.
+
+The next block of text iterates over each of the dataframes in the batch, adding the speeches from each to a list. The batch of speeches is sent to the `bigram_process` function, which is a convenience wrapper for Gensim's n-gram pipeline and some text pre-processing using SpaCy. This function expects a flat list of documents, then handles breaking each document into sentences and creating the flat list of sentences that Gensim expects for bigram model training. The utility function returns a list of untokenized sentences, with bigram pairs of words joined by `_`. 
+
+To cap off the process, we send each batch of results to the multiprocessing Queue object so that each sentence can be written onto a new line of the file `speeches.txt`. Before sending the sentences to the file writing queue, we join them into a single string with a new line character in between, because this is much faster than having the multiprocessing queue write each line to the output file individually.
+
+Whew. Let's do it. 
+
+
+```python
+def get_sentences(dataset):
+    
+    dfs = [pd.read_csv(df) for df in dataset]  
+    speeches = []
+    
+    for df in dfs:
+        speeches.extend(df['speechtext'].tolist())
+    speeches = [str(s).replace('\n|\r', ' ') for s in speeches]     
+    _, sentences = bigram_process(speeches, n_process = 1)    
+    sentences = '\n'.join(sentences)  
+    
+    q.put(sentences)
+```
+
+Below, we use the above `get_sentences()` function to process the data in our `datasets` object, writing the results out to `speeches.txt`, with each sentence from each speech getting it's own line in the file. It will take some time to run, but perhaps not as long as you would think given how much data we are working with here.
+
+
+```python
+m = Manager()
+q = m.Queue()
+mp_disk(datasets, get_sentences, 'data/txt_files/can_hansard_speeches.txt', q)
+```
+
+Let's do a quick count to see how many words our dataset contains.
+
+
+```python
+with open('data/txt_files/can_hansard_speeches.txt') as file:
+    data = file.read()
+    words = data.split()
+    print(len(words))
+```
+
+This file has roughly 180 million words after processing.
+
+With our data re-organized in `speeches.txt`, we can iterate over the file to train a CBOW or Skipgram classification model, while using as little memory as possible. We will use a custom class that does the iteration for us, yielding one sentence at a time, which we can pass into `gensim.models.Word2Vec()`. Once again, you can expect this process to take some time but it'll be sped up by setting the `workers` parameter to the number of CPU cores you have. 
+
+
+```python
+sentences = IterSents('data/txt_files/can_hansard_speeches.txt')
+
+model = gensim.models.Word2Vec(sentences, size = 300, window = 4, iter = 5, 
+                               sg = 0, min_count = 10, negative = 5, workers = 4)
+```
+
+And with that, we've learned our embeddings from a dataset of roughly 180 million words! We don't want to have to relearn these embeddings needlessly (who has time for that?), so we'll write the model vocabulary to a text file called `model_vocabulary.txt` and then save the model itself to disk. That way, we can reload our trained model, rather than wasting time and energy re-training it.
+
+
+```python
+vocabulary = sorted(list(model.wv.vocab))
+
+with open('../models/model_vocabulary.txt', 'w') as f:
+    for v in vocabulary:
+        f.write(v)
+        f.write('\n')
+
+model.save('../models/word2vec.model')
+```
+
+The model can be reloaded anytime, and if we don't have to update it anymore, we can keep just the word vectors themselves, which is a leaner object.
+
+
+```python
+model = gensim.models.Word2Vec.load('../models/word2vec.model')
+model = model.wv
+```
+
+## COMPARING EMBEDDINGS
+
+Everything we've done so far can also be done comparatively, which makes things much more interesting from a social scientific perspective. The trouble with these sorts of extensions is that the word embedding training process is stochastic, so we can't just learn embeddings for various different datasets and directly compare them. In fact, there's no guarantee that two models trained on the exact same data will end up looking even remotely similar! While the relations between the words in vector space may be more or less consistent in the two models (in the sense that the angle between them will be similar) the random starting positions of those words in that vector space can produce wildly differing final states. To do anything comparative, cross-sectional or over time, we need our vector spaces to be aligned. 
+
+There have been a number of solutions proposed to solve this problem [e.g., @ruder2019survey; @artetxe2016learning; @mogadala2016bilingual; @di2019training], but we will focus on the "compass" approach developed by @di2019training because it's well-implemented, efficient, and has Gensim at its core. It's designed with temporal data in mind, but we handle cross-sectional comparisons in the exact same way. Below, I'll walk you through training a word embedding model "anchor" (the compass) as a basis for comparison, and then we'll spend a bit of time working through a few temporal and cross-sectional comparisons. 
+
+  
+>   
+> The compass functionality is available in the python package TWEC, which must be installed manually from the source code provided on GitHub. As the authors of the package note, TWEC requires a customized version of Gensim, so it's advisable to make a virtual environment specifically for working with this package. As a reminder, you can do so with the following steps, all from the command line: 
+>
+>1. Clone the GitHub repository at [https://github.com/valedica/twec.git](https://github.com/valedica/twec.git)
+>2. Create a new conda vitual environment with `conda create -n twec_training` 
+>3. Activate your new conda environment with `conda activate twec_training`
+>4. `pip install cython` 
+>5. The author's custom version of Gensim, `pip install git+https://github.com/valedica/gensim.git` 
+>6. cd into the twec repository
+>7. pip install --user .
+> 
+> If you end up having a lot of trouble getting TWEC up and running, you can use any version of Gensim to load the models that have been pre-trained for this chapter. You can read more about our pre-trained models in the online supplementary materials.
+>
+
+
+### Imports
+
+Since we are working in a new virtual environment (details provided in Box XXX) with a fresh new Python kernel. We'll continue to work with the Canadian Hansards data.
+
+
+```python
+from twec.twec import TWEC
+from gensim.models.word2vec import Word2Vec
+import pandas as pd
+from dcss.utils import list_files, mp_disk
+
+from tok import Tokenizer
+from gensim.utils import simple_preprocess
+from multiprocessing import Process, Manager
+import re
+```
+
+### Aligning Your Vector Spaces!
+
+The general process of using the TWEC approach to train a series of embedding models *that are aligned from the start* is as follows:
+
+1. Train a word2vec model on the *entire* dataset in one go, retaining the position layer of the neural network model. This layer is called the **compass**. It computes a set of baseline embeddings that a series of embedding models (trained in Step 2) trained on every subset of the data (temporal slices, for example) can use as a common starting point, like a kind of "reference model."
+2. Train a word2vec model for each subset of the data using the compass layer from Step 1 as the starting point. This ensures the vector spaces are properly aligned and lets the vector coordinates move around according to the embeddings of words in that subset of data.  
+
+Once the reference model has been trained, the series of contextual models trained in the next step call all be trained with a common starting point (as opposed to a random one). Then the embeddings for each subset diverge from that common origin as appropriate and the differences and similarities between their vectors can be interpreted as meaningful differences. @di2019training provide plenty of technical details on how TWEC works, if you are interested in going beyond what I introduce here. 
+
+Let's perform both steps. We'll use the compass trained in Step 1 for a series of temporal and cross-sectional comparsons later in the chapter. 
+
+### Step 1: Train the Compass
+
+To train the compass, `TWEC` expects a text file where each sentence in our dataset is provided on a new line. Since we prepared this exact file in the previous chapter, we'll reuse it here. It's stored in `speeches.txt`. 
+
+
+```python
+compass_path = 'data/txt_files/can_hansard_speeches.txt'
+```
+
+Because `TWEC` uses a custom version of Gensim, it doesn't automatically receive the many updates that Gensim has had in recent years. One of the package dependencies has been updated since the @di2019training paper was published and now produces a warning about a function that will eventually be deprecated. To keep things a bit cleaner, we'll tell Python to suppress those warnings.
+
+
+```python
+import warnings
+warnings.filterwarnings("ignore")
+```
+
+Now we can inialize a TWEC class object, providing the parameters to pass to Gensim for training (note that the `negative=` argument for negative sampling is replaced by `ns=` here). We'll use this object to create the compass and when training the aligned temporal slices. 
+
+The results are automatically saved to a `model/` folder in the current working directory. This process will take the same amount of time as it took to train the Word2Vec model above, so it's best to set "overwrite" to `False` so we don't accidentally lose all of that processing time. Remember to set the number of workers to the number of cores you want to use - most personal computers have 4 cores. If you ever need to pick things back up after a restart (or a kernel crash) running the cell again will simply reload the trained compass.
+
+
+```python
+aligner = TWEC(size = 300, siter = 5, diter = 5, window = 10, sg = 0, min_count = 10, ns = 5, workers = 4)
+aligner.train_compass(compass_path, overwrite=False)
+```
+
+### Step 2: Train a Series of Aligned Embedding Models
+
+Now that our reference model has been trained and stored in the `aligner` object, we can proceed with training a series of embedding models on various subsets of our data. In the examples that follow, we will train a series of models to show change over time, followed by a series of models to compare speeches by different political parties. We will use the same `aligner` object as the reference model for both. 
+
+#### Research on Cultural Change with Temporal Embeddings
+
+Regardless of whether our comparison is cross-sectional or temporal, we need to subset our data *prior* to training any additional models. Since we are starting using embeddings to compare change over time, let's divide our data into different temporal slices. We'll be training a gemsim word2vec model with each subset, so we will prepare the data with one sentence-per-line file for model training. 
+
+In this case, the CSV files in the Canadian Hansard dataset are organized into folders by year. We can use that to our advantage here. First, we'll load up the CSV files and create some lists to store the file paths for each decade.
+
+
+```python
+datasets = list_files("data/canadian_hansards/lipad/", 'csv')
+len(datasets)
+```
+
+
+```python
+canadian_1990s = []
+canadian_2000s = []
+canadian_2010s = []
+
+for i in range(1990,1999):
+    year_data = 'data/canadian_hansards/lipad/' + str(i) + '/'
+    datasets_1990s = list_files(year_data, 'csv')
+    canadian_1990s.extend(datasets_1990s)
+    
+for i in range(2000,2009):
+    year_data = 'data/canadian_hansards/lipad/' + str(i) + '/'
+    datasets_2000s = list_files(year_data, 'csv')
+    canadian_2000s.extend(datasets_2000s)
+    
+for i in range(2010,2019):
+    year_data = 'data/canadian_hansards/lipad/' + str(i) + '/'
+    datasets_2010s = list_files(year_data, 'csv')
+    canadian_2010s.extend(datasets_2010s)
+```
+
+Now that we have our data organized into temporal slices, we need to create our sentence-per-line files. To do that with multiprocessing, we'll re-use the `get_sentences()` function we used in the previous chapter. 
+
+
+```python
+m = Manager()
+q = m.Queue()
+mp_disk(canadian_1990s, get_sentences, 'data/txt_files/1990s_speeches.txt', q)
+```
+
+
+```python
+m = Manager()
+q = m.Queue()
+mp_disk(canadian_2000s, get_sentences, 'data/txt_files/2000s_speeches.txt', q)
+```
+
+
+```python
+m = Manager()
+q = m.Queue()
+mp_disk(canadian_2010s, get_sentences, 'data/txt_files/2010s_speeches.txt', q)
+```
+
+Finally, we can train individual models on the slices using the `aligner` object. As you may have guessed, this can take a bit of time and you probably want to process each in its own cell, setting "save" to `True` so that the model will be output to the `model/` directory, with a filename matching the name of the text file provided.
+
+
+```python
+model_1990s = aligner.train_slice('data/txt_files/1990s_speeches.txt', save=True)
+```
+
+
+```python
+model_2000s = aligner.train_slice('data/txt_files/2000s_speeches.txt', save=True)
+```
+
+
+```python
+model_2010s = aligner.train_slice('data/txt_files/2010s_speeches.txt', save=True)
+```
+
+At this point we don't need the compass model anymore, but it's a good idea to keep it around. The contextual models we've trained for each temporal slice are good to go, and unlike the compass model, can simply be loaded into Gensim for analysis. Note that although we used `sg=0` above because Skip-gram takes a long time to train compared to CBOW, the models you can load below were trained with Skip-gram.
+
+
+```python
+model_1990s = Word2Vec.load('../models/1990s_speeches.model')
+model_2000s = Word2Vec.load('../models/2000s_speeches.model')
+model_2010s = Word2Vec.load('../models/2010s_speeches.model')
+```
+
+Now that we've trained our aligned temporal embedding models, we can do all kinds of interesting and useful things, such as comparing the embeddings of terms in different decades. As a simple example, let's look at the most similar words to 'climate_change' across each decade. We should expect to see tokens such as 'global_warming' showing up, *but that's what we want*; our model (which doesn't actually know what words mean) is doing what it's supposed to do. Below we can see that the similarity between these terms starts to decline a bit in the 2010s, when 'climate_change' became the preferred term. 
+
+
+```python
+model_1990s.wv.most_similar(positive = 'climate_change', topn = 10)
+```
+
+
+```python
+model_2000s.wv.most_similar(positive = 'climate_change', topn = 10)
+```
+
+
+```python
+model_2010s.wv.most_similar(positive = 'climate_change', topn = 10)
+```
+
+#### Cross-sectional Comparisons: Political Parties on Climate Change
+
+Sometimes our research goals are to compare culture and meaning across subgroups in a population, rather than change over time. For example, continuing with the examples we've used in this chapter so far, we might be more interested in comparing how different political parties talk about climate change than how political discussions of climate change have evolved over time. 
+
+To make those comparisons, we need to organize our data by political party rather than by decade. To keep things relatively simple, we'll focus on the three major political parties: the Liberals, the New Democratic Party, and the Conservatives, keeping in mind that the latter is a relatively recent merger of the former Canadian Alliance, Progressive Conservative, and Reform parties. In this case, slicing the data isn't quite as straightforward, so we'll create a modified version of `get_sentences()` that will accept lists of terms to mask (filter) the dataframes with.
+
+
+```python
+liberal = ['Liberal']
+conservative = ['Conservative', 'Canadian Alliance', 'Progressive Conservative', 'Reform']
+ndp = ['New Democratic Party']
+```
+
+
+```python
+def get_sentences_by_party(dataset, filter_terms):
+    
+    dfs_unfiltered = [pd.read_csv(df) for df in dataset]
+    dfs = []  
+    
+    for df in dfs_unfiltered:
+        temp_df = df.dropna(subset = ['speakerparty'])
+        mask = temp_df['speakerparty'].apply(lambda x: any(party for party in filter_terms if party in x))
+        temp_df2 = temp_df[mask]
+        if len(temp_df2) > 0:
+            dfs.append(temp_df2)
+        
+    speeches = []
+    
+    for df in dfs:
+        speeches.extend(df['speechtext'].tolist())
+    speeches = [str(s).replace('\n|\r', ' ') for s in speeches]   # make sure everything is a lowercase string, remove newlines    
+    _, sentences = u.bigram_process(speeches)    
+    sentences = '\n'.join(sentences)  # join the batch of sentences with newlines into 1 string
+    
+    q.put(sentences)
+```
+
+
+```python
+m = Manager()
+q = m.Queue()
+
+mp_disk(datasets, get_sentences_by_party, 'data/txt_files/liberal_speeches.txt', q, liberal)
+```
+
+
+```python
+m = Manager()
+q = m.Queue()
+
+mp_disk(datasets, get_sentences_by_party, 'data/txt_files/conservative_speeches.txt', q, conservative)
+```
+
+
+```python
+m = Manager()
+q = m.Queue()
+
+mp_disk(datasets, get_sentences_by_party, 'data/txt_files/ndp_speeches.txt', q, ndp)
+```
+
+Now we can train an aligned model for each of the three parties, using the same `aligner` object we used earlier (trained on the full corpus). 
+
+
+```python
+model_liberal = aligner.train_slice('data/txt_files/liberal_speeches.txt', save=True)
+```
+
+
+```python
+model_conservative = aligner.train_slice('data/txt_files/conservative_speeches.txt', save=True)
+```
+
+
+```python
+model_ndp = aligner.train_slice('data/txt_files/ndp_speeches.txt', save=True)
+```
+
+With our three aligned models, we can now compare how each of the three major parties talk about climate change. Remember that this is for *all* party-specific talk from 1990 onwards. We *could* train more models to disaggregate things even further (e.g., each party in each decade), but we'll keep things simple here.
+
+
+```python
+model_liberal = Word2Vec.load('../models/liberal_speeches.model')
+model_conservative = Word2Vec.load('../models/conservative_speeches.model')
+model_ndp = Word2Vec.load('../models/ndp_speeches.model')
+```
+
+
+```python
+model_liberal.wv.most_similar(positive = 'climate_change', topn = 10)
+```
+
+
+```python
+model_conservative.wv.most_similar(positive = 'climate_change', topn = 10)
+```
+
+
+```python
+model_ndp.wv.most_similar(positive = 'climate_change', topn = 10)
+```
+
+Of course, everything we did previously with the pre-trained embeddings can be applied and generalized with the models we've trained here. Give it a shot! 
+
+  
+> **Further Reading**  
+> 
+> Adji Dieng, Francisco Ruiz, and David Blei [-@dieng2020topic] have developed a really interesting probabilistic topic model that uses embeddings to represent text rather than the DTM representations used in LDA topic models. They also generalize this model for dynamic data in [@dieng2019dynamic]. If you are interested in the relationship between topic models and word embeddings, I recommend reading their articles. 
+>
+
+
+## CONCLUSION
+
+### Key Points 
+
+- Word embeddings represent words with short dense vectors that describe the word's local semantic contexts
+- Embeddings as a whole depict patterns of word usage and language structure
+- They are NOT "meaning," and we should not trust intuitions built on low-dimensional representations
+- Constructed embeddings and aligned embeddings using Gensim

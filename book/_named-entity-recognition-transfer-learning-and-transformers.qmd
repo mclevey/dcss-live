@@ -1,0 +1,1156 @@
+# Named Entity Recognition, Transfer Learning, and Transformer Models
+
+## LEARNING OBJECTIVES
+
+- Learn what Named Entity Recognition (NER) is and what it's used for
+- Use SpaCy to train an out-of-the-box NER model
+- Know what transfer learning is and how it applies to machine learning
+- Learn what transformer models are and what makes them so efficient
+- Use transformer models for NER and sentiment analysis
+- Combine multiple methods and models from this book to identify named entities, assess sentiment, construct a network, and interpret it
+
+## LEARNING MATERIALS
+
+You can find the online learning materials for this chapter in `doing_computational_social_science/Chapter_33`. `cd` into the directory and launch your Jupyter Server.
+
+## INTRODUCTION
+
+In this final chapter, we'll turn our attention to another set of text analysis tools. We'll begin with Named Entity Recognition (NER), which tries to identify and classify named "things" from unstructured text into pre-determined categories. Then we will use SpaCy's "out-of-the-box" models to conduct some simple NER. Following the general iterative logic of Box's loop, we'll critique that model and consider how to improve it by updating SpaCy's model by teaching it with our own data. This is an example of **transfer learning**. 
+
+In the second part, we wander into the world of large language models, more specifically **transformer models**, which are right at the edge of current machine learning boundaries. Following a conceptual introduction, we return to the task of Named Entity Recognition, this time using data from the Canadian Hansards and transformer models. We'll finish by working through an example of combining multiple methods and models in one analysis by constructing a network of co-occurring named entities from speeches made by former party leaders of the three major Canadian political parties. We'll use the transformer model to predict the positive or negative sentiment of the semantic contexts the named entites occur in and then fit a stochastic block model. This extended example is meant to show how various different types of models can be productively combined, and is hence more open-ended and exploratory than your own research work may be.
+
+## NAMED ENTITY RECOGNITION (NER)
+
+#### Named Entity Recognition
+
+Named Entity Recognition (also referred to as entity identification, chunking, or extraction) is the task of sifting through unstructured text data to identify real world entities that have, or could have, proper names. Consider this three paragraph excerpt from a story in *The Guardian* [@cadwalladr2019cambridge] about the Cambridge Analytica scandal and whistleblower Christopher Wylie a year after the initial story broke. I have manually emphasized some "named entities."
+
+> **Wylie** became a public figure overnight. And the story triggered what, in many ways, looked like a year of reckoning for the tech industry. **Damian Collins**, the chair of the **Department of Culture, Media and Sport**’s 18-month-long fake news inquiry, which delivered last month’s report, described the story’s publication as a “pivotal moment” when “public attitudes and government policy towards the tech companies started to change”. 
+
+> Last week, on the 30th anniversary of the worldwide web, its creator **Tim Berners-Lee** urged people to stop the “downward plunge” to “a dysfunctional future” that the **Cambridge Analytica** scandal had helped expose. It was, **Berners-Lee** said, the moment people realised that “elections had been manipulated using data that they contributed”.
+
+> The problem is that while the tech companies have been called to account, they haven’t actually been held accountable. In November, after **Zuckerberg** refused to comply with a summons to **parliament** to answer questions about **Facebook**’s role in the scandal, **Collins** convened an international committee of nine parliaments. **Zuckerberg** refused to come to that too.
+
+Before going further, let's briefly re-examine the three preceding block quotes. The excerpts contain the full and partial names for a number of people (Christopher Wylie, Damian Collins, Tim Berners-Lee, Mark Zuckerberg) as well as references to specific organizations (Cambridge Analytica, Facebook). They also contain some more ambiguous entities, such as "parliament" (which here does refer to a specific parliament) and "chair of the Department of Culture, Media, and Sport," which refers to a specific person (Damian Collins) while also containing a reference to a specific real-world organization (the Department of Culture, Media, and Sports). We used our human cognitive abilities to identify these named entities in the original text. How does a computer do it? And can we use computers to extract more complex types of entities, such as events?
+
+Initially, NER might seem pretty straightforward, but perhaps you've already noticed potential challenges. It has proven very difficult for computational linguists to develop accurate models. The latest models from SpaCy (version 3), which are neural network models trained on large annotated datasets, are 89.48% accurate for the state-of-the-art transformer models (discussed below) and 85.5% for the large English model. That is very good, but you should expect false positives and false negatives if you don't update these models on your own data. 
+
+In this example, most of the named entities are proper nouns, which in English are typically capitalized. It turns out that capitalization and a word's part-of-speech go a very long way towards identifying named entities, but they are imperfect guides. If NER only had to identify capitalized nouns, it would be a relatively simple task with consistently high levels of accuracy. However, not all proper nouns are capitalized (macOS) and not all capitalized nouns are proper. Furthermore, some entities are unambiguous, clearly refer to a single entity (the name of a person: Angela Merkel), while others are ambiguous and may refer to one of many possible entities (the name of a position that a person holds: Chancellor of Germany). The former (unambiguous) are referred to as "rigid designators" and the latter (ambiguous) are "flaccid designators" [@squire2016mastering]. As you might guess, identifying the former is significantly easier than the later. In NER, there is a tension between the many "easy" cases and the few "hard" cases that always drag accuracy rates down. Any given approach to NER should get the easy cases right, and any advancements will come in the form of small improvements to coping with the hard cases.  
+
+One approach to tackling hard cases involves using a list of "seed" entities. If we already have access to a list of entities -- such as politicians, cooperatives, cities, or countries -- we can instruct our model to search the document collection for those entities, and we can train the model to learn the patterns associated with the type of entity we are looking for. Then the model can use these rules and patterns to uncover references to additional entities that we didn't know about, which, if appropriate, can be added back to our list of entities. This process can also work if we don't already have a list of entities. In that scenario, we would select a reasonable sample of documents and manually identify and annotate the named entities, and they become our initial seed list.
+
+This approach to NER is called **bootstrapping**. The idea is to use supervised learning to train a model to predict an outcome we care about, like classifying a word as the name of an organization or not. Once we run the model, we select those instances (here, words) that were classified with a high degree of confidence and move them into our training data (the seed list). The classifiers are then run again, following the same process of moving highly accurate classifications into the seed list. This process is repeated multiple times, growing the training data with each repetition. This bootstrapping approach to NER is powerful but -- like other approaches -- imperfect.
+
+When we do our own NER classification later in the chapter, we will once again use SpaCy because of its relative ease of use and its highly advanced NER models. For now, it's useful to understand that these models make predictions about whether and what type of named entity any given word may be. It is extremely important to understand that *the accuracy of these predictions depends in large part on the data the models were trained on.* 
+
+If you are working with highly-specialized text data -- say, text from journal articles in [biomedical science](https://www.youtube.com/watch?v=2_HSKDALwuw) or transcripts of YouTube videos about cryptocurrencies -- you will likely get better results by training your own NER models on a comparable dataset that you manually annotated. This can include your own custom entity types; you are not limited to the types of entities that SpaCy uses in their default pre-trained models. It's possible to do this on your own, of course, but if possible it is better to have multiple annotators, and to compute inter-rater reliability scores for annotations. 
+
+While many people crowdsource this work using platforms like Amazon's Mechanical Turk, CrowdFlower, or Productive Academic, the best annotation jobs are likely to be done by people with extensive domain knowledge, and is therefore likely best done in-house. Not all annotations require domain knowledge, but in those cases, the pre-trained models should be appropriate unless the type of entity you are looking for is not included in the pre-trained models. An interesting example of training custom models that require domain expertise to do high quality annotations is `SciSpaCy`, which uses a SpaCy pipeline custom built by [Allen AI](https://allenai.github.io/scispacy/) for doing natural language processing, including NER, on biomedical publications and scientific documents more generally.
+
+The SpaCy documentation provides [a fairly detailed explanation](https://spacy.io/usage/linguistic-features#named-entities) of how to train an NER model on your own data. Remember, you need to construct the training data yourself by manually annotating data. You should also know that [you will likely need access to a fairly powerful computer](https://www.youtube.com/watch?v=UxzyD6gVlC8) to be able to train your own model. Depending on the resources available to you, this may be expensive and / or time consuming, but if you annotate enough data, the results in your domain-specific application will be greatly improved. If you decide to train your own NER model, put care into data annotation. It will pay dividends later.
+
+At present, SpaCy (version 3) can recognize [18 different types of entities](https://spacy.io/api/annotation#named-entities): people's names, nationalities or religious or political groups, infrastructure, organization, geo-political entities, locations, products, events, works of art, documents made into laws, languages, dates, times, percentages, money, quantitative measurements, ordinal ranks, and other numerals (i.e. cardinal). As with part-of-speech tagging, we can use `spacy.explain()` to get a description of each type of entity. For example, `spacy.explain('GPE')` returns `'Countries, cities, states'.` 
+
+Let's compare our manual annotation of the story excerpt against SpaCy's NER analysis of the same text to see what it looks like and what kinds of entities it identifies.
+
+![The results of spaCy NER on the same excerpt of text that we manually annotated.](figures/ner.pdf)
+
+SpaCy has picked up on all of the entities we tagged, but it mistakenly classified "Wylie" as an organization. It also identified several other types of entities -- dates, times, and cardinals -- that we did not manually annotate.
+
+Let's make all of this a little less abstract by working through an NER example using the full article text rather than just an excerpt. First, we will load the full article text, which is stored in a text file in the `data/misc` directory. Then we simply process it using SpaCy's `nlp()` pipeline, without disabling any modules like we did previously. 
+
+### NER, Out of the Box
+
+#### Imports
+
+
+```python
+from dcss.text import *
+from dcss.networks import *
+from dcss.utils import list_files
+from dcss.plots import draw_ner_blockmodel_sfdp
+import spacy
+from graph_tool.all import *
+import math
+import pandas as pd
+pd.set_option("display.notebook_repr_html", False)
+from collections import Counter
+nlp = spacy.load('en_core_web_sm')
+```
+
+
+```python
+with open('data/txt_files/ca_story.txt', 'r') as f:
+    full_text = [line.strip() for line in f]
+    full_text = " ".join(full_text)
+```
+
+
+```python
+doc = nlp(full_text)
+```
+
+Once SpaCy has processed our text, we can retrieve information about the named entities from the `Doc` object. The code block below constructs a list of the named entity types discovered in this story. SpaCy finds over 250 unique entities in the news story, depending on your version of the language model, most of which are organizations, people, and geopolitical entities.
+
+
+```python
+ent_types = [ent.label_ for ent in doc.ents]
+print('Found {} named entities'.format(len(ent_types)))
+Counter(ent_types).most_common()
+```
+
+    Found 268 named entities
+
+
+
+
+
+    [('PERSON', 67),
+     ('ORG', 51),
+     ('GPE', 49),
+     ('DATE', 39),
+     ('CARDINAL', 18),
+     ('NORP', 14),
+     ('TIME', 9),
+     ('ORDINAL', 9),
+     ('MONEY', 6),
+     ('LOC', 4),
+     ('EVENT', 1),
+     ('PRODUCT', 1)]
+
+
+
+We can filter for all entities of a certain type with `.label_`, such as the geo-political entities.
+
+
+```python
+Counter([str(ent) for ent in doc.ents if ent.label_ == "GPE"])
+```
+
+
+
+
+    Counter({'Cambridge': 15,
+             'UK': 2,
+             'Britain': 4,
+             'Analytica': 1,
+             'US': 4,
+             'Media': 1,
+             'Washington': 1,
+             'New York': 3,
+             'London': 3,
+             'New Jersey': 1,
+             'Israel': 1,
+             'Afghanistan': 1,
+             'Nigeria': 1,
+             'Cambridge Analytica': 1,
+             'Stockholm': 1,
+             'South Africa': 1,
+             'France': 1,
+             'Charlottesville': 1,
+             'Virginia': 1,
+             'New Zealand': 1,
+             'Russia': 1,
+             'Hollywood': 1,
+             'the British Empire': 1,
+             'Wylie': 1})
+
+
+
+This list is mostly cities, countries, and states, but also "the British Empire", "Cambridge", "Analytica", "Cambridge Analytica", and even "Wylie" once. The "PERSON" and "ORG" tags are, in some ways, more interesting, because they reveal the challenges that models have in differentiating how we talk about people and how we talk about organizations. This isn't surprising, given that in many places, organizations *are* spoken about like people and even have some of the same rights. The code block below will print all entities identified as people in the article.
+
+
+```python
+Counter([str(ent) for ent in doc.ents if ent.label_ == 'PERSON']).most_common(10)
+```
+
+
+
+
+    [('Wylie', 23),
+     ('Analytica', 6),
+     ('Brexit', 4),
+     ('Zuckerberg', 3),
+     ('Cambridge Analytica', 3),
+     ('Analytica Files', 2),
+     ('Alexander Nix', 2),
+     ('Trump', 1),
+     ('Christopher Wylie', 1),
+     ('Mark Zuckerberg', 1)]
+
+
+
+In the full article, SpaCy's small model realizes that "Wylie" refers to a person most of the time, but also identified "Cambridge Analytica" and "Analytica" as people. If we look for "ORG" instead, the most frequent is the FBI (more than Cambridge Analytica), and we also have Congress, Collins's (who is a person), and two instances of Cambridge Analytica. This is a good time to mention that the entity attribute, if detected, is assigned *per token*, not to a string that could be the text of many tokens. This is why "Wylie" can be both a person and a geopolitical entity. 
+
+The rest of the organizations seem pretty valid (the Department of Justice, BBC, H&M, FTC, etc.) but obvious ones like Facebook are missing. For reference, "Cambridge Analytica" appears in the article 22 times and "Facebook" 26 times. Depending on your research question, you may opt to combine the results of the "PERSON" and "ORG" labels. There are alternatives, though, and one of them is to update the SpaCy model or even train a new one, which we will detail below.
+
+
+```python
+Counter([str(ent) for ent in doc.ents if ent.label_ == 'ORG']).most_common(10)
+```
+
+
+
+
+    [('FBI', 4),
+     ('Congress', 3),
+     ('Cambridge Analytica', 2),
+     ('Collins’s', 2),
+     ('the Department of Justice', 2),
+     ('FTC', 2),
+     ('H&M', 2),
+     ('BBC', 2),
+     ('the Independent Group', 1),
+     ('Observer', 1)]
+
+
+
+### Customizing SpaCy's Pre-trained Named Entity Recognition
+
+It's worth noting that the largest SpaCy model performs better than the one used above, but still not as well as other options. One of our options, which is better than what we've done so far, is to *update* the pre-trained NER model in SpaCy. We'll do this by creating a dictionary of example "texts" that are actually just sentences from the article that have been annotated with NER labels. The expected format is a list of texts, where each text is a tuple of (`doc`, `label`) and each label is a dictionary. The `doc` is a doc object from the string of text that's being labeled. Each of the label dictionaries has a key that specifies the attribute to update (in this case, "entities") and a value that is a tuple of (`span start`, `span end`, `entity label`). You might recall that spans refer to the index of the beginning and end of a text, but remember that they behave like the `range` function in Python - the character at the `span end` index will *not* be included.
+
+
+```python
+import random
+random.seed(7)
+from spacy.training import Example
+```
+
+Here are some pre-crafted entity annotation training sentences, with "Cambridge Analytica", "Facebook", and "Wylie" annotated. As you can see, creating more than a few of these manually would be pretty mind-numbing.
+
+
+```python
+update_list = [
+    ('It was a report that drew on hours of testimony from Cambridge Analytica directors, Facebook executives and dozens of expert witnesses',
+     {
+         'entities': [(53, 72, 'ORG'), (84, 92, 'ORG')]
+     }),
+    ('Cambridge Analytica rode it out, initially, but finally called in the administrators in May',
+     {
+         'entities': [(0, 19, 'ORG')]
+     }),
+    ('In April Facebook admitted it wasn’t 50 million users who had had their profiles mined',
+     {
+         'entities': [(9, 17, 'ORG')]
+     }),
+    ('Facebook published a statement saying that it had banned both Cambridge Analytica and Wylie from its platform.',
+     {
+         'entities': [(0, 8, 'ORG'), (62, 81, 'ORG'), (86, 91, 'PERSON')]
+     })
+]
+```
+
+This seems like a pretty small list to expect it to have much impact. However, remember *this is not a string-matching rule list*. What we are doing here is teaching spaCy how to make better predictions based in part on semantic context, so we need not supply an *exhaustive* list of corrections. Our training set is very short, so we'll iterate it a number of times so that the model has time to study, with a drop rate (i.e., forgetting) of 0.6 so that the model has to see things more times before it remembers them, and shuffling the list of texts between iterations so that it has to "think" instead of just memorize. Different drop rates and numbers of training iterations will bring quite different results with such a small training set, so it takes some fiddling to see improvements. With more training data and less iterations required, this becomes more reliable.
+
+
+```python
+nlp = spacy.load('en_core_web_sm')  
+
+for i in range(10):
+    random.shuffle(update_list)    
+    examples = []                  
+    for text, label_spans in update_list:
+        doc = nlp.make_doc(text)          
+        examples.append(Example.from_dict(doc, label_spans))  
+    nlp.update(examples, drop = 0.6)
+    
+trained_doc = nlp(full_text)
+```
+
+Now let's see what kind of improvements we made! 
+
+
+```python
+Counter([str(ent) for ent in trained_doc.ents if ent.label_ == "GPE"])
+```
+
+
+
+
+    Counter({'UK': 2,
+             'Britain': 2,
+             'US': 4,
+             'Washington': 1,
+             'New York': 3,
+             'London': 3,
+             'New Jersey': 1,
+             'Israel': 1,
+             'Afghanistan': 1,
+             'Nigeria': 1,
+             'France': 1,
+             'Charlottesville': 1,
+             'Virginia': 1,
+             'New Zealand': 1,
+             'Russia': 1,
+             'Hollywood': 1,
+             'the British Empire': 1})
+
+
+
+Impressively, "Cambridge" no longer appears as a geopolitical entity, even though in other contexts it could be and we didn't annotate that word without "Analytica". The word "Media" is also gone but we do lose a few valid entries such as "Stockholm" and "South Africa." 
+
+
+```python
+Counter([str(ent) for ent in trained_doc.ents if ent.label_ == 'PERSON']).most_common(10)
+```
+
+
+
+
+    [('Wylie', 16),
+     ('Brexit', 4),
+     ('Zuckerberg', 2),
+     ('Alexander Nix', 2),
+     ('Christopher Wylie', 1),
+     ('Mark Zuckerberg', 1),
+     ('Damian Collins', 1),
+     ('Tim Berners-Lee', 1),
+     ('Jason Kint', 1),
+     ('George Soros', 1)]
+
+
+
+The results for recognizing people are also mixed: some instances of Wylie are gone and Brexit is still there, but all of the "Cambridge Analytica" related entries are gone.
+
+
+```python
+Counter([str(ent) for ent in trained_doc.ents if ent.label_ == 'ORG']).most_common(10)
+```
+
+
+
+
+    [('Cambridge Analytica', 17),
+     ('Facebook', 4),
+     ('FBI', 4),
+     ('Congress', 3),
+     ('Wylie’s', 3),
+     ('Observer', 2),
+     ('the Cambridge Analytica Files', 2),
+     ('Trump', 2),
+     ('Britain’s', 2),
+     ('Cambridge Analytica’s', 2)]
+
+
+
+Likewise, the number of "Cambridge Analytica" ORG tags is greatly improved (17/21) and "Facebook" finally makes an appearance (11/26), but so does "Wylie's" and "Trump". Let's see what happens if we update the model with the full text, annotating the full text with the three entities of interest, instead of a few lines. This would be pretty time consuming to do manually, so we'll use a function called `create_examples` (from the dcss package) to take care of some of the annotation. 
+
+
+```python
+## RELOAD A FRESH VERSION OF THE PRE-TRAINED MODEL
+nlp = spacy.load('en_core_web_sm')  
+```
+
+
+```python
+examples = create_examples(full_text)
+
+for i in range(10):
+    random.shuffle(examples)
+    nlp.update(examples, drop = 0.6)
+    
+trained_doc = nlp(full_text)
+```
+
+This gives us a perfect Wylie detection count of 27 with his full name included. Unfortunately, "Brexit" is still detected as a person and only one of two "Trump" appearances are corrected.
+
+
+```python
+Counter([str(ent) for ent in trained_doc.ents if ent.label_ == 'PERSON']).most_common(10)
+```
+
+
+
+
+    [('Wylie', 26),
+     ('Brexit', 4),
+     ('Zuckerberg', 3),
+     ('Trump', 1),
+     ('Christopher Wylie', 1),
+     ('Mark Zuckerberg', 1),
+     ('Damian Collins', 1),
+     ('Collins', 1),
+     ('George Soros', 1),
+     ('Jamie Bartlett', 1)]
+
+
+
+The organization detection is also improved but not perfectly. There are two cases of "Cambridge Analytica" missing and nine cases of "Facebook".
+
+
+```python
+Counter([str(ent) for ent in trained_doc.ents if ent.label_ == 'ORG']).most_common(10)
+```
+
+
+
+
+    [('Cambridge Analytica', 17),
+     ('Facebook', 10),
+     ('FBI', 4),
+     ('Congress', 3),
+     ('Cambridge Analytica’s', 2),
+     ('the Department of Justice', 2),
+     ('FTC', 2),
+     ('BBC', 2),
+     ('the Independent Group', 1),
+     ('the Department of Culture', 1)]
+
+
+
+There's another simple option that's useful in many cases. If you know that you'll always want a certain word to be identified as a specific type of entity, you can add the `EntityRuler` pipeline component. For example, it will always be safe to add "Facebook" and "Cambridge Analytica" as organizations but not "Wylie", because outside of this article, it could refer to many unknown entities.
+
+
+```python
+ent_labels = [
+    {'label': 'ORG', 'pattern': 'Facebook'},
+    {'label': 'ORG', 'pattern': 'Cambridge Analytica'}
+]
+
+ent_ruler = nlp.add_pipe('entity_ruler', config = {'overwrite_ents': True})
+ent_ruler.add_patterns(ent_labels)
+```
+
+
+```python
+ruled_doc = nlp(full_text)
+Counter([str(ent) for ent in ruled_doc.ents if ent.label_ == 'ORG']).most_common(10)
+```
+
+
+
+
+    [('Facebook', 26),
+     ('Cambridge Analytica', 21),
+     ('FBI', 4),
+     ('Congress', 3),
+     ('the Department of Justice', 2),
+     ('FTC', 2),
+     ('BBC', 2),
+     ('the Independent Group', 1),
+     ('the Department of Culture', 1),
+     ('Washington', 1)]
+
+
+
+So, of course we have perfect accuracy now for the two entities that we know are key to the article. But these methods will not work quite as well if you have a large corpus with a wide range of topics, or even a mid-sized corpus that you don't know much about. Or if you just don't have the time to iteratively craft a combination of training data and rules until you get accurate reasults. Thankfully, others have trained numerous models on more text than a single person will ever annotate, and there are ways to transfer that learning as a baseline, so you only have to give it a bit more information or a well-defined objective, giving us **transfer learning**.
+
+### NER with Transfer Learning
+
+Although it isn't a new concept in machine learning, transfer learning has gained considerable attention in recent years, perhaps most visibly in the recent rise of transformer neural network models, like Google's BERT. We will discuss transformer models shortly, but first we'll briefly cover the idea behind transfer learning.
+
+Transfer learning is predominantly used in neural networks, where a model is trained for some task or data, then used for a different, but related, task or data. With the new task, the weight layer(s) of the neural network model are used to compute the final output layer, essentially using the learning of the original model to produce results for a different objective. When you use a pre-trained model of any sort - one of SpaCy's models for example - you're using transfer learning. You might also recall that in word2vec, the objective of the training model is not particularly useful and the output layer is discarded - the part we use is *the information that the model learned* rather than the result it produced. When we calculate the similarity between the embeddings of two words, we are using a method of transfer learning, where the learned embeddings are used for the new similarity task. 
+
+Of course, word2vec embedding models can also be applied to unseen data in the same way as SpaCy's models. In this case, comparing the similarity between two words in the new data would have the same results as it did on the original training data, but comparing documents in the new data would not - the words that make up the documents would have a unique combination of the word embeddings made from the original training data. This is what makes word embeddings accessible for research projects that don't have enough data to train a useful model. Someone could compare the similarity between two tweets about animals and one tweet about computers, and the two tweets about animals would be more similar, even if they didn't share any words. This obviously would not be the case if a model were trained on only those three tweets.
+
+This is the key innovation that has made transfer learning more prevalent, especially in natural language processing. Much has been said about the opportunities offered by the enormous amount of textual data available, but less has been said about who will be able to act on those opportunities. Not everyone has the computing resources or time to train a model on billions of texts, even if there were that much data about their topic of interest. Pre-trained models make the accuracy benefits of those huge amounts of training data accessible, while also saving time and resources everyone, but now doesn't have to. Crucially, these pre-trained models can be updated manually by training on domain-specific data, or fine-tuned for a specific task. If a pre-trained model has enough features and has seen enough contexts, it will have a pretty good sense of what to do with your training data already - these things are either shared across domains, or in recent years with transformer models, the model has more-or-less covered all domains. 
+
+## TRANSFORMER MODELS
+
+While transfer learning and most of the now-prevalent neural network architectures were introduced before the 1990's, transformers are only a few years old [@vaswani2017attention]. Commonly used for text data, recurrent neural networks (RNN) process input data sequentially; the calculations performed on a given word are performed on the results from processing the previous word. This means that the dependency between any two words is impacted by the words that appear between them, regardless of whether it should be, and this impact unduly magnifies the importance of proximity. When we read textual information, meaning can be comprised of complex references that can also change over time, and the more abstract you go, the more likely that the meaning of a word is dependant on a complex combination of words from other places in the sentence, or even the whole document! 
+
+RNNs used for language modeling typically take word embeddings as their input, with the sequential component of the RNN introducing the ordering of the words in their local context to the calculation. Importantly, each word in an embedding model is given only one embedding, so the word "mean" has the same embedding even though its meaning differs greatly between the contexts of "mean grade," "mean grader", and "what does this grade even mean?" The sequential processing of RNNs means that each word can have multiple embeddings associated with it and those associations also depend on the ordering of words. But there's still the problem where words at the beginning of a sequence are increasingly unlikely to be associated with words at the end of the sequence. To address this, `attention mechanisms` are added on top of RNNs, so that dependencies will be considered between all words in a sequence regardless of their proximity, and these calculations are performed on the entire sequence using matrix manipulation. 
+
+Training an RNN is computationally expensive - even moreso with an attention mechanism added to it - making it especially difficult to train a model that could be transferred to a different context with reasonable accuracy. To this end, Google researchers decided to skip the recurrent neural network entirely and focus instead on the attention mechanism [@vaswani2017attention], which might remind you of how other Google researchers discarded the output from the RNN learning objective of the word2vec model. This led to the creation of transformer models.
+
+Transformers replaced the functionality of RNNs in two ways: 1) by adding positional encodings to the input embeddings so that sequence order would be retained and 2) with multi-headed attention mechanisms that pay attention to parts of the text independently of each other, rather than sequentially building off of previous learning. The key innovation of transformers over attention-based RNNs is not so much a conceptual improvement, but rather an enormous performance improvement brought from parallel calculations and reduced computational complexity. To accurately differentiate between two contexts that a word appears in, a model needs to have seen both contexts enough times to consider them distinct, but also needs to know when those contexts aren't different, despite the surrounding words being different. Unlike a lot of other modeling situations, more training data means that an attention model learns more of these nuances with a limit that has yet to be reached, and transformers can be trained on enormous amounts of data in far less time. 
+
+Like all neural networks, transformers can be fine-tuned for virtually any task you can craft that conforms to the training input required by the neural network implementation. Transformer models often handle tasks like question answering, machine translation, sentence completion, or sentiment analysis. Briefly, because we will use it later, sentiment analysis is an NLP method for identifying and assessing positive and negative *evaluations* in text. Sentiment analysis can be fine-grained with multiple categories, or it can be simply a positive or negative score. If you want to go fine-grained, you need to take care that the training used to tweak the objective is well-crafted enough to justify the complexity of the sentiment categories.
+
+   
+> **Further Reading**   
+> 
+> To learn more about sentiment analysis, I recommend @taboada2016sentiment, @prabowo2009sentiment, @hutto2014vader, and @mohammad2016sentiment.
+>  
+
+
+#### Hugging Face + SpaCy
+
+There is an important caveat to the accessibility of recent state-of-the art natural language processing developments: accessibility is relative. The first transformer models were trained on eight Tesla P100 GPUs designed by Nvidia for scientific and research applications - at a cost. A few years later, many researchers - especially social scientists - wouldn't have access to the equivalent of one Tesla P100, never mind 8 of them. The top performing of the first transformer models took 3.5 days to train on 8 GPUs [@vaswani2017attention]. The follow-up and now-ubiquitous BERT family of transformer models was trained on the 800 million words in the Google BooksCorpus and 2.5 billion words from English language Wikipedia [@devlin2018bert]. While many of the early NLP models were for applied purposes, such as topic modeling for information retrieval, the motivation behind NLP development in recent years has been recognizably more commercial. These models are developed towards benchmarks for tasks like automated question answering, machine translation, text generation, and search. If we ever believed the goal of search engine development was as simple as "information retrieval", we were probably too young to know better. Part of the modern search task is "next sentence prediction," which can't help but be influenced by complex social conditions - good or bad. The training behind those predictions shapes the outcomes. 
+
+The automated assistant greeting you from the website of your cell phone provider could very well be a transformer model, hopefully finetuned, but probably not trained from scratch. There isn't much to gain from recreating the solid foundations of the many pre-trained models available when they perform their best after being finetuned for a task anyway. One of the more recent high-performing models, Open AI's `GPT-3`, was developed with an eye towards skipping this finetuning step by training a model with 175 billion parameters [@brown2020language]. That number of parameters, unfortunately, points to the bottom-line: you probably can't run many of the models you'll read about in papers about cutting-edge models published by computational linguists and NLP researchers. It's more-or-less necessary to use a GPU to apply the marquee pre-trained models, such as BERT, whereas finetuning them often requires that you have a GPU with 12GB of memory or more. Thankfully, there are people out there that have used smart fridges to mine Bitcoins, and the same type of people took an interest in transformer models - MobileBERT runs on a smartphone [@sun2020mobilebert]. 
+
+Once you've solved your computing requirements, you should probably make your way to the `transformers` package, developed by HuggingFace to be a Python architecture for any transformer model. HuggingFace supports an ambitious number of transformer models under one roof, while providing access to thousands more through a widely-used community repository. Aside from the core transformer models and their pared down variants, models available through HuggingFace are fine-tuned or sometimes modified more substantially. The company [Allen AI](https://allenai.github.io/scispacy/)'s `Longformer` builds on Facebook's offering, `RoBERTa`, by replacing the attention mechanism with one that handles sequences longer than 512. Recall that an attention mechanism is able to consider dependencies between any two points in a sequence - a sequence much longer than 512 might be useful if you have long documents about homogenous topics.
+
+If you want to explore the depth of transformer models, HuggingFace is probably the best place to start - training a fine-tuning layer on top of a model will be tricky enough to be instructive. For an API that might be a bit more familiar at this point in the book, the latest version of SpaCy now offers full interoperability with models that are available through HuggingFace. `RoBERTa` is officially distributed by SpaCy and can be simply downloaded and dropped-in to improve the performance of all of the SpaCy pipelines that you're already familiar with. The others just need an additional import step. There are still a couple difficulties here: 1) SpaCy allows you to train a task-specific layer on top of these transformer models, so should consider it, and 2) they also recommend that you have a GPU with 10GB of memory. You will have to decide whether to implement HuggingFace's DistilBERT [@sanh2019distilbert] in their own package, or by importing it into SpaCy's pipeline. In all cases keep in mind that inference (applying the model) takes more time with transformer models - it will be worth considering what you need from your results. One of these considerations should be whether the finetuning you perform could make a more basic model just as good. In other words, the model might not need to know the entirety of wikipedia to tell us what we want. For example, if you have access to a list of domain-specific individuals, there's no reason to leave it to statistics to confirm what we know - help the model out.
+
+<!--
+>**Comment (JA):** This section offers some really good practical tips for implementing transformers. However, I wonder whether it could be distilled down to make more of an impact. Currently, I feel like the three main points that I've gleamed (transformers still take a lot of computational resources, build off of other's efforts by exploring HuggingFace for pre-trained transformer models, and carefully consider whether a simpler architecture could get the job done) are somewhat lost in the discussion of specific models, metrics, and technology.
+-->
+
+SpaCy makes those models as easy to use as loading up a standard model. It's also smaller than the largest standard model, although this doesn't mean that it's as fast to process large amounts of text (especially without using a GPU). Let's load up the model (which is Facebook's `roberta-base` under the hood) and apply it to the full-text!
+
+
+```python
+nlpt = spacy.load('en_core_web_trf', exclude=['tagger','lemmatizer'])
+doct = nlpt(full_text)
+```
+
+
+```python
+Counter([str(ent) for ent in doct.ents if ent.label_ == 'ORG']).most_common(10)
+```
+
+
+
+
+    [('Facebook', 25),
+     ('Cambridge Analytica', 17),
+     ('Observer', 5),
+     ('FBI', 4),
+     ('Congress', 3),
+     ('H&M', 3),
+     ('Cambridge Analytica’s', 2),
+     ('the Department of Justice', 2),
+     ('FTC', 2),
+     ('BBC', 2)]
+
+
+
+
+```python
+Counter([str(ent) for ent in doct.ents if ent.label_ == 'PERSON']).most_common(10)
+```
+
+
+
+
+    [('Wylie', 25),
+     ('Zuckerberg', 3),
+     ('Collins', 3),
+     ('Nix', 3),
+     ('Trump', 2),
+     ('Damian Collins', 2),
+     ('Alexander Nix', 2),
+     ('Christopher Wylie', 1),
+     ('Mark Zuckerberg', 1),
+     ('Tim Berners-Lee', 1)]
+
+
+
+As you can see, the accuracy right out of the gate is better than the standard model or the trained standard model, and acceptably close enough to the rule-based one. There are also an impressive set of improvements for entities that weren't detected - "Observer" ends up with perfect accuracy, "Trump" is no longer mistaken for an organization, and "Brexit" is no longer a person. It's important to remember that the training data for `roberta-base` was *unlabeled*, which makes the context-based self-supervised results all the more impressive. The training data includes both Wikipedia and a crawl of news articles, which was conducted before the Guardian article we analyzed above but after the Cambridge Analytica scandal itself, so it's well-suited for this particular text data. An often fascinating part of contextually supervised models is that their "errors" can sometimes be informative about the cultural use of a term. We can investigate a bit using some of SpaCy's convenient approaches to NLP. Let's look at how the word "Brexit" and the entities in the sentences it appears in have been handled now.
+
+
+```python
+for ent in doct.ents:
+    if ent.text == "Brexit":
+        print(ent.label_)
+        print(ent.sent.text)
+        for ent2 in ent.sent.ents:
+            print(ent2.text + ': ' + ent2.label_)
+```
+
+    GPE
+    The account of a whistleblower from inside the data analytics firm that had worked in different capacities – the details are still disputed – on the two pivotal campaigns of 2016 that gave us Brexit and Trump.
+    two: CARDINAL
+    2016: DATE
+    Brexit: GPE
+    Trump: PERSON
+
+
+Although one out of four "Brexit" appearances is now labeled as a geopolitical entity, this could be because the term is used in some contexts as a stand-in for "Britain without the EU." We can look at all sentences contained the word "Brexit" to see what might have distinguished them.
+
+
+```python
+for token in doct:
+    if token.text == "Brexit":
+        print(token.sent.text)
+```
+
+    The account of a whistleblower from inside the data analytics firm that had worked in different capacities – the details are still disputed – on the two pivotal campaigns of 2016 that gave us Brexit and Trump.
+    It goes from Trump to Brexit to Russian espionage to military operations in Afghanistan to hacking the president of Nigeria.
+     “When you look at how, for example, the NCA [National Crime Agency] has just sat on blatant evidence of Russian interference in Brexit,” Wylie says. “
+    The Brexit angle of the Cambridge Analytica Files, the explosive revelations of a second whistleblower, Shahmir Sanni, fell inexplicably flat.
+
+
+It does seem as though it's only the first sentence where the term could be replaced by "Britain without the EU". Notice also that nothing in the sentence in question points to "Brexit" and "Trump" being different types of entity - that's the pre-training of the model. Let's see how much data the model needs to make this distinction.
+
+
+```python
+sentence = nlpt("The account of a whistleblower from inside the data analytics firm that had worked in different capacities "
+               "– the details are still disputed – on the two pivotal campaigns of 2016 that gave us Brexit and Trump.")
+```
+
+
+```python
+for ent in sentence.ents:
+        print(ent.text + ": " + ent.label_)
+```
+
+    two: CARDINAL
+    2016: DATE
+    Trump: PERSON
+
+
+This example demonstrates that a transformer model considers a wide context not just for training, but also when it's applied to a piece of text. It isn't until the full paragraph is processed that Brexit is detected as an entity but as an organization rather than a geopolitical one - remember that transformers can analyze dependencies between fairly distant tokens, so it may be that the word "parliament" is being tied to "campaign" here, indicating that the "Brexit" we were given is a government (ie. political organization). 
+
+
+```python
+sentence = nlpt("It was a year ago this weekend that the Observer published the first in a series of stories, known as the Cambridge Analytica Files, "
+                "that led to parliament grappling with these questions. The account of a whistleblower from inside the data analytics firm that had "
+                "worked in different capacities – the details are still disputed – on the two pivotal campaigns of 2016 that gave us Brexit and the Trump administration.")
+```
+
+
+```python
+for ent in sentence.ents:
+        print(ent.text + ": " + ent.label_)
+```
+
+    a year ago this weekend: DATE
+    Observer: ORG
+    first: ORDINAL
+    the Cambridge Analytica Files: WORK_OF_ART
+    two: CARDINAL
+    2016: DATE
+    Brexit: ORG
+    Trump: PERSON
+
+
+It is also a bit amusing that the Cambridge Analytica Files were detected as a work of art, because if you read the article, they are treated with the same reverence one might treat a Rembrandt. 
+
+#### Named Entities in Context
+
+Now that we have a pretty dependable way of detecting entities in text, we need to figure out some way to take adantage of that information. We can gain more qualitative knowledge about those entities by going *back* to the original text to see how any given entity is being discussed, balancing more qualitative reading of original documents with more computational methods within an integrated multi-method framework like computational grounded theory [@nelson2017computational]. Remember Firth's quote, "You will know a word by the company it keeps." Context here is everything, and when we rip entities from the contexts they are discussed in, it becomes harder to know what they actually mean, or why they were together in the sentence. It's entirely possible to fine-tune transformer models to focus on a specific task to give us the context we want, but that process could be a chapter on its own, and also requires a lot more system resources. Thankfully, there are hundreds of models that have been finetuned for downstream tasks and made available in the HuggingFace repository - either by developers, research labs, or the wider NLP community. Unfortunately, a lot of these tasks are optimizations for benchmarks that assess model performance in terms of applications that are of limited applicability to social science research, such as automated question answering and translation, although there are probably some clever ways that someone could make use of those! Thankfully, **sentiment analysis** is relevant to many of the industries that are now invested in the development of NLP and has enormous potential for social science research - quantitative or qualitative. 
+
+We will move on shortly to a network analysis that ties together the concepts learning in this chapter, along with some from previous chapters, but first let's take advantage of sentiment analysis to provide another level of insight. 
+
+#### Sentiment Analysis with Transformers
+
+SpaCy has never been particularly focused on sentiment analysis, so doesn't have functionality that handles the heavy lifting. In this case, you're better off taking advantage of the pipelines built-in to HuggingFace's `transformers` library. Normally, even using a fine-tuned model takes a bit of work to apply - the text you want to analyze needs to be pre-processed using the tokenizer that the base model expects, and there are a number of moving pieces and decisions to make. With the built-in pipeline, `transformers` will handle virtually all of this, from downloading and caching the model, to creating a classifier object that provides formatted results that are easy to work with. 
+
+Start by importing the `pipeline` class and instantiating a sentiment analysis classifier. This is when the model will be downloaded and cached - the default model is `distilbert` but with fine-tuning for the Stanford Sentiment Treebank (SST) benchmark.
+
+
+```python
+from transformers import pipeline
+
+sentiment = pipeline('sentiment-analysis')
+```
+
+
+```python
+sentiment('“When you look at how, for example, the NCA [National Crime Agency] has just sat on blatant evidence of Russian interference in Brexit,” Wylie says.'
+          '"The Brexit angle of the Cambridge Analytica Files, the explosive revelations of a second whistleblower, Shahmir Sanni, fell inexplicably flat.')
+```
+
+
+
+
+    [{'label': 'NEGATIVE', 'score': 0.9997309446334839}]
+
+
+
+The interpretation of this score is the probability, between 0 and 1, that the classification is accurate. Notice that the input was technically two sentences - sometimes you want an overall sentiment for a string of text but multiple sentiments can be expressed in a single sentence, so you might also want that granularity. One thing to also keep in mind with transformers is that most of them have an inherent maximum sequence length (BERT is 512) and finetuned pre-trained models will have their own sequence length configured (the model we're using is 128). These limits are set because of the resource requirements inherent to the attention mechanisms of most models, although there are some for longer text input, such as `Longformer`, which replaces the self-attention mechanism in `RoBERTa` with one that combines local windowed attention with task-specific global attention. 
+
+It's also important to know that this *sequence* length does not translate into a maximum *word* length. Most transformers, including BERT, use sub-word tokenization, as well as their own special tokens that you won't necessarily see, but are part of the sequence length. There are many different ways to address this limitation, but these are more-or-less model specific, so here we will just play it safe by processing a single sentence at a time.
+
+In the HuggingFace library, classifying a batch of sentences at once is quite easy, accepting a list of raw sentences and returning a list of dictionaries containing their labels and scores.
+
+
+```python
+scores = sentiment(['“When you look at how, for example, the NCA [National Crime Agency] has '
+                   'just sat on blatant evidence of Russian interference in Brexit,” Wylie says.',
+                   '"The Brexit angle of the Cambridge Analytica Files, the explosive revelations '
+                   'of a second whistleblower, Shahmir Sanni, fell inexplicably flat.'])
+print(scores)
+```
+
+    [{'label': 'NEGATIVE', 'score': 0.9984580874443054}, {'label': 'NEGATIVE', 'score': 0.9997546076774597}]
+
+
+We can return to our SpaCy `doc` object to keep this process simple. 
+
+
+```python
+sentences = [sent.text for sent in doct.sents]
+scores = sentiment(sentences)
+```
+
+Let's make the results into a dataframe so we can take a better look at them. We'll print the positive sentences with the highest and lowest probability, and the same for negative sentences.
+
+
+```python
+label, score = [x['label'] for x in scores], [x['score'] for x in scores]
+
+df = pd.DataFrame()
+df['sentence'], df['label'], df['score'] = sentences, label, score
+
+top_pos = df[df['label'] == 'POSITIVE']['score'].idxmax()
+bot_pos = df[df['label'] == 'POSITIVE']['score'].idxmin()
+top_neg = df[df['label'] == 'NEGATIVE']['score'].idxmax()
+bot_neg = df[df['label'] == 'NEGATIVE']['score'].idxmin()
+
+for pos in [top_pos, bot_pos, top_neg, bot_neg]:    
+    print('Value: ' + str(df['score'].iloc[pos]) + '\nSentence: ' + df['sentence'].iloc[pos], '\n')
+```
+
+    Value: 0.9997883439064026
+    Sentence: And this change in political tone is hugely significant.”   
+    
+    Value: 0.5255212187767029
+    Sentence: But the scandal that followed seems to reveal something far more shocking. 
+    
+    Value: 0.9997935891151428
+    Sentence: ”  If it wasn’t so tragic, it would be funny to Wylie that one of the biggest takeaways of the story – which was generating 34,000 news stories a day at its height and cost one of the biggest companies on Earth billions – is how it failed. 
+    
+    Value: 0.5627380013465881
+    Sentence: My overriding impression of the months before publication, I tell him, when we were working with lawyers on how to break his non-disclosure agreement and trying to prove the public interest case, and dealing with other news organisations, is of this long and dark and scary winter. 
+    
+
+
+The latter three results are fairly intuitive after a bit of thought. But the high certainty of the top positive result is a bit mysterious - the sentence seems fairly ambiguous alone - a political tone can change for better or for worse. This score is far less ambiguous when you look at the sentence in context:
+
+>“But especially Facebook,” says Bartlett. “Just yesterday, the Democrat presidential hopeful Elizabeth Warren said she wants Facebook broken up. She wouldn’t have said this without the Cambridge Analytica story. And this change in political tone is hugely significant.”
+
+It's difficult to determine how the model made this decision. The article itself is highly positive about the Cambridge Analytica *story* (recall the "work of art" designation from earlier) but implicitly negative about Cambridge Analytica the organization. It could be informative to see the sentiment in all of the sentences where Cambridge Analytica is recognized as an entity. We'll include the entity type for good measure. This process will be useful in the next section of the chapter, so we can use the `entity_sentiment()` function from the dcss package to process each speech and then expand them out into a dataframe of sentences, with the leader who spoke them, their sentiment label, sentiment score, and the entities detected in the sentence. Now we need to process those speeches. 
+
+
+```python
+sent_df = entity_sentiment(doct, sentiment, ['Cambridge Analytica'])
+
+sent_df['sent_signed'] = sent_df['sentiment_score']
+sent_df.loc[sent_df['sentiment'] == 'NEGATIVE', 'sent_signed'] *= -1
+```
+
+
+```python
+sent_df['sent_signed'].mean()
+```
+
+
+
+
+    -0.4811149269592862
+
+
+
+The average sentiment score is pretty negative. To save space we won't print all of these sentences but if you look at them, you will notice that two high probability positive sentences are also about the story itself, rather than the organization.
+
+We can be pretty confident that the sentiment analysis of the finetuned `distilbert` model is sensible enough to try applying it to a larger corpus and integrate the results into a larger analysis. Let's explore the speeches made by recent longterm leaders of the three largest national parties in the Canadian House of Commons. 
+
+### Translating Transformer Insight into Human Insight
+
+We'll load the speech data into a dataframe the same way that we have in previous chapters.
+
+
+```python
+datasets = list_files("data/canadian_hansards/lipad/", 'csv')
+dfs = [pd.read_csv(df, low_memory=False) for df in datasets]
+df = pd.concat(dfs)
+```
+
+Next, filter for the three Canadian political party leaders that were the heads of their parties for fairly long periods of time. Jack Layton is selected, in particular, because he led the NDP during a time when they were the official opposition - party leaders that are neither in power nor the official opposition have far less speaking opportunities in the House of Commons. Even still, Jack Layton was in this position for a much shorter time than the other two leaders and this is reflected in the number of speeches he has in the data.
+
+
+```python
+leaders = ['Stephen Harper', 'Jack Layton', 'Jean Chrétien']
+df_filt = df[df['speakername'].isin(leaders)]
+df_filt.speakername.value_counts()
+```
+
+
+
+
+    Stephen Harper    11394
+    Jean Chrétien     11060
+    Jack Layton        3334
+    Name: speakername, dtype: int64
+
+
+
+To shorten the processing time, we'll disable the tagger, parser, and lemmatizer but enable the rule-based sentencizer. You will find that processing a modest corpus of less than 30K documents in SpaCy, with the transformer model, is still quite slow if you don't use a GPU. As an alternative, you can simply skip the next couple cells and load the provided pickle with all of the processing completed already. 
+
+
+```python
+nlp = spacy.load('en_core_web_trf', exclude=['tagger', 'parser', 'lemmatizer'])
+nlp.add_pipe('sentencizer')
+```
+
+
+
+
+    <spacy.pipeline.sentencizer.Sentencizer at 0x7f6718ebf5c0>
+
+
+
+The following `process_speeches_sentiment()` function will also produce the same thing as the pickle below it, after some time.
+
+
+```python
+sentiment_df = process_speeches_sentiment(df_filt, nlp, sentiment)
+```
+
+
+```python
+sentiment_df.to_pickle('data/can_hansard_sentiment.pkl')
+```
+
+
+```python
+## RUN THIS CELL TO LOAD THE DATA WITH EVERYTHING ABOVE ANALYSED ALREADY
+sentiment_df = pd.read_pickle('data/can_hansard_sentiment.pkl')
+```
+
+Create a new column with negative sentiment scores negated, in order to simplify using them in any calculations.
+
+
+```python
+sentiment_df['sent_signed'] = sentiment_df['sentiment_score']
+sentiment_df.loc[sentiment_df['sentiment'] == 'NEGATIVE', 'sent_signed'] *= -1
+```
+
+As you can see, Jack Layton has a much larger proportion of sentences with negative sentiment than the other leaders, even though he was often considered to be a relatively positive figure, as far as politicians go. This is also likely an artifact of him only ever being the official opposition and never in power. The role of the official opposition is to challenge the government in power, while governments in power want to maintain the impression that life is mostly okay.
+
+
+```python
+sentiment_df.value_counts(subset=['speaker', 'sentiment'], sort=False)
+```
+
+
+
+
+    speaker         sentiment
+    Jack Layton     NEGATIVE     2765
+                    POSITIVE     1715
+    Jean Chrétien   NEGATIVE     4560
+                    POSITIVE     6209
+    Stephen Harper  NEGATIVE     7412
+                    POSITIVE     6492
+    dtype: int64
+
+
+
+If we group the dataframe by speaker and then take the average of their sentiment score probabilities, we end up with a sort of metric that better accounts for the cases where the sentiment model wasn't as confident about its assessment. Another way of thinking of this is that sentences aren't 100% positive or negative all the time and can instead express a mixture of the two.
+
+
+```python
+sentiment_df.groupby('speaker')['sent_signed'].mean()
+```
+
+
+
+
+    speaker
+    Jack Layton      -0.228365
+    Jean Chrétien     0.152638
+    Stephen Harper   -0.062230
+    Name: sent_signed, dtype: float64
+
+
+
+We'll move on to the final step of incorporating a network analysis shortly but first let's create the dataframe that we'll be using - this dataframe conveniently doubles as a way to look at the sentiment in sentences containing specific entities. Then we'll group and sort the dataframes to see the pairings of entities with the highest and lowest sentiments.
+
+
+```python
+chretien_df = create_speaker_edge_df(sentiment_df, 'Jean Chrétien')
+layton_df = create_speaker_edge_df(sentiment_df, 'Jack Layton')
+harper_df = create_speaker_edge_df(sentiment_df, 'Stephen Harper')
+```
+
+For Jean Chrétien, the most obvious situation represented, at a glance, is negative sentiment when Quebec and the leader of their national party at the time, Lucien Bouchard, are mentioned in the same sentence. [Chrétien was openly not much of a fan of Bouchard](https://www.ctvnews.ca/chretien-mulroney-share-common-nemesis-bouchard-1.255858).
+
+
+```python
+chretien_df.groupby(['source','target'])['weight'].mean().reset_index().sort_values(by='weight', ascending = False)
+```
+
+
+
+
+                       source                  target    weight
+    1107      David Pelletier              Jamie Sale  0.999883
+    1091        Daniel Wesley     Karolina Wisniewska  0.999870
+    1811  Karolina Wisniewska    Lauren Woolstencroft  0.999870
+    458        Brian McKeever    Lauren Woolstencroft  0.999870
+    457        Brian McKeever     Karolina Wisniewska  0.999870
+    ...                   ...                     ...       ...
+    2775              Speaker      the Globe and Mail -0.999705
+    122                 Amman        British Columbia -0.999717
+    125                 Amman                 Speaker -0.999717
+    1523                House                     NHL -0.999755
+    429              Bouchard  the Province of Quebec -0.999758
+    
+    [3101 rows x 3 columns]
+
+
+
+On the flipside, one of the highest sentiment combinations for Jack Layton is Quebec and their government. Layton's NDP became official opposition largely because of an unexpected sweep of seats in Quebec that had never voted NDP party members into office before. Layton's sentiment towards the province could be a contribution to that sweep, gratitude for it, or likely some combination. Also high on the list, unsurprisingly, is Olivia Chow, who was Jack Layton's wife and also a member of parliament in the NDP. Finally, the low sentiment combinations involving HST reflect [Layton's open opposition to a new method of taxation that was being introduced at the time](https://toronto.ctvnews.ca/federal-ndp-sees-hst-as-a-populist-cause-1.457564?cache=yes). 
+
+
+```python
+layton_df.groupby(['source','target'])['weight'].mean().reset_index().sort_values(by='weight', ascending = False)
+```
+
+
+
+
+                     source                                             target  \
+    1316          Longueuil                                     Pierre-Boucher   
+    1615             Quebec                           the Government of Quebec   
+    462              Canada                                               June   
+    1386               Mike                                        Olivia Chow   
+    1531        Olivia Chow                                              Sarah   
+    ...                 ...                                                ...   
+    1409             Molson                                            The Bay   
+    342   Bruce Fitzpatrick  the Peterborough Federal Conservative Riding A...   
+    341   Bruce Fitzpatrick                                                HST   
+    987                 HST  the Peterborough Federal Conservative Riding A...   
+    3      ATI Technologies                                            Abitibi   
+    
+            weight  
+    1316  0.999855  
+    1615  0.999850  
+    462   0.999843  
+    1386  0.999830  
+    1531  0.999830  
+    ...        ...  
+    1409 -0.999782  
+    342  -0.999785  
+    341  -0.999785  
+    987  -0.999785  
+    3    -0.999791  
+    
+    [1864 rows x 3 columns]
+
+
+
+Like Jack Layton, Stephen Harper also spent some time courting votes in Quebec, with the pairing to Canada reflecting his strategy of appealing to the somewhat nationalist side of Quebec's population, referring to the province as the ["foundation of Canada"](https://www.theglobeandmail.com/news/politics/courting-the-fourth-sister/article1065358/). As a final example, the low sentiment of the combination of the Liberal Party and the Canadian Senate -- a level of government with appointed rather than elected members -- likely reflects [his dissatisfaction with the Senate as an institution and particularly one that had a strong majority of Liberal appointees](https://www.cbc.ca/news/politics/senate-s-class-of-2009-now-haunts-stephen-harper-1.2356508).
+
+
+```python
+harper_df.groupby(['source','target'])['weight'].mean().reset_index().sort_values(by='weight', ascending = False)
+```
+
+
+
+
+                     source                target    weight
+    1787              Grant                Robert  0.999878
+    927              Canada          Peterborough  0.999873
+    3631   Veterans Affairs        Walt Natynczyk  0.999870
+    935              Canada                Québec  0.999863
+    2293       John Paul II   the Catholic Church  0.999863
+    ...                 ...                   ...       ...
+    2083            Hussein    the United Nations -0.999770
+    854              Canada               Hussein -0.999770
+    2384          La Presse         Pierre Gravel -0.999788
+    3892  the Liberal Party  the Senate of Canada -0.999788
+    2889              Obama     the Liberal Party -0.999790
+    
+    [3928 rows x 3 columns]
+
+
+
+There are many, many other ways that one could look in great detail at the results of this entity-co-occurrence sentiment analysis, but we will now move on to a technique for analyzing whether there are latent structural configurations discernible from the entities mentioned together in these speeches. We'll do this with the stochastic block models (SBMs) that were introduced in much more detail in Chapter 31.
+
+#### Co-Occurring Named Entities
+
+One of the main goals of NER is to extract *structured* pieces of data, such as the name of an event or a person from *unstructured* text. @squire2016mastering likens this to sifting for gold, separating the gold (the names of the entities) from the dirt (the rest of the text). Sometimes the analysis we want to do is on the entities themselves, such as counting the most frequently occurring organizations, or looking at networks of co-occurrences of named entities within sentences or paragraphs.
+
+We'll use a function from dcss that accepts the sentiment and entity dataframe we created above, and returns an edgelist dataframe for the designated speaker. We assign an undirected edge between two entities if they are both referenced in the same sentence, and we'll make an edge property that is the sentiment score for that sentence.
+
+
+```python
+chretien_df = create_speaker_edge_df(sentiment_df, 'Jean Chrétien')
+layton_df = create_speaker_edge_df(sentiment_df, 'Jack Layton')
+harper_df = create_speaker_edge_df(sentiment_df, 'Stephen Harper')
+```
+
+As mentioned above, we can start this process with the same dataframes we used to take a quick look at sentiment towards co-occurring entities. By sending these dataframes to the `shrink_small_df` utility from the dcss package, we end up with a dataframe that has been grouped so that all of the edges between the same two entities are aggregated, with the number of edges added as an edge weight, should we decide we want that.
+
+
+```python
+chretien_small_df = shrink_sent_df(chretien_df)
+layton_small_df = shrink_sent_df(layton_df)
+harper_small_df = shrink_sent_df(harper_df)
+```
+
+With another convenience function from the dcss package, `blockmodel_from_edge_df`, sending the grouped dataframes above returns a constructed graph and an associated block model that has been estimated from that graph. The function provides the option to produce a filter mask for the graph, so that it can be filtered later (or anytime) in order to produce a block model graph with `n_edges` from highest weight to lowest weight. Note that the blockmodel is estimated with all edges and nodes - the filter is meant for cleaner visualization. Finally, there is an optional parameter `use_weights` in the utility function that can be set to `True` in order to incorporate whatever values are in the "weight" column of the dataframe, as a covariate for block model estimation. This option is not used here because it can *dramatically* increase processing time, even on a lab server with 32 CPU cores available.
+
+So, let's estimate those block models! We'll set `n_edges` to 200, as mentioned, for visual clarity.
+
+
+```python
+chretien_small_G, chretien_small_blocks = blockmodel_from_edge_df(chretien_small_df, n_edges = 200)
+layton_small_G, layton_small_blocks = blockmodel_from_edge_df(layton_small_df, n_edges = 200)
+harper_small_G, harper_small_blocks = blockmodel_from_edge_df(harper_small_df, n_edges = 200)
+```
+
+Now, before we start analysing the nitty-gritty results of the block model partitioning, let's print a block model graph for each of the leaders! Once again, there is a utility function for this available from dcss, called `draw_ner_blockmodel_sfdp`. This function expects the first argument to be the network graph, the second to be the block model, and also accepts an optional `filename` to output an image to the given filename. A filepath can also be part of the name. If a filename is not provided, the block model graph will be displayed in the notebook instead.
+
+The next code block produces all three of the images, which are then presented in the following figures.
+
+
+```python
+draw_ner_blockmodel_sfdp(chretien_small_G, chretien_small_blocks, filename = 'figures/chretien_blockmodel_top200_unweighted_sfdp.pdf')
+draw_ner_blockmodel_sfdp(layton_small_G, layton_small_blocks, filename = 'figures/layton_blockmodel_top200_unweighted_sfdp.pdf')
+draw_ner_blockmodel_sfdp(harper_small_G, harper_small_blocks, filename = 'figures/harper_blockmodel_top200_unweighted_sfdp.pdf')
+```
+
+As with the earlier sentiment dataframes, there's too much information here to exhaustively interpret. But in Chrétien's graph below, for a start, we can clearly see certain countries together in one partition, while others are in another. Likewise, a number of Canadian provinces are in an apolitical group, whereas Quebec, Alberta, and Newfoundland share a block with Chrétien's political rivals.
+
+![Cap](figures/chretien_blockmodel_top200_unweighted_sfdp.pdf)
+
+For Jack Layton, there's a bit of a mixed bag. On the one hand, there's a very populated block with a wide range of entities that are tough to see an intuitive common ground for. On the other, there are some very homogenous blocks also, with one containing only other countries, and another containing only provinces but with the Bloc Quebecois party as the lone government entity. This blockmodel might call for some iterative experimentation to produce more well-defined partitions out of the very large group, or Layton simply displayed no discernible structure when talking about those entities.
+
+![Cap](figures/layton_blockmodel_top200_unweighted_sfdp.pdf)
+
+Finally, for Stephen Harper, the entities are fairly intuitively partitioned. We see one block with a number of lower population provinces, while his home province of Alberta shares a block with the two provinces that house over half of Canada's population. Meanwhile, three distinct blocks seem to be made up of entities related to three different international conflicts - in Syria, Afghanistan, and Iraq. China, India, and Japan are grouped together, which might be a fairly interesting dynamic to look a bit closer at, so we will finish off with just that process in the material that follows!
+
+![Cap](figures/harper_blockmodel_top200_unweighted_sfdp.pdf)
+
+The `get_sentiment_blocks_df` function from dcss will return a dataframe with the block assignment for every entity in the graph. We give it to the graph first and then the block model.
+
+
+```python
+chretien_results = get_sentiment_blocks_df(chretien_small_G, chretien_small_blocks)
+layton_results = get_sentiment_blocks_df(layton_small_G, layton_small_blocks)
+harper_results = get_sentiment_blocks_df(harper_small_G, harper_small_blocks)
+```
+
+
+```python
+chretien_results.head()
+```
+
+
+
+
+                  entity  block
+    0             Canada      0
+    1             Quebec      1
+    2            Speaker      0
+    3  the United States      2
+    4              House      0
+
+
+
+And now the last function call, to `calculate_avg_block_sentiment`, also from the dcss package. This function will produce a dataframe where each row is a block, the entities column has a list of the names of each block member, and there's an average sentiment score for sentiment pairwise between each member of the block. This means the speaker expressed that average sentiment when speaking of those entities together. Take note that this will not necessarily reflect the block assignment structure - these sentiment weights were not factored into the block model estimation. These can take a bit of time to run, so pre-processed pickles are available, as usual.
+
+
+```python
+chretien_block_sentiment_df = calculate_avg_block_sentiment(chretien_results, chretien_df)
+chretien_block_sentiment_df.to_pickle('data/chretien_blockmodel_sent_analysis.pkl')
+```
+
+
+```python
+## RUN TO LOAD THE PICKLED DATAFRAME
+chretien_block_sentiment_df = pd.read_pickle('data/chretien_blockmodel_sent_analysis.pkl')
+```
+
+
+```python
+chretien_block_sentiment_df.head(30)
+```
+
+
+
+
+        block                                           entities  avg_sentiments
+    0       0  [Canada, Speaker, House, the House of Commons,...       -0.068260
+    1       1  [Quebec, the Bloc Quebecois, New Brunswick, Ne...       -0.270369
+    2       2  [the United States, France, Great Britain, Ger...        0.204894
+    3       3  [Ontario, Manitoba, Saskatchewan, Charlottetow...        0.261303
+    4       4  [the Parti Quebecois, Mexico, PQ, Johnson, Par...        0.091311
+    5       5  [the Reform Party, Parliament, Alberta, RCMP, ...        0.063778
+    6       6             [NATO, Kosovo, the United Nations, UN]        0.655119
+    7       7  [the Security Council, Saddam Hussein, Blix, I...        0.138377
+    8       8  [Senate, Bloc, the Conservative Party, Airbus,...        0.145302
+    9       9  [China, India, Pakistan, Indonesia, the Soviet...        0.783205
+    10     10  [Milosevic, Bosnia, Croatia, the Government of...        0.227347
+    11     11  [Saint-Maurice, Esquimalt, Juan de Fuca, Nanai...        0.488620
+    12     12  [Saint-Jean, Kingston, Afghanistan, the Canada...        0.265714
+    13     13  [Roberval, UNSCOM, Israel, Palestine, Saddam, ...        0.340711
+    14     14  [Antonine Maillet, Gabrielle Roy, Margo Kane, ...        0.965706
+    15     15  [The Arthritis Society, the Calgary Catholic I...       -0.998867
+
+
+
+If you cross-reference the members of these blocks with the block model graphs above, the images can actually be pretty helpful to quickly see who's in a block, their ties, and where they're roughly situated, but with a better sense of the vibe from the speaker when speaking about them together. In the 
+
+
+```python
+layton_block_sentiment_df = calculate_avg_block_sentiment(layton_results, layton_df)
+layton_block_sentiment_df.to_pickle('data/layton_blockmodel_sent_analysis.pkl')
+```
+
+
+```python
+## RUN TO LOAD THE PICKLED DATAFRAME
+layton_block_sentiment_df.to_pickle('data/layton_blockmodel_sent_analysis.pkl')
+```
+
+
+```python
+layton_block_sentiment_df.head(30)
+```
+
+
+
+
+        block                                           entities  avg_sentiments
+    0       0               [Canada, Speaker, House, Parliament]       -0.444194
+    1       1  [Afghanistan, NDP, Quebec, UN, Ontario, the Li...       -0.300015
+    2       2  [the United States, Darfur, China, Japan, Sout...       -0.061132
+    3       3  [NATO, U.S., Bush, the House of Commons, the N...       -0.024512
+    4       4  [British Columbia, Coquitlam, New Westminster,...       -0.171941
+    5       5  [Montreal, Toronto, Ottawa, Nortel, the Bloc Q...       -0.234125
+    6       6  [Vancouver, GM, Oshawa, Margaret Mitchell, Gat...        0.067261
+    7       7  [Falconbridge, Inco, Alcan, Alcoa, Stelco, Dof...       -0.995202
+    8       8  [Vale, BHP, Potash, Georgia-Pacific, Vale Inco...       -0.863167
+    9       9  [David Dingwall, Richard Mahoney, Art Eggleton...       -0.668836
+    10     10  [Bill Blaikie, Ed Broadbent, Frank Rainville, ...        0.823316
+
+
+
+Remember that in this case, the visualization of the block model graph is filtered to the top 200 edges. Any nodes that weren't part of those connections won't be on the graph. In a huge network, it becomes pretty difficult to discern nodes anyway and edges even more. But with a high quality image and reliable layout, you can look at the block members in a dataframe and see where they'd be situated if they *were* on the graph.
+
+
+```python
+harper_block_sentiment_df = calculate_avg_block_sentiment(harper_results, harper_df)
+harper_block_sentiment_df.to_pickle('data/harper_blockmodel_sent_analysis.pkl')
+```
+
+
+```python
+## RUN TO LOAD THE PICKLED DATAFRAME
+harper_block_sentiment_df.to_pickle('data/harper_blockmodel_sent_analysis.pkl')
+```
+
+
+```python
+harper_block_sentiment_df.head(30)
+```
+
+
+
+
+        block                                           entities  avg_sentiments
+    0       0  [NDP, Speaker, the Liberal Party, House, Parli...        0.058924
+    1       1                 [Canada, the United States, China]       -0.000844
+    2       2  [Quebec, Bloc, Senate, the Conservative Party,...       -0.167042
+    3       3  [Duffy, Wright, UNESCO, Gomery, the Liberal Pa...       -0.036970
+    4       4  [Ontario, the Bloc Quebecois, Labrador, Newfou...       -0.058601
+    5       5  [Afghanistan, the Canadian Forces, Taliban, NA...        0.172953
+    6       6  [Iraq, the United Nations, U.S., UN, ISIL, Syr...       -0.158887
+    7       7  [Saddam Hussein, Australia, the United Kingdom...        0.508794
+    8       8  [Elections Canada, LaSalle, Émard, Penashue, t...       -0.010631
+    9       9  [Laval, the Conseil du patronat du Québec, the...        0.997304
+    10     10  [OECD, G8, the International Monetary Fund, th...        0.284104
+    11     11  [India, Mexico, Mulroney, Laurier, Trudeau, Ky...       -0.325267
+    12     12  [Groupaction, Canadian Forces, the Department ...       -0.314922
+    13     13  [the Federation of Canadian Municipalities, th...        0.999614
+    14     14  [Calgary, Edmonton, CFB Calgary, CFB Edmonton,...        0.526361
+
+
+
+## CONCLUSION
+
+### Key Points 
+
+- Iteratively eveloped several NER models using SpaCy, starting from out-of-the-box and then tuning it
+- Transfer learning is using machine learning models in contexts for which they were not originally trained
+- Transformer models are incredibly powerful, incredibly efficient, and can make use of data and computing power in incredible ways
+- Combined many different concepts, methods, and models from this book into a single example

@@ -1,0 +1,8 @@
+# Changelog
+
+- TODO: Summarize `_changes.md`
+
+## Git
+
+Coming soon... 
+

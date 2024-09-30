@@ -1,0 +1,480 @@
+# Web data (APIs)
+
+## Learning Objectives
+
+By the end of this chapter, you should be able to:
+
+- Develop a mental model of what APIs are, how they work, and how they can be used for data collection.
+- Apply your understanding to work with specific APIs to collect the data you need.
+- Use Python programming to develop scripts that query APIs and programmatically collect and store data following best practices.
+- Work effectively with *The Guardian* REST API and the YouTube Data API.
+- Handle API authentication securely and efficiently.
+- Manage API rate limits and implement error handling.
+
+<br>
+
+It's time to put your Python programming skills to work by collecting data from the web! In this chapter, you'll learn how to collect data programmatically using web-based Application Programming Interfaces (APIs). You'll develop a solid understanding of what APIs are, how they function, and how to interact with them using Python. We'll work through practical examples using APIs from **The Guardian** and YouTube, which will prepare you to tackle other APIs in your research.
+
+APIs provide some benefits to collecting data from the web. With rare exceptions, rules about what data we can collect and how we can collect it using APIs are explicitly stated, which removes some of the legal uncertainties that can complicate other data collection methods. Widely-used APIs are generally well-documented and maintained, and the data returned is usually well-structured and easy to work with. 
+
+It's not *all* good, though. There are two main downsides to working with APIs: First, there may be restrictions on what data is provided, and if there are, those restrictions are often grounded in business interests rather than technical requirements and limitations. That said, the data that API providers *choose to include* is almost always complete because it is often generated programmatically as a byproduct of their platform, and applications depend on it. Second, APIs change, sometimes unexpectedly. Usually this is not a huge inconvenience, but it is possible to lose access to data without notice.
+The primary learning objective of this chapter is to understand how web-based APIs work in general and to develop a mental model that allows you to work with specific APIs to obtain the data you need. To that end, we will begin with a conceptual overview of what APIs are and how they work, which will include a pretty high-level discussion of how the Internet works. Then we will put that general knowledge to use by collecting data.
+
+## Application Programming Interfaces (APIs)
+
+Understanding APIs starts with the notion of an **interface**—the "I" in API. An interface allows different systems or components to communicate and interact with each other. In the context of software, an **Application Programming Interface (API)** is a set of rules and protocols that allows one piece of software to interact with another.
+
+You're already familiar with **user interfaces** (UIs)—the buttons, menus, and controls you use to interact with software applications. UIs abstract the complexity of the underlying system, allowing you to perform tasks without needing to understand how they are implemented. Similarly, **APIs** allow software applications to interact with each other without exposing the internal complexities. They provide a set of predefined functions and protocols that developers can use to access the features or data of another application or service. In programming languages like Python, the functions and libraries you use are themselves APIs. They abstract low-level operations into high-level functions that are easier to use and understand. For example, when you use the `print()` function, you're leveraging an API that handles the complexities of displaying output to the console.
+
+When using web APIs for data collection, a bit of knowledge about the standardized protocols that devices use to communicate on the internet goes a long way.
+
+- **IP Addresses and Domain Names**: Every device on the internet has a unique IP address. We use human-readable domain names (e.g., nytimes.com) which are translated to IP addresses by DNS servers.
+- **HTTP and HTTPS**: These protocols govern how data is transferred between clients (like your computer) and servers. They use methods like GET, POST, PUT, and DELETE to request or send data.
+- **REST APIs**: These are interfaces that allow programs to interact with web services over HTTP/HTTPS. They abstract away many network complexities, letting you focus on data exchange.
+- **Client-Server Model**: Your program (the client) sends requests to a server, which processes them and sends back responses.
+- **Data Packets**: Information is broken into small packets for transmission, then reassembled at the destination.
+
+When you use an APIs for data collection, your program sends HTTP requests to specific URLs (endpoints) provided by the API. These requests include parameters that specify the data you want. The server then processes your request and sends back data, typically in formats like JSON or XML. You store that data locally (to avoid making redundant API calls), and then process it for analysis.
+
+### Making Requests with Python
+
+We have just learned, at a relatively high-level, what happens when your computer (**the "client"**) makes a request for a webpage (**the "resource"**) from a server. In a similar fashion, you can write programs that make `GET` requests for resources from a server. These resources can be just about anything, but as researchers, we usually want to retrieve some sort of data or metadata from a web server. To do so, we send our requests to a specific "endpoint."
+
+An **endpoint** is a location on the Internet where you send a request for a specific resource. Recall that "resource" is an abstract term for just about anything that we want to retrieve from a web server. If you are working with a Twitter API, for example, you will see that there are endpoints for requesting data about tweets and an endpoint for requesting data about users. If you are working with the API for *The Guardian* or another news organization, you will see that there is an endpoint for "content," among other things. To access the resources we want, we have to send our request to the correct endpoint. In nearly all cases, this will be in the form of a URL.
+
+The URLs that we use to send requests to endpoints typically include several important pieces of information that enable us to specify what we want the API to return. For example, the URL may include information about our **query**, as well as some optional **parameters** and **filters**. Usually, this information is combined into a single URL. 
+
+If web servers receive too many requests at once -- whether intentionally, in the form of a coordinated attack, or unintentionally, in the form of a poorly written or inconsiderate script -- they can be overwhelmed. To prevent this from happening, most APIs use **rate limiting** to restrict the number of requests that a user can make within specific time frames. Ss of June 2020, *The Guardian* content endpoint limits users to making 12 requests per second and a maximum of 5,000 calls per day. Other APIs will have their own restrictions, which you can learn about in the API **Terms of Service**. Most of the time, APIs enforce rate limits by detecting overuse and then disconnecting or throttling users, while others use an honour system but heavily penalize users who are found to be violating those limits, such as blacklisting the user.
+
+### API Keys, Tokens
+
+To make requests to an API you will usually need an **API Key**, or **API Token**. You can think of these as a username and password that identify you to the API. Unlike usernames and passwords, you don't set them yourself. Instead, the API provides them to you when you sign up for their service and agree to their Terms of Service. We will see several examples of obtaining and working with different API tokens in the examples that follow.
+
+It is *crucial* that you do not share your API tokens. Do **not** write them directly into your scripts, or inadvertently commit them to a public repository (e.g., on GitLab or GitHub). Doing so is comparable to sharing usernames and passwords you use for any other web service and any misuse will be tied to you as the user. If someone obtained your API keys for *The Guardian*, they could access the service as if they were you, and you will suffer the consequences. If you believe your access token has been compromised for some reason, find an appropriate point of contact and inform them. They have an interest in ensuring that *no one* is using compromised tokens. Later in the chapter, we will learn how to use your keys while maintaining a high level of security.
+
+### Responses
+
+When we make a `GET` request to an API, we get a **response** in return. These responses have numerical codes, such as the familiar `404` (Page Not Found) error you get when you follow a dead link. There are many possible response codes, most of which you don't see when you're just browsing the web. For example, if your request was successful, you will get a `200` (OK) response code. On the other hand, if there was some sort of problem with your request, you will likely get a response code such as `401` (unauthorized), `403` (forbidden), `500` (internal server error), or `503` (the server is unavailable). When you are developing scripts to programmatically collect data from APIs, it is always a good idea to check the status of any given request. Because there are many possible responses for errors, it is better to check for success (i.e. `200`) than failure.
+
+Technically, web-based APIs can return anything, but by far the most common way of providing data is **`json`**, which stands for JavaScript Object Notation. `json` is a nested data structure that looks a lot like a Python `dictionary` in that the data is stored using key-value pairs inside curly braces. For this reason, working with `json` is relatively painless in Python. If you import the standard library `json`, you can easily read and write `json` files, and when loaded in memory you can use dictionary methods to work with that data. Additionally, it is possible to use the `Pandas` package (discussed in later chapters) to read `json` directly into a `dataframe` using the `.read_json()` method. We will see many examples of working with `json` throughout the rest of this chapter.
+
+## Working with APIs
+
+Now that we have a conceptual understanding of what APIs are and how they work in general, we can get a bit more practical. In the rest of this chapter, we make these abstract concepts more concrete by comparing several practical examples of collecting data programmatically via web-based APIs. Remember, these examples are not intended to be comprehensive recipes for working with specific APIs. Instead, the idea is that you will deepen your *general* understanding of APIs by comparing multiple examples. When doing your own research, you will likely want to use some feature of an API that I haven't covered, but you will have the foundational knowledge and understanding required to understand the documentation and solve the problem yourself.
+
+### Setup
+
+```python
+import requests
+import json
+
+import pandas as pd
+import dcss.youtube as yt
+import dcss.cleaners as clean
+import dcss.utils as utils
+```
+
+### *The Guardian*
+
+Many major newspapers provide access to non-trivial amounts of data on their published articles via APIs and *The Guardian* is no exception. As of January 2021, it offers five endpoints:
+
+1. The **content endpoint** provides the text and metadata for published articles. It is possible to query and filter results. This endpoint is likely the most useful for researchers. 
+2. The **tags endpoint** provides API tags for greater than 50,000 results, which can be used in other API queries.
+3. The **sections endpoint** provides information on groupings of published articles into sections.
+4. The **editions endpoint** provides content for the each of regional main pages: US, UK, Australia, and International.
+5. The **single items endpoint** returns data for specific items, including content, tags, and sections.
+
+Often, the easiest way to work with an API is to use a "client." Python clients for *The Guardian* API or other APIs are no different than any other Python package: they provide functions that abstract away some of the complexities of authenticating with, making requests to, and processing results from the API. You may want to use clients from time to time, such as when working with large and relatively complex APIs. Here, however, we will work directly with *The Guardian* API using a package called `requests`. This affords a bit more flexibility and freedom in how we interface with the API, and will help make some of the previously introduced concepts more concrete. 
+
+##### Accessing *The Guardian* API
+
+As with most other APIs, you need to register for an API key to access *The Guardian* API. This key enables them to monitor your access to their data and ensure you are following their terms of service. Once you have your API key, you can make 12 calls per second and up to 5,000 calls per day. You can access the article text (but not images, audio, or video) for millions of articles for free. As with many other APIs, it's possible to unlock more content by paying for a commercial license.
+
+You can obtain your API keys by registering on *The Guardian*'s website. The process is outlined on their [developer page](open-platform.theguardian.com/documentation/). We won't review all the steps here, as they can easily change and result in confusion. However, the process is straightforward and well-explained.
+
+In this case, your API key will be a single alphanumeric string. To store and use this key securely, open a new text file with the following one liner:
+
+```python
+GUARDIAN_KEY = 'paste_your_key_here'
+```
+
+Save this file with the name `.env` and store it in the same directory as whatever notebook or script will contain the code you write to query the API. If you are using git for version control, don't forget to add `.env` to your `.gitignore` file. Once you have saved `.env`, you can load your keys into your script and authenticate with the API. 
+
+```python
+KEY_NAMES = ['GUARDIAN_KEY']
+API_KEYS = utils.load_api_key_list(KEY_NAMES)
+GUARDIAN_KEY = API_KEYS[0]
+```
+
+We are now ready to make requests to the API.
+
+##### Making Requests
+
+We'll use a package called `requests` to make our API requests. Once the package has been imported, we can do this by providing the `.get()` method with the base **API url** for the [content endpoint](https://open-platform.theguardian.com/documentation/search). We will also create a dictionary called `PARAMS`, which will contain a key-value pair for our API key. Later, we will add more key-value pairs to this dictionary to change what the API returns.
+
+The actual call to the API is made in line 7 of the code block below, where `requests` authenticates us with *The Guardian*'s servers by sending a `GET` request to the API with our API key. The API returns a response, including some `json` data that we store in the variable `response_dict`. 
+
+
+```python
+API_ENDPOINT = 'http://content.guardianapis.com/search'
+PARAMS = {'api-key': GUARDIAN_KEY}
+
+response = requests.get(API_ENDPOINT, params=PARAMS)
+response_dict = response.json()['response']
+print(len(response_dict))
+```
+
+
+If you print the `response_dict`, you will see there is quite a lot of information included here and we haven't even provided any specific search criteria! Why is that? 
+
+By default, *The Guardian* is returning a sample of current news stories. Let's start by digging into the fields contained in this response. Remember, since `json` is essentially identical to a Python dictionary, it's natural to store it as a dictionary. We can get a list of the available fields by using the `.keys()` method.
+
+
+```python
+print(response_dict.keys())
+```
+
+
+The most useful data is contained in the `results` field, which you can access with `response_dict['results']`. This is where the actual article context is stored.
+
+If you look at the contents of `response_dict['results']`, you will find a list of 10 dictionaries, each corresponding to one of the 10 retrieved stories, which is the default number of stories returned. Each story has several key value pairs containing useful article metadata such as an ID, a type, section IDs, publication date, the title, the URL for the story and for further API access, and so on. The actual content of the publications is not included, though; we will learn how to retrieve it shortly. 
+
+##### Filtering Results
+
+Earlier, I mentioned that we can use queries and filters to retrieve specific types of content from an API. You can use queries to find content just as you would if you were using a search engine and you can use filters to narrow the returned content on the basis of specific metadata. The API documentation provides information on what kinds of filters are available. For example, in the code block below, we can use filters to specify: 
+
+* a specific date or range of dates when the articles were last published
+* the language
+* the production office
+* a term to search for
+
+```python
+PARAMS = {
+    'api-key': GUARDIAN_KEY,
+    'from-date': '2020-04-10',
+    'to-date': '2020-04-10',
+    'lang': 'en',
+    'production-office': 'uk',
+    'q': 'coronavirus'
+}
+
+response = requests.get(API_ENDPOINT, params=PARAMS)
+response_dict = response.json()['response']
+```
+
+Notice that the resulting `response_dict` contains more information than our last set of results.
+
+```python
+print(response_dict.keys())
+```
+
+There are several new fields here, but still no article content or bylines. To retrieve this and other data, we can specify it using the `show-fields` parameter. Let's add it to our search.
+
+```python
+PARAMS = {
+    'api-key': GUARDIAN_KEY,
+    'from-date': '2020-04-10',
+    'to-date': '2020-04-10',
+    'lang': 'en',
+    'production-office': 'uk',
+    'q': 'coronavirus',
+    'show-fields': 'wordcount,body,byline'
+}
+
+response = requests.get(API_ENDPOINT, params=PARAMS)
+response_dict = response.json()['response']
+```
+
+Now, when you print the content of `response_dict`, you will see we have the additional data we were looking for. I won't print all of that here, but you can by executing the following code:
+
+```python
+for response in response_dict['results']:
+    print(response['fields']['body'])
+```
+
+Note that the text itself contains HTML tags -- we will discuss these in the next chapter.
+
+##### Asking for More Data
+
+We've now seen how to get useful data from article publications that meet our search criteria, but we still only have that data for 10 stories. To get more, we need to dig into some additional API concepts. Three of the keys of our `response_dict` describe the volume of data we receive: `total`, `pages`, and `pageSize`. They all work together, in a fashion similar to the results that would be returned by a search engine. `Total` is a count of the total number of stories available. These results can be broken up into multiple `pages`, again, like results returned from a search engine. The number of stories included in any given page is determined by the `pageSize`. If we want the API to return all available stories, we need to change these parameters when we make our request. We can do this by specifying how many stories should be returned in a single page, and then request stories from multiple pages, much as we might click to navigate to the second, third, *n*th page of results in a search.
+
+Below, we update our search parameters with a new parameter specifying `pageSize`. We will increase it from 10 to 50. 
+
+
+```python
+PARAMS = {
+    'api-key': GUARDIAN_KEY,
+    'from-date': '2020-04-10',
+    'to-date': '2020-04-10',
+    'lang': 'en',
+    'production-office': 'uk',
+    'q': 'coronavirus',
+    'show-fields': 'wordcount,body,byline',
+    'page-size': 50,
+}
+
+response = requests.get(API_ENDPOINT, params=PARAMS)
+response_dict = response.json()['response']
+```
+
+Increasing the number of stories on any given page is not actually necessary to obtain all of the data we want, since we can simply request more pages. However, we have to make a new API request for each page, which increases the load on *The Guardian* servers. Instead, we reduce the number of calls we need to make by increasing the amount of data returned in each individual call. You could probably get away with increasing this number, but there are a couple good reasons why you might want to keep it at a modest setting. First, many APIs have rate limits or maximum thresholds above which they'll refuse to return any data; haphazardly increasing the amount of data you ask for in a single request might run you afowl of these limits. Second, it's simply more considerate! Other people and organizations are likely trying to use the same API, and the API itself only has so much bandwidth (both literally and figuratively); just because you can push the limits doesn't mean you should. Exercising temperence is part of being a good digital citizen.
+
+To iterate through each page of results, we will use yet another parameter: `page`. However, unlike before, we will update this parameter dynamically, enabling us to make new requests for each page of available data until we have collected all results.
+
+The dict `PARAMS` has been written and re-written several times now, but the most recent version contains our fully developed search, including the increased number of stories on each page. We will execute this search multiple times, each time retrieving data for a new page. Because we want to use the `page` parameter and to update it dynamically, we will use a while loop.
+
+
+```python
+all_results = []
+cur_page = 1
+total_pages = 1
+
+while (cur_page <= total_pages) and (cur_page < 10):  # with a fail safe
+    # Make a API request
+    PARAMS['page'] = cur_page
+    response = requests.get(API_ENDPOINT, params=PARAMS)
+    response_dict = response.json()['response']
+
+    # Update our master results list
+    all_results += (response_dict['results'])
+
+    # Update our loop variables
+    total_pages = response_dict['pages']
+    cur_page += 1
+```
+
+
+```python
+len(all_results)
+```
+
+*Don't forget*, we need to be very careful about rate limiting when we automate our API requests like this, to be mindful of *The Guardian* servers, and to prevent losing access. To ensure that you're not over-taxing the API, consider adding in `time.sleep()` calls, which will have the effect of spacing out your requests. During testing, it's also a good idea to keep your requests to an absolute minimum.
+
+##### Storing Your Data
+
+At this point, we have learned how to use use the `requests` package and our API key to make `GET` requests to *The Guardian*'s API, and how to use parameters to query and filter results returned from the content endpoint. We also learned that the data we want is split up into multiple "pages" of results, and to retrieve everything, we have to make individual requests for each page. In doing so, we need to adopt an approach to automating API requests that ensures we stay within the rate limits and don't violate any other terms of service.
+
+Now that we have our data, we need to write it to disk so that it is easily accessed, now or later, without making redundant calls to the API. This will also enable us to decouple the code used to collect this data from any code we develop to clean and analyze it. Remember, that kind of code separation is considered best practice *in general*, and is a key component of specific computational research workflows, such as the principled data processing framework.
+
+We can use the `json` module to write this data to disk using the `with open(x) as` approach.
+
+
+```python
+FILE_PATH = 'data/guardian_api_results.json'
+with open(FILE_PATH, 'w') as outfile:
+    json.dump(all_results, outfile)
+```
+
+Now that we have a firm grasp on how to query data from *The Guardian*'s relatively simple REST API, you're ready to move onto a more powerful and complex APIs.
+
+### Working with the YouTube Data API
+
+The YouTube API is well-documented, but it can be a challenging API to start with. The YouTube module in `dcss` will make things a little easier. If you are comfortable with the content I present here and want to learn more, I would encourage you to review the code I wrote for the package the `dcss` package.
+
+#### Get a YouTube API Key
+
+The first thing you need to do is get yourself an API key. You can do that by following these steps, each described in more detail below.
+
+1. Log into / sign up for a Google Account
+2. Go to the Google Cloud Console website
+3. Create a new project
+4. Enable the **YouTube Data API v3**
+5. Create an API key for the YouTube Data API v3
+6. Store Your API Key Securely
+7. Restrict your API key
+
+**(1)** First, you'll need to sign up for a Google account if you don't already have one. **(2)** Next, open the [Google Cloud Console](https://console.cloud.google.com/) webpage. You should see something like this:
+
+![](images/google-cloud-console.png)
+
+**(3)** Use the dropdown menu to the right of **Google Cloud** to create a **New Project**. If you already have a project setup, it may show the name of the current project. In my case, it shows `INTRO-CSS`. Give your project an informative name and leave the location field as is. Press **Create**.
+
+![](images/new-project.png)
+
+**(4)** Next, you'll need to enable the YouTube Data API v3. Under "Quick Access", click on **APIs & Services** and select **Library**. Type **YouTube** into the search bar and then select **YouTube Data API v3**. A new page will load with "1 result". Click the button and then enable the YouTube API on the new page.
+
+![](images/enable_api.png)
+
+**(5)** Now you can create an API key for the YouTube Data API v3. Select **Credentials** from the left-side navigation pane. When the page loads, click the **Create Credentials** button and select **API Key**.
+
+![](images/create_credentials.png)
+
+You should see a popup that looks something like this:
+
+![](images/api_key.png)
+
+**(6)** Your API key is like a password; you should treat it as such. Copy your key, store it someplace secure,^[I recommend using [Bitwarden](https://bitwarden.com) or another password manager.], and then close the popup. You should see your new key listed under **API Keys** with an orange alert icon to the right of your key name. In my case, the newly created key is `API key 2`.
+
+![](images/listed_keys.png)
+
+**(7)** Finally, you'll want to restrict your API Key. Click the three dots under `Actions` to `Edit API Key`. You should see something like this:
+
+![](images/edit_keys.png)
+
+Under `API Restrictions`, select `Restrict key` and then select `YouTube Data API v3` from the drop-down menu. Click `Save`.
+
+![](images/restrict_key.png)
+
+Your API key is now ready to use!
+
+#### Using Your API Key Securely
+
+Let's add our API key(s) to the `.env` file created earlier. Remember that each line of the file should contain the name and the value of your API key (so just 1 line if you are using 1 API key). The name itself doesn't matter, but it's useful to give it a name that corresponds to the name of the project you created to get the API key. The example below is a randomly-generated fake API key assigned to the name GESIS.
+
+```
+GESIS='GEzaLyB69Xh5yz3QRsdP-X8QeLMpgWuva-XmWKh'
+```
+
+If you have more than one API key (which can come in handy), make sure each key is on its own line. We can then load our API key(s) using the same process we did before.
+
+```python
+KEY_NAMES = ["GESIS", "GESISPY", "INTRO_CSS", "INTROCSS2024", "YouTubeAPILecture", "metascience_golems", "McLevey", "MSGD"]
+
+API_KEYS = utils.load_api_key_list(KEY_NAMES)
+YOUTUBE_API = yt.YouTubeAPI(API_KEYS)
+```
+
+#### Understanding the YouTubeAPI Class
+
+The YouTubeAPI class is designed to handle interactions with the YouTube API, specifically error handling and the task of using multiple API keys at once and an exponential back-off strategy to avoid rate limiting and handle errors automatically.
+
+As you can see in the code block above, we initialize the YouTubeAPI class with a list of API keys. If you use the `load_api_key_list()` function and a config file, this is a simple process. Once you initialize it, the class:
+
+- **Creates a "service" object**, which is the main interface to the YouTube API and allows us to send requests and receive responses. It does this using the googleapiclient.discovery.build() function and the build_service() method.
+- **Automatically switches API keys** if one API key hits a rate limit.
+- **Executes requests** using an execute_request() method. This method handles the actual sending of requests to the API and includes error handling to manage rate limits and retries. It also uses an exponential backoff strategy to avoid overwhelming the API with too many requests in a short time.
+
+#### Get the YouTube Channel IDs
+
+In this example, we're going to collect data from the talksatgoogle YouTube channel. To do that, we need to start by getting its YouTube channel ID. We can do this using the `get_channel_id()` function from the icsspy course package. This function is robust in handling different ways users might identify YouTube channels, making it easier to work with the API.
+
+`get_channel_id()` tries two methods to find the channel's ID:
+
+1. Custom URL Search: It first checks if the provided channel argument is a custom URL. Many YouTube channels use custom URLs for easier access.
+2. Username Search: If the custom URL search fails, it then tries to get the channel ID using the YouTube username.
+
+If both methods fail, the function returns None.
+
+```python
+channel = 'talksatgoogle'
+
+channel_id = yt.get_channel_id(YOUTUBE_API, channel)
+print(f'The YouTube Channel ID for {channel} is {channel_id}.')
+```
+
+#### Use the Channel ID to Collect Video Data
+
+With the channel ID in hand, we can retrieve a list of video IDs associated with the channel using the get_channel_video_ids() function, which sends a request to the YouTube API to get the channel's uploads playlist ID and then iteratively fetches all the channel's public video IDs.
+
+We can pass the resulting lists of video IDs to the get_channel_video_data() function, which makes another API query to collect data such as the video's title, description, statistics (like views and likes), and other metadata.
+
+```python
+video_ids = yt.get_channel_video_ids(YOUTUBE_API, channel_id)
+video_details = yt.get_channel_video_data(YOUTUBE_API, video_ids)
+print(f"Collected data on {len(video_details)} videos from {channel}.")
+
+utils.save_json(video_details, 'data/videos.json')
+```
+
+Like most modern APIs, the YouTube API returns data in JSON format. We'll store this data by writing the JSON to disk, which will allow us to easily reload the data later without needing to re-query the YouTube API. For example, we can load the JSON data -- from disk or memory -- directly into a Pandas dataframe.
+
+```python
+videos = pd.json_normalize(video_details)
+videos.to_csv('data/videos.csv', index=False)
+
+videos.info()
+```
+
+Now that we have data on {python} len(video_details) videos, let's query the YouTube API to collect data on the comments on these videos.
+
+#### Process Channel Data and Prepare to Collect Video Comments
+
+You'll likely end up running the code in this notebook several times (or more). Each time you'll query the YouTube API, potentially re-collecting data you've already collected. Since collecting comments can involve a very large number of API calls, and API calls are expensive in terms of quota, we'll do some prep work to minimize our API calls and the risk of hitting the rate limit.
+
+```python
+videos["statistics.commentCount"] = pd.to_numeric(
+  videos["statistics.commentCount"], errors='coerce'
+)
+
+probably_no_public_comments = videos[videos["statistics.commentCount"].isna()]["id"].tolist()
+no_public_comments = videos[videos["statistics.commentCount"] == 0]["id"].tolist()
+has_public_comments = videos[videos["statistics.commentCount"] > 0]["id"].tolist()
+```
+
+We'll check for the file data/talks_at_google_video_comments.csv, which is created a little later in this tutorial; if it already exists, we'll get the IDs for videos we've already downloaded and skip their collection. If the file hasn't been created yet (i.e., this is the first time you're running this code), then it will collect everything.
+
+```python
+no_redownloading = True
+
+if no_redownloading is True:
+    try:
+        already_downloaded = pd.read_csv("data/comments.csv")
+        already_downloaded = already_downloaded["video_id"].unique().tolist()
+        has_public_comments = [
+            video
+            for video in has_public_comments
+            if video not in set(already_downloaded)
+        ]
+    except (FileNotFoundError, pd.errors.EmptyDataError):
+        already_downloaded = []
+```
+
+We'll also skip the videos in "probably_no_public_comments," but if you want to try collecting them, just uncomment the second line below.
+
+```python
+collect = has_public_comments
+# collect = has_public_comments + probably_no_public_comments
+
+# set this to true the first time you run it; then false
+overwrite = True
+# overwrite = False 
+```
+
+With this prep work done, we can collect comment data using the collect_comments_for_videos() function, which iterates over a list of video IDs and collects comments for each video. It starts by opening a CSV file to store the comments. If overwrite is True (see the code block above), it will create a new file; otherwise, it appends to an existing file. For each video, it calls the get_video_comments() function, which fetches the comments using the YouTube API. The comments are then written to the CSV file in real-time.
+
+collect_comments_for_videos() includes error handling for cases where comments might be disabled or where rate limits are exceeded, which means the function can handle issues that come up without crashing. This makes it useful for collecting large amounts of data.
+
+There are a lot of comments to collect, so this code will take a while to run. There's a progress bar to let you know what to expect. Once it's up and running, you'll want to leave it for a bit and come back.
+
+```python
+all_comments = yt.collect_comments_for_videos(
+    YOUTUBE_API, collect, "data/comments.csv", overwrite=overwrite
+)
+```
+
+Finally, after collecting the comments, we can load them into a dataframe and take a look. We'll also write the data a local file so we can re-load and analyze it later.
+
+```python
+all_comments = pd.read_csv('data/comments.csv')
+all_comments.info()
+```
+
+```python
+all_comments.head()
+```
+
+## Conclusion
+
+In this chapter, you learned how to collect data programmatically from web-based APIs. You developed a mental model of how APIs work, including authentication, making requests, handling responses, and managing rate limits.
+
+By working with **The Guardian** API and the YouTube Data API, you gained hands-on experience in:
+
+- **Authenticating and Making Requests**: Using API keys and the `requests` library to interact with APIs.
+- **Filtering and Paginating Results**: Using parameters and loops to retrieve all relevant data.
+- **Handling JSON Data**: Parsing JSON responses and storing data in Python data structures.
+- **Storing Data**: Saving data to JSON and CSV files for later analysis.
+- **Error Handling and Rate Limiting**: Implementing strategies to handle API limitations gracefully.
+
+APIs are powerful tools for data collection in computational social science. They provide structured and accessible data, enabling you to perform various analyses. However, it's important to use them responsibly, adhering to terms of service and ethical considerations.
+
+### Key Points
+
+- **APIs Simplify Data Access**: APIs abstract away the complexities of interacting with web services, providing a simple interface for data access.
+- **Understanding RESTful APIs**: REST APIs use standard HTTP methods and are stateless, resource-based interfaces.
+- **Secure API Authentication**: Always protect your API keys and tokens by storing them securely and not exposing them in your code.
+- **Making Efficient Requests**: Use parameters and filters to retrieve only the data you need, and handle pagination to access large datasets.
+- **Handling Responses and Errors**: Check status codes, parse JSON data, and implement error handling to create robust data collection scripts.
+- **Managing Rate Limits**: Be mindful of API rate limits and implement strategies like exponential backoff and API key rotation.
+- **Data Storage Best Practices**: Save collected data to files to avoid redundant API calls and to facilitate data analysis.
+
+In the next chapter, we'll explore web scraping, another method for collecting data from the web when APIs are unavailable or insufficient for your research needs. You'll learn how to extract data from web pages using tools like `BeautifulSoup` and handle challenges like navigating HTML structures and handling dynamic content.

@@ -1,0 +1,27 @@
+# Structural similarity and latent social space
+
+::: {.callout-warning}
+## Planned Revisions
+
+This chapter is being revised in fall 2024. The revised version will serve as a general networks EDA chapter, which often involves plotting networks, performing some sort of community detection to reduce a complex network, and some kind of centrality analysis. In the worst case, these are done naively and / or mindlessly. Since centrality analysis was introduced in the previous chapter, this chapter will focus on visualization and community detection.
+
+It will use the political blogs example (graph-tool) to introduce visualization and force-directed layouts, as well as crique mindless application of modularity-maximization approaches to community detection. It will introduce assortative and positional structure and contrast the two approaches to partitioning networks. It will apply a first SBM but won't get into posterior inference (yet). It will end with the idea of latent social space and feature a short section on latent position models (which dovetail nicely with the other chapters in this section that use dimensionality reduction methods).
+
+For now, this chapter contains several chapters back to back. They will be consolidated shortly (as in over the next few days).
+:::
+
+<!-- 
+Start with visualization and divided we blog example. Then: 
+
+In the last chapter we took a kind of "networked individuals" approach, which is intuitive. We also stuck with networks at the level they were observed. But often we want to generalize beyond our specific observations, much like in text and structured data. There have been many proposals for how to do this. With assortative structure, we often think of position in terms of centrality, since it assumes a flow- or walk-like perspective. And we use community detection to do this. Louvain and Leiden suck and we want to avoid them if we can. An alternative is to use a Planted Partition Model (PPM). 
+
+Or we can think in terms of latent positions and blocks, and to do that we turn to blockmodelling. Here we fit a first non-PPM SBM, but don't get into inference. 
+ -->
+
+{{< include _graph-tool-101-political-blogs.qmd >}}
+
+{{< include _generative-network-analysis-with-bayesian-stochastic-blockmodels.qmd >}}
+
+{{< include _connection_and_clustering_content.qmd >}}
+
+{{< include _modularity-is-bad.qmd >}}

@@ -1,0 +1,24 @@
+# Audio, image, and document data
+
+::: {.callout-warning}
+## In Development
+
+This is a ✨new✨ chapter. It's currently in development and will likely be ready for distribution by the end of 2024. It includes some deep learning models for the audio and document data, so I need to think about how best to integrate the chapter this early in the book, long before deep learning is introduced.
+:::
+
+<!-- 
+## Audio Data
+
+- Focus will be on OpenAI's Whisper model
+
+## Image Data
+
+- How deep do I want to do here?
+
+## Document Data
+
+- Word documents
+- PDFs
+    - Older tools
+    - Deep learning models (including images)     
+-->
