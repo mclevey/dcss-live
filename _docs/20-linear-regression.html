@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.5.56">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Doing Computational Social ScienceThe Continuous Development Edition - 20&nbsp; Bayesian Regression Models with Probabilistic Programming</title>
+<title>20&nbsp; Bayesian Regression Models with Probabilistic Programming – Doing Computational Social Science&lt;br&gt;[The **Continuous Development** Edition]{.small}</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -22,7 +22,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -33,7 +33,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -58,6 +58,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
+  margin-bottom: 0em;
 }
 .hanging-indent div.csl-entry {
   margin-left:2em;
@@ -101,7 +102,13 @@ div.csl-indent {
   "collapse-after": 3,
   "panel-placement": "start",
   "type": "textbox",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -110,14 +117,42 @@ div.csl-indent {
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
 }</script>
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="custom.css">
 </head>
@@ -128,13 +163,13 @@ div.csl-indent {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./20-linear-regression.html">Generative Modeling</a></li><li class="breadcrumb-item"><a href="./20-linear-regression.html"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Bayesian Regression Models with Probabilistic Programming</span></a></li></ol></nav>
-      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-      </a>
-      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./20-linear-regression.html">Generative Modeling</a></li><li class="breadcrumb-item"><a href="./20-linear-regression.html"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Bayesian Regression Models with Probabilistic Programming</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -143,7 +178,7 @@ div.csl-indent {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
       <a href="./index.html" class="sidebar-logo-link">
       <img src="./media/logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
@@ -151,25 +186,25 @@ div.csl-indent {
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Doing Computational Social Science<br><span class="small">The <strong>Continuous Development</strong> Edition</span></a> 
         <div class="sidebar-tools-main">
-    <a href="https://github.com/UWNETLAB/dcss_supplementary/tree/master/book/" rel="" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="https://github.com/UWNETLAB/dcss_supplementary/tree/master/book/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
     <div class="dropdown">
-      <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Share"><i class="bi bi-share"></i></a>
+      <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
       <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
           <li>
             <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=|url|">
-              <i class="bi bi-bi-twitter pe-1"></i>
+              <i class="bi bi-twitter pe-1"></i>
             Twitter
             </a>
           </li>
           <li>
             <a class="dropdown-item sidebar-tools-main-item" href="https://www.facebook.com/sharer/sharer.php?u=|url|">
-              <i class="bi bi-bi-facebook pe-1"></i>
+              <i class="bi bi-facebook pe-1"></i>
             Facebook
             </a>
           </li>
           <li>
             <a class="dropdown-item sidebar-tools-main-item" href="https://www.linkedin.com/sharing/share-offsite/?url=|url|">
-              <i class="bi bi-bi-linkedin pe-1"></i>
+              <i class="bi bi-linkedin pe-1"></i>
             LinkedIn
             </a>
           </li>
@@ -199,9 +234,9 @@ div.csl-indent {
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
  <span class="menu-text">Research Computing</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -228,9 +263,9 @@ div.csl-indent {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
  <span class="menu-text">Obtaining Data</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -263,9 +298,9 @@ div.csl-indent {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
  <span class="menu-text">Exploring Data</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -316,9 +351,9 @@ div.csl-indent {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
  <span class="menu-text">Prediction and Inference</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -357,9 +392,9 @@ div.csl-indent {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
  <span class="menu-text">Generative Modeling</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -416,9 +451,9 @@ div.csl-indent {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
  <span class="menu-text">Deep Learning Demystified</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -451,9 +486,9 @@ div.csl-indent {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
  <span class="menu-text">Professional Responsibilities</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -492,9 +527,9 @@ div.csl-indent {
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
  <span class="menu-text">Appendices</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -516,7 +551,7 @@ div.csl-indent {
     </ul>
     </div>
 </nav>
-<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
@@ -546,12 +581,12 @@ div.csl-indent {
   <li><a href="#key-points" id="toc-key-points" class="nav-link" data-scroll-target="#key-points"><span class="header-section-number">20.5.1</span> Key Points</a></li>
   </ul></li>
   </ul>
-<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/UWNETLAB/dcss_supplementary/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/UWNETLAB/dcss_supplementary/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./20-linear-regression.html">Generative Modeling</a></li><li class="breadcrumb-item"><a href="./20-linear-regression.html"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Bayesian Regression Models with Probabilistic Programming</span></a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Bayesian Regression Models with Probabilistic Programming</span></h1>
 </div>
@@ -566,7 +601,9 @@ div.csl-indent {
   </div>
   
 
+
 </header>
+
 
 <section id="learning-objectives" class="level2" data-number="20.1">
 <h2 data-number="20.1" class="anchored" data-anchor-id="learning-objectives"><span class="header-section-number">20.1</span> LEARNING OBJECTIVES</h2>
@@ -629,13 +666,17 @@ div.csl-indent {
 <p>The <code>state</code> and <code>districts</code> variables are straightforward: they represent the state and numerical identifier associated with the congressional district in question. The <code>vote</code> and <code>spend</code> columns are a little more involved. For the past 29 years, American federal elections have been an almost completely two-party affair. Almost all viable candidates at almost every level of government belong to either the Democratic or Republican parties. There are some notable exceptions (such as the technically independent senators Bernie Sanders and Angus King), but almost all politically viable independent politicians in the US are Democrats in all but name (they often even receive the official endorsement of the Democratic party, and are not opposed by any member). Given the ubiquity of this political duopoly, we can simplify our data by focusing solely on the differential in votes and spending between the two major parties.</p>
 <p>We’ve decided to treat Republicans as our ‘negative’ case and the Democrats as our ‘positive’ case. Casting the two in diametric opposition allows the <code>vote</code> and <code>spend</code> variables to represent the <em>differential</em> between the two parties: when <code>vote</code> is positive, it means the Democrats received more votes than the Republicans. A negative <code>vote</code> value means the Republicans received more votes than the Democrats. Ditto for <code>spend</code>.</p>
 <p>Although this helps us simplify our model immensely, it also comes at a cost: we can only include districts where both Democrats and Republicans <em>officially</em> ran, spent campaign funds, and received votes. This limitation has reduced our data from 435 districts to 371; a steep cost, but not an altogether unwarranted one. More advanced models could incorporate and model the dropped data, but we’re keeping it simple.</p>
-<p>Now that the data is loaded, let’s create a scatterplot so we can see how it is distributed (Figure <a href="#fig-26_01">Figure&nbsp;<span>20.1</span></a>).</p>
+<p>Now that the data is loaded, let’s create a scatterplot so we can see how it is distributed (Figure <a href="#fig-26_01" class="quarto-xref">Figure&nbsp;<span>20.1</span></a>).</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>plot_2020_election_diff(df)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'figures/27_01.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div id="fig-26_01" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="figures/27_01.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">Figure&nbsp;20.1: png</figcaption>
+<div id="fig-26_01" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-26_01-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/27_01.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-26_01-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;20.1: png
+</figcaption>
 </figure>
 </div>
 <p>In the above scatterplot, each point represents a single congressional district in one of the 50 states. The x-axis represents the Democrats’ ‘spending differential’, which is just the amount of money the Democrats spent in a congressional race minus the amount the Republicans spent in the same. The y-axis, ‘vote differential’, is similar: it represents the amount of votes the Democrats received minus the amount the Republicans received.</p>
@@ -751,7 +792,7 @@ div.csl-indent {
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>beta_samples <span class="op">=</span> prior_predictive.prior[<span class="st">'beta'</span>].values.flatten()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Take some time to flip through the values in the <code>prior_predictive</code> object, and you’ll notice that they’re stored as xarray DataArrays. If you examine <code>alpha_samples.shape</code>, you’ll see that there are 50 samples (the number of samples we asked for). Similarly for <code>beta_samples</code>.</p>
 <p>Now that that’s done, we can just plug the parameter samples into a simple reproduction of our linear model.</p>
-<p>Results are shown in Figure <a href="#fig-26_02">Figure&nbsp;<span>20.2</span></a>.</p>
+<p>Results are shown in Figure <a href="#fig-26_02" class="quarto-xref">Figure&nbsp;<span>20.2</span></a>.</p>
 <div class="sourceCode" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>spend_grid <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">20</span>, <span class="dv">20</span>, <span class="dv">50</span>)</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>plt.xlim((<span class="op">-</span><span class="dv">10</span>, <span class="dv">10</span>))</span>
@@ -771,14 +812,18 @@ div.csl-indent {
 <span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Expenditure differential (standard deviations)"</span>)</span>
 <span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Vote differential (standard deviations)"</span>)</span>
 <span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'figures/26_02.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div id="fig-26_02" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="figures/26_02.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">Figure&nbsp;20.2: png</figcaption>
+<div id="fig-26_02" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-26_02-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/26_02.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-26_02-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;20.2: png
+</figcaption>
 </figure>
 </div>
 <p>The above plot contains 50 different regression lines drawn from our model’s prior distributions – a quick glance shows that our priors leave a whole lot of room for improvement. Here’s how you can tell: the intersecting grey areas in the plot represent two standard deviations on both of our variables, which means that roughly 95% of our data points will fall somewhere within the darker grey area of overlap. We can see that the majority of the regression lines we sampled from our model cross through the darker grey area from the lower-left to the upper-right, albeit at slightly too sharp an angle. A great many of the lines, though, only barely skim the edges or corners of the box; some fail to cross it altogether. If your model produces one or two highly suspect regression lines, that’s not a cause for concern. When your model produces a great many (as is the case with ours), it might be time to consider making your priors a little more informative.</p>
-<p>Take a look at what we can do by tightening our priors a little. The results are shown in Figure <a href="#fig-26_03">Figure&nbsp;<span>20.3</span></a>.</p>
+<p>Take a look at what we can do by tightening our priors a little. The results are shown in Figure <a href="#fig-26_03" class="quarto-xref">Figure&nbsp;<span>20.3</span></a>.</p>
 <div class="sourceCode" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> pm.Model() <span class="im">as</span> regularized_model:</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Priors</span></span>
@@ -813,10 +858,14 @@ div.csl-indent {
 <span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Expenditure differential (standard deviations)"</span>)</span>
 <span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Vote differential (standard deviations)"</span>)</span>
 <span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'figures/26_03.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div id="fig-26_03" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="figures/26_03.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">Figure&nbsp;20.3: png</figcaption>
+<div id="fig-26_03" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-26_03-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/26_03.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-26_03-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;20.3: png
+</figcaption>
 </figure>
 </div>
 <p>Based on the above plot, we can see that our new regularized model has a very strong preference for regression lines that hem closely to the origin (0 on both axes), and feature a moderately positive relationship between <code>spend_std</code> and <code>vote_std</code> (most regression lines have a positive slope). There’s still quite a bit of variability in the predictions: owing to their steeper incline, some of the regression lines travel through a limited span of the middle area. Others are more or less flat (predicting no relationship between spending and votes), and our model even permits a few of the lines to reverse the trend entirely and predict that increased spending is correlated with <em>fewer</em> votes received. All said, <em>MUCH better!</em></p>
@@ -847,13 +896,17 @@ div.csl-indent {
 </section>
 <section id="checking-the-traceplot" class="level3" data-number="20.4.4">
 <h3 data-number="20.4.4" class="anchored" data-anchor-id="checking-the-traceplot"><span class="header-section-number">20.4.4</span> Checking the Traceplot</h3>
-<p>One of the most important steps in any Bayesian regression model involves checking your model’s ‘traces’ to ensure that nothing went awry behind the scenes. ArviZ has some really nice built-in tools for this, shown for our trace pool model in Figure <a href="#fig-26_04">Figure&nbsp;<span>20.4</span></a>.</p>
+<p>One of the most important steps in any Bayesian regression model involves checking your model’s ‘traces’ to ensure that nothing went awry behind the scenes. ArviZ has some really nice built-in tools for this, shown for our trace pool model in Figure <a href="#fig-26_04" class="quarto-xref">Figure&nbsp;<span>20.4</span></a>.</p>
 <div class="sourceCode" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>az.plot_trace(trace_pool, var_names<span class="op">=</span>[<span class="st">'alpha'</span>, <span class="st">'beta'</span>, <span class="st">'sigma'</span>], compact<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'figures/26_04.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div id="fig-26_04" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="figures/26_04.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">Figure&nbsp;20.4: png</figcaption>
+<div id="fig-26_04" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-26_04-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/26_04.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-26_04-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;20.4: png
+</figcaption>
 </figure>
 </div>
 <p>Each row in the foregoing grid of plots corresponds to a row in the dataframe summary we produced above. The left column of plots presents you with the shape of the posterior distribution corresponding to one variable in the model (or, equivalently, one dimension of the posterior distribution). The right column of plots shows you the ‘trace’ of the PyMC sampler as it attempted to fit your model. You can think of each line in each traceplot representing a single marble being swatted around a high-dimensional skate bowl, and each row of the figure (there’s one per parameter) is one of those dimensions. This might seem a bit unintuitive at first, but the x-axis in each of the plots on the left represents the exact same thing as the y-axis of their counterpart in the same row on the right! They both represent the parameter’s value: the left is showing you the estimated posterior distribution of the parameter, and the right is showing you how the marbles moved to produce it (the x-axis for each plot on the right is the ‘sample number’; you can think of the marbles as moving from left to right within each plot).</p>
@@ -872,7 +925,7 @@ div.csl-indent {
 <h3 data-number="20.4.5" class="anchored" data-anchor-id="establishing-credible-intervals"><span class="header-section-number">20.4.5</span> Establishing Credible Intervals</h3>
 <p>Now, let’s dig into each of our variables in a bit more detail; we can do so using ArviZ’s <code>plot_posterior</code> function. Our focus will be on something called the ‘<strong>HDI</strong>’, which stands for the ‘<strong>Highest Density Interval</strong>’. The HDI is the closest thing you’re going to see to the Frequentist ‘95% confidence interval’ (or similar) in Bayesian data analysis. Statistically, the HDI represents the shortest possible interval in one dimension of the posterior distribution which contains a predetermined amount of probability. We use the HDI interval to provide us a sense of the area in the distribution that we’re confident (to a predetermined extent) contains the best-fitting parameter value.</p>
 <p>It’s up to us to determine how much of the posterior probability we want to appear inside our HDI. In his classic Bayesian text, Richard McElreath <span class="citation" data-cites="mcelreath2020statistical">(<a href="references.html#ref-mcelreath2020statistical" role="doc-biblioref">2020</a>)</span> uses an abundance of cheek when suggesting that Bayesians should employ a prime number for no other reason than the fact that it is prime. He portrays this as a way of subtly jabbing Frequentists for their automatic use of an arbitrarily-set significance threshold of .05, whose progenitor specifically indicated should not be adopted as a default. Hilarious! (Though to be fair, many Frequentists are themselves trying to get other Frequentists to stop doing that.)</p>
-<p>We’ll follow in McElreath’s footsteps and use 0.89, but there’s no good reason why we couldn’t use something like 0.83 or 0.79. The default for most ArviZ plots is 94%; having made our point, we’ll leave the HDI intervals at their defaults from here on out. Results are shown in Figure <a href="#fig-26_05">Figure&nbsp;<span>20.5</span></a>.</p>
+<p>We’ll follow in McElreath’s footsteps and use 0.89, but there’s no good reason why we couldn’t use something like 0.83 or 0.79. The default for most ArviZ plots is 94%; having made our point, we’ll leave the HDI intervals at their defaults from here on out. Results are shown in Figure <a href="#fig-26_05" class="quarto-xref">Figure&nbsp;<span>20.5</span></a>.</p>
 <div class="sourceCode" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>fig, axs <span class="op">=</span> plt.subplots(<span class="dv">3</span>, <span class="dv">1</span>, sharex<span class="op">=</span><span class="va">True</span>, sharey<span class="op">=</span><span class="va">True</span>, figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">6</span>))</span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>az.plot_posterior(trace_pool,</span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>                  ax<span class="op">=</span>axs,</span>
@@ -881,10 +934,14 @@ div.csl-indent {
 <span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>fig.tight_layout()</span>
 <span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'figures/26_05.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div id="fig-26_05" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="figures/26_05.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">Figure&nbsp;20.5: png</figcaption>
+<div id="fig-26_05" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-26_05-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/26_05.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-26_05-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;20.5: png
+</figcaption>
 </figure>
 </div>
 <p>We decided to force PyMC and ArviZ to plot all three posterior distributions (and their HDIs) on the same unified axis so you could directly compare their positions and widths. The black bars under each of the plotted distributions represent the span of our chosen HDI. The numbers that appear to the left and right of the black bar represent the HDI’s upper and lower bounds – this gives us a precise numerical range within which our chosen probability density can be found.</p>
@@ -898,13 +955,17 @@ div.csl-indent {
 <p>Just as with the prior predictive, we start by drawing samples from our model:</p>
 <div class="sourceCode" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> pool_model:</span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>    ppc <span class="op">=</span> pm.sample_posterior_predictive(trace_pool, var_names<span class="op">=</span>[<span class="st">'votes'</span>, <span class="st">'alpha'</span>, <span class="st">'beta'</span>, <span class="st">'sigma'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>If you inspect it, you’ll find that the resulting <code>ppc</code> object is an <code>arviz.InferenceData</code> object. We can use this object directly with the <code>ArviZ</code> functions. In the code cell below, we use the <code>az.plot_ppc</code> function to produce a plot of our posterior predictive (Figure <a href="#fig-26_06">Figure&nbsp;<span>20.6</span></a>):</p>
+<p>If you inspect it, you’ll find that the resulting <code>ppc</code> object is an <code>arviz.InferenceData</code> object. We can use this object directly with the <code>ArviZ</code> functions. In the code cell below, we use the <code>az.plot_ppc</code> function to produce a plot of our posterior predictive (Figure <a href="#fig-26_06" class="quarto-xref">Figure&nbsp;<span>20.6</span></a>):</p>
 <div class="sourceCode" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>az.plot_ppc(ppc, num_pp_samples<span class="op">=</span><span class="dv">100</span>, legend<span class="op">=</span><span class="va">False</span>)</span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'figures/26_06.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div id="fig-26_06" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="figures/26_06.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">Figure&nbsp;20.6: png</figcaption>
+<div id="fig-26_06" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-26_06-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/26_06.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-26_06-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;20.6: png
+</figcaption>
 </figure>
 </div>
 <p>In the above plot, observations from our outcome variable (the standardized vote differential) are arranged along the x-axis, and the frequency (or density) of an observation of that value is tracked along the y-axis. The light wispy lines represent all of the retrodictions made by one set of posterior parameter values (of which we sampled 100); the dashed line represents the overall average of each sample. The solid black line represents the observed data.</p>
@@ -912,13 +973,17 @@ div.csl-indent {
 </section>
 <section id="plotting-uncertainty" class="level3" data-number="20.4.7">
 <h3 data-number="20.4.7" class="anchored" data-anchor-id="plotting-uncertainty"><span class="header-section-number">20.4.7</span> Plotting Uncertainty</h3>
-<p>I know I’ve said it quite a lot already, but one of the reasons why we use Bayesian methods in the first place is because we want to preserve uncertainty to the greatest extent possible throughout the entire modelling process. You’ll often find that other approaches to regression analysis produce a ‘line of best fit’ or a ‘predictor line’ or something similar. In Bayesian analysis, we instead produce a <em>range</em> of such lines, each of which is probabilistically drawn from our posterior distribution, and each of which differs from the others. Since it’s difficult to appreciate information at this scale directly, Bayesian regression leans heavily on visualization techniques to provide intuitive guides to inference. Here, we’re going to draw samples of predicted outcomes and parameter values from our posterior distribution (using a PyMC function designed for just such a task), feed those sampled values through our linear model, and plot the 94% HDI range of the results (Figure <a href="#fig-26_07">Figure&nbsp;<span>20.7</span></a>).</p>
+<p>I know I’ve said it quite a lot already, but one of the reasons why we use Bayesian methods in the first place is because we want to preserve uncertainty to the greatest extent possible throughout the entire modelling process. You’ll often find that other approaches to regression analysis produce a ‘line of best fit’ or a ‘predictor line’ or something similar. In Bayesian analysis, we instead produce a <em>range</em> of such lines, each of which is probabilistically drawn from our posterior distribution, and each of which differs from the others. Since it’s difficult to appreciate information at this scale directly, Bayesian regression leans heavily on visualization techniques to provide intuitive guides to inference. Here, we’re going to draw samples of predicted outcomes and parameter values from our posterior distribution (using a PyMC function designed for just such a task), feed those sampled values through our linear model, and plot the 94% HDI range of the results (Figure <a href="#fig-26_07" class="quarto-xref">Figure&nbsp;<span>20.7</span></a>).</p>
 <div class="sourceCode" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>plot_2020_election_fit(spend_std, vote_std, trace_pool, ppc)</span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'figures/26_07.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div id="fig-26_07" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="figures/26_07.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">Figure&nbsp;20.7: png</figcaption>
+<div id="fig-26_07" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-26_07-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/26_07.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-26_07-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;20.7: png
+</figcaption>
 </figure>
 </div>
 <p>In the above plot, the black line represents the mean (or average) predictor line. Its value was produced by averaging over thousands of such lines, 94% of which fall entirely within the smaller, darker band around the black line; that band represents our model’s uncertainty in the regressor. Our model <em>also</em> models predictive uncertainty – or, in simpler terms, the width of the band within which it expects 94% of the data to fall (which is controlled by our model’s <code>sigma</code> parameter, which we also have some uncertainty about). It’s uncertainty piled upon uncertainty (and so on <em>ad infinitum</em>), but it produces a set of results and visualizations that are remarkably intuitive to read and interpret.</p>
@@ -937,7 +1002,7 @@ div.csl-indent {
 </ul>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
 <div id="ref-martin2018bayesian" class="csl-entry" role="listitem">
 Martin, Osvaldo. 2018. <em>Bayesian Analysis with Python: Introduction to Statistical Modeling and Probabilistic Programming Using Pymc and ArviZ</em>. Packt Publishing Ltd.
 </div>
@@ -987,18 +1052,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -1030,11 +1084,50 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
-  function tippyHover(el, contentFn) {
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -1044,8 +1137,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -1057,7 +1159,130 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -1101,6 +1326,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -1126,6 +1352,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -1187,12 +1439,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./19-causality.html" class="pagination-link">
+      <a href="./19-causality.html" class="pagination-link" aria-label="Causality">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Causality</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./21-multilevel-regression-with-post-stratification.html" class="pagination-link">
+      <a href="./21-multilevel-regression-with-post-stratification.html" class="pagination-link" aria-label="Multilevel regression with post-stratification">
         <span class="nav-page-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Multilevel regression with post-stratification</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
@@ -1201,4 +1453,5 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
-</body></html>
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/UWNETLAB/dcss_supplementary/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>

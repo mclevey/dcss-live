@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.5.56">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Doing Computational Social ScienceThe Continuous Development Edition - 27&nbsp; Diffusion</title>
+<title>27&nbsp; Diffusion – Doing Computational Social Science&lt;br&gt;[The **Continuous Development** Edition]{.small}</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -22,7 +22,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -33,7 +33,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -58,6 +58,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
+  margin-bottom: 0em;
 }
 .hanging-indent div.csl-entry {
   margin-left:2em;
@@ -101,7 +102,13 @@ div.csl-indent {
   "collapse-after": 3,
   "panel-placement": "start",
   "type": "textbox",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -110,14 +117,42 @@ div.csl-indent {
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
 }</script>
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="custom.css">
 </head>
@@ -128,13 +163,13 @@ div.csl-indent {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./20-linear-regression.html">Generative Modeling</a></li><li class="breadcrumb-item"><a href="./27-developing-agent-based-models.html"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Diffusion</span></a></li></ol></nav>
-      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-      </a>
-      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./20-linear-regression.html">Generative Modeling</a></li><li class="breadcrumb-item"><a href="./27-developing-agent-based-models.html"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Diffusion</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -143,7 +178,7 @@ div.csl-indent {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
       <a href="./index.html" class="sidebar-logo-link">
       <img src="./media/logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
@@ -151,25 +186,25 @@ div.csl-indent {
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Doing Computational Social Science<br><span class="small">The <strong>Continuous Development</strong> Edition</span></a> 
         <div class="sidebar-tools-main">
-    <a href="https://github.com/UWNETLAB/dcss_supplementary/tree/master/book/" rel="" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="https://github.com/UWNETLAB/dcss_supplementary/tree/master/book/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
     <div class="dropdown">
-      <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Share"><i class="bi bi-share"></i></a>
+      <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
       <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
           <li>
             <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=|url|">
-              <i class="bi bi-bi-twitter pe-1"></i>
+              <i class="bi bi-twitter pe-1"></i>
             Twitter
             </a>
           </li>
           <li>
             <a class="dropdown-item sidebar-tools-main-item" href="https://www.facebook.com/sharer/sharer.php?u=|url|">
-              <i class="bi bi-bi-facebook pe-1"></i>
+              <i class="bi bi-facebook pe-1"></i>
             Facebook
             </a>
           </li>
           <li>
             <a class="dropdown-item sidebar-tools-main-item" href="https://www.linkedin.com/sharing/share-offsite/?url=|url|">
-              <i class="bi bi-bi-linkedin pe-1"></i>
+              <i class="bi bi-linkedin pe-1"></i>
             LinkedIn
             </a>
           </li>
@@ -199,9 +234,9 @@ div.csl-indent {
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
  <span class="menu-text">Research Computing</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -228,9 +263,9 @@ div.csl-indent {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
  <span class="menu-text">Obtaining Data</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -263,9 +298,9 @@ div.csl-indent {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
  <span class="menu-text">Exploring Data</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -316,9 +351,9 @@ div.csl-indent {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
  <span class="menu-text">Prediction and Inference</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -357,9 +392,9 @@ div.csl-indent {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
  <span class="menu-text">Generative Modeling</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -416,9 +451,9 @@ div.csl-indent {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
  <span class="menu-text">Deep Learning Demystified</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -451,9 +486,9 @@ div.csl-indent {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
  <span class="menu-text">Professional Responsibilities</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -492,9 +527,9 @@ div.csl-indent {
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
  <span class="menu-text">Appendices</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -516,7 +551,7 @@ div.csl-indent {
     </ul>
     </div>
 </nav>
-<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
@@ -599,12 +634,12 @@ div.csl-indent {
   </ul></li>
   <li><a href="#cultural-cognition-and-opinion-dynamics" id="toc-cultural-cognition-and-opinion-dynamics" class="nav-link" data-scroll-target="#cultural-cognition-and-opinion-dynamics"><span class="header-section-number">34</span> Cultural cognition and opinion dynamics</a></li>
   </ul>
-<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/UWNETLAB/dcss_supplementary/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/UWNETLAB/dcss_supplementary/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./20-linear-regression.html">Generative Modeling</a></li><li class="breadcrumb-item"><a href="./27-developing-agent-based-models.html"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Diffusion</span></a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Diffusion</span></h1>
 </div>
@@ -619,7 +654,9 @@ div.csl-indent {
   </div>
   
 
+
 </header>
+
 
 <ul>
 <li>Two chapters to be integrated</li>
@@ -843,7 +880,7 @@ div.csl-indent {
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/sir_subplots.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">Batch results for Model 2 with mean trends emphasized.</figcaption>
+<figcaption>Batch results for Model 2 with mean trends emphasized.</figcaption>
 </figure>
 </div>
 <p>Next, we aggreate the results for the sensitivity analysis.</p>
@@ -886,7 +923,7 @@ div.csl-indent {
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/sir_sensitivity_analysis.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">Sensitivity plot for our SIR model parameters and peak proportion infected across all model runs.</figcaption>
+<figcaption>Sensitivity plot for our SIR model parameters and peak proportion infected across all model runs.</figcaption>
 </figure>
 </div>
 <section id="correlate-the-parameters-with-the-outcomes" class="level3" data-number="29.5.1">
@@ -1162,7 +1199,7 @@ div.csl-indent {
 <p>Traditional epidemiological models make some strong simplifying assumptions. The advent of network analysis has led epidemiologists to incorporate network structure and dynamics into their work to address some of those assumptions. Since it can be <em>incredibly</em> challenging, not to mention costly and time-consuming, to collect the relevant data, these models typically combine observational data with carefully specified simulation models that we can run thousands of times. We can then step back and look at the most common outcomes from these many simulations.</p>
 <p>The value of a network approach to questions of diffusion is not limited to epidemiology. Network analysts are interested in the spread of many different kinds of contagions, infectious diseases being only one (important) example. In network analysis, we use the term “<strong>contagion</strong>” to mean some “thing” that spreads through a network; it may be a disease, or perhaps news, a new fashion trend, safe-sex behaviours, or some other quality. Usually, contagions are things that are not consumed as they spread, but propagate and increase in total. A sum of money being shared through a network, for example, is not usually called a contagion, nor is it subject to epidemic spread and diffusion.</p>
 <p>To better understand the spread of a contagion through a network, there are some key terms that are important to know. A node is <strong>activated</strong> when they’ve adopted, caught, or been “infected” by whatever contagion is flowing over the network. For example, they might catch a cold or adopt a belief. A node is <strong>exposed</strong> to the contagion when an adjacent node is activated.</p>
-<p>Consider the hypothetical network shown in Figure <a href="#fig-16_01">Figure&nbsp;<span>32.1</span></a>, through which an information-based contagion spreads over time. At first (Time 0), Yevgen has some interesting gossip he is eager to share. Since Yevgen and Eric are directly connected, Eric is “exposed.” Once Yevgen shares the information with Eric in Time 1, Eric becomes activated and his alters become exposed. Eric’s switch from exposed to activated is a <strong>state change</strong>. All state changes in the figure are represented by changes in node color from white (not activated, not exposed) to grey (exposed) to activated (crimson).</p>
+<p>Consider the hypothetical network shown in Figure <a href="#fig-16_01" class="quarto-xref">Figure&nbsp;<span>32.1</span></a>, through which an information-based contagion spreads over time. At first (Time 0), Yevgen has some interesting gossip he is eager to share. Since Yevgen and Eric are directly connected, Eric is “exposed.” Once Yevgen shares the information with Eric in Time 1, Eric becomes activated and his alters become exposed. Eric’s switch from exposed to activated is a <strong>state change</strong>. All state changes in the figure are represented by changes in node color from white (not activated, not exposed) to grey (exposed) to activated (crimson).</p>
 <p>This is some <em>really</em> interesting gossip, and Eric can hardly contain it. He doesn’t. He shares it with his contacts, triggering another set of state changes in Time 2. Finally, in Time 3, all of Eric’s neighbourhood has been activated and the process continues to spread beyond the boundaries of the figure.</p>
 <p><img src="figures/contagion_simple.png" class="img-fluid"></p>
 <p>This is an illustration of a <strong>simple contagion</strong> process. It’s “simple” in several respects, the most salient of which is that transmission between any two people is <em>practically effortless</em>. A single interaction between two people is all that is needed to enable a simple contagion like information to spread. This is not just true for informational contagions, of course. Other simple contagions, such as COVID-19 or a sexually transmitted infection, spread with the same sort of ease. And yet we don’t learn new information from every conversation, contract COVID-19 from every face-to-face interaction, or develop an STI following every sexual encounter. And despite having much in common, there are substantial differences in the specific diffusion patterns for these and other simple contagions.</p>
@@ -1216,7 +1253,7 @@ div.csl-indent {
 </section>
 <section id="simulating-a-small-world" class="level3" data-number="32.5.3">
 <h3 data-number="32.5.3" class="anchored" data-anchor-id="simulating-a-small-world"><span class="header-section-number">32.5.3</span> Simulating a Small World</h3>
-<p>To get started with modelling diffusion processes, we’ll simulate a simple network with 300 nodes. The particular type of network we are simulating here is a “small world” network, which if you recall from earlier is a type of network with low average shortest paths and high clustering coefficients. Each node in this simulated network, shown in Figure <a href="#fig-16_01">Figure&nbsp;<span>32.1</span></a>, will be connected to 4 other nodes. Obviously this network differs substantially from just about any existing social network that we might observe empirically, but it’s a useful starting point. Once we’ve developed some intuition of the how these types of models work, we’ll switch over to using empirical data on interaction networks.</p>
+<p>To get started with modelling diffusion processes, we’ll simulate a simple network with 300 nodes. The particular type of network we are simulating here is a “small world” network, which if you recall from earlier is a type of network with low average shortest paths and high clustering coefficients. Each node in this simulated network, shown in Figure <a href="#fig-16_01" class="quarto-xref">Figure&nbsp;<span>32.1</span></a>, will be connected to 4 other nodes. Obviously this network differs substantially from just about any existing social network that we might observe empirically, but it’s a useful starting point. Once we’ve developed some intuition of the how these types of models work, we’ll switch over to using empirical data on interaction networks.</p>
 <div class="sourceCode" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>population_size <span class="op">=</span> <span class="dv">300</span></span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>G <span class="op">=</span> nx.watts_strogatz_graph(population_size, <span class="dv">4</span>, <span class="fl">0.15</span>)</span>
 <span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>G.name <span class="op">=</span> <span class="st">"A Simulated Small World"</span></span>
@@ -1232,10 +1269,14 @@ div.csl-indent {
 <span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>        node_size<span class="op">=</span><span class="dv">100</span>,</span>
 <span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>        width<span class="op">=</span><span class="fl">.5</span>)</span>
 <span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'figures/16_01.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div id="fig-16_01" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="figures/16_01.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">Figure&nbsp;32.1: png</figcaption>
+<div id="fig-16_01" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-16_01-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/16_01.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-16_01-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;32.1: png
+</figcaption>
 </figure>
 </div>
 </section>
@@ -1341,7 +1382,7 @@ div.csl-indent {
 <span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>)    </span>
 <span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>sir_1_trends.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>From here, we can plot (1) trends in the number of susceptible, infected, and removed nodes; and (2) the compartment deltas. The results are shown in Figure <a href="#fig-16_03">Figure&nbsp;<span>33.2</span></a>.</p>
+<p>From here, we can plot (1) trends in the number of susceptible, infected, and removed nodes; and (2) the compartment deltas. The results are shown in Figure <a href="#fig-16_03" class="quarto-xref">Figure&nbsp;<span>33.2</span></a>.</p>
 <div class="sourceCode" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots()</span>
 <span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>sns.lineplot(data<span class="op">=</span>sir_1_trends)</span>
 <span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1352,14 +1393,18 @@ div.csl-indent {
 <span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
 <span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
 <span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'figures/16_03.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div id="fig-16_03" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="figures/16_03.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">Figure&nbsp;32.2: png</figcaption>
+<div id="fig-16_03" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-16_03-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/16_03.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-16_03-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;32.2: png
+</figcaption>
 </figure>
 </div>
 <p>This plot offers a high-level summary of what has happened to our simulated society over time. In this particular case, we can see the proportion of infected nodes increases dramatically, infecting more than 70% of the population in fewer than 50 iterations (when you factor in those who had already recovered by iteration 50, about 90% of the population had been infected, but some had already recovered). At the same time, the number of susceptible nodes decreases (which we should expect, given the zero-sum and unidirectional nature of the SIR model). Over time, there is a fairly steady increase in the number of nodes who are removed from the simulation due to immunity or death.</p>
-<p>Let’s also take a quick look at the deltas for each state (Figure <a href="#fig-16_04">Figure&nbsp;<span>33.3</span></a>).</p>
+<p>Let’s also take a quick look at the deltas for each state (Figure <a href="#fig-16_04" class="quarto-xref">Figure&nbsp;<span>33.3</span></a>).</p>
 <div class="sourceCode" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>fig, (ax1, ax2, ax3) <span class="op">=</span> plt.subplots(<span class="dv">3</span>,<span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">8</span>,<span class="dv">8</span>), sharex<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>sns.lineplot(ax <span class="op">=</span> ax1, data<span class="op">=</span>sir_1_deltas[<span class="st">'Susceptible'</span>], color<span class="op">=</span><span class="st">'gray'</span>)</span>
 <span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>sns.lineplot(ax <span class="op">=</span> ax2, data<span class="op">=</span>sir_1_deltas[<span class="st">'Infected'</span>], color<span class="op">=</span><span class="st">'gray'</span>)</span>
@@ -1372,17 +1417,21 @@ div.csl-indent {
 <span id="cb42-10"><a href="#cb42-10" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb42-11"><a href="#cb42-11" aria-hidden="true" tabindex="-1"></a>ax3.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">'Iteration'</span>)</span>
 <span id="cb42-12"><a href="#cb42-12" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'figures/16_04.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div id="fig-16_04" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="figures/16_04.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">Figure&nbsp;32.3: png</figcaption>
+<div id="fig-16_04" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-16_04-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/16_04.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-16_04-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;32.3: png
+</figcaption>
 </figure>
 </div>
 <p>This plots shows how the number of nodes in each of the three possible node states changes from one iteration to the next, and is not cumulative. It should make some intuitive sense: in the SIR model, a susceptible node can either stay susceptible or become infected, an infected node can either stay infected or become removed, and a removed node cannot change state. Therefore, the susceptible population should always decrease, the infected population can increase or decrease, and the recovered population always increases.</p>
 </section>
 <section id="wait-who-did-we-just-infect" class="level4" data-number="32.6.1.3">
 <h4 data-number="32.6.1.3" class="anchored" data-anchor-id="wait-who-did-we-just-infect"><span class="header-section-number">32.6.1.3</span> Wait, Who Did We Just Infect?</h4>
-<p>Recall that NDLib is simulating discrete nodes in a network, rather than solving differential equations. Figure <a href="#fig-16_05">Figure&nbsp;<span>33.4</span></a> provides a bit of additional insight into what has happened to our simulated society throughout this process. We took 200 steps through time, but a lot of action happened in just the first 20 steps. Each of the subplots in the Figure below represents one of the first 20 iterations. At each iteration, the nodes are crimson if they are newly infected, or were infected in a previous iteration. Grey nodes are susceptible. Some of these nodes of course transitioned to the “removed” state, but for pedagogical reasons, my interest here is in highlighting the specific paths the contagion moves along. Though there are, of course, some clusters that form around the initial seed infections, there is no indication that the contagion gets “stuck” in those clusters. It spreads easily to infect surrounding nodes.</p>
+<p>Recall that NDLib is simulating discrete nodes in a network, rather than solving differential equations. Figure <a href="#fig-16_05" class="quarto-xref">Figure&nbsp;<span>33.4</span></a> provides a bit of additional insight into what has happened to our simulated society throughout this process. We took 200 steps through time, but a lot of action happened in just the first 20 steps. Each of the subplots in the Figure below represents one of the first 20 iterations. At each iteration, the nodes are crimson if they are newly infected, or were infected in a previous iteration. Grey nodes are susceptible. Some of these nodes of course transitioned to the “removed” state, but for pedagogical reasons, my interest here is in highlighting the specific paths the contagion moves along. Though there are, of course, some clusters that form around the initial seed infections, there is no indication that the contagion gets “stuck” in those clusters. It spreads easily to infect surrounding nodes.</p>
 <p>There is another (more important) pedagogical reason for this figure: to emphasize that it’s just <em>one</em> of many possible outcomes. We’ve performed a <em>single simulation</em> over 200 time steps. Showing this sequence of snapshots of the network over time is a useful reminder that at any point in this process, including T0 where we see the nodes that were randomly infected at the start of our model, <em>things could have gone differently</em>, unlike with deterministic SIR models using differential equations, which always give the same results. We might have selected a different random subset, for example. Since the transmission process is probabilistic, minor differences in which nodes get infected at any given point in the process could have an impact on what happens later, such as opening up or closing off certain regions of the network to the contagion. All of this and more is possible with the <em>exact</em> same model we used, with the same probabilities of infection and removal.</p>
 <p>What should we do? Simulate a <em>whole lot more</em> and look at aggregate patterns across all of those simulations. Let’s do that now.</p>
 <p><img src="figures/activations_first_20.png" class="img-fluid"></p>
@@ -1397,7 +1446,7 @@ div.csl-indent {
 <span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>    infection_sets<span class="op">=</span><span class="va">None</span>, </span>
 <span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>    nprocesses<span class="op">=</span><span class="dv">4</span></span>
 <span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>The results returned by <code>multi_runs()</code> are very similar to that returned by <code>iteration_bunch()</code>, only more deeply nested. The custom function from the utilities package, parses the output and produces a trend plot (Figure <a href="#fig-16_06">Figure&nbsp;<span>33.5</span></a>).</p>
+<p>The results returned by <code>multi_runs()</code> are very similar to that returned by <code>iteration_bunch()</code>, only more deeply nested. The custom function from the utilities package, parses the output and produces a trend plot (Figure <a href="#fig-16_06" class="quarto-xref">Figure&nbsp;<span>33.5</span></a>).</p>
 <div class="sourceCode" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>visualize_trends(</span>
 <span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>    trends, </span>
 <span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>    network<span class="op">=</span>G, </span>
@@ -1406,10 +1455,14 @@ div.csl-indent {
 <span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'figures/16_06.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div id="fig-16_06" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="figures/16_06.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">Figure&nbsp;32.4: png</figcaption>
+<div id="fig-16_06" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-16_06-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/16_06.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-16_06-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;32.4: png
+</figcaption>
 </figure>
 </div>
 <p>This figure conveys the same type of information as the first trend plot we produced, only this time it does so for 500 simulations with 200 iterations rather than 1 simulation with 200 iterations. Each thin gray line represents the trend for one of the three possible states across the iterations of a single simulation, and the three more prominent lines represent the median trend across all 500. As you can see, there are a few simulations that deviate from the pack, but for the most part the patterns are very clear, and things don’t fluctuate wildly across runs.</p>
@@ -1430,7 +1483,7 @@ div.csl-indent {
 <span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>g_bluetooth_contact.name <span class="op">=</span> <span class="st">'CNS Bluetooth Contact'</span></span>
 <span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(g_bluetooth_contact)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="sourceCode" id="cb48"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>layout <span class="op">=</span> nx.nx_pydot.graphviz_layout(g_bluetooth_contact)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>This network is quite dense, so visualizing it is a bit tough. In Figure <a href="#fig-16_07">Figure&nbsp;<span>33.6</span></a>, I overlay a contour plot to give an idea of where the density lies, and what kind of gradient it follows.</p>
+<p>This network is quite dense, so visualizing it is a bit tough. In Figure <a href="#fig-16_07" class="quarto-xref">Figure&nbsp;<span>33.6</span></a>, I overlay a contour plot to give an idea of where the density lies, and what kind of gradient it follows.</p>
 <ul>
 <li><strong>TODO: Update this; gt here too?</strong></li>
 </ul>
@@ -1448,13 +1501,17 @@ div.csl-indent {
 <span id="cb49-12"><a href="#cb49-12" aria-hidden="true" tabindex="-1"></a>       alpha<span class="op">=</span><span class="fl">.3</span>)</span>
 <span id="cb49-13"><a href="#cb49-13" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb49-14"><a href="#cb49-14" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'figures/16_07.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div id="fig-16_07" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="figures/16_07.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">Figure&nbsp;32.5: png</figcaption>
+<div id="fig-16_07" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-16_07-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/16_07.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-16_07-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;32.5: png
+</figcaption>
 </figure>
 </div>
-<p>Let’s also inspect the degree distribution (Figure <a href="#fig-16_08">Figure&nbsp;<span>32.6</span></a>).</p>
+<p>Let’s also inspect the degree distribution (Figure <a href="#fig-16_08" class="quarto-xref">Figure&nbsp;<span>32.6</span></a>).</p>
 <div class="sourceCode" id="cb50"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots()</span>
 <span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>deg <span class="op">=</span> pd.Series(</span>
@@ -1466,14 +1523,18 @@ div.csl-indent {
 <span id="cb50-9"><a href="#cb50-9" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
 <span id="cb50-10"><a href="#cb50-10" aria-hidden="true" tabindex="-1"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">'Node degree'</span>)</span>
 <span id="cb50-11"><a href="#cb50-11" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'figures/16_08.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div id="fig-16_08" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="figures/16_08.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">Figure&nbsp;32.6: png</figcaption>
+<div id="fig-16_08" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-16_08-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/16_08.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-16_08-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;32.6: png
+</figcaption>
 </figure>
 </div>
 <p>Now we’re ready to develop our second SIR model. We’ll keep the same <code>beta</code> (<span class="math inline">\(\beta\)</span>) and <code>gamma</code> (<span class="math inline">\(\gamma\)</span>) parameters, and the same proportion of initially infected nodes. Unlike last time, we’ll let our simulations run for 300 iterations, and we’ll execute a batch of 500. In order to compare our results against future models, we’re going to set the initially infected nodes so we can isolate the effects of changing parameters. While we are choosing the nodes randomly, we’ll set a seed for the random number generator to keep results consistent for the book. You would not normally do this for research purposes. Since we’re running 500 simulations, we will produce 500 initial infection sets.</p>
-<p>The results are shown in Figure <a href="#fig-16_09">Figure&nbsp;<span>32.7</span></a>.</p>
+<p>The results are shown in Figure <a href="#fig-16_09" class="quarto-xref">Figure&nbsp;<span>32.7</span></a>.</p>
 <div class="sourceCode" id="cb51"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> random</span>
 <span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> copy</span>
 <span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1515,15 +1576,19 @@ div.csl-indent {
 <span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'figures/16_09.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div id="fig-16_09" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="figures/16_09.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">Figure&nbsp;32.7: png</figcaption>
+<div id="fig-16_09" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-16_09-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/16_09.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-16_09-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;32.7: png
+</figcaption>
 </figure>
 </div>
 <p>We see the same general pattern we saw before, with an early spike of infections that spreads rapidly through the population, accompanied by a decline in the proportion of susceptible nodes. And as before, we see a fairly steady increase over time in the number of nodes that are removed by immunity or death. By the 100th iteration, nearly every susceptible individual has been infected, and all that remains is the recovery process. Note, however, that if we had more isolated components in the network, rather than one large one, some simulations might have hade very different results. Since contagions cannot spread without an interaction, each component would need to have at least one infected node at T0 for infection to be a possibility. In general, the higher the number of components in a network, the more important the number and distribution of initial infections will be.</p>
 <p>Another thing to note from these visualizations is that the trends across all simulations are usually more tightly clustered together right at the dawn of simulated time than they are as the simulation progress. Since each simulation starts with the same conditions, they have little room to diverge from each other. As the infection spreads with some random chance at each time point, different parts of the network may open up at different rates, and different initially infected nodes may be more conducive to faster or slower transmissions through the network.</p>
-<p>Now let’s model a simple contagion with <span class="math inline">\(\beta = 0.01\)</span>, dramatically dropping the probability of transmitting an infection. The results are shown in Figure <a href="#fig-16_10">Figure&nbsp;<span>32.8</span></a>.</p>
+<p>Now let’s model a simple contagion with <span class="math inline">\(\beta = 0.01\)</span>, dramatically dropping the probability of transmitting an infection. The results are shown in Figure <a href="#fig-16_10" class="quarto-xref">Figure&nbsp;<span>32.8</span></a>.</p>
 <div class="sourceCode" id="cb54"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>sir_model_3 <span class="op">=</span> sir_model(</span>
 <span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>    g_bluetooth_contact,</span>
 <span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>    beta<span class="op">=</span><span class="fl">0.01</span>,</span>
@@ -1543,10 +1608,14 @@ div.csl-indent {
 <span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'figures/16_10.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div id="fig-16_10" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="figures/16_10.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">Figure&nbsp;32.8: png</figcaption>
+<div id="fig-16_10" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-16_10-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/16_10.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-16_10-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;32.8: png
+</figcaption>
 </figure>
 </div>
 <p>Notice that lowering the probability that an infected person transmits the contagion to a neighbour has produced several noticable differences. First, the initial spike of infections is much less sharp, and its effects are more spread out over time. Public health interventions during a pandemic will often focus on reducing the disease’s <span class="math inline">\(\beta\)</span> because it helps “flatten the curve.” A region’s healthcare facilities usually operate close to their maximum capacity during non-pandemic times for the sake of efficiency, but that means that sudden spikes can overwhelm the available resources. Reducing the rate of infection, by mandating wearing masks for example, can help buffer the system against rapid shocks.</p>
@@ -1706,10 +1775,14 @@ div.csl-indent {
 <span id="cb60-8"><a href="#cb60-8" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb60-9"><a href="#cb60-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb60-10"><a href="#cb60-10" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'figures/16_02.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div id="fig-16_02" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="figures/16_02.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">Figure&nbsp;33.1: png</figcaption>
+<div id="fig-16_02" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-16_02-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/16_02.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-16_02-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;33.1: png
+</figcaption>
 </figure>
 </div>
 <div class="sourceCode" id="cb61"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>thresh_model_2 <span class="op">=</span> ep.ThresholdModel(g_bluetooth_contact)</span>
@@ -1744,10 +1817,14 @@ div.csl-indent {
 <span id="cb62-8"><a href="#cb62-8" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb62-9"><a href="#cb62-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb62-10"><a href="#cb62-10" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'figures/16_03.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div id="fig-16_03" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="figures/16_03.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">Figure&nbsp;33.2: png</figcaption>
+<div id="fig-16_03" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-16_03-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/16_03.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-16_03-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;33.2: png
+</figcaption>
 </figure>
 </div>
 <div class="sourceCode" id="cb63"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a>thresh_model_3 <span class="op">=</span> ep.ThresholdModel(g_bluetooth_contact)</span>
@@ -1784,10 +1861,14 @@ div.csl-indent {
 <span id="cb64-8"><a href="#cb64-8" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb64-9"><a href="#cb64-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb64-10"><a href="#cb64-10" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'figures/16_04.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div id="fig-16_04" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="figures/16_04.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">Figure&nbsp;33.3: png</figcaption>
+<div id="fig-16_04" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-16_04-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/16_04.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-16_04-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;33.3: png
+</figcaption>
 </figure>
 </div>
 <p>Let’s take a look at model 1. Despite starting with only 10% of the population infected, this contagion spreads to the whole population in less than 5 iterations in every simulation. This complex contagion spreads faster than the simple contagions I modelled earlier! After a moment’s reflection, this should make sense. Model 1 has a fractional threshold of 0.1, which means that a node only needs 10% of its neighbours to be activated for the contagion to spread. Given that the average degree is less than 10, that will usually translate to needing a single activated neighbour. While I have <em>technically</em> defined a threshold model for a complex contagion, this contagion will <em>effectively</em> act like a simple contagion with perfect transmissibility for most of the population!</p>
@@ -1829,10 +1910,14 @@ div.csl-indent {
 <div class="sourceCode" id="cb67"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a>sns.ecdfplot(random_thresholds)</span>
 <span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
 <span id="cb67-3"><a href="#cb67-3" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'figures/16_05.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div id="fig-16_05" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="figures/16_05.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">Figure&nbsp;33.4: png</figcaption>
+<div id="fig-16_05" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-16_05-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/16_05.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-16_05-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;33.4: png
+</figcaption>
 </figure>
 </div>
 <p>And now let’s run the final models, shown in Figures <span class="quarto-unresolved-ref">?fig-17_06</span> and <span class="quarto-unresolved-ref">?fig-17_07</span>.</p>
@@ -1853,10 +1938,14 @@ div.csl-indent {
 <span id="cb69-8"><a href="#cb69-8" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb69-9"><a href="#cb69-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb69-10"><a href="#cb69-10" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'figures/16_06.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div id="fig-16_06" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="figures/16_06.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">Figure&nbsp;33.5: png</figcaption>
+<div id="fig-16_06" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-16_06-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/16_06.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-16_06-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;33.5: png
+</figcaption>
 </figure>
 </div>
 <div class="sourceCode" id="cb70"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a>model_cc_vt_2 <span class="op">=</span> ep.ThresholdModel(g_bluetooth_contact)</span>
@@ -1899,10 +1988,14 @@ div.csl-indent {
 <span id="cb71-8"><a href="#cb71-8" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb71-9"><a href="#cb71-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb71-10"><a href="#cb71-10" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'figures/16_07.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div id="fig-16_07" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="figures/16_07.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">Figure&nbsp;33.6: png</figcaption>
+<div id="fig-16_07" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-16_07-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/16_07.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-16_07-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;33.6: png
+</figcaption>
 </figure>
 </div>
 <p>Wow. These two models appear incredibly distinct! Recall that these models are being run on the same network, with the same initially infected nodes, with the same mean threshold of 0.35. The only difference is the size of the standard standard deviation of their thresholds. For a far deeper and more thorough exploration of variable threshold models, I will once again draw your attention to Centola’s [CITE] work. Let this example serve to emphasize a major theme of this chapter: intuitions can be very unreliable when dealing with complex contagions. Explore every facet of your model and the network because due diligence is especially important when models can be sensitive to initial conditions.</p>
@@ -1934,7 +2027,7 @@ div.csl-indent {
 </ul>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
 <div id="ref-bruch2015agent" class="csl-entry" role="listitem">
 Bruch, Elizabeth, and Jon Atwell. 2015. <span>“Agent-Based Models in Empirical Social Research.”</span> <em>Sociological Methods &amp; Research</em> 44 (2): 186–221.
 </div>
@@ -2031,18 +2124,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -2074,11 +2156,50 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
-  function tippyHover(el, contentFn) {
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -2088,8 +2209,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -2101,7 +2231,130 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -2145,6 +2398,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -2170,6 +2424,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -2231,12 +2511,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./26-complex-adaptive-systems.html" class="pagination-link">
+      <a href="./26-complex-adaptive-systems.html" class="pagination-link" aria-label="Agent-based Models">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Agent-based Models</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./28-artificial-neural-networks-fnn-rnn-cnn.html" class="pagination-link">
+      <a href="./28-artificial-neural-networks-fnn-rnn-cnn.html" class="pagination-link" aria-label="Neural networks 101">
         <span class="nav-page-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Neural networks 101</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
@@ -2245,4 +2525,5 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
-</body></html>
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/UWNETLAB/dcss_supplementary/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
