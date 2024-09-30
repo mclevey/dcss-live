@@ -1,0 +1,1169 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Doing Computational Social ScienceThe Continuous Development Edition - 2&nbsp; Python 101</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./03-python-102.html" rel="next">
+<link href="./01-getting-started.html" rel="prev">
+<link href="./media/logo.png" rel="icon" type="image/png">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="custom.css">
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01-getting-started.html">Research Computing</a></li><li class="breadcrumb-item"><a href="./02-python-101.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Python 101</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="./index.html" class="sidebar-logo-link">
+      <img src="./media/logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      </a>
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Doing Computational Social Science<br><span class="small">The <strong>Continuous Development</strong> Edition</span></a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/UWNETLAB/dcss_supplementary/tree/master/book/" rel="" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <div class="dropdown">
+      <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Share"><i class="bi bi-share"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=|url|">
+              <i class="bi bi-bi-twitter pe-1"></i>
+            Twitter
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://www.facebook.com/sharer/sharer.php?u=|url|">
+              <i class="bi bi-bi-facebook pe-1"></i>
+            Facebook
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://www.linkedin.com/sharing/share-offsite/?url=|url|">
+              <i class="bi bi-bi-linkedin pe-1"></i>
+            LinkedIn
+            </a>
+          </li>
+      </ul>
+    </div>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">👋 Hello!</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./00-introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Learning to Do Computational Social Science</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">Research Computing</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-getting-started.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Getting Started</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-python-101.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Python 101</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-python-102.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Python 102</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text">Obtaining Data</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04-sampling-and-survey-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Sampling and survey data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-web-data-apis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Web data (APIs)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06-web-data-scraping.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Web data (Scraping)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-audio-image-and-document-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Audio, image, and document data</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+ <span class="menu-text">Exploring Data</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08-processing-structured-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Processing Structured Data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09-exploratory-data-analysis-and-visualization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Exploratory data analysis and visualization</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10-association-and-latent-factors.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Association and latent factors</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11-text-as-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Text as Data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./12-text-similarity-and-latent-semantic-space.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Text similarity and latent semantic space</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./13-social-networks-and-relational-thinking.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Networks: Relationships as Data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./14-structural-similarity-and-latent-social-space.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Structural similarity and latent social space</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+ <span class="menu-text">Prediction and Inference</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./15-machine-and-statistical-learning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Machine Learning 101</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./16-prediction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Prediction</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./17-probability.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Probability 101</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./18-credibility.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Credibility</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./19-causality.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Causality</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
+ <span class="menu-text">Generative Modeling</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./20-linear-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Bayesian Regression Models with Probabilistic Programming</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./21-multilevel-regression-with-post-stratification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Multilevel regression with post-stratification</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./22-generalized-linear-models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Generalized Linear Models</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./23-causal-analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Causal analysis</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./24-latent-structure-networks.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Latent structure in networks</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./25-latent-topics-text-lda.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Latent topics in text (LDA)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./26-complex-adaptive-systems.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Agent-based Models</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./27-developing-agent-based-models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Diffusion</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true">
+ <span class="menu-text">Deep Learning Demystified</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./28-artificial-neural-networks-fnn-rnn-cnn.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Neural networks 101</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./29-processing-natural-language-data-spacy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Processing Natural Language Data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./30-transformers-self-attention.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Transformers, Self-attention architecture</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./31-latent-topics-text-transformers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Modelling latent topics (Transformers)</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true">
+ <span class="menu-text">Professional Responsibilities</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./32-research-ethics-politics-and-practices.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Research Ethics, Politics, and Practices</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./33-next-steps.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Next steps</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./acknowledgements.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Acknowledgements</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./changelog.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Changelog</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./appendix-centrality-formulas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Centrality Formulas</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./appendix-courses.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Courses and Workshops</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#learning-python" id="toc-learning-python" class="nav-link active" data-scroll-target="#learning-python"><span class="header-section-number">2.1</span> Learning Python</a></li>
+  <li><a href="#python-foundations" id="toc-python-foundations" class="nav-link" data-scroll-target="#python-foundations"><span class="header-section-number">2.2</span> Python Foundations</a>
+  <ul class="collapse">
+  <li><a href="#basic-data-types-and-expressions" id="toc-basic-data-types-and-expressions" class="nav-link" data-scroll-target="#basic-data-types-and-expressions"><span class="header-section-number">2.2.1</span> Basic Data Types and Expressions</a></li>
+  <li><a href="#variables-and-assignment" id="toc-variables-and-assignment" class="nav-link" data-scroll-target="#variables-and-assignment"><span class="header-section-number">2.2.2</span> Variables and Assignment</a></li>
+  <li><a href="#objects-and-methods-illustrated-with-strings" id="toc-objects-and-methods-illustrated-with-strings" class="nav-link" data-scroll-target="#objects-and-methods-illustrated-with-strings"><span class="header-section-number">2.2.3</span> Objects and Methods, Illustrated with Strings</a></li>
+  <li><a href="#comparison-and-control-flow" id="toc-comparison-and-control-flow" class="nav-link" data-scroll-target="#comparison-and-control-flow"><span class="header-section-number">2.2.4</span> Comparison and Control Flow</a></li>
+  <li><a href="#tracebacks" id="toc-tracebacks" class="nav-link" data-scroll-target="#tracebacks"><span class="header-section-number">2.2.5</span> Tracebacks</a></li>
+  </ul></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">2.3</span> Conclusion</a>
+  <ul class="collapse">
+  <li><a href="#key-points" id="toc-key-points" class="nav-link" data-scroll-target="#key-points"><span class="header-section-number">2.3.1</span> Key Points</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/UWNETLAB/dcss_supplementary/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Python 101</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Learning Objectives
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>By the end of this chapter, you should be able to:</p>
+<ul>
+<li>Understand and use basic data types in Python (strings, integers, floats, and Booleans).</li>
+<li>Understand and use variable assignment and naming conventions.</li>
+<li>Utilize methods for manipulating strings, including understanding string immutability.</li>
+<li>Understand and use comparison operators and control flow statements to perform conditional execution.</li>
+<li>Interpret Python’s <code>Tracebacks</code> to debug errors in your code.</li>
+<li>Use <code>try</code> and <code>except</code> blocks to handle exceptions and manage potential interruptions in code execution.</li>
+</ul>
+</div>
+</div>
+<p><br></p>
+<p>It’s time to start writing Python code! Open a Jupyter notebook or a Python console and follow along as you work through this chapter. If you’ve loaded the supplementary learning materials as described in Chapter 2, you’ll find a series of chapter-specific Jupyter Notebooks to get you started. Use <code>chapter_03_notes.ipynb</code> as you work through this chapter, or create your own empty notebook. After you’ve worked through the chapter, you can deepen and test your knowledge by completing the problem sets in <code>chapter_03_problem_sets.ipynb</code>. Other chapters will also use this <code>_notes</code> and <code>_problem_sets</code> naming convention to keep things simple.</p>
+<p>Our primary goal in this chapter is to lay a foundation of general Python knowledge. We’ll start with the basics: data types, assignment, using methods and functions, control flow, and handling errors. What you learn here is not specific to scientific computing, but you will find yourself using this knowledge <em>constantly</em>. You don’t need to have “mastered” this content before moving on—you will have plenty of opportunities to practice your Python programming as you progress through the book. You can always come back to this chapter if you need a refresher.</p>
+<section id="learning-python" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="learning-python"><span class="header-section-number">2.1</span> Learning Python</h2>
+<p>Python is designed to maximize human readability, and as a consequence, it’s common to <em>feel</em> that you have a good understanding of something because the code on the page makes sense and seems obvious, only to find yourself at a loss when you try to write the same code yourself. That’s totally normal. You must resist the temptation to copy and paste. You <em>will</em> understand more, identify what you don’t understand, and gain mastery faster if you actually type the code out yourself. Your future self will thank you.</p>
+<p>If you are new to Python but have some experience doing scripted data analysis in another language, I suggest that you approach Python as if you were a beginner. It’s common to start working in Python by “translating” your R or Stata scripts into Python. While there are many generic programming concepts that are used in those languages and many others, efforts to “translate” your scripts will lead to writing poor Python code and will slow down your learning, causing problems later. While a certain amount of this is unavoidable, you will benefit from minimizing it. When you are working in Python, it is generally better to embrace doing things the “Pythonic” way.</p>
+</section>
+<section id="python-foundations" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="python-foundations"><span class="header-section-number">2.2</span> Python Foundations</h2>
+<section id="basic-data-types-and-expressions" class="level3" data-number="2.2.1">
+<h3 data-number="2.2.1" class="anchored" data-anchor-id="basic-data-types-and-expressions"><span class="header-section-number">2.2.1</span> Basic Data Types and Expressions</h3>
+<p>Every value in Python has a specific data type. The key data types to know are:</p>
+<ul>
+<li><strong>Integers</strong> (e.g., <code>42</code>)</li>
+<li><strong>Floats</strong> (e.g., <code>42.0</code>)</li>
+<li><strong>Strings</strong> (e.g., <code>'The Hitchhiker's Guide to the Galaxy'</code> or <code>'cats are the best'</code>)</li>
+<li><strong>Booleans</strong> (e.g., <code>True</code> or <code>False</code>)</li>
+</ul>
+<p>Strings are sequences of characters wrapped in single or double quotes. Both work the same way, but you must be consistent when starting and ending a string, and you can’t use quotes of one type inside quotes of the same type. Having the option for both enables us to include quotes and apostrophes within a string.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">"That's correct."</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">'My teacher said, "That is correct."'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>An <strong>expression</strong> consists of values joined by operators. The following examples use Python like a calculator.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="op">+</span> <span class="dv">2</span>  <span class="co"># Addition</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="op">*</span> <span class="dv">9</span>  <span class="co"># Multiplication</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="dv">10</span> <span class="op">/</span> <span class="dv">2</span>  <span class="co"># Division</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="op">**</span> <span class="dv">6</span>  <span class="co"># Exponentiation</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="op">+</span> <span class="dv">9</span> <span class="op">*</span> <span class="dv">7</span>  <span class="co"># Python follows the order of operations</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Python has mathematical operators for addition (<code>+</code>), subtraction (<code>-</code>), multiplication (<code>*</code>), division (<code>/</code>), floor division (<code>//</code>), exponentiation (<code>**</code>), and modulus/remainder (<code>%</code>) when working with numbers. Given expressions with multiple operators, Python follows the conventional mathematical order of operations.</p>
+<p>Some of these operators can also be used to perform operations on strings, but they represent different things. For example, when used in an expression with two strings, the <code>+</code> operator performs <strong>string concatenation</strong> by joining the two strings together. We demonstrate this below. The following expression is contained inside a <code>print()</code> function, which appropriately prints the result inline for notebooks or to the screen if you are executing scripts.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Miyoko is interested in '</span> <span class="op">+</span> <span class="st">'a career in data science.'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Python determines whether <code>+</code> should be addition or string concatenation based on context: whether both items being operated on are strings or numbers. However, Python will throw an error if you try to add, or concatenate, a number and a string. To demonstrate, create a new code cell and type <code>42 + 'is the answer'</code>. You will see an error message—a “Traceback”—printed below the code cell. We will discuss errors and how to interpret them later. If you wrap the <code>42</code> in quotes and execute the cell again, you will see that Python now treats <code>42</code> as a string and performs concatenation.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="dv">42</span> <span class="op">+</span> <span class="st">' is the answer'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre><code>---------------------------------------------------------------------------
+
+TypeError                                 Traceback (most recent call last)
+
+&lt;ipython-input-9-c30245934d2d&gt; in &lt;module&gt;
+----&gt; 1 42 + ' is the answer'
+
+
+TypeError: unsupported operand type(s) for +: 'int' and 'str'</code></pre>
+<div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">'42 '</span> <span class="op">+</span> <span class="st">'is the answer'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Alternatively, we can convert numbers to strings with the <code>str()</code> function.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="bu">str</span>(<span class="dv">42</span>) <span class="op">+</span> <span class="st">' is the answer'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>We can also use the <code>*</code> operator with strings, where it becomes a <strong>string replicator</strong>, which requires a string and an integer. For example,</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Sociology '</span> <span class="op">*</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="variables-and-assignment" class="level3" data-number="2.2.2">
+<h3 data-number="2.2.2" class="anchored" data-anchor-id="variables-and-assignment"><span class="header-section-number">2.2.2</span> Variables and Assignment</h3>
+<p>We can store data in <strong>variables</strong> by <strong>assignment</strong>, indicated by the <code>=</code> operator. We can call variables anything we want, provided:</p>
+<ol type="1">
+<li>We only use numbers, letters, and the underscore character (<code>_</code>).</li>
+<li>We don’t start the name with a number.</li>
+<li>We do not use any special words that are reserved for Python itself (e.g., <code>class</code>, <code>def</code>, <code>if</code>, etc.).</li>
+</ol>
+<p>Variable names are case-sensitive, so <code>Variable</code>, <code>variable</code>, and <code>VARIABLE</code> are all different. Use descriptive names for your variables (e.g., call the variable storing your last name as a string <code>last_name</code>, not <code>ln</code>). It makes your code much more readable and easier for you or your collaborators to understand after some time has passed.</p>
+<p>You can think of a variable as a labeled container that stores specific information. In the example below, the container has a label called <code>a_number</code> and stores the integer value <code>16</code>:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>a_number <span class="op">=</span> <span class="dv">16</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(a_number)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Once you have created a variable, you can use it in expressions. For example:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>a_number <span class="op">*</span> a_number</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>city <span class="op">=</span> <span class="st">'Cologne'</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>country <span class="op">=</span> <span class="st">'Germany'</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(city <span class="op">+</span> country)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(city <span class="op">+</span> <span class="st">' is the fourth-most populous city in '</span> <span class="op">+</span> country)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>We are not limited to printing the results of an expression. We can save our results in a new variable.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>sentence <span class="op">=</span> city <span class="op">+</span> <span class="st">' is the fourth-most populous city in '</span> <span class="op">+</span> country</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(sentence)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="objects-and-methods-illustrated-with-strings" class="level3" data-number="2.2.3">
+<h3 data-number="2.2.3" class="anchored" data-anchor-id="objects-and-methods-illustrated-with-strings"><span class="header-section-number">2.2.3</span> Objects and Methods, Illustrated with Strings</h3>
+<p>Python is an <strong>object-oriented language</strong>, which means that it performs computations using “objects. You’ll learn more about object-oriented programming when we get to agent-based modelling, but for now it’s useful to understand a few simple concepts. Let’s use a simple analogy. Imagine two cats, Boo and Lando Catrissian, who can perform various actions like napping, drinking water, or playing. Boo and Lando are both specific <strong>instances</strong> of the general <strong>class</strong> of cats. As cats, they share common behaviors.</p>
+<p>In Python, (almost) <em>everything</em> is an object of one kind or another. Like Boo and Lando, <strong>objects</strong> are specific instances of more general <strong>classes</strong>. Being specific instances, they typically have a name that differs from their class; the <code>sentence</code> object is an instance of the <code>string</code> class. Objects are capable of various actions—called <strong>methods</strong>—that they share with other objects of the same class. In Python, strings have methods for changing cases, checking for the presence of a value, replacing one substring with another, and many more. As computational social scientists, we frequently work with real-world text data; Python’s <code>string</code> methods are indispensable for doing so. To learn about a particular class and its methods, you can usually check online documentation, use Jupyter’s <code>?</code> function (e.g., <code>a_number?</code>), or Python’s <code>dir()</code> function (e.g., <code>dir(a_number)</code>).</p>
+<section id="changing-case" class="level4" data-number="2.2.3.1">
+<h4 data-number="2.2.3.1" class="anchored" data-anchor-id="changing-case"><span class="header-section-number">2.2.3.1</span> Changing Case</h4>
+<p>The examples below illustrate some common string manipulation tasks. Any time we use a method, we provide the name of the object followed by a <code>.</code> and the name of the method. For example, to change the case of the characters in a string, we can use the <code>.upper()</code>, <code>.lower()</code>, and <code>.title()</code> methods. Let’s try on the <code>city</code> variable from earlier:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>city.upper()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>city.lower()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>city.title()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Technically, strings in Python are <strong>immutable</strong>, which means they cannot be changed after they are created. Methods like <code>.upper()</code> and <code>.lower()</code> do not actually change the original string; they create a new string. The code above printed those new strings, but Python did not change the string contained in <code>city</code>. To do that, we need to overwrite <code>city</code> with the new string.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(city)</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>city <span class="op">=</span> city.upper()</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(city)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="checking-for-substrings" class="level4" data-number="2.2.3.2">
+<h4 data-number="2.2.3.2" class="anchored" data-anchor-id="checking-for-substrings"><span class="header-section-number">2.2.3.2</span> Checking for Substrings</h4>
+<p>We can check whether a string contains another string using the <code>in</code> operator. Python will return <code>True</code> if the substring is in the string or <code>False</code> if it is not.</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co">'GERMANY'</span> <span class="kw">in</span> sentence</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>We can also use the <code>.index()</code> method to return the starting index position where a substring appears in a string. If the substring is not in the string, this method will throw an error.</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>sentence.index(<span class="st">'Germany'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>To replace one substring with another substring, we can use the <code>.replace()</code> method. For example, to replace ‘COLOGNE’ with ‘KÖLN’:</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>sentence <span class="op">=</span> sentence.replace(<span class="st">'Cologne'</span>, <span class="st">'Köln'</span>)</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(sentence)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="joining-and-splitting-strings" class="level4" data-number="2.2.3.3">
+<h4 data-number="2.2.3.3" class="anchored" data-anchor-id="joining-and-splitting-strings"><span class="header-section-number">2.2.3.3</span> Joining and Splitting Strings</h4>
+<p>When working with strings and other text data, you will often find yourself needing to split a string into multiple pieces or to join items together into a specific string. If we use the <code>.split()</code> method on a string with no arguments, it will split the string on whitespace and return a list.</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>sent_split_1 <span class="op">=</span> sentence.split()</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(sent_split_1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Alternatively, we can tell the <code>.split()</code> method to split a string at specific substrings.</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>sent_split_2 <span class="op">=</span> sentence.split(<span class="st">'populous'</span>)</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(sent_split_2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>sent_split_3 <span class="op">=</span> sentence.split(<span class="st">'-'</span>)</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(sent_split_3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>To join these items back into a single string, we use <code>.join()</code>. To use this method, we first provide the <code>separator</code> we want <code>.join()</code> to place between the items and then pass the items we want to reassemble into a string.</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>joined <span class="op">=</span> <span class="st">" "</span>.join(sent_split_1)</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>joined</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>also_joined <span class="op">=</span> <span class="st">"-"</span>.join(sent_split_1)</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>also_joined</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="removing-whitespace" class="level4" data-number="2.2.3.4">
+<h4 data-number="2.2.3.4" class="anchored" data-anchor-id="removing-whitespace"><span class="header-section-number">2.2.3.4</span> Removing Whitespace</h4>
+<p>Strings containing text data from the real world often have a lot of whitespace. To remove this whitespace, we can use the <code>.strip()</code>, <code>.lstrip()</code>, or <code>.rstrip()</code> methods to strip out extra whitespace from the whole string (not including the spaces between words) or from the beginning or end of the string.</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>with_whitespaces <span class="op">=</span> <span class="st">'   This string has     extra whitespace. '</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(with_whitespaces)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(with_whitespaces.strip())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(with_whitespaces.lstrip())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(with_whitespaces.rstrip())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="formatting-strings-with-f-strings" class="level4" data-number="2.2.3.5">
+<h4 data-number="2.2.3.5" class="anchored" data-anchor-id="formatting-strings-with-f-strings"><span class="header-section-number">2.2.3.5</span> Formatting Strings with f-Strings</h4>
+<p>While we can use <code>+</code> for string concatenation, it is usually better to use Python’s built-in tools for string formatting. One such tool is the <strong>f-string</strong>, which was introduced in Python 3.6 and is the recommended way to format strings. By putting an <code>f</code> before our string, we can include the name of the variable containing the relevant value inside each <code>{}</code>.</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>city<span class="sc">.</span>title()<span class="sc">}</span><span class="ss"> is the fourth-most populous city in </span><span class="sc">{</span>country<span class="sc">}</span><span class="ss">."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This is more readable and efficient than older methods like <code>str.format()</code>. However, for completeness, here’s how you could use the <code>format()</code> method:</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>a_string <span class="op">=</span> <span class="st">"</span><span class="sc">{}</span><span class="st"> is the fourth-most populous city in </span><span class="sc">{}</span><span class="st">."</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(a_string.<span class="bu">format</span>(city.title(), country))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="multiline-strings" class="level4" data-number="2.2.3.6">
+<h4 data-number="2.2.3.6" class="anchored" data-anchor-id="multiline-strings"><span class="header-section-number">2.2.3.6</span> Multiline Strings</h4>
+<p>In Python, a string can be as short as zero characters (<code>""</code> contains no characters but is a valid string) or arbitrarily long (provided it fits in your system’s memory). Sometimes, you’ll want to create or manipulate longer strings, such as the chapter of a book or the entirety of a congressional report. In such cases, it’s possible to preserve a long text’s layout using ‘newline’ characters (<code>\n</code>) wherever there’s a paragraph break in the text. As you can imagine, however, this gets messy very quickly. Luckily, Python has a built-in syntax for representing multi-line strings: three single (<code>'''</code>) or double (<code>"""</code>) quotation marks in a row.</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>multiline_string <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="st">You can work with strings longer than War and Peace, if you want.</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a><span class="st">The strings can contain line breaks.</span></span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(multiline_string)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Let’s set strings aside for now. We will return to them with some more advanced concepts later in the book.</p>
+</section>
+</section>
+<section id="comparison-and-control-flow" class="level3" data-number="2.2.4">
+<h3 data-number="2.2.4" class="anchored" data-anchor-id="comparison-and-control-flow"><span class="header-section-number">2.2.4</span> Comparison and Control Flow</h3>
+<p>We know how to tell our computer to execute individual instructions (e.g., evaluate <code>2 + 2</code>). However, we often don’t want our computer to simply execute a series of individual instructions from top to bottom. Instead, we want to be able to tell our computer to execute code <em>depending on one or more conditions</em>. This is called <strong>control flow</strong>.</p>
+<p>Control flow statements include a <strong>condition</strong> that can be evaluated to either <code>True</code> or <code>False</code> (these are Boolean values, named after the mathematician George Boole), followed by a <strong>clause</strong>, which is an indented block of code to execute depending on whether the condition evaluates to <code>True</code> or <code>False</code>. In other words, we will execute the clause code <em>if the condition returns <code>True</code></em> and skip over that code if the expression evaluates to <code>False</code>. Usually, the condition contains one or more of the <strong>comparison operators</strong> in <a href="#tbl-comparison-operators">Table&nbsp;<span>2.1</span></a>, all of which resolve an expression to a Boolean value</p>
+<div id="tbl-comparison-operators" class="anchored">
+<table class="table">
+<caption>Table&nbsp;2.1: Python Comparison Operators</caption>
+<colgroup>
+<col style="width: 25%">
+<col style="width: 75%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Comparison Operator</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>==</code></td>
+<td>Equal to</td>
+</tr>
+<tr class="even">
+<td><code>!=</code></td>
+<td>Not equal to</td>
+</tr>
+<tr class="odd">
+<td><code>&gt;</code></td>
+<td>Greater than</td>
+</tr>
+<tr class="even">
+<td><code>&gt;=</code></td>
+<td>Greater than or equal to</td>
+</tr>
+<tr class="odd">
+<td><code>&lt;</code></td>
+<td>Less than</td>
+</tr>
+<tr class="even">
+<td><code>&lt;=</code></td>
+<td>Less than or equal to</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>country <span class="op">==</span> country.upper()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>country <span class="op">!=</span> country.upper()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>country <span class="op">==</span> country</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="dv">23</span> <span class="op">&lt;</span> <span class="dv">33</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="dv">33</span> <span class="op">&gt;=</span> <span class="dv">33</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>We can use these comparison operators to execute code <em>conditionally</em>. Let’s make this less abstract with a simple example that uses an <strong>if statement</strong>.</p>
+<section id="if-elif-else" class="level4" data-number="2.2.4.1">
+<h4 data-number="2.2.4.1" class="anchored" data-anchor-id="if-elif-else"><span class="header-section-number">2.2.4.1</span> If, Elif, Else</h4>
+<p>An <code>if</code> statement starts with <code>if</code>, followed by an expression that can be evaluated to <code>True</code> or <code>False</code>, and ends with a colon <code>:</code>. The expression is the <em>condition</em>, and the colon indicates that what follows will be the <em>clause</em>: the indented code to run if the condition is <code>True</code>.</p>
+<p>The cell below illustrates control flow using a simple <code>if</code> statement. It executes the same if-statement on two variables, checking if a variable has the value <code>'COLOGNE'</code> and printing a string if the condition evaluates to <code>True</code>.</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> city <span class="op">==</span> <span class="st">'COLOGNE'</span>:</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"city has the value: 'COLOGNE'"</span>)</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"city does not have the value: 'COLOGNE'"</span>)</span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> country <span class="op">==</span> <span class="st">'COLOGNE'</span>:</span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"country has the value: 'COLOGNE'"</span>)</span>
+<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"country does not have the value: 'COLOGNE'"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Notice that we have included an <code>else</code> statement, which indicates that if the previous condition does not evaluate to <code>True</code>, Python should execute the indented clause code under <code>else</code>. In this case, we use the <code>else</code> statement to indicate when a variable did not match the condition.</p>
+<p>Let’s examine that <code>==</code> operator more closely.</p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="st">'doing computational social science'</span> <span class="op">==</span> <span class="st">'Doing Computational Social Science'</span>:</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"The second two strings are equal to each other!"</span>)</span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="st">'doing computational social science '</span> <span class="op">==</span> <span class="st">'doing computational social science'</span>:</span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"The first two strings are equal to each other!"</span>)</span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="st">'doing computational social science'</span> <span class="op">==</span> <span class="st">'doing computational social science'</span>:</span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"The third two strings are equal to each other!"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>There are a few things to note here. First, Python cares about differences in capitalization (the first if-statement) and whitespace (the second if-statement) when comparing strings. <code>'doing'</code>, <code>'Doing'</code>, and <code>'Doing '</code> are all different strings.</p>
+<p>This might seem frustrating at first, but Python’s capacity for specificity can pay dividends. We can also anticipate these issues and use some string manipulation methods to exert a bit more control over the comparison. For example, we can enforce title case and strip out whitespace using the string methods we just learned.</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="st">'doing computational social science '</span>.title().strip() <span class="op">==</span> <span class="st">'Doing Computational Social Science'</span>:</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"These two items are equal to one another!"</span>)</span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"These two items are NOT equal to one another."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>In this example, there are only two options: if the strings are equal, do one thing; if not, do another. We can use <code>elif</code>, or <em>else-if statements</em>, to introduce code to execute under different conditions. Note that using an <code>elif</code> statement is functionally equivalent to nesting an if-statement within the clause of an else-statement. It will only run if the previous condition has evaluated to <code>False</code>.</p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>we_do_sentence <span class="op">=</span> <span class="st">"We're learning control flow"</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>learning_string <span class="op">=</span> <span class="st">"learning control flow"</span></span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> we_do_sentence <span class="op">==</span> learning_string:</span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"These two strings are equal to each other!"</span>)</span>
+<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a><span class="cf">elif</span> learning_string <span class="kw">in</span> we_do_sentence:</span>
+<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"The second string is in the first string, but they are not equal to each other."</span>)</span>
+<span id="cb46-8"><a href="#cb46-8" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb46-9"><a href="#cb46-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"The two strings are NOT equal to each other, and the second string is NOT in the first string."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>We can read this code as following this logic: if the first condition is <code>True</code>, then execute the first print statement. If the first condition is false, check if the second condition is <code>True</code>. If it is, execute the second print statement. If the preceding if- and elif-statements were all <code>False</code>, then execute the final print statement.</p>
+<p>Also note that we used strings that contain <code>'</code>, such as <code>We're</code>. If we used single quotes to open and close those strings, Python would throw an error because it interprets the <code>'</code> in <code>'re</code> as indicating the end of the string. If your string contains a <code>'</code>, then you need to open and close the string with double quotes <code>"</code>, and the reverse is true.</p>
+<p>Very importantly, the indentation in our code is meaningful. All indented code following a <code>condition</code> is a <code>clause</code> and will only be executed when the condition is met. Jupyter, VS Code, and other IDEs and text editors generally do a good job of managing indentation for you as you write your code, but you can still make mistakes. This is a double-edged sword: by making indentation syntax-relevant, Python has eliminated the need for much of the explicit statement formatting required by other languages and is thus far easier to read; in doing so, it demands that we be vigilant about finicky indentation levels, lest our code execute incorrectly.</p>
+</section>
+<section id="while-loops" class="level4" data-number="2.2.4.2">
+<h4 data-number="2.2.4.2" class="anchored" data-anchor-id="while-loops"><span class="header-section-number">2.2.4.2</span> While Loops</h4>
+<p><code>if</code> statements are probably the most common type of statements used in control flow, but they are not the only ones. We can also use a <code>while</code> statement to conditionally execute code. A <code>while</code> statement starts with the word <code>while</code> and is followed by an expression that can be evaluated to <code>True</code> or <code>False</code>. You can read a while-loop as if it were saying “If <code>condition</code> is <code>True</code>, execute <code>clause</code>. Repeat this process until <code>condition</code> is <code>False</code> or told to stop.”</p>
+<p>In the following example, we will use a while loop to print a string until we have reached the end of a course. In plain language, we say “while the current week is less than or equal to the last week, print ‘The course is still in progress’ and increase the week by 1.”</p>
+<div class="sourceCode" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>week <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> week <span class="op">&lt;=</span> <span class="dv">12</span>:</span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"It's Week </span><span class="sc">{</span>week<span class="sc">}</span><span class="ss">. The course is still in progress."</span>)</span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>    week <span class="op">+=</span> <span class="dv">1</span>  <span class="co"># equivalent to `week = week + 1`</span></span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'</span><span class="ch">\n</span><span class="st">The course is "complete". Congratulations!'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Remember that the <em>indentation is meaningful</em>; because the last line is not indented, Python knows it is not part of the while loop and only runs it when the while loop has completed.</p>
+<p>Also, note that line 5 contains a <strong>comment</strong>. Comments in Python start with <code>#</code>. Anything on the line after the <code>#</code> is not considered code and will not be executed. Comments can be very useful to include in your code. You should use comments to remind yourself what certain chunks of code do. However, as you become more comfortable with Python, you will want to avoid writing comments that translate the code into ordinary language and instead write comments that remind your future self—or inform a collaborator—about what you were trying to do, or what you were thinking at the time. These tend to be much more useful comments than descriptive translations, which become less helpful as your Python skills develop.</p>
+<p>A third thing to notice is that, unlike the <code>if</code> clause from above, this example is a <strong>loop</strong>. If the condition on Line 3 evaluates to <code>True</code>, the clause (the code block on Lines 4 and 5) will be executed over and over again until Line 3 evaluates to <code>False</code>, at which point Python exits the loop.</p>
+<p>You may already be anticipating this, but it is possible to write your code in a way that leads Python into an <strong>infinite loop</strong>, in which it keeps executing the same code over and over again… forever, or until something unexpected interrupts it, like a power outage. Infinite loops are caused when the condition always evaluates to the same value. For example, if we forgot to include the <code>+</code> in the <code>+=</code> on Line 5 of the example above, then Python would not add <code>1</code> to the variable <code>week</code>. Instead, it would simply keep re-assigning <code>1</code> to <code>week</code>, Line 3 will always evaluate to <code>True</code>, and Python is stuck in an infinite loop. To get out of an infinite loop, press <code>Ctrl+C</code>. If you are in a Jupyter Notebook, press the stop button to interrupt the kernel.</p>
+</section>
+<section id="combining-comparisons-with-logical-operators" class="level4" data-number="2.2.4.3">
+<h4 data-number="2.2.4.3" class="anchored" data-anchor-id="combining-comparisons-with-logical-operators"><span class="header-section-number">2.2.4.3</span> Combining Comparisons with Logical Operators</h4>
+<p>It’s often useful to combine comparisons in a condition with logical operators such as <code>and</code>, <code>or</code>, and <code>not</code> to exert even more control over the code that is executed under various conditions. For example, to use the <code>and</code> operator in a conditional:</p>
+<div class="sourceCode" id="cb48"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>book <span class="op">=</span> <span class="st">'Doing Computational Social Science'</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">len</span>(book) <span class="op">&gt;</span> <span class="dv">30</span> <span class="kw">and</span> book <span class="op">==</span> <span class="st">'Doing Computational Social Science'</span>:</span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Correct! That's the name of this book"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The conditional on Line 1 above uses <code>and</code> to chain together two comparisons. When using <code>and</code>, the line will evaluate to <code>True</code> if <em>both</em> comparisons are <code>True</code>. If one of them evaluates to <code>False</code>, then the line evaluates to <code>False</code>.</p>
+<p>Alternatively, we could use the <code>or</code> operator. Below, Line 1 evaluates to <code>True</code> if <em>either</em> of the two comparisons evaluates to <code>True</code>.</p>
+<div class="sourceCode" id="cb49"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">len</span>(book) <span class="op">&gt;</span> <span class="dv">30</span> <span class="kw">or</span> book <span class="op">==</span> <span class="st">'Doing Computational Social Science'</span>:</span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Correct! That's the name of this book"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>It might sound a bit strange, but we can also use <code>not</code> to make an expression return <code>True</code> (and therefore execute a clause) if it evaluates to <code>False</code>.</p>
+<div class="sourceCode" id="cb50"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="kw">not</span> book <span class="op">==</span> <span class="st">'Doing Computational Social Science'</span>:</span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Sorry, that's not the name of this book"</span>)</span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Yes, that's the name of this book!"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>It’s possible to combine as many comparisons as you like, though this can make your code a little more difficult to read. The convention in Python is to wrap each comparison in <code>()</code>, which makes the code cleaner and easier to read.</p>
+<div class="sourceCode" id="cb51"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="bu">len</span>(book) <span class="op">&gt;</span> <span class="dv">30</span> <span class="kw">and</span> <span class="bu">len</span>(book) <span class="op">&lt;</span> <span class="dv">100</span>) <span class="kw">or</span> (book <span class="op">==</span> <span class="st">'Doing Computational Social Science'</span>):</span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Correct! That's the name of this book"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="tracebacks" class="level3" data-number="2.2.5">
+<h3 data-number="2.2.5" class="anchored" data-anchor-id="tracebacks"><span class="header-section-number">2.2.5</span> Tracebacks</h3>
+<p>Sometimes, something goes wrong with our code. When errors occur, Python will provide a special report called a <strong>Traceback</strong> that identifies the nature of the problem and where it was encountered. Traceback reports can contain a lot of information and may be a bit overwhelming at first, but if you understand <em>what</em> Python is providing and <em>why</em> it is providing it, you can diagnose problems with your code and, over time, become a better Python programmer.</p>
+<p>In general, you should read a Traceback from the bottom up. The final line of the Traceback tells you what kind of problem Python encountered, as well as an error message that helps you understand why the exception was raised. Lines that appear earlier in the Traceback show you where in your code the error occurred. Depending on your code, the Traceback may be short and concise or long and nested.</p>
+<p>At this point, the exceptions that you are most likely to encounter are <code>NameError</code> (you use a variable that is not yet defined), <code>TypeError</code> (you perform an operation on an incorrect datatype), <code>ValueError</code> (you pass an argument of the right type but an inappropriate value), and <code>SyntaxError</code> (you broke Python’s grammar rules). We saw an example of a <code>TypeError</code> earlier when we tried to use <code>+</code> on a string and an integer.</p>
+<section id="try-except" class="level4" data-number="2.2.5.1">
+<h4 data-number="2.2.5.1" class="anchored" data-anchor-id="try-except"><span class="header-section-number">2.2.5.1</span> Try / Except</h4>
+<p>We can distinguish between at least two classes of errors. If code has broken one of the grammar rules of Python, like not properly closing brackets, you will get a <strong>syntax error</strong>. An <strong>exception</strong> occurs when syntactically correct code still manages to produce an error. While both are errors, syntax errors are detected while the code is being parsed, <em>before</em> the code is executed, resulting in it not running at all. Exceptions occur during execution and <em>may</em> not cause the execution to fail.</p>
+<p>When it encounters an exception of any type, Python’s default behavior is to halt execution of your code and provide you with a Traceback. While this is often a useful feature, it isn’t always what we want. Sometimes, we know that some of the code we’ve written is likely to encounter a <em>very particular</em> type of error, and we would rather Python handle the error in some way and continue executing the rest of our code. In these cases, we can use <code>try</code> and <code>except</code> statements. In general, you should not use <code>try</code>/<code>except</code> to handle syntax errors. It’s usually impossible because, as mentioned, the syntax error will halt execution before it even attempts to execute the code.</p>
+<p>The <code>try</code> statement is used before an indented block of code, and it indicates that Python should attempt to execute the code in the indented block. When Python encounters an error whilst executing code contained within a <code>try</code> block, it doesn’t immediately halt execution: instead, it first checks all of the following <code>except</code> statements to see if the exception it has encountered is listed (e.g., <code>except ValueError:</code>). If so, Python then executes the code in the pertinent <code>except</code> block before carrying on as normal. Let’s consider an example.</p>
+<p>Let’s expand on the example we used for the <code>while</code> loop. Rather than assuming that users will always start from the first week, let’s pretend the code now allows users to input the week they wish to start from, so long as it’s one of the first three weeks. We have stored our hypothetical user’s input in the <code>user_input</code> variable. If its value is an integer equal to or less than 12, you’ll see one line of printout for each of the remaining weeks. What happens if the user had typed in “seven” instead of a number?</p>
+<div class="sourceCode" id="cb52"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Please enter which week you will start in."</span>)</span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>user_input <span class="op">=</span> <span class="st">"seven"</span></span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>week <span class="op">=</span> <span class="bu">int</span>(user_input)</span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> week <span class="op">&lt;=</span> <span class="dv">12</span>:</span>
+<span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"It's Week </span><span class="sc">{</span>week<span class="sc">}</span><span class="ss">. The course is still in progress."</span>)</span>
+<span id="cb52-7"><a href="#cb52-7" aria-hidden="true" tabindex="-1"></a>    week <span class="op">+=</span> <span class="dv">1</span>  <span class="co"># equivalent to `week = week + 1`</span></span>
+<span id="cb52-8"><a href="#cb52-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-9"><a href="#cb52-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'</span><span class="ch">\n</span><span class="st">The course is "complete". Congratulations!'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre><code>Please enter which week you will start in.
+
+
+---------------------------------------------------------------------------
+
+ValueError                                Traceback (most recent call last)
+
+&lt;ipython-input-53-9d4cb53a15de&gt; in &lt;module&gt;
+      1 print("Please enter which week you will start in.")
+      2 user_input = "seven"
+----&gt; 3 week = int(user_input)
+      4 
+      5 while week &lt;= 12:
+
+
+ValueError: invalid literal for int() with base 10: 'seven'</code></pre>
+<p>You should see a <code>ValueError</code> exception. This makes sense. Python isn’t inherently aware of how to interpret the string <code>"seven"</code> as an integer. We can use <code>try</code> and <code>except</code> to catch some of the cases of the value error without sacrificing any of our original functionality. To do this, we’ll have to start by figuring out where the error is coming from. We can do this by using the Traceback Python printed when it encountered the exception: looks like line 3 is the culprit. Let’s try wrapping that line in a <code>try</code> block, and then using <code>except ValueError</code> plus some hand-written string comprehension to handle the error. Let’s assume that people can only start the course in the first three weeks, and account for those in our <code>try</code> block:</p>
+<div class="sourceCode" id="cb54"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Please enter which of weeks."</span>)</span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>user_input <span class="op">=</span> <span class="st">"three"</span></span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>    week <span class="op">=</span> <span class="bu">int</span>(user_input)</span>
+<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> <span class="pp">ValueError</span>:</span>
+<span id="cb54-7"><a href="#cb54-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> user_input.lower().strip() <span class="op">==</span> <span class="st">"one"</span>:</span>
+<span id="cb54-8"><a href="#cb54-8" aria-hidden="true" tabindex="-1"></a>        week <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb54-9"><a href="#cb54-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> user_input.lower().strip() <span class="op">==</span> <span class="st">"two"</span>:</span>
+<span id="cb54-10"><a href="#cb54-10" aria-hidden="true" tabindex="-1"></a>        week <span class="op">=</span> <span class="dv">2</span></span>
+<span id="cb54-11"><a href="#cb54-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> user_input.lower().strip() <span class="op">==</span> <span class="st">"three"</span>:</span>
+<span id="cb54-12"><a href="#cb54-12" aria-hidden="true" tabindex="-1"></a>        week <span class="op">=</span> <span class="dv">3</span></span>
+<span id="cb54-13"><a href="#cb54-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb54-14"><a href="#cb54-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">"I don't recognize that as a valid number! Try again!"</span>)</span>
+<span id="cb54-15"><a href="#cb54-15" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb54-16"><a href="#cb54-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-17"><a href="#cb54-17" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> week <span class="op">&lt;=</span> <span class="dv">12</span>:</span>
+<span id="cb54-18"><a href="#cb54-18" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"It's Week </span><span class="sc">{</span>week<span class="sc">}</span><span class="ss">. The course is still in progress."</span>)</span>
+<span id="cb54-19"><a href="#cb54-19" aria-hidden="true" tabindex="-1"></a>    week <span class="op">+=</span> <span class="dv">1</span> <span class="co"># equivalent to `week = week + 1</span></span>
+<span id="cb54-20"><a href="#cb54-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-21"><a href="#cb54-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'</span><span class="ch">\n</span><span class="st">The course is "complete". Congratulations!'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Notice that the <code>else</code> statement, if executed, re-raises <code>ValueError</code> (albeit with a different message). Rather than assume your workaround will work in every case, it’s good practice to manually raise an <code>exception</code> if all else fails; that way, Python will have a way of letting you know that your fix was a bust, and that it’s time to head back to the drawing board.</p>
+<p>When used judiciously, <code>try</code> and <code>except</code> are invaluable tools that will serve you well. That said, <code>try</code> and <code>except</code> – like many of the tools we will cover in this book – are prone to abuse. If you don’t specify an individual <code>exception</code> after your <code>except</code> statement, your <code>try</code>/<code>except</code> will cover <em>all</em> possible exceptions. When a deadline looms, the clock has struck 4am, and you’re at your wits’ end trying to hunt down the one error-throwing bug preventing your code from executing, the siren song of <code>try</code> and <code>except</code> may be very tempting. Simply wrap all of your code in a <code>try</code> statement, and provide a wildcard <code>except</code> at the end. Poof! No more errors! Problem solved, right?</p>
+<p>Sadly no. In Python programming as in life, errors occur for a reason: <em>something is wrong</em>. If you don’t know what’s causing an error, you <strong>should not trust your code</strong>. Code that cannot be trusted is worthless at best, and potentially harmful. Avoid doing this at all costs.</p>
+</section>
+</section>
+</section>
+<section id="conclusion" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">2.3</span> Conclusion</h2>
+<p>In this chapter, we’ve laid the foundation for your journey into Python programming. You learned about the basic data types in Python, including strings, integers, floats, and Booleans, and how to assign them to variables. We explored how to manipulate strings using methods like <code>.upper()</code>, <code>.lower()</code>, <code>.strip()</code>, and <code>.replace()</code>, which are essential when working with text data.</p>
+<p>We delved into control flow, understanding how to use comparison operators and conditional statements like <code>if</code>, <code>elif</code>, and <code>else</code> to execute code based on certain conditions. You learned how to loop over code using <code>while</code> loops and the importance of careful indentation in Python.</p>
+<p>We also discussed how to read and interpret Python’s <code>Traceback</code> messages when errors occur, which is crucial for debugging your code. By understanding the difference between syntax errors and exceptions, you can better diagnose and fix issues in your programs.</p>
+<p>Finally, we introduced <code>try</code> and <code>except</code> statements for handling exceptions gracefully. You saw how to use these constructs to catch specific exceptions, provide meaningful feedback, and ensure your programs can handle unexpected inputs without crashing.</p>
+<p>These foundational skills are essential as you progress in computational social science. They enable you to write more robust, efficient, and user-friendly code. In the next chapter, we’ll build on this knowledge by exploring data structures, functions, and how to work with external files in Python.</p>
+<section id="key-points" class="level3" data-number="2.3.1">
+<h3 data-number="2.3.1" class="anchored" data-anchor-id="key-points"><span class="header-section-number">2.3.1</span> Key Points</h3>
+<ul>
+<li><strong>Python Fundamentals</strong>: You learned about basic data types (strings, integers, floats, Booleans) and how to assign them to variables.</li>
+<li><strong>String Manipulation</strong>: Explored methods for manipulating strings, such as changing case, concatenation, and formatting.</li>
+<li><strong>Control Flow</strong>: Gained an understanding of control flow using comparison operators and conditional statements (<code>if</code>, <code>elif</code>, <code>else</code>, <code>while</code>).</li>
+<li><strong>Error Handling</strong>: Learned how to read and interpret Python’s <code>Traceback</code> messages to diagnose errors.</li>
+<li><strong>Exception Handling</strong>: Discovered how to handle exceptions using <code>try</code> and <code>except</code> blocks, enhancing the robustness of your code.</li>
+<li><strong>Best Practices</strong>: Emphasized the importance of catching specific exceptions and avoiding the use of broad <code>except</code> clauses that can mask underlying issues.</li>
+<li><strong>Next Steps</strong>: With these foundational skills, you’re well-prepared to delve deeper into Python programming in the next chapter.</li>
+</ul>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./01-getting-started.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Getting Started</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./03-python-102.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Python 102</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>

@@ -1,0 +1,1050 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Doing Computational Social ScienceThe Continuous Development Edition - 18&nbsp; Credibility</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./19-causality.html" rel="next">
+<link href="./17-probability.html" rel="prev">
+<link href="./media/logo.png" rel="icon" type="image/png">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="custom.css">
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./15-machine-and-statistical-learning.html">Prediction and Inference</a></li><li class="breadcrumb-item"><a href="./18-credibility.html"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Credibility</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="./index.html" class="sidebar-logo-link">
+      <img src="./media/logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      </a>
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Doing Computational Social Science<br><span class="small">The <strong>Continuous Development</strong> Edition</span></a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/UWNETLAB/dcss_supplementary/tree/master/book/" rel="" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <div class="dropdown">
+      <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Share"><i class="bi bi-share"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=|url|">
+              <i class="bi bi-bi-twitter pe-1"></i>
+            Twitter
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://www.facebook.com/sharer/sharer.php?u=|url|">
+              <i class="bi bi-bi-facebook pe-1"></i>
+            Facebook
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://www.linkedin.com/sharing/share-offsite/?url=|url|">
+              <i class="bi bi-bi-linkedin pe-1"></i>
+            LinkedIn
+            </a>
+          </li>
+      </ul>
+    </div>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">👋 Hello!</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./00-introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Learning to Do Computational Social Science</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">Research Computing</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-getting-started.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Getting Started</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-python-101.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Python 101</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-python-102.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Python 102</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text">Obtaining Data</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04-sampling-and-survey-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Sampling and survey data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-web-data-apis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Web data (APIs)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06-web-data-scraping.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Web data (Scraping)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-audio-image-and-document-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Audio, image, and document data</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+ <span class="menu-text">Exploring Data</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08-processing-structured-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Processing Structured Data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09-exploratory-data-analysis-and-visualization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Exploratory data analysis and visualization</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10-association-and-latent-factors.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Association and latent factors</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11-text-as-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Text as Data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./12-text-similarity-and-latent-semantic-space.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Text similarity and latent semantic space</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./13-social-networks-and-relational-thinking.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Networks: Relationships as Data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./14-structural-similarity-and-latent-social-space.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Structural similarity and latent social space</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+ <span class="menu-text">Prediction and Inference</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./15-machine-and-statistical-learning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Machine Learning 101</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./16-prediction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Prediction</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./17-probability.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Probability 101</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./18-credibility.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Credibility</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./19-causality.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Causality</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
+ <span class="menu-text">Generative Modeling</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./20-linear-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Bayesian Regression Models with Probabilistic Programming</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./21-multilevel-regression-with-post-stratification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Multilevel regression with post-stratification</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./22-generalized-linear-models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Generalized Linear Models</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./23-causal-analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Causal analysis</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./24-latent-structure-networks.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Latent structure in networks</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./25-latent-topics-text-lda.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Latent topics in text (LDA)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./26-complex-adaptive-systems.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Agent-based Models</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./27-developing-agent-based-models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Diffusion</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true">
+ <span class="menu-text">Deep Learning Demystified</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./28-artificial-neural-networks-fnn-rnn-cnn.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Neural networks 101</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./29-processing-natural-language-data-spacy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Processing Natural Language Data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./30-transformers-self-attention.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Transformers, Self-attention architecture</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./31-latent-topics-text-transformers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Modelling latent topics (Transformers)</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true">
+ <span class="menu-text">Professional Responsibilities</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./32-research-ethics-politics-and-practices.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Research Ethics, Politics, and Practices</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./33-next-steps.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Next steps</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./acknowledgements.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Acknowledgements</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./changelog.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Changelog</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./appendix-centrality-formulas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Centrality Formulas</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./appendix-courses.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Courses and Workshops</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link active" data-scroll-target="#learning-objectives"><span class="header-section-number">18.1</span> LEARNING OBJECTIVES</a></li>
+  <li><a href="#learning-materials" id="toc-learning-materials" class="nav-link" data-scroll-target="#learning-materials"><span class="header-section-number">18.2</span> LEARNING MATERIALS</a></li>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction"><span class="header-section-number">18.3</span> INTRODUCTION</a></li>
+  <li><a href="#bayesian-regression" id="toc-bayesian-regression" class="nav-link" data-scroll-target="#bayesian-regression"><span class="header-section-number">18.4</span> BAYESIAN REGRESSION</a>
+  <ul class="collapse">
+  <li><a href="#playing-the-whats-that-game" id="toc-playing-the-whats-that-game" class="nav-link" data-scroll-target="#playing-the-whats-that-game"><span class="header-section-number">18.4.1</span> Playing the “What’s That?” Game</a></li>
+  <li><a href="#introducing-a-predictor" id="toc-introducing-a-predictor" class="nav-link" data-scroll-target="#introducing-a-predictor"><span class="header-section-number">18.4.2</span> Introducing a Predictor</a></li>
+  </ul></li>
+  <li><a href="#stochastic-sampling-methods" id="toc-stochastic-sampling-methods" class="nav-link" data-scroll-target="#stochastic-sampling-methods"><span class="header-section-number">18.5</span> STOCHASTIC SAMPLING METHODS</a>
+  <ul class="collapse">
+  <li><a href="#markov-chain-monte-carlo" id="toc-markov-chain-monte-carlo" class="nav-link" data-scroll-target="#markov-chain-monte-carlo"><span class="header-section-number">18.5.1</span> Markov Chain Monte Carlo</a></li>
+  <li><a href="#mapping-a-skate-bowl" id="toc-mapping-a-skate-bowl" class="nav-link" data-scroll-target="#mapping-a-skate-bowl"><span class="header-section-number">18.5.2</span> Mapping a Skate Bowl</a></li>
+  </ul></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">18.6</span> CONCLUSION</a>
+  <ul class="collapse">
+  <li><a href="#key-points" id="toc-key-points" class="nav-link" data-scroll-target="#key-points"><span class="header-section-number">18.6.1</span> Key Points</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/UWNETLAB/dcss_supplementary/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Credibility</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<!-- reallocation -->
+<!-- Posterior Inference -->
+<section id="learning-objectives" class="level2" data-number="18.1">
+<h2 data-number="18.1" class="anchored" data-anchor-id="learning-objectives"><span class="header-section-number">18.1</span> LEARNING OBJECTIVES</h2>
+<ul>
+<li>Understand the basic logic of developing a regression model within the Bayesian paradigm</li>
+<li>Differentiate between variables in a Bayesian model based on their “origin”</li>
+<li>Develop a Bayesian model by repeatedly asking yourself “what’s that?”</li>
+<li>Explain how stochastic sampling methods enable us to fit Bayesian models that would otherwise be intractable</li>
+<li>Explain what a Markov chain is</li>
+<li>Explain how Metropolis-Hastings and Hamiltonian Monte Carlo allow us to efficiently explore posterior distributions</li>
+</ul>
+</section>
+<section id="learning-materials" class="level2" data-number="18.2">
+<h2 data-number="18.2" class="anchored" data-anchor-id="learning-materials"><span class="header-section-number">18.2</span> LEARNING MATERIALS</h2>
+<p>You can find the online learning materials for this chapter in <code>doing_computational_social_science/Chapter_27</code>. <code>cd</code> into the directory and launch your Jupyter Server.</p>
+</section>
+<section id="introduction" class="level2" data-number="18.3">
+<h2 data-number="18.3" class="anchored" data-anchor-id="introduction"><span class="header-section-number">18.3</span> INTRODUCTION</h2>
+<p>Pierson Browne, one of my PhD students, was once sitting in on a “Mathematics for Statisticians” lecture at the University of Michigan when a professor of mathematics settled an in-class debate by boldly stating: “there are many, many more functions then there are formulae.” He was trying to hammer home the idea that some numerical relationships are knowable, but cannot be readily described using a single algebraic equation. This might, at first, seem like a counterintuitive claim because much of our mathematical instruction is focused on manipulating functions whose behaviour can be precisely expressed using an equation (most of which are defined for inputs along the real number line). It may come as a surprise to you that there are some functions that cannot be accurately described using an equation. Form(ula) Follows Function.</p>
+<p>In the last chapter, we saw how the Bayesian paradigm uses statements of likelihood <span class="math inline">\(P(\text{D | }\theta)\)</span> and total probability <span class="math inline">\(P(\text{D})\)</span> to condition a prior <span class="math inline">\(P(\theta)\)</span> on data, producing a posterior probability <span class="math inline">\(P(\theta \text{ | D})\)</span>. The function that describes this process, however, is not often accompanied by a well-behaved formula. Consequently, for the majority of the 20th century, the Bayesian paradigm required frequent use of daedal calculus and often produced algebraic dead-ends, all of which severely hampered the development and adoption of Bayesian methods.</p>
+<p>Fortunately, recent advances in computational Bayesian statistics and probabilistic programming have allowed the Bayesian paradigm to largely slip free from intractable integrals by <strong>approximating the posterior</strong>. As far as this book is concerned, the two main ways of doing this are:</p>
+<ol type="1">
+<li><strong>stochastic sampling</strong>, especially with the family of Markov Chain Monte Carlo (MCMC) methods, and</li>
+<li><strong>variational inference</strong>, which approximates the posterior by using a simpler but very similar distribution as a proxy.</li>
+</ol>
+<p>The primary purpose of this chapter is to demystify stochastic sampling with MCMC methods. We’ll set variational inference aside until Chapter 31.</p>
+<p>Understanding stochastic sampling with MCMC is our goal; we won’t actually <em>start</em> there. Instead, I’ll start by setting up a scenario that demonstrates the practical utility of MCMC methods with a detailed work-through of a hypothetical Bayesian regression model based on principles established in previous chapters. This will also help you understand how Bayesians approach regression analysis (which will be the focus of the next two chapters). Then, I’ll introduce MCMC methods with the goal of helping you develop an intuitive understanding of how they work.</p>
+<p>In this chapter, I assume that you’ve been introduced to linear regression (beyond its brief appearance in Chapter 21), and more specifically, the classic Frequentist approach of Ordinary Least Squares (OLS). A typical introductory quantitative methods class in the social sciences should suffice. If OLS is entirely new to you, it’s worth taking a moment to familiarize yourself with the basic framework.</p>
+</section>
+<section id="bayesian-regression" class="level2" data-number="18.4">
+<h2 data-number="18.4" class="anchored" data-anchor-id="bayesian-regression"><span class="header-section-number">18.4</span> BAYESIAN REGRESSION</h2>
+<p>One of the models you’re going to encounter <em>ad nauseum</em> in the social sciences is linear regression, often called ’<strong>ordinary least squares’ (OLS)</strong>. Linear regression is a workhorse in many fields, and is notable for its ease of computation and interpretation (categorical variables make a lot of intuitive sense in OLS, and do not in many other models). We’re going to use it to deepen your understanding of Bayesian Data Analysis.</p>
+<p>Tackling linear regression from a Bayesian perspective still involves using data to condition priors and turn them into posteriors. In doing so, we’re going to use a <em>continuous range</em> of hypotheses about the numerical relationship between two or more variables (including exactly one ‘dependent’ variable and some number of ‘independent’ variables). As a result our “hypotheses” are going to become significantly more complex. We might ask a question like “how much does a 1,000-dollar increase in yearly salary affect a person’s life span?” This requires a numerical answer. We will consider an infinite number of such answers at the same time. That might sound impressive, but isn’t: it’s the natural consequence of using continuous variables to describe hypotheses.</p>
+<p>As with other chapters in this book, my goal is to build intuition and understanding with practical examples. However, this will mean I have to hand-wave the specifics of how Bayes theorem is being used at times. The basic logic is the same, but more complex, when we generalize it to multiple variables and higher dimensions. I don’t think that it’s necessary to have a deep understanding of the maths behind generalizing the theorem to these conditions, so when we get to places where there is a precise-yet-notationally-baffling explanation for the logical leaps we’re making, I’m just going to mention that it <strong>Just Works <span class="math inline">\(^{(TM)}\)</span></strong>.</p>
+<section id="playing-the-whats-that-game" class="level3" data-number="18.4.1">
+<h3 data-number="18.4.1" class="anchored" data-anchor-id="playing-the-whats-that-game"><span class="header-section-number">18.4.1</span> Playing the “What’s That?” Game</h3>
+<p>When developing a Bayesian regression model, you can get pretty far by asking a bunch of annoying “What’s That?” questions. <em>Unleash your inner child!</em> I’ll show you what I mean by walking through the development of a hypothetical regression model. This is not likely to be a <em>good</em> model; it’s designed with pedagogical goals in mind, so there are some purposeful problems with the model.</p>
+<p>Let’s imagine we have a couple thousand observations about individual-level wealth around the world. Since wealth is a continuous variable (or nearly enough so that we can treat it as such), and can hypothetically take on any value on the real number line, it can be expressed as a random variable drawn from the Normal distribution. By doing this, we’re effectively hypothesizing that individual wealth is distributed following a rough ‘bell curve’, with some mean <span class="math inline">\(\mu\)</span> (the Greek letter mu, pronounced ‘mew’) and some standard deviation <span class="math inline">\(\sigma\)</span> (the Greek letter sigma). This is, of course, a very naive hypothesis (remember, <strong>model criticism</strong> in the context of Box’s loop, introduced in Chapter 8).</p>
+<p>We can express the above using <strong>model notation</strong>, like so:</p>
+<p><span class="math display">\[
+\text{Wealth} \sim \text{Normal}(\mu, \sigma)
+\]</span></p>
+<p>In one line, we’ve concisely defined the relationship between our three variables, <span class="math inline">\(\text{Wealth}\)</span>, <span class="math inline">\(\mu\)</span>, and <span class="math inline">\(\sigma\)</span>. The little squiggly line (called a tilde) separating <span class="math inline">\(\text{Wealth}\)</span> from the rest of the model notation indicates “is distributed as”. Using this notation, we’re saying that “<span class="math inline">\(\text{Wealth}\)</span> has the same distribution as a Normal Distribution with mean <span class="math inline">\(\mu\)</span> and standard deviation <span class="math inline">\(\sigma\)</span>”.</p>
+<p>We don’t yet have a complete model, though. For a Bayesian, you can’t just conjure a variable out of thin air, it must have an origin of some sort. You should ask: <em>where did this variable come from?</em> There are, broadly speaking, three different types of origin for a variable.</p>
+<ol type="1">
+<li>A variable can be <strong>observed</strong>. In almost all cases, observed variables come from data. Their origin is the real world, or perhaps a simulation.</li>
+<li>A variable can be <strong>calculated</strong>. Its origin is a combination of other variables.</li>
+<li>A variable can be <strong>unobserved</strong>. Unobservered variables are often referred to as <strong>latent</strong> or <strong>hidden</strong> variables, or <strong>parameters</strong>. If we haven’t observed enough to know much about a variable, and the variable isn’t calculated by mathematically combining other variables, then we must use our brains to produce a prior distribution for it (which serves as the origin).</li>
+</ol>
+<blockquote class="blockquote">
+<p>This is not the place to belabour the point, but Bayesian statistics provides a powerful framework for working with unobserved variables in a wide variety of contexts. For now, we’ll focus on regression problems and refer to ‘parameters’ since you’re already acquiring a lot of new technical vocabulary very quickly, and discussing parameters in the context of regression modelling is likely more familiar that describing regression modelling in terms of latent or hidden variables.</p>
+<p>The downside of this approach is that ‘parameter’ generally implies a single value that estimated from some sort of model – a ‘<strong>point estimate</strong>.’ Whereas linear regression in the Frequentist paradigm produces point estimates with standard errors, Bayesian regression, produces a full distribution. It is possible to produce a point estimate from that distribution (which is almost always the same as what you would get from a Frequentist point estimate).</p>
+<p>In later chapters, we’ll drop the language of parameters to speak more generally about “latent” and “hidden variables.” Mathematically and statistically nothing will change; what we are calling “parameters in Chapters 27-29 <em>are the same thing as latent and hidden variables</em>. But once you have a slightly firmer grasp on the logic of Bayesian data analysis and inference, switching up our language a bit will help you get your head around the wider world of Bayesian latent variable models. We’ll focus on drawing inferences about latent structure in social networks and latent thematic structure (topics) in large text datasets, but these two are also only a small subset of what’s possible. Once you ‘get’ the bigger picture of latent variable modelling in a Bayesian framework, you’re well on you way to developing high-quality bespoke probabilistic models for all kinds of really interesting research problems.</p>
+</blockquote>
+<p>Our model has three variables. One is observed: <span class="math inline">\(\text{Wealth}\)</span>. Both <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\sigma\)</span> are not calculated anywhere in our model specification, and we don’t have data on them, so – by process of elimination – they are unobserved, and we must imbue them with a prior.</p>
+<p>You can probably see the value of interrogating your models with the “What’s That?” game as you construct them. Every time you write down a variable, <em>make sure you ask yourself where it comes from</em>. If you can’t identify a pre-existing origin, you must make one by supplying a prior. This will seem like a clunky and exhausting process at first, but it becomes second nature after a while.</p>
+<p>Since both <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\sigma\)</span> are unobserved, we’re going to have to come up with priors for them. Since <span class="math inline">\(\mu\)</span> simply represents the middle point of our Normal distribution, we can probably come up with a sensible prior for it. If you take the total amount of wealth in the world, convert everything into USD, and divide the result by the number of humans on the planet, you get approximately 7,000. You might be tempted to update your model specification like so:</p>
+<p><span class="math display">\[\begin{align}
+\text{Wealth} &amp;\sim \text{Normal}(\mu, \sigma) \\
+\mu &amp;= 7000
+\end{align}\]</span></p>
+<p>While that might be a prior (of a sort), it’s not a very good one. In fact, <em>it’s a very, very bad one</em>. Among other things, it’s equivalent to saying that you are perfectly confident that the value of <span class="math inline">\(\mu\)</span> is <em>exactly</em> 7,000 and will never change for any reason.</p>
+<p>If we want our Bayesian model to be able to <em>update</em> our priors to produce the posteriors, we must inject some <em>uncertainty</em> into them. Rather than describing <span class="math inline">\(\mu\)</span> using an integer, we’ll describe it using a full probability distribution. Since we know that <span class="math inline">\(\mu\)</span> represents the number of dollars per capita, and given that these dollars are the same unit (and thus follow the same rules) as our wealth variable, we might as well use a Normal distribution here, too. Since we’re pretty sure of our mean value, we can afford to use a comparatively small value for the standard deviation of this distribution; if we use a value of 1,000, we’re saying that about 68% of the probability will lie between 6,000 and 8,000. If you’re wondering why in the world it’s permissible to pull numbers out of a hat like this, stay tuned: we’ll cover the dark art of prior selection in more detail in the next chapter. If you’re really concerned and can’t wait, know that in most actual models with anything other than very small datasets, the evidence generally overwhelms the priors, and they have little effect.</p>
+<p>We’re going to have to go through the same process for <span class="math inline">\(\sigma\)</span> as we did for <span class="math inline">\(\mu\)</span>. The standard deviation parameter in a normal distribution is a continuous variable that can take on any value from 0 to positive infinity. That means that we should be careful to assign a prior that can’t produce negative values. There are many good candidates, but we’ll use the exponential distribution, which covers the same domain (from 0 to positive infinity). The exponential distribution takes only one parameter - <span class="math inline">\(\beta\)</span>. For simplicty’s sake, let’s assign a large value for <span class="math inline">\(\beta\)</span>, which will help encode our lack of prior knowledge about the variability of wealth. When we put it all together, our model looks like this:</p>
+<p><span class="math display">\[\begin{align}
+\text{Wealth} &amp;\sim \text{Normal}(\mu, \sigma)  &amp;\text{[Likelihood]}\\  
+\mu &amp;\sim \text{Normal}(7000, 1000) &amp;[\mu \text{  Prior]}\\
+\sigma &amp;\sim \text{Exponential}(4000) &amp;[\sigma \text{  Prior]}
+\end{align}\]</span></p>
+<p>At this point, we have a complete model. You can play the “What’s That?” game on any portion of it, and another part of the model definition will give you an answer. However, the model isn’t very informative at this point. All we’ve done is lump all of our data into one big bin and described the shape of that bin by specifying where the middle is and how wide it is. If we had actual data, we could produce posterior probabilities for each of our priors and see how close our initial guesses were to the final answers (hint: they’d probably be <em>way, way off)</em>. For now, let’s focus on two specific limitations with what we’ve done:</p>
+<ol type="1">
+<li>The model isn’t even remotely interesting or informative.</li>
+<li>It isn’t yet a linear model. (For it to be a linear model, we’d need to have an independent variable upon which wealth depends.)</li>
+</ol>
+<p>These two problems are related, and we’ll attempt to solve them both in the subsequent section.</p>
+</section>
+<section id="introducing-a-predictor" class="level3" data-number="18.4.2">
+<h3 data-number="18.4.2" class="anchored" data-anchor-id="introducing-a-predictor"><span class="header-section-number">18.4.2</span> Introducing a Predictor</h3>
+<p>In order to turn our normal model into a linear model, we’re going to need to introduce another variable. Let’s say you’ve been reading some international development and globalization research and learn there is a correlation between the absolute value of latitude and wealth per capita (<em>after</em> the Industrial Revolution). Whether you go North or South, per capita wealth is higher the further you get from the equator. How strong is this relationship? Maybe you want to know, for example, how much of a difference a 10-degree shift of latitude has on wealth. To show how we’d go about modelling this, let’s rebuild our model, starting from the likelihood:</p>
+<p><span class="math display">\[\begin{align}
+\text{Wealth}_i &amp;\sim \text{Normal}(\mu_i, \sigma) &amp;\text{[Likelihood]}\\  
+\end{align}\]</span></p>
+<p>That looks almost exactly the same as the Normal model we specified before! The only difference is that there are now subscripted ’i’s after <span class="math inline">\(\text{Wealth}\)</span> and <span class="math inline">\(\mu\)</span> - what gives?”</p>
+<p>The subscripted ‘i’ is a powerful clue. It means that rather than trying to find a single value for <span class="math inline">\(\mu\)</span> that applies to the entire dataset (which, in effect, gives us overall average wealth), we’re going to be producing a different value of <span class="math inline">\(\mu\)</span> for each observation of <span class="math inline">\(\text{Wealth}\)</span> in our dataset. Pay attention to subscripts (like ‘i’ or ‘j’) going forward: their appearance in some part of the model indicates that we’re going to be allowing that part of the model to take on many different values – usually, one value for each observation in the data.</p>
+<p>In this case, rather than plunking a normal distribution somewhere along the real number line and trying to configure it to best account for all of the data we have, we’re going to let it move about. Every time we calculate a <span class="math inline">\(\mu\)</span> value for one of the observations in the data, we’ll plug it in as a parameter in our Normal distribution, which will cause the distribution to scoot around the real number line in an attempt to get as close as possible to the observed data.</p>
+<p>If we’re serious about allowing our likelihood distribution to move, we can’t put a prior directly on <span class="math inline">\(\mu\)</span>. Instead, we’re going to re-cast <span class="math inline">\(\mu\)</span> as a statistic, and calculate it as a combination of other variables. This is where our linear model comes in!</p>
+<p><span class="math display">\[\begin{align}
+\text{Wealth}_i &amp;\sim \text{Normal}(\mu_i, \sigma)  &amp;\text{[Likelihood]}\\
+\mu_i &amp;= \alpha + (\beta \times \text{Latitude}_i)  &amp;\text{[Linear Model]}\\
+\end{align}\]</span></p>
+<p>Note the new line uses <span class="math inline">\(=\)</span> rather than <span class="math inline">\(\sim\)</span>. This indicates that the calculation of <span class="math inline">\(\mu\)</span> is now based on a <em>deterministic</em> combination of its constituent parts. This line is called the ‘linear model,’ and it’s how we tell our Bayesian model that we want to use a line to approximate the relationship between latitude and wealth. If you squint and blur your eyes a bit, you might even begin to recognize similarities between the linear model and the equation for a straight line:</p>
+<p><span class="math display">\[
+y = mx + b
+\]</span></p>
+<p>Where <span class="math inline">\(m\)</span> is the slope of the line and <span class="math inline">\(b\)</span> is the intercept. We’re doing the exact same thing here, except rearranging things, using <span class="math inline">\(\alpha\)</span> instead of <span class="math inline">\(b\)</span>, and using <span class="math inline">\(\beta\)</span> instead of <span class="math inline">\(m\)</span>. It’s a simple model, but simplicity is often a virtue in statistics. All we have to do to complete it is play the ‘What’s That?’ game until we’ve covered all of our bases. Let’s start from the top:</p>
+<ul>
+<li>We already know that Wealth is observed, and so it doesn’t need to appear anywhere else in the model.</li>
+<li>We know that <span class="math inline">\(\mu_i\)</span> is unobserved, but unlike the previous model we made, it is now calculated from other variables in the model. As such, it doesn’t need a prior – we already have a line telling us where it comes from. That line is a linear model.</li>
+<li>No such luck with <span class="math inline">\(\sigma\)</span>; we’re going to need a prior just like before.</li>
+<li>Similarly, we do not have information about <span class="math inline">\(\alpha\)</span> or <span class="math inline">\(\beta\)</span>, and so they’re both going to need priors.</li>
+<li>Latitude is observed, so we can leave it as-is.</li>
+</ul>
+<p>Consider what these terms might mean in the model, and then to try and extrapolate some sensible priors. Pay attention to what values the parameters <em>can</em> take. Recall, that you can’t have a negative standard error, and so it’s vitally important that you assign a prior to <span class="math inline">\(\sigma\)</span> that can’t take on any negative values. Conversely, it’s important to make sure that you don’t artificially limit what values a variable can take. If you assign a probability of 0 to a value, you’ve made that particular value impossible; from that point onward, it will never receive any probability from the model. If you ever assign any value a probability of 0, make sure that you’ve got <em>a really good reason for doing so</em> (a model predicting wealth using age probably shouldn’t allow negative ages). If you think a particular value is unlikely <em>but still theoretically possible</em>, then it’s far safer to use a distribution that will place a vanishingly small but still non-0 probability on those unlikely values.</p>
+<p><strong>Prior specification</strong> is a complex debate. Don’t worry about about it for now; until you’re comfortable with Bayesian analysis, your focus should be making sure that you don’t unintentionally make the impossible possible, or vice versa. When you have lots of data and a simple model, the exact form of your priors won’t matter because <em>they’ll get overwhelmed by the evidence!</em> Even horrifically mis-specified priors will be “washed out” and have next-to-no impact on inference.</p>
+<p>When you’ve thought this through a bit, feel free to take a look at what I’ve selected. Got any criticisms? Good. That’s a <em>vital</em> part of the process. Write them down.</p>
+<p><span class="math display">\[\begin{align}
+\text{Wealth}_i &amp;\sim \text{Normal}(\mu_i, \sigma) &amp;\text{[Likelihood]}\\  
+\mu_i &amp;= \alpha + (\beta \times \text{Latitude}_i) &amp;\text{[Linear Model]}\\
+\alpha &amp;\sim \text{Normal}(4000, 2000)             &amp;[\alpha\text{ Prior]}\\
+\beta &amp;\sim \text{Normal}(1000, 500)               &amp;[\beta\text{ Prior]}\\
+\sigma &amp;\sim \text{Exponential}(1000)              &amp;[\sigma\text{ Prior]} \\
+\end{align}\]</span></p>
+<p>And now, for the anticlimax: we don’t have any data for this model, so we can’t produce a posterior distribution. A shame, I know, but that wasn’t the point. The point was to work through the process of developing a rudimentary Bayesian regression model using only hypotheticals to keep your focus as much as possible on the <em>structure</em> and <em>logic</em> of these regressions, including the use of a few priors that stretch credibility in order to emphasize the importance of <em>criticism</em> in model development. This is a theme we will return to often.</p>
+<p>Now that you’ve built a bivariate linear regression, you can easily extrapolate what you’ve learned to add more variables to your model. Suppose we wanted to add another variable to the model we just finished specifying. We could do so by simply adding another term to the linear model equation and creating another prior for the coefficient!</p>
+<p><span class="math display">\[\begin{align}
+\text{Wealth}_i &amp;\sim \text{Normal}(\mu_i, \sigma)  &amp;\text{[Likelihood]}\\                                              
+\mu_i &amp;= \alpha + (\beta_1 \times \text{Latitude}_i) + (\beta_2 \times \text{NewVariable}_i) &amp;\text{[Linear Model]}\\
+\alpha &amp;\sim \text{Normal}(4000, 2000) &amp;[\alpha\text{ Prior]}\\
+\beta_1 &amp;\sim \text{Normal}(1000, 500) &amp;[\beta_1\text{ Prior]}\\
+\beta_2 &amp;\sim \text{Normal}(-150, 100) &amp;[\beta_2\text{ Prior]}\\
+\sigma &amp;\sim \text{Exponential}(1000) &amp;[\sigma\text{ Prior]} \\
+\end{align}\]</span></p>
+<p>Rather take a deep dive into the mathematics of Bayesian inference we’re going to skip to the cutting edge of Bayesian analysis and discuss the first of two computational approaches to approximating the posterior: stochastic sampling. Together with variational inference (introduced in Chapter 30), stochastic sampling has played a <em>major</em> role in the meteoric rise of Bayesian methods.</p>
+</section>
+</section>
+<section id="stochastic-sampling-methods" class="level2" data-number="18.5">
+<h2 data-number="18.5" class="anchored" data-anchor-id="stochastic-sampling-methods"><span class="header-section-number">18.5</span> STOCHASTIC SAMPLING METHODS</h2>
+<p>Throughout the next few chapters, we’re going to be making frequent use of stochastic sampling methods to produce posterior distributions for a variety of Bayesian models. <strong>Stochastic sampling methods</strong> represent the cutting-edge of a remarkably adaptable approach to fitting otherwise difficult or impossible models. What they are <em>not</em> is a one-size-fits-all panacea. Unlike many other approaches, we can’t simply feed our data and model specification into a sampler and reliably get an intelligible answer. You’re going to have to know:</p>
+<ul>
+<li>how your sampler works,</li>
+<li>how to read and interpret the output it produces, and, most importantly,</li>
+<li>how to help a sampler that’s fallen sick.</li>
+</ul>
+<p>Fortunately, you don’t need a rigorous understanding of the underlying math in order to become a pretty good sampler medic; you will, however, need a strong intuitive understanding of how they work. In what follows, and over the course of the next two chapters, my goal is to help you build that essential intuition. Rather than wasting your time starting from first principles and working our way up to something interesting, I’m going to briefly introduce an especially important concept, Markov Chains. Then we’ll dive straight into the deep end of a grotesquely extended metaphor. We’ll get into the details of diagnosing and fixing problems with samplers in the chapters to come. Let’s begin.</p>
+<section id="markov-chains" class="level4" data-number="18.5.0.1">
+<h4 data-number="18.5.0.1" class="anchored" data-anchor-id="markov-chains"><span class="header-section-number">18.5.0.1</span> Markov Chains</h4>
+<p>At the root of everything we’re going to cover in this section is the <strong>Markov Chain</strong>. Named after Russian mathematician Andrey Markov, a Markov Chain is a simple machine that transitions from one state to another based on some pre-defined set of inter-state probabilities. Markov Chain models are ‘memoryless,’ which is a fancy way of saying that when they decide to switch states, they do so using information about the current state of the machine and nothing else. Figure <a href="20-linear-regression.html#fig-26_01">Figure&nbsp;<span>20.1</span></a> is a model that describes (pretty accurately) how my two cats, Dorothy and Lando Catrissian, spend their days.</p>
+<p><img src="figures/markov_chain_vis.png" id="fig-26_01" class="img-fluid"></p>
+<p>All we have to do is choose an initial state and some kind of looping time interval which governs when we check for a state transition. Let’s say we start on the ‘Play’ node, jumping in boxes and pawing at strings. Every 5 minutes, we’ll check to see if we transition to a different node. No matter which node we’re on, there’s a non-zero chance that we’ll end up on any of the nodes (including the one we’re currently on). From the Play node, there’s a 60% chance that we’ll stay exactly where we are, a 20% chance that we’ll end up on the ‘Nap’ node, and a 20% chance of wandering over to the food bowl for a snack.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">3</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>np.random.choice([<span class="st">'Play'</span>, <span class="st">'Snack'</span>, <span class="st">'Nap'</span>], p<span class="op">=</span>[<span class="fl">0.6</span>, <span class="fl">0.2</span>, <span class="fl">0.2</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The choice is ‘Play,’ so we’ll keep batting at strings. That was the most probable outcome (60% chance). After a further 5 minutes of wondering what you have to do to get a human to break out a laser pointer, we’ll run the check once more:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">4</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>np.random.choice(</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    [<span class="st">'Play'</span>, <span class="st">'Snack'</span>, <span class="st">'Nap'</span>], </span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    p<span class="op">=</span>[<span class="fl">0.6</span>, <span class="fl">0.2</span>, <span class="fl">0.2</span>]</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Nap time! While on the Nap node, we’re very likely to stay where we are: a 70% chance. Of the remaining probability, there’s a 20% probability of getting up for another snack and a 10% chance of more play. Let’s see what happens;</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">5</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>np.random.choice([<span class="st">'Play'</span>, <span class="st">'Snack'</span>, <span class="st">'Nap'</span>], p<span class="op">=</span>[<span class="fl">0.1</span>, <span class="fl">0.2</span>, <span class="fl">0.7</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Sleeping is hard work! Time to reward all that effort with a well-deserved snack.</p>
+<p>At this point, the pattern should be pretty clear: a Markov Chain switches between some set of pre-defined states according to a set of probabilities that can be different for each of the nodes in the model. Crucially, Markov Chain models converge, over long periods of time, to a calculable equilibrium state. This feature will come in handy in just a moment…</p>
+</section>
+<section id="markov-chain-monte-carlo" class="level3" data-number="18.5.1">
+<h3 data-number="18.5.1" class="anchored" data-anchor-id="markov-chain-monte-carlo"><span class="header-section-number">18.5.1</span> Markov Chain Monte Carlo</h3>
+<p>As it happens, we can fruitfully apply Markov Chains to probability distributions by replacing the bespoke probabilities we used in the previous section (Nap, Snack, Play) with probabilities computed on-the-fly based on a distribution. This is known as <strong>Markov chain Monte Carlo</strong> (MCMC), and is useful because it – much like the simpler Markov Chains we already covered – converges with the probability distribution it is being asked to traverse. Very useful!</p>
+<p>The issue with MCMC is that – while simple and elegant in theory – implementing them in practical settings involves a number of trade-offs. This has caused a plethora of specific implementations to emerge: one workhorse from among this stable is the “<strong>Metropolis-Hastings Algorithm</strong>”, which uses a proposal distribution to quasi-randomly walk around the parameter space. Instead of transitioning between abstract ‘states’, as in the case of the pure Markov Chain above, we can imagine Metropolis-Hastings stepping between different parameter values. Let’s say that we think a certain parameter in a model can only take on one of 5 discrete ordinal values (1 through 5), each of which might be more or less plausible. Metropolis-Hastings chooses a random parameter value to start with and then – for a predetermined number of iterations – starts stepping from value to value according to the following logic:</p>
+<ol type="1">
+<li>Randomly select an adjacent parameter value that’s 1 higher or lower than the current parameter value. We’ll call it the ‘proposal’. If the proposal is outside the range of values (e.g., 0 or 6), wrap around to the other side of the value range.</li>
+<li>Calculate the probability at the proposal, and compare it to the probability of the current parameter value. If the proposal has a higher probability, move to it immediately and return to step 1. Otherwise, move to step 3.</li>
+<li>Since the proposal’s probability is equal to or lower than the current node’s, randomly choose from between the two with a probability proportional to the difference between them. (For example, if the proposal has half the probability of the current value, then there’s a 1/3 chance that the algorithm will move to the proposal, and a 2/3 chance it will stay where it is).</li>
+</ol>
+<p>That’s it! Collectively, these rules ensure that the Metropolis-Hastings algorithm will trend towards the parameter values with the highest posterior probability, but won’t entirely ignore the ones with lower probability.</p>
+<p>Despite the Metropolis-Hastings algorithm not knowing about the shape of the distributions it is tasked with exploring, its stochastic meandering will eventually cause it to visit every portion of a probability distribution <em>in proportion to the probability density at that location</em>. Thinking back to the hypothetical Bayesian model we created in the first half of this chapter, using a sampling method like Metropolis-Hastings would allow us to create reliable estimates of the posterior distributions for all of our unobserved parameters (<span class="math inline">\(\alpha\)</span>, <span class="math inline">\(\beta\)</span>, and <span class="math inline">\(\sigma\)</span>), provided we had data to feed into our linear model/likelihood (which we don’t).</p>
+<p>Metropolis-Hastings “Just Works<span class="math inline">\(^{(TM)}\)</span>,” but sometimes it doesn’t work quickly or efficiently enough for our purposes. It’s not enough to employ an algorithm that will <em>eventually</em> provide us with a satisfactory approximation; we want to find one that will do so efficiently and in a reasonable amount of time, even when the shape of the posterior is irregular.</p>
+<p>Rather than skipping straight to the answer, we’re going to take a diversion into the realm of an extended thought experiment that will – with luck – provide you with an intuition for how one might go about efficiently exploring convoluted continuous parameter spaces. It’s a bit of a weird thought experiment, but learning about stochastic sampling for the first time is a bit mind-bending anyway, so let’s just have a bit of fun, shall we?</p>
+</section>
+<section id="mapping-a-skate-bowl" class="level3" data-number="18.5.2">
+<h3 data-number="18.5.2" class="anchored" data-anchor-id="mapping-a-skate-bowl"><span class="header-section-number">18.5.2</span> Mapping a Skate Bowl</h3>
+<p>Imagine we’ve made a bet with a friend that we can create a topographical map of the bottom of a skate bowl. The bowl is highly irregular in shape and depth, with several local minima scattered around, and there’s no easy way to mathematically describe it. This poses a bit of a challenge already, but the <em>real</em> challenge is that the rules of the bet prevent us from ever seeing the skate park! All we know in advance is that there are several low areas scattered throughout the skate bowl (relative to their steeply sloping surroundings), and that our friend is more interested in the lower areas of the bowl than the steeply sloping sides of the bowl. They’re completely uninterested in the completely flat, high area surrounding the bowl. The 3D plots in Figure <a href="20-linear-regression.html#fig-26_02">Figure&nbsp;<span>20.2</span></a> offer three perspectives that are <em>similar</em>, but not the same, as the shape of the skate bowl we’re trying to map in this example.</p>
+<p><img src="figures/skate_bowl.png" id="fig-26_02" class="img-fluid"></p>
+<p>This is already kind of a weird example, so let’s just lean into the weird. Our friend has provided two unusual tools to help us: a frictionless, perfectly elastic marble which, once set into motion, will stop – dead – after a configurable length of time has elapsed. This marble is a marvel of modern engineering (and may potentially break several laws of physics), as it is capable of coming to an immediate and complete standstill whilst halfway up a slope that any other round object would immediately begin to roll down. What’s more, the marble, once it has come to a complete stop, will send you an unnervingly accurate three-dimensional readout of its current position.</p>
+<p>The other tool is a robot. We’re allowed to program the robot to traverse the skate park, find the physics-defying marble, and move the marble either by picking it up and putting it down elsewhere, or by imparting some kind of force onto the marble. The robot is always aware (relative to its current position) of where the marble is, where the marble last came to a stop, and where the skate park’s walls are – it is otherwise incapable of perceiving anything about its surroundings.</p>
+<p>Our objective is to use the robot and the marble to ‘map’ the contours of the skate bowl (but none of the surrounding area) as efficiently as possible. How might we approach such a task? Let’s think it through.</p>
+<section id="gradient-descent" class="level4" data-number="18.5.2.1">
+<h4 data-number="18.5.2.1" class="anchored" data-anchor-id="gradient-descent"><span class="header-section-number">18.5.2.1</span> Gradient Descent</h4>
+<p>Those of you who saw the ‘efficiently as possible’ qualifier above might have started thinking something akin to: “why not just instruct the robot to repeatedly roll the marble over very small intervals until it descends into the skate bowl, and keep going until it reaches the bottom? We could use the resulting data as an approximation of best fit!” That would be very similar to the “<strong>Gradient Descent</strong>” approach discussed in Chapter 23.</p>
+<p>While this technique certainly gets top marks for ease of implementation, our friend wouldn’t be sufficiently impressed to concede the bet. For starters, short of conducting several such throws, we’d have no way of knowing whether or not the marble had ended up in a ‘local minima,’ i.e., one of the smaller sub-bowls in the diagram above that are quite a bit shallower than a nearby ‘global minima,’ which is the actual lowest point in the skate bowl. What’s more, recall that to win the bet our friend expects us to describe low points throughout the entire bowl, not just an approximation of the single lowest point.</p>
+</section>
+<section id="quadratic-approximation" class="level4" data-number="18.5.2.2">
+<h4 data-number="18.5.2.2" class="anchored" data-anchor-id="quadratic-approximation"><span class="header-section-number">18.5.2.2</span> Quadratic Approximation</h4>
+<p>Since having a single point isn’t good enough, we could use the data gathered as our marble slowly descended into the bowl (remember, it stopped frequently on the way down) to estimate the curve it followed as it descended?” If you were thinking along these lines, it might be fair to say that you had hoped to employ a ‘<strong>Quadratic Approximation</strong>’ which involves using a analytically-defined ‘good-enough’ parabolic curve to describe the shape of the bowl.</p>
+<p>Since many statistical models make extensive use of the Normal distribution, and given that the Normal distribution can be fairly well-approximated using a parabola, Quadratic Approximation is commonly called upon to help provide useful approximations of posterior distributions in simple (and a few not-so-simple) Bayesian models. Unfortunately, based on the description of the bowl our friend provided us with (and the simulation of one possible bowl above), the skate bowl is not symmetric, has multiple ‘lowest points’ (multiple local minima), and undulates (not monotonic). Under such conditions, there’s no easy way to produce an accurate quadratic approximation: the best-fitting curve will look nothing like the actual bowl.</p>
+</section>
+<section id="grid-approximation" class="level4" data-number="18.5.2.3">
+<h4 data-number="18.5.2.3" class="anchored" data-anchor-id="grid-approximation"><span class="header-section-number">18.5.2.3</span> Grid Approximation</h4>
+<p>You may now be thinking “okay, the quick-and-easy approach is out, so how about we double down on accuracy and try to systematically cover every inch of the skate park?” This is a method akin to ‘<strong>Grid Approximation</strong>’ or ‘<strong>Grid Search</strong>’, wherein we would systematically cover every part of the skate bowl by breaking the entire skate park into a regularly-spaced grid, and then taking a sample at each intersection in that grid.</p>
+<p>Using this approach, you’d be guaranteed to map the entire skate bowl. The problem here, though, is that you’re going to spend a whole lot of time – a WHOLE lot – exploring areas of the skate bowl that aren’t of any interest. Let’s say the park is 100 metres by 100 metres. Even if you only take one measurement every two metres, you’re going to have to take 2,500 measurements to cover the entire park. If you double the resolution of your search to take one measurement every metre, the number of measurements balloons to 10,000. Further increases in resolution will result exponentially larger numbers of required measurements.</p>
+<p>If we were immortal, fine, grid search can be usefully applied to complex, continuous spaces. If, however, you want to settle this bet sometime between now and the eventual heat death of the universe, you’re going to have to find a faster way.</p>
+</section>
+<section id="randomly-whack-the-marble-around" class="level4" data-number="18.5.2.4">
+<h4 data-number="18.5.2.4" class="anchored" data-anchor-id="randomly-whack-the-marble-around"><span class="header-section-number">18.5.2.4</span> Randomly Whack The Marble Around</h4>
+<p>Those of you with a keen sense of irony may have seen something like this coming: rather than employing sophisticated mathematical approximations of our skate bowl, our best option overall involves instructing our robot to give the marble a good thump in a random direction with a random force, wait until it stops (after a fixed period of time), and then repeat the process from the marble’s new location. This “Randomly Whack The Marble Around” approach is known as <strong>‘Hamiltonian Monte Carlo’ (HMC)</strong>. The unusual thing about it is that – with the exception of a few edge cases – it is a reasonable, reliable, and comparatively efficient method for exploring the shape of a distribution, even if the distribution is very complex or has many different dimensions.</p>
+<p>Providing any form of rigorous proof - mathematical or otherwise - of the effectiveness of Hamiltonian Monte Carlo is FAR beyond the scope of this book. You’ll have to take it for granted that this method Just Works<span class="math inline">\(^{(TM)}\)</span>. You can get a good look under the hood with some of the recommended sources at the end of this chapter.</p>
+<blockquote class="blockquote">
+<p><strong>Box</strong>. If you want to learn more about HMC, and it’s use in regression analysis, I recommend McElreath’s <span class="citation" data-cites="mcelreath2020statistical">(<a href="references.html#ref-mcelreath2020statistical" role="doc-biblioref">2020</a>)</span> classic Bayesian statistics textbook <em>Rethinking Statistics</em>. Note, however, that you’ll want to build up more of a foundation before jumping into that book, or others like it. <span class="citation" data-cites="lambert2018student">Lambert (<a href="references.html#ref-lambert2018student" role="doc-biblioref">2018</a>)</span> and <span class="citation" data-cites="kruschke2014doing">Kruschke (<a href="references.html#ref-kruschke2014doing" role="doc-biblioref">2014</a>)</span> are also excellent introductions to Bayesian statistics in the social and cognitive sciences that include discussions of various approaches to approximate and exact Bayesian inference.</p>
+</blockquote>
+</section>
+<section id="go-see-the-marbles-move" class="level4" data-number="18.5.2.5">
+<h4 data-number="18.5.2.5" class="anchored" data-anchor-id="go-see-the-marbles-move"><span class="header-section-number">18.5.2.5</span> Go See The Marbles Move</h4>
+<p>I’ve tried to make everything we’ve just covered as concrete and easy-to-picture as possible, but obviously all of this remains <em>very</em> abstract. This material can be incredibly difficult to grasp, especially if you’re encountering it for the first time, and dually so when we try to extend the intuitions we’ve built in 3 dimensions to higher number of dimensions. It is, sadly, impossible to imagine a marble rolling around in a 16-dimensional skate bowl.</p>
+<p>It might be helpful to view an animated representation of what’s happening. Since you’re most likely reading this textbook on paper, I recommend reading Richard McElreath’s blog post “Build a Better Markov Chain” <a href="https://elevanth.org/blog/2017/11/28/build-a-better-markov-chain/">https://elevanth.org/blog/2017/11/28/build-a-better-markov-chain/</a>. You can spend a bit of time observing and playing around with a few animated stochastic samplers to deepen your understanding.</p>
+<p>In particular, we’d like to draw your attention to the section on the No-U-Turn-Sampler, or NUTS for short. NUTS is a sort of special case of HMC, wherein the marble is capable of intelligently detecting when it has pulled a U-turn and is headed back towards its starting location.</p>
+<p>When you’re all done watching the imaginary marbles zip around the imaginary skate bowls, we can move on to specifying some models in the next chapter.</p>
+</section>
+</section>
+</section>
+<section id="conclusion" class="level2" data-number="18.6">
+<h2 data-number="18.6" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">18.6</span> CONCLUSION</h2>
+<section id="key-points" class="level3" data-number="18.6.1">
+<h3 data-number="18.6.1" class="anchored" data-anchor-id="key-points"><span class="header-section-number">18.6.1</span> Key Points</h3>
+<ul>
+<li>In this chapter, we developed an intuitive understanding of how Bayesian regression models are specified using a set of mathematical conventions</li>
+<li>Introduced the concept of Markov Chains and some of the sampling techniques based thereon</li>
+<li>Used an extended metaphor to develop an intuitive understanding of how the Hamiltonian Monte Carlo sampling algorithm works</li>
+</ul>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="ref-kruschke2014doing" class="csl-entry" role="listitem">
+Kruschke, John. 2014. <span>“Doing Bayesian Data Analysis: A Tutorial with r, JAGS, and Stan.”</span>
+</div>
+<div id="ref-lambert2018student" class="csl-entry" role="listitem">
+Lambert, Ben. 2018. <em>A Student’s Guide to Bayesian Statistics</em>. Sage.
+</div>
+<div id="ref-mcelreath2020statistical" class="csl-entry" role="listitem">
+McElreath, Richard. 2020. <em>Statistical Rethinking: A Bayesian Course with Examples in r and Stan</em>. CRC press.
+</div>
+</div>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./17-probability.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Probability 101</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./19-causality.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Causality</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>

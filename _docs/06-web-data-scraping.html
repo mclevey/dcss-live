@@ -1,0 +1,1029 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Doing Computational Social ScienceThe Continuous Development Edition - 6&nbsp; Web data (Scraping)</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./07-audio-image-and-document-data.html" rel="next">
+<link href="./05-web-data-apis.html" rel="prev">
+<link href="./media/logo.png" rel="icon" type="image/png">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="custom.css">
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./04-sampling-and-survey-data.html">Obtaining Data</a></li><li class="breadcrumb-item"><a href="./06-web-data-scraping.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Web data (Scraping)</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="./index.html" class="sidebar-logo-link">
+      <img src="./media/logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      </a>
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Doing Computational Social Science<br><span class="small">The <strong>Continuous Development</strong> Edition</span></a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/UWNETLAB/dcss_supplementary/tree/master/book/" rel="" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <div class="dropdown">
+      <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Share"><i class="bi bi-share"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=|url|">
+              <i class="bi bi-bi-twitter pe-1"></i>
+            Twitter
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://www.facebook.com/sharer/sharer.php?u=|url|">
+              <i class="bi bi-bi-facebook pe-1"></i>
+            Facebook
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://www.linkedin.com/sharing/share-offsite/?url=|url|">
+              <i class="bi bi-bi-linkedin pe-1"></i>
+            LinkedIn
+            </a>
+          </li>
+      </ul>
+    </div>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">👋 Hello!</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./00-introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Learning to Do Computational Social Science</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">Research Computing</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-getting-started.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Getting Started</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-python-101.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Python 101</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-python-102.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Python 102</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text">Obtaining Data</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04-sampling-and-survey-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Sampling and survey data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-web-data-apis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Web data (APIs)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06-web-data-scraping.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Web data (Scraping)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-audio-image-and-document-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Audio, image, and document data</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+ <span class="menu-text">Exploring Data</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08-processing-structured-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Processing Structured Data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09-exploratory-data-analysis-and-visualization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Exploratory data analysis and visualization</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10-association-and-latent-factors.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Association and latent factors</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11-text-as-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Text as Data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./12-text-similarity-and-latent-semantic-space.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Text similarity and latent semantic space</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./13-social-networks-and-relational-thinking.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Networks: Relationships as Data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./14-structural-similarity-and-latent-social-space.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Structural similarity and latent social space</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+ <span class="menu-text">Prediction and Inference</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./15-machine-and-statistical-learning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Machine Learning 101</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./16-prediction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Prediction</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./17-probability.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Probability 101</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./18-credibility.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Credibility</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./19-causality.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Causality</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
+ <span class="menu-text">Generative Modeling</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./20-linear-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Bayesian Regression Models with Probabilistic Programming</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./21-multilevel-regression-with-post-stratification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Multilevel regression with post-stratification</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./22-generalized-linear-models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Generalized Linear Models</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./23-causal-analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Causal analysis</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./24-latent-structure-networks.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Latent structure in networks</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./25-latent-topics-text-lda.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Latent topics in text (LDA)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./26-complex-adaptive-systems.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Agent-based Models</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./27-developing-agent-based-models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Diffusion</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true">
+ <span class="menu-text">Deep Learning Demystified</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./28-artificial-neural-networks-fnn-rnn-cnn.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Neural networks 101</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./29-processing-natural-language-data-spacy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Processing Natural Language Data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./30-transformers-self-attention.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Transformers, Self-attention architecture</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./31-latent-topics-text-transformers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Modelling latent topics (Transformers)</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true">
+ <span class="menu-text">Professional Responsibilities</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./32-research-ethics-politics-and-practices.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Research Ethics, Politics, and Practices</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./33-next-steps.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Next steps</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./acknowledgements.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Acknowledgements</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./changelog.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Changelog</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./appendix-centrality-formulas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Centrality Formulas</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./appendix-courses.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Courses and Workshops</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#collecting-data-from-the-web-scraping" id="toc-collecting-data-from-the-web-scraping" class="nav-link active" data-scroll-target="#collecting-data-from-the-web-scraping"><span class="header-section-number">7</span> Collecting Data from the Web: Scraping</a>
+  <ul class="collapse">
+  <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link" data-scroll-target="#learning-objectives"><span class="header-section-number">7.1</span> LEARNING OBJECTIVES</a></li>
+  <li><a href="#learning-materials" id="toc-learning-materials" class="nav-link" data-scroll-target="#learning-materials"><span class="header-section-number">7.2</span> LEARNING MATERIALS</a></li>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction"><span class="header-section-number">7.3</span> INTRODUCTION</a></li>
+  <li><a href="#an-html-and-css-primer-for-web-scrapers" id="toc-an-html-and-css-primer-for-web-scrapers" class="nav-link" data-scroll-target="#an-html-and-css-primer-for-web-scrapers"><span class="header-section-number">7.4</span> AN HTML AND CSS PRIMER FOR WEB SCRAPERS</a>
+  <ul class="collapse">
+  <li><a href="#developing-your-first-web-scraper" id="toc-developing-your-first-web-scraper" class="nav-link" data-scroll-target="#developing-your-first-web-scraper"><span class="header-section-number">7.4.1</span> DEVELOPING YOUR FIRST WEB SCRAPER</a></li>
+  <li><a href="#ethical-and-legal-issues-in-web-scraping" id="toc-ethical-and-legal-issues-in-web-scraping" class="nav-link" data-scroll-target="#ethical-and-legal-issues-in-web-scraping"><span class="header-section-number">7.4.2</span> ETHICAL AND LEGAL ISSUES IN WEB SCRAPING</a></li>
+  </ul></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">7.5</span> CONCLUSION</a>
+  <ul class="collapse">
+  <li><a href="#key-points" id="toc-key-points" class="nav-link" data-scroll-target="#key-points"><span class="header-section-number">7.5.1</span> Key Points</a></li>
+  </ul></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/UWNETLAB/dcss_supplementary/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Web data (Scraping)</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="collecting-data-from-the-web-scraping" class="level1" data-number="7">
+<h1 data-number="7"><span class="header-section-number">7</span> Collecting Data from the Web: Scraping</h1>
+<section id="learning-objectives" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="learning-objectives"><span class="header-section-number">7.1</span> LEARNING OBJECTIVES</h2>
+<p>By the end of this chapter, you should be able to:</p>
+<ul>
+<li>Learn how to study the source code for a website to make a plan for collecting the data you need.</li>
+<li>Use the Requests package to programmatically make <code>GET</code> requests to web servers.</li>
+<li>Use the BeautifulSoup package to parse HTML and CSS code to extract and clean data from webpage source code.</li>
+<li>Change URLs programmatically to scrape multiple pages of a website.</li>
+<li>Explain the ethical and legal issues involved in web scraping projects.</li>
+</ul>
+</section>
+<section id="learning-materials" class="level2" data-number="7.2">
+<h2 data-number="7.2" class="anchored" data-anchor-id="learning-materials"><span class="header-section-number">7.2</span> LEARNING MATERIALS</h2>
+<p>You can find the online learning materials for this chapter in <code>doing_computational_social_science/Chapter_06</code>. <code>cd</code> into the directory and launch your Jupyter Server.</p>
+</section>
+<section id="introduction" class="level2" data-number="7.3">
+<h2 data-number="7.3" class="anchored" data-anchor-id="introduction"><span class="header-section-number">7.3</span> INTRODUCTION</h2>
+<p>This chapter introduces web scraping as a method of programmatically collecting data from the web. While Application Programming Interfaces (APIs) provide direct access to the data behind a website using documented protocols, web scraping requires studying the source code of a website as displayed in a browser, and then writing scripts that take advantage of HTML and CSS to extract specific pieces of data.</p>
+<p>We will begin by introducing the basics of HTML and CSS, which are essential to understand when developing a web scraper, followed by an explanation of how to use browser-based developer tools to study the source code of a website and isolate the data you want to extract. We will then work through several examples of scraping text data from websites using the packages <code>requests</code> and <code>BeautifulSoup</code>. These examples cover many common web scraping needs and can easily be extended to cover more.</p>
+<p>It is possible to collect virtually any data from the web by writing web scrapers, but that doesn’t mean you should. As with APIs, you always need to ensure you that you are collecting data in a way that meets high ethical standards, and that you are respecting a website’s Terms of Service. We’ll discuss ethics, including for digital data collection, in detail in Chapter 19.</p>
+</section>
+<section id="an-html-and-css-primer-for-web-scrapers" class="level2" data-number="7.4">
+<h2 data-number="7.4" class="anchored" data-anchor-id="an-html-and-css-primer-for-web-scrapers"><span class="header-section-number">7.4</span> AN HTML AND CSS PRIMER FOR WEB SCRAPERS</h2>
+<p>This chapter builds on the previous chapter’s foundations; I will begin by describing how the content on webpages is structured using HTML and CSS, and then explain how to write web scrapers that take advantage of these types of markup to programmatically extract data from web pages. As you learn this material, keep in mind that <em>it takes far less knowledge to scrape a website than it does to develop it in the first place</em>. A little knowledge goes a long way.</p>
+<p>As someone who frequently reads and writes “documents” (news stories, blog posts, journal articles, Tweets, etc.), you are already familiar with the basics of structuring and organizing documents using headings, subheadings, and so on. This chapter, for example, has all those features and more. As humans, we parse these organizational features of documents <em>visually</em>.</p>
+<p>If you create a document using a WYSIWYG (“what you see is what you get”) word processor like Open Office, Microsoft Word, or Google Docs, you apply different styles to parts of the text to indicate whether something is a title, a heading, a paragraph, a list, etc. HTML documents also have these organizational features but use special ‘markup’ to describe structural features of the document (HTML) as well as how things should appear (Cascading Style Sheets, or ‘CSS’).</p>
+<p>HTML consists of ‘elements’ (e.g.&nbsp;paragraphs) with opening and closing tags. You can think of these tags as containers. The tags tell your browser about the text that sits between the opening and closing tags (or “inside the container”). Here’s an example:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode html code-with-copy"><code class="sourceCode html"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;html&gt;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;head&gt;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>        <span class="kw">&lt;title&gt;</span>This is a minimal example<span class="kw">&lt;/title&gt;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;/head&gt;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;body&gt;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>        <span class="kw">&lt;h1&gt;</span>This is a first-level heading<span class="kw">&lt;/h1&gt;</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>        <span class="kw">&lt;p&gt;</span>A paragraph with some <span class="kw">&lt;emph&gt;</span>italicized<span class="kw">&lt;/emph&gt;</span> text.<span class="kw">&lt;/p&gt;</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>        <span class="kw">&lt;img</span> <span class="er">src</span><span class="ot">=</span><span class="st">"image.pdf"</span> <span class="er">alt</span><span class="ot">=</span><span class="st">"This is an image"</span><span class="kw">&gt;</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>        <span class="kw">&lt;p&gt;</span>A paragraph with some <span class="kw">&lt;strong&gt;</span>bold<span class="kw">&lt;/strong&gt;</span> text.<span class="kw">&lt;/p&gt;</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>        <span class="kw">&lt;h2&gt;</span>This is a second-level heading<span class="kw">&lt;/h2&gt;</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>        <span class="kw">&lt;ul&gt;</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>            <span class="kw">&lt;li&gt;</span>first list item<span class="kw">&lt;/li&gt;</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>            <span class="kw">&lt;li&gt;</span>second list item<span class="kw">&lt;/li&gt;</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>        <span class="kw">&lt;/ul&gt;</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;/body&gt;</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;/html&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>In our example above, the <code>paragraph</code> element opens a paragraph with <code>&lt;p&gt;</code> and closes it with <code>&lt;/p&gt;</code>. The actual text – what you see in your browser – lives between those tags. We can see examples of them on lines 7 and 9 in the HTML code above.</p>
+<p>The outermost element in any HTML document is the <strong><code>html</code> element</strong>. Your browser knows that anything between <code>&lt;html&gt;</code> and <code>&lt;/html&gt;</code> tags should be processed as HTML markup. Most of the time, the next element in an HTML page will be a <code>head</code> element. The text inside the <code>&lt;head&gt;</code> and <code>&lt;/head&gt;</code> tags will not actually be rendered by your browser. Instead, it contains metadata about the page itself. This is where the page title is contained, which is displayed on the tab in your browser.</p>
+<p>Inside the HTML tags, you’ll also find a <strong><code>body</code> element</strong>. Anything inside the <code>&lt;body&gt;</code> and <code>&lt;/body&gt;</code> tags will be displayed in the main browser window (e.g.&nbsp;the text of a news story). Inside the body tags, you will typically find elements for headings (e.g.&nbsp;<code>&lt;h1&gt;</code> and <code>&lt;/h1&gt;</code>, <code>&lt;h2&gt;</code> and <code>&lt;/h2&gt;</code>, and so on), paragraphs (<code>&lt;p&gt;</code> and <code>&lt;/p&gt;</code>), bold text (<code>&lt;strong&gt;</code> and <code>&lt;/strong&gt;</code> or <code>&lt;b&gt;</code> and <code>&lt;/b&gt;</code>), italicized text <code>&lt;i&gt;</code> and <code>&lt;/i&gt;</code> or <code>&lt;em&gt;</code> and <code>&lt;/em&gt;</code>), as well as ordered and unordered lists, tables, images, and links.</p>
+<p>Sometimes elements include ‘attributes,’ which provide more information about the content of the text. For example, a paragraph element may specify that the text contained within its tags is American English. This information is contained inside the opening bracket. <code>&lt;p lang="en-us"&gt;American English sentence here...&lt;/p&gt;</code>. As you will soon learn, attributes can be <em>extremely</em> useful when scraping the web.</p>
+<p>Before moving on, it’s important to understand one final type of HTML element you’ll frequently encounter when developing web scrapers: <strong>the division tag <code>div</code></strong>. This is simply a generic container that splits a website into smaller sections. Developers often use them to apply a particular style (e.g.&nbsp;switch to a <code>monospaced font</code> to display code) to some chunk of text in the HTML document, using CSS. Splitting webpages into these smaller pieces using <code>div</code> tags makes websites easier for developers to maintain and modify. They also make it easier for us web scrapers to drill down and grab the information we need. You’ll see this in action in the examples to follow.</p>
+<p>When scraping the web you will also encounter CSS, which I previously mentioned is used to <em>style</em> websites. To properly understand how CSS works, remember that the vast majority of modern websites are designed to separate content (e.g.&nbsp;actual words that mean things to humans) from <em>structure</em> and <em>style</em>. HTML markup tells your browser what some piece of text is (e.g.&nbsp;a heading, a list item, a row in a table, a paragraph) and CSS tells your browser what it should look like when rendered in your browser (e.g.&nbsp;what font to use for subheadings, how big to make the text, what colour to make the text, and so on). If there is no CSS, then your browser will use an extremely minimal default style to render the text in your browser. In most cases, developing a good web scraper will require a deeper understanding of HTML than CSS, so we will set aside discussion of CSS for now, but will return later when knowledge of CSS can help us develop a better scraper.</p>
+<p>A full inventory of HTML and CSS elements is, of course, beyond the scope of this book. The good news is that you don’t need exhaustive knowledge of either to write a good web scraper. You need to have a basic understanding of the key concepts and you need to know what the most common tags mean, but <em>more than anything else</em> you need to be willing to spend time investigating the source code for websites you want to scrape, attempt to solve problems creatively, and work interactively.</p>
+<blockquote class="blockquote">
+<p><strong>Further Reading</strong></p>
+<p>With this foundational knowledge, you’ll be able fill gaps in your knowledge of HTML and CSS with web searches as you develop scrapers to collect data for a research project. Still, I recommend setting aside a bit of time to browse some basic tutorials. Better yet, spend some time browsing Jon Duckett’s <span class="citation" data-cites="duckett2011html">(<a href="references.html#ref-duckett2011html" role="doc-biblioref">2011</a>)</span> beautiful resource book <em>HTML &amp; CSS: Design and Build Websites</em>, which is an excellent resource for learning the basics.</p>
+</blockquote>
+<section id="developing-your-first-web-scraper" class="level3" data-number="7.4.1">
+<h3 data-number="7.4.1" class="anchored" data-anchor-id="developing-your-first-web-scraper"><span class="header-section-number">7.4.1</span> DEVELOPING YOUR FIRST WEB SCRAPER</h3>
+<p>Now that you have a baseline understanding of how your computer retrieves and renders websites, and the role that HTML and CSS play in that process, we can demystify web scraping even further. First, we know that the information we want to retrieve from a website will be sent to our computer from a remote web server following a <code>GET</code> request. Webpages are provided as source code, which is parsed and rendered by our web browser of choice.</p>
+<p>Before jumping into coding a scraper, you need to familiarize yourself with the sources you plan to gather data from – this is good advice to apply to any data you plan to use for research purposes. The best way to study the source code of a website is to use the <strong>developer tools</strong> built into browsers like Firefox, Chrome, or Brave. Here, and throughout the rest of this book, I will use Firefox, but the developer tools we use here are available in the other browsers as well. We’ll start by learning how to study the source code of a webpage we want to scrape, and then move into writing the actual code for the scraper.</p>
+<section id="studying-website-source-code-with-developer-tools" class="level4" data-number="7.4.1.1">
+<h4 data-number="7.4.1.1" class="anchored" data-anchor-id="studying-website-source-code-with-developer-tools"><span class="header-section-number">7.4.1.1</span> Studying Website Source Code with Developer Tools</h4>
+<p>First, navigate to a website in Firefox. I’ve selected a story from the front page of <em>The Guardian</em> on August 2nd 2019, “Charming but dishonest and duplicitous: Europe’s verdict on Boris Johnson.” The specific story you select doesn’t really matter, however. If you are writing and executing code along with me as you read this book, and for some reason this story is no longer available, you could select another story from <em>The Guardian</em> instead and follow along just fine.</p>
+<p>Once the story is loaded in Firefox, I can right-click anywhere on the page and select “Inspect Element” to open a pane of developer tools. (You can also open this pane by selecting “Toggle Tools” from the “Web Developer” section of the “Tools” menu in the toolbar.) We can use these tools to study our target webpage interactively, viewing the rendered content and the raw source code of the webpage simultaneously.</p>
+<p>One especially useful strategy is to highlight some information of interest on the webpage and then right-click and select ‘Inspect Source’ (or ‘View Selection Source’ or ‘Inspect Element’ or similar). This will jump to that specific highlighted information in the HTML code, making it much easier to quickly find what tags the information you need is stored in. From here, we can strategize how best to retrieve the data we want.</p>
+<p>Figure <a href="08-processing-structured-data.html#fig-06_01">Figure&nbsp;<span>8.1</span></a> is a screenshot of the developer tools pane open in a Firefox tab for the story about Boris Johnson. Unfortunately it might be a bit difficult to fully read on this printed page. If that’s the case, you can consult the high resolution screenshot available in the online materials. The text “As the Brexit deadline looms, Europe remains wary of the poker player behind the clown mask” is highlighted and revealed in the inspector tool at the bottom of the page. We can see in the developer tools that the text we’ve highlighted is enclosed in simple paragraph tags (<code>&lt;p&gt;As the Brexit deadline looms, Europe remains wary of the poker player behind the clown mask&lt;/p&gt;</code>). That’s precisely the kind of information we can exploit when developing a web scraper. Let’s see how exactly it’s done.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><embed src="figures/boris.pdf" class="img-fluid"></p>
+<figcaption class="figure-caption">A screenshot of the Firefox developer tools pane open for the story “Charming but dishonest: Europe’s verdict on Boris Johnson,” published in <em>The Guardian</em> on August 2, 2019.</figcaption>
+</figure>
+</div>
+<p>As we develop our web scraper, we progressively narrow down to the information we need, clean it by stripping out unwanted information (e.g.&nbsp;white spaces, new line characters), and then write it to some sort of dataset for later use. Next, we’ll cover the steps one might take to develop a functional scraper from the ground up.</p>
+<p>One very useful way to extract the data we want is to make use of Cascading Style Sheet (CSS) selectors. Many of the HTML elements on a website have <code>class attributes</code>, which allow web developers and designers to style specific chunks of content using styles defined in CSS. In addition to <code>class attributes</code>, we may encounter an <code>id</code> attribute for some <code>elements</code>. Unlike the <code>class attributes</code>, the <code>id</code> in an element is unique. It refers to that <code>element</code>, and that <code>element</code> only. If you’re looking for a way to grab multiple elements that are some subset of all the elements of that type, then you want to use <code>class attributes</code>. But if you want a single element, and that element has an <code>id</code>, then use the <code>id</code>!</p>
+<p>One final thing that’s very helpful to know here is that almost all web pages use a <strong>‘Document Object Model’ (DOM)</strong> to organize the elements they display. The DOM is a hierarchical structure resembling a tree, the trunk of which is the web page itself. In this model, all of the elements can be thought of as branches of the trunk, or branches of those branches, and so on. Many sources use language borrowed from family trees to describe elements’ relationships to one another, as most elements in the page will have other elements nested within them. These nested elements are ‘children’ of the larger ‘parent’ element they are nested within. If we follow through with the metaphor, the nested elements can be thought of as each others’ ‘siblings’.</p>
+<p>This family tree structure of the DOM is useful to understand, especially in cases when you need to grab data from an element that doesn’t have an <code>id</code> and also doesn’t have a unique <code>class attribute</code>, such as what you often find for the headlines of news stories. In such cases, we can exploit the nested, hierarchical structure of the DOM to find the information we want: all we need to do is locate the element’s parent, at which point we can get information about all of its children and extract the data we need.</p>
+<p>If you find that the website design is consistent across the pages you want to scrape, you could determine whether the element you want is always <em>nested</em> at the same level. If it is, you could provide a full path to the data you want to scrape, even when given the vaguest of elements. This might mean that you want to always grab the text located at <code>&lt;body&gt;&lt;div&gt;&lt;div&gt;&lt;article&gt;&lt;div&gt;&lt;h1&gt;</code>. If you need to access the second of two <code>&lt;div&gt;</code> elements that are at the same depth (and, thus, a sibling of the first), it can be referred to in the same way you would access an element in aPython list, by <code>&lt;div[1]&gt;</code>.</p>
+</section>
+<section id="coding-a-web-scraper-for-a-single-page" class="level4" data-number="7.4.1.2">
+<h4 data-number="7.4.1.2" class="anchored" data-anchor-id="coding-a-web-scraper-for-a-single-page"><span class="header-section-number">7.4.1.2</span> Coding a Web Scraper for a Single Page</h4>
+<p>In order to get our scraper operational, we’ll need a way to actually get data from the web pages into Python. Normally, the process of requesting and rendering a page is handled by our browser, but as you learned in the previous chapter, this isn’t the only way to request HTML documents from a web server. We can also connect to a web server from a Python script using a package such as <strong><code>requests</code></strong>, and load the HTML provided by the web server into our computer’s memory. Once we have this HTML in memory (rather than rendered in a browser), we can move onto the next step, which is to start parsing the HTML and extracting the information we want.</p>
+<p>When we load an HTML document in Python, we’re looking at the raw markup, not the rendered version we see when we load that file in a browser. If we’re lucky, the information we want will be consistently stored in elements that are easy to isolate and don’t contain a lot of irrelevant information. In order to get that information, we need to parse the HTML file, which can be done using a Python package called <code>BeautifulSoup</code>. Note that BeautifulSoup’s naming conventions are a little confusing. The package is called <strong><code>BeautifulSoup</code></strong> but you have to install it using <code>beautifulsoup4</code> and import it into Python using <code>bs4</code>. Clear as mud. Let’s make all of this a little less abstract by working through a specific example.</p>
+<p>To get started, let’s grab the title and body text of the article on Boris Johnson mentioned previously. We will (1) request the HTML document from <em>The Guardian’s</em> web server using the <code>requests</code> package, (2) feed that HTML data into <code>BeautifulSoup</code> to construct a <code>soup</code> object that we can parse, and then (3) extract the article title and text, then store them in a couple of lists.</p>
+<p>In the code block below, we import the three packages we will use, get the HTML, construct the soup object using an <code>lxml</code> parser, and then – <em>just because we can</em> – print the raw HTML DOM to our screen.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> bs4 <span class="im">import</span> BeautifulSoup</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> <span class="st">'https://www.theguardian.com/politics/2019/aug/02/europes-view-on-boris-johnson'</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>r <span class="op">=</span> requests.get(url)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>soup <span class="op">=</span> BeautifulSoup(r.content, <span class="st">'lxml'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>To save space, I will not actually reproduce the DOM here, but you can do so by running:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(soup.prettify())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Now we need to get the title. I know that the article title is stored inside a <code>&lt;title&gt;</code> element. I use the <code>findAll</code> method from <code>BeautifulSoup</code> to retrieve that part of the text, which <code>BeautifulSoup</code> returns in the form of a list with one item. To get the string, I simply select the first item in the list using its index (<code>[0]</code>) and add <code>.text</code> to strip away the markup. Finally, although it is not strictly <em>necessary</em> at this point, I strip out any invisible new line characters by ending the line with <code>.replace('\\n', '')</code>.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>article_title <span class="op">=</span> soup.findAll(<span class="st">'title'</span>)[<span class="dv">0</span>].text.replace(<span class="st">'</span><span class="ch">\n</span><span class="st">'</span>, <span class="st">''</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(article_title)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Getting the body text is even easier, as all body text is contained inside <code>&lt;p&gt;</code> elements. We can construct a list of paragraphs with the <code>findAll</code> method.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>paragraphs <span class="op">=</span> soup.findAll(<span class="st">'p'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The ninth paragraph in the list is:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>paragraphs[<span class="dv">8</span>].text</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Sometimes it’s useful to combine all the text from an article into one long string (as we will discuss in the chapters on text analysis). We can do this by joining the items in the list, separated by white space.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>all_text <span class="op">=</span> <span class="st">" "</span>.join(para.text <span class="cf">for</span> para <span class="kw">in</span> paragraphs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>And with that, we have written our first scraper! It was a relatively simple one, in that our goal was simply to pull out a title and body text for an article in a newspaper. We could have collected a bit of other data if we wanted, such as the author of the page and the date it was published. However, one nice thing about our rather minimal scraper is that we can use it to grab text from other stories posted by <em>The Guardian</em> as well. In other words, simple web scrapers can be used in a broader variety of contexts, because they are not overly tailored to the content of any one specific page. The main takeaway here is that you should keep your web scrapers <em>as simple and portable as possible</em>. Avoid adding complexity unless it’s necessary to retrieve the data you need.</p>
+<p>Let’s wrap these steps up in a simple function, grab some text from a few more news stories, and then construct a <code>Pandas dataframe</code> with article titles in one column and article text in another. We will provide a much deeper explanation of the Pandas package and dataframes in the next chapter.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> scrape_guardian_stories(url):</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    soup <span class="op">=</span> BeautifulSoup(requests.get(url).content, <span class="st">'lxml'</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    article_title <span class="op">=</span> soup.find(<span class="st">'title'</span>).text.replace(<span class="st">'</span><span class="ch">\n</span><span class="st">'</span>, <span class="st">''</span>)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    paras <span class="op">=</span> <span class="st">" "</span>.join(para.text.replace(<span class="st">'</span><span class="ch">\n</span><span class="st">'</span>, <span class="st">''</span>) <span class="cf">for</span> para <span class="kw">in</span> soup.findAll(<span class="st">'p'</span>))</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> [article_title, paras]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The function we just defined follows the same process we just used to scrape the text of the first story on Boris Johnson, but this time wraps the code up in a single function that returns a list containing two items: the title of a story and the main body text. To produce the <code>dataframe</code>, we will provide a list of urls and apply our function to each individual story. This will return a <code>list</code> of <code>lists</code> as a result, which we can then convert into a <code>dataframe</code>.</p>
+<p>In the code block below, I read in a text file called <code>guardian_story_links.txt</code>. This file containing four URLs, each saved on it’s own line. When I read those lines in, each URL becomes an element in a list. I can then use list comprehension to iterate over the URLs and scrape their content.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">'data/guardian_story_links.txt'</span>) <span class="im">as</span> f:</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    stories <span class="op">=</span> [line.rstrip() <span class="cf">for</span> line <span class="kw">in</span> f]</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>scraped <span class="op">=</span> [scrape_guardian_stories(s) <span class="cf">for</span> s <span class="kw">in</span> stories]</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>df_scraped <span class="op">=</span> pd.DataFrame(scraped, columns<span class="op">=</span>[<span class="st">'Title'</span>, <span class="st">'Article Text'</span>])</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df_scraped.info())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>We’ll use a <code>dataframe</code> to summarize the result; <code>dataframes</code> are a form of structured data that we will be using frequently throughout the book; in the next chapter, we’ll go over them in detail. In this <code>dataframe</code>, the titles appear in one column and the article text in another.</p>
+<p>Obviously, a simple script like this would not be especially helpful to us if we were only analyzing the text of three or four articles. But social scientists are almost <em>never</em> concerned with the content of just a few articles. With very little code, we can collect a lot of text very efficiently and store it in a dataset that we can analyze using a variety of methods, from traditional content analysis methods to applied natural language processing. All you need is a list of urls, which you can construct manually (although this is not the best approach), by scraping links from some sort of index page (or possibly the front page), or by writing a more complex web crawler (which is beyond the scope of this chapter but you can read about it in Ryan Mitchell’s <span class="citation" data-cites="mitchell2018web">(<a href="references.html#ref-mitchell2018web" role="doc-biblioref">2018</a>)</span> excellent book <em>Web Scraping with Python</em>).</p>
+</section>
+<section id="working-with-many-webpages" class="level4" data-number="7.4.1.3">
+<h4 data-number="7.4.1.3" class="anchored" data-anchor-id="working-with-many-webpages"><span class="header-section-number">7.4.1.3</span> Working with Many Webpages</h4>
+<p>In many cases, the data you want to scrape isn’t neatly packaged for you on a single webpage but is instead spread out across several different pages on a single website. In most cases, there will be some kind of ordering principle that undergirds each of those webpages’ URLs; we can take advantage of this to greatly simplify and expedite the scraping process. Just as we studied the source code for a webpage to determine how best to scrape it, we have to study how the website handles URLs to determine how best to get the data we want from multiple pages.</p>
+<p>Let’s talk first about detecting patterns when you browse through pages on a website. This is as simple as navigating though your page, from some starting point (say the front page of <code>nytimes.com</code>), and then clicking through to different sections and news stories. As you do this, you’ll notice that some parts of the URL change and other parts stay the same. For example, you might see that a new chunk of string is added to the URL when you navigate to parts of the website that cover international news, and a different string appears when you’re reading op-eds or the lifestyle section.</p>
+<p>As you click through pages, make notes on how the URL changes. Then start simply entering new values into parts of the URL (such as different numbers for pages) and see what the results are. Does it return a valid page or not? Did it return what you expected? This is just one way of doing the necessary detective work – both in terms of the webpage source code and how the website handles URLs – to get the content we want from those pages. Figure <a href="08-processing-structured-data.html#fig-06_02">Figure&nbsp;<span>8.2</span></a> below presents an overview of these two interconnected processes.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><embed src="figures/scraping.pdf" class="img-fluid"></p>
+<figcaption class="figure-caption">An overview of the front end investigatory work that goes into web scraping. You must spend time studying URLs and the source code of the pages you want to scrape.</figcaption>
+</figure>
+</div>
+<p>Let’s make this all a little less abstract by looking at a specific example of programmatically iterating over URLs to scrape a page.</p>
+<p>Consider the United Nations’ Sustainable Development Partnership Platform. This website contains a directory of sustainable development projects that the UN’s Department of Economic and Social Affairs is supporting. Here’s an example of one such project’s page on the website: <a href="https://sustainabledevelopment.un.org/partnership/?p=35711">https://sustainabledevelopment.un.org/partnership/?p=35711</a>. Here, we can see that the ‘Future Rangers Program’ is an anti-poaching initiative designed to train a new generation of wildlife conservationists.</p>
+<p>Let’s say you wanted to scrape information about 30 projects approved by this initiative. These project pages are informative but it will take a fair bit of time to find URLs for each of those 30 projects and then put them into a list (as we did with <em>The Guardian</em> in the examples above). Luckily for us, there’s an easy way to iterate through the project pages on this website: the key can be found in the <code>?p=35711</code> at the trailing end of the URL we examined. Each of the projects listed on the website has a project number and each project’s page can be accessed by replacing the number at the end of our example URL with the project number you want to access. Give it a try!</p>
+<p>After plugging in a few random numbers, you’ll discover that not every 5-digit number has a corresponding project (you can use 35553, if you’d like to see one that works), and that continuing to use hand-typed numbers until we reach our desired threshold of 30 projects will take a very long time. Let’s write some code to move things along:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> scrape_UNSD_project(url):</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    result <span class="op">=</span> requests.get(url)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> result.ok:</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>        soup <span class="op">=</span> BeautifulSoup(result.content, <span class="st">'lxml'</span>)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>        headline <span class="op">=</span> soup.find(<span class="bu">id</span><span class="op">=</span><span class="st">'headline'</span>).getText()</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>        intro <span class="op">=</span> <span class="st">" "</span>.join(</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>            [segment <span class="cf">for</span> segment <span class="kw">in</span> soup.find(<span class="bu">id</span><span class="op">=</span><span class="st">'intro'</span>).stripped_strings])</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> [headline, intro]</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">None</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>In the above code block, we define a function that takes one parameter (a URL) and retrieves textual data about a project from its page on the UN Sustainable Development website (defined by the URL). This function does things a little differently than in previous examples, so it’s worth going through it line by line.</p>
+<p>The first thing the function does is pass the URL it was supplied to the <code>requests.get</code> function, which returns a result. Not all results are useful, though, and as you may have discovered while entering random numbers into the UNSD website, most project IDs don’t have a publicly-visible project associated with them. Whenever an HTTP <code>GET</code> requests a page that the server can’t find, it returns a <code>404</code> code, indicating that it couldn’t locate what we were asking for. When it <em>can</em> find what we’re looking for, the server will usually return a <code>200</code> code, indicating that everything is okay. There are a variety of HTTP Status Codes that a server can return and each of them carry a specific meaning (visit https://www.restapitutorial.com/httpstatuscodes.html for a list of what each code means). Generally speaking, codes from 0 to 399 indicate a successful <code>GET</code> request, whereas anything <code>400</code> or above indicates that something went wrong.</p>
+<p>Luckily for us, the Requests package was designed with ease-of-use in mind, and provides a convenient way of checking if our <code>GET</code> request was successful: <code>ok</code>. The <code>ok</code> attribute is <code>False</code> if something went wrong, and <code>True</code> in all other cases. As such, we can use <code>result.ok</code> to provide a boolean operator to an <code>if-else</code> statement; we’ll cover how this fits into the larger picture a few paragraphs from now. If the <code>result</code> is <code>ok</code>, the function then uses <code>BeautifulSoup</code> to parse it. We’ll use <code>find</code> to isolate the text we’re interested in, but this time we’ll use the named <code>id</code>s ‘headline’ and ‘intro’ to retrieve it.</p>
+<p>The next block of code simply sets the starting parameters for our scrape - we’ll use them later on. In this case, we’ve used three variables to indicate to our scraper which URL we want it to start at (<code>base_url</code> and <code>starting_number</code>), and how many pages we want to collect (<code>target_records</code>).</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>base_url <span class="op">=</span> <span class="st">"https://sustainabledevelopment.un.org/partnership/?p=</span><span class="sc">{}</span><span class="st">"</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>starting_number <span class="op">=</span> <span class="dv">30000</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>target_records <span class="op">=</span> <span class="dv">30</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>We’re going to get Python to repeatedly replace those curly braces (<code>{}</code>) in our URL with different numbers, corresponding to the project IDs we want to gather information about.</p>
+<p>The final code block of this section puts the pieces together, starting by defining a list, which we’ll populate using our scraper. Then, it uses a <code>while</code> statement with the condition that the number of scraped documents contained in <code>scraped</code> is smaller than <code>target_records</code>; this means that the code inside the <code>while</code> block will repeat until the condition is no longer true.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>scraped <span class="op">=</span> []</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>current_number <span class="op">=</span> starting_number</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> <span class="bu">len</span>(scraped) <span class="op">&lt;</span> target_records:</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    url <span class="op">=</span> base_url.<span class="bu">format</span>(current_number)</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>        output <span class="op">=</span> scrape_UNSD_project(url)</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> output <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="ss">f"scraping </span><span class="sc">{</span>current_number<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>            scraped.append(output)</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span> <span class="pp">AttributeError</span>:</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>        <span class="cf">pass</span></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>    current_number <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>df_scraped <span class="op">=</span> pd.DataFrame(scraped, columns<span class="op">=</span>[<span class="st">'Headline'</span>, <span class="st">'Introduction'</span>])</span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df_scraped.info())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>When using <code>while</code> blocks, exercise caution! If you use a <code>while</code> loop with an end-state that isn’t guaranteed to be met (or might not be met in a reasonable time-frame), your computer will keep executing the same code over and over until the end of time (or Windows forces your computer to update – sorry, I couldn’t resist). In our case, we’ve used a condition that will eventually be broken out of by the code inside the <code>while</code> block. Here’s how:</p>
+<ul>
+<li>First, it uses <code>format</code> to replace the curly braces inside <code>base_url</code> with the current value of <code>starting_number</code>, giving us our <code>url</code>.</li>
+<li>Second, it attempts to retrieve text data using the <code>url</code> and our <code>scrape_UNSD_project</code> function, storing the result in <code>output</code>.</li>
+<li>After checking to see if <code>output</code> contains anything (it can sometimes be empty, which we don’t want), our code appends <code>output</code> to our <code>scraped</code> list.</li>
+<li>Finally, it increments <code>starting_number</code> by one and if the number of successful scrapes is fewer than 30, it uses the new <code>starting_number</code> to begin another scrape on the next project.</li>
+</ul>
+<p>So, now we have a <code>dataframe</code> containing text describing 30 different projects from the UNSD website and we’ve accomplished this without having to navigate the site using links or redirects – we just changed one number! While such an approach is extremely useful, it isn’t compatible with all websites. If the approaches we’ve covered thus far won’t work (which can happen when a website is dynamically generated or interactive, for instance), then we’ll have to call in the cavalry. In this case, the cavalry is a Python package called <code>selenium</code>. Since my publishers have unreasonably insisted that this book should be carryable without the assistance of a hydraulic lift, we’re not going to have room to cover <code>selenium</code> in-text. If you want to read more about how to scrape the interactive web, we’ve prepared an online supplement that will guide you through the process.</p>
+</section>
+</section>
+<section id="ethical-and-legal-issues-in-web-scraping" class="level3" data-number="7.4.2">
+<h3 data-number="7.4.2" class="anchored" data-anchor-id="ethical-and-legal-issues-in-web-scraping"><span class="header-section-number">7.4.2</span> ETHICAL AND LEGAL ISSUES IN WEB SCRAPING</h3>
+<p>While it’s theoretically possible to systematically step through every page and element of a website and store it (sometimes called a site-dump), most websites would prefer you didn’t, may forbid it in their Terms of Service, or in some cases, may seek legal recourse if you were to use that data anywhere. Thankfully, academic researchers are under greater scrutiny over the ethics of their work than your average web-hacker trying to harvest content, but you may not have your research plan vetted by people who understand the legal and ethical issues involved in web scraping, and even if you do, you shouldn’t rely on them to tell you whether your plan is going to violate the Terms of Service for a website. You most definitely want to avoid a threat of legal action when web scraping, so be sure you are <em>always</em> checking the Terms of Service for any website you scrape.</p>
+<p>A general rule to follow here is that if a website wants to provide users access to data at scale, they will setup an API to provide it. If they haven’t, err on the side of <em>not</em> collecting data at scale, and limit your data collection efforts to what you need rather than gathering all of it and filtering later. You may recall that websites will sometimes deny service after receiving too many requests. Sometimes, their infrastructure can struggle to even send out the needed denials of service, and will crash. It’s very unlikely that you could cause this type of problem, which is usually performed by many computers at once in a distributed denial of service (DDoS) attack that is either orchestrated or the product of computer viruses. That said, it is likely you will run across denial of service errors, perhaps when doing a more extensive URL iteration like in the example above, and may want to think about implementing a modest rate limit in your script.</p>
+<p>Finally, there is not yet a widely-held standard, in academia or elsewhere, for the boundaries between ethical and unethical web scraping. The most widely-held position seems to be that public content online should be treated with the same standards that one would apply when observing people in public settings, as ethnographers do. If this is the position you take, you may sometimes need to think very carefully about what types of online content is “reasonably public.” If you were scraping some personal blog platform, for example, and found that you could iterate through URLs to access pages that aren’t linked to anywhere, this likely would not be considered “reasonably public” because it’s possible the blog owner thought they were no longer accessible. This ongoing debate will inevitably include web-scraping practices, so should be an important one to research and keep track of. We’ll discuss these issues in more depth in Chapter 19.</p>
+<blockquote class="blockquote">
+<p><strong>Box</strong>. To further develop your web scraping skills, I strongly recommend Mitchell’s <span class="citation" data-cites="mitchell2018web">(<a href="references.html#ref-mitchell2018web" role="doc-biblioref">2018</a>)</span> <em>Web Scraping with Python</em>. It covers a broader range of practical problems than I cover in this chapter, including parsing documents such as PDFs.</p>
+</blockquote>
+</section>
+</section>
+<section id="conclusion" class="level2" data-number="7.5">
+<h2 data-number="7.5" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">7.5</span> CONCLUSION</h2>
+<section id="key-points" class="level3" data-number="7.5.1">
+<h3 data-number="7.5.1" class="anchored" data-anchor-id="key-points"><span class="header-section-number">7.5.1</span> Key Points</h3>
+<ul>
+<li>Web scraping is a powerful approach to collecting data from the web, useful for when data is not available in an API, but could still be obtained ethically and legally</li>
+<li>BeautifulSoup is a very useful tool for processing HTML from websites, but cannot obviate the need to understand a web page’s Document Object Model (DOM)</li>
+<li>The “iron rule of web scraping”: you must put in the proper time and energy to investigating the source code for the pages you want to scrape</li>
+<li>The only true limits on the data you can collect from scraping the web are ethical and legal</li>
+</ul>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="ref-duckett2011html" class="csl-entry" role="listitem">
+Duckett, Jon. 2011. <em>HTML &amp; CSS: Design and Build Websites</em>. Vol. 15. Wiley Indianapolis, IN.
+</div>
+<div id="ref-mitchell2018web" class="csl-entry" role="listitem">
+Mitchell, Ryan. 2018. <em>Web Scraping with Python: Collecting More Data from the Modern Web</em>. "O’Reilly".
+</div>
+</div>
+</section>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./05-web-data-apis.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Web data (APIs)</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./07-audio-image-and-document-data.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Audio, image, and document data</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>
