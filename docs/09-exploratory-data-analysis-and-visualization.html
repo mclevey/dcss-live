@@ -1,0 +1,1805 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.56">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>9&nbsp; Exploratory data analysis and visualization – Doing Computational Social Science&lt;br&gt;[The **Continuous Development** Edition]{.small}</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./10-association-and-latent-factors.html" rel="next">
+<link href="./08-processing-structured-data.html" rel="prev">
+<link href="./media/logo.png" rel="icon" type="image/png">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="custom.css">
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./08-processing-structured-data.html">Exploring Data</a></li><li class="breadcrumb-item"><a href="./09-exploratory-data-analysis-and-visualization.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Exploratory data analysis and visualization</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="./index.html" class="sidebar-logo-link">
+      <img src="./media/logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      </a>
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Doing Computational Social Science<br><span class="small">The <strong>Continuous Development</strong> Edition</span></a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/UWNETLAB/dcss_supplementary/tree/master/book/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <div class="dropdown">
+      <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=|url|">
+              <i class="bi bi-twitter pe-1"></i>
+            Twitter
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://www.facebook.com/sharer/sharer.php?u=|url|">
+              <i class="bi bi-facebook pe-1"></i>
+            Facebook
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://www.linkedin.com/sharing/share-offsite/?url=|url|">
+              <i class="bi bi-linkedin pe-1"></i>
+            LinkedIn
+            </a>
+          </li>
+      </ul>
+    </div>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">👋 Hello!</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./00-introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Learning to Do Computational Social Science</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Research Computing</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-getting-started.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Getting Started</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-python-101.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Python 101</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-python-102.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Python 102</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Obtaining Data</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04-sampling-and-survey-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Sampling and survey data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-web-data-apis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Web data (APIs)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06-web-data-scraping.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Web data (Scraping)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-audio-image-and-document-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Audio, image, and document data</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Exploring Data</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08-processing-structured-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Processing Structured Data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09-exploratory-data-analysis-and-visualization.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Exploratory data analysis and visualization</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10-association-and-latent-factors.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Association and latent factors</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11-text-as-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Text as Data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./12-text-similarity-and-latent-semantic-space.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Text similarity and latent semantic space</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./13-social-networks-and-relational-thinking.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Networks: Relationships as Data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./14-structural-similarity-and-latent-social-space.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Structural similarity and latent social space</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Prediction and Inference</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./15-machine-and-statistical-learning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Machine Learning 101</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./16-prediction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Prediction</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./17-probability.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Probability 101</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./18-credibility.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Credibility</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./19-causality.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Causality</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Generative Modeling</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./20-linear-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Bayesian Regression Models with Probabilistic Programming</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./21-multilevel-regression-with-post-stratification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Multilevel regression with post-stratification</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./22-generalized-linear-models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Generalized Linear Models</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./23-causal-analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Causal analysis</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./24-latent-structure-networks.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Latent structure in networks</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./25-latent-topics-text-lda.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Latent topics in text (LDA)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./26-complex-adaptive-systems.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Agent-based Models</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./27-developing-agent-based-models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Diffusion</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">Deep Learning Demystified</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./28-artificial-neural-networks-fnn-rnn-cnn.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Neural networks 101</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./29-processing-natural-language-data-spacy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Processing Natural Language Data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./30-transformers-self-attention.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Transformers, Self-attention architecture</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./31-latent-topics-text-transformers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Modelling latent topics (Transformers)</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text">Professional Responsibilities</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./32-research-ethics-politics-and-practices.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Research Ethics, Politics, and Practices</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./33-next-steps.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Next steps</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./acknowledgements.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Acknowledgements</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./changelog.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Changelog</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./appendix-centrality-formulas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Centrality Formulas</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./appendix-courses.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Courses and Workshops</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#learning-outcomes" id="toc-learning-outcomes" class="nav-link active" data-scroll-target="#learning-outcomes"><span class="header-section-number">9.1</span> LEARNING OUTCOMES</a></li>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction"><span class="header-section-number">9.2</span> INTRODUCTION</a></li>
+  <li><a href="#iterative-research-workflows-eda-and-boxs-loop" id="toc-iterative-research-workflows-eda-and-boxs-loop" class="nav-link" data-scroll-target="#iterative-research-workflows-eda-and-boxs-loop"><span class="header-section-number">9.3</span> ITERATIVE RESEARCH WORKFLOWS: EDA AND BOX’S LOOP</a></li>
+  <li><a href="#effective-visualization" id="toc-effective-visualization" class="nav-link" data-scroll-target="#effective-visualization"><span class="header-section-number">9.4</span> EFFECTIVE VISUALIZATION</a></li>
+  <li><a href="#univariate-eda-describing-and-visualizing-distributions" id="toc-univariate-eda-describing-and-visualizing-distributions" class="nav-link" data-scroll-target="#univariate-eda-describing-and-visualizing-distributions"><span class="header-section-number">9.5</span> UNIVARIATE EDA: DESCRIBING AND VISUALIZING DISTRIBUTIONS</a>
+  <ul class="collapse">
+  <li><a href="#imports" id="toc-imports" class="nav-link" data-scroll-target="#imports"><span class="header-section-number">9.5.1</span> Imports</a></li>
+  </ul></li>
+  <li><a href="#multivariate-eda" id="toc-multivariate-eda" class="nav-link" data-scroll-target="#multivariate-eda"><span class="header-section-number">9.6</span> MULTIVARIATE EDA</a>
+  <ul class="collapse">
+  <li><a href="#visualization-with-more-informational-density" id="toc-visualization-with-more-informational-density" class="nav-link" data-scroll-target="#visualization-with-more-informational-density"><span class="header-section-number">9.6.1</span> Visualization with More Informational Density</a></li>
+  </ul></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">9.7</span> CONCLUSION</a>
+  <ul class="collapse">
+  <li><a href="#key-points" id="toc-key-points" class="nav-link" data-scroll-target="#key-points"><span class="header-section-number">9.7.1</span> Key Points</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/UWNETLAB/dcss_supplementary/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./08-processing-structured-data.html">Exploring Data</a></li><li class="breadcrumb-item"><a href="./09-exploratory-data-analysis-and-visualization.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Exploratory data analysis and visualization</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Exploratory data analysis and visualization</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="learning-outcomes" class="level2" data-number="9.1">
+<h2 data-number="9.1" class="anchored" data-anchor-id="learning-outcomes"><span class="header-section-number">9.1</span> LEARNING OUTCOMES</h2>
+<ul>
+<li>Learn about Iterative Research Workflows and Box’s Loop</li>
+<li>Build an intuitive understanding of what makes visualization intuitive and effective</li>
+<li>Explore techniques for visualizaing univariate data and distributions</li>
+<li>Explore techniques for Exploratory Data Analysis for multivariate data</li>
+</ul>
+</section>
+<section id="introduction" class="level2" data-number="9.2">
+<h2 data-number="9.2" class="anchored" data-anchor-id="introduction"><span class="header-section-number">9.2</span> INTRODUCTION</h2>
+<p>In this chapter, we’ll continue to build foundational data processing skills by introducing the basics of data visualization and <strong>exploratory data analysis (EDA)</strong>. EDA encompasses a broad range of data processing activities that you should <em>always</em> undertake before developing models, but EDA is <em>not</em> limited to beginning of a project. EDA is an important part of developing, criticizing, and re-developing statistical and machine learning models. EDA and model development are intimately linked in <em>iterative</em> workflows. We will focus specifically on the types of EDA that you might perform when you start working with some new data, but you will see EDA throughout the rest of the book in the context of <em>iteratively</em> developing, critiquing, and re-developing models. To clarify, we’ll discuss a simplified version of a generic data analysis workflow known as “Box’s loop”.</p>
+<p>We will make extensive use of the Seaborn package (V0.11+), a high-level statistical visualization package built on top of the older, <em>and more complex</em>, Matplotlib package. Because it’s built on top of Matplotlib, you can usually combine Matplotlib code and Seaborn code, which we will occasionally do to take advantage of the low-level capabilities of Matploblib while working in more user-friendly Seaborn.</p>
+</section>
+<section id="iterative-research-workflows-eda-and-boxs-loop" class="level2" data-number="9.3">
+<h2 data-number="9.3" class="anchored" data-anchor-id="iterative-research-workflows-eda-and-boxs-loop"><span class="header-section-number">9.3</span> ITERATIVE RESEARCH WORKFLOWS: EDA AND BOX’S LOOP</h2>
+<p>The term <strong>exploratory data analysis</strong> (<strong>EDA</strong>) has generally come to refer to the work you do to explore, examine, clean, and make sense of a dataset prior to any formal statistical modelling (<strong>confirmatory data analysis</strong>). The idea is that one should carefully examine their data (i.e., exploration) before getting into hypothesis testing (i.e., confirmation). However, it is important to understand that the relationship between “exploratory” and “confirmatory” analysis is rarely clear cut. Some prominent statisticians and social scientists have proposed approaches that intentionally combine the two. Andrew <span class="citation" data-cites="gelman2004exploratory">Gelman (<a href="references.html#ref-gelman2004exploratory" role="doc-biblioref">2004</a>)</span> has pointed out that we can think of both approaches to analysis as sharing the same underlying logic: comparing what we observe relative to an <em>implicit</em> or <em>explicit</em> statistical model. In between these two views – EDA as first steps, EDA as a kind of implicit modelling – is the idea that EDA is an important part of iteratively developing almost any model, simple or complex. Let’s briefly consider this framework for thinking about the role of EDA in quantitative and computational research. We will do so using an idealized framework known as <strong>Box’s loop</strong>, first proposed by the statistician George Box.</p>
+<p>In our idealized framework, the first thing we do is <em>build a model</em>. Note that data hasn’t entered the picture yet. In our ideal world, we have a question that we want to answer. Perhaps we want to know “How does education relate to yearly income in Canada?” To answer that question, we create a model that captures the salient features of our question. “I think education is positively associated with income, but I also think income is related to age, and education is probably related to age.” This model should tell us what kind of data we will need, which is why data enters in the second step: we should be collecting or using data with our model in mind <em>first</em>. One of the things that makes data “good” is its appropriateness for the model you are using. It doesn’t matter how accurate your data on house fly reproduction cycles are if you want to answer a question about dragonfly eating habits. In step 2, we <em>analyze our data</em> to answer our question. Oftentimes, we get a much better idea about how good our data really is after we analyze it. Technically, we should now have an answer to our question. However, in step three, we consider the process and results of our analysis. Does the model make sense? Is there anything surprising? If there is, does that mean there’s an unforseen issue with the data? Is this the best answer to my question that I can get? Science is messy, and it’s a rare person indeed who never makes a mistake or knows exactly how a research project will proceed. So, rather than accept the first answer we find, we find things that worked, things that didn’t, and we <em>criticize our model</em>. In step 4, we take our critique from step 3 and use that to <em>revise our model</em>, which takes us back to step 1. We continue this process until we are satisfied with our model and data, at which point we can break the loop and apply the model.</p>
+<p>Returning to exploratory data analysis, let’s pretend to be Gelman and consider why we visualize data. We want to answer a question, even if the question is something as simple as “how is height distributed in Canada?” To answer that question, we (1) <em>build a model</em>. Perhaps our model is “Height is measured in centimeters, which is a continuous variable. I can make a histogram that will tell me how it is distributed.” Then, we (2) <em>analyze our data</em>. We make our histogram. Then, we consider how good our visualization is at answering our question; we <em>criticize our model</em> by considering what worked, what didn’t. Perhaps we noticed that height is actually a bimodal distribution after visualizing it. Then we (4) use that critique to <em>revise our model</em>. Perhaps we decide to plot height as a histogram, but conditional on sex. We repeat this process until we are satisfied and (5) <em>apply our model</em>, actually drawing conclusions about the distribution of height in Canada.</p>
+<p>When we get to statistical models later, you may discover that this is a doubly-nested process. You will build a statistical model, analyze data, criticize the model using EDA (start a sub-loop here), revise the statistical model, and repeat the main loop until you’re satisfied or give up. This process is summarized in Figure <a href="10-association-and-latent-factors.html#fig-08_01" class="quarto-xref">Figure&nbsp;<span>10.1</span></a>. In later chapters, you’ll see variations on this basic loop.</p>
+<p><embed src="figures/boxes_loop_init.pdf" class="img-fluid"></p>
+<p>For our purposes we will work on developing your EDA skills in the more classical sense: the first steps you take with a new dataset. However, I will continue to emphasize the iterative development process of visualizations, in part to help prepare you; once you have those skills, you can and should use them in the broader context of statistical model criticism and iterative development. You will continue to develop these skills as you work through the book, and you may find yourself further appreciating Gelman’s argument that even this EDA work is a kind of modelling, which further tightens the links between the kind of work we will consider here and the more complex statistical and machine learning models we will focus on in later chapters.</p>
+<p>EDA is often broken down into graphical and non-graphical methods for analyzing single variables (i.e., <strong>univariate graphical</strong> and <strong>univariate non-graphical</strong>) and graphical and non-graphical methods for analyzing two or more variables (i.e., <strong>multivariate graphical</strong> and <strong>multivariate non-graphical</strong>). We will discuss methods within these four categories that can be used for categorical and quantitative data. First, let’s first discuss visualization <em>in general</em> - specifically what differentiates good plots from bad plots, and ways to make creating good plots a bit easier.</p>
+</section>
+<section id="effective-visualization" class="level2" data-number="9.4">
+<h2 data-number="9.4" class="anchored" data-anchor-id="effective-visualization"><span class="header-section-number">9.4</span> EFFECTIVE VISUALIZATION</h2>
+<section id="guidelines-for-effective-visualization" class="level4" data-number="9.4.0.1">
+<h4 data-number="9.4.0.1" class="anchored" data-anchor-id="guidelines-for-effective-visualization"><span class="header-section-number">9.4.0.1</span> Guidelines for Effective Visualization</h4>
+<p>I’ll admit, I’m fastidious when it comes to the aesthetics of data visualization. But when I talk about good visualizations versus bad ones, I’m <em>not</em> talking about the fine distinctions between colors or typefaces. You can create good visualizations while being clueless about those things. No, I’m talking about more fundamental things like knowing what you want to learn or communicate.</p>
+<p>Creating graphs to visualize distributions, relationships, and so on, is relatively straightforward in Python. Creating <em>good</em> graphs has little to do with Python and everything to do with the decisions you make about what to show and how to show it. Some of those decisions are high level, like the <em>kind</em> of graph and how it should be structured. Other decisions are low-level, like selecting colors and shapes. What differentiates a really good visualization from a really bad one is rarely taste. It’s almost always the amount of thought behind those fundamental decisions.</p>
+<p>As Kieran Healy points out, “bad graphs” tend to be bad for one of three reasons:</p>
+<ol type="1">
+<li><strong>Aesthetics</strong>: there are a unnecessary details or modifications (e.g.&nbsp;unnecessary 3D effects, shadows, rotated axes). These “infographic” visualizations may be memorable but are difficult to interpret correctly. <strong>Avoid creating these at all costs.</strong> If a collaborator asks you to make one, politely decline.</li>
+<li><strong>Substantive data problems</strong>: the graph <em>looks</em> good and follows best practices, but the data themselves are bad or have been incorrectly processed, sending a misleading message. Avoid this by doing extensive EDA.</li>
+<li><strong>Being inattentive to the realities of human perception</strong>, and therefore making poor visualization choices that may mislead you or your readers.</li>
+</ol>
+<p>As I have stressed, effective data visualization requires adopting an <em>iterative approach</em>. Start by thinking carefully about what you want to learn (if you’re doing exploratory data analysis), or what you want to communicate (if you’re producing a graph for publication). Try sketching the plot with pen and paper. It refines your thinking before you start coding and helps clarify what <em>kind</em> of plot you need.</p>
+<p>Once you know what you want and need, <em>then</em> you start coding. Again: <em>iterate</em>. Start with the default settings for the <em>kind</em> of plot you want, such as a scatterplot. Then gradually modify the defaults, and add and remove elements, until you have a plot that clearly shows what you want it to show. Work slowly: change one thing at a time.</p>
+<p>If you think of visualization as a communication problem, you need to consider the realities of <strong>perception</strong> and the <strong>human vision system</strong>. Perception is more complicated than simply creating a 1:1 mental representation of what we are looking at. Think of the many examples of visual effects and optical illusions.</p>
+<p>There is a sizable empirical literature on perception and statistical visualization, largely built on Bill Cleveland’s work in the 1980s and 1990s. Psychologists, statisticians, and applied data analysts have documented many specific factors that affect the probability of drawing an incorrect conclusion from a graph. These include:</p>
+<ul>
+<li>Selecting the wrong type of colour palette increases the chance of mis-perception (e.g.&nbsp;it’s diverging when it should be qualitative, it’s not colour-blind friendly).</li>
+<li>Using area or angles to represent important properties increases the chance of mis-perception because humans are inherently bad at comparing similar angles and areas.</li>
+<li>Using length and position increase the chance of <em>correct</em> perceptions because humans are good at comparing differences in length and position. Think of these first.</li>
+</ul>
+<p>This leads to some useful guidelines. One of the most important, and <em>very</em> easy to implement, comes from knowing we have an easier time perceiving some colours, shapes, and relationships than others. Visualizations that require comparing angles and areas – such as pie charts, bubble charts, and stacked bar charts – are non-starters. Follow that basic rule. You’ll avoid plenty of bad and misleading visualizations.</p>
+<p>Pie charts are easy to criticize, but are stacked bar charts and bubble charts really all that bad? Yes. With stacked bar charts, each block has a different baseline / starting point in each bar. Given how bad we are at comparing areas, your reader will be more likely to interpret your graph incorrectly. Bubble charts are slightly more complex. Sometimes, it <em>can</em> be effective to change the size of points in a scatterplot, but be careful, and you shouldn’t expect a reader to perceive small differences between points.</p>
+<p>Distances are very important and meaningful in almost all data visualizations. <em>Most of the time</em>, bar graphs and dot plots should have a <span class="math inline">\(y\)</span>-axis that starts at 0, but <em>contrary to common wisdom</em>, there are some <strong>rare</strong> cases when this is not the best choice. Generally, default to axes that start at 0, but don’t be dogmatic. Again, know exactly what you want to show and why. If you want to be instantly discredited by a quantitatively-literate reader, exaggerate differences by manipulating the range of the y-axis. Otherwise, <em>don’t do this!</em></p>
+<p>Humans also tend to see patterns in data, even when those patterns are not actually meaningful. As such, it’s usually a mistake to use visualizations without doing some statistical modelling, <em>just as it is a mistake to model your data without visualizing it</em>. Recall Gelman’s argument; all EDA is done in reference to an implicit or explicit model. While statistical modelling will come later, I want to emphasize that you should pursue these two types of analysis simultaneously. In this chapter, we pair visualization with summary statistics that are commonly used in EDA.</p>
+<p>In addition, here are some straightforward rules to reduce the chances of creating bad visualizations:</p>
+<ol type="1">
+<li>If you can show what you need to using a graphic that is widely-used and well-understood, do so. Don’t invent new graphics for the sake of it. Make it easy for you and your readers to interpret your graphs.</li>
+<li>Less ink is better than more ink. Simplify as much as possible, but no more. Find the balance of information density and visual minimalism by working on your visualizations <em>iteratively</em>.</li>
+<li>Don’t create 3D visualizations of any plot. If you have to add a third dimension, consider using either colour or shape, but not both.</li>
+<li>The dimensions of a line plot have a <em>huge</em> effect on our perception of slope / rate of change. Exercise extreme care when selecting the dimensions. <strong>Do not intentionally mislead your readers</strong>.</li>
+<li>Do not vary colour or shape unless you are encoding important information in colours and shapes. A multi-coloured bar plot might look nicer than a solid grey, but if the colours aren’t meaningful, it dramatically increases the chances of mis-perception.</li>
+</ol>
+<p>Finally, ask others to critique your visualizations and practice! Learn any new skill takes time and effort.</p>
+<p>Now, let’s get into the code!</p>
+<blockquote class="blockquote">
+<p><strong>Further Reading</strong></p>
+<p>In addition to what’s provided here, I suggest reading <span class="citation" data-cites="healy2014data">Healy and Moody (<a href="references.html#ref-healy2014data" role="doc-biblioref">2014</a>)</span> on the state of data visualization in sociology and other social sciences. And though it uses R rather than Python, <span class="citation" data-cites="healy2018data">Healy (<a href="references.html#ref-healy2018data" role="doc-biblioref">2018</a>)</span> is an <em>outstanding</em> introduction to good data visualization practice.</p>
+</blockquote>
+</section>
+</section>
+<section id="univariate-eda-describing-and-visualizing-distributions" class="level2" data-number="9.5">
+<h2 data-number="9.5" class="anchored" data-anchor-id="univariate-eda-describing-and-visualizing-distributions"><span class="header-section-number">9.5</span> UNIVARIATE EDA: DESCRIBING AND VISUALIZING DISTRIBUTIONS</h2>
+<p>We’re going to make use of the VDEM data we used in the previous chapter as the basis for our exploratory data analysis. You should refresh yourself on the data and variables description before proceeding. We will start by reading in the filtered and subsetted dataframe <code>fsdf</code> that we produced earlier and saved as a CSV and produce get the mean, median, and standard deviation from some of its variables.</p>
+<section id="imports" class="level3" data-number="9.5.1">
+<h3 data-number="9.5.1" class="anchored" data-anchor-id="imports"><span class="header-section-number">9.5.1</span> Imports</h3>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib <span class="im">as</span> mpl</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dcss <span class="im">import</span> set_style</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>set_style()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># data was downloaded in chapter 6</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>fsdf <span class="op">=</span> pd.read_csv(<span class="st">'data/vdem/filtered_subset.csv'</span>) </span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>fsdf.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>egal <span class="op">=</span> fsdf[<span class="st">'v2x_egaldem'</span>]</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Median Egalitarian Democracy Score: </span><span class="sc">{</span>egal<span class="sc">.</span>median()<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Mean Egalitarian Democracy Score: </span><span class="sc">{</span>egal<span class="sc">.</span>mean()<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Standard Deviation: </span><span class="sc">{</span>egal<span class="sc">.</span>std()<span class="sc">}</span><span class="ss">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Since the values returned from operations on Series are essentially equivalent to a NumPy array, we can use NumPy methods on quantitative Series. For example, here you can use the <code>round()</code> method to round these descriptives to a few decimal points.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Median Egalitarian Democracy Score: </span><span class="sc">{</span><span class="bu">round</span>(egal.median(),<span class="dv">3</span>)<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Mean Egalitarian Democracy Score: </span><span class="sc">{</span><span class="bu">round</span>(egal.mean(), <span class="dv">3</span>)<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Standard Deviation: </span><span class="sc">{</span><span class="bu">round</span>(egal.std(), <span class="dv">3</span>)<span class="sc">}</span><span class="ss">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If the Series is categorical, we can also easily compute useful information such as the number of unique categories, the size of each category, and so on. For example, you can use the <code>.unique()</code> method to get a list of the unique countries from the <code>country_name</code> Series. Here these values are cast as a list and sliced to display the first 10 elements.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="bu">list</span>(fsdf[<span class="st">'country_name'</span>].unique())[<span class="dv">0</span>:<span class="dv">10</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>With a categorical variable like this, you can also use the <code>value_counts()</code> method to see how many observations you have for <code>country_name</code> in the dataset. Since there are 73, don’t print everything to screen, just peek at the top and the bottom 10 rows.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>fsdf[<span class="st">'country_name'</span>].value_counts().head(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>fsdf[<span class="st">'country_name'</span>].value_counts().tail(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="visualizing-marginal-distributions" class="level4" data-number="9.5.1.1">
+<h4 data-number="9.5.1.1" class="anchored" data-anchor-id="visualizing-marginal-distributions"><span class="header-section-number">9.5.1.1</span> Visualizing Marginal Distributions</h4>
+<p>You should visualize distributions for individual variables (i.e.&nbsp;“<strong>marginal distributions</strong>”) before any more complex analyses. As with numerical summaries, graphical approaches to examining distributions will typically answer questions about the range of values, their central tendency, whether they are highly skewed, whether there are potentially influential outliers, and so on.</p>
+<section id="count-plots-and-frequency-tables-for-categorical-variables" class="level5" data-number="9.5.1.1.1">
+<h5 data-number="9.5.1.1.1" class="anchored" data-anchor-id="count-plots-and-frequency-tables-for-categorical-variables"><span class="header-section-number">9.5.1.1.1</span> Count Plots and Frequency Tables for Categorical Variables</h5>
+<p>For a single categorical variable, we are limited to examining frequencies, percentages, and proportions. For example, you can visualize the number of countries in each geographical region defined by the United Nations (the <code>e_regiongeo</code> categorical variable) using the <code>.countplot()</code> function. You want the bars in the countplot to be horizontal rather than vertical, so use the argument <code>y='e_regiongeo'</code> instead of <code>x='e_regiongeo'</code>. The code below produces Figure <a href="#fig-07_01" class="quarto-xref">Figure&nbsp;<span>9.1</span></a>.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> sns.countplot(data<span class="op">=</span>fsdf, y<span class="op">=</span><span class="st">'e_regiongeo'</span>, color<span class="op">=</span><span class="st">'darkgray'</span>)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'figures/07-01.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-07_01" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-07_01-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/07-01.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-07_01-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.1: caption…
+</figcaption>
+</figure>
+</div>
+<p>This graph could use some improvements. Let’s iterate! First, it would be better if the data were in descending order by counts. Second, it would be better it had region names rather than number IDs. Third, a few small aesthetic adjustments that would improve the overall look of the graph, like removing the black line on the left side of the graph.</p>
+<p>Remember, address these issues one at a time. First deal with the order issue, which can be solved by using the <code>order</code> argument for <code>.countplot()</code>. Tell it to order the bars by sorting the <code>fsdf['e_regiongeo']</code> Series. The code below produces Figure <a href="#fig-07_02" class="quarto-xref">Figure&nbsp;<span>9.2</span></a>.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> sns.countplot(</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    data<span class="op">=</span>fsdf, </span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    y<span class="op">=</span><span class="st">'e_regiongeo'</span>, </span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    color<span class="op">=</span><span class="st">'darkgray'</span>,</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    order <span class="op">=</span> fsdf[<span class="st">'e_regiongeo'</span>].value_counts().index</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>) </span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">'Number of Observations'</span>, ylabel<span class="op">=</span><span class="st">'Geographic Region'</span>)</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'figures/07-02.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-07_02" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-07_02-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/07-02.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-07_02-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.2: caption…
+</figcaption>
+</figure>
+</div>
+<p>Let’s replace the numerical region IDs with a string ID. The dictionary below is the mapping between IDs (keys) and the region strings (values) provided in the VDEM codebook.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>region_strings <span class="op">=</span> {</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    <span class="dv">1</span>: <span class="st">"Western Europe"</span>,</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="dv">2</span>: <span class="st">"Northern Europe"</span>,</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="dv">3</span>: <span class="st">"Southern Europe"</span>,</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="dv">4</span>: <span class="st">"Eastern Europe"</span>,</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    <span class="dv">5</span>: <span class="st">"Northern Africa"</span>,</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    <span class="dv">6</span>: <span class="st">"Western Africa"</span>,</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    <span class="dv">7</span>: <span class="st">"Middle Africa"</span>,</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>    <span class="dv">8</span>: <span class="st">"Eastern Africa"</span>,</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>    <span class="dv">9</span>: <span class="st">"Southern Africa"</span>,</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>    <span class="dv">10</span>: <span class="st">"Western Asia"</span>,</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>    <span class="dv">11</span>: <span class="st">"Central Asia"</span>,</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>    <span class="dv">12</span>: <span class="st">"East Asia"</span>,</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>    <span class="dv">13</span>: <span class="st">"South-East Asia"</span>,</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>    <span class="dv">14</span>: <span class="st">"South Asia"</span>,</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>    <span class="dv">15</span>: <span class="st">"Oceania"</span>, <span class="co"># (including Australia and the Pacific)</span></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>    <span class="dv">16</span>: <span class="st">"North America"</span>,</span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>    <span class="dv">17</span>: <span class="st">"Central America"</span>,</span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>    <span class="dv">18</span>: <span class="st">"South America"</span>,</span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>    <span class="dv">19</span>: <span class="st">"Caribbean"</span> <span class="co"># (including Belize, Cuba, Haiti, Dominican Republic and Guyana)</span></span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>You can now use a Pandas method called <code>.replace()</code> to replace each numerical ID with the string representation.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>fsdf.replace({<span class="st">'e_regiongeo'</span>: region_strings}, inplace<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>inplace=True</code> changes the values in the original dataframe. If you create the same countplot again, the region names will be used as the labels on the y-axis. The code below produces Figure <a href="#fig-07_03" class="quarto-xref">Figure&nbsp;<span>9.3</span></a>.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> sns.countplot(</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    data<span class="op">=</span>fsdf, </span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    y<span class="op">=</span><span class="st">'e_regiongeo'</span>, </span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    color<span class="op">=</span><span class="st">'darkgray'</span>,</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    order <span class="op">=</span> fsdf[<span class="st">'e_regiongeo'</span>].value_counts().index</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>sns.despine(left<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">'Number of Observations'</span>, ylabel<span class="op">=</span><span class="st">''</span>)</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>ax.xaxis.set_major_formatter(mpl.ticker.StrMethodFormatter(<span class="st">'</span><span class="sc">{x:,.0f}</span><span class="st">'</span>)) <span class="co"># comma formats x-axis</span></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'figures/07-03.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-07_03" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-07_03-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/07-03.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-07_03-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.3: caption…
+</figcaption>
+</figure>
+</div>
+<p>We can easily produce frequency tables with Pandas; in fact, we have already done this using <code>.value_counts()</code> at the country-level. The code below creates a frequency table for the same data you just plotted.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>fsdf[<span class="st">'e_regiongeo'</span>].value_counts()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="univariate-histograms-and-density-estimation" class="level5" data-number="9.5.1.1.2">
+<h5 data-number="9.5.1.1.2" class="anchored" data-anchor-id="univariate-histograms-and-density-estimation"><span class="header-section-number">9.5.1.1.2</span> Univariate Histograms and Density Estimation</h5>
+<p>One of the first things you can do in EDA is create a histogram for each of the variables you are interested in. A histogram visualizes “where” your data is clustered. It’s a bar chart, where the x-axis contains the range of all values for a particular variable and the y-axis indicates a count of the number of observations. The height of each bar represents the number of observations of x values between the left and right boundaries of each bar. Histograms are a more easily digestible summary of a variable than the <code>.describe()</code> method used earlier.</p>
+<p>Let’s use Seaborn’s <code>histplot()</code> to create a histogram of the egalitarian democracy index variable from the <code>fsdf</code> dataframe. The code below produces Figure <a href="#fig-07_04" class="quarto-xref">Figure&nbsp;<span>9.4</span></a>.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> sns.histplot(data<span class="op">=</span>fsdf, x<span class="op">=</span><span class="st">'v2x_egaldem'</span>)</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>sns.despine(left<span class="op">=</span><span class="va">True</span>, right<span class="op">=</span><span class="va">True</span>, top<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">'Egalitarian Democracy Index'</span>, ylabel<span class="op">=</span><span class="st">'Count'</span>)</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>ax.yaxis.set_major_formatter(mpl.ticker.StrMethodFormatter(<span class="st">'</span><span class="sc">{x:,.0f}</span><span class="st">'</span>))</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'figures/07-04.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-07_04" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-07_04-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/07-04.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-07_04-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.4: caption…
+</figcaption>
+</figure>
+</div>
+<p>The histogram clearly shows that most of the <code>v2x_egaldem</code> values in the dataset can be found at the lower end of the range, quickly sloping down and then evening out with a few gentle peaks. Note that the function has made an important decision implicitly - you did’ntt specify the number of bins, so it used a built-in method that provides generally good defaults. However, you should always double-check default parameters. Overly wide bins can “hide” peaks or troughs in the distribution if they fit entirely inside a bin. Overly narrow bins can produce visualizations that are especially sensitive to “noise”. Narrower bins will tend to result in graphs with sharper spikes as small clusters and gaps get magnified.</p>
+<p>You can manually check for these cases by providing explicit values to the <code>bins</code> or <code>binwidth</code> parameters. Below, I provide extreme examples of overly wide and narrow bins to highlight the issues with both. The code below produces Figure <a href="#fig-07_05" class="quarto-xref">Figure&nbsp;<span>9.5</span></a>.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> sns.histplot(data<span class="op">=</span>fsdf, x<span class="op">=</span><span class="st">'v2x_egaldem'</span>, bins<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>sns.despine(left<span class="op">=</span><span class="va">True</span>, right<span class="op">=</span><span class="va">True</span>, top<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">'Egalitarian Democracy Index'</span>, ylabel<span class="op">=</span><span class="st">'Count'</span>)</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>ax.yaxis.set_major_formatter(mpl.ticker.StrMethodFormatter(<span class="st">'</span><span class="sc">{x:,.0f}</span><span class="st">'</span>))</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'figures/07-05.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-07_05" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-07_05-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/07-05.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-07_05-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.5: caption…
+</figcaption>
+</figure>
+</div>
+<p>The code below produces Figure <a href="#fig-07_06" class="quarto-xref">Figure&nbsp;<span>9.6</span></a>.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> sns.histplot(data<span class="op">=</span>fsdf, x<span class="op">=</span><span class="st">'v2x_egaldem'</span>, binwidth <span class="op">=</span> <span class="fl">0.001</span>)</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>sns.despine(left<span class="op">=</span><span class="va">True</span>, right<span class="op">=</span><span class="va">True</span>, top<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">'Egalitarian Democracy Index'</span>, ylabel<span class="op">=</span><span class="st">'Count'</span>)</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>ax.yaxis.set_major_formatter(mpl.ticker.StrMethodFormatter(<span class="st">'</span><span class="sc">{x:,.0f}</span><span class="st">'</span>))</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'figures/07-06.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-07_06" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-07_06-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/07-06.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-07_06-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.6: caption…
+</figcaption>
+</figure>
+</div>
+<p>We can also use kernel density estimation (KDE) to visualize a distribution. KDE is a technique for estimating the probability density function of a random variable. Rather than visualizing the raw counts in combined bins, it estimates the probability of every possible value using a smooth function. KDE attempts to reduce the random noise in the data, smoothing out the spikes.</p>
+<p>You can add a KDE line to histograms by providing the parameter <code>kde = True</code>. The code below produces Figure <a href="#fig-07_07" class="quarto-xref">Figure&nbsp;<span>9.7</span></a>.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> sns.histplot(data<span class="op">=</span>fsdf, x<span class="op">=</span><span class="st">'v2x_egaldem'</span>, kde<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>sns.despine(left<span class="op">=</span><span class="va">True</span>, right<span class="op">=</span><span class="va">True</span>, top<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">'Egalitarian Democracy Index'</span>, ylabel<span class="op">=</span><span class="st">'Count'</span>)</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>ax.yaxis.set_major_formatter(mpl.ticker.StrMethodFormatter(<span class="st">'</span><span class="sc">{x:,.0f}</span><span class="st">'</span>))</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'figures/07-07.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-07_07" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-07_07-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/07-07.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-07_07-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.7: caption…
+</figcaption>
+</figure>
+</div>
+<p>Seaborn provides a large number of ways to customize and refine your visualizations. However, with great power comes great responsibility. In this case, you are responsible for creating visualizations that make sense, because the package may not stop you from making mistakes. Consider the previous histogram with <code>binwidth=1</code>. The entire range of <code>v2x_egaldem</code> is less than 1. The visualization is technically possible, though certainly useless. I left the KDE line to help keep track of where the data actually is. The code below produces Figure <a href="#fig-07_08" class="quarto-xref">Figure&nbsp;<span>9.8</span></a>.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> sns.histplot(fsdf[<span class="st">'v2x_egaldem'</span>], kde<span class="op">=</span><span class="va">True</span>, binwidth<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>sns.despine(left<span class="op">=</span><span class="va">True</span>, right<span class="op">=</span><span class="va">True</span>, top<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">'Egalitarian Democracy Index'</span>, ylabel<span class="op">=</span><span class="st">'Count'</span>)</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>ax.yaxis.set_major_formatter(mpl.ticker.StrMethodFormatter(<span class="st">'</span><span class="sc">{x:,.0f}</span><span class="st">'</span>))</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'figures/07-08.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-07_08" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-07_08-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/07-08.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-07_08-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.8: caption…
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="marginal-empirical-cumulative-distributions" class="level5" data-number="9.5.1.1.3">
+<h5 data-number="9.5.1.1.3" class="anchored" data-anchor-id="marginal-empirical-cumulative-distributions"><span class="header-section-number">9.5.1.1.3</span> Marginal Empirical Cumulative Distributions</h5>
+<p>Empirical Cumulative Distributions (ECDs) combine several of the advantages of the previously described visualizations. Unlike histograms, you do not need to bin your data because every data point is represented. This makes it easy to assess the shape of the distribution. For example, one can easily visually identify the five-number summary. Finally, they make it much easier to compare multiple distributions.</p>
+</section>
+<section id="plotting-empirical-cumulative-distributions" class="level5" data-number="9.5.1.1.4">
+<h5 data-number="9.5.1.1.4" class="anchored" data-anchor-id="plotting-empirical-cumulative-distributions"><span class="header-section-number">9.5.1.1.4</span> Plotting Empirical Cumulative Distributions</h5>
+<p>To visualize an ECD, set one axis to be the variable of interest. The second axis represents the <em>proportion of observations that have a value equal to or lower than a given cutoff point</em>. Consider a five-number summary. The five numbers are the minimum value, the first, second, and third quartiles, and the maximum value. If a point on an ECD represents a value of our variable and the proportion of observations with equal or lower value, the minimum value must be given by the very first point: the lowest, and leftmost point on the plot. The first quartile is necessarily found at the point where proportion equals 0.25. The second quartile is where proportion equals 0.50, and so on for the third quartile, and the maximum value.</p>
+<p>Since the proportion axis captures each observation and all lower-valued ones, proportion <em>can never decrease as the variable increases</em>. Unfortunately, ECDs are less common than point or box-based visualization techniques, so we have less experience reading them. Like all skills though, it can be developed with time and practice. Most importantly, you can think of the slope of the line as telling you where data is clustered. A steep slope indicates a large portion of the data is clustered around those values. Consider the ECD of <code>v2x_egaldem</code>. The code below produces Figure <a href="#fig-07_09" class="quarto-xref">Figure&nbsp;<span>9.9</span></a>.</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> sns.displot(fsdf, x<span class="op">=</span><span class="st">"v2x_egaldem"</span>, kind<span class="op">=</span><span class="st">"ecdf"</span>, color<span class="op">=</span><span class="st">'darkgray'</span>)</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">'Egalitarian Democracy Index'</span>)</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>plt.xlim(<span class="dv">0</span>, <span class="dv">1</span>) </span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'figures/07-09.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-07_09" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-07_09-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/07-09.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-07_09-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.9: caption…
+</figcaption>
+</figure>
+</div>
+<p>The slope shows us that proportion rises very rapidly between <code>v2x_egaldem</code> values of 0.0 and 0.2. Much of the data is clustered in that area, and the slope slowly tapers off afterwards, telling us the same thing we saw in the histogram: the number of observations decreases as <code>v2x_egaldem</code> increases, with a slight blip around 0.75.</p>
+<p>Histograms, kernel density estimation, and empirical cumulative distributions have different strengths and weaknesses; each makes some things easier to see and others harder. I advise you to use all three types when exploring your data.</p>
+</section>
+</section>
+</section>
+</section>
+<section id="multivariate-eda" class="level2" data-number="9.6">
+<h2 data-number="9.6" class="anchored" data-anchor-id="multivariate-eda"><span class="header-section-number">9.6</span> MULTIVARIATE EDA</h2>
+<section id="visualizing-conditional-distributions" class="level4" data-number="9.6.0.1">
+<h4 data-number="9.6.0.1" class="anchored" data-anchor-id="visualizing-conditional-distributions"><span class="header-section-number">9.6.0.1</span> Visualizing Conditional Distributions</h4>
+<p>Sometimes we might want to visualize a variable of interest conditioned on another variable. Perhaps we want to visualize only those instances of a variable <span class="math inline">\(X\)</span> that are associated with a particular value of <span class="math inline">\(Y\)</span>.</p>
+<section id="conditional-histograms" class="level5" data-number="9.6.0.1.1">
+<h5 data-number="9.6.0.1.1" class="anchored" data-anchor-id="conditional-histograms"><span class="header-section-number">9.6.0.1.1</span> Conditional Histograms</h5>
+<p>Let’s visualize the egalitarian index of countries, conditioned on whether the country is a democracy or not. A conditional distribution will exclude any observations that do not meet the condition, so for completeness, we can visualize both cases separately, but side-by-side.</p>
+<p>The <code>displot</code> function allows us to visualize univariate (a single variable) or bivariate (two variables) data distributions across multiple subplots. Below, we will create a visualization that displays a <code>v2x_egaldem</code> histogram for each value of <code>e_boix_regime</code>, a binary variable. Thus, when we give the column parameter <code>col</code> the values for <code>e_boix_regime</code>, we should get 2 columns, one for each value it can take. The code below produces Figure <a href="#fig-07_10" class="quarto-xref">Figure&nbsp;<span>9.10</span></a>.</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> sns.displot(fsdf, x<span class="op">=</span><span class="st">"v2x_egaldem"</span>, col<span class="op">=</span><span class="st">"e_boix_regime"</span>, multiple<span class="op">=</span><span class="st">"dodge"</span>)</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">'Egalitarian Democracy Index'</span>)</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'figures/07-10.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-07_10" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-07_10-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/07-10.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-07_10-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.10: caption…
+</figcaption>
+</figure>
+</div>
+<p>The result we get is the two conditional distribution histograms above. If you were to add the two together, you would get the original <code>v2x_egaldem</code> marginal distribution histogram we produced earlier. While this method makes very clean graphs, it can be hard to compare the graphs, especially if you want to graph many different conditions. One way around this would be to plot both conditional distributions on the same plot, but colour them differently and make them slightly transparent. We can do this by passing <code>e_boix_regime</code> to the <code>hue</code> parameter, rather than <code>col</code>. The code below produces Figure <a href="#fig-07_11" class="quarto-xref">Figure&nbsp;<span>9.11</span></a>.</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>grayscale_cmap <span class="op">=</span> sns.cubehelix_palette(</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    <span class="dv">50</span>, </span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>    hue<span class="op">=</span><span class="fl">0.05</span>, </span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>    rot<span class="op">=</span><span class="dv">0</span>, </span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>    light<span class="op">=</span><span class="fl">0.9</span>, </span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>    dark<span class="op">=</span><span class="dv">0</span>, </span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>    as_cmap<span class="op">=</span><span class="va">True</span></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>grayscale_palette <span class="op">=</span> sns.color_palette(<span class="st">"cubehelix"</span>, <span class="dv">50</span>)</span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> sns.displot(</span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>    fsdf, </span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span><span class="st">"v2x_egaldem"</span>, </span>
+<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a>    hue<span class="op">=</span><span class="st">"e_boix_regime"</span>, </span>
+<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a>    palette<span class="op">=</span>grayscale_palette</span>
+<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">'Egalitarian Democracy Index'</span>)</span>
+<span id="cb21-22"><a href="#cb21-22" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'figures/07-11.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-07_11" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-07_11-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/07-11.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-07_11-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.11: caption…
+</figcaption>
+</figure>
+</div>
+<p>This plot makes it much easier to compare the two distributions, and we can clearly see where they overlap and don’t. However, it adds visual clutter and can quickly become hard to read as more conditions are added.</p>
+</section>
+<section id="conditional-kde" class="level5" data-number="9.6.0.1.2">
+<h5 data-number="9.6.0.1.2" class="anchored" data-anchor-id="conditional-kde"><span class="header-section-number">9.6.0.1.2</span> Conditional KDE</h5>
+<p>As before, we can add KDEs to existing histograms by passing <code>kde = True</code>, or we may visualize just the KDE to reduce visual clutter by passing <code>kind = "kde"</code>. The code below produces Figure <a href="#fig-07_12" class="quarto-xref">Figure&nbsp;<span>9.12</span></a>.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> sns.displot(fsdf, x<span class="op">=</span><span class="st">"v2x_egaldem"</span>, hue<span class="op">=</span><span class="st">"e_boix_regime"</span>, kde <span class="op">=</span> <span class="va">True</span>, palette<span class="op">=</span>grayscale_palette)</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">'Egalitarian Democracy Index'</span>)</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'figures/07-12.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-07_12" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-07_12-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/07-12.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-07_12-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.12: caption…
+</figcaption>
+</figure>
+</div>
+<p>The code below produces Figure <a href="#fig-07_13" class="quarto-xref">Figure&nbsp;<span>9.13</span></a>.</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> sns.displot(</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>    fsdf, </span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span><span class="st">"v2x_egaldem"</span>, </span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>    hue<span class="op">=</span><span class="st">"e_boix_regime"</span>, </span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>    kind <span class="op">=</span> <span class="st">"kde"</span>, </span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">'Egalitarian Democracy Index'</span>)</span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'figures/07-13.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-07_13" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-07_13-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/07-13.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-07_13-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.13: caption…
+</figcaption>
+</figure>
+</div>
+<p>In all of these plots, countries with a value of <code>1.0</code> for <code>e_boix_regime</code> are electoral democracies. Those with <code>0.0</code> are not. The comparative plots we have been creating show, unsurprisingly, that non-democratic countries tend to have lower scores on the Egalitarian Democracy Index.</p>
+</section>
+<section id="conditional-ecds" class="level5" data-number="9.6.0.1.3">
+<h5 data-number="9.6.0.1.3" class="anchored" data-anchor-id="conditional-ecds"><span class="header-section-number">9.6.0.1.3</span> Conditional ECDs</h5>
+<p>Extending an ECD to conditional distributions is as easy as passing <code>e_boix_regime</code> to the <code>hue</code> parameter. Consider the previous example of plotting the histograms of <code>v2x_egaldem</code> conditioned on <code>e_boix_regime</code>. Histograms involve a lot of “ink”, resulting in a lot of visual clutter compared to ECDs, and get hard to read very quickly as the number of conditions increases. The code below produces Figure <a href="#fig-07_14" class="quarto-xref">Figure&nbsp;<span>9.14</span></a>.</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> sns.displot(fsdf, x<span class="op">=</span><span class="st">"v2x_egaldem"</span>, kind <span class="op">=</span> <span class="st">"ecdf"</span>, </span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>                 hue<span class="op">=</span><span class="st">"e_boix_regime"</span>) <span class="co"># palette=grayscale_palette</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">'Egalitarian Democracy Index'</span>)</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>plt.xlim(<span class="dv">0</span>, <span class="dv">1</span>) </span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'figures/07-14.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-07_14" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-07_14-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/07-14.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-07_14-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.14: caption…
+</figcaption>
+</figure>
+</div>
+<p>We can see from slope for <code>e_boix_regime = 0.0</code> (non-democratic countries) that observations are very clustered towards the lower values of <code>v2x_egaldem</code>, and they very rapidly taper off. The maximum value can be found around <code>v2x_egaldem = 0.5</code>. Conversely, the slope for <code>e_boix_regime = 1.0</code> (democratic countries) is more gradual, telling us that the distribution is much more evenly distributed across all values, with a few spikes where the slope increases around 0.55 and 0.75. If we look back at the histograms, we can confirm that the visualizations agree with one another.</p>
+</section>
+</section>
+<section id="visualizing-joint-distributions" class="level4" data-number="9.6.0.2">
+<h4 data-number="9.6.0.2" class="anchored" data-anchor-id="visualizing-joint-distributions"><span class="header-section-number">9.6.0.2</span> VISUALIZING JOINT DISTRIBUTIONS</h4>
+<p>While the marginal and conditional distributions of the earlier section are useful for understanding the shape of our data, we often want to examine the relationships between variables. We can visually represent these relationships by visualizing <em>joint</em> distributions. Let’s first look at two of the most common ways of visualizing joint distributions: cross tables for categorical variables and scatter plots for continuous variables.</p>
+<section id="cross-tables" class="level5" data-number="9.6.0.2.1">
+<h5 data-number="9.6.0.2.1" class="anchored" data-anchor-id="cross-tables"><span class="header-section-number">9.6.0.2.1</span> Cross Tables</h5>
+<p>When we want to visualize the joint distribution of two categorical variables we can produce a cross-table: an extension of a frequency table. A cross table, sometimes shortened to crosstab, shows a grid, with the possible values of one categorical variable along one axis and the same for the other variable along the other axis. Each cell in the grid shows the number of observations that have <em>both</em> (hence joint) categorical variable values corresponding to its row and column.</p>
+<p>Let’s create a cross table using the <code>.crosstab()</code> function for the categorical variables <code>e_regiongeo</code> and <code>e_boix_regime</code>. The resulting table will tell us how many observations (country-year combinations) there are of each regime type for each geographic region.</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>ct <span class="op">=</span> pd.crosstab(fsdf.e_regiongeo, fsdf.e_boix_regime)</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>ct.columns <span class="op">=</span> [<span class="st">'Not democracies'</span>, <span class="st">'Democracies'</span>]</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>ct</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If we want to know how many non-democratic countries there were in Western Europe across all years in the VDEM dataset, we would look at the corresponding row value for the “Not democracies” column, which shows 110. The number of democratic observations, 703, is shown in the “Democracies” column.</p>
+</section>
+<section id="scatter-plots" class="level5" data-number="9.6.0.2.2">
+<h5 data-number="9.6.0.2.2" class="anchored" data-anchor-id="scatter-plots"><span class="header-section-number">9.6.0.2.2</span> Scatter Plots</h5>
+<p>A scatter plot shows the relationship between two variables by plotting each observation on a graph, where the x-axis represents the value of one variable, while the y-axis represents the value of the other. Let’s use the <code>scatterplot</code> function to plot the relationship between the egalitarian democracy and polyarchy indices. The code below produces Figure <a href="#fig-07_15" class="quarto-xref">Figure&nbsp;<span>9.15</span></a>.</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> sns.scatterplot(data <span class="op">=</span> fsdf, x<span class="op">=</span><span class="st">"v2x_egaldem"</span>, y<span class="op">=</span><span class="st">"v2x_polyarchy"</span>)</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">'Egalitarian Democracy Index'</span>, ylabel<span class="op">=</span><span class="st">'Polyarchy Index'</span>)</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>plt.xlim(<span class="dv">0</span>, <span class="dv">1</span>) </span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>plt.ylim(<span class="dv">0</span>, <span class="dv">1</span>) </span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'figures/07-15.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-07_15" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-07_15-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/07-15.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-07_15-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.15: caption…
+</figcaption>
+</figure>
+</div>
+<p>At first glance, this seems to suggest a non-linear, but definitely positive relationship between the two variables. If an observation has a high value for one of the two variables, the other is also high. At lower values, the relationship is a bit less tight where we can see the points are less densely clustered, but the overall pattern remains visible. We can use different alpha (transparency) values to see where overlapping points are obscuring underlying points. The code below produces Figure <a href="#fig-07_16" class="quarto-xref">Figure&nbsp;<span>9.16</span></a>.</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> sns.scatterplot(data <span class="op">=</span> fsdf, x<span class="op">=</span><span class="st">"v2x_egaldem"</span>, y<span class="op">=</span><span class="st">"v2x_polyarchy"</span>, alpha <span class="op">=</span> <span class="fl">0.1</span>)</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">'Egalitarian Democracy Index'</span>, ylabel<span class="op">=</span><span class="st">'Polyarchy Index'</span>)</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>plt.xlim(<span class="dv">0</span>, <span class="dv">1</span>) </span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>plt.ylim(<span class="dv">0</span>, <span class="dv">1</span>) </span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'figures/07-16.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-07_16" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-07_16-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/07-16.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-07_16-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.16: caption…
+</figcaption>
+</figure>
+</div>
+<p>The code below produces Figure <a href="#fig-07_17" class="quarto-xref">Figure&nbsp;<span>9.17</span></a>.</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> sns.scatterplot(data <span class="op">=</span> fsdf, x<span class="op">=</span><span class="st">"v2x_egaldem"</span>, y<span class="op">=</span><span class="st">"v2x_polyarchy"</span>, alpha <span class="op">=</span> <span class="fl">0.01</span>)</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">'Egalitarian Democracy Index'</span>, ylabel<span class="op">=</span><span class="st">'Polyarchy Index'</span>)</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>plt.xlim(<span class="dv">0</span>, <span class="dv">1</span>) </span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>plt.ylim(<span class="dv">0</span>, <span class="dv">1</span>) </span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'figures/07-17.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-07_17" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-07_17-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/07-17.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-07_17-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.17: caption…
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="bivariate-histograms" class="level5" data-number="9.6.0.2.3">
+<h5 data-number="9.6.0.2.3" class="anchored" data-anchor-id="bivariate-histograms"><span class="header-section-number">9.6.0.2.3</span> Bivariate Histograms</h5>
+<p>We can extend the idea of histograms to bivariate visualizations. To do so, we divide both the x and y-axes into bins, producing square bins. The square bins are coloured based on the number of observations within each box. Since our y-axis is now being used to define another dimension of the box, we use colour instead of bar height to indicate how densely observations are clustered within a bin. The code below produces Figure <a href="#fig-07_18" class="quarto-xref">Figure&nbsp;<span>9.18</span></a>.</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> sns.displot(fsdf, x<span class="op">=</span><span class="st">"v2x_egaldem"</span>, y<span class="op">=</span><span class="st">"v2x_polyarchy"</span>)</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">'Egalitarian Democracy Index'</span>, ylabel<span class="op">=</span><span class="st">'Polyarchy Index'</span>)</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>plt.xlim(<span class="dv">0</span>, <span class="dv">1</span>) </span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>plt.ylim(<span class="dv">0</span>, <span class="dv">1</span>) </span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'figures/07-18.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-07_18" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-07_18-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/07-18.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-07_18-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.18: caption…
+</figcaption>
+</figure>
+</div>
+<p>Upon inspection, the majority of observations can be found clustering around low values of <code>v2x_polyarchy</code> and <code>v2x_egaldem</code>. There appears to be another, less dense cluster at the top right portion of the distribution as well.</p>
+<p>Like univariate histograms, we can refine our visualization by explicitly setting parameter values, like <code>binwidth</code>. We can even provide a further layer of information by including a rug plot, which acts like a one-dimensional scatterplot for each axis. For visualizations with lots of data, use of alpha values to avoid solid black bars like below. The code below produces Figure <a href="#fig-07_19" class="quarto-xref">Figure&nbsp;<span>9.19</span></a>.</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> sns.displot(fsdf, x<span class="op">=</span><span class="st">"v2x_egaldem"</span>, y<span class="op">=</span><span class="st">"v2x_polyarchy"</span>, binwidth <span class="op">=</span> <span class="fl">0.01</span>, rug<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">'Egalitarian Democracy Index'</span>, ylabel<span class="op">=</span><span class="st">'Polyarchy Index'</span>)</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>plt.xlim(<span class="dv">0</span>, <span class="dv">1</span>) </span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>plt.ylim(<span class="dv">0</span>, <span class="dv">1</span>) </span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'figures/07-19.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-07_19" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-07_19-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/07-19.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-07_19-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.19: caption…
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="bivariate-kernel-density-estimation" class="level5" data-number="9.6.0.2.4">
+<h5 data-number="9.6.0.2.4" class="anchored" data-anchor-id="bivariate-kernel-density-estimation"><span class="header-section-number">9.6.0.2.4</span> Bivariate Kernel Density Estimation</h5>
+<p>Like histograms, we can also use kernel density estimation (KDE) to smooth the bins to give an idea of the underlying probability distribution. In this case, it takes the form of a 2D contour plot. Let’s also improve the appearance of the rug plot by providing <code>rug_kws</code> with a dictionary describing values for its parameters: in this case setting an alpha of 0.01. The code below produces Figure <a href="#fig-07_20" class="quarto-xref">Figure&nbsp;<span>9.20</span></a>.</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> sns.displot(fsdf, x<span class="op">=</span><span class="st">"v2x_egaldem"</span>, y<span class="op">=</span><span class="st">"v2x_polyarchy"</span>, kind<span class="op">=</span><span class="st">"kde"</span>, rug <span class="op">=</span> <span class="va">True</span>, rug_kws <span class="op">=</span> {<span class="st">"alpha"</span>: <span class="fl">0.01</span>})</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">'Egalitarian Democracy Index'</span>, ylabel<span class="op">=</span><span class="st">'Polyarchy Index'</span>)</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'figures/07-20.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-07_20" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-07_20-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/07-20.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-07_20-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.20: caption…
+</figcaption>
+</figure>
+</div>
+<p>If you are familiar with reading contour maps, many closely spaced lines indicate areas of rapid change in elevation, or in this case, density. The slopes of our ECD plots are very analogous to the slopes described by contour plots. Looking at the above visualization, we can see two major clusters: one at the lower left and a smaller, but still significant one in the upper right.</p>
+</section>
+<section id="line-of-best-fit" class="level5" data-number="9.6.0.2.5">
+<h5 data-number="9.6.0.2.5" class="anchored" data-anchor-id="line-of-best-fit"><span class="header-section-number">9.6.0.2.5</span> Line of Best Fit</h5>
+<p>The visualizations in this section try to strike a balance between showing as much of the data as possible while conveying the relationship between the two variables as simply as possible. These two goals are in conflict with each other. The more data you visualize, the more complicated your plots become. If we want to display the relationship between two variables as simply as possible, we can produce a <em>line of best fit</em>. A line of best fit is a straight line that tries to minimize the distance between itself and each observation.</p>
+<p>The concept is very closely tied to regression techniques, which we will discuss in later chapters. For now, we can take for granted that a line of best fit is a way of mathematically describing a linear relationship between two variables. Consider the earlier scatter plot. While we can see some kind of postive relationship between the two variables, a scatter plot only provides a qualitative description of that relationship. A line, on the other hand can be described <em>exactly</em> by a formula:</p>
+<p><span class="math display">\[
+y = mx + b
+\]</span></p>
+<p>It is a common practice to include a line of best fit on a scatter plot. Scatter plots display the data in great detail, while the line of best fit describes the relationship within the data very concisely. Together, the two provide a lot of information about the data. Let’s reproduce the earlier scatter plot with a line of best fit. To do this, we will use the <code>regplot</code> function. The code below produces Figure <a href="#fig-07_21" class="quarto-xref">Figure&nbsp;<span>9.21</span></a>.</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> sns.regplot(data <span class="op">=</span> fsdf, x <span class="op">=</span> <span class="st">"v2x_egaldem"</span>, y <span class="op">=</span> <span class="st">"v2x_polyarchy"</span>, color<span class="op">=</span><span class="st">'darkgray'</span>, scatter_kws <span class="op">=</span> {<span class="st">"alpha"</span>: <span class="fl">0.05</span>}, line_kws<span class="op">=</span>{<span class="st">"color"</span>: <span class="st">"black"</span>})</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">'Egalitarian Democracy Index'</span>, ylabel<span class="op">=</span><span class="st">'Polyarchy Index'</span>)</span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'figures/07-21.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-07_21" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-07_21-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/07-21.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-07_21-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.21: caption…
+</figcaption>
+</figure>
+</div>
+</section>
+</section>
+<section id="correlation" class="level4" data-number="9.6.0.3">
+<h4 data-number="9.6.0.3" class="anchored" data-anchor-id="correlation"><span class="header-section-number">9.6.0.3</span> Correlation</h4>
+<p>You likely have an idea of what correlation is about, but it’s important to get these things right. Firstly and very generally, correlation is a measure of how closely random variables are related to one another, or how linearly dependent they are. What does that mean?</p>
+<p>If a variable is closely related to another (there is a high degree of dependence between them) we can use an observation of one to predict the other. For example, a person’s weight in kilograms is perfectly correlated/dependent on their weight in pounds. If you know one, you also know the other. The fuel economy of a car (usually expressed in L/100km or mpg) and the distance it traveled on a full tank are strongly correlated variables, though not perfect. Other factors can influence the distance traveled, but knowing the fuel economy of a car lets you make an accurate guess.</p>
+<p>More rigorously, <em>Correlation</em> describes the standardized direction of a linear relationship between variables <em>as well as its strength</em>. Correlation values, or correlation coefficients, range between -1 and +1. A coefficient of 1 represents a perfectly linearly dependent relationship for <em>any</em> two variables. A coefficient of -1 <em>also</em> represents a perfectly linearly dependent relationship, but in the opposite direction. For example, the number of eggs in a standard 12-pack egg carton is linearly dependent on the number of eggs I removed from it. The difference is that, with weight in lbs and weight in kilograms, when one goes up, the other also goes up. Hence, a positive linear relationship. With eggs in the carton and eggs removed from the carton, when one goes up, the other necessarily goes down: a negative linear relationship. In both cases, <em>if you know one value, you also know the other</em>.</p>
+<p>Let’s calculate some correlations. To do so, we call <code>.corr()</code> on a variable and pass another of equal length as an argument.</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>corr_libdem_partipdem <span class="op">=</span> fsdf.v2x_libdem.corr(fsdf.v2x_partipdem)</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>corr_libdem_year <span class="op">=</span> fsdf.v2x_libdem.corr(fsdf.year)</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Correlation of v2x_libdem and v2x_partipdem: </span><span class="sc">{</span>corr_libdem_partipdem<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Correlation of v2x_libdem and year: </span><span class="sc">{</span>corr_libdem_year<span class="sc">}</span><span class="ss">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Note that here we access dataframe columns by name using ‘dot notation’ rather than the square brackets we used earlier. Both methods see frequent use, so it’s a good idea to get used to seeing them as largely interchangeable.</p>
+<p>While the math behind correlation coefficients is beyond the scope of this chapter, it’s useful to have an idea of what I mean when I say that it is <em>standardized</em> and what a <em>linear relationship</em> actually means. To demonstrate, let’s create a new variable that is just <code>year</code> multiplied by 100 and correlate that with <code>v2x_libdem</code> like we did in the previous cell.</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>df_new <span class="op">=</span> fsdf.copy()</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>df_new[<span class="st">'year_x100'</span>] <span class="op">=</span> fsdf[<span class="st">'year'</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> x: x<span class="op">*</span><span class="dv">100</span>)</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>new_corr_libdem_partipdem <span class="op">=</span> df_new.v2x_libdem.corr(df_new.v2x_partipdem)</span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>new_corr_libdem_year <span class="op">=</span> df_new.v2x_libdem.corr(df_new.year_x100)</span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Correlation of v2x_libdem and v2x_partipdem: </span><span class="sc">{</span>new_corr_libdem_partipdem<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Correlation of v2x_libdem and year*100: </span><span class="sc">{</span>new_corr_libdem_year<span class="sc">}</span><span class="ss">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The correlation remains the same, despite multiplying one of the variables by 100. This is because the correlation coefficient is defined so that its value will always be between -1 and 1: it is actually another measure (covariance, which we will discuss in another chapter) that has been standardized to those values. As for linear relationships, recall the line of best fit in a scatter plot. If we plot observations of two variables, the strength of the linear relationship between the two is how closely those points lie on a straight line. If you can draw a straight line through every single point, the two variables have a perfect linear relationship. When we multiplied <code>year</code> by 100, all we did was change the angle of the line; we did not change the direction of the relationship, or the strength of it, so the coefficient remains the same.</p>
+<section id="correlation-coefficient-pearson-and-spearman" class="level5" data-number="9.6.0.3.1">
+<h5 data-number="9.6.0.3.1" class="anchored" data-anchor-id="correlation-coefficient-pearson-and-spearman"><span class="header-section-number">9.6.0.3.1</span> Correlation Coefficient: Pearson and Spearman</h5>
+<p>Just as there are different kinds of data, there are different ways of calculating correlation coefficients. We have been using the default Pearson correlation. A full discussion of different correlation coefficients is beyond our scope, so I will briefly mention one of the most common alternatives to Pearson correlation. Spearman correlation is intended for use with rank data, where a variable has some order, but the distance between values is not necessarily consistent. Consider the placings of runners in a race. We know that the first-place runner finished before second-place, but we don’t know <em>by how much</em>. The distance between first and second could be very different than the distance between second and third place. To calculate the Spearman rank order correlation coefficient in Pandas, we simply provide the <code>.corr()</code> function with the appropriate <code>method</code> parameter.</p>
+</section>
+</section>
+<section id="correlation-matrices-and-heatmaps" class="level4" data-number="9.6.0.4">
+<h4 data-number="9.6.0.4" class="anchored" data-anchor-id="correlation-matrices-and-heatmaps"><span class="header-section-number">9.6.0.4</span> Correlation Matrices and Heatmaps</h4>
+<p>Sometimes we want to explore our data to see if there are any strong or weak relationships that we might not expect. We could calculate a correlation coefficient for each pair of variables in our data, but it’s more efficient to create a correlation matrix and visualize the results. A correlation matrix shows the correlation coefficient for every pairing of variables in a given data set. Since every variable is being compared to every other variable, we will get an <span class="math inline">\(n \times n\)</span> table, where <span class="math inline">\(n\)</span> is the number of variables.</p>
+<p>To create a correlation matrix, we need to select only the appropriate columns. Since we’re using Pearson correlation, that will be continuous variables. Previously, we used the <code>.corr()</code> method to calculate the correlation between two columns. If we provide it a dataframe without specifying any columns, it will produce a correlation matrix with all possible pairings.</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>fsdf_corr <span class="op">=</span> fsdf[[<span class="st">'v2x_polyarchy'</span>, <span class="st">'v2x_libdem'</span>, <span class="st">'v2x_partipdem'</span>, <span class="st">'v2x_delibdem'</span>, <span class="st">'v2x_egaldem'</span>]].corr()</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>fsdf_corr</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Note the diagonal line of 1s arranged from top left to bottom right. Any variable correlated with itself should provide a coefficient of 1: a variable will always be perfectly associated with itself. Secondly, the coefficients are mirrored across the diagonal. The coefficient for the <code>v2x_polyarchy</code> row and the <code>v2x_libdem</code> column is the same as the one for the <code>v2x_libdem</code> row and the <code>v2x_polyarchy</code> column. Recall that Pearson correlation is <em>commutative</em>, so <span class="math inline">\(corr(X,Y) = corr(Y,X)\)</span>.</p>
+<p>We can also create a heatmap to help us scan the data quickly for correlations that especially stand out. The code below produces Figure <a href="#fig-07_22" class="quarto-xref">Figure&nbsp;<span>9.22</span></a>. Unlike me, you have more color options. I would recommend using a color palette other than grayscale.</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> sns.heatmap(</span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>    data <span class="op">=</span> fsdf_corr, vmin <span class="op">=</span> <span class="fl">0.9</span>, vmax <span class="op">=</span> <span class="dv">1</span> <span class="co">#, cmap=grayscale_cmap</span></span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'figures/07-22.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-07_22" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-07_22-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/07-22.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-07_22-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.22: caption…
+</figcaption>
+</figure>
+</div>
+<p>First, note the scale. I have disregarded my own guideline that scales should start at 0. This is because the values are highly clustered at top of the range, and <em>what I want to learn</em> is which correlations stand out from the others. If I included the whole scale, each box would be a nearly identical colour. Guidelines can help you make decisions about visualizations, but they can’t replace thinking about what you’re doing and why.</p>
+<p>To create a heatmap that doesn’t duplicate data and is less cluttered, we can use a “mask” to cover up the upper triangle. The code below produces Figure <a href="#fig-07_23" class="quarto-xref">Figure&nbsp;<span>9.23</span></a>.</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>mask <span class="op">=</span> np.triu(np.ones_like(fsdf_corr, dtype <span class="op">=</span> <span class="bu">bool</span>))</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> sns.heatmap(fsdf_corr, mask <span class="op">=</span> mask, vmin <span class="op">=</span> <span class="fl">0.9</span>, </span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>                 vmax <span class="op">=</span> <span class="dv">1</span>) <span class="co"># cmap=grayscale_cmap</span></span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'figures/07-23.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-07_23" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-07_23-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/07-23.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-07_23-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.23: caption…
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="visualization-with-more-informational-density" class="level3" data-number="9.6.1">
+<h3 data-number="9.6.1" class="anchored" data-anchor-id="visualization-with-more-informational-density"><span class="header-section-number">9.6.1</span> Visualization with More Informational Density</h3>
+<p>I’ve mentioned that good visualization practice involves thinking about what to display. That requires exercising restraint regarding what you add to a graph. Less is <em>usually</em>, but not always, more. We often find ourselves in situations where the best option is to layer several simple visualizations together in ways that substantially increase the overall information density of a visualization <em>while still keeping the parts and the whole as simple as possible</em>. This is often preferable to, for example, generating multiple simple graphs that you, or a reader would have to consult simultaneously to learn from. Again, think about what <em>exactly</em> you are trying to learn or show, and construct a visualization for that purpose and <em>no other</em>.</p>
+<p>The two primary examples of more informationally-dense visualizations we will consider here, and which we will use in various parts of the books, are graphs that combine marginal and joint distributions, and small multiples and pair plots. We will only briefly introduce these visualizations here. In later parts of the book, you will see many examples of using and refining them in specific data analysis contexts.</p>
+<section id="layering-marginal-and-joint-distributions" class="level4" data-number="9.6.1.1">
+<h4 data-number="9.6.1.1" class="anchored" data-anchor-id="layering-marginal-and-joint-distributions"><span class="header-section-number">9.6.1.1</span> Layering Marginal and Joint Distributions</h4>
+<p>Previously, we have occasionally combined different distributions or visualizations in the same plot. We plotted conditional histograms together, histograms with KDEs, scatter plots with lines of best fit, and heat maps and contour maps with rug plots. Lets focus on supplementing our scatterplot with line of best fit. Rather than the rug plots we used earlier, let’s include a histogram with a KDE to easily visualize the marginal distributions of each variable to complement the joint distribution. The code below produces Figure <a href="#fig-07_24" class="quarto-xref">Figure&nbsp;<span>9.24</span></a>.</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> sns.jointplot(</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>    data<span class="op">=</span>fsdf, </span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span><span class="st">"v2x_polyarchy"</span>, </span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>    y<span class="op">=</span><span class="st">"v2x_egaldem"</span>, </span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>    kind<span class="op">=</span><span class="st">"reg"</span>, </span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a>    color<span class="op">=</span><span class="st">'darkgray'</span>,</span>
+<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a>    joint_kws<span class="op">=</span>{</span>
+<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a>        <span class="st">'line_kws'</span>:{<span class="st">'color'</span>:<span class="st">'black'</span>},</span>
+<span id="cb38-11"><a href="#cb38-11" aria-hidden="true" tabindex="-1"></a>        <span class="st">'scatter_kws'</span>:{<span class="st">'alpha'</span>:<span class="fl">0.03</span>}</span>
+<span id="cb38-12"><a href="#cb38-12" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb38-13"><a href="#cb38-13" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb38-14"><a href="#cb38-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-15"><a href="#cb38-15" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'figures/07-24.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-07_24" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-07_24-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/07-24.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-07_24-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.24: caption…
+</figcaption>
+</figure>
+</div>
+<p>The above visualization provides us with a wealth of information, letting us see individual points as well as the relationship between the two variables with the joint distribution. The marginal distributions show us the observed distributions and an estimate of the underlying probability distribution.</p>
+</section>
+<section id="quick-comparisons-with-pair-plots" class="level4" data-number="9.6.1.2">
+<h4 data-number="9.6.1.2" class="anchored" data-anchor-id="quick-comparisons-with-pair-plots"><span class="header-section-number">9.6.1.2</span> Quick Comparisons with Pair Plots</h4>
+<p>When we get an entirely new data set, we often want to perform some exploratory analysis to get a sense of the data and potential relationships that we may not even be aware of. Rather than choosing which variables to plot against each other, we can cover all of our bases and use the <code>pairplot</code> function to plot all variables against each other. This will produce a grid of scatter plots, pairing every variable against every other variable. Where a variable would be paired with itself (the diagonal of the grid), we instead get a histogram of the marginal distribution of that variable. A <code>pairplot</code> is a great way to get a sense of your data before letting theory and research questions guide more focused analysis and visualization. The code below produces Figure <a href="#fig-07_25" class="quarto-xref">Figure&nbsp;<span>9.25</span></a>.</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>high_level_indexes <span class="op">=</span> [<span class="st">'v2x_polyarchy'</span>, <span class="st">'v2x_libdem'</span>, <span class="st">'v2x_partipdem'</span>, <span class="st">'v2x_delibdem'</span>, <span class="st">'v2x_egaldem'</span>]</span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> sns.pairplot(fsdf[high_level_indexes])</span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'figures/07-25.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-07_25" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-07_25-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/07-25.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-07_25-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.25: caption…
+</figcaption>
+</figure>
+</div>
+<p>In later chapters, we will often produce “small multiples” that have a structured subplot design like the pairplots. We will set that aside until later, however.</p>
+<blockquote class="blockquote">
+<p><strong>Further Reading</strong></p>
+<p>In addition to being a good introduction to Pandas and Numpy, VanderPlas’ <span class="citation" data-cites="vanderplas2016python">(<a href="references.html#ref-vanderplas2016python" role="doc-biblioref">2016</a>)</span> <em>Python Data Science Handbook</em> contains a good introduction to matplotlib, which Seaborn is built on top of. Regrettably I don’t have space to get into matplotlib in this book, but it’s <em>very</em> powerful package. We use little bits of matplotlib code to supplement Seaborn in this book. If you want to take more control over the aesthetics of your plots, it’s well worth learning more about matplotlib.</p>
+</blockquote>
+</section>
+</section>
+</section>
+<section id="conclusion" class="level2" data-number="9.7">
+<h2 data-number="9.7" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">9.7</span> CONCLUSION</h2>
+<section id="key-points" class="level3" data-number="9.7.1">
+<h3 data-number="9.7.1" class="anchored" data-anchor-id="key-points"><span class="header-section-number">9.7.1</span> Key Points</h3>
+<ul>
+<li>This chapter introduced the concept of Exploratory Data Analysis alongside Box’s Loop and Iterative research workflows</li>
+<li>We explored some basic guidelines for creating effective visualizations</li>
+<li>We then applied those guidelines to univariate and multivariate data drawn from a (very large!) real-world dataset</li>
+</ul>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-gelman2004exploratory" class="csl-entry" role="listitem">
+Gelman, Andrew. 2004. <span>“Exploratory Data Analysis for Complex Models.”</span> <em>Journal of Computational and Graphical Statistics</em> 13 (4): 755–79.
+</div>
+<div id="ref-healy2018data" class="csl-entry" role="listitem">
+Healy, Kieran. 2018. <em>Data Visualization: A Practical Introduction</em>. Princeton University Press.
+</div>
+<div id="ref-healy2014data" class="csl-entry" role="listitem">
+Healy, Kieran, and James Moody. 2014. <span>“Data Visualization in Sociology.”</span> <em>Annual Review of Sociology</em> 40: 105–28.
+</div>
+<div id="ref-vanderplas2016python" class="csl-entry" role="listitem">
+VanderPlas, Jake. 2016. <em>Python Data Science Handbook: Essential Tools for Working with Data</em>. " O’Reilly Media, Inc.".
+</div>
+</div>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./08-processing-structured-data.html" class="pagination-link" aria-label="Processing Structured Data">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Processing Structured Data</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./10-association-and-latent-factors.html" class="pagination-link" aria-label="Association and latent factors">
+        <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Association and latent factors</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/UWNETLAB/dcss_supplementary/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>

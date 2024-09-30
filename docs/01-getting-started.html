@@ -1,0 +1,1466 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.56">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>1&nbsp; Getting Started – Doing Computational Social Science&lt;br&gt;[The **Continuous Development** Edition]{.small}</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./02-python-101.html" rel="next">
+<link href="./00-introduction.html" rel="prev">
+<link href="./media/logo.png" rel="icon" type="image/png">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="custom.css">
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01-getting-started.html">Research Computing</a></li><li class="breadcrumb-item"><a href="./01-getting-started.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Getting Started</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="./index.html" class="sidebar-logo-link">
+      <img src="./media/logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      </a>
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Doing Computational Social Science<br><span class="small">The <strong>Continuous Development</strong> Edition</span></a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/UWNETLAB/dcss_supplementary/tree/master/book/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <div class="dropdown">
+      <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=|url|">
+              <i class="bi bi-twitter pe-1"></i>
+            Twitter
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://www.facebook.com/sharer/sharer.php?u=|url|">
+              <i class="bi bi-facebook pe-1"></i>
+            Facebook
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://www.linkedin.com/sharing/share-offsite/?url=|url|">
+              <i class="bi bi-linkedin pe-1"></i>
+            LinkedIn
+            </a>
+          </li>
+      </ul>
+    </div>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">👋 Hello!</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./00-introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Learning to Do Computational Social Science</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Research Computing</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-getting-started.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Getting Started</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-python-101.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Python 101</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-python-102.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Python 102</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Obtaining Data</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04-sampling-and-survey-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Sampling and survey data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-web-data-apis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Web data (APIs)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06-web-data-scraping.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Web data (Scraping)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-audio-image-and-document-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Audio, image, and document data</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Exploring Data</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08-processing-structured-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Processing Structured Data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09-exploratory-data-analysis-and-visualization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Exploratory data analysis and visualization</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10-association-and-latent-factors.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Association and latent factors</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11-text-as-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Text as Data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./12-text-similarity-and-latent-semantic-space.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Text similarity and latent semantic space</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./13-social-networks-and-relational-thinking.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Networks: Relationships as Data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./14-structural-similarity-and-latent-social-space.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Structural similarity and latent social space</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Prediction and Inference</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./15-machine-and-statistical-learning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Machine Learning 101</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./16-prediction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Prediction</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./17-probability.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Probability 101</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./18-credibility.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Credibility</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./19-causality.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Causality</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Generative Modeling</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./20-linear-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Bayesian Regression Models with Probabilistic Programming</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./21-multilevel-regression-with-post-stratification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Multilevel regression with post-stratification</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./22-generalized-linear-models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Generalized Linear Models</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./23-causal-analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Causal analysis</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./24-latent-structure-networks.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Latent structure in networks</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./25-latent-topics-text-lda.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Latent topics in text (LDA)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./26-complex-adaptive-systems.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Agent-based Models</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./27-developing-agent-based-models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Diffusion</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">Deep Learning Demystified</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./28-artificial-neural-networks-fnn-rnn-cnn.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Neural networks 101</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./29-processing-natural-language-data-spacy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Processing Natural Language Data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./30-transformers-self-attention.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Transformers, Self-attention architecture</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./31-latent-topics-text-transformers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Modelling latent topics (Transformers)</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text">Professional Responsibilities</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./32-research-ethics-politics-and-practices.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Research Ethics, Politics, and Practices</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./33-next-steps.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Next steps</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./acknowledgements.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Acknowledgements</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./changelog.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Changelog</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./appendix-centrality-formulas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Centrality Formulas</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./appendix-courses.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Courses and Workshops</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#open-source-software" id="toc-open-source-software" class="nav-link active" data-scroll-target="#open-source-software"><span class="header-section-number">1.1</span> Open Source Software</a>
+  <ul class="collapse">
+  <li><a href="#working-in-the-cloud-with-github-codespaces" id="toc-working-in-the-cloud-with-github-codespaces" class="nav-link" data-scroll-target="#working-in-the-cloud-with-github-codespaces"><span class="header-section-number">1.1.1</span> Working in the Cloud with GitHub Codespaces</a></li>
+  <li><a href="#working-locally-on-your-own-computer" id="toc-working-locally-on-your-own-computer" class="nav-link" data-scroll-target="#working-locally-on-your-own-computer"><span class="header-section-number">1.1.2</span> Working Locally on Your Own Computer</a></li>
+  <li><a href="#step-by-step-setup-instructions" id="toc-step-by-step-setup-instructions" class="nav-link" data-scroll-target="#step-by-step-setup-instructions"><span class="header-section-number">1.1.3</span> Step-by-Step Setup Instructions</a></li>
+  <li><a href="#launching-the-container-and-getting-started" id="toc-launching-the-container-and-getting-started" class="nav-link" data-scroll-target="#launching-the-container-and-getting-started"><span class="header-section-number">1.1.4</span> Launching the Container and Getting Started</a></li>
+  </ul></li>
+  <li><a href="#command-line-computing" id="toc-command-line-computing" class="nav-link" data-scroll-target="#command-line-computing"><span class="header-section-number">1.2</span> Command-Line Computing</a>
+  <ul class="collapse">
+  <li><a href="#the-shell" id="toc-the-shell" class="nav-link" data-scroll-target="#the-shell"><span class="header-section-number">1.2.1</span> The Shell</a></li>
+  <li><a href="#the-structure-of-shell-commands" id="toc-the-structure-of-shell-commands" class="nav-link" data-scroll-target="#the-structure-of-shell-commands"><span class="header-section-number">1.2.2</span> The Structure of Shell Commands</a></li>
+  <li><a href="#getting-around-the-file-system" id="toc-getting-around-the-file-system" class="nav-link" data-scroll-target="#getting-around-the-file-system"><span class="header-section-number">1.2.3</span> Getting Around the File System</a></li>
+  <li><a href="#creating-files-and-directories" id="toc-creating-files-and-directories" class="nav-link" data-scroll-target="#creating-files-and-directories"><span class="header-section-number">1.2.4</span> Creating Files and Directories</a></li>
+  <li><a href="#getting-help" id="toc-getting-help" class="nav-link" data-scroll-target="#getting-help"><span class="header-section-number">1.2.5</span> Getting Help</a></li>
+  <li><a href="#further-reading" id="toc-further-reading" class="nav-link" data-scroll-target="#further-reading"><span class="header-section-number">1.2.6</span> Further Reading</a></li>
+  </ul></li>
+  <li><a href="#version-control-tools" id="toc-version-control-tools" class="nav-link" data-scroll-target="#version-control-tools"><span class="header-section-number">1.3</span> Version Control Tools</a>
+  <ul class="collapse">
+  <li><a href="#git-from-inside-vs-code" id="toc-git-from-inside-vs-code" class="nav-link" data-scroll-target="#git-from-inside-vs-code"><span class="header-section-number">1.3.1</span> Git from Inside VS Code</a></li>
+  <li><a href="#git-from-the-command-line" id="toc-git-from-the-command-line" class="nav-link" data-scroll-target="#git-from-the-command-line"><span class="header-section-number">1.3.2</span> Git from the Command Line</a></li>
+  <li><a href="#further-reading-1" id="toc-further-reading-1" class="nav-link" data-scroll-target="#further-reading-1"><span class="header-section-number">1.3.3</span> Further Reading</a></li>
+  </ul></li>
+  <li><a href="#virtualization-tools" id="toc-virtualization-tools" class="nav-link" data-scroll-target="#virtualization-tools"><span class="header-section-number">1.4</span> VIRTUALIZATION TOOLS</a>
+  <ul class="collapse">
+  <li><a href="#containers" id="toc-containers" class="nav-link" data-scroll-target="#containers"><span class="header-section-number">1.4.1</span> Containers</a></li>
+  <li><a href="#creating-and-using-virtual-environments" id="toc-creating-and-using-virtual-environments" class="nav-link" data-scroll-target="#creating-and-using-virtual-environments"><span class="header-section-number">1.4.2</span> Creating and Using Virtual Environments</a></li>
+  </ul></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">1.5</span> CONCLUSION</a></li>
+  <li><a href="#key-points" id="toc-key-points" class="nav-link" data-scroll-target="#key-points"><span class="header-section-number">1.6</span> KEY POINTS</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/UWNETLAB/dcss_supplementary/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01-getting-started.html">Research Computing</a></li><li class="breadcrumb-item"><a href="./01-getting-started.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Getting Started</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Getting Started</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Learning Objectives
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>In this chapter, you will:</p>
+<ul>
+<li>Set up your computational environment by installing essential software like Docker Desktop, VS Code, and Git.</li>
+<li>Learn how to access course materials using Git within VS Code.</li>
+<li>Gain an introduction to command-line computing and version control tools.</li>
+<li>Understand the differences between Docker containers, DevContainers, and virtual environments managed by Poetry and Conda.</li>
+<li>Become comfortable using VS Code for computational social science research.</li>
+</ul>
+</div>
+</div>
+<p><br></p>
+<p>This chapter is devoted entirely to the practical knowledge about research computing that you need to run Python code and undertake computational social science research. I’ll start by walking you through a few key pieces of software to download and install: Docker Desktop, VS Code, and Git. I’ll briefly explain what each is, followed by instructions on how to use Git inside VS Code to access the course materials (which are hosted on GitHub). The rest of the chapter will introduce the basics of command-line computing and version control tools. It assumes you’ve followed the initial instructions.</p>
+<p>Once we have the software downloaded and installed and you’ve accessed the course materials using Git inside of VS Code, I’ll offer some initial advice on using VS Code for computational social science, followed by an introduction to using “the shell” to interact with your computer and Git for version control. For simplicity’s sake, we’ll focus primarily on the Git GUI in VS Code and secondarily on using Git on the command line. Finally, the last section of this chapter compares two major types of “virtualization” we use in this book: Docker + DevContainers, which we use throughout the course, and virtual environments with Poetry and Conda, which we use in several chapters as needed. If all of this is new to you, feel free to skip this section and come back to it later.</p>
+<section id="open-source-software" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="open-source-software"><span class="header-section-number">1.1</span> Open Source Software</h2>
+<p>I’ve developed a specialized computing environment that you can use for this book, and your computational social science research more generally. Like all good research computing setups, this one starts with a good text editor: VS Code. Whether you work in the cloud using GitHub Codespaces or locally on your own computer, you’ll be using VS Code.</p>
+<p>A good text editor is an essential part of your research toolkit. You’ll use it primarily for writing code, but it’s also great for writing academic articles, chapters, theses, books, and so on. These days, most text editors have similar capabilities. While they may differ in appearance and feel, they can be customized extensively to suit your needs. Picking an editor might seem overwhelming, but it doesn’t need to be. For instance, you can check out Wikipedia’s article on the <a href="https://en.wikipedia.org/wiki/Editor_war">Editor War</a> between Emacs and Vi to see how debates over relatively minor differences can evolve into multi-generational rivalries. To quote Brian <span class="citation" data-cites="ward2021linux">Ward (<a href="references.html#ref-ward2021linux" role="doc-biblioref">2021</a>)</span> from <em>How Linux Works</em>, “Most UNIX wizards are religious about their choice of editor, but don’t listen to them. Just choose yourself” (pp.&nbsp;24). You should try out a few and stick with what works best for you.</p>
+<p>In what follows, I’ll assume you’re using <strong>Visual Studio Code (VS Code)</strong>. It’s free, open-source, runs on all operating systems, has excellent support for computing on remote machines, and has excellent community extensions for writing code, working with data, and even drafting technical documents. It’s especially useful for Python. VS Code also integrates some great features for collaborative coding and working in containers, making it a perfect fit for everything you’ll tackle in this book, and computational social science projects more generally.</p>
+<p>We’ll be using VS Code configured to act like an <strong>Integrated Development Environment (IDE)</strong> specifically for data science and computational social science. This setup ensures that all the tools you need to work with data, write code, and create reports are integrated into a single environment. You’ll be writing and executing Python code, generating plots, and authoring documents—all within VS Code. Instead of Jupyter Notebooks, we’ll use <strong>Quarto</strong>, a powerful tool that enables you to combine code, text, and visuals in one place, much like Jupyter but with more flexibility, especially for creating publications.</p>
+<p>The key benefit of this setup is that you’ll be working in a <strong>containerized environment</strong>. Think of a container as a pre-configured computer within your own, complete with all the software and tools you need for this course. Inside the container, you’ll have access to Python, data analysis libraries, and Quarto—so there’s no need to install or manage these tools on your personal machine. We’ve already taken care of that in the course’s Docker image.</p>
+<p>There are two main ways to use this computing setup: in the cloud using GitHub Codespaces, or locally on your own machine. If you are entirely new to this stuff, I would recommend starting in the cloud and setting up your local environment later. But select whatever approach you prefer!</p>
+<section id="working-in-the-cloud-with-github-codespaces" class="level3" data-number="1.1.1">
+<h3 data-number="1.1.1" class="anchored" data-anchor-id="working-in-the-cloud-with-github-codespaces"><span class="header-section-number">1.1.1</span> Working in the Cloud with GitHub Codespaces</h3>
+<p>If you’re new to all of this and want to simplify the setup process, I recommend working in the cloud using GitHub Codespaces. First, you’ll need to sign up for a free GitHub account at <a href="https://github.com">github.com</a>. GitHub Codespaces is a cloud-based development environment that allows you to run VS Code directly in your web browser, complete with all the tools and extensions you need. It’s especially convenient because it eliminates the need to install software on your own computer; everything runs on GitHub’s servers. As a student, you can access Codespaces for free. However, keep in mind that if your codespace remains inactive for a while, GitHub may prompt you to save your changes so that the codespace can be deleted to free up resources.</p>
+<p>To get started, navigate to the supplementary materials repository for this book at <a href="https://github.com/UWNETLAB/dcss_supplementary">https://github.com/UWNETLAB/dcss_supplementary</a>. Once you’re there, you’ll see a green <strong>Code</strong> button near the top right corner of the repository page. Click on it, and in the dropdown menu, select <strong>Open with Codespaces</strong>. If you don’t see this option, it might be under <strong>Codespaces</strong> in the dropdown. This will launch a new Codespace instance in your browser, loading the repository’s contents and setting up the pre-configured development environment. Please note that the repository contents are being updated, so you might see new materials appear as they’re added.</p>
+<p>While working in the cloud with GitHub Codespaces is convenient, you might prefer to set up the environment on your own computer, especially if you want more control or if you anticipate working without a stable internet connection. In the next section, I’ll guide you through setting up the necessary software on your local machine so you can work offline and have all your tools directly at your fingertips.</p>
+</section>
+<section id="working-locally-on-your-own-computer" class="level3" data-number="1.1.2">
+<h3 data-number="1.1.2" class="anchored" data-anchor-id="working-locally-on-your-own-computer"><span class="header-section-number">1.1.2</span> Working Locally on Your Own Computer</h3>
+<p>If you want to work locally on your own machine, instead of remotely in GitHub Codespaces, you’ll need to download and install <strong>Docker Desktop</strong>, <strong>Git</strong>, and <strong>VS Code</strong> on your computer. Once these are installed, you’ll be able to clone the course repository from GitHub, open it in VS Code, and start working in the container environment.</p>
+<p>Here’s how to get set up:</p>
+</section>
+<section id="step-by-step-setup-instructions" class="level3" data-number="1.1.3">
+<h3 data-number="1.1.3" class="anchored" data-anchor-id="step-by-step-setup-instructions"><span class="header-section-number">1.1.3</span> Step-by-Step Setup Instructions</h3>
+<section id="install-docker-desktop" class="level4" data-number="1.1.3.1">
+<h4 data-number="1.1.3.1" class="anchored" data-anchor-id="install-docker-desktop"><span class="header-section-number">1.1.3.1</span> 1. Install Docker Desktop</h4>
+<p>Docker is the software that allows you to run the container, which contains the entire computing environment. To install Docker Desktop, go to the <a href="https://www.docker.com/products/docker-desktop">Docker Desktop</a> page for your operating system. Download the installer and follow the instructions. Once Docker is installed, you’ll see its icon in your system’s toolbar or taskbar. Make sure it’s running before you proceed to the next steps.</p>
+</section>
+<section id="install-vs-code" class="level4" data-number="1.1.3.2">
+<h4 data-number="1.1.3.2" class="anchored" data-anchor-id="install-vs-code"><span class="header-section-number">1.1.3.2</span> 2. Install VS Code</h4>
+<p>Next, you’ll need <strong>Visual Studio Code</strong> (VS Code), which I will assume you are using as your text editor and IDE for this course. You can download it for free at <a href="https://code.visualstudio.com/Download">code.visualstudio.com</a>. After installing, open VS Code and head to the <strong>Extensions</strong> tab (on the left sidebar). Search for and install the following extensions:</p>
+<ul>
+<li><strong>Dev Containers</strong> (this lets you work in the container environment seamlessly)</li>
+<li><strong>Python</strong> (for Python code development)</li>
+<li><strong>Quarto</strong> (for authoring your Quarto files)</li>
+</ul>
+<p>These extensions will make it easy to work with Python code and documents, as well as interact with the pre-configured container I’ve built for you.</p>
+</section>
+<section id="install-git" class="level4" data-number="1.1.3.3">
+<h4 data-number="1.1.3.3" class="anchored" data-anchor-id="install-git"><span class="header-section-number">1.1.3.3</span> 3. Install Git</h4>
+<p>Finally, you’ll need <strong>Git</strong>, which will help you manage the course materials from GitHub. Install it from <a href="https://git-scm.com/downloads">git-scm.com</a> and follow the instructions for your operating system.</p>
+<p>Once you have these tools installed, you’re ready to start working in the pre-configured environment. You don’t need to worry about installing Python, data science libraries, or Quarto—they’re all set up inside the container.</p>
+</section>
+</section>
+<section id="launching-the-container-and-getting-started" class="level3" data-number="1.1.4">
+<h3 data-number="1.1.4" class="anchored" data-anchor-id="launching-the-container-and-getting-started"><span class="header-section-number">1.1.4</span> Launching the Container and Getting Started</h3>
+<p>Now that everything is installed, here’s how to set up the course materials and start working in the containerized environment:</p>
+<section id="clone-the-course-repository" class="level4" data-number="1.1.4.1">
+<h4 data-number="1.1.4.1" class="anchored" data-anchor-id="clone-the-course-repository"><span class="header-section-number">1.1.4.1</span> Clone the Course Repository:</h4>
+<ol type="1">
+<li>Open VS Code.</li>
+<li>Click on <strong>View</strong> in the top menu, then select <strong>Command Palette</strong> (or press <code>Ctrl+Shift+P</code> on Windows/Linux or <code>Cmd+Shift+P</code> on Mac).</li>
+<li>In the command palette, type <strong>Git: Clone</strong> and select it.</li>
+<li>When prompted for the repository URL, enter <code>https://github.com/UWNETLAB/dcss_supplementary.git</code>.</li>
+<li>Choose a local folder where you want to clone the repository.</li>
+</ol>
+</section>
+<section id="open-the-repository-in-vs-code" class="level4" data-number="1.1.4.2">
+<h4 data-number="1.1.4.2" class="anchored" data-anchor-id="open-the-repository-in-vs-code"><span class="header-section-number">1.1.4.2</span> Open the Repository in VS Code:</h4>
+<ol type="1">
+<li>After cloning, a prompt may appear asking if you want to open the cloned repository. Click <strong>Open</strong>.</li>
+<li>If not, you can manually open it by going to <strong>File &gt; Open Folder</strong> and navigating to where you cloned the repository.</li>
+</ol>
+</section>
+<section id="open-in-a-dev-container" class="level4" data-number="1.1.4.3">
+<h4 data-number="1.1.4.3" class="anchored" data-anchor-id="open-in-a-dev-container"><span class="header-section-number">1.1.4.3</span> Open in a Dev Container:</h4>
+<ol type="1">
+<li>Once the repository is open in VS Code, you might see a prompt at the bottom right corner asking if you want to <strong>Reopen in Container</strong>. Click on it.</li>
+<li>If you don’t see the prompt, you can click on the green icon in the bottom-left corner of VS Code (the <strong>Dev Containers</strong> icon) and select <strong>Reopen in Container</strong>.</li>
+<li>VS Code will now build and open the container. This may take a few minutes the first time.</li>
+</ol>
+<p>That’s it! You’re now set up to work within a complete computational social science environment, with everything you need installed and ready to go. In the rest of this chapter, I’ll introduce some basic knowledge and skills for command-line computing and using Git for version control. Then I’ll describe the differences between two types of virtualization used in this book: Docker containers and DevContainers on the one hand, and virtual environments managed by Poetry and/or Conda on the other. Feel free to skip this content and come back to it later if and when you need it.</p>
+</section>
+</section>
+</section>
+<section id="command-line-computing" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="command-line-computing"><span class="header-section-number">1.2</span> Command-Line Computing</h2>
+<p>Doing computational social science or data science often requires interacting with computers using a <strong>Command-Line Interface (CLI)</strong>. This may feel unfamiliar and inefficient in the age of mobile computing, beautifully designed <strong>Graphical User Interfaces (GUIs)</strong>, and touch screens, but it is what enables us to do computational research in the first place. A bit of knowledge unlocks a vast world of high-quality open-source tools and enables us to benefit from the expertise and experience of many other researchers, scientists, and engineers around the world. Among a great many other things, command-line computing also enables us to work on remote computers; organize our software, data, and models according to best practices; efficiently manage and track our research projects; and make collaboration much easier, and transparency, accountability, and reproducibility possible. The command line is our common point of departure, regardless of which operating system you happen to be using. In what follows, I’ll introduce some essentials of command-line computing, starting with an introduction to “the shell.”</p>
+<section id="the-shell" class="level3" data-number="1.2.1">
+<h3 data-number="1.2.1" class="anchored" data-anchor-id="the-shell"><span class="header-section-number">1.2.1</span> The Shell</h3>
+<p>When I talk about working “on the command line” or “in a terminal,” what I really mean is that we tell our computer’s operating system what we want it to do by interacting with a program called the <strong>shell</strong>. We interact with the shell by typing commands into a <strong>terminal emulator</strong>, or “terminal.” Linux, macOS, and Windows all come with pre-installed terminal emulators, but for the sake of convenience we’ll use the one that’s built into VS Code. You can open it by clicking on the ‘View’ and then ‘Terminal’ menu items, or by using a keyboard shortcut.</p>
+<p>What you see when you first open a terminal window will depend on your machine and whatever theme is active in VS Code. By default, most will likely display your username and the name of the computer you’re working on (e.g., <code>user@computer$</code>). My setup—which you can see in Figure 1—uses the Nord theme for VS Code and customizes the terminal prompt using a tool called <strong>Starship</strong>. As I’ll explain shortly, I’ve used Starship to configure the terminal prompt in the pre-built computing environment that we’ll use throughout this book.</p>
+<div id="fig-vscode-terminal" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-vscode-terminal-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/vscode-terminal.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-vscode-terminal-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1.1: The terminal in VS Code
+</figcaption>
+</figure>
+</div>
+<p>To interact with the shell—that is, to tell our computer what we want to do—we type commands on the command line and then hit the Return key (i.e., Enter). To see how this works, type <code>cal</code> on the command line, and then hit <code>Return</code>.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cal</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>cal</code> is a command-line program installed on your computer; when you type the command <code>cal</code>, your computer executes that program and prints a calendar to the screen with the current day highlighted. Other commands we pass to the shell are also programs, and as we will see below, they tend to be most useful when we provide those programs with additional information about what we want. If you happen to issue a command that your computer does not recognize, nothing bad will happen. Your computer will just tell you that it doesn’t understand what you want it to do. Go ahead and type something like <code>Hi, shell!</code> and hit return. We can do almost anything we want on the command line, but we have to use commands that our computer knows about.</p>
+</section>
+<section id="the-structure-of-shell-commands" class="level3" data-number="1.2.2">
+<h3 data-number="1.2.2" class="anchored" data-anchor-id="the-structure-of-shell-commands"><span class="header-section-number">1.2.2</span> The Structure of Shell Commands</h3>
+<p>Generally, the commands you execute will have the same basic structure, though the components of a command may be called different things by different people. The first word you type is the command itself, or the name of the program you are going to execute. Often, the default behavior can be modified by using <strong>options</strong>, which can be specified using a “short” version (a letter following a <code>-</code>, such as <code>ls -l</code>) or a long version (a word following <code>--</code>, such as <code>ls --long</code>). When using the short version, you can string multiple options together following a single <code>-</code>, such as <code>ls -ltS</code>. In addition to the command itself and the options that follow, commands may take <strong>arguments</strong>, such as the name of a file or directory that a command should act on. This may seem very abstract now, but if you follow along with the commands below in your terminal, it will become more concrete.</p>
+<p><strong>Command Structure:</strong></p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[COMMAND]</span> <span class="pp">[</span><span class="ss">OPTIONS</span><span class="pp">]</span> <span class="pp">[</span><span class="ss">ARGUMENTS</span><span class="pp">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>While there are different terminal applications available, they all do the same thing: interact with the shell. If you’re using Windows, you’re going to end up running into the limitations of your default terminal emulator pretty quickly. One solution to this problem is to get a proper terminal emulator and configure it to best meet your needs. However, in this case, it’s unnecessary because you’ll be using the terminal in VS Code to interact with the shell inside the course’s pre-built computing environment, which is Linux!</p>
+<p>Now that you’re set up with a good terminal emulator that runs in a Linux environment, let’s discuss a few very simple but essential actions for getting work done on the command line. We’ll focus on a small subset of commands for navigating the file system and performing various operations with directories and files.</p>
+</section>
+<section id="getting-around-the-file-system" class="level3" data-number="1.2.3">
+<h3 data-number="1.2.3" class="anchored" data-anchor-id="getting-around-the-file-system"><span class="header-section-number">1.2.3</span> Getting Around the File System</h3>
+<p>The commands you will use most frequently are those that enable you to navigate a computer’s file system and perform basic operations on directories (i.e., “folders”) and files. Let’s focus on those commands first. I recommend that you work through this chapter with your terminal open. You are likely to learn faster and more deeply if you execute these commands as you read, and if you take little breaks along the way to practice what you’ve learned.</p>
+<section id="directories-and-files" class="level4" data-number="1.2.3.1">
+<h4 data-number="1.2.3.1" class="anchored" data-anchor-id="directories-and-files"><span class="header-section-number">1.2.3.1</span> Directories and Files</h4>
+<p>Although there are some differences across operating systems—chiefly between Windows and the *nix systems Linux and macOS—these operating systems all organize <strong>directories</strong> (or “folders”) as hierarchical trees. The <code>root</code> directory sits at the top of that tree; all files and subdirectories are contained within it. We call it ‘root’, but in most operating systems, it’ll just look like a single forward slash (/). In what follows, we’ll use the pre-built computing environment, which, again, is Linux.</p>
+<p>Most users navigate through their computer’s directory structure using a GUI, such as Finder on macOS or File Explorer on Windows. This process works a little differently on the command line, of course, but ultimately we want to do the same thing: get “into” the directories where our files are, as well as the directories above and below them in the filesystem. The directory we are “in” at any given time is the <strong>current working directory</strong>. To see where we are in the filesystem, we can print the path to that directory by typing the command <code>pwd</code> (print working directory).</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="bu">pwd</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>To change directories, we use the <code>cd</code> command (change directory). For example, to move to the home directory, you can type:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Or to move up one level to the parent directory:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ..</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The command <code>cd</code> is usually followed by an <strong>argument</strong>, which provides more information to the shell about where you want to go. For example, you could provide an <strong>absolute path</strong>, which starts with the root directory and goes to whatever directory you want to be in. For example, if I wanted to <code>cd</code> into a directory where I keep various files related to graduate supervision, I could type the absolute path:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /users/johnmclevey/Documents/supervision/grad_students/</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The <strong>path</strong> is essentially an ordered list of the nested directories you would have clicked through if you were navigating the file system using a GUI like Finder or File Explorer. Each step in the path is separated by a <code>/</code>.</p>
+<p>Because this path starts at the root directory, I can execute it regardless of where in the filesystem I currently am. Alternatively, I can provide <code>cd</code> with a <strong>relative path</strong>, which tells the shell where to go relative to the current working directory. For example, if my current working directory was <code>/users/johnmclevey/Documents/</code> and I wanted to get to <code>grad_students/</code>, I could use the following relative path:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> supervision/grad_students/</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>In this case, the command worked because we were “in” the Documents directory. But if <code>/users/johnmclevey/Dropbox/</code> was my current working directory and I typed the same command, the shell would tell me that there is no such</p>
+<p>file or directory. When using relative paths, you have to provide the path from the current working directory to the directory where you want to be.</p>
+<p>To list the files in a directory, you can use the command <code>ls</code>. If we execute <code>ls</code> without any arguments, it will default to printing the files in the current working directory, but if provided with an absolute or relative path, it will list the contents of that directory instead. Below, for example, we list the contents of the current working directory’s parent directory.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> ..</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>We can provide <code>ls</code> with a number of <strong>options</strong> that modify what the program prints to screen. For example, we can print some metadata about our files—such as their access permissions, the name of the user who owns the file, the file size, the last time they were modified, and so on—if we add the option <code>-l</code>, which is short for “long output.”</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-l</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>We can string together a number of these short options to change the behavior of the command. For example, adding the option <code>t</code> to our command (<code>ls -lt</code>) changes the order of the files printed to screen such that the most recently modified files are at the top of the list, whereas <code>ls -lS</code> prints them with the largest files on top. Using <code>ls -a</code> will display “hidden” files, some of which we will discuss below.</p>
+</section>
+</section>
+<section id="creating-files-and-directories" class="level3" data-number="1.2.4">
+<h3 data-number="1.2.4" class="anchored" data-anchor-id="creating-files-and-directories"><span class="header-section-number">1.2.4</span> Creating Files and Directories</h3>
+<p>It is also possible to create new directories and files from the command line. For example, to make a new directory inside the current working directory, we can use the command <code>mkdir</code> followed by the name of the directory we want to create. Once created, we can move into it using <code>cd</code>.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> learning_shell</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> learning_shell</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>To create a new file, we use the <code>touch</code> command followed by the name of the file we want to create. For example, we could create a simple text file called <code>test.txt</code>.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">touch</span> test.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>test.txt</code> is an empty file. If we wanted to quickly add text to it from the command line, we could use a built-in command-line text editor, the most minimal of which is called <code>nano</code>. We can edit the file by calling <code>nano</code> and providing the name of the file we want to edit as an argument.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nano</span> test.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="getting-help" class="level3" data-number="1.2.5">
+<h3 data-number="1.2.5" class="anchored" data-anchor-id="getting-help"><span class="header-section-number">1.2.5</span> Getting Help</h3>
+<p>The commands we’ve just learned, summarized in <strong>Table 1</strong>, are the ones that you will use the most often when working on the command line and are worth committing to memory. You can build out your knowledge from here on an as-needed basis. One way to do this is to look up information about any given command and the options and arguments it takes by pulling up its manual page using the <code>man</code> command. For example, to learn more about <code>ls</code>, you could type:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">man</span> ls</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>You can then page through the results using your spacebar, and return to the command line by pressing the letter <code>q</code>.</p>
+<p><strong>Table 1: Essential commands for working from the command line</strong></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 8%">
+<col style="width: 47%">
+<col style="width: 44%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Command</th>
+<th style="text-align: left;">Action</th>
+<th style="text-align: left;">Example</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>pwd</code></td>
+<td style="text-align: left;">Print current working directory</td>
+<td style="text-align: left;"><code>pwd</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>cd</code></td>
+<td style="text-align: left;">Change directory</td>
+<td style="text-align: left;"><code>cd ..</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>ls</code></td>
+<td style="text-align: left;">List directory contents</td>
+<td style="text-align: left;"><code>ls -ltS</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>mkdir</code></td>
+<td style="text-align: left;">Make new directory</td>
+<td style="text-align: left;"><code>mkdir figures tables</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>touch</code></td>
+<td style="text-align: left;">Make a new text file</td>
+<td style="text-align: left;"><code>touch search_log.txt</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>rm</code></td>
+<td style="text-align: left;">Remove file/directory</td>
+<td style="text-align: left;"><code>rm output</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>cp</code></td>
+<td style="text-align: left;">Copy file/directory</td>
+<td style="text-align: left;"><code>cp manuscript_draft submitted_manuscripts</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>mv</code></td>
+<td style="text-align: left;">Move file/directory</td>
+<td style="text-align: left;"><code>mv manuscript_draft submitted_manuscripts</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>grep</code></td>
+<td style="text-align: left;">Search files for a pattern</td>
+<td style="text-align: left;"><code>grep 'pattern' file.txt</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>open</code></td>
+<td style="text-align: left;">Open a file or directory in the default application</td>
+<td style="text-align: left;"><code>open search_log.txt</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>history</code></td>
+<td style="text-align: left;">Print the history of commands issued to the shell</td>
+<td style="text-align: left;"><code>history</code></td>
+</tr>
+</tbody>
+</table>
+<p>If you are looking to expand your general command-line toolkit even further, there is an enormous number of high-quality tutorials online. Now that you have a basic foundation, learning will be faster. However, as mentioned earlier, I recommend against taking a completionist approach. Instead of trying to learn everything at once, get comfortable with this foundation and expand your knowledge in a problem-driven way. That way you will have time to practice and make interacting with your computer this way feel more natural, fast, and automatic.</p>
+</section>
+<section id="further-reading" class="level3" data-number="1.2.6">
+<h3 data-number="1.2.6" class="anchored" data-anchor-id="further-reading"><span class="header-section-number">1.2.6</span> Further Reading</h3>
+<p>In general, the best way to deepen your knowledge of open-source computing, for research or otherwise, is to learn more about Linux and command-line computing. You’ll find plenty of excellent free resources about Linux and open-source computing online, but if you’re looking for a more guided and scaffolded tour that doesn’t throw you right into the deep end, I would recommend William Shotts’ <a href="https://linuxcommand.org/tlcl.php"><em>The Linux Command Line</em></a> or Brian Ward’s <a href="https://www.nostarch.com/howlinuxworks3"><em>How Linux Works</em></a>.</p>
+<p>Now let’s learn how to use version control software, specifically Git, in order to do our work in more transparent, auditable, and reproducible ways. I’ll focus on using a visual interface for Git (a “GUI”) inside VS Code and then I’ll explain how to use Git on the command line. Use whichever approach you prefer.</p>
+</section>
+</section>
+<section id="version-control-tools" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="version-control-tools"><span class="header-section-number">1.3</span> Version Control Tools</h2>
+<p>Real research projects can become complex messes very quickly. While there are organizational strategies you can adopt to keep the messiness to a minimum, a good version control system is essential. Version control systems watch your full project and record all the changes that happen everywhere, to every file (unless you tell it to ignore a file or subdirectory). It keeps logs of who did what, to what files, when, and if you use it properly, it can even keep log files and other notes associated with each change to the project. It eliminates the “need” for long descriptive file names with information about dates, authors’ comments, and revision stages, or emailing the “final version” of a <code>.docx</code> file back and forth between collaborators. At any given point, you can roll back in time to a previous state of the project. They also unlock <em>enormous</em> potential for collaboration—in fact, the version control system I recommend, Git, is used to manage what is arguably the largest and most complex software development project in the world, the Linux kernel, built by over 5,000 individual developers from over 400 organizations around the world.</p>
+<p>The model for Git and other version control systems is that you store your project in a <strong>repository</strong>. Once your repository has been “initialized,” you work on your files as you normally would. From time to time—say each time you start and finish working on some piece of your project—you “add” or “stage” your changes and then “commit” them to the repository along with a brief log message about what you did and why. If your repository is linked to a remote server, such as GitHub, you can also “push” your changes to the remote repository.</p>
+<p>As you do this, you build up a complete record of the history of your project, including who (your past self included) did what and why. You can roll back to any place in the history of your project, create experimental branches of the project to explore other lines of inquiry, and so on. Your collaborators can also have access to the remote repositories and can “clone” (i.e., download) the repository with the full history, make their own changes, add them, commit them, and push them back to the remote repository. You can get those changes yourself by “pulling” down new changes.</p>
+<section id="git-from-inside-vs-code" class="level3" data-number="1.3.1">
+<h3 data-number="1.3.1" class="anchored" data-anchor-id="git-from-inside-vs-code"><span class="header-section-number">1.3.1</span> Git from Inside VS Code</h3>
+<p>Using Git within VS Code provides a user-friendly way to manage version control without needing to remember all the command-line instructions. Here’s how you can use Git inside VS Code:</p>
+<ol type="1">
+<li>After you’ve opened your project folder in VS Code, you’ll notice an icon on the left sidebar that looks like a branch with three nodes—that’s the <strong>Source Control</strong> tab. Click on it to access Git features.</li>
+<li>When you make changes to your files, VS Code will detect them and list them under <strong>Changes</strong> in the Source Control tab. You can click on each file to see what has changed.</li>
+<li>To stage your changes, hover over the file and click on the <code>+</code> icon that appears, or right-click and select <strong>Stage Changes</strong>. Staged changes are ready to be committed.</li>
+<li>Once you’ve staged the changes you want to commit, enter a commit message in the text box at the top (e.g., “Added data cleaning script”) and click the checkmark icon to commit them.</li>
+<li>If your repository is linked to a remote repository on GitHub, you can push your commits by clicking on the ellipsis icon (<code>...</code>) in the Source Control tab and selecting <strong>Push</strong>. Similarly, you can pull changes from the remote repository by selecting <strong>Pull</strong>.</li>
+</ol>
+<p>Using Git within VS Code makes version control more visual and can help you better understand what’s happening in your project. It also integrates well with other features of VS Code, such as the built-in terminal and extensions.</p>
+</section>
+<section id="git-from-the-command-line" class="level3" data-number="1.3.2">
+<h3 data-number="1.3.2" class="anchored" data-anchor-id="git-from-the-command-line"><span class="header-section-number">1.3.2</span> Git from the Command Line</h3>
+<p>It’s also possible to use Git from the command line—in fact, it was designed for the command line! Let’s say you are starting a new web scraping project. You’ve written some code, all stored inside a directory called <code>scraping_project</code>. To use Git to manage your project, you would <code>cd</code> into the project directory and initialize Git. You only have to initialize Git once for a project.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> scraping_project</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> init</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Once you’ve made some changes to your project, you can “stage” the changes using <code>git add</code>. You can track individual file changes, but the easiest thing to do is to track any changes that have been made to the whole project directory. You can do this by specifying that you are adding changes for the full directory using the <code>.</code> (remember: <code>.</code> indicates the current directory).</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add .</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Next, you’ll want to write a commit message that <em>briefly</em> describes the changes you’ve made. For example, we might write:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"Drafted initial web scraping script"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Git provides a number of other useful commands that you’ll make frequent use of. For example, if you have an account on GitHub, GitLab, or some other service for managing Git repositories, you can push your changes to the remote version by using <code>git push</code>. Similarly, you could also “pull” down an up-to-date version of the project on another computer, once again making your work more portable. Other useful Git commands are provided in <strong>Table 2</strong>.</p>
+<p><strong>Table 2: The subset of Git commands you need to do 99% of your work with</strong></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 15%">
+<col style="width: 41%">
+<col style="width: 42%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Command</th>
+<th style="text-align: left;">Action</th>
+<th style="text-align: left;">Example</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>git init</code></td>
+<td style="text-align: left;">Initialize a new Git repository</td>
+<td style="text-align: left;"><code>git init .</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>git add</code></td>
+<td style="text-align: left;">Stage changes</td>
+<td style="text-align: left;"><code>git add .</code>, <code>git add article.md</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>git commit -m</code></td>
+<td style="text-align: left;">Commit changes with log message</td>
+<td style="text-align: left;"><code>git commit -m "Drafted introduction"</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>git push</code></td>
+<td style="text-align: left;">Push changes to remote repository</td>
+<td style="text-align: left;"><code>git push</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>git status</code></td>
+<td style="text-align: left;">Compare local repository with remote repository</td>
+<td style="text-align: left;"><code>git status</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>git pull</code></td>
+<td style="text-align: left;">Update your local repo with changes from remote</td>
+<td style="text-align: left;"><code>git pull</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>git clone</code></td>
+<td style="text-align: left;">Clone a remote repository</td>
+<td style="text-align: left;"><code>git clone [URL]</code></td>
+</tr>
+</tbody>
+</table>
+<p>Using version control software like Git has many benefits, not the least of which is that when you return to your work after a period of working on something else—say, when a chapter is being reviewed by your committee or a paper is under review—you will know exactly what you did and why later. When it comes to accountability, transparency, and reproducibility, this is perhaps the most important thing: <strong>you must always know what you did</strong>.</p>
+</section>
+<section id="further-reading-1" class="level3" data-number="1.3.3">
+<h3 data-number="1.3.3" class="anchored" data-anchor-id="further-reading-1"><span class="header-section-number">1.3.3</span> Further Reading</h3>
+<p>Using tools like Git makes transparency, accountability, and reproducibility possible, but only if you use them properly. As you become more comfortable with these tools, you’ll want to seek out advice on how people use them for different types of projects. I recommend Patrick Ball’s <span class="citation" data-cites="ballPdpp">(<a href="references.html#ref-ballPdpp" role="doc-biblioref">2016</a>)</span> <em>“Principled Data Processing (PDP)”</em> framework. Eric Ma’s <span class="citation" data-cites="ma">(<a href="references.html#ref-ma" role="doc-biblioref">2021</a>)</span> <em>Data Science Bootstrap: A Practical Guide to Getting Organized for Your Best Data Science Work</em> also provides a lot of excellent advice for scientific computing more generally, and for setting up workflows for projects that don’t lend themselves well to the PDP framework.</p>
+<p>Finally, as a computational social scientist, you’ll need to understand and make use of virtualization tools. I’ve already set all of this up for you in our pre-built environment, so if all of this is new to you, it’s okay to skip over this next section and come back if and when you need it.</p>
+</section>
+</section>
+<section id="virtualization-tools" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="virtualization-tools"><span class="header-section-number">1.4</span> VIRTUALIZATION TOOLS</h2>
+<p>As a computational social scientist, you’ll need to understand and utilize virtualization tools to ensure your work is consistent, reproducible, and portable across different computing environments. While this might seem complex at first, virtualization allows you to create isolated environments that encapsulate all the dependencies your projects require. This ensures that your code runs exactly as intended, regardless of where or how it’s executed.</p>
+<p>We’ll focus on two primary types of virtualization: <strong>containers</strong> and <strong>virtual environments</strong>. Both serve the purpose of isolating your project’s dependencies but operate at different levels.</p>
+<section id="containers" class="level3" data-number="1.4.1">
+<h3 data-number="1.4.1" class="anchored" data-anchor-id="containers"><span class="header-section-number">1.4.1</span> Containers</h3>
+<p><strong>Containers</strong> are a form of operating system virtualization that allows you to run applications in isolated environments. They package up software with all its necessary components—code, runtime, system tools, libraries, and settings—so it runs consistently across different computing environments.</p>
+<p>The most popular tool for working with containers is <strong>Docker</strong>. Docker enables you to create, deploy, and run applications inside containers. In this book, we’ve provided a pre-built Docker image that contains all the software and libraries you’ll need for computational social science research.</p>
+<p><strong>DevContainers</strong> are a feature of VS Code that leverages Docker to provide a seamless development experience. When you open a project configured with a DevContainer, VS Code automatically builds and starts the Docker container defined for the project. This means you don’t have to worry about installing the correct versions of Python or any libraries on your local machine—the container handles all of that for you.</p>
+<p>Using Docker and DevContainers has several advantages:</p>
+<ul>
+<li><strong>Consistency</strong>: Everyone working on the project uses the same environment, eliminating “it works on my machine” problems.</li>
+<li><strong>Isolation</strong>: Your development environment is isolated from your local machine, preventing conflicts between project dependencies.</li>
+<li><strong>Reproducibility</strong>: Containers can be versioned and shared, ensuring that others can reproduce your computational environment exactly.</li>
+</ul>
+<p>To get started with containers in this book, all you need is Docker Desktop and the Dev Containers extension in VS Code (which we’ve covered earlier). When you open the course repository in VS Code, it will automatically detect the DevContainer configuration and prompt you to reopen the project inside the container. Once you do, you’ll be working inside the pre-configured environment we’ve provided.</p>
+</section>
+<section id="creating-and-using-virtual-environments" class="level3" data-number="1.4.2">
+<h3 data-number="1.4.2" class="anchored" data-anchor-id="creating-and-using-virtual-environments"><span class="header-section-number">1.4.2</span> Creating and Using Virtual Environments</h3>
+<p>While containers isolate the entire operating system environment, <strong>virtual environments</strong> allow you to isolate Python dependencies at the project level. This is particularly useful when you have multiple projects requiring different versions of the same packages.</p>
+<p>In this book, we’ll occasionally use virtual environments managed by <strong>Conda</strong> or <strong>Poetry</strong>. These tools help you create and manage project-specific environments, ensuring your Python packages and dependencies are neatly organized.</p>
+<section id="using-conda-for-virtual-environments" class="level4" data-number="1.4.2.1">
+<h4 data-number="1.4.2.1" class="anchored" data-anchor-id="using-conda-for-virtual-environments"><span class="header-section-number">1.4.2.1</span> Using Conda for Virtual Environments</h4>
+<p><strong>Conda</strong> is an open-source package and environment management system that works across Windows, macOS, and Linux. It’s especially popular in the data science community.</p>
+<p>Here’s how to create and activate a Conda environment within VS Code:</p>
+<ol type="1">
+<li><p><strong>Open the Terminal in VS Code</strong>: Click on ‘Terminal’ in the top menu and select ‘New Terminal’, or use the shortcut <code>Ctrl+Shift+</code> (Windows/Linux) or <code>Cmd+Shift+</code> (macOS).</p></li>
+<li><p><strong>Create a New Environment</strong>: Navigate (<code>cd</code>) to your project directory and create a new environment:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> create <span class="at">--name</span> myenv</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Replace <code>myenv</code> with the name you want for your environment.</p></li>
+<li><p><strong>Activate the Environment</strong>:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> activate myenv</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>You’ll notice your terminal prompt now starts with <code>(myenv)</code>, indicating the environment is active.</p></li>
+<li><p><strong>Install Packages</strong>: You can now install the packages you need:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> install numpy pandas</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This installs the latest versions of NumPy and pandas into your environment.</p></li>
+</ol>
+</section>
+<section id="using-poetry-for-virtual-environments" class="level4" data-number="1.4.2.2">
+<h4 data-number="1.4.2.2" class="anchored" data-anchor-id="using-poetry-for-virtual-environments"><span class="header-section-number">1.4.2.2</span> Using Poetry for Virtual Environments</h4>
+<p><strong>Poetry</strong> is a tool that manages Python dependencies and virtual environments, simplifying the process of setting up and maintaining your project.</p>
+<p>To use Poetry within VS Code:</p>
+<ol type="1">
+<li><p><strong>Install Poetry</strong>: If you haven’t already, install Poetry by following the instructions on the <a href="https://python-poetry.org/docs/#installation">Poetry website</a>.</p></li>
+<li><p><strong>Navigate to Your Project Directory</strong>:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /path/to/your/project</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p><strong>Initialize a New Poetry Project</strong>:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="ex">poetry</span> init</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Follow the prompts to set up your project configuration.</p></li>
+<li><p><strong>Add Dependencies</strong>:</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="ex">poetry</span> add numpy pandas</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p><strong>Activate the Virtual Environment</strong>:</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="ex">poetry</span> shell</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This spawns a new shell within the virtual environment, indicated by the <code>(my-project-name)</code> prefix in your terminal prompt.</p></li>
+</ol>
+</section>
+<section id="activating-virtual-environments-in-vs-code" class="level4" data-number="1.4.2.3">
+<h4 data-number="1.4.2.3" class="anchored" data-anchor-id="activating-virtual-environments-in-vs-code"><span class="header-section-number">1.4.2.3</span> Activating Virtual Environments in VS Code</h4>
+<p>VS Code is adept at recognizing and working with virtual environments. After creating and activating a virtual environment, you might need to tell VS Code to use it for running Python code:</p>
+<ol type="1">
+<li><p><strong>Select the Python Interpreter</strong>: Press <code>Ctrl+Shift+P</code> (Windows/Linux) or <code>Cmd+Shift+P</code> (macOS) to open the Command Palette. Type <code>Python: Select Interpreter</code> and select it.</p></li>
+<li><p><strong>Choose Your Environment</strong>: From the list of available interpreters, select the one corresponding to your virtual environment.</p></li>
+</ol>
+<p>This ensures that when you run or debug your code in VS Code, it uses the correct environment.</p>
+</section>
+<section id="when-to-use-virtual-environments" class="level4" data-number="1.4.2.4">
+<h4 data-number="1.4.2.4" class="anchored" data-anchor-id="when-to-use-virtual-environments"><span class="header-section-number">1.4.2.4</span> When to Use Virtual Environments</h4>
+<p>While our pre-built Docker environment covers most of the computational needs for this book, there are instances—like when we explore generative models for networks—where you’ll need to create and manage virtual environments. Virtual environments are particularly useful when:</p>
+<ul>
+<li><strong>Working on Multiple Projects</strong>: Isolating dependencies prevents conflicts between projects.</li>
+<li><strong>Requiring Specific Package Versions</strong>: Some projects might need specific versions of libraries that differ from others.</li>
+<li><strong>Collaborating with Others</strong>: Sharing a <code>pyproject.toml</code> or <code>environment.yml</code> file allows collaborators to replicate your environment exactly.</li>
+</ul>
+<p>If you’re new to this, don’t worry. You can rely on the container setup for now and revisit virtual environments when we reach those chapters.</p>
+</section>
+</section>
+</section>
+<section id="conclusion" class="level2" data-number="1.5">
+<h2 data-number="1.5" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">1.5</span> CONCLUSION</h2>
+<p>Starting with computational social science might seem overwhelming due to the array of tools and technologies involved. However, each tool serves a specific purpose in streamlining your workflow, enhancing collaboration, and ensuring reproducibility.</p>
+<p>While the initial setup requires effort, investing time in learning these tools will pay off immensely. You’ll find that they not only make your research more efficient but also open up possibilities for collaboration and innovation that aren’t feasible with traditional methods.</p>
+<p>Remember, it’s perfectly normal to feel a bit lost when diving into something new. Take it step by step, refer back to this chapter as needed, and don’t hesitate to seek out additional resources or ask questions. Soon enough, using these tools will become second nature, and you’ll be well-equipped to tackle any computational challenge in your research.</p>
+</section>
+<section id="key-points" class="level2" data-number="1.6">
+<h2 data-number="1.6" class="anchored" data-anchor-id="key-points"><span class="header-section-number">1.6</span> KEY POINTS</h2>
+<ul>
+<li><strong>Command Line Proficiency</strong>: Understanding how to navigate and operate in the shell is foundational for computational social science.</li>
+<li><strong>VS Code</strong>: A versatile text editor and IDE that integrates seamlessly with tools like Git, Docker, and virtual environments.</li>
+<li><strong>Git for Version Control</strong>: Essential for tracking changes, collaborating with others, and ensuring reproducibility.</li>
+<li><strong>Containers with Docker and DevContainers</strong>: Provide consistent and isolated environments, ensuring your code runs the same everywhere.</li>
+<li><strong>Virtual Environments with Conda and Poetry</strong>: Allow for project-specific dependency management without interfering with system-wide settings.</li>
+<li><strong>Integration in VS Code</strong>: All these tools work together within VS Code, providing a unified and efficient workflow.</li>
+<li><strong>Reproducibility and Collaboration</strong>: Using these tools promotes transparency, accountability, and ease of collaboration in research.</li>
+<li><strong>Continuous Learning</strong>: Embrace a problem-driven approach to expand your skills as you encounter new challenges.</li>
+</ul>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-ballPdpp" class="csl-entry" role="listitem">
+Ball, Patrick. 2016. <span>“Principled Data Processing.”</span> Data &amp; Society.
+</div>
+<div id="ref-ma" class="csl-entry" role="listitem">
+Ma, Eric. 2021. <em>Data Science Bootstrap: A Practical Guide to Getting Organized for Your Best Data Science Work</em>. LeanPub.
+</div>
+<div id="ref-ward2021linux" class="csl-entry" role="listitem">
+Ward, Brian. 2021. <em>How Linux Works: What Every Superuser Should Know</em>. no starch press.
+</div>
+</div>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./00-introduction.html" class="pagination-link" aria-label="Learning to Do Computational Social Science">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Learning to Do Computational Social Science</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./02-python-101.html" class="pagination-link" aria-label="Python 101">
+        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Python 101</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/UWNETLAB/dcss_supplementary/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>

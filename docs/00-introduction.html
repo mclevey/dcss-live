@@ -1,0 +1,1435 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.56">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Learning to Do Computational Social Science – Doing Computational Social ScienceThe Continuous Development Edition</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./01-getting-started.html" rel="next">
+<link href="./index.html" rel="prev">
+<link href="./media/logo.png" rel="icon" type="image/png">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="custom.css">
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./00-introduction.html">Learning to Do Computational Social Science</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="./index.html" class="sidebar-logo-link">
+      <img src="./media/logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      </a>
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Doing Computational Social Science<br><span class="small">The <strong>Continuous Development</strong> Edition</span></a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/UWNETLAB/dcss_supplementary/tree/master/book/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <div class="dropdown">
+      <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=|url|">
+              <i class="bi bi-twitter pe-1"></i>
+            Twitter
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://www.facebook.com/sharer/sharer.php?u=|url|">
+              <i class="bi bi-facebook pe-1"></i>
+            Facebook
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://www.linkedin.com/sharing/share-offsite/?url=|url|">
+              <i class="bi bi-linkedin pe-1"></i>
+            LinkedIn
+            </a>
+          </li>
+      </ul>
+    </div>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">👋 Hello!</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./00-introduction.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Learning to Do Computational Social Science</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Research Computing</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-getting-started.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Getting Started</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-python-101.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Python 101</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-python-102.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Python 102</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Obtaining Data</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04-sampling-and-survey-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Sampling and survey data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-web-data-apis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Web data (APIs)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06-web-data-scraping.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Web data (Scraping)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-audio-image-and-document-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Audio, image, and document data</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Exploring Data</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08-processing-structured-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Processing Structured Data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09-exploratory-data-analysis-and-visualization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Exploratory data analysis and visualization</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10-association-and-latent-factors.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Association and latent factors</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11-text-as-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Text as Data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./12-text-similarity-and-latent-semantic-space.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Text similarity and latent semantic space</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./13-social-networks-and-relational-thinking.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Networks: Relationships as Data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./14-structural-similarity-and-latent-social-space.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Structural similarity and latent social space</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Prediction and Inference</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./15-machine-and-statistical-learning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Machine Learning 101</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./16-prediction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Prediction</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./17-probability.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Probability 101</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./18-credibility.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Credibility</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./19-causality.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Causality</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Generative Modeling</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./20-linear-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Bayesian Regression Models with Probabilistic Programming</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./21-multilevel-regression-with-post-stratification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Multilevel regression with post-stratification</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./22-generalized-linear-models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Generalized Linear Models</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./23-causal-analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Causal analysis</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./24-latent-structure-networks.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Latent structure in networks</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./25-latent-topics-text-lda.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Latent topics in text (LDA)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./26-complex-adaptive-systems.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Agent-based Models</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./27-developing-agent-based-models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Diffusion</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">Deep Learning Demystified</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./28-artificial-neural-networks-fnn-rnn-cnn.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Neural networks 101</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./29-processing-natural-language-data-spacy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Processing Natural Language Data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./30-transformers-self-attention.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Transformers, Self-attention architecture</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./31-latent-topics-text-transformers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Modelling latent topics (Transformers)</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text">Professional Responsibilities</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./32-research-ethics-politics-and-practices.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Research Ethics, Politics, and Practices</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./33-next-steps.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Next steps</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./acknowledgements.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Acknowledgements</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./changelog.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Changelog</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./appendix-centrality-formulas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Centrality Formulas</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./appendix-courses.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Courses and Workshops</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#who-is-this-book-for" id="toc-who-is-this-book-for" class="nav-link active" data-scroll-target="#who-is-this-book-for">Who Is This Book For?</a>
+  <ul class="collapse">
+  <li><a href="#assumed-knowledge-and-skills" id="toc-assumed-knowledge-and-skills" class="nav-link" data-scroll-target="#assumed-knowledge-and-skills">Assumed Knowledge and Skills</a></li>
+  <li><a href="#advice-on-using-this-book-to-learn-efficiently" id="toc-advice-on-using-this-book-to-learn-efficiently" class="nav-link" data-scroll-target="#advice-on-using-this-book-to-learn-efficiently">Advice on Using This Book to Learn Efficiently</a></li>
+  <li><a href="#using-large-language-models-to-enhance-your-learning" id="toc-using-large-language-models-to-enhance-your-learning" class="nav-link" data-scroll-target="#using-large-language-models-to-enhance-your-learning">Using Large Language Models to Enhance Your Learning</a></li>
+  </ul></li>
+  <li><a href="#sec-roadmap" id="toc-sec-roadmap" class="nav-link" data-scroll-target="#sec-roadmap">Roadmap</a>
+  <ul class="collapse">
+  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#part-i-research-computing" id="toc-part-i-research-computing" class="nav-link" data-scroll-target="#part-i-research-computing">Part I | Research Computing</a></li>
+  <li><a href="#part-ii-obtaining-data" id="toc-part-ii-obtaining-data" class="nav-link" data-scroll-target="#part-ii-obtaining-data">Part II | Obtaining Data</a></li>
+  <li><a href="#part-iii-exploring-data" id="toc-part-iii-exploring-data" class="nav-link" data-scroll-target="#part-iii-exploring-data">Part III | Exploring Data</a></li>
+  <li><a href="#part-iv-prediction-and-inference" id="toc-part-iv-prediction-and-inference" class="nav-link" data-scroll-target="#part-iv-prediction-and-inference">Part IV | Prediction and Inference</a></li>
+  <li><a href="#part-v-generative-modeling" id="toc-part-v-generative-modeling" class="nav-link" data-scroll-target="#part-v-generative-modeling">Part V | Generative Modeling</a></li>
+  <li><a href="#part-vi-deep-learning-demystified" id="toc-part-vi-deep-learning-demystified" class="nav-link" data-scroll-target="#part-vi-deep-learning-demystified">Part VI | Deep Learning Demystified</a></li>
+  <li><a href="#part-vii-professional-responsibilities-and-ethical-practice" id="toc-part-vii-professional-responsibilities-and-ethical-practice" class="nav-link" data-scroll-target="#part-vii-professional-responsibilities-and-ethical-practice">Part VII | Professional Responsibilities and Ethical Practice</a></li>
+  </ul></li>
+  <li><a href="#datasets-used-in-this-book" id="toc-datasets-used-in-this-book" class="nav-link" data-scroll-target="#datasets-used-in-this-book">Datasets Used in This Book</a>
+  <ul class="collapse">
+  <li><a href="#structured-datasets" id="toc-structured-datasets" class="nav-link" data-scroll-target="#structured-datasets">“Structured” Datasets</a></li>
+  <li><a href="#relationalnetwork-datasets" id="toc-relationalnetwork-datasets" class="nav-link" data-scroll-target="#relationalnetwork-datasets">Relational/Network Datasets</a></li>
+  <li><a href="#text-datasets" id="toc-text-datasets" class="nav-link" data-scroll-target="#text-datasets">Text Datasets</a></li>
+  </ul></li>
+  <li><a href="#learning-materials" id="toc-learning-materials" class="nav-link" data-scroll-target="#learning-materials">Learning Materials</a>
+  <ul class="collapse">
+  <li><a href="#learning-objectives-key-concepts-recommended-content-and-key-points" id="toc-learning-objectives-key-concepts-recommended-content-and-key-points" class="nav-link" data-scroll-target="#learning-objectives-key-concepts-recommended-content-and-key-points">Learning Objectives, Key Concepts, Recommended Content, and Key Points</a></li>
+  <li><a href="#online-supplementary-learning-materials" id="toc-online-supplementary-learning-materials" class="nav-link" data-scroll-target="#online-supplementary-learning-materials">Online Supplementary Learning Materials</a></li>
+  <li><a href="#the-dcss-computing-setup-and-python-package" id="toc-the-dcss-computing-setup-and-python-package" class="nav-link" data-scroll-target="#the-dcss-computing-setup-and-python-package">The DCSS Computing Setup and Python Package</a></li>
+  </ul></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">CONCLUSION</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/UWNETLAB/dcss_supplementary/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Learning to Do Computational Social Science</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Planned Revisions
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Parts of this chapter – specifically the roadmap – will see some minor updates to reflect other changes in the book. I’ll likely make those changes in late fall 2024 when the other revisions are complete. For now, this version is mostly the same as the print edition.</p>
+</div>
+</div>
+<p><br></p>
+<p>This book aims to <strong>show</strong> you how to <strong>do</strong> computational social science, and data science more generally, using the open source programming language Python and complex, imperfect datasets of the kind you might actually work with in your own research—messy real-world data. It differs from other books and learning materials in the field in many respects, the most salient three being:</p>
+<ul>
+<li>It is designed to accommodate researchers with widely varying intellectual and technical backgrounds.</li>
+<li>It covers a very broad range of methods and models while still emphasizing deep understanding.</li>
+<li>It does so in an unapologetically practical way. I’ve tried to write as if we were sitting down at a computer looking at data and fitting models together.</li>
+</ul>
+<p>I start with the very basics (setting up a scientific computing environment and typing your first line of Python code) and end with in-depth examples of developing a variety of models that are currently at the cutting edge of machine learning and statistics, network science, and natural language processing. The content is cumulative and carefully scaffolded, provided you start at the beginning and work through each chapter sequentially. If you already have a good foundation and are looking to go further in one area or another, you can safely read chapters out of sequence. If you are starting with little to no prior experience to build on, the early chapters will help lay a foundation that subsequent chapters can build on, brick by brick.</p>
+<p>I’ve done my best to identify what you really need to know to go from a beginner to a highly skilled researcher with a good bit of breadth and depth. However, to learn effectively from this book—<em>to get the most from it</em>—you will need to honestly assess where you are and where you want to be, and plan your learning accordingly. Below, I’ll outline some of the assumptions I make about what you already know. Then I’ll offer some practical advice on how to learn to do computational social science from this book so that you can start using your new knowledge and skills in your own projects as quickly as possible.</p>
+<section id="who-is-this-book-for" class="level2">
+<h2 class="anchored" data-anchor-id="who-is-this-book-for">Who Is This Book For?</h2>
+<p>I have tried to write this book for as broad and diverse a readership as possible, but even with 200,000 words it can’t cover everything, and it can’t be a book for everyone. The type of person I have primarily kept in mind is a scientific researcher—regardless of their specific disciplinary background or research interests—with little to no computational experience or expertise. I have no specific career stage in mind; rather than writing for students of a particular level, I have tried to write for anyone who is new, or relatively new, to computational social science. That could be as true for a tenured professor as for a graduate student, or an advanced undergraduate student.</p>
+<p>What do I mean by “scientific researcher” or “scientist”? I use those terms a lot, and pretty casually, so it’s worth taking a moment to clarify what I mean by them. I mean “scientist” in a very general sense, inclusive of all the social, cognitive, and communication sciences; applied health sciences; environmental sciences; and interdisciplinary fields like network science that cut across nearly every branch of science. While it is easy to enumerate dozens of things that make sociologists different from epidemiologists, economists different from biologists, and everyone different from physicists, my preference in writing this book has been to emphasize what we have in common: we all engage in efforts to honestly and systematically advance the state of general knowledge in our fields using a combination of empirical data, theory, and models. Given that you are currently reading this book, I assume you are interested in furthering your ability to do so using computational approaches.</p>
+<section id="assumed-knowledge-and-skills" class="level3">
+<h3 class="anchored" data-anchor-id="assumed-knowledge-and-skills">Assumed Knowledge and Skills</h3>
+<p>In this edition, I assume you have little to no previous experience with programming, scientific computing, or quantitative data analysis. The early chapters are designed to give you a foundation in these areas, which we will build on as we progress through more advanced methods.</p>
+<p>When it comes to methodological background, I no longer assume that you are familiar with research design or conventional quantitative research methods in the social sciences. Instead, the first half of the book has been thoroughly revised to teach this content from the ground up, building up your skills incrementally. This shift marks a key difference from the print edition, where I expected readers to have already completed a course in quantitative research methods. Now, my goal is to guide you through the foundations, with a focus on concepts like causal inference and probabilistic modeling. While it may be a bit of an unconventional introduction to quantitative methods, I believe it will better prepare you for the present and future landscape of social science research. We’ll focus on the present as well as the probable and preferable future instead of being beholden to the past.</p>
+<p>People enter computational social science with vastly different intellectual backgrounds. Some might have strong experience in quantitative methods, while others may come from a more qualitative or interpretive background. These differences can shape your learning process in important and perhaps unexpected ways.</p>
+<p>First, if you have some experience with quantitative data analysis—perhaps from a course in statistics or econometrics—you’re in a great position to build on that foundation. You may find the transition into computational methods easier because you’re already comfortable with probabilistic thinking and model-based approaches. This prior knowledge will be an asset, especially as we delve into more complex models.</p>
+<p>However, if your background is more qualitative or interpretive, you also bring valuable skills to the table, even if they might not seem immediately relevant. Many computational methods, especially those used in fields like cultural sociology or political science, are designed to engage with the kinds of unstructured data—such as text and images—that qualitative researchers often work with. Moreover, your experience with abstract theoretical frameworks will help you develop a unique perspective on how to approach computational models. Over time, you’ll learn to represent these theories within the models, turning your theoretical strengths into a modeling advantage.</p>
+<p>Finally, there is the matter of learning to program in the first place. While some quantitative researchers may enjoy an advantage here, the benefits are not ubiquitous. Having to write at least some code does not mean professional quantitative researchers adhere to best programming or scientific computing practices. Most of the time, the scripts they write get the job done in ugly and inefficient ways because they have acquired what programming knowledge they have in quantitative methods courses and/or by trying to solve specific data analysis problems rather than starting from the basics. I speak from personal experience.</p>
+<p>While problem-driven learning is excellent in general (it features heavily in this book), it can develop many bad habits that—all aesthetic judgments aside—are bad for science. Even the most impressive stats nerds tend to be pretty bad programmers and could benefit from learning some basics. This is not so easily done, though, because some things that are good practice in programming and software development are not necessarily good practice in science. While you don’t have to become a professional programmer to do great computational social science, it is very important to fix bad habits.</p>
+</section>
+<section id="advice-on-using-this-book-to-learn-efficiently" class="level3">
+<h3 class="anchored" data-anchor-id="advice-on-using-this-book-to-learn-efficiently">Advice on Using This Book to Learn Efficiently</h3>
+<p>When you are first learning computational social science or data science, it can feel like you are drinking from a firehose. If that’s the case for you, I have a few pieces of general advice that might help.</p>
+<p>First, I recommend using a simplified version of Bloom’s taxonomy of learning outcomes (just a web search away) to determine (a) where you are right now and (b) where you want to be. Don’t skip steps in the taxonomy. If there are multiple steps between where you are and where you want to be, that’s OK, but you need to take those steps one at a time. Work through the book slowly and deliberately. After each chapter, take stock of your cumulative knowledge. What have you learned, and how does it relate to what you learned previously? Can you <em>explain</em> what you’ve learned in your own words? Can you <em>do</em> the things that are introduced in each chapter on your own? In doing this, you may find that you understand something when you see it on the page but are unable to clearly explain that thing or do that thing yourself. You are experiencing the fuzzy threshold between different levels of competence: <strong>understanding</strong> (level 1 of Bloom’s taxonomy), <strong>explanation</strong> (level 2), and <strong>application</strong> (level 3). If you have no previous experience of any kind, then your learning goals should focus on understanding before all else. Just make sense of what’s going on. Once you have acquired understanding, then you can work on being able to correctly and clearly explain. The third step is competent application of your new knowledge and skills.</p>
+<p>The book supports this scaffolded approach to learning by design <span class="citation" data-cites="weinstein2018understanding brown2014science doyle2018new">(inspired by <a href="references.html#ref-weinstein2018understanding" role="doc-biblioref">Weinstein, Sumeracki, and Caviglioli 2018</a>; <a href="references.html#ref-brown2014science" role="doc-biblioref">Brown, Roediger, and McDaniel 2014</a>; <a href="references.html#ref-doyle2018new" role="doc-biblioref">Doyle and Zakrajsek 2018</a>)</span>. I recommend you read each chapter twice. Read it the first time on its own. Focus on understanding the concepts and see how each part of the chapter fits together into a coherent whole. Read the code and take notes. If something is unclear to you, write a reminder about what you don’t understand <em>but keep reading</em>. Once you get to the end of the chapter, stop. If you have time, sleep on it. Give your brain a chance to process everything you’ve exposed it to. Let it move some of that content from short-term memory to long-term memory overnight! Then, without letting too much time pass, go back to the start of the chapter, but this time, <em>make sure you are sitting in front of a computer</em>. Type out the code in the chapter as you go, changing little things here and there to see how things work. Then, try to work through the problems and online learning materials associated with the chapter (described below). Whenever you encounter a gap in your knowledge, (i) explicitly make note of it and (ii) fill it by going back to the relevant part of the chapter or by searching online.</p>
+<p>My second piece of advice is to consider your learning process in computational social science as a kind of enculturation process (even though computational social science has many different communities and cultures). This is very different from the learning-with-a-checklist mindset. Checklists are helpful when they break complex things down into small manageable chunks, which is why each chapter starts with a (check)list of learning objectives. That said, checklists make it easy to forget that the individual items themselves are not really the point. The way I present computational social science is heavily focused on the underlying <strong>principles</strong> and <strong>practices</strong> of the field, as well as the shared conceptual underpinnings of a wide variety of methods and models (e.g., Bayesian inference).</p>
+<p>Learning to do computational social science in line with these principles usually requires slowing down at first to unlearn some deeply ingrained habits and replace them with others. It’s less about “learning Python” or other specific skills than it is about enculturation into a culture of transparent, auditable, and reproducible scientific computing. To align yourself with these core principles, you must know how to write all of your data collection, cleaning, and analysis code in well-organized scripts or notebooks, managed using virtual environments and version control software, and executed from the command line. Knowing how to use each tool is just the first step; to subsume principle and practice is the end goal. Most social scientists are never taught this, and many well-intentioned efforts to share important “how-to” knowledge have the unintended consequence of disorienting and overwhelming highly capable newcomers who, through no fault of their own, can’t see the point of doing things in such a seemingly byzantine fashion.</p>
+<p>My third piece of advice is to be kind to yourself. Regardless of how challenging you find the material, <em>there is a lot to learn</em>, and you can’t learn it all at once. The knowledge and skills that are required to develop deep expertise are scattered throughout the entire book. Most of the foundational <em>technical</em> stuff you need to know to get started, however, is introduced in the earliest chapters. Everything else is about gradually layering more specific computing skills on top of the general foundation. As you progress, regularly and honestly assess the state of your knowledge: you will see progress over time.</p>
+</section>
+<section id="using-large-language-models-to-enhance-your-learning" class="level3">
+<h3 class="anchored" data-anchor-id="using-large-language-models-to-enhance-your-learning">Using Large Language Models to Enhance Your Learning</h3>
+<p>In the few years since this book was published, Large language models (LLMs) like OpenAI’s ChatGPT, GitHub’s Copilot, Anthropic’s Claude, Google’s Gemini, and Meta’s Llama (which is open source) have burst onto the scene. Everything is different now. If you choose to use them, these tools can be an invaluable learning resource or a major liability. Perhaps most importantly, you should use LLMs as learning aids rather than crutches. Here are a few examples of how you might do that:</p>
+<ul>
+<li><strong>Clarifying Concepts</strong>: When you encounter a concept that is challenging to grasp, you can ask an LLM to provide explanations with more or less technical detail, with or without analogies, or by drawing connections to other concepts you already understand.</li>
+<li><strong>Clarifying Code</strong>: When you are reading someone else’s code – mine, for example – and something isn’t quite making sense, you can ask an LLM to provide a detailed line-by-line explanation. After reviewing the explanation, you can ask follow up questions to clear up any lingering confusion.</li>
+<li><strong>Parsing Errors</strong>: Debugging code is an important skills, but can be one of the most frustrating aspects of programming, especially when you’re starting out. LLMs can help you interpret error messages and suggest potential fixes. For example, if you run some code and get a <code>TypeError</code>, you can input the error message into an LLM and ask for assistance: “I’m getting a ‘TypeError: unsupported operand type(s) for +: ’int’ and ‘str’’ in my code. What does this mean, and how can I fix it?” Instead of mindlessly copying code until it seems to work, treat the LLM like a tutor and make a sincere effort to understand the problem and proposed solution.</li>
+<li><strong>Exploring Alternative Approaches</strong>: If you’re thinking through ways to solve a problem, you can ask an LLM to critique your ideas or outline alternative methods.</li>
+<li><strong>Developing Tests</strong>: As you develop as a computational social scientist, you’ll reach a point where it is important to ensure your code works as intended by putting it through a battery of tests. However, writing tests can be tedious. LLMs can help you write better tests more efficiently, and can prompt you to consider scenarios that you may otherwise overlook.</li>
+<li><strong>Drafting Documentation</strong>: Similarly, writing clear documentation is essential for both your future self and others who might read your code. LLMs can assist in drafting and updating documentation to explain exactly what your code is designed to do.</li>
+</ul>
+<p>There are just a few examples of how LLMs can be a helpful tool in learning computational social science, but it’s crucial to maintain some healthy skepticism. Always critically evaluate the responses you receive, cross-reference with reliable sources, and test any code or suggestions provided. Remember, the goal is not to have the LLM do the work for you but to use it as a tool to enhance your own understanding and problem-solving abilities.</p>
+<p>By thoughtfully integrating LLMs into your learning process, you can overcome hurdles more efficiently and deepen your understanding of computational social science. But it’s very important to use LLMs responsibly, and to disclose when and how you use them in your work. Be cautious about sharing sensitive data when using these models, especially if they are cloud-based services. Always adhere to ethical guidelines and data protection regulations relevant to your field and region.</p>
+</section>
+</section>
+<section id="sec-roadmap" class="level2">
+<h2 class="anchored" data-anchor-id="sec-roadmap">Roadmap</h2>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+This Content Will Change!
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The roadmap below <strong>will change.</strong> Skim it if you want a general sense of what’s to come, but know that I won’t put much effort into changing this roadmap until the revisions are finished, or close to finished.</p>
+</div>
+</div>
+<p>This book is carefully structured so that a complete newcomer can start at the beginning and work through it step by step. It’s also flexible enough to allow readers with some background to jump to specific chapters depending on their needs. Here’s a preview of what you can expect, highlighting some important changes from the print edition.</p>
+<section id="introduction" class="level3">
+<h3 class="anchored" data-anchor-id="introduction">Introduction</h3>
+<p>The introduction sets the stage for your journey into computational social science. It includes:</p>
+<div class="table-responsive">
+<table class="table-striped table-hover caption-top table">
+<caption>Introduction</caption>
+<colgroup>
+<col style="width: 10%">
+<col style="width: 90%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">🏠</td>
+<td style="text-align: left;">About this edition</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">00</td>
+<td style="text-align: left;">Learning to do computational social science</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>I’ve updated this chapter to reflect changes in assumed backgrounds and added a new section offering guidance on using large language models (LLMs) like ChatGPT and GitHub Copilot for learning and doing computational social science.</p>
+</section>
+<section id="part-i-research-computing" class="level3">
+<h3 class="anchored" data-anchor-id="part-i-research-computing">Part I | Research Computing</h3>
+<p>In Part I, we dive right into programming with Python, laying the groundwork for all the computational methods to come. These chapters have been revised to reflect current best practices, while keeping the core content similar to previous versions.</p>
+<table class="caption-top table">
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">01</td>
+<td style="text-align: left;">Getting started with Python</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">02</td>
+<td style="text-align: left;">Python 101</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">03</td>
+<td style="text-align: left;">Python 102</td>
+</tr>
+</tbody>
+</table>
+<p>In <strong>Chapter 1: Getting started with research computing</strong>, we set up the computational environment and go over essential tools for research computing, such as version control and basic command-line skills. <strong>Chapters 2 and 3</strong> cover Python fundamentals, including basic data types, control flow, functions, data structures, and working with files.</p>
+</section>
+<section id="part-ii-obtaining-data" class="level3">
+<h3 class="anchored" data-anchor-id="part-ii-obtaining-data">Part II | Obtaining Data</h3>
+<p>Part II focuses on acquiring and working with different types of data. This section includes updates and new chapters, making the learning experience more streamlined.</p>
+<table class="caption-top table">
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">04</td>
+<td style="text-align: left;">Sampling and survey data</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">05</td>
+<td style="text-align: left;">Web data (APIs)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">06</td>
+<td style="text-align: left;">Web data (Scraping)</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">07</td>
+<td style="text-align: left;">Audio, image, and document data</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Chapter 4</strong> is a new chapter that introduces essential knowledge and skills for working with real world survey data using <code>Pandas</code>. We’ll use several public opinion surveys, including the Eurobarometer and European Values surveys and a Canadian survey on attitudes about harm reduction initiatives for people who use drugs (PWUD).</p>
+<p>In <strong>Chapter 5</strong>, you’ll learn how to collect data from APIs, with practical examples like <em>The Guardian</em> for news data and the YouTube Data API for social media data. <strong>Chapter 6</strong> focuses on web scraping, with updates to reflect changes in web technologies and ethical considerations. <strong>Chapter 7</strong> is a new chapter that introduces working with multimedia data, such as audio, images, and documents—an increasingly important skill in modern computational social science. This chapter is currently in development and should be publically available in winter 2025.</p>
+</section>
+<section id="part-iii-exploring-data" class="level3">
+<h3 class="anchored" data-anchor-id="part-iii-exploring-data">Part III | Exploring Data</h3>
+<p>Part III delves into exploratory data analysis (EDA) and introduces a central theme in this book: latent factors, components, and variables. This content has been extensively revised to focus on the <em>process</em> of exploratory data analysis (EDA) with different types of data and research problems (rather than focusing on how to use Python for EDA, which was an unintended consequence of the approach I took in the print edition).</p>
+<table class="caption-top table">
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">08</td>
+<td style="text-align: left;">Processing structured data</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">09</td>
+<td style="text-align: left;">Exploratory data analysis and visualization</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">10</td>
+<td style="text-align: left;">Association and latent factors</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">11</td>
+<td style="text-align: left;">Text as data</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">12</td>
+<td style="text-align: left;">Text similarity and latent semantic space</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">13</td>
+<td style="text-align: left;">Social networks and relational thinking</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">14</td>
+<td style="text-align: left;">Structural similarity and latent social space</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Chapter 8</strong> covers processing structured data like survey or readymade datasets. <strong>Chapter 9: Exploratory data analysis and visualization</strong> focuses on purposeful EDA as part of a broader workflow. <strong>Chapter 10: Association and latent factors</strong> introduces latent factors and components, preparing you for more complex models in later parts. <strong>Chapters 11-14</strong> introduce text analysis and network modeling, with an emphasis on latent structures in both text and social networks.</p>
+</section>
+<section id="part-iv-prediction-and-inference" class="level3">
+<h3 class="anchored" data-anchor-id="part-iv-prediction-and-inference">Part IV | Prediction and Inference</h3>
+<p>This section has undergone significant changes, focusing more deeply on prediction in supervised machine learning, followed by probabilistic reasoning, Bayesian inference, and causal inference.</p>
+<table class="caption-top table">
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">15</td>
+<td style="text-align: left;">Machine and statistical learning</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">16</td>
+<td style="text-align: left;">Prediction</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">17</td>
+<td style="text-align: left;">Probability</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">18</td>
+<td style="text-align: left;">Credibility</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">19</td>
+<td style="text-align: left;">Causality</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Chapter 15: Machine and statistical learning</strong> introduces supervised learning and prediction. <strong>Chapters 16-18</strong> develop a strong foundation in probabilistic reasoning and Bayesian inference. <strong>Chapter 19: Causality</strong> introduces causal inference with observational data using directed acyclic graphs (DAGs) and Bayesian causal models.</p>
+</section>
+<section id="part-v-generative-modeling" class="level3">
+<h3 class="anchored" data-anchor-id="part-v-generative-modeling">Part V | Generative Modeling</h3>
+<p>Part V builds on the previous part by introduces generative models, including linear models, network models, text models, and agent-based simulations. All of these chapters have been extensively revised and explicitly build on one another.</p>
+<table class="caption-top table">
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">20</td>
+<td style="text-align: left;">Linear regression</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">21</td>
+<td style="text-align: left;">Multilevel regression with post-stratification</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">22</td>
+<td style="text-align: left;">Generalized linear models</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">23</td>
+<td style="text-align: left;">Causal analysis</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">24</td>
+<td style="text-align: left;">Latent structure in networks</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">25</td>
+<td style="text-align: left;">Latent topics in text (LDA/STM)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">26</td>
+<td style="text-align: left;">Complex adaptive systems</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">27</td>
+<td style="text-align: left;">Developing agent-based models</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Chapter 20-22</strong> guide you through core statistical models in a Bayesian framework, emphasizing Bambi and PyMC integration. <strong>Chapter 23</strong> explains how to use these kinds of models for causal analysis, and <strong>Chapters 24-27</strong> take you into advanced generative modeling for networks, topics, and agent-based models.</p>
+</section>
+<section id="part-vi-deep-learning-demystified" class="level3">
+<h3 class="anchored" data-anchor-id="part-vi-deep-learning-demystified">Part VI | Deep Learning Demystified</h3>
+<p>Part VI introduces neural networks, natural language processing (NLP), and transformer-based models.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 6%">
+<col style="width: 93%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">28</td>
+<td style="text-align: left;">Artificial neural networks (FNN, RNN, CNN)</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">29</td>
+<td style="text-align: left;">Processing natural language data (SpaCy and embeddings)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">30</td>
+<td style="text-align: left;">Transformers and self-attention</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">31</td>
+<td style="text-align: left;">Latent topics in text and images using transformers</td>
+</tr>
+</tbody>
+</table>
+<p>In <strong>Chapter 28</strong>, we cover neural networks with traditional feed-forward, recurrent, and convolutional architectures, which sets the stage for <strong>Chapter 29</strong> on processing natural language data and understanding word vectors / embeddings. <strong>Chapter 30</strong> introduces the attention architecture used by transformer models and demonstrates how to use transformers from HuggingFace for senitment analysis and named entity recognition. <strong>Chapter 31</strong> introduces transformer-based topic models for text and image data.</p>
+</section>
+<section id="part-vii-professional-responsibilities-and-ethical-practice" class="level3">
+<h3 class="anchored" data-anchor-id="part-vii-professional-responsibilities-and-ethical-practice">Part VII | Professional Responsibilities and Ethical Practice</h3>
+<p>The final section of the book addresses our professional responsibilities as computational social scientists, specifically doing ethical research in reproducible, transparent, and accountable ways.</p>
+<table class="caption-top table">
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">32</td>
+<td style="text-align: left;">Research ethics and politics</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">33</td>
+<td style="text-align: left;">Next steps</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Chapter 32</strong> retains it’s original content, but has been expanded to include debates about LLMs, “alignment,” and “uncensored” models. <strong>Chapter 33</strong> offers guidance on further developing your skills in computational social science.</p>
+</section>
+</section>
+<section id="datasets-used-in-this-book" class="level2">
+<h2 class="anchored" data-anchor-id="datasets-used-in-this-book">Datasets Used in This Book</h2>
+<p>As I mentioned previously, the examples in this book are based around a variety of real-world datasets that are likely more similar to what you would work with on a daily basis than the convenient toy datasets that are often used in other learning materials. These datasets generally fall into one of three categories:</p>
+<ol type="1">
+<li><strong>“Structured” datasets</strong>, for lack of a better term. If you’ve worked with real-world statistical data before, the format of these structured datasets is likely to be familiar to you: their rows represent observations (or cases), and their columns represent variables. We will make frequent use of four such datasets, each described in the subsection below.
+<ul>
+<li>Varieties of Democracy</li>
+<li>European Values Study (EVS)</li>
+<li>Freedom House “Freedom on the Net”</li>
+<li>US 2020 Election Dataset</li>
+</ul></li>
+<li><strong>Relational/network datasets</strong>. These are also “structured” data, but they differ from the structured data listed above in that they describe meaningful <em>relationships</em> between entities (e.g., people). We will make frequent use of four relational datasets, also described below.
+<ul>
+<li>SocioPatterns friendship networks</li>
+<li>The Copenhagen Networks Study data</li>
+<li>The Enron email communication network</li>
+<li>A series of networks constructed by parsing information from text data</li>
+</ul></li>
+<li><strong>Text datasets</strong>. We will make use of a number of text datasets throughout the book, but the two most important by far are datasets of millions of political speeches by Canadian and British politicians.
+<ul>
+<li>The Canadian Hansards, 1867–2020</li>
+<li>The British Hansards, 1802–2020</li>
+</ul></li>
+</ol>
+<p>Below, I provide a general overview of these datasets and explain where to go if you want to learn more about them. You may want to come back to these descriptions as you work through the book.</p>
+<section id="structured-datasets" class="level3">
+<h3 class="anchored" data-anchor-id="structured-datasets">“Structured” Datasets</h3>
+<p>The <strong>Varieties of Democracy (V-Dem)</strong> dataset <span class="citation" data-cites="coppedge2020v">(<a href="references.html#ref-coppedge2020v" role="doc-biblioref">Coppedge et al. 2020</a>)</span> is the result of a massive project with collaborators from nearly every country in the world, headquartered at the V-Dem Institute at the University of Gothenburg, Sweden. It contains a dizzying array of data points that are, in aggregate, used to measure key aspects of political regimes for countries around the world along a continuum of democratic and autocratic, grounded in five major theoretical traditions in political science, political sociology, and political theory and philosophy. The dataset includes over 4,000 variables per country-year, including a set of five high-level scales used to assess the extent of electoral, liberal, participatory, deliberative, and egalitarian democracy in a given country per year, stretching back to the 1800s. We will be using subsets of the larger V-Dem dataset extensively, especially in the first half of the book. You can learn a <em>lot</em> about the V-Dem project, and everything you would ever want to know about this dataset and more, from <span class="citation" data-cites="coppedge2020v">Coppedge et al. (<a href="references.html#ref-coppedge2020v" role="doc-biblioref">2020</a>)</span>, and from the codebook for Version 11 of the dataset <span class="citation" data-cites="coppedge2021v">(<a href="references.html#ref-coppedge2021v" role="doc-biblioref">Coppedge et al. 2021</a>)</span>.</p>
+<p>The <strong>European Values Study (EVS)</strong> <span class="citation" data-cites="evs2017">(<a href="references.html#ref-evs2017" role="doc-biblioref">EVS 2017</a>)</span>, housed at the Data Archive for the Social Sciences of GESIS – Leibniz Institute in Cologne, is a set of standardized surveys of participants across Europe on topics including religion, national identity, morality, politics, family, work, society, and the environment, among other things. Each survey dataset includes over 400 variables spanning demographics and the aforementioned focal areas. They are administered in the context of one-hour face-to-face interviews with an additional questionnaire. Participation in all EVS surveys is on the basis of informed consent and is completely voluntary. Participation in the study is confidential, all data is anonymized, and direct identifiers are never added to the EVS database.</p>
+<p>The <strong>Freedom on the Net</strong> dataset is created and maintained by Freedom House <span class="citation" data-cites="fh2020">(<a href="references.html#ref-fh2020" role="doc-biblioref">2020</a>)</span>, a U.S. nonprofit headquartered in Washington, D.C. Unlike the two massive datasets preceding this one, the Freedom on the Net dataset consists of five substantive variables for each of the 65 countries included. Three of those variables are sector scores, tracking ‘Obstacles to Access’, ‘Limits on Content’, and ‘Violations of User Rights’. The final two are an overall numerical score measuring internet freedom and a categorical label derived from the overall numerical score that labels countries as having either ‘Free’, ‘Partly Free’, or ‘Not Free’ access to the internet. We primarily use the Freedom House dataset as a companion to the V-Dem dataset to see if it’s possible to predict a country’s internet freedoms using other (non-internet-related) democratic indices.</p>
+<p>The final “structured” dataset we will use in this book is a <strong>US 2020 Election Dataset</strong>, created by my PhD student Pierson Browne specifically for this book. The dataset was built from components of three different datasets:</p>
+<ul>
+<li>‘Individual Contributions’, from the U.S. Government’s Federal Election Commission <span class="citation" data-cites="us2020">(<a href="references.html#ref-us2020" role="doc-biblioref">2020</a>)</span>,</li>
+<li>The 2017 Cook Partisan Voting Index <span class="citation" data-cites="cook2017">(<a href="references.html#ref-cook2017" role="doc-biblioref">Wasserman and Flinn 2020</a>)</span>, and</li>
+<li>Raphael Fontes’ “US Election 2020” dataset, publicly available on Kaggle <span class="citation" data-cites="Fontes2020">(<a href="references.html#ref-Fontes2020" role="doc-biblioref">Fontes 2020</a>)</span>.</li>
+</ul>
+<p>The dataset covers Campaign Spending Differential, Vote Differential, Cook Partisan Voting Index, Republican Incumbency, and Democratic Incumbency, for each of the 435 Federal Congressional Districts electing Voting Representatives contested in the 2020 U.S. General Election. We will use this dataset extensively throughout our chapters on Bayesian Regression and Bayesian Hierarchical Linear Regression.</p>
+</section>
+<section id="relationalnetwork-datasets" class="level3">
+<h3 class="anchored" data-anchor-id="relationalnetwork-datasets">Relational/Network Datasets</h3>
+<p>The <strong>Copenhagen Networks Study</strong> dataset was created by Piotr Sapiezynski, Arkadiusz Stopczynski, David Dreyer Lassen, and Sune Lehmann <span class="citation" data-cites="sapiezynski2019interaction">(<a href="references.html#ref-sapiezynski2019interaction" role="doc-biblioref">2019</a>)</span>. It consists of a multi-layered relational network based on digital interactions between 700 undergraduate students from the Technical University of Denmark. We will use this dataset in the chapters that discuss contagion dynamics on social networks. The data was primarily collected from questionnaires, Facebook, and participants’ smartphones. It includes measures of digital interaction, physical proximity, and online ‘friendship.’ There are too many details to fully recount here, but <span class="citation" data-cites="sapiezynski2019interaction">Sapiezynski et al. (<a href="references.html#ref-sapiezynski2019interaction" role="doc-biblioref">2019</a>)</span> provide extensive details in their <em>Nature (Scientific Data)</em> article. All participants gave free and informed consent and were aware of their ability to withdraw from the study at any time and/or to have their data deleted. The authors took great pains to ensure participant privacy throughout. All of the automatically logged data was anonymized.</p>
+<p>The <strong>Enron email communication network dataset</strong> was collated by my PhD student Tyler Crick specifically for this book, once again by doing extensive work cleaning and augmenting existing datasets. The base download of the data came from a version with corrections made by Arne Ruhe <span class="citation" data-cites="ruhe_2016">(<a href="references.html#ref-ruhe_2016" role="doc-biblioref">Ruhe 2016</a>)</span>. This version was later found to have inconsistencies with other available versions, such as the many available from EnronData.org under a Creative Commons Attribution 3.0 United States license. A significant number of job titles were still missing from these datasets, so thorough searches of LinkedIn, Google’s web cache, and the Internet Archive were used to either verify the identified job titles and correct missing or vague ones (“Employee,” for example, quite often was actually a trader). The data was used here only for social network analysis, so only the relational aspects (sender and receiver email address) were retained from the emails—no text content from the email bodies is reproduced here.</p>
+<p>The <strong>SocioPatterns</strong> dataset <span class="citation" data-cites="mastrandrea2015contact">(<a href="references.html#ref-mastrandrea2015contact" role="doc-biblioref">Mastrandrea, Fournet, and Barrat 2015</a>)</span> is the result of a collaborative research project run by the ISI Foundation in Turin, Italy; the Centre de Physique Théorique in Marseille, France; and Bitmanufactory in Cambridge, United Kingdom. There are a number of datasets contained therein, but we will only use two:</p>
+<ul>
+<li>A directed self-reported friendship network between high-school students in Marseille, France, in December 2013</li>
+<li>A directed contact network constructed from students’ contact diaries</li>
+</ul>
+<p>All participants were over 18 at the time of study deployment and offered free and informed consent. The <em>Commission Nationale de l’Informatique et des Libertés</em> approved the study, including its privacy measures.</p>
+</section>
+<section id="text-datasets" class="level3">
+<h3 class="anchored" data-anchor-id="text-datasets">Text Datasets</h3>
+<p>Nearly all of the text analysis we do in this book will focus on examples from two massive text datasets: The Canadian Commons Hansard and the British Commons Hansard. Both are very similar but are unique to their national contexts. The <strong>British Commons Hansard</strong> is created by the British Government <span class="citation" data-cites="britHans">(<a href="references.html#ref-britHans" role="doc-biblioref">T. U. Parliament 2021</a>)</span> and contains transcripts (not verbatim, but close) of recorded speeches in British Parliament, dating back to 1802. It consists of all of the speeches made by politicians in Parliamentary sessions, recorded, transcribed, and entered into public record. Similarly, the <strong>Canadian Commons Hansard</strong> <span class="citation" data-cites="canHans">(<a href="references.html#ref-canHans" role="doc-biblioref">T. C. Parliament 2021</a>)</span> is created by the Canadian Government and consists of transcripts (not verbatim, but close) of recorded speeches in Canadian Parliament, dating back to 1867.</p>
+<p>There is, of course, much more to say about these datasets than what is included here, or in the specific chapters where we use these datasets. I encourage you to consult the citations for each dataset to learn more. There are also additional details available in the online supplementary materials (described below).</p>
+</section>
+</section>
+<section id="learning-materials" class="level2">
+<h2 class="anchored" data-anchor-id="learning-materials">Learning Materials</h2>
+<section id="learning-objectives-key-concepts-recommended-content-and-key-points" class="level3">
+<h3 class="anchored" data-anchor-id="learning-objectives-key-concepts-recommended-content-and-key-points">Learning Objectives, Key Concepts, Recommended Content, and Key Points</h3>
+<p>Each chapter in this book follows a few conventions to help you learn. First, each chapter starts with a set of itemized learning objectives and ends with a bulleted set of key points in the chapter. Of course, these are not meant to cover <em>everything</em>. The learning objectives highlight some of the key things you should ensure you understand before moving on to the next chapter. The key points that conclude each chapter are intended to help connect the end of each chapter with the start of the next; note that they are not detailed enough to stand in for carefully working your way through the chapter (by design).</p>
+<p>Throughout each chapter, you will find the first mention of all key concepts in bold text. That’s where I define many key terms, so you’ll want to be especially attentive to that content. Finally, each chapter also contains boxes that provide some additional advice and recommendations. Most of the time, I’ll point you to other readings and resources that you can use to further develop your knowledge and skills.</p>
+</section>
+<section id="online-supplementary-learning-materials" class="level3">
+<h3 class="anchored" data-anchor-id="online-supplementary-learning-materials">Online Supplementary Learning Materials</h3>
+<ul>
+<li><strong>TODO</strong>: Update this for the new and revised supplementary learning materials.</li>
+</ul>
+<p>The central design decision that has guided all other decisions in the creation of this book—to <strong>show</strong> you how to <strong>do</strong> computational social science—means that many of the additional learning materials are not well-suited to the printed page. Every chapter in this book is accompanied by a wide variety of supplementary materials created by myself, Pierson Browne, Tyler Crick, Alexander Graham, Jillian Anderson, and a number of other computational social scientists and data scientists. These materials are all provided as an <strong>online</strong> supplement because (1) it makes them vastly more useful to you, and (2) it frees up an astonishingly large number of words in the book that can be put to other uses, like teaching more methods and models in greater depth than otherwise possible.</p>
+<p>All of the supplementary learning materials for this book are provided in a git repository (which you will learn about shortly) available at <a href="https://github.com/UWNETLAB/doing_computational_social_science">github.com/UWNETLAB/doing_computational_social_science</a>. Among other things, you will find:</p>
+<ol type="1">
+<li>A set of carefully scaffolded <strong>problem sets</strong> accompanying each chapter in the book. These problem sets are much more extensively developed than what you would typically find at the end of each chapter in books such as this one. These are the problems that I use in my own classes at the University of Waterloo. An answer key for instructors is available upon request.</li>
+<li>A copy of the <strong>datasets</strong> we use in this book, though filtered and subsetted to include only the portions I actually use in each chapter. You will also find instructions to secure the full datasets if you wish.</li>
+<li>A set of <strong>perspectives and practical advice</strong> from other computational social scientists and data scientists. Many of these were initially part of the book manuscript itself, but the combination of life interrupted via COVID-19 and with more than 100,000 words to cut from the penultimate draft, they’ve been moved to the online materials. An unintended benefit of this change is that more perspectives can be included afterwards. Expect this part of the online materials to grow over time.</li>
+<li><strong>High-resolution color images</strong> of every one of the figures in this book, with file names that are easily matched back to images in the book.</li>
+<li>Instructions on how to download and use dozens of <strong>large-scale pre-trained language models</strong> trained by Tyler Crick and myself at the University of Waterloo.</li>
+<li>A wealth of <strong>additional materials on scientific computing</strong> that will take you <em>well</em> beyond the basics introduced in Chapter 2.</li>
+<li><strong>Course syllabi</strong>.</li>
+<li>A <strong>DCSS virtual environment</strong> (explained below and in Chapter 2).</li>
+<li>And more…</li>
+</ol>
+<p>These supplementary materials are intended to help you work interactively through every chapter of the book, to test your knowledge and practice your skills, to share important views and experiences other than my own, and to provide some additional chapter-specific material that is worthwhile but doesn’t ‘fit’ in this version of the book for one reason or another.</p>
+<p>Chapter 2 explains how to download these materials and get your scientific computing environment set up. Once you’ve done that, you’ll be able to make extensive use of all of the accompanying materials as you work through the book.</p>
+</section>
+<section id="the-dcss-computing-setup-and-python-package" class="level3">
+<h3 class="anchored" data-anchor-id="the-dcss-computing-setup-and-python-package">The DCSS Computing Setup and Python Package</h3>
+<p>Finally, this book also ships with its very own pre-built computing environment that ensures you will be able to use all the exact packages (with the exact same versions) that are used in this book no matter which operating system you are using, and no matter what changes occur between the time this book goes to the printers and when you pick it up to read it. It will make your life a <em>lot</em> more convenient, not to mention that of instructors who may assign this book in a course while looking to spend less time on technical support. Everything you need to know about this carefully crafted environment, including how to access it and use it, is provided in the next chapter. Note that this is setup is completely different than the one that was designed for the print edition.</p>
+<p>I’ve also created a Python package, appropriately called <code>dcss</code>, to accompany this book. It’s been extensively redesigned and refactored since the initial release. It’s included in the installations managed by the virtual environment, so you don’t need to do anything special to install it.</p>
+</section>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">CONCLUSION</h2>
+<p>Now that you have a sense of what this book is about, how it’s designed, and how you can get the most from it, it’s time to start doing computational social science! Let’s get started.</p>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-brown2014science" class="csl-entry" role="listitem">
+Brown, Peter, Henry Roediger, and Mark McDaniel. 2014. <em>Make It Stick: The Science of Successful Learning</em>. <em>Cambridge, MA</em>.
+</div>
+<div id="ref-coppedge2020v" class="csl-entry" role="listitem">
+Coppedge, Michael, John Gerring, Adam Glynn, Carl Henrik Knutsen, Staffan Lindberg, Daniel Pemstein, Brigitte Seim, Svend-Erik Skaaning, and Jan Teorell. 2020. <em>Varieties of Democracy: Measuring Two Centuries of Political Change</em>. Cambridge University Press.
+</div>
+<div id="ref-coppedge2021v" class="csl-entry" role="listitem">
+Coppedge, Michael, John Gerring, Carl Knutsen, Staffan Lindberg, Jan Teorell, David Altman, Michael Bernhard, et al. 2021. <span>“V-Dem Codebook V11.”</span>
+</div>
+<div id="ref-doyle2018new" class="csl-entry" role="listitem">
+Doyle, Terry, and Todd Zakrajsek. 2018. <em>The New Science of Learning: How to Learn in Harmony with Your Brain</em>. Stylus Publishing, LLC.
+</div>
+<div id="ref-evs2017" class="csl-entry" role="listitem">
+EVS. 2017. <span>“European Values Study 2017: Integrated Dataset (EVS 2017).”</span>
+</div>
+<div id="ref-us2020" class="csl-entry" role="listitem">
+Federal Election Commission", "U.S. 2020. <span>“Individual Contributions.”</span>
+</div>
+<div id="ref-Fontes2020" class="csl-entry" role="listitem">
+Fontes, Raphael. 2020. <span>“US Election 2020.”</span>
+</div>
+<div id="ref-fh2020" class="csl-entry" role="listitem">
+House, Freedom. 2020. <span>“Freedom on the Net.”</span>
+</div>
+<div id="ref-mastrandrea2015contact" class="csl-entry" role="listitem">
+Mastrandrea, Rossana, Julie Fournet, and Alain Barrat. 2015. <span>“Contact Patterns in a High School: A Comparison Between Data Collected Using Wearable Sensors, Contact Diaries and Friendship Surveys.”</span> <em>PloS One</em> 10 (9): e0136497.
+</div>
+<div id="ref-canHans" class="csl-entry" role="listitem">
+Parliament, The Canadian. 2021. <span>“The Canadian Commons Hansard.”</span>
+</div>
+<div id="ref-britHans" class="csl-entry" role="listitem">
+Parliament, The UK. 2021. <span>“The UK Commons Hansard.”</span>
+</div>
+<div id="ref-ruhe_2016" class="csl-entry" role="listitem">
+Ruhe, Arne Hendrik. 2016. <span>“Enron Data.”</span> <em>Http://Www.ahschulz.de/Enron-Email-Data/</em>.
+</div>
+<div id="ref-sapiezynski2019interaction" class="csl-entry" role="listitem">
+Sapiezynski, Piotr, Arkadiusz Stopczynski, David Dreyer Lassen, and Sune Lehmann. 2019. <span>“Interaction Data from the Copenhagen Networks Study.”</span> <em>Scientific Data</em> 6 (1): 1–10.
+</div>
+<div id="ref-cook2017" class="csl-entry" role="listitem">
+Wasserman, David, and Ally Flinn. 2020. <span>“Introducing the 2017 Cook Political Report Partisan Voter Index.”</span>
+</div>
+<div id="ref-weinstein2018understanding" class="csl-entry" role="listitem">
+Weinstein, Yana, Megan Sumeracki, and Oliver Caviglioli. 2018. <em>Understanding How We Learn: A Visual Guide</em>. Routledge.
+</div>
+</div>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./index.html" class="pagination-link" aria-label="👋 Hello!">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">👋 Hello!</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./01-getting-started.html" class="pagination-link" aria-label="Getting Started">
+        <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Getting Started</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/UWNETLAB/dcss_supplementary/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
