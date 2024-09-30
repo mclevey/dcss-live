@@ -1,0 +1,30 @@
+{
+	"name": "dcss",
+	"build": {
+		"dockerfile": "Dockerfile",
+		"context": ".."
+	},
+	"postCreateCommand": "poetry install",
+	"remoteUser": "vscode",
+	"mounts": [
+		"source=${localEnv:HOME}/.ssh,target=/home/vscode/.ssh,type=bind",
+		"source=${localWorkspaceFolder},target=/workspace,type=bind"
+	],
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"ms-python.python",
+				"njpwerner.autodocstring",
+				"ms-toolsai.jupyter",
+				"ms-vscode-remote.remote-containers",
+				"quarto.quarto",
+				"ms-azuretools.vscode-docker",
+				"mechatroner.rainbow-csv",
+				"shd101wyy.markdown-preview-enhanced",
+				"tamasfe.even-better-toml",
+				"streetsidesoftware.code-spell-checker",
+				"ms-python.black-formatter"
+			]
+		}
+	}
+}

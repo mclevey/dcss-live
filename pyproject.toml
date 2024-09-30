@@ -1,0 +1,48 @@
+[tool.poetry]
+name = "dcss"
+version = "0.1.0"
+description = "Doing Computational Social Science"
+authors = ["John McLevey <john.mclevey@uwaterloo.ca>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = ">=3.11,<3.13"
+pandas = "^2.2.2"
+ipykernel = "^6.29.5"
+nbformat = "^5.10.4"
+nbclient = "^0.10.0"
+jupyter = "^1.1.1"
+requests = "^2.32.3"
+lxml = "^5.3.0"
+matplotlib = "^3.9.2"
+seaborn = "^0.13.2"
+scikit-learn = "^1.5.2"
+spacy = "^3.7.5"
+scipy = "^1.13.1"
+gensim = "^4.3.3"
+networkx = "^3.3"
+pydot = "^3.0.1"
+python-louvain = "^0.16"
+igraph = "^0.11.6"
+leidenalg = "^0.10.2"
+pymc = "^5.16.2"
+arviz = "^0.19.0"
+graphviz = "^0.20.3"
+streamlit = "^1.38.0"
+pygraphviz = "^1.13"
+h5py = ">=3.11,<3.12"
+python-dotenv = "^1.0.1"
+pyprojroot = "^0.3.0"
+ndlib = "^5.1.1"
+tabulate = "^0.9.0"
+tensorflow = "^2.17.0"
+pyldavis = "^3.4.1"
+google-api-python-client = "^2.147.0"
+bambi = "^0.14.0"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.3.3"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
