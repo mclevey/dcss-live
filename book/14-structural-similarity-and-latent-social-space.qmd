@@ -1,5 +1,6 @@
 # Structural similarity and latent social space
 
+<!-- 
 ::: {.callout-warning}
 ## Planned Revisions
 
@@ -10,7 +11,7 @@ It will use the political blogs example (graph-tool) to introduce visualization 
 For now, this chapter contains several chapters back to back. They will be consolidated shortly (as in over the next few days).
 :::
 
-<!-- 
+
 Start with visualization and divided we blog example. Then: 
 
 In the last chapter we took a kind of "networked individuals" approach, which is intuitive. We also stuck with networks at the level they were observed. But often we want to generalize beyond our specific observations, much like in text and structured data. There have been many proposals for how to do this. With assortative structure, we often think of position in terms of centrality, since it assumes a flow- or walk-like perspective. And we use community detection to do this. Louvain and Leiden suck and we want to avoid them if we can. An alternative is to use a Planted Partition Model (PPM). 
@@ -18,10 +19,1071 @@ In the last chapter we took a kind of "networked individuals" approach, which is
 Or we can think in terms of latent positions and blocks, and to do that we turn to blockmodelling. Here we fit a first non-PPM SBM, but don't get into inference. 
  -->
 
-{{< include _graph-tool-101-political-blogs.qmd >}}
+## Learning Objectives
 
-{{< include _generative-network-analysis-with-bayesian-stochastic-blockmodels.qmd >}}
+- Dyads (two nodes) and triads (three nodes) are the primary micro-structures that are used to describe networks
+- Conducted a triad census
+- Explain how stochastic equivalence builds upon, yet is distinct from, structural equivalence
+- Describe the Bayesian logic of Stochastic BlockModels (SBMs) and how they aggregate nodes into stochastically equivalent blocks
+- **REVISE; NO INFERENCE YET (STOP SHORT OF NSBMs > base model)**: Use `graph-tool` to produce posterior distributions of nodes in hierarchically nested blocks
 
-{{< include _connection_and_clustering_content.qmd >}}
+<br>
 
-{{< include _modularity-is-bad.qmd >}}
+> Visualization + Clusters + Modularity + Equivalence + PPM and NSBM
+
+This chapter expands on the general introduction to social networks in the previous chapter by widening our discussion to micro- and meso-level structures in social networks. We begin with the building blocks of network structure: dyads. Dyads provide the basis for discussing triads, which are in turn the basis for the more complex meso-level structures we discuss afterwards.
+
+## Visualizing Networks
+
+- **TODO**: In the SN&RT chapter, we saw some gross visualizations. Let's revisit that topic... 
+
+### Network Analysis with Graph-Tool (Political Blogs Network)
+
+- **TODO**: drafting notes:
+    - to this point we've worked in networkx; we've seen some bad visualizations
+    - networkx has strengths and weaknesses; it is ubiqutous and so helpful to understand, but in many cases, it's better to use graph-tool. In this part of the chapter, I introduce the basics of working with graph-tool objects, constructing and manipulating visualizations (include critique of naive force-directed)
+    - don't get into the blockmodels because they will be integrated into the chapter "structural similarity and latent social space."
+    - Draft the text to accompany this code.
+
+Setup
+
+```python
+import numpy as np
+import graph_tool.all as gt
+import matplotlib as mpl
+from icsspy.networks import rotate_positions
+
+print(f'Using graph-tool version {gt.__version__}')
+```
+
+Load the data.
+
+```python
+g = gt.collection.data["polblogs"]
+print(g)
+```
+
+```python
+print(g.gp.readme)
+```
+
+graph-tool Property Maps
+
+```python
+type(g.vp.value)
+```
+
+We can look up the political class for any given node by passing its integer ID. For example, vertex 30:
+
+```python
+g.vp.value[30]
+```
+
+To view all classifications, we can iterate over the vertices and print each vertex ID followed by its class label:
+
+```python
+for v in g.vertices():
+    print(v, g.vp.value[v])
+```
+
+```python
+political_colors = {0: "#2F357E", 1: "#D72F32"}  # color map
+vertex_political_colors = g.new_vertex_property("string")  # new vertex property
+
+# assign colors to each vertex based on the political classification
+for v in g.vertices():
+    vertex_political_colors[v] = political_colors[g.vp.value[v]]
+```
+
+<!-- INTEGRATE SOME OF THIS LECTURE CONTENT?
+
+##
+
+[But wait, there's more...]{.nord-light}
+
+### Force Directed Visualization
+
+:::: {.columns}
+::: {.column width="60%"}
+![](figures/divided_they_blog.png){width=100% .shadow-img}
+:::
+
+::: {.column width="40%"}
+<br><br><br><br><br><br>
+
+Is the network structure<br>[self-evident? 🤔]{.large-text}
+:::
+::::
+
+::: {.notes}
+Nodes are initially placed randomly. Repulsive forces push then away from one another, but edges act like springs to pull connected nodes back towards one another. Repulsive and attractive forces are then summed to update node positions. This continues until equilibrium or the maximum number of iterations has been reached.
+:::
+
+
+## Nope
+
+:::: {.columns}
+::: {.column width="55%"}
+![Figure reproduced from @peixoto2023descriptive](figures/face_mars.png){width=86%}
+:::
+
+::: {.column width="5%"}
+:::
+
+::: {.column width="40%"}
+![😂 [From https://x.com/GrandjeanMartin/status/1600154712380014594]{.nord-light}](figures/jaws.png){width=80%}
+:::
+::::
+
+
+## Force Directed Visualization
+
+[From @peixoto2021hairball]{.nord-light}
+
+:::: {.columns}
+::: {.column width="50%"}
+![The political blogs network from @adamic2005political, redrawn for easier comparison with @fig-divided_they_blog_sbm.](figures/divided_they_blog_tiago.png){width=100% #fig-divided_they_blog_tiago}
+:::
+
+
+::: {.column width="50%"}
+![Subgroup membership assigned using a generative network model.<br>Which is the problem? The visualization model, or the SBM? [(It's the visualization...)]{.nord-light}](figures/divided_they_blog_sbm.png){width=90%  #fig-divided_they_blog_sbm}
+:::
+::::
+
+
+##
+
+:::: {.columns}
+::: {.column width="69%"}
+![Things look *very* different if we add attractive forces between nodes placed in the same group rather than just between adjacent nodes. [Image reproduced from @peixoto2021hairball.]{.nord-light}](figures/divided_they_blog_lay.png){width=100% #fig-divided_they_blog_lay}
+:::
+
+::: {.column width="1%"}
+:::
+
+::: {.column width="30%"}
+$\longleftarrow$<br>
+This is still force directed, but this time the **model has been explicated, criticized, and refined** for the task at hand.
+<br><br>
+
+[There’s no good reason for us to accept the status quo: We can simply modify how the layout behaves based on what we know about the network data, or what we have discovered using a well-defined methodology that is relevant for our research question. Equipped with this information, we can then use it to constrain the visualization, rather than the other way around. In the case of a force-directed layout we can simply add an additional attractive force between nodes that belong to the same detected module.<br><br>@peixoto2021hairball]{.small-text}
+
+We are not limited to force directed visualizations, of course.
+
+![Another view of subgroup structure in the political blogs network, this time with hierarchical edge bundling.](figures/divided_they_blog_chordal.png){width=60% #fig-divided_they_blog_chordal}
+
+:::
+::::
+
+ -->
+
+As a first step, let's recreate the political blogs figures we've seen so far (including those based on the nested SBM). We'll assign node positions using the **stable force directed placement** function, `sfdp_layout()`. This will more-or-less recreate the force directed layout from the original.
+
+```python
+pos = gt.sfdp_layout(g)
+
+gt.graph_draw(
+    g, pos,
+    vertex_fill_color=vertex_political_colors,
+    output_size=(1200, 1200),
+    bg_color=[1, 1, 1, 1], # white background (transparent by default)
+    inline=True
+)
+```
+
+Let's just focus on the giant component for a cleaner visualization. We'll also rotate the graph's position to match the figures more closely.
+
+```python
+giant = gt.extract_largest_component(g, directed=True)
+
+pos = gt.sfdp_layout(giant)
+pos = rotate_positions(pos, a=90)
+
+gt.graph_draw(
+    giant, pos,
+    vertex_fill_color=vertex_political_colors,
+    output_size=(1200, 1200),
+    bg_color=[1, 1, 1, 1],
+    inline=True
+)
+```
+
+# SWITCH TO COHESION HERE
+
+There are many ways of detecting cohesive subgroups in networks, some of which start with micro-level structural configurations that overlap to form larger and more complex structures, and others that start at the level of the network itself and work their way down to smaller structures. (**TODO: Update this content to reflect what I'm keeping and it's new place in the book.**) We will start with two common "bottom-up" approaches, (1) $k$-clique communities and (2) Louvain and Leiden community detection, followed by two "top-down" approaches to describing network structure, (3) $k$-component structural cohesion analysis and (4) $k$-core decomposition. While these ideas are not unique to "computational" approaches to network analysis, computational network analysis rests on top of these more general foundations, so they are essential to understand first.
+
+
+```python
+import pandas as pd
+import numpy as np
+
+from sklearn.metrics.pairwise import euclidean_distances
+from scipy.cluster import hierarchy
+
+import networkx as nx
+from networkx.algorithms.community import k_clique_communities
+from networkx.algorithms.triads import triadic_census
+import community
+
+import matplotlib
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+import random
+
+from dcss import set_style
+set_style()
+```
+
+- **TODO**: Switch up the data!
+
+In this chapter, we'll use both randomly generated networks and the 2013 data on reported contacts collected from the high school students in Marseilles. Technically this is a directed network, but some of the methods we will cover in this chapter are not implemented for directed networks. Instead, we will treat it as an *undirected* network. 
+
+
+```python
+contact_diaries = pd.read_csv("data/SocioPatterns/Contact-diaries-network_data_2013.csv", sep=' ')
+
+G = nx.from_pandas_edgelist(contact_diaries, 'i', 'j', create_using=nx.Graph())
+G.name = 'Reported Contacts (Diary Data)'
+print(G)
+```
+
+```python
+contact_diaries.j.unique()[:5]
+```
+
+- **TODO**: Should the dyads and triads content go into the relaitonal thinking chapter? There should be space for it, and it might be a good place. This chapter will likjely be far too long otherwise, even with all the cut content.
+
+
+## MICRO-LEVEL NETWORK STRUCTURE AND PROCESSES
+
+The smallest *relational* units in a network are **dyads** (2 nodes) and **triads** (3 nodes). Much of network analysis rests on aggregations of these simple structures into more complex configurations, so it is important to understand the vocabulary that network analysts use to describe the different forms that dyads and triads take. Let's start with dyads.
+
+### Dyads and Reciprocity
+
+A dyad consists of the presence or absence of an edge between two nodes, the minimum number of nodes and edges that can define a relation. I say "presence or absence" because *absence matters*. Edges that do not exist are as informative as edges that do exist (the case of missing data leads to a very interesting literature including covert and illicit networks that is beyond our present scope). Whole networks are built up from the presence and absence of edges between every pair of nodes in the network. 
+
+If our network is directed, it is possible to observe dyads that differ from those in undirected networks. In @fig-15_01, for example, we have two nodes $i$ and $j$. There are three possible configurations of nodes and the relationships between them: **mutual** ($i$ and $j$ both send edges to one another, $i \longleftrightarrow j$, which is an indication of reciprocity), **asymmetric** (one sends an unreciprocated edge to the other, either $i \rightarrow j$ or $j \leftarrow i$), and **null** (the absence of an edge between $i$ and $j$). The possibilities are summarized in the figure below. For obvious reasons, we refer to this as the MAN framework; **m**utual, **a**symmetric, **n**ull. 
+
+![](figures/dyads.pdf)
+
+In directed social networks, we may or may not expect to see **reciprocity**. This is one of many structural forms that we hypothesize about, *look for*, and model. For example, in interaction networks amoung friends, we should expect to see that when one friend sends another friend a message, *they respond*. However, in an advice giving network, we might expect to see more asymmetry; graduate students turn to their supervisors for career advice more often then supervisors turn to graduate students for advice. The key takeaway here is that there is a social process, *reciprocity*, that is reflected in the edges of directed networks. The social process *generates* the structural form. Other types of social processes manifest in other types of structural forms, and this is one reason why network analysis is a powerful tool for thinking systemically about our interdependencies with one another. 
+
+Dyads are foundational to social network analysis, though they tend to get less attention because they cannot by themselves speak to higher-order concepts such as community structure or network positions. In order to get at those ideas, we need to introduce another level of complexity. 
+
+### Triads and Triadic Closure
+
+The next micro-level structure is the **triad**, just one level up from the dyad. As the name would suggest, triads are the extension of dyads to three ordered nodes. Triads have an especially important place in network analysis, and theoretical work on their importance can be traced back to the classic works of the German sociologist Georg Simmel in 1901. Simmel observed that the addition of a third person to a triad has *far* more dramatic effects than adding a fourth person to a triad, or any other additions that increase the size of the group. The transition from 2 people to 3 people is a substantial qualitative change in the relationship and entirely changes what is possible [see excerpts in @wolff1950sociology]. One of Simmel's examples, that is by no means the most insightful but which drives the point home, is the difference between couples with and without a child. The difference between couples who have a child and those who are child-free is much bigger than the difference between a couple with one child and a couple with two. More generally, the introduction of a third person means that two people can ally themselves to pressure the third, and so on. 
+
+Because triads allow relations between two nodes to be understood within the context of a third person, and because of all the qualitative relational differences that the introduction of a third person poses, we can think of triads as the smallest structural elements of larger groups, communities, and societies. For example, when a dyad disagrees, there is no recourse to outside influence, be it mediators, tie-breaking votes, or the like. When a dyad disagrees within a triad, the third node has the opportunity to influence or be influenced by it. 
+
+### MAN for Triads
+
+Earlier, we introduced the MAN framework for differentiating between different types of dyads in a directed network: mutual, asymmetric, and null. The possibilities are fewer for an undirected network: present or absent. With an undirected network the possibilities for triads are also fairly straightforward. We can observe triads with no edges between the nodes, with one edge, with two edges, or with three edges. 
+
+Things become considerably more complex for directed networks. Whereas a dyad in a directed network has 3 possible configurations, a triad in a directed network has 16 possible configurations, and differentiating between them requires some specialized vocabulary. We'll use a framework proposed by @davis1967structure to describe every possible configuration of a triad with directed edges. This framework rests on the MAN framework for dyads, also introduced by @davis1967structure. 
+
+The description of a triad under the MAN framework takes the form of a three digit number, where each digit represents the number of mutual, asymmetric, and null relations within the triad. Thus, the triad described by 003 would be a triad with 0 mutual relations, 0 asymmetric relations, and 3 null relations. In short, it's a graph of 3 nodes with no edges. 300 describes a triad where each node has a mutual relation with the others. In other words, there are 3 dyads embedded in this triad. If we name the nodes $A$, $B$, and $C$, we have $A \longleftrightarrow B$, $A \longleftrightarrow C$, and $B \longleftrightarrow C$. 
+
+Since the MAN relations describe all possible edge configurations within a dyad, the sum of the three digits in a MAN triad will always be 3. That gives us the following possible configurations: `300`, `210`, `201`, `120`, `102`, `111`, `030`, `021`, `012`, and `003`.
+
+That might seem like a lot, but it describes only 10 of the 16 possible configurations for triads in a directed network. Consider the case of 030, the triad where each dyad has a single directed edge between them. This configuration might be **cyclical** or it might be **transitive**. A cyclical triad is simply a cycle (discussed in the previous chapter) made with three nodes. A transitive triad takes the form $A \rightarrow B$, $B \rightarrow C$, and $A \rightarrow C$. One node sends two edges. One node sends an edge and receives an edge. The last node receives two edges. 
+
+These two subconfigurations are given a capital letter to differentiate them, giving us 030C and 030T, respectively. The full set of 16 configurations is shown in @fig-15_02. 
+
+![](figures/census.pdf)
+
+We can count the number of every one of these 16 configurations in a directed network by conducting a **triad census**. This gives us some insight into the kinds of micro-level structures that are more or less prevalent in the network we are analyzing. This requires examining *every combination of 3 nodes* in the network to identify which MAN triad they belong to. The number of such combinations in a network of any moderate size quickly becomes infeasible to conduct by hand, so we turn to computer algorithms. 
+
+To build a bit of intuition about the complexities involved here, and their implications for other network methods, we'll use a custom dcss function to simulate a network, execute a triad census, modify it a bit, and then conduct another census. Let's simulate a random network with 50 nodes using the `gn_graph()`, function, which creates a growing network (GN) with directed edges. 
+
+
+```python
+from networkx.algorithms.triads import triadic_census
+
+gn_50 = nx.gn_graph(50, seed = 42)
+sim_50 = pd.Series(triadic_census(gn_50))
+sim_50
+```
+
+While we might notice certain configurations are more prevalent than others, it's important to remember that interpreting and comparing these counts is not so straightforward. Two triads may overlap. The mutual relationship between the dyad of $A$ and $B$ will show up in the $ABC$ triad, but also the $ABD$ triad, and the $ABE$ triad, and so on. A triad census will *necessarily* count every dyad multiple times, and every triad will have multiple overlaps with others. Consider another issue. Network **density** is the proportion of *potential* connections in a network that are realized. As network density decreases, we would certainly expect to see a greater number of triads with more null relationships.
+
+Let's generate a new network with only 20 nodes. We will define another function that prints the number of nodes, edges, and network density. Finally, we will create a simple visualization of this network (@fig-14_03).
+
+
+```python
+gn = nx.gn_graph(20, seed = 42)
+gn.name = "Simulated DiGraph with 20 Nodes"
+
+def describe_simulated_network(network):
+    print(f'Network: {network.name}')
+    print(f'Number of nodes: {network.number_of_nodes()}')
+    print(f'Number of edges: {network.number_of_edges()}')
+    print(f'Density: {nx.density(network)}')
+    
+describe_simulated_network(gn)
+```
+
+```python
+layout = nx.fruchterman_reingold_layout(gn, seed=12)
+
+nx.draw(gn, layout, node_color='darkgray',
+        edge_color='gray', node_size=100, width=1)
+
+plt.savefig('figures/14_03.png', dpi=300)
+```
+
+![png](figures/14_03.png){#fig-14_03}
+    
+Now let's conduct a triad census on the network.
+
+
+```python
+sim_20_a = pd.Series(triadic_census(gn))
+sim_20_a
+```
+
+Now, let's add a single node *with no edges* and see how it affects our triad census. 
+
+
+```python
+gn.add_node("an isolate")
+describe_simulated_network(gn)
+```
+
+We've added just a single new node with no edges, an "**isolate**". The number of edges in the network is the same, and the difference in the density is minor. But what happens when we run the triad census again?
+
+
+```python
+sim_20_b = pd.Series(triadic_census(gn))
+sim_20_b
+```
+
+We can simplify the comparison by making it visual. Below we'll plot the counts for each of the triadic configurations for both networks. The values for the original network are shown in @fig-14_04 with grey points. The values for same simulation with a single isolate added are shown with crimson plus marks. 
+
+
+```python
+fig, ax = plt.subplots()
+sns.scatterplot(x=sim_20_a,
+                y=sim_20_a.index,
+                s=50,
+                alpha=.8,
+                label="Simulated network")
+sns.scatterplot(x=sim_20_b,
+                y=sim_20_b.index,
+                color='crimson',
+                marker="+",
+                s=80,
+                label="Simulated network + one isolate")
+ax.set(xlabel='Count', ylabel='Triad configurations')
+sns.despine()
+plt.legend()
+plt.savefig('figures/14_04.png', dpi=300)
+```
+
+![png](figures/14_04.png){#fig-14_04}
+    
+We've added quite a few new 003 triads (171 to be precise) and a non-trivial number of 012 triads (19). All this despite the fact that there has been no appreciable change in the structure of the network.
+
+Finally, let's consider two networks with the same number of nodes and edges. One network will contain a very dense group, while the other will not. 
+
+
+```python
+clustered_g = nx.null_graph(create_using=nx.DiGraph())
+nodes = range(0,20)
+
+for node in nodes:
+    clustered_g.add_node(str(node))
+
+for i in range(0,9):
+    for j in range(0,9):
+        if i != j:
+            clustered_g.add_edge(str(i), str(j))
+
+clustered_g.name = 'Simulated DiGraph, Clustered'
+describe_simulated_network(clustered_g)
+```
+
+```python
+not_clustered_g = nx.null_graph(create_using=nx.DiGraph())
+
+for node in nodes:
+    not_clustered_g.add_node(str(node))
+
+for i in range(0,72):
+    random_from = str(random.randint(0,19))
+    random_to = str(random.randint(0,19))
+    while not_clustered_g.has_edge(random_from, random_to):
+        random_from = str(random.randint(0,19))
+        random_to = str(random.randint(0,19))
+    not_clustered_g.add_edge(random_from, random_to)
+            
+not_clustered_g.name = 'Simulated DiGraph, Not Clustered'
+describe_simulated_network(not_clustered_g)
+```
+
+Now let's compute a census for both simulated networks and then compare the results visually (@fig-14_05).
+
+```python
+tc_clustered = pd.Series(triadic_census(clustered_g))
+tc_not_clustered = pd.Series(triadic_census(not_clustered_g))
+```
+
+
+```python
+fig, ax = plt.subplots()
+sns.scatterplot(x=tc_clustered,
+                y=tc_clustered.index,
+                s=50,
+                alpha=.8,
+                label="Simulated network, clustered")
+sns.scatterplot(x=tc_not_clustered,
+                y=tc_not_clustered.index,
+                color='crimson',
+                marker="+",
+                s=80,
+                label="Simulated network, not clustered")
+ax.set(xlabel='Count', ylabel='Triad configurations')
+sns.despine()
+
+plt.legend()
+plt.savefig('figures/14_05.png', dpi=300)
+```
+
+![png](figures/14_05.png){#fig-14_05}
+    
+Remember, these two networks have the same number of nodes and edges, but one has a dense cluster and the other does not. What has happened is that the dense cluster has a monopoly on the edges, there is a large number of heavily overlapping `300` triads, a much greater number of `003` null triads created by there being more isolates, and there are many more `102` triads representing two isolates and a member of the dense cluster. 
+
+The key point to take away from these simple simulations is that raw counts of micro-structural configurations in a network, for example via a triad census, can be deceiving. They are nested and complex. However, a triad census can be part of an initial exploratory analysis if you are being careful *and intentional*. Among other things, they may help you think through what types of processes and mechanisms might be contributing to the specific structural forms a network takes. 
+
+Consider a network of journal articles that cite other journal articles. If we perform a triad census on a citation network, we should absolutely expect to see many more 030T triads than 030C triads. In fact, *we might see no 030C triads at all*, as such a triad suggests that a paper $A$ cited a paper $B$, that cited a paper $C$, that cited the original paper $A$. Given that most articles cite papers that have already been published, rather than papers that have yet to be published, such triads should be exceedingly rare, though technically not impossible.
+
+- **TODO**: This is good motivation for inferential approaches. Categorize some approaches here, but don't get into them. Compare deterministic / descriptive with inferential, lean on Tiago's typology here a bit.
+
+There are many ways of detecting **cohesive subgroups**, often called **communities**, in social networks. Some methods start with micro-level structural configurations that overlap to form larger and more complex structures, while others start at the level of the network itself and work their way down to smaller structures. In the subsections that follow, we will explore a variety of methods for such techniques.
+
+
+
+- **TODO**: Unfortunately a lot of popular approaches get it wrong. Modularity-maximization is the worst. Urg. Let's talk about how much it sucks...
+
+### Modularity-maximization methods are bad! Avoid them
+
+- **TODO**: Update this content with vigorous critique!
+
+
+Identifying cliques in a network is useful, but there are times when we want to know more about how group membership is spread across all of the nodes in a network. In these cases, we typically turn to a **community detection algorithm**. One of the most widely-used in recent years is the 'Louvain' community detection algorithm.  
+
+The Louvain community detection algorithm relies on a measure called **modularity** (**$Q$**), which is a quantitative summary of how modular the structure of a given network is, and which is produced by analyzing the density of edges within a group relative to edges outside the group. The value of $Q$ ranges between a minimum of $-\frac{1}{2}$ and a maximum of 1. The more modular a network is (closer to 1), the more distinct "communities" it is composed of. In other words, networks with higher $Q$ are made up of communities that have many internal ties and relatively few external ties. To gloss over many details, the Louvain algorithm tries to optimize Q by checking how much moving a node into a community will increase Q, and moving it into the community that increases Q the most (if any move is positive). Once Q can't be improved my moving nodes between communities, creates a new representation of the graph where each community is a node. It then repeats the process of trying to improve Q until there is only a single node. 
+
+In the modularity algorithm world, each algorithm varyingly provides some kind of modularity "guarantee." For example, Louvain guarantees that when it is finished, no merging of communities can increase $Q$ further. If one iterates the algorithm, one can eventually guarantee that no nodes can be moved that would increase $Q$. However, it makes no guarantee that this unimprovable partition is the *best* partition. It also doesn't guarantee that moving a node to a different community will not disconnect an existing community. In short, this introduces a weakness, identified by @traag2019louvain, where a bridging node that holds two parts of a community together can be moved to another community. The result would be that the first community is now disconnected, in the sense that the only way to move from one part of it to the other is through a node that is now in an outside community. While this is particularly problematic, @traag2019louvain also point out that the less dramatic case of communities that are just poorly connected can be common. However, Louvain is very popular because it has outperformed many competing algorithms in producing better partitions and doing so faster. 
+
+The Louvain algorithm is implemented in the `best_partition()` method from the `community` package we imported earlier. Although the Louvain algorithm has been developed over time and is said to be adaptable to directed, weighted networks, the original implementation is for undirected binary networks and the python package doesn't have the extensions implemented. We will talk about an alternative shortly that can make full use of the contact diary data.
+
+
+```python
+part = community.best_partition(G)
+q = community.modularity(part, G)
+print(f"The modularity of the network is {np.round(q, 3)}.")
+```
+
+We can use this community membership data in a variety of ways. The code below, for example, shows community membership differentiated by color. @fig-14_07 is printed in grayscale, but you can find the full color version in the online supplementary learning materials. 
+
+```python
+colors = [part[n] for n in G.nodes()]
+my_colors = plt.cm.Set2
+
+fig, ax = plt.subplots(figsize=(12, 8))
+nx.draw_networkx_nodes(G,
+                       pos=layout,
+                       node_size=100,
+                       node_color=colors,
+                       cmap=my_colors)
+nx.draw_networkx_edges(G, pos=layout, edge_color='lightgray', width=1)
+plt.axis('off')
+
+plt.savefig('figures/14_07.png', dpi=300)
+```
+
+![png](figures/14_07.png){#fig-14_07}
+    
+Louvain seems to have done a better job of identifying distinct clusters of densely connected nodes in this network than our $k$-clique community approach. There are, however, limitations. While some of the communities seem well-defined (the one on the right is clear-cut), others get a little messy and appear to be overlapping; these may not be good partitions, but in this case it's hard to tell because we have very limited information about the nodes, as this is an anonymized public dataset.
+
+Sometimes it is useful to bump things up a level of analysis, such as by looking at networks of cohesive subgroups rather than networks of individuals who cluster into groups. Once you have detected communities with the Louvain algorithm, you can aggregate the communities into single nodes and assign edges between them when a node from one community has a tie to a node in another community. This can be done by simply passing the Louvain partitions and the network object to the `induced_graph()` function from the `community` package. Note that we will also collect data on edge weights to size the thickness of the edges in this induced network, similar to how we sized nodes based on their centrality in the previous chapter. The result is @fig-14_08.
+
+```python
+inet = community.induced_graph(part, G)
+inet.name = "Induced Ego Network"
+
+weights = [inet[u][v]['weight']  for u,v in inet.edges()]
+ipos = nx.nx_pydot.graphviz_layout(inet)
+
+nx.draw(inet, 
+        node_color = 'black',
+        pos = ipos,
+        with_labels = True, 
+        font_color = 'white', 
+        font_size = 8, 
+        width=np.array(weights)/6, # transform edge weights
+        edge_color = "gray")
+plt.savefig('figures/14_08.png', dpi=300)
+```
+
+![png](figures/14_08.png){#fig-14_08}
+    
+To help interpret this induced graph, we can look up the names of the nodes in each community. For example, if we wanted to know which nodes make up the Community 2 node:
+
+
+```python
+community = 14
+for k,v in part.items():
+    if v == community:
+        print(k)
+```
+
+The Louvain algorithm does a reasonably good job of identifying cohesive subgroups in networks, but there are some non-trivial limitations in the algorithm. The most obvious of these limitations are that (1) nodes must belong to one and only one community because communities can't overlap, and (2) small communities may not be accurately identified and may end up being merged into larger communities. Earlier, I discussed some issues with the algorithm, raised by @traag2019louvain. 
+
+#### From Louvain to Leiden
+
+To address the issues they identified with Louvain, @traag2019louvain propose the Leiden algorithm; it includes some additional processes that give it more flexibility about how it treats communities and the nodes within them. While Louvain optimizes modularity by moving individual nodes to other communities and then kicks off the aggregation step to choose community merges, Leiden adds a step in the middle where each community is considered in isolation and its modularity is maximized. In this way, a poorly connected community that should be split into multiple smaller communities doesn't end up swallowed up as a single unhappy unit in the aggregation stage that follows. Aside from guaranteeing that all of the communities identified will actually be connected, this optimal sub-community assignment also allows Leiden to find smaller, distinct communities. Leiden also implements a number of clever performance refinements that have been proposed to improve Louvain's often lengthy convergence time. These are less important to understanding how and when to use Leiden for community detection, so we don't need to get to the bottom of them here.^[If you are curious, I suggest consulting this blog post, which does a great job of explaining what Leiden is doing. [https://timoast.github.io/blog/community-detection/](https://timoast.github.io/blog/community-detection/)] Instead, let's see some example results from applying Leiden to the same data we used the Louvain algorithm on above! 
+
+Leiden is available for Python via pip, but it requires the package python-igraph as a dependency. igraph is substantially more performant than NetworkX due to the C++ backend that it's built around, but the documentation (for the Python implementation) is not nearly as extensive as NetworkX, which is one of the reasons why we have used NetworkX so far. 
+
+Let's start by building an iGraph undirected graph object, basically identical to the one above. Thankfully, our pandas dataframe is in exactly the format that iGraph expects, where the first two columns are the `from` and `to` nodes from NetworkX terminology.
+
+
+```python
+import igraph as ig
+import leidenalg as la
+```
+
+We create the network object, then use leidenalg to calculate the partition memberships for each node.
+
+
+```python
+H = ig.Graph.DataFrame(
+    contact_diaries, 
+    directed = False,
+    vertices=None
+)
+
+if 'name' not in H.vs.attributes():
+    H.vs['name'] = [str(i) for i in range(H.vcount())]
+
+part_leiden = la.find_partition(H, la.ModularityVertexPartition)
+```
+
+For consistency, it's nice to be able to use the same layout for a graph to compare the community detection results. Drawing graphs in networkx is also quite a lot more straightforward and the graphviz layout algorithm produces nice layouts. We can access attributes of the leidenalg `partition` class object to modify a copy of the networkx partition object, which is just a dictionary of `{node_name:community_id}`. The attribute `_graph` of the `partition` class is itself an iGraph `graph` class, from which we can access the `.vs['name']` attribute that is populated from the dataframe and will match the networkx node names.
+
+
+```python
+partition = part.copy()
+for membership, node in zip(part_leiden._membership, part_leiden._graph.vs['name']):
+    partition[node] = membership
+```
+
+Now we can draw the graph just as we did with the networks above. You will notice, from @fig-14_09 (once again, printed in grayscale but with a full color version available in the online supplementary learning materials), that we end up with more communities here than we did with Louvain community detection, and some are considerably smaller. Also note that although the communities in the bottom left of the graph seem pretty intermingled, this is because the layout was calculated only by the connections between nodes, rather than any sophisticated community detection. Importantly, none of these communities have disconnected nodes despite being split into twice the communities detected by Louvain, which is a promise of the Leiden algorithm.
+
+
+```python
+colors = [partition[n] for n in G.nodes()]
+my_colors = plt.cm.Set2
+
+fig, ax = plt.subplots(figsize=(12, 8))
+nx.draw_networkx_nodes(G,
+                       pos=layout,
+                       node_size=100,
+                       node_color=colors,
+                       cmap=my_colors)
+nx.draw_networkx_edges(G, pos=layout, edge_color='lightgray', width=1)
+plt.axis('off')
+
+plt.savefig('figures/14_09.png', dpi=300)
+```
+
+![png](figures/14_09.png){#fig-14_09}
+    
+The leidenalg package also accepts directed networks with edge weights - we will provide those to the partition detection function and then see how much it changes the communities that are detected.
+
+```python
+dH = ig.Graph.DataFrame(contact_diaries, directed = True, vertices=None)
+
+if 'name' not in dH.vs.attributes():
+    dH.vs['name'] = [str(i) for i in range(dH.vcount())]
+
+
+part_leiden = la.find_partition(dH, la.ModularityVertexPartition, weights = dH.es['weight'])
+
+for membership, node in zip(part_leiden._membership, part_leiden._graph.vs['name']):
+    partition[node] = membership
+```
+
+In the resulting image (@fig-14_10), it's possible to simply observe the changes because there's actually only one! The middle community at the top of the graph is split into two individual communities. 
+
+
+```python
+colors = [partition[n] for n in G.nodes()]
+my_colors = plt.cm.Set2
+
+fig, ax = plt.subplots(figsize=(12, 8))
+nx.draw_networkx_nodes(G,
+                       pos=layout,
+                       node_size=100,
+                       node_color=colors,
+                       cmap=my_colors)
+nx.draw_networkx_edges(G, pos=layout, edge_color='lightgray', width=1)
+plt.axis('off')
+
+plt.savefig('figures/14_10.png', dpi=300)
+```
+
+![png](figures/14_10.png){#fig-14_10}
+
+### Content from the FCIT 607 and GESIS Materials to Integrate
+
+##
+
+<br><br>
+
+![](figures/heuristic.png){width=40% .shadow-img}
+
+### pitfalls and problems <br>with [heuristic]{.kn-pink} network analysis
+
+##
+
+:::: {.columns}
+::: {.column width="50%"}
+![](figures/divided_they_blog.png){#fig-divided_they_blog width="100%" .shadow-img}
+
+### Divided They Blog
+:::
+
+::: {.column width="50%"}
+$\longleftarrow$<br>This famous figure from @adamic2005political shows a conservative-liberal divide in the American political blogosphere circa 2004.
+
+- Nodes: political blogs
+- Edges: links [("citations")]{.nord-light} to other blogs
+- Color: liberal (blue), conservative (red) [(not CD!)]{.nord-light}
+- Size: indegree
+- Layout: force directed
+
+<br>
+
+[Is the network structure<br>[[self-evident]{.kn-pink}]{.large-text}<br>here?]{.fragment}
+
+:::
+::::
+
+
+##
+
+:::: {.columns}
+::: {.column width="55%"}
+![Wickham's loop.](figures/data-science.png){#fig-data-science width=60%}
+
+<br>
+
+### Common First Steps
+
+- reduce the network [(e.g., detect subgroup structure)]{.nord-light}
+- visualize network [(usually force-directed layouts)]{.nord-light}
+- interpret and ...
+
+When do we exit the loop?
+
+Can we trust intuition?
+:::
+
+::: {.column width="5%"}
+:::
+
+::: {.column width="40%"}
+![Box's loop.](figures/box_loop.png){#fig-box_loop width=60%}
+
+<br>
+
+![](figures/divided_they_blog.png){width=60% .shadow-img}
+:::
+::::
+
+##
+
+:::: {.columns}
+::: {.column width="50%"}
+![](figures/divided_they_blog.png){width=100% .shadow-img}
+
+### How sure are you?
+:::
+
+::: {.column width="50%"}
+<br>
+
+#### Common pitfalls and problems
+
+[@peixoto2021modularity; @peixoto2023descriptive; @peixoto2021hairball]{.nord-footer}
+
+- (Implicitly?) believing some approaches are more "model-free" than others
+- (Implicitly?) believing that network structure will be self-evident and our intuitions will hold up when reasoning about high-dimensional network structure
+
+<br>
+
+Which often translates to:
+
+- using heuristic approaches [(esp. modularity-maximization)]{.nord-light} to partition/reduce networks
+- interpreting generic network visualizations [(esp. force-directed)]{.nord-light} without sufficient model criticism
+:::
+::::
+
+##
+
+![These loops encourage us to explicate, criticize, and refine **models** in order to be confident in our inferences.](figures/box_loop.png){width=80% .shadow-img}
+
+There is [no inference without models]{.kn-blue}, so we should always make our models explicit.
+
+##
+
+### Heuristic Community Detection<br>via Modularity Maximization
+
+<br><br>
+
+:::: {.columns}
+::: {.column width="55%"}
+
+The Louvain [[@blondel2008fast]]{.nord-light} algorithm purports to detect communities in networks by maximizing a "modularity" score $Q$ [[@newman2004finding]]{.nord-light}, where higher $Q$ values indicate more modular networks.
+
+![](figures/Louvain.png){width=100%}
+:::
+
+::: {.column width="5%"}
+:::
+
+::: {.column width="40%"}
+![Figure reproduced from [@blondel2008fast]{.nord-light}](figures/Louvain_alg.png){.shadow-img width=100%}
+:::
+::::
+
+::: {.notes}
+It starts by assuming that every node in a network is in it's own community and calculates a modularity score $Q$ for the network. Nodes are then randomly moved into different groups and $Q$ is re-calculated. If it increased, the community assignment is retained. This process continues until the node assignments have maximized $Q$ at the level of the observed network.
+
+Next, a simplified network is created by aggregating nodes into their assigned communities and the modularity maximization process is repeated. Communities are merged with other communities, and the mergers are retained if $Q$ increases. This process continues iteratively until $Q$ has been maximized.
+:::
+
+
+##
+
+:::: {.columns}
+::: {.column width="55%"}
+
+[😲😰😰😰]{.large-text}
+
+Some **well-known problems**:
+
+- the resolution limit
+- getting stuck in local optima
+- creating disconnected communities
+- can only identify assortative structure
+- finds "communities" in random networks
+- the illusion of greater objectivity<br>[[see @moody2023cohesion]]{.nord-footer}
+- simultaneously over- and under-fit<br>[[see @peixoto2023descriptive]]{.nord-footer}
+- often has a degenerate solution space<br>[[see @peixoto2023descriptive]]{.nord-footer}
+- etc.
+
+[There have been some improvements to modularity-maximization approaches [[e.g., @traag2019louvain]]{.nord-light}, but these only go so far. There are **fundamental problems** with the modularity-maximization idea, and heuristic approaches in general.]{.fragment}
+:::
+::: {.column width=45%}
+:::
+::::
+
+::: {.notes}
+...
+
+There are well-known problems with the Louvain algorithm, including **the resolution limit**, which prevents Louvain from detecting meaningful small communities due to inappropriate merging at higher levels. Louvain can also get **stuck in local optima**, causing it to stop looking for better partitions because it "thinks" (incorrectly) that $Q$ has been maximized. And sometimes it **creates disconnected communities**!
+:::
+
+
+##
+
+
+### What is $Q$?
+
+[[@newman2004finding; @blondel2008fast]]{.nord-footer}
+
+<br>
+
+:::: {.columns}
+::: {.column width="45%"}
+$$
+Q(A, b) = \frac{1}{2E} \sum_{ij} \left( A_{ij} - \gamma \frac{k_i k_j}{2E} \right) \delta_{b_i, b_j}
+$$
+:::
+
+::: {.column width=10%}
+:::
+
+::: {.column width=45%}
+$A$ is the binary adjacency matrix for an observed network and $b$ is a vector of node community assignments, so $Q(A,b)$ is the modularity score we would obtain for matrix $A$ given a proposed vector of community assignments $b$.
+
+<br>
+
+The goal is to find $\hat{b}$, the vector $b$ that maximizes $Q$.
+
+$$
+\hat{b} = \mathop{\mathrm{argmax}}_{b} \, Q(A, b)
+$$
+
+<!-- $$
+More recent version include a [resolution parameter]{.kn-pink} $\gamma$ that determines how the algorithm considers within community edges relative to a null model. Larger $\gamma$ values tend to result in a larger number of smaller communities. In the original equation ($\longleftarrow$), this was set to 1 by default, which **gave the impression** that researchers could find the optimal community partition with little subjective judgement. -->
+:::
+
+::::
+
+
+
+
+##
+
+
+### What is $Q$?
+
+[[@newman2004finding; @blondel2008fast]]{.nord-footer}
+
+<br>
+
+:::: {.columns}
+::: {.column width="40%"}
+
+$$
+Q(A, b) = \frac{1}{2E} \sum_{ij} \left( A_{ij} - \gamma \frac{k_i k_j}{2E} \right) \delta_{b_i, b_j}
+$$
+
+$$
+\hat{b} = \mathop{\mathrm{argmax}}_{b} \, Q(A, b)
+$$
+:::
+
+::: {.column width=10%}
+:::
+
+::: {.column width=50%}
+- $E$ is the total weight of edges in the network.
+- $A_{ij}$ is a specific entry in $A$ [($A_{ij} \in \{0, 1\}$ if $A$ is binary)]{.nord-light}.
+- $\gamma$ is a resolution parameter [(more recent addition)]{.nord-light} that governs the size and number of communities detected.
+- $\frac{k_i k_j}{2E}$ is a null model for baseline expectations [(next slide)]{.nord-light}.
+- $\delta(c_i, c_j)$ is an indicator function that equals 1 if $i$ and $j$ are in the same community and 0 if not. This limits the summation to within-community edges.
+- Normalizing with $\frac{1}{2E}$ constrains the maximum modularity score to 1.
+- $\hat{b}$ is the vector of community assignments $b$ with the maximum $Q$ score.
+:::
+::::
+
+
+
+##
+
+
+### What is $Q$?
+
+[[@newman2004finding; @blondel2008fast]]{.nord-footer}
+
+<br>
+
+:::: {.columns}
+::: {.column width="40%"}
+
+$$
+Q(A, b) = \frac{1}{2E} \sum_{ij} \left( A_{ij} - \gamma \frac{k_i k_j}{2E} \right) \delta_{b_i, b_j}
+$$
+
+$$
+\hat{b} = \mathop{\mathrm{argmax}}_{b} \, Q(A, b)
+$$
+:::
+
+::: {.column width=5%}
+:::
+
+::: {.column width=55%}
+$\frac{k_i k_j}{2E}$ represents the edges expected under a **null model with no community structure at all**, in which the probability of an edge is proportional to node degrees ($k_i k_j$) and otherwise random.
+
+<br>
+
+The resolution parameter $\gamma$ varies the number and size of clusters identified by weighting the comparison of observed edges with edges expected under this [entirely implausible and inappropriate]{.nord-light} null model.
+
+$$
+\sum_{ij} \left( A_{ij} - \gamma \frac{k_i k_j}{2E} \right)
+$$
+
+This is not good inference.
+:::
+::::
+
+
+### Nested stochastic blockmodels are good! Use them
+
+- **TODO**: Update this roadmap from old introduction
+
+In the previous chapter, we used Bayesian generative models to identify latent topic structure in text data. In this chapter, we use the same underlying Bayesian logic to tackle some difficult problems in network analysis. Just as LDA addresses topic modelling as a latent variable problem using generative models, the models we introduce here -- stochastic block models (SBMs) -- approach network structure a similar way. Whereas LDA assumes that documents contain a mixture of latent topics that are made up of words, SBMs assume that networks have latent modular structure, and the goal is to figure out how to partition a network according to these low-level building blocks. 
+
+I'll start by briefly introducing some new theoretical ideas about "equivalence" and structural positions in networks. Then, I'll emphasize the theoretical and the generative logic of SBMs and their hierarchical Bayesian design. Then I'll discuss the role of Bayesian inference in SBMs, following a similar explanatory process as in the previous chapter. 
+
+In the second half of the chapter, we'll focus on three related things. First, I'll introduce the Python package graph-tool. Second, we will fit a series of SBMs to an email communication network of Enron employees involved in the legal proceedings of the Enron scandal. Third and finally, we will return to the comparison of LDA and SBM. I'll emphasize the shared conceptual logic of the problems of topic modelling and community detection. Then I'll introduce TopSBMs as a shared modelling framework for both tasks. This combination marks the end of our journey through Bayesian generative modelling and probabilistic programming.
+
+- **TODO**: Use the re-written content developed for FCIT 607 and GESIS.
+
+In the second half of the chapter, we'll focus on three related things. First, I'll introduce the Python package graph-tool. Second, we will fit a series of SBMs to an email communication network of Enron employees involved in the legal proceedings of the Enron scandal. Third and finally, we will return to the comparison of LDA and SBM. I'll emphasize the shared conceptual logic of the problems of topic modelling and community detection. Then I'll introduce TopSBMs as a shared modelling framework for both tasks. This combination marks the end of our journey through Bayesian generative modelling and probabilistic programming.
+
+### Latent Network Structure: Connected Communities and Structural Positions
+
+Generally speaking, network researchers think about the structure of social networks in one of two ways, each of which posits different social mechanisms to produce an outcome of interest (such as whether someone adopts a belief or behaviour), or give rise to different kinds of patterns in network structure. Both perspectives subsume a wide variety of specific methods, measures, and models. 
+
+The first of these two perspectives focuses mainly on issues related to **connection, cohesion, and network flow**. We work within this **general perspective** anytime we are thinking through the processes by which ties and cohesive subgroups form and dissolve, or when concerned with the role of networks in facilitating or mitigating the *spread* of a contagion or the creation of opportunities from one's direct ties or the structure of ties in their neighbourhood. Everything we have discussed in relation to networks to this point in the book has assumed this general perspective. Because of the role of direct connection and walk-structure, research that adopts this perspective measures and models *specific* relationships between *specific* nodes. 
+
+By contrast, **positional approaches** are premised on the notion that we can reduce the complexity of networks that represent specific relationships between specific nodes to a smaller set of connections between **blocks** (i.e., groups) of nodes that are judged to be "equivalent" in some meaningful way. In other words, each "block" in a network consists of a group of structurally interchangeable nodes, each of which share a common **structural position** in the network. The research goals here focus on understanding the *general* relationships between *general structural positions* rather than understanding the specific connections between specific people. 
+
+Why would we care to do this in the first place? It depends on whom you ask, but you a common motivation for working with this positional approach is **generalization**: we want to abstract away the concrete details of specific connections between specific people to focus on understanding *the big picture, in general*. As we will soon see, this way of thinking lends itself well to probabilistic models of network structure, and is more robust to problems that arise from the imprecise and imperfect observation and measurement of relational data. 
+
+Let's imagine a simple scenario. Imagine two professors, each principal investigators of research labs at a university but in completely different departments and with no overlap in their research agendas or lab members. Let's also assume that both labs have a fairly hierarchical organizational structure, as is historically typical of many sciences. In both cases, the professors have a group of students and lab technicians who report directly to them. Regardless of how we measure relevant network ties (e.g., communication, collaboration, advice-giving), the community detection we methods we discussed in Chapter 15 would place both professors into different communities. From a connection, community, and flow perspective, these two professors and their labs are completely distinct, with the only relationships between them being indirect connections along the walk structure of the network. By contrast, the models we're going to discuss in the rest of this chapter would identify the two professors as being **equivalent** despite the fact that they are not connected to one another and they have no connections in common. This is because the focus is on *general* patterns of *aggregate* relations between *categories* of nodes [@jscott; @cprell].
+
+Nodes that occupy the same structural positions in a network tend to have behavioural similarities even when they are not connected to one another. Structurally equivalent nodes may behave in similar ways because they are conforming, to varying degrees, to the expectations associated with their position and social roles. Professors do what professors do, grad students do what grad students do, undergrad students do what undergrad students do, and so on. Another mechanistic explanation is that equivalent nodes have to negotiate similar types of problems, situations, and institutional environments, and they exhibit behavioural similarities due to these common experiences and contexts rather than the influence of their direct social ties (bringing us back to that idea of *shared institutional environments* and the connection to hierarchical models first introduced in Chapter 29). 
+
+Finally, people who occupy the same structural positions in networks might look to mirror the behaviours of other people who share their structural positions. For example, if they are uncertain about how to behave, or what is needed for success, they may model their behaviour on someone who is in the same position and seems to be thriving (similarly, they may observe behaviours and outcomes they want to *avoid*). Returning to our hypothetical example: it doesn't stretch credibility to claim that a professor is more likely to make decisions about running their research lab based on observations of how similar professors run their labs than the interpersonal influence of their friends and family (who are not professors running research labs).
+
+The first thing we need to do in any positional analysis is specify an exactly what we mean by "equivalence." We need an operational definition. 
+
+#### Equivalence?
+
+@lorrain1971structural theorized that nodes in a network could be considered **structurally equivalent** if they connected to the rest of a network in *identical* ways. In this definition, equivalent nodes are literally substitutable for one another, which was the initial inspiration behind the move to aggregate nodes into abstract blocks that reveal an underlying structure of generic positions and social roles.
+
+It is exceedingly rare to find nodes that meet this strict definition of equivalence when analyzing real social networks. As a result, we typically use some measure of *approximate equivalence* instead. Since Lorraine and White's classic article, researchers have proposed many different ways of conceptualizing equivalence executing positional analyses, one of the most influential of which was White and Reitz's [-@white1983graph] **regular equivalence**. To be "regularly equivalent," nodes must have similar connection profiles to other regular equivalence classes, rather than the identical connection profile of structural equivalence. 
+
+Structural and regular equivalence are both deterministic. Probability offers us yet another way of operationalizing the idea of equivalence, and one that is well-aligned with Bayesian probabilistic modelling. Nodes are **stochastically equivalent** if they have the same probabilities of connecting with other nodes. In other words, nodes are grouped into the same blocks if they are statistically indistinguishable from one another due to sharing similar probabilities of connecting with other nodes according to their stochastically equivalent blocks. 
+
+  
+> **Further Reading**    
+>   
+> Like the deterministic conception of equivalence, this stochastic conception was initially developed in the social sciences and statistics [see @holland1983stochastic; @snijders1997estimation; @wang1987stochastic; @nowicki2001estimation], but over the same time period were developing in other sciences (a textbook example of "multiple discovery"); it is now very much an interdisciplinary affair at the cutting edge of network science [see @peixoto2019bayesian].
+>
+
+
+#### Blockmodels
+
+Once we've adopted some operational definition of equivalence, the second step is to use that definition to cluster nodes into different equivalence classes. As previously mentioned, these classes represent generic **positions** and are typically referred to as "**blocks**." The process of identifying these blocks is called "**blockmodelling**," and there are a number of different ways it can be done [see @doreian2005generalized; @doreian2002positional; @ferligoj2011positions; @peixoto2019bayesian; @snijders1997estimation]. The most important distinction is between deterministic and stochastic blockmodels. Unsurprisingly, deterministic blockmodels are used alongside deterministic understandings of equivalence, and stochastic blockmodels are used alongside stochastic understandings of equivalence.
+
+The results of deterministic blockmodels are fully determined by (*i*) the parameters of the model, such as the number of blocks to look for, and (*ii*) the input data itself. Given the same parameter values and the same input data, the models will always produce the same results. Typically this is done by constructing a similarity or distance matrix from an adjacency matrix, and then performing some form of cluster analysis, such as hierarchical clustering, on that matrix. There have been many specific algorithms for blockmodelling introduced since Harrison White and his students first introduced the idea of structural equivalence and blockmodelling in the 1970s, the most famous of which are CONCOR and REGE. A discussion of these and other deterministic blockmodels is beyond the scope of this chapter, but they are described in most social network analysis methods texts. 
+
+By contrast, the blockmodels we will discuss in the rest of this chapter are *stochastic*, and are based on notions of *stochastic equivalence*. Let's shift the discussion to them now. 
+
+- **TODO**: The statistical discussion of NSBMs followed this content previously, but I am now moving that to the chapter on latent structure in networks (#24). This explanation should be very basic, bracket lots of things, and just fit the MDL minimized SBM without any MCMC stuff. 
+
+
+# SWITCH BACK TO VISUALIZATION WITH BASIC SBM
+
+- **TODO**: Either end here, or fit the blockmodel but bracket the explanation until the next chapter. 
+- **TODO**: Process figures from the new code. 
+
+Next, we fit an SBM and color the nodes based on their estimated block membership.
+
+```python
+blockstate = gt.minimize_nested_blockmodel_dl(giant)
+blockstate_level_0 = blockstate.levels[0]
+blockstate_level_0
+```
+
+We can use the `.draw()` method for blockstate objects.
+
+```python
+blockstate_level_0.draw(
+    pos=pos,
+    output_size=(1200, 1200),
+    bg_color=[1, 1, 1, 1],
+)
+```
+
+Another figure more-or-less recreated! Two more to go.
+
+Let's modify the force directed layout to add attractive forces for block membership.
+
+```python
+pos_refined = gt.sfdp_layout(g, groups=blockstate_level_0.b, gamma=.04)
+pos_refined = rotate_positions(pos_refined, 125) # make it horizontal
+```
+
+Then we can visualize the blockstate again.
+
+```python
+blockstate_level_0.draw(
+    pos=pos_refined,
+    edge_gradient=[],
+    edge_color="#33333322",
+    output_size=(1200, 1200),
+    bg_color=[1, 1, 1, 1],
+)
+```
+
+As a refinement step **based on model criticism**, we'll adjust the force-directed layout by adding an attractive force between nodes in the same block. This is done by passing the following arguments to `sfdp_layout()`:
+
+- `groups`: A vertex property map that assigns nodes to specific groups, in this case, block assignments at the lowest level of the nested SBM (`blockstate_level_0.b`). This adds additional attractive forces for block membership in the layout.
+- `gamma`: Controls the strength of the attractive force for nodes in the same block. A small value corresponds to a weak force and more spread out clusters, while a larger value results in more compact clusters.
+
+We'll pass `blockstate_level_0.b` (block assignments) to `sfdp_layout()`. The `.b` attribute provides access to the block assignments.
+
+```python
+pos_refined = rotate_positions(pos_refined, 45)
+```
+
+Look at that!
+
+### Adjusting Node Colors & Exploring Hierarchy
+
+For the final adjustment, let's assign node colors based on political classification rather than block membership and use a layout that is designed to emphasize the hierarchical structure of the network. Even though we are dropping back down to two colors, the block structure will still be evident from the layout and we should be able to how well the binary classification lines up with the hierarchical blockmodel.
+
+### Divided They Blog?
+
+What do you think?
+
+```python
+blockstate.draw(
+    vertex_fill_color=vertex_political_colors,
+    output_size=(1200, 1200),
+    bg_color=[1, 1, 1, 1],
+    inline=True,
+)
+```
+
+This visualization reveals the hierarchical structure more clearly. It's a bit tough to see right now, but the blue square node right in the middle of the network represents the entire graph merged into one group at the highest level of the block hierarchy. As you move outward from the center, the graph splits into smaller and smaller blocks, which correspond to different political blogs at the lowest level of the block hierarchy.
+
+You may notice that the nested SBM reveals a more complex structure than a simple left-right division. The hierarchy shows internal differentiation within each political cluster, revealing sub-communities that were not as apparent in the force-directed layout. However, we can see a clear split into two groups at the highest-level below the full graph that does align with the binary classifications.
+
+Let's tweak the appearance of the block-level graph to make it easier to see and more visually appealing. We will modify the properties of the hierarchical block nodes and edges using `hvprops` (hierarchical vertex properties) and `heprops` (hierarchical edge properties).
+
+```python
+hvprops = {
+    "fill_color": "white",
+    "size": 30,
+}
+
+heprops = {
+    "color": "white",
+    "pen_width": 2,
+}
+
+blockstate.draw(
+    vertex_fill_color=vertex_political_colors,
+    hvprops=hvprops,
+    heprops=heprops,
+    output_size=(1200, 1200),
+    bg_color=[1, 1, 1, 1],
+    inline=True,
+)
+```
+
+With that, we've successfully recreated the series of political blog network figures from the lecture using `graph-tool`. We learned how to run `graph-tool` code in a conda environment, extracted the giant component, fit our first nested Stochastic Blockmodel (NSBM), and created a series of visualizions of the network and it's hierarchical block structure. We also learned how to adjust force_directed layouts to add additional attractors for group memberships based on simple model criticism, and how to modify and refine the visual properties of networks at different levels of the block hierarchy.
+
+In the next part of the tutorial, we'll explore the Enron email networks, applying similar techniques and deepening our understanding of community detection in large networks. We'll fit different kinds of models to different kinds of network representations and then rank the models based on their description lengths. As a bonus, we will compare these to results from modularity-maximization approaches (which you should not use).
+
+We just
+
+- recreated the figures
+- fit and visualized our first Nested Stochastic Blockmodel
+- learned how to modify the observed and hierachical networks in `graph-tool` visualizations
+
+- **TODO**: Sign post what's coming in the next chapter.

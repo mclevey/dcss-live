@@ -1,5 +1,8 @@
+.DS_Store
 /.quarto/
-data/*
+data/*.csv
+*.spacy
+data/*.json
 *.ipynb
 *.ipynb_checkpoints
 

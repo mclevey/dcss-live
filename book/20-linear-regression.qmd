@@ -77,7 +77,7 @@ We've decided to treat Republicans as our 'negative' case and the Democrats as o
 
 Although this helps us simplify our model immensely, it also comes at a cost: we can only include districts where both Democrats and Republicans *officially* ran, spent campaign funds, and received votes. This limitation has reduced our data from 435 districts to 371; a steep cost, but not an altogether unwarranted one. More advanced models could incorporate and model the dropped data, but we're keeping it simple.
 
-Now that the data is loaded, let's create a scatterplot so we can see how it is distributed (Figure @fig-26_01). 
+Now that the data is loaded, let's create a scatterplot so we can see how it is distributed (@fig-26_01). 
 
 
 ```python
@@ -269,7 +269,7 @@ Take some time to flip through the values in the `prior_predictive` object, and 
 
 Now that that's done, we can just plug the parameter samples into a simple reproduction of our linear model.
 
-Results are shown in Figure @fig-26_02.
+Results are shown in @fig-26_02.
 
 ```python
 spend_grid = np.linspace(-20, 20, 50)
@@ -297,7 +297,7 @@ plt.savefig('figures/26_02.png', dpi=300)
 
 The above plot contains 50 different regression lines drawn from our model's prior distributions -- a quick glance shows that our priors leave a whole lot of room for improvement. Here's how you can tell: the intersecting grey areas in the plot represent two standard deviations on both of our variables, which means that roughly 95% of our data points will fall somewhere within the darker grey area of overlap. We can see that the majority of the regression lines we sampled from our model cross through the darker grey area from the lower-left to the upper-right, albeit at slightly too sharp an angle. A great many of the lines, though, only barely skim the edges or corners of the box; some fail to cross it altogether. If your model produces one or two highly suspect regression lines, that's not a cause for concern. When your model produces a great many (as is the case with ours), it might be time to consider making your priors a little more informative.
 
-Take a look at what we can do by tightening our priors a little. The results are shown in Figure @fig-26_03.
+Take a look at what we can do by tightening our priors a little. The results are shown in @fig-26_03.
 
 ```python
 with pm.Model() as regularized_model:
@@ -380,7 +380,7 @@ If you are not familiar, the r_hat statistic is a purely diagnostic statistic an
 
 ### Checking the Traceplot
 
-One of the most important steps in any Bayesian regression model involves checking your model's 'traces' to ensure that nothing went awry behind the scenes. ArviZ has some really nice built-in tools for this, shown for our trace pool model in Figure @fig-26_04.
+One of the most important steps in any Bayesian regression model involves checking your model's 'traces' to ensure that nothing went awry behind the scenes. ArviZ has some really nice built-in tools for this, shown for our trace pool model in @fig-26_04.
 
 ```python
 az.plot_trace(trace_pool, var_names=['alpha', 'beta', 'sigma'], compact=True)
@@ -411,7 +411,7 @@ Now, let's dig into each of our variables in a bit more detail; we can do so usi
 
 It's up to us to determine how much of the posterior probability we want to appear inside our HDI. In his classic Bayesian text, Richard McElreath [-@mcelreath2020statistical] uses an abundance of cheek when suggesting that Bayesians should employ a prime number for no other reason than the fact that it is prime. He portrays this as a way of subtly jabbing Frequentists for their automatic use of an arbitrarily-set significance threshold of .05, whose progenitor specifically indicated should not be adopted as a default. Hilarious! (Though to be fair, many Frequentists are themselves trying to get other Frequentists to stop doing that.)
 
-We'll follow in McElreath's footsteps and use 0.89, but there's no good reason why we couldn't use something like 0.83 or 0.79. The default for most ArviZ plots is 94%; having made our point, we'll leave the HDI intervals at their defaults from here on out. Results are shown in Figure @fig-26_05.
+We'll follow in McElreath's footsteps and use 0.89, but there's no good reason why we couldn't use something like 0.83 or 0.79. The default for most ArviZ plots is 94%; having made our point, we'll leave the HDI intervals at their defaults from here on out. Results are shown in @fig-26_05.
 
 ```python
 fig, axs = plt.subplots(3, 1, sharex=True, sharey=True, figsize=(6, 6))
@@ -445,7 +445,7 @@ with pool_model:
     ppc = pm.sample_posterior_predictive(trace_pool, var_names=['votes', 'alpha', 'beta', 'sigma'])
 ```
 
-If you inspect it, you'll find that the resulting `ppc` object is an `arviz.InferenceData` object. We can use this object directly with the `ArviZ` functions. In the code cell below, we use the `az.plot_ppc` function to produce a plot of our posterior predictive (Figure @fig-26_06):
+If you inspect it, you'll find that the resulting `ppc` object is an `arviz.InferenceData` object. We can use this object directly with the `ArviZ` functions. In the code cell below, we use the `az.plot_ppc` function to produce a plot of our posterior predictive (@fig-26_06):
 
 ```python
 az.plot_ppc(ppc, num_pp_samples=100, legend=False)
@@ -460,7 +460,7 @@ Ideally, we'd want to see our model adhere more closely to the observed data: as
 
 ### Plotting Uncertainty
 
-I know I've said it quite a lot already, but one of the reasons why we use Bayesian methods in the first place is because we want to preserve uncertainty to the greatest extent possible throughout the entire modelling process. You'll often find that other approaches to regression analysis produce a 'line of best fit' or a 'predictor line' or something similar. In Bayesian analysis, we instead produce a *range* of such lines, each of which is probabilistically drawn from our posterior distribution, and each of which differs from the others. Since it's difficult to appreciate information at this scale directly, Bayesian regression leans heavily on visualization techniques to provide intuitive guides to inference. Here, we're going to draw samples of predicted outcomes and parameter values from our posterior distribution (using a PyMC function designed for just such a task), feed those sampled values through our linear model, and plot the 94% HDI range of the results (Figure @fig-26_07).
+I know I've said it quite a lot already, but one of the reasons why we use Bayesian methods in the first place is because we want to preserve uncertainty to the greatest extent possible throughout the entire modelling process. You'll often find that other approaches to regression analysis produce a 'line of best fit' or a 'predictor line' or something similar. In Bayesian analysis, we instead produce a *range* of such lines, each of which is probabilistically drawn from our posterior distribution, and each of which differs from the others. Since it's difficult to appreciate information at this scale directly, Bayesian regression leans heavily on visualization techniques to provide intuitive guides to inference. Here, we're going to draw samples of predicted outcomes and parameter values from our posterior distribution (using a PyMC function designed for just such a task), feed those sampled values through our linear model, and plot the 94% HDI range of the results (@fig-26_07).
 
 ```python
 plot_2020_election_fit(spend_std, vote_std, trace_pool, ppc)

@@ -1,8 +1,7 @@
 # Web data (Scraping)
 
-# Collecting Data from the Web: Scraping
-
-## LEARNING OBJECTIVES
+::: {.callout-note}
+## Learning Objectives
 
 By the end of this chapter, you should be able to:
 
@@ -11,12 +10,9 @@ By the end of this chapter, you should be able to:
 - Use the BeautifulSoup package to parse HTML and CSS code to extract and clean data from webpage source code. 
 - Change URLs programmatically to scrape multiple pages of a website.
 - Explain the ethical and legal issues involved in web scraping projects.
+:::
 
-## LEARNING MATERIALS
-
-You can find the online learning materials for this chapter in `doing_computational_social_science/Chapter_06`. `cd` into the directory and launch your Jupyter Server.
-
-## INTRODUCTION
+<br>
 
 This chapter introduces web scraping as a method of programmatically collecting data from the web. While Application Programming Interfaces (APIs) provide direct access to the data behind a website using documented protocols, web scraping requires studying the source code of a website as displayed in a browser, and then writing scripts that take advantage of HTML and CSS to extract specific pieces of data.
 
@@ -43,7 +39,7 @@ HTML consists of 'elements' (e.g. paragraphs) with opening and closing tags. You
     <body>
         <h1>This is a first-level heading</h1>
         <p>A paragraph with some <emph>italicized</emph> text.</p>
-        <img src="image.pdf" alt="This is an image">
+        <img src="image.png" alt="This is an image">
         <p>A paragraph with some <strong>bold</strong> text.</p>
         <h2>This is a second-level heading</h2>
         <ul>
@@ -90,9 +86,9 @@ Once the story is loaded in Firefox, I can right-click anywhere on the page and 
 
 One especially useful strategy is to highlight some information of interest on the webpage and then right-click and select 'Inspect Source' (or 'View Selection Source' or 'Inspect Element' or similar). This will jump to that specific highlighted information in the HTML code, making it much easier to quickly find what tags the information you need is stored in. From here, we can strategize how best to retrieve the data we want.
 
-Figure @fig-06_01 is a screenshot of the developer tools pane open in a Firefox tab for the story about Boris Johnson. Unfortunately it might be a bit difficult to fully read on this printed page. If that's the case, you can consult the high resolution screenshot available in the online materials. The text "As the Brexit deadline looms, Europe remains wary of the poker player behind the clown mask" is highlighted and revealed in the inspector tool at the bottom of the page. We can see in the developer tools that the text we've highlighted is enclosed in simple paragraph tags (`<p>As the Brexit deadline looms, Europe remains wary of the poker player behind the clown mask</p>`). That's precisely the kind of information we can exploit when developing a web scraper. Let's see how exactly it's done.
+@fig-06_01 is a screenshot of the developer tools pane open in a Firefox tab for the story about Boris Johnson. Unfortunately it might be a bit difficult to fully read on this printed page. If that's the case, you can consult the high resolution screenshot available in the online materials. The text "As the Brexit deadline looms, Europe remains wary of the poker player behind the clown mask" is highlighted and revealed in the inspector tool at the bottom of the page. We can see in the developer tools that the text we've highlighted is enclosed in simple paragraph tags (`<p>As the Brexit deadline looms, Europe remains wary of the poker player behind the clown mask</p>`). That's precisely the kind of information we can exploit when developing a web scraper. Let's see how exactly it's done.
 
-![A screenshot of the Firefox developer tools pane open for the story "Charming but dishonest: Europe's verdict on Boris Johnson," published in *The Guardian* on August 2, 2019.](figures/boris.pdf)
+![A screenshot of the Firefox developer tools pane open for the story "Charming but dishonest: Europe's verdict on Boris Johnson," published in *The Guardian* on August 2, 2019.](figures/boris.png){#fig-06_01}
 
 As we develop our web scraper, we progressively narrow down to the information we need, clean it by stripping out unwanted information (e.g. white spaces, new line characters), and then write it to some sort of dataset for later use. Next, we'll cover the steps one might take to develop a functional scraper from the ground up.
 
@@ -198,9 +194,9 @@ In many cases, the data you want to scrape isn't neatly packaged for you on a si
 
 Let's talk first about detecting patterns when you browse through pages on a website. This is as simple as navigating though your page, from some starting point (say the front page of `nytimes.com`), and then clicking through to different sections and news stories. As you do this, you'll notice that some parts of the URL change and other parts stay the same. For example, you might see that a new chunk of string is added to the URL when you navigate to parts of the website that cover international news, and a different string appears when you're reading op-eds or the lifestyle section.
 
-As you click through pages, make notes on how the URL changes. Then start simply entering new values into parts of the URL (such as different numbers for pages) and see what the results are. Does it return a valid page or not? Did it return what you expected? This is just one way of doing the necessary detective work -- both in terms of the webpage source code and how the website handles URLs -- to get the content we want from those pages. Figure @fig-06_02 below presents an overview of these two interconnected processes.
+As you click through pages, make notes on how the URL changes. Then start simply entering new values into parts of the URL (such as different numbers for pages) and see what the results are. Does it return a valid page or not? Did it return what you expected? This is just one way of doing the necessary detective work -- both in terms of the webpage source code and how the website handles URLs -- to get the content we want from those pages. @fig-06_02 below presents an overview of these two interconnected processes.
 
-![An overview of the front end investigatory work that goes into web scraping. You must spend time studying URLs and the source code of the pages you want to scrape.](figures/scraping.pdf)
+![An overview of the front end investigatory work that goes into web scraping. You must spend time studying URLs and the source code of the pages you want to scrape.](figures/scraping.png){#fig-06_02}
 
 Let's make this all a little less abstract by looking at a specific example of programmatically iterating over URLs to scrape a page.
 
@@ -286,9 +282,13 @@ Finally, there is not yet a widely-held standard, in academia or elsewhere, for 
 
 ## CONCLUSION
 
+---
+
 ### Key Points 
 
 - Web scraping is a powerful approach to collecting data from the web, useful for when data is not available in an API, but could still be obtained ethically and legally
 - BeautifulSoup is a very useful tool for processing HTML from websites, but cannot obviate the need to understand a web page's Document Object Model (DOM)
 - The "iron rule of web scraping": you must put in the proper time and energy to investigating the source code for the pages you want to scrape
 - The only true limits on the data you can collect from scraping the web are ethical and legal
+
+---

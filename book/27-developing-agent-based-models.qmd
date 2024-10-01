@@ -654,7 +654,7 @@ The value of a network approach to questions of diffusion is not limited to epid
 
 To better understand the spread of a contagion through a network, there are some key terms that are important to know. A node is **activated** when they've adopted, caught, or been "infected" by whatever contagion is flowing over the network. For example, they might catch a cold or adopt a belief. A node is **exposed** to the contagion when an adjacent node is activated. 
 
-Consider the hypothetical network shown in Figure @fig-16_01, through which an information-based contagion spreads over time. At first (Time 0), Yevgen has some interesting gossip he is eager to share. Since Yevgen and Eric are directly connected, Eric is "exposed." Once Yevgen shares the information with Eric in Time 1, Eric becomes activated and his alters become exposed. Eric's switch from exposed to activated is a **state change**. All state changes in the figure are represented by changes in node color from white (not activated, not exposed) to grey (exposed) to activated (crimson). 
+Consider the hypothetical network shown in @fig-16_01, through which an information-based contagion spreads over time. At first (Time 0), Yevgen has some interesting gossip he is eager to share. Since Yevgen and Eric are directly connected, Eric is "exposed." Once Yevgen shares the information with Eric in Time 1, Eric becomes activated and his alters become exposed. Eric's switch from exposed to activated is a **state change**. All state changes in the figure are represented by changes in node color from white (not activated, not exposed) to grey (exposed) to activated (crimson). 
 
 This is some *really* interesting gossip, and Eric can hardly contain it. He doesn't. He shares it with his contacts, triggering another set of state changes in Time 2. Finally, in Time 3, all of Eric's neighbourhood has been activated and the process continues to spread beyond the boundaries of the figure. 
 
@@ -730,7 +730,7 @@ set_style()
 
 ### Simulating a Small World
 
-To get started with modelling diffusion processes, we'll simulate a simple network with 300 nodes. The particular type of network we are simulating here is a "small world" network, which if you recall from earlier is a type of network with low average shortest paths and high clustering coefficients. Each node in this simulated network, shown in Figure @fig-16_01, will be connected to 4 other nodes. Obviously this network differs substantially from just about any existing social network that we might observe empirically, but it's a useful starting point. Once we've developed some intuition of the how these types of models work, we'll switch over to using empirical data on interaction networks. 
+To get started with modelling diffusion processes, we'll simulate a simple network with 300 nodes. The particular type of network we are simulating here is a "small world" network, which if you recall from earlier is a type of network with low average shortest paths and high clustering coefficients. Each node in this simulated network, shown in @fig-16_01, will be connected to 4 other nodes. Obviously this network differs substantially from just about any existing social network that we might observe empirically, but it's a useful starting point. Once we've developed some intuition of the how these types of models work, we'll switch over to using empirical data on interaction networks. 
 
 
 ```python
@@ -900,7 +900,7 @@ sir_1_trends, sir_1_deltas = simulation_overview(
 sir_1_trends.head()
 ```
 
-From here, we can plot (1) trends in the number of susceptible, infected, and removed nodes; and (2) the compartment deltas. The results are shown in Figure @fig-16_03.
+From here, we can plot (1) trends in the number of susceptible, infected, and removed nodes; and (2) the compartment deltas. The results are shown in @fig-16_03.
 
 
 ```python
@@ -920,7 +920,7 @@ plt.savefig('figures/16_03.png', dpi=300)
     
 This plot offers a high-level summary of what has happened to our simulated society over time. In this particular case, we can see the proportion of infected nodes increases dramatically, infecting more than 70% of the population in fewer than 50 iterations (when you factor in those who had already recovered by iteration 50, about 90% of the population had been infected, but some had already recovered). At the same time, the number of susceptible nodes decreases (which we should expect, given the zero-sum and unidirectional nature of the SIR model). Over time, there is a fairly steady increase in the number of nodes who are removed from the simulation due to immunity or death.
 
-Let's also take a quick look at the deltas for each state (Figure @fig-16_04). 
+Let's also take a quick look at the deltas for each state (@fig-16_04). 
 
 
 ```python
@@ -944,7 +944,7 @@ This plots shows how the number of nodes in each of the three possible node stat
 
 #### Wait, Who Did We Just Infect?
 
-Recall that NDLib is simulating discrete nodes in a network, rather than solving differential equations. Figure @fig-16_05 provides a bit of additional insight into what has happened to our simulated society throughout this process. We took 200 steps through time, but a lot of action happened in just the first 20 steps. Each of the subplots in the Figure below represents one of the first 20 iterations. At each iteration, the nodes are crimson if they are newly infected, or were infected in a previous iteration. Grey nodes are susceptible. Some of these nodes of course transitioned to the "removed" state, but for pedagogical reasons, my interest here is in highlighting the specific paths the contagion moves along. Though there are, of course, some clusters that form around the initial seed infections, there is no indication that the contagion gets "stuck" in those clusters. It spreads easily to infect surrounding nodes. 
+Recall that NDLib is simulating discrete nodes in a network, rather than solving differential equations. @fig-16_05 provides a bit of additional insight into what has happened to our simulated society throughout this process. We took 200 steps through time, but a lot of action happened in just the first 20 steps. Each of the subplots in the Figure below represents one of the first 20 iterations. At each iteration, the nodes are crimson if they are newly infected, or were infected in a previous iteration. Grey nodes are susceptible. Some of these nodes of course transitioned to the "removed" state, but for pedagogical reasons, my interest here is in highlighting the specific paths the contagion moves along. Though there are, of course, some clusters that form around the initial seed infections, there is no indication that the contagion gets "stuck" in those clusters. It spreads easily to infect surrounding nodes. 
 
 There is another (more important) pedagogical reason for this figure: to emphasize that it's just *one* of many possible outcomes. We've performed a *single simulation* over 200 time steps. Showing this sequence of snapshots of the network over time is a useful reminder that at any point in this process, including T0 where we see the nodes that were randomly infected at the start of our model, *things could have gone differently*, unlike with deterministic SIR models using differential equations, which always give the same results. We might have selected a different random subset, for example. Since the transmission process is probabilistic, minor differences in which nodes get infected at any given point in the process could have an impact on what happens later, such as opening up or closing off certain regions of the network to the contagion. All of this and more is possible with the *exact* same model we used, with the same probabilities of infection and removal. 
 
@@ -967,7 +967,7 @@ trends = multi_runs(
 )
 ```
 
-The results returned by `multi_runs()` are very similar to that returned by `iteration_bunch()`, only more deeply nested. The custom function from the utilities package, parses the output and produces a trend plot (Figure @fig-16_06).
+The results returned by `multi_runs()` are very similar to that returned by `iteration_bunch()`, only more deeply nested. The custom function from the utilities package, parses the output and produces a trend plot (@fig-16_06).
 
 
 ```python
@@ -1018,7 +1018,7 @@ print(g_bluetooth_contact)
 layout = nx.nx_pydot.graphviz_layout(g_bluetooth_contact)
 ```
 
-This network is quite dense, so visualizing it is a bit tough. In Figure @fig-16_07, I overlay a contour plot to give an idea of where the density lies, and what kind of gradient it follows. 
+This network is quite dense, so visualizing it is a bit tough. In @fig-16_07, I overlay a contour plot to give an idea of where the density lies, and what kind of gradient it follows. 
 
 - **TODO: Update this; gt here too?**
 
@@ -1041,7 +1041,7 @@ plt.savefig('figures/16_07.png', dpi=300)
 
 ![png](figures/16_07.png){#fig-16_07}
     
-Let's also inspect the degree distribution (Figure @fig-16_08).
+Let's also inspect the degree distribution (@fig-16_08).
 
 
 ```python
@@ -1062,7 +1062,7 @@ plt.savefig('figures/16_08.png', dpi=300)
     
 Now we're ready to develop our second SIR model. We'll keep the same `beta` ($\beta$) and `gamma` ($\gamma$) parameters, and the same proportion of initially infected nodes. Unlike last time, we'll let our simulations run for 300 iterations, and we'll execute a batch of 500. In order to compare our results against future models, we're going to set the initially infected nodes so we can isolate the effects of changing parameters. While we are choosing the nodes randomly, we'll set a seed for the random number generator to keep results consistent for the book. You would not normally do this for research purposes. Since we're running 500 simulations, we will produce 500 initial infection sets.  
 
-The results are shown in Figure @fig-16_09.
+The results are shown in @fig-16_09.
 
 
 ```python
@@ -1123,7 +1123,7 @@ We see the same general pattern we saw before, with an early spike of infections
 
 Another thing to note from these visualizations is that the trends across all simulations are usually more tightly clustered together right at the dawn of simulated time than they are as the simulation progress. Since each simulation starts with the same conditions, they have little room to diverge from each other. As the infection spreads with some random chance at each time point, different parts of the network may open up at different rates, and different initially infected nodes may be more conducive to faster or slower transmissions through the network.
 
-Now let's model a simple contagion with $\beta = 0.01$, dramatically dropping the probability of transmitting an infection. The results are shown in Figure @fig-16_10.
+Now let's model a simple contagion with $\beta = 0.01$, dramatically dropping the probability of transmitting an infection. The results are shown in @fig-16_10.
 
 
 ```python
@@ -1205,7 +1205,7 @@ In his groundbreaking work on complex contagion, Damon @centola2018behavior poin
 
 Credibility and legitimacy may seem closely related, or even the same, as they both relate to perceptions of risk. The distinction arises out of where the risk is perceived. Credibility relates to the risk of the contagion: "this technique is new and potentially dangerous to my patients." Legitimacy relates to the *social* risks of being activated. The risk (or the perception of risk) comes from one's neighbors. Ensuring a contagion is credible may require only a few positive examples. Ensuring a contagion is legitimate may require a certain portion of one's neighbours be activated. This will come up in our discussion of **thresholds** later. A complex contagion may be driven by any combination of the above mechanisms.
 
-Consider, then, what complex contagions need to spread. The basic idea is illustrated in Figure @fig-17_01. In this scenario, let's say Eric is considering signing up for a new fitness app that he heard about on a podcast. The app is free to use as long as you complete the workouts you say you're going to complete, but if you skip a workout without a good reason the app charges your card and donates £10 to a cause you find morally and politically objectionable. Ouch. What a gut punch that would be. 
+Consider, then, what complex contagions need to spread. The basic idea is illustrated in @fig-17_01. In this scenario, let's say Eric is considering signing up for a new fitness app that he heard about on a podcast. The app is free to use as long as you complete the workouts you say you're going to complete, but if you skip a workout without a good reason the app charges your card and donates £10 to a cause you find morally and politically objectionable. Ouch. What a gut punch that would be. 
 
 Eric's friend Chitra is already using the app. She loves the idea and enthusiastically promotes it to everyone she knows, including Eric. (The size of the arrow reflects her energetic promotion of the app.) But most of Eric's good friends don't use the app and Chitra's enthusiasm alone is just not enough to tip Eric into adopting. Then Eric learns that Yevgen has also been using the app and, having recently lost £10 to the campaign of a politician with a penchant for recklessly spreading bullshit, has never been so fired up about glute bridges and deadlifts. Now he never skips leg day. Still, Eric doesn't budge. The idea of losing £10 to a politician with a penchant for spreading bullshit is just too high a risk. But then Jamuna adopts the app. Maybe it's not so bad? 
 
@@ -1484,7 +1484,7 @@ config_cc_vt.add_model_parameter(
 model_cc_vt.set_initial_status(config_cc_vt)
 ```
 
-As a quick check, let's quickly visualize the distribution of randomly sampled individual thresholds using an ecdf, which should be centered on .35 (see Figure @fig-17_05).
+As a quick check, let's quickly visualize the distribution of randomly sampled individual thresholds using an ecdf, which should be centered on .35 (see @fig-17_05).
 
 
 ```python

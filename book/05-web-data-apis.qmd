@@ -1,5 +1,6 @@
 # Web data (APIs)
 
+::: {.callout-note}
 ## Learning Objectives
 
 By the end of this chapter, you should be able to:
@@ -10,6 +11,7 @@ By the end of this chapter, you should be able to:
 - Work effectively with *The Guardian* REST API and the YouTube Data API.
 - Handle API authentication securely and efficiently.
 - Manage API rate limits and implement error handling.
+:::
 
 <br>
 
@@ -467,6 +469,8 @@ By working with **The Guardian** API and the YouTube Data API, you gained hands-
 
 APIs are powerful tools for data collection in computational social science. They provide structured and accessible data, enabling you to perform various analyses. However, it's important to use them responsibly, adhering to terms of service and ethical considerations.
 
+---
+
 ### Key Points
 
 - **APIs Simplify Data Access**: APIs abstract away the complexities of interacting with web services, providing a simple interface for data access.
@@ -478,3 +482,5 @@ APIs are powerful tools for data collection in computational social science. The
 - **Data Storage Best Practices**: Save collected data to files to avoid redundant API calls and to facilitate data analysis.
 
 In the next chapter, we'll explore web scraping, another method for collecting data from the web when APIs are unavailable or insufficient for your research needs. You'll learn how to extract data from web pages using tools like `BeautifulSoup` and handle challenges like navigating HTML structures and handling dynamic content.
+
+---

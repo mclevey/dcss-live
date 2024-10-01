@@ -147,7 +147,7 @@ print(f"Mean: {dt_scores.mean()}")
 
 Not bad! In order to get a sense of what our tree is doing under the hood, the below diagram represents our decision tree. You start at the top node, which contains all of the observations (countries in this case). The top line in that node (and every non-leaf node in the remainder of the tree) indicates the rule it will use to split the data. All of the countries for which that statement is true will travel along the 'True' path for further subdivision. All of the nations for whom this condition does not apply travel along the 'False' path.
 
-Figure @fig-21_01 shows the resulting image without color because it keeps the cost of the print book down. If you change the argument `filled=False` below to `True`, you can get a color version. In the color versions, the 'strength' of the colour represents how 'pure' each node is. If there's an equal mix of both classes, the colour should desaturate entirely. The code below also writes the figure to disk. To display it in a notebook, wrap the entire function in `graphviz.Source()`. The same is true for the other decision trees later in the chapter.
+@fig-21_01 shows the resulting image without color because it keeps the cost of the print book down. If you change the argument `filled=False` below to `True`, you can get a color version. In the color versions, the 'strength' of the colour represents how 'pure' each node is. If there's an equal mix of both classes, the colour should desaturate entirely. The code below also writes the figure to disk. To display it in a notebook, wrap the entire function in `graphviz.Source()`. The same is true for the other decision trees later in the chapter.
 
 - **TODO**: Update this.
 
@@ -209,7 +209,7 @@ export_graphviz(
 dtclass_pruned.score(X_test, y_test)
 ```
 
-Looking good! We've already seen a modest improvement, which probably represents a slight reduction in overfitting (something that cross-validation automatically assesses). Let's examine the tree again (Figure @fig-21_02):
+Looking good! We've already seen a modest improvement, which probably represents a slight reduction in overfitting (something that cross-validation automatically assesses). Let's examine the tree again (@fig-21_02):
 
 ![cap](figures/pruned.png){#fig-21_02}
 
@@ -271,7 +271,7 @@ print(f"Mean: {rforest_scores.mean()}")
 
 It would appear that our Random Forest model, with modest parameters, is producing the *exact same result* as we got with our bagging classifier. 
 
-The downside of Random Forests is that -- unlike garden-variety decision trees -- the results are not so easy to interpret. For this reason, Random Forests and other ensemble models are generally considered to be less "interpretable" than simple decision trees, linear and logistic regressions, or $k$-nearest neighbours. It's worth knowing that you can inspect any of the trees in your Random Forest Classifier! This process is complicated somewhat by the fact that our model contains 100 distinct trees, meaning that you can't easily determine how significant any one tree was to the overall decision making process. Nevertheless, it's a good idea to select a tree at random and take a look at what it has done with the data. Of course, you can do this many different times, if you like. Just select different trees each time. One such tree is shown in Figure @fig-21_03.
+The downside of Random Forests is that -- unlike garden-variety decision trees -- the results are not so easy to interpret. For this reason, Random Forests and other ensemble models are generally considered to be less "interpretable" than simple decision trees, linear and logistic regressions, or $k$-nearest neighbours. It's worth knowing that you can inspect any of the trees in your Random Forest Classifier! This process is complicated somewhat by the fact that our model contains 100 distinct trees, meaning that you can't easily determine how significant any one tree was to the overall decision making process. Nevertheless, it's a good idea to select a tree at random and take a look at what it has done with the data. Of course, you can do this many different times, if you like. Just select different trees each time. One such tree is shown in @fig-21_03.
 
 ```python
 rforest.fit(X_train, y_train)

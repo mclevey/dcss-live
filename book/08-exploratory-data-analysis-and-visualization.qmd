@@ -1,0 +1,849 @@
+# Exploratory data analysis and visualization
+
+::: {.callout-note}
+## Learning Objectives
+
+By the end of this chapter, you should be able to:
+
+- Learn about Iterative Research Workflows and Box's Loop
+- Build an intuitive understanding of what makes visualization intuitive and effective 
+- Explore techniques for visualizaing univariate data and distributions 
+- Explore techniques for Exploratory Data Analysis for multivariate data
+:::
+
+::: {.callout-note}
+## Planned Updates
+
+The current emphasis in this chapter is on learning how to work with Pandas in order to perform EDA. I am revising it to instead emphasize the process and logic of purposeful EDA and will teach Pandas in that context. These revisions will be complete in fall 2024.
+:::
+
+<br>
+
+In this chapter, we'll continue to build foundational data processing skills by introducing the basics of data visualization and **exploratory data analysis (EDA)**. EDA encompasses a broad range of data processing activities that you should *always* undertake before developing models, but EDA is *not* limited to beginning of a project. EDA is an important part of developing, criticizing, and re-developing statistical and machine learning models. EDA and model development are intimately linked in *iterative* workflows. We will focus specifically on the types of EDA that you might perform when you start working with some new data, but you will see EDA throughout the rest of the book in the context of *iteratively* developing, critiquing, and re-developing models. To clarify, we'll discuss a simplified version of a generic data analysis workflow known as "Box's loop".
+
+We will make extensive use of the Seaborn package (V0.11+), a high-level statistical visualization package built on top of the older, *and more complex*, Matplotlib package. Because it's built on top of Matplotlib, you can usually combine Matplotlib code and Seaborn code, which we will occasionally do to take advantage of the low-level capabilities of Matploblib while working in more user-friendly Seaborn. 
+
+## ITERATIVE RESEARCH WORKFLOWS: EDA AND BOX'S LOOP
+
+The term **exploratory data analysis** (**EDA**) has generally come to refer to the work you do to explore, examine, clean, and make sense of a dataset prior to any formal statistical modelling (**confirmatory data analysis**). The idea is that one should carefully examine their data (i.e., exploration) before getting into hypothesis testing (i.e., confirmation). However, it is important to understand that the relationship between "exploratory" and "confirmatory" analysis is rarely clear cut. Some prominent statisticians and social scientists have proposed approaches that intentionally combine the two. Andrew @gelman2004exploratory has pointed out that we can think of both approaches to analysis as sharing the same underlying logic: comparing what we observe relative to an *implicit* or *explicit* statistical model. In between these two views -- EDA as first steps, EDA as a kind of implicit modelling -- is the idea that EDA is an important part of iteratively developing almost any model, simple or complex. Let's briefly consider this framework for thinking about the role of EDA in quantitative and computational research. We will do so using an idealized framework known as **Box's loop**, first proposed by the statistician George Box. 
+
+In our idealized framework, the first thing we do is *build a model*. Note that data hasn't entered the picture yet. In our ideal world, we have a question that we want to answer. Perhaps we want to know "How does education relate to yearly income in Canada?" To answer that question, we create a model that captures the salient features of our question. "I think education is positively associated with income, but I also think income is related to age, and education is probably related to age." This model should tell us what kind of data we will need, which is why data enters in the second step: we should be collecting or using data with our model in mind *first*. One of the things that makes data "good" is its appropriateness for the model you are using. It doesn't matter how accurate your data on house fly reproduction cycles are if you want to answer a question about dragonfly eating habits. In step 2, we *analyze our data* to answer our question. Oftentimes, we get a much better idea about how good our data really is after we analyze it. Technically, we should now have an answer to our question. However, in step three, we consider the process and results of our analysis. Does the model make sense? Is there anything surprising? If there is, does that mean there's an unforseen issue with the data? Is this the best answer to my question that I can get? Science is messy, and it's a rare person indeed who never makes a mistake or knows exactly how a research project will proceed. So, rather than accept the first answer we find, we find things that worked, things that didn't, and we *criticize our model*. In step 4, we take our critique from step 3 and use that to *revise our model*, which takes us back to step 1. We continue this process until we are satisfied with our model and data, at which point we can break the loop and apply the model. 
+
+Returning to exploratory data analysis, let's pretend to be Gelman and consider why we visualize data. We want to answer a question, even if the question is something as simple as "how is height distributed in Canada?" To answer that question, we (1) *build a model*. Perhaps our model is "Height is measured in centimeters, which is a continuous variable. I can make a histogram that will tell me how it is distributed." Then, we (2) *analyze our data*. We make our histogram. Then, we consider how good our visualization is at answering our question; we *criticize our model* by considering what worked, what didn't. Perhaps we noticed that height is actually a bimodal distribution after visualizing it. Then we (4) use that critique to *revise our model*. Perhaps we decide to plot height as a histogram, but conditional on sex. We repeat this process until we are satisfied and (5) *apply our model*, actually drawing conclusions about the distribution of height in Canada.
+
+When we get to statistical models later, you may discover that this is a doubly-nested process. You will build a statistical model, analyze data, criticize the model using EDA (start a sub-loop here), revise the statistical model, and repeat the main loop until you're satisfied or give up. This process is summarized in @fig-08_01. In later chapters, you'll see variations on this basic loop.
+
+![Cap](figures/boxes_loop_init.png){#fig-08_01}
+
+For our purposes we will work on developing your EDA skills in the more classical sense: the first steps you take with a new dataset. However, I will continue to emphasize the iterative development process of visualizations, in part to help prepare you; once you have those skills, you can and should use them in the broader context of statistical model criticism and iterative development. You will continue to develop these skills as you work through the book, and you may find yourself further appreciating Gelman's argument that even this EDA work is a kind of modelling, which further tightens the links between the kind of work we will consider here and the more complex statistical and machine learning models we will focus on in later chapters.
+
+EDA is often broken down into graphical and non-graphical methods for analyzing single variables (i.e., **univariate graphical** and **univariate non-graphical**) and graphical and non-graphical methods for analyzing two or more variables (i.e., **multivariate graphical** and **multivariate non-graphical**). We will discuss methods within these four categories that can be used for categorical and quantitative data. First, let's first discuss visualization *in general* - specifically what differentiates good plots from bad plots, and ways to make creating good plots a bit easier. 
+
+## EFFECTIVE VISUALIZATION
+
+### Guidelines for Effective Visualization
+
+I'll admit, I'm fastidious when it comes to the aesthetics of data visualization. But when I talk about good visualizations versus bad ones, I'm *not* talking about the fine distinctions between colors or typefaces. You can create good visualizations while being clueless about those things. No, I'm talking about more fundamental things like knowing what you want to learn or communicate. 
+
+Creating graphs to visualize distributions, relationships, and so on, is relatively straightforward in Python. Creating *good* graphs has little to do with Python and everything to do with the decisions you make about what to show and how to show it. Some of those decisions are high level, like the *kind* of graph and how it should be structured. Other decisions are low-level, like selecting colors and shapes. What differentiates a really good visualization from a really bad one is rarely taste. It's almost always the amount of thought behind those fundamental decisions.
+
+As Kieran Healy points out, "bad graphs" tend to be bad for one of three reasons:
+
+1. **Aesthetics**: there are a unnecessary details or modifications (e.g. unnecessary 3D effects, shadows, rotated axes). These "infographic" visualizations may be memorable but are difficult to interpret correctly. **Avoid creating these at all costs.** If a collaborator asks you to make one, politely decline. 
+2. **Substantive data problems**: the graph *looks* good and follows best practices, but the data themselves are bad or have been incorrectly processed, sending a misleading message. Avoid this by doing extensive EDA.
+3. **Being inattentive to the realities of human perception**, and therefore making poor visualization choices that may mislead you or your readers. 
+
+As I have stressed, effective data visualization requires adopting an *iterative approach*. Start by thinking carefully about what you want to learn (if you're doing exploratory data analysis), or what you want to communicate (if you're producing a graph for publication). Try sketching the plot with pen and paper. It refines your thinking before you start coding and helps clarify what *kind* of plot you need. 
+
+Once you know what you want and need, *then* you start coding. Again: *iterate*. Start with the default settings for the *kind* of plot you want, such as a scatterplot. Then gradually modify the defaults, and add and remove elements, until you have a plot that clearly shows what you want it to show. Work slowly: change one thing at a time. 
+
+If you think of visualization as a communication problem, you need to consider the realities of **perception** and the **human vision system**. Perception is more complicated than simply creating a 1:1 mental representation of what we are looking at. Think of the many examples of visual effects and optical illusions. 
+
+There is a sizable empirical literature on perception and statistical visualization, largely built on Bill Cleveland's work in the 1980s and 1990s. Psychologists, statisticians, and applied data analysts have documented many specific factors that affect the probability of drawing an incorrect conclusion from a graph. These include: 
+
+* Selecting the wrong type of colour palette increases the chance of mis-perception (e.g. it's diverging when it should be qualitative, it's not colour-blind friendly). 
+* Using area or angles to represent important properties increases the chance of mis-perception because humans are inherently bad at comparing similar angles and areas. 
+* Using length and position increase the chance of *correct* perceptions because humans are good at comparing differences in length and position. Think of these first. 
+
+This leads to some useful guidelines. One of the most important, and *very* easy to implement, comes from knowing we have an easier time perceiving some colours, shapes, and relationships than others. Visualizations that require comparing angles and areas -- such as pie charts, bubble charts, and stacked bar charts -- are non-starters. Follow that basic rule. You'll avoid plenty of bad and misleading visualizations.  
+
+Pie charts are easy to criticize, but are stacked bar charts and bubble charts really all that bad? Yes. With stacked bar charts, each block has a different baseline / starting point in each bar. Given how bad we are at comparing areas, your reader will be more likely to interpret your graph incorrectly. Bubble charts are slightly more complex. Sometimes, it *can* be effective to change the size of points in a scatterplot, but be careful, and you shouldn't expect a reader to perceive small differences between points.
+
+Distances are very important and meaningful in almost all data visualizations. *Most of the time*, bar graphs and dot plots should have a $y$-axis that starts at 0, but *contrary to common wisdom*, there are some **rare** cases when this is not the best choice. Generally, default to axes that start at 0, but don't be dogmatic. Again, know exactly what you want to show and why. If you want to be instantly discredited by a quantitatively-literate reader, exaggerate differences by manipulating the range of the y-axis. Otherwise, *don't do this!*
+
+Humans also tend to see patterns in data, even when those patterns are not actually meaningful. As such, it's usually a mistake to use visualizations without doing some statistical modelling, *just as it is a mistake to model your data without visualizing it*. Recall Gelman's argument; all EDA is done in reference to an implicit or explicit model. While statistical modelling will come later, I want to emphasize that you should pursue these two types of analysis simultaneously. In this chapter, we pair visualization with summary statistics that are commonly used in EDA.
+
+In addition, here are some straightforward rules to reduce the chances of creating bad visualizations:
+
+1. If you can show what you need to using a graphic that is widely-used and well-understood, do so. Don't invent new graphics for the sake of it. Make it easy for you and your readers to interpret your graphs. 
+2. Less ink is better than more ink. Simplify as much as possible, but no more. Find the balance of information density and visual minimalism by working on your visualizations *iteratively*.
+3. Don't create 3D visualizations of any plot. If you have to add a third dimension, consider using either colour or shape, but not both. 
+4. The dimensions of a line plot have a *huge* effect on our perception of slope / rate of change. Exercise extreme care when selecting the dimensions. **Do not intentionally mislead your readers**. 
+5. Do not vary colour or shape unless you are encoding important information in colours and shapes. A multi-coloured bar plot might look nicer than a solid grey, but if the colours aren't meaningful, it dramatically increases the chances of mis-perception. 
+
+Finally, ask others to critique your visualizations and practice! Learn any new skill takes time and effort. 
+
+Now, let's get into the code! 
+
+  
+> **Further Reading**    
+>   
+> In addition to what's provided here, I suggest reading @healy2014data on the state of data visualization in sociology and other social sciences. And though it uses R rather than Python, @healy2018data is an *outstanding* introduction to good data visualization practice. 
+>
+
+
+## UNIVARIATE EDA: DESCRIBING AND VISUALIZING DISTRIBUTIONS
+
+We're going to make use of the VDEM data we used in the previous chapter as the basis for our exploratory data analysis. You should refresh yourself on the data and variables description before proceeding. We will start by reading in the filtered and subsetted dataframe `fsdf` that we produced earlier and saved as a CSV and produce get the mean, median, and standard deviation from some of its variables. 
+
+### Imports
+
+```python
+import os
+import pandas as pd
+import numpy as np
+
+import matplotlib as mpl
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+from dcss import set_style
+set_style()
+```
+
+```python
+# data was downloaded in chapter 6
+fsdf = pd.read_csv('data/vdem/filtered_subset.csv') 
+fsdf.shape
+```
+
+```python
+egal = fsdf['v2x_egaldem']
+print(f'Median Egalitarian Democracy Score: {egal.median()}')
+print(f'Mean Egalitarian Democracy Score: {egal.mean()}')
+print(f'Standard Deviation: {egal.std()}')
+```
+
+Since the values returned from operations on Series are essentially equivalent to a NumPy array, we can use NumPy methods on quantitative Series. For example, here you can use the `round()` method to round these descriptives to a few decimal points.
+
+```python
+print(f'Median Egalitarian Democracy Score: {round(egal.median(),3)}')
+print(f'Mean Egalitarian Democracy Score: {round(egal.mean(), 3)}')
+print(f'Standard Deviation: {round(egal.std(), 3)}')
+```
+
+
+If the Series is categorical, we can also easily compute useful information such as the number of unique categories, the size of each category, and so on. For example, you can use the `.unique()` method to get a list of the unique countries from the `country_name` Series. Here these values are cast as a list and sliced to display the first 10 elements.
+
+
+```python
+list(fsdf['country_name'].unique())[0:10]
+```
+
+
+With a categorical variable like this, you can also use the `value_counts()` method to see how many observations you have for `country_name` in the dataset. Since there are 73, don't print everything to screen, just peek at the top and the bottom 10 rows. 
+
+
+```python
+fsdf['country_name'].value_counts().head(10)
+```
+
+
+```python
+fsdf['country_name'].value_counts().tail(10)
+```
+
+
+### Visualizing Marginal Distributions
+
+You should visualize distributions for individual variables (i.e. "**marginal distributions**") before any more complex analyses. As with numerical summaries, graphical approaches to examining distributions will typically answer questions about the range of values, their central tendency, whether they are highly skewed, whether there are potentially influential outliers, and so on.
+
+#### Count Plots and Frequency Tables for Categorical Variables
+
+For a single categorical variable, we are limited to examining frequencies, percentages, and proportions. For example, you can visualize the number of countries in each geographical region defined by the United Nations (the `e_regiongeo` categorical variable) using the `.countplot()` function. You want the bars in the countplot to be horizontal rather than vertical, so use the argument `y='e_regiongeo'` instead of `x='e_regiongeo'`. The code below produces @fig-07_01.
+
+
+```python
+#| output: false
+#| warning: false
+ax = sns.countplot(data=fsdf, y='e_regiongeo', color='darkgray')
+sns.despine()
+plt.savefig('figures/07-01.png', dpi=300)
+```
+
+![caption...](figures/07-01.png){#fig-07_01}
+    
+
+This graph could use some improvements. Let's iterate! First, it would be better if the data were in descending order by counts. Second, it would be better it had region names rather than number IDs. Third, a few small aesthetic adjustments that would improve the overall look of the graph, like removing the black line on the left side of the graph.
+
+Remember, address these issues one at a time. First deal with the order issue, which can be solved by using the `order` argument for `.countplot()`. Tell it to order the bars by sorting the `fsdf['e_regiongeo']` Series. The code below produces @fig-07_02.
+
+
+```python
+#| output: false
+#| warning: false
+ax = sns.countplot(
+    data=fsdf, 
+    y='e_regiongeo', 
+    color='darkgray',
+    order = fsdf['e_regiongeo'].value_counts().index
+) 
+
+sns.despine()
+ax.set(xlabel='Number of Observations', ylabel='Geographic Region')
+plt.savefig('figures/07-02.png', dpi=300)
+```
+
+    
+![caption...](figures/07-02.png){#fig-07_02}
+    
+Let's replace the numerical region IDs with a string ID. The dictionary below is the mapping between IDs (keys) and the region strings (values) provided in the VDEM codebook. 
+
+
+```python
+region_strings = {
+    1: "Western Europe",
+    2: "Northern Europe",
+    3: "Southern Europe",
+    4: "Eastern Europe",
+    5: "Northern Africa",
+    6: "Western Africa",
+    7: "Middle Africa",
+    8: "Eastern Africa",
+    9: "Southern Africa",
+    10: "Western Asia",
+    11: "Central Asia",
+    12: "East Asia",
+    13: "South-East Asia",
+    14: "South Asia",
+    15: "Oceania", # (including Australia and the Pacific)
+    16: "North America",
+    17: "Central America",
+    18: "South America",
+    19: "Caribbean" # (including Belize, Cuba, Haiti, Dominican Republic and Guyana)
+}
+```
+
+You can now use a Pandas method called `.replace()` to replace each numerical ID with the string representation.
+
+
+```python
+fsdf.replace({'e_regiongeo': region_strings}, inplace=True)
+```
+
+`inplace=True` changes the values in the original dataframe. If you create the same countplot again, the region names will be used as the labels on the y-axis. The code below produces @fig-07_03.
+
+
+```python
+#| output: false
+#| warning: false
+ax = sns.countplot(
+    data=fsdf, 
+    y='e_regiongeo', 
+    color='darkgray',
+    order = fsdf['e_regiongeo'].value_counts().index
+)
+
+sns.despine(left=True)
+ax.set(xlabel='Number of Observations', ylabel='')
+ax.xaxis.set_major_formatter(mpl.ticker.StrMethodFormatter('{x:,.0f}')) # comma formats x-axis
+plt.savefig('figures/07-03.png', dpi=300)
+```
+
+
+    
+![caption...](figures/07-03.png){#fig-07_03}
+    
+
+We can easily produce frequency tables with Pandas; in fact, we have already done this using `.value_counts()` at the country-level. The code below creates a frequency table for the same data you just plotted. 
+
+
+```python
+fsdf['e_regiongeo'].value_counts()
+```
+
+
+#### Univariate Histograms and Density Estimation
+
+One of the first things you can do in EDA is create a histogram for each of the variables you are interested in. A histogram visualizes "where" your data is clustered. It's a bar chart, where the x-axis contains the range of all values for a particular variable and the y-axis indicates a count of the number of observations. The height of each bar represents the number of observations of x values between the left and right boundaries of each bar. Histograms are a more easily digestible summary of a variable than the `.describe()` method used earlier. 
+
+Let's use Seaborn's `histplot()` to create a histogram of the egalitarian democracy index variable from the `fsdf` dataframe. The code below produces @fig-07_04.
+
+
+```python
+#| output: false
+#| warning: false
+ax = sns.histplot(data=fsdf, x='v2x_egaldem')
+sns.despine(left=True, right=True, top=True)
+ax.set(xlabel='Egalitarian Democracy Index', ylabel='Count')
+ax.yaxis.set_major_formatter(mpl.ticker.StrMethodFormatter('{x:,.0f}'))
+plt.savefig('figures/07-04.png', dpi=300)
+```
+
+
+    
+![caption...](figures/07-04.png){#fig-07_04}
+    
+
+
+The histogram clearly shows that most of the `v2x_egaldem` values in the dataset can be found at the lower end of the range, quickly sloping down and then evening out with a few gentle peaks. Note that the function has made an important decision implicitly - you did'ntt specify the number of bins, so it used a built-in method that provides generally good defaults. However, you should always double-check default parameters. Overly wide bins can "hide" peaks or troughs in the distribution if they fit entirely inside a bin. Overly narrow bins can produce visualizations that are especially sensitive to "noise". Narrower bins will tend to result in graphs with sharper spikes as small clusters and gaps get magnified. 
+
+You can manually check for these cases by providing explicit values to the `bins` or `binwidth` parameters. Below, I provide extreme examples of overly wide and narrow bins to highlight the issues with both. The code below produces @fig-07_05.
+
+
+```python
+#| output: false
+#| warning: false
+ax = sns.histplot(data=fsdf, x='v2x_egaldem', bins=3)
+sns.despine(left=True, right=True, top=True)
+ax.set(xlabel='Egalitarian Democracy Index', ylabel='Count')
+ax.yaxis.set_major_formatter(mpl.ticker.StrMethodFormatter('{x:,.0f}'))
+plt.savefig('figures/07-05.png', dpi=300)
+```
+
+
+    
+![caption...](figures/07-05.png){#fig-07_05}
+    
+
+
+The code below produces @fig-07_06.
+
+
+```python
+#| output: false
+#| warning: false
+ax = sns.histplot(data=fsdf, x='v2x_egaldem', binwidth = 0.001)
+sns.despine(left=True, right=True, top=True)
+ax.set(xlabel='Egalitarian Democracy Index', ylabel='Count')
+ax.yaxis.set_major_formatter(mpl.ticker.StrMethodFormatter('{x:,.0f}'))
+plt.savefig('figures/07-06.png', dpi=300)
+```
+
+
+    
+![caption...](figures/07-06.png){#fig-07_06}
+    
+
+
+We can also use kernel density estimation (KDE) to visualize a distribution. KDE is a technique for estimating the probability density function of a random variable. Rather than visualizing the raw counts in combined bins, it estimates the probability of every possible value using a smooth function. KDE attempts to reduce the random noise in the data, smoothing out the spikes. 
+
+You can add a KDE line to histograms by providing the parameter `kde = True`. The code below produces @fig-07_07.
+
+
+```python
+#| output: false
+#| warning: false
+ax = sns.histplot(data=fsdf, x='v2x_egaldem', kde=True)
+sns.despine(left=True, right=True, top=True)
+ax.set(xlabel='Egalitarian Democracy Index', ylabel='Count')
+ax.yaxis.set_major_formatter(mpl.ticker.StrMethodFormatter('{x:,.0f}'))
+plt.savefig('figures/07-07.png', dpi=300)
+```
+
+
+    
+![caption...](figures/07-07.png){#fig-07_07}
+    
+
+
+Seaborn provides a large number of ways to customize and refine your visualizations. However, with great power comes great responsibility. In this case, you are responsible for creating visualizations that make sense, because the package may not stop you from making mistakes. Consider the previous histogram with `binwidth=1`. The entire range of `v2x_egaldem` is less than 1. The visualization is technically possible, though certainly useless. I left the KDE line to help keep track of where the data actually is. The code below produces @fig-07_08.
+
+
+```python
+#| output: false
+#| warning: false
+ax = sns.histplot(fsdf['v2x_egaldem'], kde=True, binwidth=1)
+sns.despine(left=True, right=True, top=True)
+ax.set(xlabel='Egalitarian Democracy Index', ylabel='Count')
+ax.yaxis.set_major_formatter(mpl.ticker.StrMethodFormatter('{x:,.0f}'))
+plt.savefig('figures/07-08.png', dpi=300)
+```
+
+![caption...](figures/07-08.png){#fig-07_08}
+    
+
+
+#### Marginal Empirical Cumulative Distributions
+
+Empirical Cumulative Distributions (ECDs) combine several of the advantages of the previously described visualizations. Unlike histograms, you do not need to bin your data because every data point is represented. This makes it easy to assess the shape of the distribution. For example, one can easily visually identify the five-number summary. Finally, they make it much easier to compare multiple distributions.
+
+#### Plotting Empirical Cumulative Distributions
+
+To visualize an ECD, set one axis to be the variable of interest. The second axis represents the *proportion of observations that have a value equal to or lower than a given cutoff point*. Consider a five-number summary. The five numbers are the minimum value, the first, second, and third quartiles, and the maximum value. If a point on an ECD represents a value of our variable and the proportion of observations with equal or lower value, the minimum value must be given by the very first point: the lowest, and leftmost point on the plot. The first quartile is necessarily found at the point where proportion equals 0.25. The second quartile is where proportion equals 0.50, and so on for the third quartile, and the maximum value. 
+
+Since the proportion axis captures each observation and all lower-valued ones, proportion *can never decrease as the variable increases*. Unfortunately, ECDs are less common than point or box-based visualization techniques, so we have less experience reading them. Like all skills though, it can be developed with time and practice. Most importantly, you can think of the slope of the line as telling you where data is clustered. A steep slope indicates a large portion of the data is clustered around those values. Consider the ECD of `v2x_egaldem`. The code below produces @fig-07_09.
+
+
+```python
+#| output: false
+#| warning: false
+ax = sns.displot(fsdf, x="v2x_egaldem", kind="ecdf", color='darkgray')
+sns.despine()
+ax.set(xlabel='Egalitarian Democracy Index')
+plt.xlim(0, 1) 
+plt.savefig('figures/07-09.png', dpi=300)
+```
+
+
+    
+![caption...](figures/07-09.png){#fig-07_09}
+    
+
+
+The slope shows us that proportion rises very rapidly between `v2x_egaldem` values of 0.0 and 0.2. Much of the data is clustered in that area, and the slope slowly tapers off afterwards, telling us the same thing we saw in the histogram: the number of observations decreases as `v2x_egaldem` increases, with a slight blip around 0.75.
+
+Histograms, kernel density estimation, and empirical cumulative distributions have different strengths and weaknesses; each makes some things easier to see and others harder. I advise you to use all three types when exploring your data. 
+
+## MULTIVARIATE EDA
+
+### Visualizing Conditional Distributions
+
+Sometimes we might want to visualize a variable of interest conditioned on another variable. Perhaps we want to visualize only those instances of a variable $X$ that are associated with a particular value of $Y$. 
+
+#### Conditional Histograms
+
+Let's visualize the egalitarian index of countries, conditioned on whether the country is a democracy or not. A conditional distribution will exclude any observations that do not meet the condition, so for completeness, we can visualize both cases separately, but side-by-side. 
+
+The `displot` function allows us to visualize univariate (a single variable) or bivariate (two variables) data distributions across multiple subplots. Below, we will create a visualization that displays a `v2x_egaldem` histogram for each value of `e_boix_regime`, a binary variable. Thus, when we give the column parameter `col` the values for `e_boix_regime`, we should get 2 columns, one for each value it can take. The code below produces @fig-07_10.
+
+
+```python
+#| output: false
+#| warning: false
+ax = sns.displot(fsdf, x="v2x_egaldem", col="e_boix_regime", multiple="dodge")
+ax.set(xlabel='Egalitarian Democracy Index')
+plt.savefig('figures/07-10.png', dpi=300)
+```
+
+![caption...](figures/07-10.png){#fig-07_10}
+    
+
+
+The result we get is the two conditional distribution histograms above. If you were to add the two together, you would get the original `v2x_egaldem` marginal distribution histogram we produced earlier. While this method makes very clean graphs, it can be hard to compare the graphs, especially if you want to graph many different conditions. One way around this would be to plot both conditional distributions on the same plot, but colour them differently and make them slightly transparent. We can do this by passing `e_boix_regime` to the `hue` parameter, rather than `col`. The code below produces @fig-07_11.
+
+
+```python
+#| output: false
+#| warning: false
+grayscale_cmap = sns.cubehelix_palette(
+    50, 
+    hue=0.05, 
+    rot=0, 
+    light=0.9, 
+    dark=0, 
+    as_cmap=True
+)
+
+grayscale_palette = sns.color_palette("cubehelix", 50)
+
+ax = sns.displot(
+    fsdf, 
+    x="v2x_egaldem", 
+    hue="e_boix_regime", 
+    palette=grayscale_palette
+)
+
+ax.set(xlabel='Egalitarian Democracy Index')
+plt.savefig('figures/07-11.png', dpi=300)
+```
+
+
+    
+![caption...](figures/07-11.png){#fig-07_11}
+    
+
+
+This plot makes it much easier to compare the two distributions, and we can clearly see where they overlap and don't. However, it adds visual clutter and can quickly become hard to read as more conditions are added. 
+
+#### Conditional KDE
+
+As before, we can add KDEs to existing histograms by passing `kde = True`, or we may visualize just the KDE to reduce visual clutter by passing `kind = "kde"`. The code below produces @fig-07_12.
+
+
+```python
+#| output: false
+#| warning: false
+ax = sns.displot(fsdf, x="v2x_egaldem", hue="e_boix_regime", kde = True, palette=grayscale_palette)
+ax.set(xlabel='Egalitarian Democracy Index')
+plt.savefig('figures/07-12.png', dpi=300)
+```
+
+![caption...](figures/07-12.png){#fig-07_12}
+    
+The code below produces @fig-07_13.
+
+```python
+#| output: false
+#| warning: false
+ax = sns.displot(
+    fsdf, 
+    x="v2x_egaldem", 
+    hue="e_boix_regime", 
+    kind = "kde", 
+)
+
+ax.set(xlabel='Egalitarian Democracy Index')
+plt.savefig('figures/07-13.png', dpi=300)
+```
+
+
+    
+![caption...](figures/07-13.png){#fig-07_13}
+    
+
+
+In all of these plots, countries with a value of `1.0` for `e_boix_regime` are electoral democracies. Those with `0.0` are not. The comparative plots we have been creating show, unsurprisingly, that non-democratic countries tend to have lower scores on the Egalitarian Democracy Index.
+
+#### Conditional ECDs
+
+Extending an ECD to conditional distributions is as easy as passing `e_boix_regime` to the `hue` parameter. Consider the previous example of plotting the histograms of `v2x_egaldem` conditioned on `e_boix_regime`. Histograms involve a lot of "ink", resulting in a lot of visual clutter compared to ECDs, and get hard to read very quickly as the number of conditions increases. The code below produces @fig-07_14.
+
+
+```python
+#| output: false
+#| warning: false
+ax = sns.displot(fsdf, x="v2x_egaldem", kind = "ecdf", 
+                 hue="e_boix_regime") # palette=grayscale_palette
+sns.despine()
+ax.set(xlabel='Egalitarian Democracy Index')
+plt.xlim(0, 1) 
+plt.savefig('figures/07-14.png', dpi=300)
+```
+
+
+    
+![caption...](figures/07-14.png){#fig-07_14}
+    
+
+
+We can see from slope for `e_boix_regime = 0.0` (non-democratic countries) that observations are very clustered towards the lower values of `v2x_egaldem`, and they very rapidly taper off. The maximum value can be found around `v2x_egaldem = 0.5`. Conversely, the slope for `e_boix_regime = 1.0` (democratic countries) is more gradual, telling us that the distribution is much more evenly distributed across all values, with a few spikes where the slope increases around 0.55 and 0.75. If we look back at the histograms, we can confirm that the visualizations agree with one another.
+
+### VISUALIZING JOINT DISTRIBUTIONS
+
+While the marginal and conditional distributions of the earlier section are useful for understanding the shape of our data, we often want to examine the relationships between variables. We can visually represent these relationships by visualizing *joint* distributions. Let's first look at two of the most common ways of visualizing joint distributions: cross tables for categorical variables and scatter plots for continuous variables. 
+
+#### Cross Tables 
+
+When we want to visualize the joint distribution of two categorical variables we can produce a cross-table: an extension of a frequency table. A cross table, sometimes shortened to crosstab, shows a grid, with the possible values of one categorical variable along one axis and the same for the other variable along the other axis. Each cell in the grid shows the number of observations that have *both* (hence joint) categorical variable values corresponding to its row and column.
+
+Let's create a cross table using the `.crosstab()` function for the categorical variables `e_regiongeo` and `e_boix_regime`. The resulting table will tell us how many observations (country-year combinations) there are of each regime type for each geographic region.
+
+
+```python
+ct = pd.crosstab(fsdf.e_regiongeo, fsdf.e_boix_regime)
+ct.columns = ['Not democracies', 'Democracies']
+ct
+```
+
+If we want to know how many non-democratic countries there were in Western Europe across all years in the VDEM dataset, we would look at the corresponding row value for the "Not democracies" column, which shows 110. The number of democratic observations, 703, is shown in the "Democracies" column.
+
+#### Scatter Plots
+
+A scatter plot shows the relationship between two variables by plotting each observation on a graph, where the x-axis represents the value of one variable, while the y-axis represents the value of the other. Let's use the `scatterplot` function to plot the relationship between the egalitarian democracy and polyarchy indices. The code below produces @fig-07_15.
+
+
+```python
+#| output: false
+#| warning: false
+ax = sns.scatterplot(data = fsdf, x="v2x_egaldem", y="v2x_polyarchy")
+sns.despine()
+ax.set(xlabel='Egalitarian Democracy Index', ylabel='Polyarchy Index')
+plt.xlim(0, 1) 
+plt.ylim(0, 1) 
+plt.savefig('figures/07-15.png', dpi=300)
+```
+
+
+    
+![caption...](figures/07-15.png){#fig-07_15}
+    
+
+
+At first glance, this seems to suggest a non-linear, but definitely positive relationship between the two variables. If an observation has a high value for one of the two variables, the other is also high. At lower values, the relationship is a bit less tight where we can see the points are less densely clustered, but the overall pattern remains visible. We can use different alpha (transparency) values to see where overlapping points are obscuring underlying points. The code below produces @fig-07_16.
+
+
+```python
+#| output: false
+#| warning: false
+ax = sns.scatterplot(data = fsdf, x="v2x_egaldem", y="v2x_polyarchy", alpha = 0.1)
+sns.despine()
+ax.set(xlabel='Egalitarian Democracy Index', ylabel='Polyarchy Index')
+plt.xlim(0, 1) 
+plt.ylim(0, 1) 
+plt.savefig('figures/07-16.png', dpi=300)
+```
+    
+![caption...](figures/07-16.png){#fig-07_16}
+    
+The code below produces @fig-07_17.
+
+
+```python
+#| output: false
+#| warning: false
+ax = sns.scatterplot(data = fsdf, x="v2x_egaldem", y="v2x_polyarchy", alpha = 0.01)
+sns.despine()
+ax.set(xlabel='Egalitarian Democracy Index', ylabel='Polyarchy Index')
+plt.xlim(0, 1) 
+plt.ylim(0, 1) 
+plt.savefig('figures/07-17.png', dpi=300)
+```
+
+
+    
+![caption...](figures/07-17.png){#fig-07_17}
+    
+
+
+#### Bivariate Histograms
+
+We can extend the idea of histograms to bivariate visualizations. To do so, we divide both the x and y-axes into bins, producing square bins. The square bins are coloured based on the number of observations within each box. Since our y-axis is now being used to define another dimension of the box, we use colour instead of bar height to indicate how densely observations are clustered within a bin. The code below produces @fig-07_18.
+
+
+```python
+#| output: false
+#| warning: false
+ax = sns.displot(fsdf, x="v2x_egaldem", y="v2x_polyarchy")
+sns.despine()
+ax.set(xlabel='Egalitarian Democracy Index', ylabel='Polyarchy Index')
+plt.xlim(0, 1) 
+plt.ylim(0, 1) 
+plt.savefig('figures/07-18.png', dpi=300)
+```
+
+
+    
+![caption...](figures/07-18.png){#fig-07_18}
+    
+
+
+Upon inspection, the majority of observations can be found clustering around low values of `v2x_polyarchy` and `v2x_egaldem`. There appears to be another, less dense cluster at the top right portion of the distribution as well. 
+
+Like univariate histograms, we can refine our visualization by explicitly setting parameter values, like `binwidth`. We can even provide a further layer of information by including a rug plot, which acts like a one-dimensional scatterplot for each axis. For visualizations with lots of data, use of alpha values to avoid solid black bars like below. The code below produces @fig-07_19.
+
+
+```python
+#| output: false
+#| warning: false
+ax = sns.displot(fsdf, x="v2x_egaldem", y="v2x_polyarchy", binwidth = 0.01, rug=True)
+sns.despine()
+ax.set(xlabel='Egalitarian Democracy Index', ylabel='Polyarchy Index')
+plt.xlim(0, 1) 
+plt.ylim(0, 1) 
+plt.savefig('figures/07-19.png', dpi=300)
+```
+
+
+    
+![caption...](figures/07-19.png){#fig-07_19}
+    
+
+
+#### Bivariate Kernel Density Estimation
+
+Like histograms, we can also use kernel density estimation (KDE) to smooth the bins to give an idea of the underlying probability distribution. In this case, it takes the form of a 2D contour plot. Let's also improve the appearance of the rug plot by providing `rug_kws` with a dictionary describing values for its parameters: in this case setting an alpha of 0.01. The code below produces @fig-07_20.
+
+
+```python
+#| output: false
+#| warning: false
+ax = sns.displot(fsdf, x="v2x_egaldem", y="v2x_polyarchy", kind="kde", rug = True, rug_kws = {"alpha": 0.01})
+sns.despine()
+ax.set(xlabel='Egalitarian Democracy Index', ylabel='Polyarchy Index')
+plt.savefig('figures/07-20.png', dpi=300)
+```
+
+
+    
+![caption...](figures/07-20.png){#fig-07_20}
+    
+
+
+If you are familiar with reading contour maps, many closely spaced lines indicate areas of rapid change in elevation, or in this case, density. The slopes of our ECD plots are very analogous to the slopes described by contour plots. Looking at the above visualization, we can see two major clusters: one at the lower left and a smaller, but still significant one in the upper right. 
+
+#### Line of Best Fit
+
+The visualizations in this section try to strike a balance between showing as much of the data as possible while conveying the relationship between the two variables as simply as possible. These two goals are in conflict with each other. The more data you visualize, the more complicated your plots become. If we want to display the relationship between two variables as simply as possible, we can produce a *line of best fit*. A line of best fit is a straight line that tries to minimize the distance between itself and each observation. 
+
+The concept is very closely tied to regression techniques, which we will discuss in later chapters. For now, we can take for granted that a line of best fit is a way of mathematically describing a linear relationship between two variables. Consider the earlier scatter plot. While we can see some kind of postive relationship between the two variables, a scatter plot only provides a qualitative description of that relationship. A line, on the other hand can be described *exactly* by a formula:
+
+$$
+y = mx + b
+$$
+
+It is a common practice to include a line of best fit on a scatter plot. Scatter plots display the data in great detail, while the line of best fit describes the relationship within the data very concisely. Together, the two provide a lot of information about the data. Let's reproduce the earlier scatter plot with a line of best fit. To do this, we will use the `regplot` function. The code below produces @fig-07_21.
+
+
+```python
+#| output: false
+#| warning: false
+ax = sns.regplot(data = fsdf, x = "v2x_egaldem", y = "v2x_polyarchy", color='darkgray', scatter_kws = {"alpha": 0.05}, line_kws={"color": "black"})
+sns.despine()
+ax.set(xlabel='Egalitarian Democracy Index', ylabel='Polyarchy Index')
+plt.savefig('figures/07-21.png', dpi=300)
+```
+    
+![caption...](figures/07-21.png){#fig-07_21}
+
+
+### Correlation 
+
+You likely have an idea of what correlation is about, but it's important to get these things right. Firstly and very generally, correlation is a measure of how closely random variables are related to one another, or how linearly dependent they are. What does that mean?
+
+If a variable is closely related to another (there is a high degree of dependence between them) we can use an observation of one to predict the other. For example, a person's weight in kilograms is perfectly correlated/dependent on their weight in pounds. If you know one, you also know the other. The fuel economy of a car (usually expressed in L/100km or mpg) and the distance it traveled on a full tank are strongly correlated variables, though not perfect. Other factors can influence the distance traveled, but knowing the fuel economy of a car lets you make an accurate guess. 
+
+More rigorously, *Correlation* describes the standardized direction of a linear relationship between variables *as well as its strength*. Correlation values, or correlation coefficients, range between -1 and +1. A coefficient of 1 represents a perfectly linearly dependent relationship for *any* two variables. A coefficient of -1 *also* represents a perfectly linearly dependent relationship, but in the opposite direction. For example, the number of eggs in a standard 12-pack egg carton is linearly dependent on the number of eggs I removed from it. The difference is that, with weight in lbs and weight in kilograms, when one goes up, the other also goes up. Hence, a positive linear relationship. With eggs in the carton and eggs removed from the carton, when one goes up, the other necessarily goes down: a negative linear relationship. In both cases, *if you know one value, you also know the other*.
+
+Let's calculate some correlations. To do so, we call `.corr()` on a variable and pass another of equal length as an argument. 
+
+```python
+corr_libdem_partipdem = fsdf.v2x_libdem.corr(fsdf.v2x_partipdem)
+corr_libdem_year = fsdf.v2x_libdem.corr(fsdf.year)
+
+print(f'Correlation of v2x_libdem and v2x_partipdem: {corr_libdem_partipdem}')
+print(f'Correlation of v2x_libdem and year: {corr_libdem_year}')
+```
+
+Note that here we access dataframe columns by name using 'dot notation' rather than the square brackets we used earlier. Both methods see frequent use, so it's a good idea to get used to seeing them as largely interchangeable.  
+
+While the math behind correlation coefficients is beyond the scope of this chapter, it's useful to have an idea of what I mean when I say that it is *standardized* and what a *linear relationship* actually means. To demonstrate, let's create a new variable that is just `year` multiplied by 100 and correlate that with `v2x_libdem` like we did in the previous cell. 
+
+
+```python
+df_new = fsdf.copy()
+df_new['year_x100'] = fsdf['year'].apply(lambda x: x*100)
+
+new_corr_libdem_partipdem = df_new.v2x_libdem.corr(df_new.v2x_partipdem)
+new_corr_libdem_year = df_new.v2x_libdem.corr(df_new.year_x100)
+
+print(f'Correlation of v2x_libdem and v2x_partipdem: {new_corr_libdem_partipdem}')
+print(f'Correlation of v2x_libdem and year*100: {new_corr_libdem_year}')
+```
+
+
+The correlation remains the same, despite multiplying one of the variables by 100. This is because the correlation coefficient is defined so that its value will always be between -1 and 1: it is actually another measure (covariance, which we will discuss in another chapter) that has been standardized to those values. As for linear relationships, recall the line of best fit in a scatter plot. If we plot observations of two variables, the strength of the linear relationship between the two is how closely those points lie on a straight line. If you can draw a straight line through every single point, the two variables have a perfect linear relationship. When we multiplied `year` by 100, all we did was change the angle of the line; we did not change the direction of the relationship, or the strength of it, so the coefficient remains the same. 
+
+#### Correlation Coefficient: Pearson and Spearman
+
+Just as there are different kinds of data, there are different ways of calculating correlation coefficients. We have been using the default Pearson correlation. A full discussion of different correlation coefficients is beyond our scope, so I will briefly mention one of the most common alternatives to Pearson correlation. Spearman correlation is intended for use with rank data, where a variable has some order, but the distance between values is not necessarily consistent. Consider the placings of runners in a race. We know that the first-place runner finished before second-place, but we don't know *by how much*. The distance between first and second could be very different than the distance between second and third place. To calculate the Spearman rank order correlation coefficient in Pandas, we simply provide the `.corr()` function with the appropriate `method` parameter. 
+
+#### Correlation Matrices and Heatmaps
+
+Sometimes we want to explore our data to see if there are any strong or weak relationships that we might not expect. We could calculate a correlation coefficient for each pair of variables in our data, but it's more efficient to create a correlation matrix and visualize the results. A correlation matrix shows the correlation coefficient for every pairing of variables in a given data set. Since every variable is being compared to every other variable, we will get an $n \times n$ table, where $n$ is the number of variables. 
+
+To create a correlation matrix, we need to select only the appropriate columns. Since we're using Pearson correlation, that will be continuous variables. Previously, we used the `.corr()` method to calculate the correlation between two columns. If we provide it a dataframe without specifying any columns, it will produce a correlation matrix with all possible pairings. 
+
+
+```python
+fsdf_corr = fsdf[['v2x_polyarchy', 'v2x_libdem', 'v2x_partipdem', 'v2x_delibdem', 'v2x_egaldem']].corr()
+
+fsdf_corr
+```
+
+Note the diagonal line of 1s arranged from top left to bottom right. Any variable correlated with itself should provide a coefficient of 1: a variable will always be perfectly associated with itself. Secondly, the coefficients are mirrored across the diagonal. The coefficient for the `v2x_polyarchy` row and the `v2x_libdem` column is the same as the one for the `v2x_libdem` row and the `v2x_polyarchy` column. Recall that Pearson correlation is *commutative*, so $corr(X,Y) = corr(Y,X)$. 
+
+We can also create a heatmap to help us scan the data quickly for correlations that especially stand out. The code below produces @fig-07_22. Unlike me, you have more color options. I would recommend using a color palette other than grayscale. 
+
+
+```python
+#| output: false
+#| warning: false
+ax = sns.heatmap(
+    data = fsdf_corr, vmin = 0.9, vmax = 1 #, cmap=grayscale_cmap
+)
+
+plt.savefig('figures/07-22.png', dpi=300)
+```
+    
+
+![caption...](figures/07-22.png){#fig-07_22}
+    
+First, note the scale. I have disregarded my own guideline that scales should start at 0. This is because the values are highly clustered at top of the range, and *what I want to learn* is which correlations stand out from the others. If I included the whole scale, each box would be a nearly identical colour. Guidelines can help you make decisions about visualizations, but they can't replace thinking about what you're doing and why. 
+
+To create a heatmap that doesn't duplicate data and is less cluttered, we can use a "mask" to cover up the upper triangle. The code below produces @fig-07_23.
+
+
+```python
+#| output: false
+#| warning: false
+mask = np.triu(np.ones_like(fsdf_corr, dtype = bool))
+ax = sns.heatmap(fsdf_corr, mask = mask, vmin = 0.9, 
+                 vmax = 1) # cmap=grayscale_cmap
+plt.savefig('figures/07-23.png', dpi=300)
+```
+    
+![caption...](figures/07-23.png){#fig-07_23}
+    
+## Visualization with More Informational Density 
+
+I've mentioned that good visualization practice involves thinking about what to display. That requires exercising restraint regarding what you add to a graph. Less is *usually*, but not always, more. We often find ourselves in situations where the best option is to layer several simple visualizations together in ways that substantially increase the overall information density of a visualization *while still keeping the parts and the whole as simple as possible*. This is often preferable to, for example, generating multiple simple graphs that you, or a reader would have to consult simultaneously to learn from. Again, think about what *exactly* you are trying to learn or show, and construct a visualization for that purpose and *no other*.
+
+The two primary examples of more informationally-dense visualizations we will consider here, and which we will use in various parts of the books, are graphs that combine marginal and joint distributions, and small multiples and pair plots. We will only briefly introduce these visualizations here. In later parts of the book, you will see many examples of using and refining them in specific data analysis contexts. 
+
+### Layering Marginal and Joint Distributions
+
+Previously, we have occasionally combined different distributions or visualizations in the same plot. We plotted conditional histograms together, histograms with KDEs, scatter plots with lines of best fit, and heat maps and contour maps with rug plots. Lets focus on supplementing our scatterplot with line of best fit. Rather than the rug plots we used earlier, let's include a histogram with a KDE to easily visualize the marginal distributions of each variable to complement the joint distribution. The code below produces @fig-07_24.
+
+
+```python
+#| output: false
+#| warning: false
+ax = sns.jointplot(
+    data=fsdf, 
+    x="v2x_polyarchy", 
+    y="v2x_egaldem", 
+    kind="reg", 
+    color='darkgray',
+    joint_kws={
+        'line_kws':{'color':'black'},
+        'scatter_kws':{'alpha':0.03}
+    }
+)
+
+plt.savefig('figures/07-24.png', dpi=300)
+```
+
+![caption...](figures/07-24.png){#fig-07_24}
+    
+The above visualization provides us with a wealth of information, letting us see individual points as well as the relationship between the two variables with the joint distribution. The marginal distributions show us the observed distributions and an estimate of the underlying probability distribution. 
+
+### Quick Comparisons with Pair Plots
+
+When we get an entirely new data set, we often want to perform some exploratory analysis to get a sense of the data and potential relationships that we may not even be aware of. Rather than choosing which variables to plot against each other, we can cover all of our bases and use the `pairplot` function to plot all variables against each other. This will produce a grid of scatter plots, pairing every variable against every other variable. Where a variable would be paired with itself (the diagonal of the grid), we instead get a histogram of the marginal distribution of that variable. A `pairplot` is a great way to get a sense of your data before letting theory and research questions guide more focused analysis and visualization. The code below produces @fig-07_25.
+
+
+```python
+#| output: false
+#| warning: false
+high_level_indexes = ['v2x_polyarchy', 'v2x_libdem', 'v2x_partipdem', 'v2x_delibdem', 'v2x_egaldem']
+ax = sns.pairplot(fsdf[high_level_indexes])
+plt.savefig('figures/07-25.png', dpi=300)
+```
+
+
+    
+![caption...](figures/07-25.png){#fig-07_25}
+    
+
+
+In later chapters, we will often produce "small multiples" that have a structured subplot design like the pairplots. We will set that aside until later, however.  
+
+  
+> **Further Reading**    
+>   
+> In addition to being a good introduction to Pandas and Numpy, VanderPlas' [-@vanderplas2016python] *Python Data Science Handbook* contains a good introduction to matplotlib, which Seaborn is built on top of. Regrettably I don't have space to get into matplotlib in this book, but it's *very* powerful package. We use little bits of matplotlib code to supplement Seaborn in this book. If you want to take more control over the aesthetics of your plots, it's well worth learning more about matplotlib. 
+>
+
+
+## CONCLUSION
+
+---
+
+## Key Points 
+
+- This chapter introduced the concept of Exploratory Data Analysis alongside Box's Loop and Iterative research workflows
+- We explored some basic guidelines for creating effective visualizations
+- We then applied those guidelines to univariate and multivariate data drawn from a (very large!) real-world dataset
+
+---

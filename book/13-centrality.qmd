@@ -1,0 +1,851 @@
+# Centrality
+
+::: {.callout-note}
+## Learning Objectives
+
+- Explain what centrality analysis is and how it relates to theoretical ideas
+- Explain what a shortest path is
+- Compare shortest path and current flow betweenness
+- Compare degree, eigenvector, and Bonacich power centrality
+- Explain the conceptual and graph-theoretic underpinnings of
+    - shortest path and current flow betweenness centrality
+    - degree centrality, eigenvector centrality, and Bonacich power centrality
+- Explain why it is *essential* to think carefully about what specific centrality measures mean given the nature of the edges in an observed network
+:::
+
+::: {.callout-note}
+## Planned Revision
+
+This chapter has been revised to compute Bonacich power centrality in Python instead of R (I implemented it in the `dcss` networks module). 
+
+I will be making some relatively minor changes to this chapter in fall 2024 that will present more of a generative perspective on centrality. The idea will be to emphasize uncertainty and measurement issue to setup some of the more inferential content coming later in the book.
+
+Finally, I'm going to switch from networkx to graph-tool in this chapter
+:::
+
+<br>
+
+<!-- Influence, Inequality, and Power in Social Networks -->
+<!-- paths-positions-and-power -->
+
+This chapter focuses on "centrality analysis," which is widely-used for analyzing social networks with an emphasis on influence, inequality, status, dependence, and power (among many other things). The literature on social networks contains a huge number of centrality measures, each designed to operationalize and measure some specific theoretical idea. It's not possible to cover all of them here, nor especially desirable. I will cover two important frameworks for thinking about centrality. For each framework, I will describe some of the most foundational centrality measures, and clarify the connections between these empirical measures and their conceptual and theoretical underpinnings. This should help you develop a good understanding of centrality *in general* so you can make sense of other centralities.
+
+This chapter is organized into three main sections. The first section begins with a brief high-level discussion of centrality. I then introduce the first centrality framework: a "central" node describes a network position that has more influence over the flow of things through the network. This perspective is anchored in ideas of "walks" on a network and "contagions" that "flow" through those walks, two ideas that were briefly introduced in the previous chapter. The second section of this chapter builds up an intuitive understanding of these concepts and culminates in a discussion of "shortest path betweenness centrality" and "current flow betweenness centrality." 
+
+The third section addresses the second centrality framework, which ultimately boil down to counting connections, the sum of which is known as a node's "degree." At the most basic level, nodes that are connected to many other nodes (high degree) are more popular than nodes with few relationships (low degree). This simple idea is the foundation of more complex ideas. For example, the popularity of the nodes that one is connected to also matters, and because of the structure of social networks this idea expands out to include all reachable nodes in a network. In other words, being connected to a small to moderate number of very well-connected nodes can unlock more advantages in a network than being connected to a very large number of nodes who are not themselves well-connected (e.g. it's probably better to have 20 friends who each have 5 friends than to have 100 friends who are only connected to you). This is will lead us to eigenvector centrality and its close relation Bonacich power centrality. 
+
+These different ways of thinking about -- and operationalizing -- influence, inequality, status, dependence, and power came from researchers studying different networks in a wide array of contexts. A centrality measure developed to measure the influence in a friendship network may not translate well to measuring influence in an information brokerage network. As @kitts2014beyond has argued, a common problem with centrality analysis is that researchers implicitly assume there is some inherent meaning behind specific centrality measures that holds up regardless of the type of relationships that are operationalized as the edges of a network. In fact, the interpretation of a measure depends as much on the nature of the relations measured than it does on the mathematics of the measure itself [see also @kitts2020rethinking].
+
+As always, we're just scratching the surface of what is possible here, but if you really understand the conceptual basis of these measures and how they are computed from network data, you'll have a solid foundation for learning about other centrality measures.
+
+## Package Imports
+
+```python
+import collections
+import random
+
+import matplotlib
+import matplotlib.pyplot as plt
+from matplotlib import cm
+from matplotlib.colors import Normalize
+from matplotlib.cm import ScalarMappable
+import networkx as nx
+import numpy as np
+import pandas as pd
+import seaborn as sns
+
+from dcss import set_style
+from dcss.networks import *
+
+set_style()
+```
+
+## Data
+
+We will continue to work with data from the SocioPatterns project -- specifically, the relational data reported by students in their contact diaries.
+
+
+```python
+contact_diaries = pd.read_csv("data/SocioPatterns/Contact-diaries-network_data_2013.csv", sep=' ')
+
+G = nx.from_pandas_edgelist(contact_diaries, 'i', 'j', create_using=nx.Graph())
+G.name = 'Reported Contacts (Diary Data)'
+print(G)
+```
+
+Recall from the previous chapter that `create_using=nx.Graph()` means we are creating an undirected network. The output of the `info()` function confirms this by telling us we have a `Graph` object, not a `DiGraph` object (directed). 
+
+## CENTRALITY MEASURES: THE BIG PICTURE
+
+A node's location in a social network matters. It determines what they are exposed to; the support, opportunities, and resources they have access to; their social status and prestige; and their ability to exercise power and influence over others. In network science, centrality measures are one of the main ways in which abstract concepts such as these are mapped onto concrete measurable variables that can be computed from relational data.
+
+Consider power. Like many other social scientific approaches to conceptualizing power, the network perspective is relational. It emphasizes relationships and situations where one person is dependent upon another, with the assumption that these dependency relations determine consequential things in our lives, both good and bad. We are embedded in a complex intersection of many such relationships, regardless of how aware we are of the dependency dynamics. To name just a few examples:
+
+- a child or young adult who depends upon a parent for *everything*; 
+- a graduate student who depends upon a supervisor's expertise, support, and connections; 
+- an academic department chair whose approval or disapproval partially determines a faculty member's performance evaluations and salary increases (in a non-unionized context); or
+- a friend who depends upon another friend for support in a crisis. 
+
+These dependency relations can, of course, be exploited. Parents can be unloving, and physically or emotionally abusive. Supervisors can be take credit for work. Department chairs can be jealous, or petty, and favour others. Friends can take advantage of us. 
+
+In these cases, one person has asymmetric control and power in the relationship. They can impose their will and make life better or worse for the dependent individual. The point is *outcomes for ego, such as health and wellbeing, are at least partially in the hands of alter*. But it's not just about one-to-one relationships, and this is one of the critical reasons for thinking about these dependency relations in the context of larger networks of relations, not just dyads.
+
+If a student can jump ship and find a better supervisor, if a friend can turn to another friend, if a faculty member can be evaluated by committee rather than by a department chair, then the dependency is lessened and power is less concentrated. Children and adults in toxic and abusive relationships are more obviously constrained in their ability to reduce their dependencies. Children don't get to choose their parents and there are most certainly specific reasons why people are prevented from leaving toxic and abusive relationships. The structure of social networks can constrain people in comparable ways, making it difficult to break free from the control of others. This is further complicated by the fact that most of us don't *really* know all that much about the structure of the networks that we live our lives in. As @hanneman2005introduction put it so pithily, "ego's power is alter's dependence." 
+
+This insight has profound implications. The structural properties of a social network determine the amount of power available in general, its distribution among nodes, and therefore the extent to which some nodes can influence others. In some networks, power may be relatively evenly distributed and opportunities for control and domination are rare. In others, it may be centralized around a small subset of nodes. In other words, the structure of our social networks determine the extent to which we are *able* to influence and control one another, with some network structures enabling more influence and control and others enabling less. We can change lives *dramatically*, for better or for worse, by changing the structure of dependency relations.
+
+Centrality analysis provides tools we can use to examine power empirically via dependency relations, but this is only one possibility. Centrality analysis can be used to assess the opportunities and constraints for any node, given the specific ways they connect to other nodes in a network, which we can refer to as a node's "position."^[In the next chapter we will expand the idea of positions in a network, but for the time being we can think of position primarily in terms of centrality.] Some positions may be more or less likely to result in exposure to novel information and ideas, or they may afford easy access to elites or resources that are more difficult for others in less advantageous positions to access. 
+
+There are various centrality measures designed to capture these differences and others. At this point it's important to note:
+
+1. Being central is not *inherently* good or desirable. The same types of central positions that give one early access to useful information can also mean early exposure to infectious diseases.  
+2. Being central is not a guarantee that a node will experience the hypothesized effects of their position, good or bad. Having the opportunity to access elites is not the same thing as seizing that opportunity. 
+
+There are usually specific types of structural positions that you expect to be important given your research question. As always, *theory is really important here*. Rather than computing every centrality score, you should select those that correspond to your research question or operationalize a relevant concept. You may want to identify information brokers in a collaboration network. This could help you study whether people who are in a position to influence the flow of information over walks (a concept we will turn to momentarily) in the collaboration network have different career outcomes than those who are not in such positions, or perhaps find key individuals in a needle sharing network for a public health intervention. In that case, you could use betweenness centrality, which we discuss shortly. While you certainly should analyze multiple centralities, you need to think deeply about the question you are trying to answer, what these specific centralities mean and how they work, and how well those align.
+
+## SHORTEST PATHS AND NETWORK FLOW
+
+### Shortest Paths / Geodesics 
+
+The first framework for thinking about centrality is interested in the access that a node has to the rest of the network. It's probably intuitive that the most efficient way to exchange something (information, resources, power) between two points is to find the shortest distance between them (i.e. the path between two nodes that involves the smallest number of nodes and edges). Those "shortest paths" are also called **geodesics**.
+
+We can identify the *shortest* path between any two nodes using the `shortest_path()` function in NetworkX. If we use the function without specifying a specific pair of nodes, it will compute all of the shortest paths between every possible start and end point between every pair of nodes in a network. Even for small networks, that's a *lot* of paths.
+
+To help build some intuition about paths, we will define a couple of functions that will let us quickly query the paths between any pair of nodes, and then highlight those paths in simple network visualizations. Note that we are constructing our visualizations a little differently than we did in the last chapter. 
+
+Our `plot_path()` function requires a layout for the network visualization. We will use the `kamada_kawai_layout()` function to compute the layout for a visualization of the contact diary network data from SocioPatterns, which we used to construct the network object `G` at the start of this chapter.
+
+
+```python
+layout = nx.kamada_kawai_layout(G)
+```
+
+The nodes in the SocioPatterns data are, of course, anonymized. The research team assigned each node an integer ID. You can see those IDs with `G.nodes()`.
+
+Now that we have our functions defined, and we know what the IDs are for the nodes in our network, let's look at a few examples. We will provide our `get_shortest_paths()` function with the integer IDs for our source and target nodes. For example, let's find the shortest path between node `173` and node `48`. 
+
+
+```python
+path_a, es_a = get_shortest_paths(G, 173, 48) 
+print(path_a)
+```
+
+
+In order for some information that `173` has to reach `48` along the shortest path, it would have to first go through nodes `295`, `954`, and so on. What does this path look like? Let's visualize it. In @fig-15_01, the shortest path between `173` and `48` will be highlighted.
+
+```python
+plot_path(G, layout, path_a, es_a)
+plt.savefig('figures/15_01.png', dpi=300)
+```
+
+![png](figures/15_01.png){#fig-15_01}
+    
+#### Multiple Shortest Paths
+
+If there are more than one shortest paths between nodes, then `get_shortest_paths()` picks one at random to return. We can get the full list of shortest paths using the `all_shortest_paths()` function. Let's see the other paths between `173` and `48`.
+
+
+```python
+sps = [path for path in nx.all_shortest_paths(G, source=173, target=48)]
+path_nodes = set([item for sublist in sps for item in sublist])
+
+for path in sps:
+    print(path)
+```
+
+Notice that in these shortest paths that *start* with `173` and *end* with `48`, there are some nodes that appear on *all* the shortest paths, such as `295` and `954`. This enables us to count the number of shortest paths that involve any given node. Nodes that are involved in a larger number of shortest paths may be considered more central, as being involved in more shortest paths offers some distinct advantages for power and influence.  
+
+Let's plot all of these paths (@fig-15_02). 
+
+
+```python
+fig, ax = plt.subplots(figsize=(12, 8))
+
+nx.draw_networkx_nodes(
+    G, 
+    pos=layout, 
+    node_size=200, 
+    node_color='#32363A'
+)
+
+nx.draw_networkx_edges(
+    G,
+    pos=layout,
+    edge_color='darkgray',
+    width=1
+)
+
+## THE PATHS!
+
+nx.draw_networkx_nodes(
+    G,
+    pos=layout,
+    node_size=200,
+    node_color='crimson',
+    nodelist=path_nodes
+)
+
+for p in sps:
+    edges = set(zip(p, p[1:]))
+    nx.draw_networkx_edges(G,
+                           pos=layout,
+                           edgelist=edges,
+                           edge_color='crimson',
+                           width=4)
+
+plt.axis('off')
+plt.savefig('figures/15_02.png', dpi=300)
+```
+
+
+    
+![png](figures/15_02.png){#fig-15_02}
+    
+
+
+Shortest path lengths can also be computed, which can be useful when the **distance** between two nodes matters more than the specific paths connecting them. We can do this with the `shortest_path_length()` function. Recall from earlier that we are counting *edges* on a path between a source and target node, so the length will always be equal to 1 - the number of nodes in the path itself. This can be useful to know because information and influence usually degrade over longer distances. That's why shorter paths are likely to be more important than longer ones. The `shortest_path_length()` function tells us that, regardless of the specific path, the closest that `173` and `48` can be is 10 steps.
+
+Sometimes, depending on the network and the data, edges might vary in length, which can be encoded as edge weights. In these cases, the number of edges between two nodes is no longer the best measure of distance. Thankfully, many algorithms, like shortest paths, can take these weights into consideration. We will see an example of an algorithm that accounts for edge weight shortly when we discuss current flow betweenness centrality. 
+
+
+```python
+nx.shortest_path_length(G, source=173, target=48) 
+```
+
+Finally, we can also compute the average length shortest paths in a connected network using the `average_shortest_paths()` function. This is an average across *all pairs* of $i,j$ nodes in the full network.
+
+
+```python
+np.round(nx.average_shortest_path_length(G), 2)
+```
+
+
+Note that the path lengths between `173` and `48` are higher than the average path lengths in the network. 
+
+## BETWEENNESS CENTRALITY, TWO WAYS
+
+This discussion of paths and network walk-structure has been building a foundation for our discussion of betweenness centrality. In brief, the idea is that nodes that lie **between** nodes, or better yet, between groups of densely connected nodes (a concept we will turn to in the next chapter), often have advantages and opportunities that other nodes do not have. For example, information tends to be more homogenous within clusters of densely connected nodes and more diverse across such clusters. As a result, nodes that are embedded *within* a cluster tend not to have information that is unknown to their adjacent peers, but nodes that lie *between* clusters get access to diverse sources of information. In some cases, these nodes may be able to influence and perhaps even control the flow of information through the network. For example, they may filter and frame information in ways that increase their own power over others who depend on them for access to that information. In other words, they are in potential **brokerage** positions. Consider the hypothetical network in @fig-15_03. Which node is the in-between broker? If we consider the shortest paths in this network, which nodes will be on more shortest paths than others?
+
+  
+> **Further Reading**    
+>   
+> If you want to deepen your understanding of brokerage dynamics in social networks, I recommend Katherine Stovel and Lynette Shaw's  [-@stovel2012brokerage] review article "brokerage," which touches on many interesting theoretical ideas related to centrality.
+>
+
+
+
+```python
+nx.draw(nx.barbell_graph(5,1), node_size=300, node_color='#32363A')
+plt.savefig('figures/15_03.png', dpi=300)
+```
+
+![png](figures/15_03.png){#fig-15_03}
+    
+There are two main ways of computing betweenness centrality: shortest path and current flow. As you might expect, **shortest path betweenness** is computed based on shortest paths, which are central to the any process where a contagion (e.g. information) spreads through a network. 
+
+To compute shortest path betweenness for any given node, we first determine the shortest paths between every pair of nodes in the network. We then compute the proportion of shortest paths that include the node in question for each $i,j$ pair of nodes in the network. Those proportions are then summed to obtain a single number. If a node does not lie on *any* shortest paths, then its betweenness score will be 0 (e.g. if it is an isolate). It will have the maximum value if it lies on *all* shortest paths between *all* pairs of nodes in the network. Note that this is a systematic implementation of the general idea we considered earlier when noting that some nodes lie on more shortest paths than others.
+
+Let's quickly visualize the distribution of betweenness scores with a histogram (@fig-15_04).
+
+
+```python
+sp_bet = pd.Series(nx.betweenness_centrality(G))
+
+ax = sns.histplot(sp_bet, kde=True)
+ax.set(xlabel='Shortest path betweenness centrality', 
+      ylabel='Number of nodes')
+sns.despine()
+
+plt.savefig('figures/15_04.png', dpi=300)
+```
+
+![png](figures/15_04.png){#fig-15_04}
+    
+Most nodes in the network have low shortest path betweenness; only a few have higher scores. 
+
+Unlike shortest paths betweenness, **current flow betweenness** takes into account the strength of relationships when it conceptualizes how a contagion flows through a network. Current flow betweenness draws on the analogy of electrical current flowing through a *resistance network*, where edges are resistors. A detailed discussion of electromagnetism is beyond the scope of this book, so we will gloss over the details and focus on some quick takeaways. 
+
+A circuit where resistors are arranged in a single line between the source and the target is a series circuit. The current can only flow through one path, so the current is the same between each node on the path between the source and the target. The *effective resistance* of the circuit is the sum of the resistances of all the resistors. Thus, for a given path, adding another edge at the end can only increase the effective resistance: information flows less well through longer chains.  Consider the flow of people leaving a crowded stadium. This stadium is poorly designed and everyone has to leave via a single path consisting of a series of rooms. Each time you add a room, you add a door that has to be opened, you give people more chances to stumble, and generally the whole flow of people from the stadium (source) to the exit (target) will slow down. 
+
+A circuit where resistors are arranged such that multiple paths lie between the source and the target is a parallel circuit. The current will split where paths branch and flow down each of the possible paths, with more current flowing through more efficient paths. As you add parallel resistors, the effective resistance of the whole circuit decreases. Consider the stadium example: if we have multiple exits, people will be leaving through all of them. Some exits will be more efficient because they have fewer rooms and/or larger doors, and people will flow through those faster. If you add another exit, even if it's a small side door, people will necessarily be able to leave faster. In current flow betweenness, the strength of a relationship corresponds to how efficient the flow of current is between nodes. In our example, rooms with larger doorways between them could be represented with greater edge weights. 
+
+This example sounds like a directed network, but the network we are working with is undirected. To calculate the circuit flow betweenness of a node, we consider that each node in the network could be a source or a target, and calculate the current flow for that node averaged across every possible pairing of source and target nodes. Bringing it back to the stadium example, this is like shuffling the stadium seats and the stadium exit through all the rooms so that we consider every possible pairing and take the average flow through a room across all those pairings. 
+
+The code below computes current flow betweenness and then constructs a scatterplot (@fig-15_05) to compare the scores against the shortest path version.
+
+
+```python
+cf_bet = pd.Series(nx.current_flow_betweenness_centrality(G))
+betweenness = pd.concat([sp_bet, cf_bet], axis=1)
+betweenness.columns = ['Shortest Path Betweenness', 'Current Flow Betweenness']
+```
+
+
+```python
+sns.jointplot(data=betweenness,
+              x='Shortest Path Betweenness',
+              y='Current Flow Betweenness',
+              alpha=.7)
+plt.savefig('figures/15_05.png', dpi=300)
+```
+
+    
+![png](figures/15_05.png){#fig-15_05}
+    
+
+
+While similar, the two measures are not equivalent to one another. At very low values, shortest path betweenness and current flow betweenness are quite densely clustered and the relationship between the two seems stronger, but as we look at the larger (and rarer) values, the relationship becomes much weaker. Consider why this might be. Being on a single shortest path will necessarily have a low shortest path and low current flow betweenness score because the flow of contagion/current can only be a small amount of the larger network. However, as we increase the number of shortest paths that a node is on, we are also increasing the chances of a node being part of a parallel circuits (metaphorically speaking). Current flow betweenness conceptualizes that flow between nodes take the routes other than the shortest path, albeit at a reduced rate. Thus, we would likely expect a wider distribution of current flow betweenness values.
+
+Let's move on from the idea of things flowing through a network and consider another way of thinking about centrality.
+
+## POPULARITY, POWER, AND INFLUENCE
+
+The second centrality framework is focused less on the ideas of paths and flow, and more on popularity, status, and prestige. The idea is that more -- and "better" -- relationships are associated with greater popularity, status, and prestige.
+
+To demonstrate this, let's work with another network dataset collected from the same French high school students by the SocioPatterns team. The previous network represented reported *contacts* that we coerced into an undirected network. This network is a directed friendship network produced by students identifying other students as their friends. Unfortunately, some friendships are asymmetrical; one may feel the relationship is strong enough to nominate the other, but it may not be reciprocated. For this, we will use a DiGraph (directed graph). 
+
+
+```python
+reported_friendships = pd.read_csv("data/SocioPatterns/Friendship-network_data_2013.csv",
+                                   sep=' ')
+
+G_friendships = nx.from_pandas_edgelist(
+    reported_friendships,
+    'i', 'j', 
+    create_using=nx.DiGraph()
+)
+
+G_friendships.name = 'Reported Friendships'
+print(G_friendships)
+```
+
+```python
+layout = nx.nx_pydot.graphviz_layout(G_friendships)
+```
+
+### Degree, Degree Centrality, and Connection Inequality
+
+One of the most critical pieces of information in this approach to centrality is the number of connections a node has. For an undirected network, that count is called **degree**. If I have 50 connections my degree is 50. Nodes with higher degree are, by definition, more connected. For a directed network, we distinguish between edges leaving a node, *out-degree*, and edges arriving at a node, *in-degree*. In a hypothetical advice network at a business where a directed edge represents "gave advice to", we would expect the most senior and experienced employees to have higher out-degree (they are giving advice to more people) and the most junior would have higher in-degree (they are receiving from more people). While an individual node can have different in-degree and out-degree, the network *as a whole* will have a balanced in-degree and out-degree because each directed edge is necessarily an outgoing *and* an incoming edge for two different nodes. We can still use the concept of degree for directed networks, simply by adding a node's in-degree and out-degree to count all edges connected to a node. 
+
+Let's compute the out and in-degrees for the nodes in the SocioPatterns contact network. Then we'll visualize the network a couple of times, once with the node sizes as a function of indegree and once as a function of outdegree. Since we intend to execute the visualization code a couple of times, let's define a custom function.
+
+
+```python
+def visualize_digraph(
+    network, layout, node_size=50, title=''
+):
+    fig, ax = plt.subplots(figsize=(12, 8))
+    ax.set_title(title, fontsize=16)
+    nx.draw_networkx_nodes(network,
+                       pos=layout,
+                       node_size=node_size,
+                       node_color='#32363A')
+    nx.draw_networkx_edges(network,
+                       pos=layout,
+                       edge_color='#98989C',
+                       arrowsize=5,
+                       width=1)
+    plt.axis('off')
+```
+
+
+```python
+in_degree = dict(G_friendships.in_degree())
+out_degree = dict(G_friendships.out_degree())
+```
+
+If we supply networkx with the original in and out degree scores as node sizes, even the most popular and active nodes will be extremely tiny. Instead we will multiply every score by 20 to get them into a range of values that are large enough to use as node sizes in the visualization (@fig-15_06).
+
+
+```python
+sized_by_indegree = [v * 20 for v in in_degree.values()]
+sized_by_outdegree = [v * 20 for v in out_degree.values()]
+```
+
+
+```python
+visualize_digraph(G_friendships, layout, sized_by_indegree)
+plt.savefig('figures/15_06.png', dpi=300)
+```
+
+![png](figures/15_06.png){#fig-15_06}
+    
+And now we'll do the same for outdegree (@fig-15_07). 
+
+```python
+visualize_digraph(G_friendships, layout, sized_by_outdegree)
+plt.savefig('figures/15_07.png', dpi=300)
+```
+
+
+![png](figures/15_07.png){#fig-15_07}
+    
+If you squint, you might notice some apparent differences in the popularity (indegree) and activity (outdegree) across nodes in the network, but for the most part it seems as if the nodes that have higher indegree also have higher outdegree. We can confirm our hunch by plotting the two degree scores (@fig-15_08).  
+
+
+```python
+fig, ax = plt.subplots()
+sns.scatterplot(x=in_degree, y=out_degree, alpha = 0.2)
+sns.despine()
+ax.set(xlabel='Indegree',
+       ylabel='Outdegree')
+plt.savefig('figures/15_08.png', dpi=300)
+```
+
+![png](figures/15_08.png){#fig-15_08}
+    
+Recall we are working with reported friendships, where outdegree means that one node, $i$, has nominated another node, $j$, as a friend. If $i$ and $j$ are indeed friends, then they should both nominate each other. (*Reciprocity!*) It follows that in a network such as this one, nodes that have a high score on one of the two degree measures will likely also have a high score on the other. The network visualizations and the scatterplot clearly suggests that there are some high-activity students who both nominated, and were nominated by more people, and while closely related, it is also clear that in-degree and out-degree are not equal for all students. Not every friendship in this network was reciprocated. 
+
+#### Connection Inequality
+
+Inequalities in connectedness, visible as inequalities in node in-/out-/degree, can have many consequences. We are often concerned with extreme levels of inequality, which in network science are analyzed in terms of cumulative advantage processes -- the rich get richer, the more well-connected become more connected [@merton1968matthew; @barabasi1999emergence; @price1965networks; @price1986little; @diprete2006cumulative].
+
+Even moderate levels of inequality can have surprising effects, however. Consider what Scott @feld1991your has called "**the friendship paradox**," which states: on average, people's friends have more friends than they do (on average, people have fewer friends than their friends do). To demonstrate, consider the following: a person (ego) has 20 friends (alters) who each have 10 friends. As a consequence of this inequality, every alter has a below-average number of friends. This connection inequality in personal networks can impact how we perceive the world around us and what we judge to be "normal." Although they are a minority overall, the most well-connected people are over-represented in most people's personal networks, and everyone else, though quantitatively more common, are under-represented in other people's networks [@feld1991your]. 
+
+The preferences and behaviours of the most popular people are more visible in our lives than those of their underrepresented peers. As a result, our personal connections are rarely a good indication of the types of preferences and behaviours that are more common in the general population because the most well-connected are disproportionately represented. In other words, our everyday perceptions of what is "normal" are biased.
+
+Let's use degree as a measure of popularity for now, though in-degree may also be suitable. We can visualize connection inequalities by plotting the **degree distribution**. In @fig-15_09, we see the number of nodes ($y$-axis) with each possible degree value ($x$-axis). 
+
+
+```python
+degree_sequence = sorted([d for n, d in G_friendships.degree()], reverse=True)  # degree sequence
+degreeCount = collections.Counter(degree_sequence)
+deg, cnt = zip(*degreeCount.items())
+```
+
+
+```python
+fig, ax = plt.subplots(figsize=(6,4))
+plt.bar(deg, cnt, width=0.80, color="#32363A")
+ax.spines['right'].set_visible(False)
+ax.spines['top'].set_visible(False)
+ax.set_xlabel('Degree')
+ax.set_ylabel('Number of nodes')
+plt.savefig('figures/15_09.png', dpi=300)
+```
+
+![png](figures/15_09.png){#fig-15-09}
+    
+Because there is often a lot of inequality in connectedness, especially in larger networks, it is often more informative to plot the degree distribution with both axes on a log scale. If the result is a relatively straight negative line from the upper right to the bottom left, you might want to formally check for a power law distribution, which would indicate extreme inequality and potentially some sort of cumulative advantage process.
+
+Another way of inspecting the degree distribution is to produce a plot that ranks nodes based on their degree and plots their rank and degree on a log-log scale (@fig-15_10). The top *ranked* node in the graph is shown in the upper left of the graph (at $10^{0}$, which is 1). As you would expect, nodes in this upper left corner have higher degree centrality than any other nodes in the network (27). We see the decreasing degree of each successive node in the ranked list as we move along the $x$-axis. As we get towards the end of the list, we start to see nodes with very low degree. As there are no isolates in this network, the lowest degree score is 1 (or $10^{0}$).
+
+
+```python
+fig, ax = plt.subplots(figsize=(6,4))
+
+ax.loglog(degree_sequence, 
+          'black', 
+          marker='o', 
+          markersize=3)
+
+plt.title("Degree Rank Plot")
+plt.ylabel("Degree")
+plt.xlabel("Rank")
+
+ax.spines['right'].set_visible(False)
+ax.spines['top'].set_visible(False)
+
+plt.savefig('figures/15_10.png', dpi=300)
+```
+
+![png](figures/15_10.png){#fig-5_10}
+
+Degree is commonly treated as a proxy for "popularity," but that's not the only option. Our interpretation of any centrality measure *must be based on the type of ties in the network*. In the earlier example of the contact diary network, the edges in the network simply indicate whether two nodes came into contact with each other within a given time frame. One could make an argument for "popularity" there, but it would make more sense to think of degree in the contact network as something like mobility: moving more may produce more opportunities for contact. Returning to the idea of contagions flowing through a network, degree could be a measure for exposure, with more connections indicating more exposure. The specific details of the relations encoded in the network matter as much, or more than, the formal mathematics of the measure when it comes to interpreting centrality.
+
+### Eigenvector Centrality
+
+Degree centrality is an intuitive way of thinking about how connected people are, but analytically it doesn't get us very far on its own. However, many other centrality measures are built on degree, and can be used to operationalize more complex and interesting ideas. **Eigenvector centrality** is based on the simple idea that being connected to well-connected people matters: even if your degree doesn't change, if your neighbour's degree increases, your connection to the network also increases. 
+
+Consider our friendship network again. This time we are going to look at the "**neighborhoods**" (immediate alters) of two specific nodes and their extended neighbourhoods (alters' alters). I will pick two focal nodes, `1519` and `196` and assign them the color crimson. Their immediate alters will be plotted in black, their extended neighbourhood in dark gray, and the rest of the nodes light gray. I have chosen these two nodes to compare because they have the same degree (the size of their immediate neighbourhoods are identical). 
+
+We'll use the `plot_nodes()` function defined below to simplify some of the visualization code. The resulting plots is shown in Figures @fig-15_11 and @fig-15_12.
+
+
+```python
+def plot_nodes(which_network, which_nodes, what_color, where):
+    if type(which_nodes) is list:
+        nx.draw_networkx_nodes(
+            which_network, 
+            pos=where, 
+            node_size=100, 
+            node_color=what_color,
+            nodelist=which_nodes
+        ) 
+    else:
+        nx.draw_networkx_nodes(
+            which_network, 
+            pos=where, 
+            node_size=100, 
+            node_color=what_color,
+            nodelist=[which_nodes]
+        ) 
+```
+
+
+```python
+alters = nx.ego_graph(G_friendships, 1519, radius=1, undirected=True)
+
+alters_2 = nx.ego_graph(G_friendships, 1519, radius=2, undirected=True)
+
+fig, ax = plt.subplots(figsize=(12, 8))
+
+plot_nodes(
+    G_friendships, 
+    list(G_friendships.nodes()), 
+    'lightgray', 
+    layout
+)
+
+plot_nodes(
+    G_friendships, 
+    list(alters_2.nodes()), 
+    'gray', 
+    layout
+)
+
+plot_nodes(
+    G_friendships, 
+    list(alters.nodes()), 
+    'black', 
+    layout
+)
+
+plot_nodes(
+    G_friendships, 
+    1519, 
+    'crimson', 
+    layout
+)
+
+nx.draw_networkx_edges(
+    G_friendships, 
+    pos=layout,edge_color='lightgray',
+    arrowsize=3,
+    width=1
+)
+
+plt.axis('off')
+plt.savefig('figures/15_11.png', dpi=300)
+```
+
+![png](figures/15_11.png){#fig-15-11}
+    
+
+
+
+```python
+alters = nx.ego_graph(
+    G_friendships, 
+    196, 
+    radius = 1, 
+    undirected = True
+)
+
+alters_2 = nx.ego_graph(
+    G_friendships, 
+    196, 
+    radius = 2, 
+    undirected = True
+)
+
+fig, ax = plt.subplots(figsize=(12,8))
+
+plot_nodes(G_friendships, list(G_friendships.nodes()), 'lightgray', layout)
+
+plot_nodes(
+    G_friendships, 
+    list(alters_2.nodes()), 
+    'gray', 
+    layout
+)
+
+plot_nodes(
+    G_friendships, 
+    list(alters.nodes()), 
+    'black', 
+    layout
+)
+
+plot_nodes(
+    G_friendships, 
+    196, 
+    'crimson', 
+    layout
+)
+
+nx.draw_networkx_edges(
+    G_friendships, 
+    pos=layout, 
+    edge_color='lightgray',
+    arrowsize=3,
+    width=1)
+
+plt.axis('off')
+plt.savefig('figures/15_12.png', dpi=300)
+```
+
+![png](figures/15_12.png){#fig-15_12}
+    
+Despite their immediate neighbourhoods (black) being the same size, `196` has much greater reach with their extended neighbourhood because their immediate neighbours are better connected. 
+
+Think about *influence* in this context. `196` influences and is influenced by their direct alters, who in turn influence and are influenced by *their* direct alters. Influence on `196` is most strong from their immediate alters, followed by their alters' alters, followed by her alters' alters' alters, and so on. 
+
+Let's consider how this is reflected in eigenvector centrality. Technically, a node's eigenvector centrality is proportional to the sum of the centralities of their alters [@borgatti2018analyzing]. In this sense eigenvector centrality can also be interpreted as a measure of popularity, but it differs from degree centrality because a node can have high eigenvector centrality but low degree centrality (i.e., they are connected to only a few people, but those people are well-connected).
+
+
+Both `1519` and `196` have degrees of 11 (5 reciprocated nominations and one unreciprocated), but when we look at the network we can probably intuit that they occupy different types of positions given *who* they are connected to, and how those people are connected. Just by eyeballing the network, we can see that `196`'s connections are more connected than `1519`'s are. When it comes to *influence* and *power* in a network, being connected to well-connected people is more useful than being connected to less well-connected people.
+
+Eigenvector centrality is based on this fundamental idea that, when it comes to influence, the connections of the people we are connected to matter. We have to think, and "see" beyond our immediate social neighborhoods. 
+
+#### Computing Eigenvector Centrality
+
+Let's take a look at the distribution of eigenvector centrality scores to degree (@fig-15_13).
+
+
+```python
+dn = pd.Series(dict(nx.degree(G_friendships)))
+ec = pd.Series(nx.eigenvector_centrality(G_friendships))
+
+fig, ax = plt.subplots()
+sns.scatterplot(x=dn, y=ec, alpha=.6)
+ax.set(xlabel='Degree', ylabel='Eigenvector centrality')
+sns.despine()
+plt.savefig('figures/15_13.png', dpi=300)
+```
+
+![png](figures/15_13.png){#fig-15_13}
+    
+We can see that degree and eigenvector centrality are somewhat positively correlated. As degree increases, eigenvector tends to increase as well, though some individuals with high degree centrality are especially well-positioned and take a lion's share of the eigenvector centrality. 
+
+### Bonacich Power Centrality
+
+Eigenvector centrality is often used, among other things, as a proxy for power. However, as Phillip @bonacich1987power pointed out, being more "central" is not necessarily the same thing as being more powerful. Being connected to well-connected others makes you more reachable, *but less powerful*, because the people you are connected to are connected to many others; they do not *depend* on you because they have alternative connections. On the other hand, if the people you are connected to are *not* themselves well-connected, then their connection to you matters more; they are more dependent on you, and therefore you are more powerful. For Bonacich, then, ego is more central when their alters are densely connected with one another, but this makes ego *less* powerful; instead, ego gains power when their alters have few connections to others.
+
+We might expect to see this in access and exchange networks, where being connected to people who have a lot of other exchange partners reduces your "bargaining power." Being connected to people who have few exchange partners, on the other hand, increases your bargaining power. Bonacich power centrality conceptualizes power in terms of an ego's access to alters who are dependent on them.
+
+Bonacich power centrality introduces an **attenuation factor** -- the parameter $\beta$ -- that controls how a node's centrality is influenced by the centralities of its alters. $\beta$ can be positive or negative, reflecting different notions of power and centrality. For example, a **positive $\beta$** indicates that being connected to well-connected alters increases your centrality. This is similar to the idea of eigenvector centrality, where centrality flows through well-connected nodes. A **negative $\beta$** indicates that being connected to poorly connected alters increases your power. This captures the idea that you are more powerful when your alters depend on you because they lack alternative connections. Finally, $\beta$ of **zero** indicates that the centrality of a node is independent of the centralities of its alters, effectively reducing Bonacich centrality to degree centrality.
+
+In this way, Bonacich power centrality is a flexible measure that can capture different dimensions of centrality and power depending on the value of $\beta$. However, this flexibility comes with the need to carefully choose an appropriate $\beta$ value, or range or $\beta$ values. Importantly, not all values of $\beta$ are valid for a given network. The attenuation factor $\beta$ must be within certain bounds to ensure that the centrality calculation is mathematically valid and numerically stable.
+
+#### Valid Ranges of $\beta$
+
+Computing Bonacich power centrality involves inverting the matrix $(I - \beta A)$, where $I$ is the identity matrix and $A$ is the adjacency matrix of the network. For the inverse $(I - \beta A)^{-1}$ to exist, the matrix $(I - \beta A)$ must be invertible, which depends on the eigenvalues of $A$. 
+
+For **positive attenuation factors**, $\beta$ must be less than the absolute value of the recipricol of the largest eigenvalue of $A$,
+
+$$
+\beta < \frac{1}{\lambda_{\text{max}}}
+$$
+
+where $\lambda_{\text{max}}$ is the largest eigenvalue of $A$.
+
+For **negative attenuation factors**, $\beta$ must be greater than the recipricol of the smallest eigenvalue of $A$
+
+$$
+\beta > \frac{1}{\lambda_{\text{min}}}
+$$
+
+where $\lambda_{\text{min}}$.
+
+These upper and lower bounds ensure that the matrix $(I - \beta A)$ is invertible, thereby avoiding issues with singularity and numerical instability.
+
+Choosing a single $\beta$ parameter within these bounds can be challenging, but that is not what we want to do in practice. Instead, we want to explore a range of $\beta$ values to understand how the centrality measures change.
+
+At the time of writing, Bonacich power centrality is not implemented in NetworkX, graph-tool, or igraph for Python. However, I've implemented it in the networks module of the dcss package. It correctly handles the attenuation factor $\beta$ and the necessary bounds by default.
+
+Let's compute Bonacich power centrality scores for a network constructed from the SocioPatterns contact diary data. 
+
+```python
+G = nx.from_pandas_edgelist(
+    contact_diaries, 
+    'i', 'j', 
+    create_using=nx.Graph()
+)
+
+G.name = 'Reported Contacts (Diary Data)'
+```
+
+Let's define a range of $\beta$ values that are within the valid bounds for this network.
+
+```python
+attenuation_bounds = get_attenuation_bounds(G)
+attenuation_bounds
+
+betas = generate_attenuation_factors(
+    attenuation_bounds,
+    num_points=19)
+
+print("Valid beta values including zero:")
+print(betas)
+```
+
+Now we can compute the Bonacich power centrality scores for the valid $\beta$ values.
+
+```python
+centralities = bonacich_centrality_multiple_betas(
+    G, betas
+)
+
+centralities_df = pd.DataFrame.from_dict(
+    centralities, orient='index'
+).T
+
+centralities_df['Node'] = centralities_df.index
+centralities_df = centralities_df.round(4)
+centralities_df.head(10)
+```
+
+Let's compare the Bonacich power centrality scores for different $\beta$ values to normalized degree centrality. @fig-15_bpc_ndc shows scatter plots of power centrality versus normalized degree centrality for a range of $\beta$ values, with each subplot corresponding to a different $\beta$.
+
+```python
+degree_centrality = nx.degree_centrality(G)
+
+degree_centrality_df = pd.DataFrame.from_dict(
+    degree_centrality, orient='index', columns=['degree_centrality']
+)
+degree_centrality_df.reset_index(inplace=True)
+degree_centrality_df.rename(columns={'index': 'Node'}, inplace=True)
+
+df = pd.merge(centralities_df, degree_centrality_df, on='Node')
+
+beta_columns = [
+    col 
+    for col in df.columns 
+    if col not in ['Node', 'degree_centrality']
+]
+```
+
+
+
+```python
+num_plots = len(beta_columns)
+num_cols = 4  
+num_rows = num_plots // num_cols + int(num_plots % num_cols > 0)
+
+fig, axes = plt.subplots(
+    num_rows, 
+    num_cols, 
+    figsize=(20, 
+    num_rows * 5), 
+    sharex=True, 
+    sharey=True
+)
+
+axes = axes.flatten()
+
+for idx, beta_col in enumerate(beta_columns):
+    ax = axes[idx]
+    ax.scatter(df['degree_centrality'], df[beta_col], alpha=0.6)
+    ax.set_title(f"\nBeta = {round(beta_col, 4)}", loc='left')
+    ax.set_xlabel('Normalized Degree Centrality')
+    ax.set_ylabel('Power Centrality')
+
+for idx in range(num_plots, len(axes)):
+    fig.delaxes(axes[idx])
+
+plt.tight_layout()
+plt.savefig('figures/15_bpc_ndc.png', dpi=300)
+```
+
+![cap](figures/15_bpc_ndc.png){#fig-15_bpc_ndc}
+
+These scatter plots reveal how the relationship between degree centrality and Bonacich power centrality changes as $\beta$ varies. At $\beta = 0$, Bonacich power centrality reduces to degree centrality, which is reflected in the perfect linear relationship in the corresponding subplot, where each node's power centrality score is directly proportional to its normalized degree centrality. For positive $\beta$ values, the centrality scores begin to emphasize nodes connected to well-connected alters. The correlation with degree centrality remains positive, but with more dispersion. Nodes with high degree centrality connected to other well-connected nodes may have disproportionately higher power centrality scores. 
+
+The relationship between degree centrality and power centrality changes considerably for negative $\beta$ values. As Bonacich argued should be the case, nodes connected to poorly connected alters have higher power centrality scores. The scatter plots show negative trends, highlighting how nodes with lower degree centrality have higher power centrality, due to their alters' dependence on them.
+
+To deepen our understanding of how the attenuation factor $\beta$ influences the Bonacich power centrality scores, let's visualize the network graphs with nodes sized and colored according to their power centrality scores for each $\beta$ value. @fig-15_bpc_networks presents a series of network visualizations (small multiples), each corresponding to a different $\beta$ value.
+
+```python
+centralities_df.set_index('Node', inplace=True)
+
+pos = nx.nx_pydot.graphviz_layout(G)
+beta_columns = centralities_df.columns.tolist()
+
+num_plots = len(beta_columns)
+num_cols = 4  # Number of plots per row
+num_rows = num_plots // num_cols + int(num_plots % num_cols > 0)
+
+fig, axes = plt.subplots(
+    num_rows,
+    num_cols,
+    figsize=(20, num_rows * 5),
+    constrained_layout=True
+)
+axes = axes.flatten()
+
+for idx, beta_col in enumerate(beta_columns):
+    ax = axes[idx]
+    centrality = centralities_df[beta_col]
+    
+    # normalize centrality values within the beta, noit globally
+    beta_min = centrality.min()
+    beta_max = centrality.max()
+    norm = Normalize(vmin=beta_min, vmax=beta_max)
+    cmap = cm.viridis
+    
+    sm = ScalarMappable(cmap=cmap, norm=norm)
+    sm.set_array([])
+    
+    node_colors = [cmap(norm(centrality.loc[node])) for node in G.nodes()]
+    
+    min_size = 50
+    max_size = 300
+    size_range = max_size - min_size
+    sizes = [((centrality.loc[node] - beta_min) / (beta_max - beta_min) * size_range + min_size) if beta_max != beta_min else min_size + size_range / 2 for node in G.nodes()]
+    
+    nx.draw_networkx(
+        G,
+        pos=pos,
+        with_labels=False,
+        node_color=node_colors,
+        node_size=sizes,
+        edge_color='gray',
+        ax=ax
+    )
+    ax.set_title(r'$\beta$' + f" = {round(float(beta_col), 4)}", loc='left')
+    ax.axis('off')
+    
+    cbar = fig.colorbar(
+        sm,
+        ax=ax,
+        orientation='horizontal',
+        fraction=0.046,
+        pad=0.04
+    )
+    cbar.ax.tick_params(labelsize=8)
+    cbar.set_label('Power Centrality', fontsize=8)
+
+for idx in range(num_plots, len(axes)):
+    fig.delaxes(axes[idx])
+
+plt.savefig('figures/15_bpc_networks.png', dpi=300)
+plt.savefig('figures/15_bpc_small_multiples_force_directed.png', dpi=600)
+```
+
+@fig-15_bpc_networks reveals a few notable patterns. 
+
+As previously noted, at $\beta = 0$ (all purple nodes), the node sizes and colors reflect degree centrality. As $\beta$ increases to positive values, nodes that are connected to well-connected alters have higher centrality. As such, nodes in densely connected clusters become larger and more prominently colored. This effect is similar to eigenvector centrality, where being connected to highly central nodes increases one’s own centrality. The visualizations show centrality clustering in densely connected parts of the network.
+
+As $\beta$ decreases to negative values, the centrality scores highlight nodes connected to poorly connected alters. Nodes that serve as bridges to less-connected parts of the network become more central. In the visualizations, some previously large nodes shrink relative to their neighbors, while nodes connected to less-connected alters increase in size. This reflects the concept that power can come from brokering alters who lack alternative connections.
+
+These graphs shed light on how the attenuation factor, $\beta$, affects what we learn about power and centrality in a network through the lens of Bonacich's power centrality. As always, the choice of $\beta$ should align with the theoretical considerations of power and influence in the specific research context, and should always consider a range of parameter values.
+
+   
+> **Further Reading**    
+>
+> If you are looking to learn more on centrality analysis, Chapter 10 of Borgatti, Everett, and Johnson's [-@borgatti2018analyzing] *Analyzing Social Networks* provides a good overview. @borgatti2020three contrast three different perspectives on network centrality. @kitts2014beyond and @kitts2020rethinking offer a useful perspective on social networks in "the era of computational social science," with implications of how we interpret centrality measures with networks constructed using behavioural and interactional data.
+
+
+## CONCLUSION
+
+---
+
+### Key Points 
+
+- Learned two major ways of thinking about what centrality means: shortest paths through the network, and counting edges
+- Learned some of the most common centrality measures
+- Connected centrality measures to the theories and concepts they operationalize
+- Visualized the distribution of different centrality measures within the same network
+
+---

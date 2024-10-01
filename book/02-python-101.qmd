@@ -292,16 +292,16 @@ We know how to tell our computer to execute individual instructions (e.g., evalu
 
 Control flow statements include a **condition** that can be evaluated to either `True` or `False` (these are Boolean values, named after the mathematician George Boole), followed by a **clause**, which is an indented block of code to execute depending on whether the condition evaluates to `True` or `False`. In other words, we will execute the clause code *if the condition returns `True`* and skip over that code if the expression evaluates to `False`. Usually, the condition contains one or more of the **comparison operators** in @tbl-comparison-operators, all of which resolve an expression to a Boolean value
 
-| Comparison Operator | Meaning                     |
-|---------------------|-----------------------------|
-| `==`                | Equal to                    |
-| `!=`                | Not equal to                |
-| `>`                 | Greater than                |
-| `>=`                | Greater than or equal to    |
-| `<`                 | Less than                   |
-| `<=`                | Less than or equal to       |
+| Comparison                  | Operator |
+|:----------------------------|:---------|
+| Equal to                    | `==`     |
+| Not equal to                | `!=`     |
+| Greater than                | `>`      |
+| Greater than or equal to    | `>=`     |
+| Less than                   | `<`      |
+| Less than or equal to       | `<=`     |
 
-: Python Comparison Operators {#tbl-comparison-operators tbl-colwidths="[25,75]"}
+: Python Comparison Operators {#tbl-comparison-operators tbl-colwidths="[40,60]"}
 
 
 ```{python}
@@ -538,6 +538,8 @@ Finally, we introduced `try` and `except` statements for handling exceptions gra
 
 These foundational skills are essential as you progress in computational social science. They enable you to write more robust, efficient, and user-friendly code. In the next chapter, we'll build on this knowledge by exploring data structures, functions, and how to work with external files in Python.
 
+---
+
 ### Key Points
 
 - **Python Fundamentals**: You learned about basic data types (strings, integers, floats, Booleans) and how to assign them to variables.
@@ -547,3 +549,5 @@ These foundational skills are essential as you progress in computational social 
 - **Exception Handling**: Discovered how to handle exceptions using `try` and `except` blocks, enhancing the robustness of your code.
 - **Best Practices**: Emphasized the importance of catching specific exceptions and avoiding the use of broad `except` clauses that can mask underlying issues.
 - **Next Steps**: With these foundational skills, you're well-prepared to delve deeper into Python programming in the next chapter.
+
+---

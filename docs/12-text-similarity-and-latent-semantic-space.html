@@ -86,7 +86,7 @@ div.csl-indent {
 <meta name="quarto:offset" content="./">
 <link href="./13-social-networks-and-relational-thinking.html" rel="next">
 <link href="./11-text-as-data.html" rel="prev">
-<link href="./media/logo.png" rel="icon" type="image/png">
+<link href="./figures/logo.png" rel="icon" type="image/png">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -181,7 +181,7 @@ window.Quarto = {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
       <a href="./index.html" class="sidebar-logo-link">
-      <img src="./media/logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      <img src="./figures/logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
       </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Doing Computational Social Science<br><span class="small">The <strong>Continuous Development</strong> Edition</span></a> 
@@ -755,7 +755,7 @@ Figure&nbsp;12.1: png
 <p><span class="math display">\[
 \text{DTM} \thickapprox U \cdot S \cdot V
 \]</span></p>
-<p>Figure <span class="quarto-unresolved-ref">?fig-13_02</span> below further clarifies the relationships between these three matrices.</p>
+<p><span class="quarto-unresolved-ref">?fig-13_02</span> below further clarifies the relationships between these three matrices.</p>
 <p><embed src="figures/svd.pdf" class="img-fluid"></p>
 <p>We can use these three matrices to interpret the latent topics in our dataset. We can use <span class="math inline">\(V\)</span> to learn about the tokens most strongly associated with each latent topic, enabling us to interpret what that latent topic represents. We can use <span class="math inline">\(S\)</span> to learn roughly how important the topic is relative to the other topics. Finally, we can use <span class="math inline">\(U\)</span> to better understand how the discovered topics are distributed across the documents in our corpus.</p>
 <p>As with PCA, when we perform an SVD we will get back a number of latent components equal to the number of features in the original matrix, and those components will be sorted such that the ones explaining the most variance come first, and those explaining the least amount of variance come last. We are almost never interested in using all of the topics, so we usually select some subset of the latent components to interpret. This is called <strong>truncated SVD</strong>, and is the approach implemented in sklearn. This means we have to tell sklearn in advance how many components we want.</p>
@@ -769,7 +769,7 @@ Figure&nbsp;12.1: png
 <div class="sourceCode" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>svs <span class="op">=</span> lsa.singular_values_[:<span class="dv">20</span>]</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>svs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Each dimensions contains a <em>little bit</em> of pretty much every term in the vocabulary. When you are interpreting the meaning of the dimensions, what you want to look for is the terms that have the highest values.</p>
-<p>To make this a bit easier, we can transpose the <code>lsa.components_</code> matrix (<code>V</code> Figure <span class="quarto-unresolved-ref">?fig-13_02</span>) to create a dataframe where the rows are terms in the vocabulary and each column represents one of the latent dimensions. The score in each cell tells you how strongly associated that word is for the given topic.</p>
+<p>To make this a bit easier, we can transpose the <code>lsa.components_</code> matrix (<code>V</code> <span class="quarto-unresolved-ref">?fig-13_02</span>) to create a dataframe where the rows are terms in the vocabulary and each column represents one of the latent dimensions. The score in each cell tells you how strongly associated that word is for the given topic.</p>
 <div class="sourceCode" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># transpose the dataframe so WORDS are in the rows</span></span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>word_topics <span class="op">=</span> pd.DataFrame(lsa.components_).T </span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>column_names <span class="op">=</span> [<span class="ss">f'Topic </span><span class="sc">{</span>c<span class="sc">}</span><span class="ss">'</span> <span class="cf">for</span> c <span class="kw">in</span> np.arange(<span class="dv">1</span>,<span class="dv">101</span>,<span class="dv">1</span>)]</span>

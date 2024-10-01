@@ -81,7 +81,7 @@ We've now created an instance of spaCy's text processing pipeline. Let's put it 
 
 #### The SpaCy NLP Pipeline
 
-Once the language model has been loaded (`nlp`), we can start processing our raw text by passing it through SpaCy's default text processing pipeline, which is illustrated in Figure @fig-10_01. This is often the slowest part of a natural language processing workflow because SpaCy does a *lot* of heavy lifting right at the start. The result of this process will be something called a `Doc` object, which we will discuss momentarily; for now, let's focus on the big picture and then circle back and fill in the details on each pipeline component and data structure later.
+Once the language model has been loaded (`nlp`), we can start processing our raw text by passing it through SpaCy's default text processing pipeline, which is illustrated in @fig-10_01. This is often the slowest part of a natural language processing workflow because SpaCy does a *lot* of heavy lifting right at the start. The result of this process will be something called a `Doc` object, which we will discuss momentarily; for now, let's focus on the big picture and then circle back and fill in the details on each pipeline component and data structure later.
 
 ![](figures/spacy.pdf)
 
@@ -393,7 +393,7 @@ sentence = nlp("This book is a practical guide to computational social science")
 
 ![A visualization of syntactic dependency relationships between words.](figures/displacy.pdf)
 
-The dependency relations that SpaCy identified in this simple sentence are shown in the Table below and in Figure @fig-10_02 (produced using displacy). As you can see, SpaCy has mapped each word in our document to another word, based on a specific type of dependency relationship. Those dependency types are actually labeled on the arcs in the visualization. In Figure XXX and Table XXX, each word has a "head" (which sends a directed link to the word as a "child") but only some have "children" (which receive an incoming link from a word if they depend on it). 
+The dependency relations that SpaCy identified in this simple sentence are shown in the Table below and in @fig-10_02 (produced using displacy). As you can see, SpaCy has mapped each word in our document to another word, based on a specific type of dependency relationship. Those dependency types are actually labeled on the arcs in the visualization. In Figure XXX and Table XXX, each word has a "head" (which sends a directed link to the word as a "child") but only some have "children" (which receive an incoming link from a word if they depend on it). 
 
 | TEXT          | DEP   | HEAD TEXT | HEAD POS | CHILDREN                |
 | :------------ | :---- | :-------- | :------- | :---------------------- |
@@ -409,7 +409,7 @@ The dependency relations that SpaCy identified in this simple sentence are shown
 | science       | pobj  | to        | ADP      | [computational, social] |
 | .             | punct | is        | AUX      | []                      |
 
-Table: A table view of the syntactic dependencies shown in Figure @fig-10_02. 
+Table: A table view of the syntactic dependencies shown in @fig-10_02. 
 
 For now, what's important to understand is that SpaCy does this dependency parsing as part of the default processing pipeline (and like other parts of the pipeline, it is possible to disable it if you don't need it). However, we can extract information about these dependency relations directly from the syntactic tree, which in turn enables us to extract a variety of useful information from text with a very high degree of precision, and makes it possible to partially automate methods such as quantitative narrative analysis, briefly discussed below, which are otherwise very laborious and time consuming.
 
@@ -531,7 +531,7 @@ With that briefest of context introduced, let's turn our attention to word embed
 
 In previous chapters, we used bag-of-words models to represent individual documents as *long* and *sparse* vectors, and document collections as *wide*, *sparse* matrices (i.e., DTMs). These matrices are long because each feature represents a unique word in the vocabulary, and each cell represents something like presence / absence, frequency, or some sort of weight such as TF-IDF for each word in each document. They are sparse because most words do not appear in most documents, which means that most cells have values of 0. This approach can be very powerful for modelling latent distributions of topical content, but we actually gain more insight into what words mean by using shorter, denser vector representations, generally referred as **word embeddings**. Words are just the beginning, though. They provide a foundation we can build on to explore and model meaning and larger cultural systems in ways that were not possible just a short time ago.
 
-In bag-of-word models, we represent *documents* with long sparse vectors indicating the presence or absence, frequency, or weight of a word in each document. Embeddings differ in that they represent *words* with short dense vectors that define the local semantic contexts within wich words are used. Figure @fig-32_01 illustrates this idea of local semantic contexts using a window of 5 words that slides over each word in sentence from @neblo2018politics. This sliding window approach gives us much deeper insight into how words relate to other words, but it comes at the cost of fine-grained information about how each word relates to the documents in which they appeared. 
+In bag-of-word models, we represent *documents* with long sparse vectors indicating the presence or absence, frequency, or weight of a word in each document. Embeddings differ in that they represent *words* with short dense vectors that define the local semantic contexts within wich words are used. @fig-32_01 illustrates this idea of local semantic contexts using a window of 5 words that slides over each word in sentence from @neblo2018politics. This sliding window approach gives us much deeper insight into how words relate to other words, but it comes at the cost of fine-grained information about how each word relates to the documents in which they appeared. 
 
 ![](figures/word2vec.pdf)
 
@@ -555,7 +555,7 @@ Word2vec has two different architectures: **Continuous Bag-of-Words (CBOW)** and
 
 The shallow neural network models that word2vec use to learn the embeddings, illustrated in Figure XXX (which is adapted from @mikolov2013distributed), have a few clever modifications. In CBOW, the *non-linear* hidden layer is replaced by a much simpler *linear* projection. For each token in the data, the feature vector of the underlying token is the target, while the input to the neural network is the average of the vectors for each of the individual context tokens (ie. the vectors of the surrounding words). It's worth mentioning briefly that the Gensim implementation of word2vec gives the option to sum the context vectors rather than average them. After the neural network tries to predict the target word, the resulting probabilities are used to update the feature weights for both the target token *and* the vectors of the context tokens that were averaged. Once training is done, these updated weights provide each word with a single, dense vector of feature weights. For Skip-gram, rather than sending an averaged context vector to the neural network objective function, the input is the token under consideration and the output is error (probability) vectors for *each* context word that are then added together, before being used to update feature weights. 
 
-Second, the functions used for the prediction in the output layer are different than what we might typically use in such a neural network. The CBOW architecture replaces the traditional softmax (log-linear) classifier for the output layer with a binary logistic regression classifier, and the Skip-gram architecture replaces it with a much more efficient hierarchical softmax variant. In Figure @fig-32_02, $T$ represents the target word, and the indices represent word position in relation to the target word. 
+Second, the functions used for the prediction in the output layer are different than what we might typically use in such a neural network. The CBOW architecture replaces the traditional softmax (log-linear) classifier for the output layer with a binary logistic regression classifier, and the Skip-gram architecture replaces it with a much more efficient hierarchical softmax variant. In @fig-32_02, $T$ represents the target word, and the indices represent word position in relation to the target word. 
 
 ![](figures/word2vec_models.pdf)
 
@@ -604,7 +604,7 @@ from dcss import set_style
 set_style()
 ```
 
-Using the `plot()` function, we can plot either a single word vector, or some mathematical combination of vectors enclosed in brackets (as shown in Figure @fig-32_03). If you call `plot()` multiple times in the same cell, all of the requested vectors will show up in the figure.
+Using the `plot()` function, we can plot either a single word vector, or some mathematical combination of vectors enclosed in brackets (as shown in @fig-32_03). If you call `plot()` multiple times in the same cell, all of the requested vectors will show up in the figure.
 
 
 ```python
@@ -658,7 +658,7 @@ print("Queen and combo-vector: " + str(lang['queen'].distance(king_woman_no_man)
 
 The combined vector *that should be almost the same as "queen"* is actually still closer to the vector for "king". Given the plot above, how is this possible? This is the first caveat: word embedding vectors are *multi-dimensional* space - in this case, 300 dimensions. The best we can really plot is 3-dimensional space and the plot above is 2-dimensional. In either case, there is a LOT of data-reduction happening.
 
-Let's get a different perspective on things by using `plot_interactive()` (a screenshot of which is shown in Figure @fig-32_04). First, add the vectors to an `EmbeddingSet()` class instance. Then it's as simple as adding `.plot_interactive()` to that object, along with a few parameters, including the distance metric to use for the axes (cosine distance). 
+Let's get a different perspective on things by using `plot_interactive()` (a screenshot of which is shown in @fig-32_04). First, add the vectors to an `EmbeddingSet()` class instance. Then it's as simple as adding `.plot_interactive()` to that object, along with a few parameters, including the distance metric to use for the axes (cosine distance). 
 
 
 ```python
@@ -711,7 +711,7 @@ Now that you have some understanding of what word embeddings are, what they can 
 
 ### Data
 
-We'll use the Canadian Hansards dataset for the rest of this chapter (and the next). 
+We'll use the Canadian Hansard dataset for the rest of this chapter (and the next). 
 
 
 ```python
@@ -728,7 +728,7 @@ len(datasets)
 
 Training good word embeddings requires a lot of text, and we want to avoid loading all that text into memory at once. Gensim's algorithm expects only a single sentence at a time, so a clever way to avoid consuming a lot of memory is to store each sentence from the data on its own line in a text file, and then read that enormous text file into memory one line at a time, passing just the sentence to Gensim. That way, we never have to hold all of our data in memory at the same time. 
 
-This requires some pre-processing. The Canadian Hansards data is provided as a large collection of CSV files, each containing a single `Series` with full text for a given speech. We want to get each sentence from each speech in each dataset, while working as efficiently as possible and minimizing the amount of data held in memory.
+This requires some pre-processing. The Canadian Hansard data is provided as a large collection of CSV files, each containing a single `Series` with full text for a given speech. We want to get each sentence from each speech in each dataset, while working as efficiently as possible and minimizing the amount of data held in memory.
 
 The function below is one way to do this. It will take some time to run, but perhaps not as long as you would think, given how much data we are working with here, and given that we can use the `mp_disk` utility for multiprocessing to take advantage of available CPU cores. A less general version of the `mp` utility, `mp_disk`, accepts an iterable (e.g. a list) of the data that needs processing, the function you'll use to process it, a filename to write the results to, and any other arguments that the processing function needs. 
 
@@ -833,7 +833,7 @@ There have been a number of solutions proposed to solve this problem [e.g., @rud
 
 ### Imports
 
-Since we are working in a new virtual environment (details provided in Box XXX) with a fresh new Python kernel. We'll continue to work with the Canadian Hansards data.
+Since we are working in a new virtual environment (details provided in Box XXX) with a fresh new Python kernel. We'll continue to work with the Canadian Hansard data.
 
 
 ```python

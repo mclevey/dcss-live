@@ -86,7 +86,7 @@ div.csl-indent {
 <meta name="quarto:offset" content="./">
 <link href="./17-probability.html" rel="next">
 <link href="./15-machine-and-statistical-learning.html" rel="prev">
-<link href="./media/logo.png" rel="icon" type="image/png">
+<link href="./figures/logo.png" rel="icon" type="image/png">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -181,7 +181,7 @@ window.Quarto = {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
       <a href="./index.html" class="sidebar-logo-link">
-      <img src="./media/logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      <img src="./figures/logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
       </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Doing Computational Social Science<br><span class="small">The <strong>Continuous Development</strong> Edition</span></a> 
@@ -733,7 +733,7 @@ window.Quarto = {
 <span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(dt_scores)</span>
 <span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Mean: </span><span class="sc">{</span>dt_scores<span class="sc">.</span>mean()<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Not bad! In order to get a sense of what our tree is doing under the hood, the below diagram represents our decision tree. You start at the top node, which contains all of the observations (countries in this case). The top line in that node (and every non-leaf node in the remainder of the tree) indicates the rule it will use to split the data. All of the countries for which that statement is true will travel along the ‘True’ path for further subdivision. All of the nations for whom this condition does not apply travel along the ‘False’ path.</p>
-<p>Figure <a href="#fig-21_01" class="quarto-xref">Figure&nbsp;<span>16.1</span></a> shows the resulting image without color because it keeps the cost of the print book down. If you change the argument <code>filled=False</code> below to <code>True</code>, you can get a color version. In the color versions, the ‘strength’ of the colour represents how ‘pure’ each node is. If there’s an equal mix of both classes, the colour should desaturate entirely. The code below also writes the figure to disk. To display it in a notebook, wrap the entire function in <code>graphviz.Source()</code>. The same is true for the other decision trees later in the chapter.</p>
+<p><a href="#fig-21_01" class="quarto-xref">Figure&nbsp;<span>16.1</span></a> shows the resulting image without color because it keeps the cost of the print book down. If you change the argument <code>filled=False</code> below to <code>True</code>, you can get a color version. In the color versions, the ‘strength’ of the colour represents how ‘pure’ each node is. If there’s an equal mix of both classes, the colour should desaturate entirely. The code below also writes the figure to disk. To display it in a notebook, wrap the entire function in <code>graphviz.Source()</code>. The same is true for the other decision trees later in the chapter.</p>
 <ul>
 <li><strong>TODO</strong>: Update this.</li>
 </ul>
@@ -786,7 +786,7 @@ Figure&nbsp;16.1: cap
 <span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    class_names<span class="op">=</span>le.classes_,</span>
 <span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>dtclass_pruned.score(X_test, y_test)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Looking good! We’ve already seen a modest improvement, which probably represents a slight reduction in overfitting (something that cross-validation automatically assesses). Let’s examine the tree again (Figure <a href="#fig-21_02" class="quarto-xref">Figure&nbsp;<span>16.2</span></a>):</p>
+<p>Looking good! We’ve already seen a modest improvement, which probably represents a slight reduction in overfitting (something that cross-validation automatically assesses). Let’s examine the tree again (<a href="#fig-21_02" class="quarto-xref">Figure&nbsp;<span>16.2</span></a>):</p>
 <div id="fig-21_02" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-21_02-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -842,7 +842,7 @@ Figure&nbsp;16.2: cap
 <span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(rforest_scores)</span>
 <span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Mean: </span><span class="sc">{</span>rforest_scores<span class="sc">.</span>mean()<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>It would appear that our Random Forest model, with modest parameters, is producing the <em>exact same result</em> as we got with our bagging classifier.</p>
-<p>The downside of Random Forests is that – unlike garden-variety decision trees – the results are not so easy to interpret. For this reason, Random Forests and other ensemble models are generally considered to be less “interpretable” than simple decision trees, linear and logistic regressions, or <span class="math inline">\(k\)</span>-nearest neighbours. It’s worth knowing that you can inspect any of the trees in your Random Forest Classifier! This process is complicated somewhat by the fact that our model contains 100 distinct trees, meaning that you can’t easily determine how significant any one tree was to the overall decision making process. Nevertheless, it’s a good idea to select a tree at random and take a look at what it has done with the data. Of course, you can do this many different times, if you like. Just select different trees each time. One such tree is shown in Figure <a href="#fig-21_03" class="quarto-xref">Figure&nbsp;<span>16.3</span></a>.</p>
+<p>The downside of Random Forests is that – unlike garden-variety decision trees – the results are not so easy to interpret. For this reason, Random Forests and other ensemble models are generally considered to be less “interpretable” than simple decision trees, linear and logistic regressions, or <span class="math inline">\(k\)</span>-nearest neighbours. It’s worth knowing that you can inspect any of the trees in your Random Forest Classifier! This process is complicated somewhat by the fact that our model contains 100 distinct trees, meaning that you can’t easily determine how significant any one tree was to the overall decision making process. Nevertheless, it’s a good idea to select a tree at random and take a look at what it has done with the data. Of course, you can do this many different times, if you like. Just select different trees each time. One such tree is shown in <a href="#fig-21_03" class="quarto-xref">Figure&nbsp;<span>16.3</span></a>.</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>rforest.fit(X_train, y_train)</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>export_graphviz(</span>

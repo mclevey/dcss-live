@@ -86,7 +86,7 @@ div.csl-indent {
 <meta name="quarto:offset" content="./">
 <link href="./09-exploratory-data-analysis-and-visualization.html" rel="next">
 <link href="./07-audio-image-and-document-data.html" rel="prev">
-<link href="./media/logo.png" rel="icon" type="image/png">
+<link href="./figures/logo.png" rel="icon" type="image/png">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -181,7 +181,7 @@ window.Quarto = {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
       <a href="./index.html" class="sidebar-logo-link">
-      <img src="./media/logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      <img src="./figures/logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
       </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Doing Computational Social Science<br><span class="small">The <strong>Continuous Development</strong> Edition</span></a> 
@@ -558,20 +558,30 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link active" data-scroll-target="#learning-objectives"><span class="header-section-number">8.1</span> LEARNING OBJECTIVES</a></li>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction"><span class="header-section-number">8.2</span> INTRODUCTION</a>
+  <li><a href="#imports" id="toc-imports" class="nav-link active" data-scroll-target="#imports"><span class="header-section-number">8.1</span> Imports</a></li>
+  <li><a href="#practical-pandas-first-steps" id="toc-practical-pandas-first-steps" class="nav-link" data-scroll-target="#practical-pandas-first-steps"><span class="header-section-number">8.2</span> PRACTICAL PANDAS: FIRST STEPS</a>
   <ul class="collapse">
-  <li><a href="#imports" id="toc-imports" class="nav-link" data-scroll-target="#imports"><span class="header-section-number">8.2.1</span> Imports</a></li>
-  <li><a href="#practical-pandas-first-steps" id="toc-practical-pandas-first-steps" class="nav-link" data-scroll-target="#practical-pandas-first-steps"><span class="header-section-number">8.2.2</span> PRACTICAL PANDAS: FIRST STEPS</a></li>
-  <li><a href="#understanding-pandas-data-structures" id="toc-understanding-pandas-data-structures" class="nav-link" data-scroll-target="#understanding-pandas-data-structures"><span class="header-section-number">8.2.3</span> UNDERSTANDING PANDAS DATA STRUCTURES</a></li>
-  <li><a href="#aggregation-grouped-operations" id="toc-aggregation-grouped-operations" class="nav-link" data-scroll-target="#aggregation-grouped-operations"><span class="header-section-number">8.2.4</span> AGGREGATION &amp; GROUPED OPERATIONS</a></li>
-  <li><a href="#working-with-time-series-data" id="toc-working-with-time-series-data" class="nav-link" data-scroll-target="#working-with-time-series-data"><span class="header-section-number">8.2.5</span> WORKING WITH TIME SERIES DATA</a></li>
-  <li><a href="#combining-dataframes" id="toc-combining-dataframes" class="nav-link" data-scroll-target="#combining-dataframes"><span class="header-section-number">8.2.6</span> COMBINING DATAFRAMES</a></li>
+  <li><a href="#getting-data-into-pandas" id="toc-getting-data-into-pandas" class="nav-link" data-scroll-target="#getting-data-into-pandas"><span class="header-section-number">8.2.1</span> Getting Data into Pandas</a></li>
+  <li><a href="#what-do-you-need-selecting-columns" id="toc-what-do-you-need-selecting-columns" class="nav-link" data-scroll-target="#what-do-you-need-selecting-columns"><span class="header-section-number">8.2.2</span> What Do You Need? Selecting Columns</a></li>
+  <li><a href="#heads-tails-and-samples" id="toc-heads-tails-and-samples" class="nav-link" data-scroll-target="#heads-tails-and-samples"><span class="header-section-number">8.2.3</span> Heads, Tails, and Samples</a></li>
+  <li><a href="#what-do-you-need-filtering-rows" id="toc-what-do-you-need-filtering-rows" class="nav-link" data-scroll-target="#what-do-you-need-filtering-rows"><span class="header-section-number">8.2.4</span> What Do You Need? Filtering Rows</a></li>
+  <li><a href="#writing-data-to-disk" id="toc-writing-data-to-disk" class="nav-link" data-scroll-target="#writing-data-to-disk"><span class="header-section-number">8.2.5</span> Writing Data to Disk</a></li>
   </ul></li>
-  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">8.3</span> CONCLUSION</a>
+  <li><a href="#understanding-pandas-data-structures" id="toc-understanding-pandas-data-structures" class="nav-link" data-scroll-target="#understanding-pandas-data-structures"><span class="header-section-number">8.3</span> UNDERSTANDING PANDAS DATA STRUCTURES</a>
   <ul class="collapse">
-  <li><a href="#key-points" id="toc-key-points" class="nav-link" data-scroll-target="#key-points"><span class="header-section-number">8.3.1</span> Key Points</a></li>
+  <li><a href="#the-series" id="toc-the-series" class="nav-link" data-scroll-target="#the-series"><span class="header-section-number">8.3.1</span> The <code>Series</code></a></li>
+  <li><a href="#dataframes" id="toc-dataframes" class="nav-link" data-scroll-target="#dataframes"><span class="header-section-number">8.3.2</span> Dataframes</a></li>
+  <li><a href="#missing-data" id="toc-missing-data" class="nav-link" data-scroll-target="#missing-data"><span class="header-section-number">8.3.3</span> Missing Data</a></li>
   </ul></li>
+  <li><a href="#aggregation-grouped-operations" id="toc-aggregation-grouped-operations" class="nav-link" data-scroll-target="#aggregation-grouped-operations"><span class="header-section-number">8.4</span> AGGREGATION &amp; GROUPED OPERATIONS</a></li>
+  <li><a href="#working-with-time-series-data" id="toc-working-with-time-series-data" class="nav-link" data-scroll-target="#working-with-time-series-data"><span class="header-section-number">8.5</span> WORKING WITH TIME SERIES DATA</a></li>
+  <li><a href="#combining-dataframes" id="toc-combining-dataframes" class="nav-link" data-scroll-target="#combining-dataframes"><span class="header-section-number">8.6</span> COMBINING DATAFRAMES</a>
+  <ul class="collapse">
+  <li><a href="#merging" id="toc-merging" class="nav-link" data-scroll-target="#merging"><span class="header-section-number">8.6.1</span> Merging</a></li>
+  <li><a href="#record-linkage" id="toc-record-linkage" class="nav-link" data-scroll-target="#record-linkage"><span class="header-section-number">8.6.2</span> Record Linkage</a></li>
+  </ul></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">8.7</span> CONCLUSION</a></li>
+  <li><a href="#key-points" id="toc-key-points" class="nav-link" data-scroll-target="#key-points"><span class="header-section-number">8.8</span> Key Points</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/UWNETLAB/dcss_supplementary/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -597,8 +607,17 @@ window.Quarto = {
 </header>
 
 
-<section id="learning-objectives" class="level2" data-number="8.1">
-<h2 data-number="8.1" class="anchored" data-anchor-id="learning-objectives"><span class="header-section-number">8.1</span> LEARNING OBJECTIVES</h2>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Learning Objectives
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>By the end of this chapter, you should be able to:</p>
 <ul>
 <li>Use Pandas to load, manipulate, and summarize data</li>
 <li>Preview data using head, tail, and sample</li>
@@ -608,14 +627,27 @@ window.Quarto = {
 <li>Combine multiple dataframes by row and by column</li>
 <li>Understand the power (and pitfalls) of record linkage</li>
 </ul>
-</section>
-<section id="introduction" class="level2" data-number="8.2">
-<h2 data-number="8.2" class="anchored" data-anchor-id="introduction"><span class="header-section-number">8.2</span> INTRODUCTION</h2>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Planned Updates
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The current emphasis in this chapter is on learning use Pandas to process data. I am revising it to align with revisions for the next chapter on EDA. The new version will most likely use a different survey dataset.</p>
+</div>
+</div>
+<p><br></p>
 <p>It’s time to shift from using Python as a general programming language to using it to process data using specialized data management and analysis packages. We are going to rely primarily on two packages from a collection of packages widely referred to as Python’s “scientific stack.” The first is Pandas, which was created by Wes McKinney for analyzing <strong>pan</strong>el <strong>da</strong>ta (hence the name). It comes with special data structures, functions, and methods that you can use to take care of the vast majority of data processing operations for structured quantitative data. The second is Numpy, which is a lower-level package for efficient computation and maths. Numpy is the foundation that many other packages, including Pandas, are built on. We’re not going to cover Numpy in any significant detail here, but it’s worth knowing that Numpy provides arrays of arbitrary size and dimensionality, and is one of the pillars upon which Pandas is built.</p>
 <p>In this chapter, I will start with the basics of getting data in and out of Pandas dataframes, and previewing subsets of data. Next, I will dig deeper into Pandas core data structures (Series and dataframes), as well as <code>index</code> and <code>datetime</code> objects. I then discuss more advanced operations, such as grouping data for systematic comparisons, working with <code>datetime</code> objects for time series analysis, and combining dataframes.</p>
 <p>Pandas is a very large and complex package with an enormous amount of power, but you don’t have to learn it all at once. In fact, you shouldn’t even try! Like most other packages you will encounter in this book, you will use a small number of features very heavily, and a large number of features very rarely.</p>
-<section id="imports" class="level3" data-number="8.2.1">
-<h3 data-number="8.2.1" class="anchored" data-anchor-id="imports"><span class="header-section-number">8.2.1</span> Imports</h3>
+<section id="imports" class="level2" data-number="8.1">
+<h2 data-number="8.1" class="anchored" data-anchor-id="imports"><span class="header-section-number">8.1</span> Imports</h2>
 <div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
@@ -625,10 +657,10 @@ window.Quarto = {
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dcss <span class="im">import</span> set_style</span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>set_style()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="practical-pandas-first-steps" class="level3" data-number="8.2.2">
-<h3 data-number="8.2.2" class="anchored" data-anchor-id="practical-pandas-first-steps"><span class="header-section-number">8.2.2</span> PRACTICAL PANDAS: FIRST STEPS</h3>
-<section id="getting-data-into-pandas" class="level4" data-number="8.2.2.1">
-<h4 data-number="8.2.2.1" class="anchored" data-anchor-id="getting-data-into-pandas"><span class="header-section-number">8.2.2.1</span> Getting Data into Pandas</h4>
+<section id="practical-pandas-first-steps" class="level2" data-number="8.2">
+<h2 data-number="8.2" class="anchored" data-anchor-id="practical-pandas-first-steps"><span class="header-section-number">8.2</span> PRACTICAL PANDAS: FIRST STEPS</h2>
+<section id="getting-data-into-pandas" class="level3" data-number="8.2.1">
+<h3 data-number="8.2.1" class="anchored" data-anchor-id="getting-data-into-pandas"><span class="header-section-number">8.2.1</span> Getting Data into Pandas</h3>
 <p>The Pandas package makes it easy to load data from an external file directly into a <code>dataframe</code> object. It uses one of many reader functions that are part of a suite of <strong>I/O (input / output, read / write) tools</strong>. I’ve listed some common examples in the table below. Information on these and other reader functions can be found in the Pandas <a href="https://pandas.pydata.org/pandas-docs/stable/user_guide/io.html">documentation</a>, which also provides useful information about the parameters for each method (e.g.&nbsp;how to specify what sheet you want from an Excel spreadsheet, or whether to write the index to a new CSV file).</p>
 <table class="caption-top table">
 <caption>I/0 Methods for Pandas</caption>
@@ -673,7 +705,7 @@ window.Quarto = {
 </tbody>
 </table>
 <p>I will focus on the <code>read_csv()</code> function to demonstrate the general process. The only <em>required</em> argument is that we provide the path to the file location, but there are many useful arguments that you can pass, such as the file encoding. By default, Pandas assumes your data is encoded with UTF-8. If you see an encoding error or some strange characters in your data, you can try a different encoding, such as latin1.</p>
-<p>This chapter will use data from the Varities of Democracy (VDEM) dataset. VDEM is an ongoing research project to measure the level of democracy in governments around the world and updated versions of the dataset are released on an ongoing basis. The research is led by a team of over 50 social scientists who coordinate the collection and analysis of expert assessments from over 3,200 historians and Country Experts (CEs). From these assessments, the VDEM project has created a remarkably complex array of indicators designed to align with five high-level facets of democracy: electoral, liberal, participatory, deliberative, and egalitarian. The dataset extends back to 1789 and is considered the gold standard of quantitative data about global democratic developments. You can find the full codebook online, and I strongly recommend that you download it and consult it as you work with this data. You can find the full dataset at (https://www.v-dem.net/en/data/data/v-dem-dataset-v11/) and the codebook here (https://www.v-dem.net/media/filer_public/e0/7f/e07f672b-b91e-4e98-b9a3-78f8cd4de696/v-dem_codebook_v8.pdf). The filtered and subsetted version we will use in this book can be downloaded using the <code>download_dataset()</code> function. Note that this will also download additional VDEM materials, including the codebook.</p>
+<p>This chapter will use data from the Varities of Democracy (VDEM) dataset. VDEM is an ongoing research project to measure the level of democracy in governments around the world and updated versions of the dataset are released on an ongoing basis. The research is led by a team of over 50 social scientists who coordinate the collection and analysis of expert assessments from over 3,200 historians and Country Experts (CEs). From these assessments, the VDEM project has created a remarkably complex array of indicators designed to align with five high-level facets of democracy: electoral, liberal, participatory, deliberative, and egalitarian. The dataset extends back to 1789 and is considered the gold standard of quantitative data about global democratic developments. You can find the full codebook online, and I strongly recommend that you download it and consult it as you work with this data. You can find the full dataset at (https://www.v-dem.net/en/data/data/v-dem-dataset-v11/) and the codebook here (https://www.v-dem.net/figures/filer_public/e0/7f/e07f672b-b91e-4e98-b9a3-78f8cd4de696/v-dem_codebook_v8.pdf). The filtered and subsetted version we will use in this book can be downloaded using the <code>download_dataset()</code> function. Note that this will also download additional VDEM materials, including the codebook.</p>
 <p>Let’s load the CSV file into a Pandas <code>dataframe</code>.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>vdem_data_url <span class="op">=</span> <span class="st">"https://www.dropbox.com/scl/fo/6ay4x2qo4svyo92wbvlxt/ACtUxCDoLYxLujkekHdXiJ4?rlkey=lhmhiasjkv3ndvyxjxapi24sk&amp;st=2p76a0dw&amp;dl=0"</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -689,8 +721,8 @@ window.Quarto = {
 <div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>df.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>This is a fairly large dataset. It has 27,013 observations and 4,108 variables! First, I will construct a new dataframe <em>from this one</em> that contains only the columns I want.</p>
 </section>
-<section id="what-do-you-need-selecting-columns" class="level4" data-number="8.2.2.2">
-<h4 data-number="8.2.2.2" class="anchored" data-anchor-id="what-do-you-need-selecting-columns"><span class="header-section-number">8.2.2.2</span> What Do You Need? Selecting Columns</h4>
+<section id="what-do-you-need-selecting-columns" class="level3" data-number="8.2.2">
+<h3 data-number="8.2.2" class="anchored" data-anchor-id="what-do-you-need-selecting-columns"><span class="header-section-number">8.2.2</span> What Do You Need? Selecting Columns</h3>
 <p>I will create a list of the variable names I want to retain, and call the original dataframe followed by the name of the list in square brackets. In this case, I will retain the following variables:</p>
 <ol type="1">
 <li>the country name,</li>
@@ -713,8 +745,8 @@ window.Quarto = {
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>sdf.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>We’ve created a new dataframe called <code>sdf</code>. It still has 27,013 rows, but only 13 variables. We can print their names using the <code>.columns</code> attribute for the dataframe.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="bu">list</span>(sdf.columns)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<section id="whats-in-your-dataframe" class="level5" data-number="8.2.2.2.1">
-<h5 data-number="8.2.2.2.1" class="anchored" data-anchor-id="whats-in-your-dataframe"><span class="header-section-number">8.2.2.2.1</span> What’s in Your dataframe?</h5>
+<section id="whats-in-your-dataframe" class="level4" data-number="8.2.2.1">
+<h4 data-number="8.2.2.1" class="anchored" data-anchor-id="whats-in-your-dataframe"><span class="header-section-number">8.2.2.1</span> What’s in Your dataframe?</h4>
 <p>We can use the <code>.info()</code> method to see: the total number of observations, the total number of columns, the names of the columns, the number of non-missing observations for each, the datatype for each variable, the number of variables that contain data of each type (e.g.&nbsp;integers and floats), and the total amount of memory used by the dataframe.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>sdf.info()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>The datatypes in this dataframe are <strong><code>float64</code></strong> (numbers with decimals), <strong><code>int64</code></strong> (integers), and <strong><code>object</code></strong>. In Pandas, <code>object</code> refers to columns that contain <code>strings</code>, or mixed types, such as <code>strings</code> and <code>integers</code> (<code>object</code> encompasses many more things, too: it’s a catchall category). Pandas can also work with booleans (True or False), categorical variables, and some specialized <code>datetime</code> objects. Recall how we selected columns to make our dataset. In the code below, I use the same idea to show only a few variables, rather than all 35, to save space. We will explain this a little more later in the chapter.</p>
@@ -722,16 +754,16 @@ window.Quarto = {
 <div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>sdf[[<span class="st">'e_regiongeo'</span>, <span class="st">'year'</span>, <span class="st">'v2x_polyarchy'</span>]].describe()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 </section>
-<section id="heads-tails-and-samples" class="level4" data-number="8.2.2.3">
-<h4 data-number="8.2.2.3" class="anchored" data-anchor-id="heads-tails-and-samples"><span class="header-section-number">8.2.2.3</span> Heads, Tails, and Samples</h4>
+<section id="heads-tails-and-samples" class="level3" data-number="8.2.3">
+<h3 data-number="8.2.3" class="anchored" data-anchor-id="heads-tails-and-samples"><span class="header-section-number">8.2.3</span> Heads, Tails, and Samples</h3>
 <p>We can also inspect the “head” or the “tail” of our dataframe using the <code>.head()</code> and <code>.tail()</code> methods, which default to the first or last 5 rows in a dataframe unless you provide a different number as an argument, such as <code>.head(10)</code>.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>sdf[[<span class="st">'country_name'</span>, <span class="st">'year'</span>, <span class="st">'v2x_libdem'</span>]].head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>sdf[[<span class="st">'country_name'</span>, <span class="st">'year'</span>, <span class="st">'v2x_libdem'</span>]].tail(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>If you would prefer a random sample of rows, you can use the <code>.sample()</code> method, which requires you to specify the number of rows you want to sample.</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>sdf[[<span class="st">'country_name'</span>, <span class="st">'year'</span>, <span class="st">'v2x_libdem'</span>]].sample(<span class="dv">15</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="what-do-you-need-filtering-rows" class="level4" data-number="8.2.2.4">
-<h4 data-number="8.2.2.4" class="anchored" data-anchor-id="what-do-you-need-filtering-rows"><span class="header-section-number">8.2.2.4</span> What Do You Need? Filtering Rows</h4>
+<section id="what-do-you-need-filtering-rows" class="level3" data-number="8.2.4">
+<h3 data-number="8.2.4" class="anchored" data-anchor-id="what-do-you-need-filtering-rows"><span class="header-section-number">8.2.4</span> What Do You Need? Filtering Rows</h3>
 <p>When we executed the <code>.describe()</code> method earlier, you may have noticed that the range for the <code>year</code> variable is 1789-2019. Let’s say we have a good reason to focus on the years from 1900-2019. We will have to filter the data to have only the rows that meet my needs.</p>
 <p>There are several ways to filter rows, including slices (e.g.&nbsp;all observations between index <span class="math inline">\(i\)</span> and index <span class="math inline">\(j\)</span>), or according to some sort of explicit condition, such as “rows where the year &gt;= 1900.” Note that when we filter or slice a dataframe, the new object is just a <em>view</em> of the original and still refers to the same data. Pandas will warn us if we try to modify the filtered object, so a lot of the time, things are smoother if we make a new copy.</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>rowfilter <span class="op">=</span> sdf[<span class="st">'year'</span>] <span class="op">&gt;=</span> <span class="dv">1900</span></span>
@@ -742,25 +774,25 @@ window.Quarto = {
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>alternate_fsdf.info()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Our final dataframe – which I have called <code>fsdf</code> for <strong>f</strong>iltered and <strong>s</strong>ubsetted <strong>d</strong>ata<strong>f</strong>rame – now has 13 columns (from 4,108) and 18,787 observations (from 27,013).</p>
 </section>
-<section id="writing-data-to-disk" class="level4" data-number="8.2.2.5">
-<h4 data-number="8.2.2.5" class="anchored" data-anchor-id="writing-data-to-disk"><span class="header-section-number">8.2.2.5</span> Writing Data to Disk</h4>
+<section id="writing-data-to-disk" class="level3" data-number="8.2.5">
+<h3 data-number="8.2.5" class="anchored" data-anchor-id="writing-data-to-disk"><span class="header-section-number">8.2.5</span> Writing Data to Disk</h3>
 <p>Just as I read our initial CSV file into Pandas using the <code>read_csv()</code> function, I can write this new dataframe to disk using the <code>write_csv()</code> function.</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>fsdf.to_csv(<span class="st">'data/vdem_filtered_subset.csv'</span>, index<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 </section>
-<section id="understanding-pandas-data-structures" class="level3" data-number="8.2.3">
-<h3 data-number="8.2.3" class="anchored" data-anchor-id="understanding-pandas-data-structures"><span class="header-section-number">8.2.3</span> UNDERSTANDING PANDAS DATA STRUCTURES</h3>
+<section id="understanding-pandas-data-structures" class="level2" data-number="8.3">
+<h2 data-number="8.3" class="anchored" data-anchor-id="understanding-pandas-data-structures"><span class="header-section-number">8.3</span> UNDERSTANDING PANDAS DATA STRUCTURES</h2>
 <p>Now let’s discuss Pandas’ main data structures, Series and DataFrames, and how they relate to one another.</p>
-<section id="the-series" class="level4" data-number="8.2.3.1">
-<h4 data-number="8.2.3.1" class="anchored" data-anchor-id="the-series"><span class="header-section-number">8.2.3.1</span> The <code>Series</code></h4>
+<section id="the-series" class="level3" data-number="8.3.1">
+<h3 data-number="8.3.1" class="anchored" data-anchor-id="the-series"><span class="header-section-number">8.3.1</span> The <code>Series</code></h3>
 <p>Each column in a dataframe is an object called <strong>a Series</strong>. A Series is a one-dimensional object (e.g.&nbsp;a vector of numbers) with an index, which is itself a vector, or array, of labels.</p>
 <p>For example, the column <code>v2x_delibdem</code> in <code>fsdf</code> is a Series containing floats and the index label for each observation. Printing a sample of 15 observations gives me a numerical index for each observation on the left and the actual value on the right. The index values are ordered in the Series itself, but they are out of sequence here because we pulled a random sample. As this is for demonstration purposes, I’ve included a random_state value to ensure you get the same sample that I do if you re-run this block.</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>fsdf[<span class="st">'v2x_delibdem'</span>].sample(<span class="dv">15</span>, random_state <span class="op">=</span> <span class="dv">42</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>In most cases, the default <code>index</code> for a Series or dataframe is an immutable vector of integers:</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>fsdf.index</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>We can easily modify an index so that it is made of up some other type of vector instead, including a <code>string</code>. Surprisingly, index values do not need to be unique. This enables some powerful techniques, but most of the time, you should avoid manually changing indexes.</p>
-<section id="accessing-a-specific-row-by-its-index" class="level5" data-number="8.2.3.1.1">
-<h5 data-number="8.2.3.1.1" class="anchored" data-anchor-id="accessing-a-specific-row-by-its-index"><span class="header-section-number">8.2.3.1.1</span> Accessing a Specific Row by its Index</h5>
+<section id="accessing-a-specific-row-by-its-index" class="level4" data-number="8.3.1.1">
+<h4 data-number="8.3.1.1" class="anchored" data-anchor-id="accessing-a-specific-row-by-its-index"><span class="header-section-number">8.3.1.1</span> Accessing a Specific Row by its Index</h4>
 <p>We can use the index to retrieve specific rows from a dataframe or specific values from a Series, much as we would if we were selecting an element from a <code>list</code>, <code>tuple</code>, or <code>array</code>. The easiest way to do this is to pass the index value (e.g.&nbsp;202) to <code>.loc[]</code>. As you can see below, the result is the observation-specific value for each variable in the dataframe.</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>fsdf.loc[<span class="dv">202</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="sourceCode" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>fsdf[<span class="st">'v2x_delibdem'</span>].loc[<span class="dv">202</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -774,8 +806,8 @@ window.Quarto = {
 <p>Afterwards, <code>.loc</code> and <code>.iloc</code> become fairly interchangeable, with a few exceptions: <code>.loc</code> has dictionary-like capabilities whereas <code>.iloc</code> is more list-like. Now, let’s take a closer look at the dataframe.</p>
 </section>
 </section>
-<section id="dataframes" class="level4" data-number="8.2.3.2">
-<h4 data-number="8.2.3.2" class="anchored" data-anchor-id="dataframes"><span class="header-section-number">8.2.3.2</span> Dataframes</h4>
+<section id="dataframes" class="level3" data-number="8.3.2">
+<h3 data-number="8.3.2" class="anchored" data-anchor-id="dataframes"><span class="header-section-number">8.3.2</span> Dataframes</h3>
 <p><strong>Dataframes</strong> in Pandas are really just collections of Series that are aligned on the same index values. In other words, the Series we worked with previously have their own indices when we work with them as standalone Series, but in the <code>fsdf</code> dataframe, they share an index.</p>
 <p>As you’ve already seen, dataframes are organized with variables in the columns and observations in the rows, and you can grab a single Series from a dataframe using square brakets – let’s do that now, using the <code>fsdf</code> dataframe:</p>
 <div class="sourceCode" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>deliberative <span class="op">=</span> fsdf[<span class="st">'v2x_delibdem'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -788,8 +820,8 @@ window.Quarto = {
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>fsdf[<span class="st">'missing_political_violence_data'</span>].value_counts().reset_index()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>As you can see from executing <code>value_counts()</code>, there is missing data on levels of political violence for 6042 observations.</p>
 </section>
-<section id="missing-data" class="level4" data-number="8.2.3.3">
-<h4 data-number="8.2.3.3" class="anchored" data-anchor-id="missing-data"><span class="header-section-number">8.2.3.3</span> Missing Data</h4>
+<section id="missing-data" class="level3" data-number="8.3.3">
+<h3 data-number="8.3.3" class="anchored" data-anchor-id="missing-data"><span class="header-section-number">8.3.3</span> Missing Data</h3>
 <p>It’s important to understand how missing data is handled. Missing data is common in real-world datasets, and it can be missing for multiple reasons! Generally, Pandas uses the <code>np.nan</code> value to represent missing data. NumPy’s <code>np.nan</code> value is a special case of a floating point number representing an unrepresentable value. These kinds of values are called <strong><code>NaNs</code></strong> (Not a Number).</p>
 <div class="sourceCode" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -816,8 +848,8 @@ window.Quarto = {
 <p>As you can probably tell, the <code>.isna()</code> method, which is similar to <code>np.isnan()</code> but covers additional cases, can be very useful in transforming and filtering data.</p>
 </section>
 </section>
-<section id="aggregation-grouped-operations" class="level3" data-number="8.2.4">
-<h3 data-number="8.2.4" class="anchored" data-anchor-id="aggregation-grouped-operations"><span class="header-section-number">8.2.4</span> AGGREGATION &amp; GROUPED OPERATIONS</h3>
+<section id="aggregation-grouped-operations" class="level2" data-number="8.4">
+<h2 data-number="8.4" class="anchored" data-anchor-id="aggregation-grouped-operations"><span class="header-section-number">8.4</span> AGGREGATION &amp; GROUPED OPERATIONS</h2>
 <p>Data analysis projects often involve aggregation or grouped operations. For example, we might want to compute and compare summary statistics for observations that take different values on a categorical variable. It can be helpful to be able to carve up the dataset itself, performing operations on different subsets of data. We’re going to do that using the <code>.groupby()</code> method, which partitions the dataframe into groups based on the values of a given variable. We can then perform operations on the resulting groups. Let’s group our countries into geographic regions using the <code>e_regiongeo</code> variable.</p>
 <div class="sourceCode" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>grouped <span class="op">=</span> fsdf.groupby(<span class="st">'e_regiongeo'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>The above code returns a grouped object that we can work with. Let’s say we want to pull out a specific group, like South East Asia, which is represented in the data using the numerical ID <code>13</code>. I know this because the relevant information is provided in the VDEM codebook, which I suggest you keep open whenever you are working with the VDEM data.</p>
@@ -865,8 +897,8 @@ window.Quarto = {
 <span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>with_agg.reset_index().sample(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>We can even define our own function for <code>agg()</code> to use! If we’re willing to pass a dictionary, <code>.agg()</code> also lets us apply different functions to multiple variables at the same time! Instead of passing one list per function, you can use a dictionary where the column names are the keys and the functions are the values (you can also pass a list of functions) to perform some truly involved aggregration all in one line of code.</p>
 </section>
-<section id="working-with-time-series-data" class="level3" data-number="8.2.5">
-<h3 data-number="8.2.5" class="anchored" data-anchor-id="working-with-time-series-data"><span class="header-section-number">8.2.5</span> WORKING WITH TIME SERIES DATA</h3>
+<section id="working-with-time-series-data" class="level2" data-number="8.5">
+<h2 data-number="8.5" class="anchored" data-anchor-id="working-with-time-series-data"><span class="header-section-number">8.5</span> WORKING WITH TIME SERIES DATA</h2>
 <p>Many real world datasets include a temporal component. This is especially true if you are working with data that comes from the web, which may have precise timestamps for things like the time an email was sent, or a news story was published. Strings are often used to store dates and times, but this is not ideal because strings don’t take advantage of the unique properties of time. It is difficult to sort dates if they are stored in strings with strange formats, for example.</p>
 <div class="sourceCode" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co">"Monday Mar 2, 1999"</span> <span class="op">&gt;</span> <span class="st">"Friday Feb 21, 2020"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Extracting features like day, month, or timezone from strings can be time-consuming an error-prone. This is why Pandas and Python have implemented special types for date/time objects, called <strong>[<code>Timestamp</code>]</strong>(https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Timestamp.html) and <strong>[<code>Datetime</code>]</strong>(https://docs.python.org/2/library/datetime.html), respectively. These are essentially equivalent to one another.</p>
@@ -1059,8 +1091,8 @@ Figure&nbsp;8.2: caption…
 </div>
 <p>The plot is much cleaner when we count at the level of weeks rather than days.</p>
 </section>
-<section id="combining-dataframes" class="level3" data-number="8.2.6">
-<h3 data-number="8.2.6" class="anchored" data-anchor-id="combining-dataframes"><span class="header-section-number">8.2.6</span> COMBINING DATAFRAMES</h3>
+<section id="combining-dataframes" class="level2" data-number="8.6">
+<h2 data-number="8.6" class="anchored" data-anchor-id="combining-dataframes"><span class="header-section-number">8.6</span> COMBINING DATAFRAMES</h2>
 <p>Combining dataframes is a <em>very</em> common task. In fact, though it might not seem obvious, combining datasets is one of the most valuable skills you can have when doing computational social science. Here, we will consider some of the most common approaches: <strong>concatenating</strong> and <strong>merging</strong>, and we will briefly describe a more advanced set of methods commonly referred to as <strong>record linkage</strong>.</p>
 <p>Concatenating a dataframe is conceptually pretty simple - think of it like attaching the rows or columns of one dataframe below/to the right of the last row/column of another dataframe. For this to be useful, the two dataframes should have at least one row or column in common, but usually you would only concatenate if there were many such overlapping entries.</p>
 <div class="sourceCode" id="cb52"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>full_df <span class="op">=</span>  pd.read_csv(<span class="st">"data/vdem/filtered_subset.csv"</span>)</span>
@@ -1072,8 +1104,8 @@ Figure&nbsp;8.2: caption…
 <div class="sourceCode" id="cb54"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>concatenated <span class="op">=</span> pd.concat([df_australia, df_sa], axis<span class="op">=</span><span class="dv">1</span>)</span>
 <span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="bu">len</span>(concatenated)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>When we concatenate the two dataframes the number of columns stays the same but the number of rows increases, accounting for the rows in both the original dataframes. Normally, this kind of concatenation would result in a different number of columns, but in this case, the two dataframes we joined had the <em>exact</em> same columns (which makes sense, given that they were both extracted from the same parent dataframe).</p>
-<section id="merging" class="level4" data-number="8.2.6.1">
-<h4 data-number="8.2.6.1" class="anchored" data-anchor-id="merging"><span class="header-section-number">8.2.6.1</span> Merging</h4>
+<section id="merging" class="level3" data-number="8.6.1">
+<h3 data-number="8.6.1" class="anchored" data-anchor-id="merging"><span class="header-section-number">8.6.1</span> Merging</h3>
 <p>An alternative way to combine datasets is to <strong>merge</strong> them. If you want to create a dataframe that contains columns from multiple datasets but is aligned on rows according to some column (or set of columns), you probably want to use the <code>merge()</code> function. To illustrate this, we will work with data from two different sources. The first is the VDEM data we used in first part of this chapter (<code>fsdf</code>). The second is a dataset from Freedom House on levels of internet freedom in 65 countries. More information is available at https://freedomhouse.org/countries/freedom-net/scores.</p>
 <div class="sourceCode" id="cb55"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>download_dataset(</span>
 <span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'https://www.dropbox.com/scl/fo/fnw5yrslxza9plhqnqhxr/AA7997oGIdd3k3EjluHyLBc?rlkey=hr93qtcdp6uh7d3lsfzbc6nr6&amp;st=bz0xzw41&amp;dl=0'</span>, </span>
@@ -1105,8 +1137,8 @@ Figure&nbsp;8.2: caption…
 <span id="cb61-4"><a href="#cb61-4" aria-hidden="true" tabindex="-1"></a>freedom_missing.sort()</span>
 <span id="cb61-5"><a href="#cb61-5" aria-hidden="true" tabindex="-1"></a>pd.DataFrame({<span class="st">'VDEM'</span>: pd.Series(fsdf_missing), <span class="st">'Freedom'</span>: pd.Series(freedom_missing)})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="record-linkage" class="level4" data-number="8.2.6.2">
-<h4 data-number="8.2.6.2" class="anchored" data-anchor-id="record-linkage"><span class="header-section-number">8.2.6.2</span> Record Linkage</h4>
+<section id="record-linkage" class="level3" data-number="8.6.2">
+<h3 data-number="8.6.2" class="anchored" data-anchor-id="record-linkage"><span class="header-section-number">8.6.2</span> Record Linkage</h3>
 <p>The <code>merge</code> function works great when you can make <em>exact</em> matches between columns. It also works really well because checking for exact matches has been optimized in Pandas. However, it’s often the case that we need to combine datasets which cannot be merged based on exact matches.</p>
 <p>Instead, we often have to use <strong>inexact matching</strong> (aka “fuzzy matching” or “approximate matching”) to combine datasets. Typically, this involves using some similarity metric to measure how close two keys are to one another. Then a match is made based on thresholds, rules, or a nearest-neighbour approach. However, naively calculating similarity between all possible key combinations results in incredibly lengthy compute times. Instead, there are ways to exclude some key pairs from the beginning. This allows you to drastically reduce the number of comparisons you need to make. Additionally, inexact matching can leverage machine learning techniques which uses human curated examples to learn to predict whether two rows should be matched with one another.</p>
 <p>If this “more advanced” approach to combining datasets is of interest, I highly suggest looking into the <a href="https://github.com/J535D165/recordlinkage"><code>recordlinkage</code></a> Python package.</p>
@@ -1116,17 +1148,19 @@ Figure&nbsp;8.2: caption…
 </blockquote>
 </section>
 </section>
+<section id="conclusion" class="level2" data-number="8.7">
+<h2 data-number="8.7" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">8.7</span> CONCLUSION</h2>
+<hr>
 </section>
-<section id="conclusion" class="level2" data-number="8.3">
-<h2 data-number="8.3" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">8.3</span> CONCLUSION</h2>
-<section id="key-points" class="level3" data-number="8.3.1">
-<h3 data-number="8.3.1" class="anchored" data-anchor-id="key-points"><span class="header-section-number">8.3.1</span> Key Points</h3>
+<section id="key-points" class="level2" data-number="8.8">
+<h2 data-number="8.8" class="anchored" data-anchor-id="key-points"><span class="header-section-number">8.8</span> Key Points</h2>
 <ul>
 <li>In this chapter, we expanded into the world of processing structured data using Pandas; these are <em>critical</em> skills for computational social scientists</li>
 <li>We covered the basic Pandas data structures, Series and dataframes, and the <code>index</code> and <code>datetime</code> objects</li>
 <li>We discussed how to subset dataframes by selecting columns and filtering rows, followed by a discussion of how to do systematic comparisons by performing operations on grouped dataframes</li>
 <li>We then discussed how to combine multiple dataframes using <code>merge</code> and <code>concatenate</code> and introduced the general idea of record linkage.</li>
 </ul>
+<hr>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
@@ -1134,7 +1168,6 @@ Figure&nbsp;8.2: caption…
 VanderPlas, Jake. 2016. <em>Python Data Science Handbook: Essential Tools for Working with Data</em>. " O’Reilly Media, Inc.".
 </div>
 </div>
-</section>
 </section>
 
 </main> <!-- /main -->

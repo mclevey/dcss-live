@@ -60,7 +60,7 @@ In previous chapters, we developed and described our Bayesian models using stati
 2. our assumptions about the structure of statistical dependencies between all the variables in our model, and relatedly
 3. our assumptions about the generative processes that give rise to the data we observe. 
 
-Graphical models are a favoured tool in probabilistic machine learning in particular [@koller2009probabilistic; @mcelreath2020statistical; @pearl2018book; @jordan2004graphical; @jordan2003introduction], and you'll see them everywhere in the generative topic modelling literature. Though they can be a little confusing at first, they are transparent once you know how to read them. Let's break down the graphical representation of a vanilla LDA topic model, shown in Figure @fig-30_01.  
+Graphical models are a favoured tool in probabilistic machine learning in particular [@koller2009probabilistic; @mcelreath2020statistical; @pearl2018book; @jordan2004graphical; @jordan2003introduction], and you'll see them everywhere in the generative topic modelling literature. Though they can be a little confusing at first, they are transparent once you know how to read them. Let's break down the graphical representation of a vanilla LDA topic model, shown in @fig-30_01.  
 
 ![](figures/lda.png)
 
@@ -107,13 +107,13 @@ As with other Bayesian models, we can't derive the posterior from the joint dist
 
 Like the probabilistic models we've developed, probabilistic topic models are built out of probability distributions! The 'Dirichlet' portion in Latent Dirichlet Allocation (often written as Dir($\alpha$) is just another probability distribution of the kind discussed in Chapter 26. It's a generalization of the idea of a triangle (called the **simplex**), only it can have an arbitrary number of sides... What?
 
-These kinds of descriptions (generalization of a triangle) are useful for those already deeply familiar with mathematical geometry or multidimensional probability distributions, but they're unlikely to get the rest of us very far. That said, with a little scaffolding, this will quickly make sense. In the probability primer chapter, we established that some probability distributions only cover some parts of the real number line; the exponential distribution, for instance, only supports positive values. The 'beta distribution' takes this idea a bit further: it only supports values from 0 to 1, inclusive. It takes two parameters, $\alpha$ and $\beta$, which jointly control the shape of the curve. You can think of the two as representing inversely correlated axes, both trying to pull more of the probability density towards the side of the distribution that they're more positive in (so $\alpha$ pulls to the right, towards 1, $\beta$ pulls to the left, towards 0). Here's an example of one where $\beta$ is doing more of the pushing (Figure @fig-30_02):
+These kinds of descriptions (generalization of a triangle) are useful for those already deeply familiar with mathematical geometry or multidimensional probability distributions, but they're unlikely to get the rest of us very far. That said, with a little scaffolding, this will quickly make sense. In the probability primer chapter, we established that some probability distributions only cover some parts of the real number line; the exponential distribution, for instance, only supports positive values. The 'beta distribution' takes this idea a bit further: it only supports values from 0 to 1, inclusive. It takes two parameters, $\alpha$ and $\beta$, which jointly control the shape of the curve. You can think of the two as representing inversely correlated axes, both trying to pull more of the probability density towards the side of the distribution that they're more positive in (so $\alpha$ pulls to the right, towards 1, $\beta$ pulls to the left, towards 0). Here's an example of one where $\beta$ is doing more of the pushing (@fig-30_02):
 
 ![](figures/beta_distribution.png)
 
 The beta distribution is remarkably flexible: you should look up some examples of the shapes it can take! 
 
-Since the beta distribution only supports values from 0 to 1, what would it look like if we tacked on a second dimension to this distribution? See for yourself, in Figure @fig-30_03.
+Since the beta distribution only supports values from 0 to 1, what would it look like if we tacked on a second dimension to this distribution? See for yourself, in @fig-30_03.
 
 ![](figures/dirichlet_plots.png)
 
@@ -195,7 +195,7 @@ q(Z; \nu)
 
 We pick some initial value for $\nu$ and then gradually modify it until we find parameter settings that make the distribution as close to the posterior $p(Z | X)$ as possible. We assess closeness by measuring the distance between the two distrubutions using a measure from information theory called KL Divergence. Once we know those parameter settings, we can use $q(Z; \nu)$ as a proxy for the posterior.
 
-This is represented in Figure @fig-30_04, which is adapted from @blei_talk. We represent the family of distributions $q(Z ; \nu)$ as an ellipse, and every position within that ellipse represents a specific instantiation of the variational family, indexed by $\nu$. The squiggly gray line represents different realizations along the way to finding the parameterized distribution that is closest to the posterior, measured with KL divergence. 
+This is represented in @fig-30_04, which is adapted from @blei_talk. We represent the family of distributions $q(Z ; \nu)$ as an ellipse, and every position within that ellipse represents a specific instantiation of the variational family, indexed by $\nu$. The squiggly gray line represents different realizations along the way to finding the parameterized distribution that is closest to the posterior, measured with KL divergence. 
 
 ![An illustration of the logic of variational inference, adapted from [David Blei (2017)](https://www.youtube.com/watch?v=Dv86zdWjJKQ)](figures/variational_inference.png)
 
@@ -843,7 +843,7 @@ save_html(vis, 'data/misc/ldavis_full_model.html')
 
 ![](figures/ldavis_full_model_topic_20.png)
 
-Of course, I can't show the interactive results here on the printed page, but what you will see in your browser will be something like the graph shown in Figure @fig-30_05. These maps contain a *lot* of information, so it's worth taking your time to explore them fully.
+Of course, I can't show the interactive results here on the printed page, but what you will see in your browser will be something like the graph shown in @fig-30_05. These maps contain a *lot* of information, so it's worth taking your time to explore them fully.
 
 How do you read this? On the left we have a two-dimensional representation of the distances between topics. The distances between topics are computed with Jensen-Shannon divergence (which is a way of measuring the distance between two probability distributions [@lin1991divergence]), and then a principal components analysis is performed on the results. The interactive graph says the map is produced "via multidimensional scaling" because MDS is a *general* class of analysis and PCA is a *specific* method. Topics that are closer together in the map are more similar. Topics that are further away from one another are dissimilar. *However*, recall that we don't know how much variance in the data is actually accounted for with these two dimensions, so we should assume that, like other text analyses, the first two principal components don't actually account for much variance. Accordingly, we should interpret the spatial relationships between topics with a *healthy dose* of scepticism. Finally, the size of the topic in this map is related to how common it is. Bigger topics are more common. Smaller topics are rare. Sizing points like this is generally not considered best data visualization practice, but we are not focused on comparing topics on their size, so it's generally okay.
 

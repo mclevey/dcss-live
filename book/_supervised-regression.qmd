@@ -304,7 +304,7 @@ Our CV $R^2$ score is a good deal lower than our score from Ridge regression.
 
 We might be able to squeeze a bit more life out of our regularized models by tweaking the 'alpha' hyperparameter. If not specified, 'alpha' defaults to 1. As $\alpha$ increases, the model becomes more simple, more constrained, and more regularized. As it decreases, the model becomes more complex, less constrained, less regularized.
 
-Let's compare the results of a series of Ridge and Lasso regressions on this data using different 'alpha' parameters. We will define a set of 'alpha' values, estimate a series of ridge and lasso regressions, and then plot their $R^2$ scores for comparison (Figure @fig-20_01).
+Let's compare the results of a series of Ridge and Lasso regressions on this data using different 'alpha' parameters. We will define a set of 'alpha' values, estimate a series of ridge and lasso regressions, and then plot their $R^2$ scores for comparison (@fig-20_01).
 
 ```python
 alphas = np.linspace(0.01, 2, 50)

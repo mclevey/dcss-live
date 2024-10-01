@@ -44,7 +44,9 @@ pop2018 = [37_468_000, 28_514_000, 25_582_000, 21_650_000, 21_581_000, 20_076_00
 ```
 
 Every item in a list has an **index** based on its position in that list. Indices are integers, and in Python, **indexing starts at 0**, which means that the first item in any list starts at index 0. In the `megacities` list, the index for `'Tokyo'` is 0, `'Delhi'` is 1, `'Shanghai'` is 2, and so on.
+
 ![Indexing in Python starts at 0, not 1.](figures/indexes.png)
+
 We can use the index to select a specific item from a list by typing the name of the list and then the index number inside square brackets:
 
 ```python
@@ -187,7 +189,7 @@ print(f'The population of {megacities[4]} in 2018 was {pop2018[4]}')  # Might pr
 
 #### Zipping and Unzipping Lists
 
-When you have data spread out over multiple lists, it can be useful to **zip** those lists together so that all the items with an index of 0 are associated with one another, all the items with an index of 1 are associated, and so on. The most straightforward way to do this is to use the `zip()` function, which is illustrated in Figure @fig-04_02 and the code block below. Clever usage of `zip()` can accomplish a great deal using very few lines of code.
+When you have data spread out over multiple lists, it can be useful to **zip** those lists together so that all the items with an index of 0 are associated with one another, all the items with an index of 1 are associated, and so on. The most straightforward way to do this is to use the `zip()` function, which is illustrated in @fig-04_02 and the code block below. Clever usage of `zip()` can accomplish a great deal using very few lines of code.
 
 ![cap](figures/zip.png){#fig-04_02}
 
@@ -698,5 +700,3 @@ By mastering these concepts, you're building a strong foundation for more advanc
 - **Modern Practices**: Employing modules like `pathlib` and proper exception handling aligns your code with contemporary best practices.
 
 ---
-
-With these tools in your arsenal, you're well-prepared to continue your Python journey. In the next chapters, we'll apply these skills to collect, process, and analyze real-world data, further bridging the gap between programming and computational social science research.

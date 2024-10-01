@@ -66,7 +66,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <meta name="quarto:offset" content="./">
 <link href="./18-credibility.html" rel="next">
 <link href="./16-prediction.html" rel="prev">
-<link href="./media/logo.png" rel="icon" type="image/png">
+<link href="./figures/logo.png" rel="icon" type="image/png">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -161,7 +161,7 @@ window.Quarto = {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
       <a href="./index.html" class="sidebar-logo-link">
-      <img src="./media/logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      <img src="./figures/logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
       </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Doing Computational Social Science<br><span class="small">The <strong>Continuous Development</strong> Edition</span></a> 
@@ -651,7 +651,7 @@ window.Quarto = {
 <p><span class="math display">\[
 \cap P(A_{i}) = \emptyset, \text{ then } \cup P(A_i) = P(A_1) + P(A_2) + ... + P(A_n)
 \]</span></p>
-<p>These two expressions are saying the same thing. The <span class="math inline">\(\cup\)</span> represents the set theoretic concept of the union of two events and the <span class="math inline">\(\cap\)</span> symbol represents their intersection. Consider the simple venn diagram in Figure <a href="#fig-25_01" class="quarto-xref">Figure&nbsp;<span>17.1</span></a>.</p>
+<p>These two expressions are saying the same thing. The <span class="math inline">\(\cup\)</span> represents the set theoretic concept of the union of two events and the <span class="math inline">\(\cap\)</span> symbol represents their intersection. Consider the simple venn diagram in <a href="#fig-25_01" class="quarto-xref">Figure&nbsp;<span>17.1</span></a>.</p>
 <p><embed src="figures/sets.pdf" class="img-fluid"></p>
 <p>Two events, A and B, intersect in the top of the figure. The point at which they intersect is the portion of the venn diagram where the two events overlap one another. This intersection is represented by the symbol <span class="math inline">\(\cap\)</span>. If the two events do <em>not</em> intersect, as in the bottom of the figure, then the intersection (<span class="math inline">\(\cap\)</span>) of the two sets is empty. We represent this emptiness with the symbol <span class="math inline">\(\emptyset\)</span>. In essence, all the third axiom is saying is that if two events are disjoint, then the probability of either of those two events happening is the probability of the first event plus the probability of the second event. That’s it.</p>
 <p>These iron-clad rules are paraphrased versions of the original trio, known as ‘Kolmogorov Axioms’ after the mathematician Andrey Kolmogorov. Together, they produce a number of useful features that we’ll explore and exploit throughout the rest of this book.</p>
@@ -686,7 +686,7 @@ P(7) = \frac{1}{10} = 0.1
 <div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>n_possible_events <span class="op">=</span> <span class="dv">6</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>samples <span class="op">=</span> np.random.randint(<span class="dv">1</span>, n_possible_events<span class="op">+</span><span class="dv">1</span>, <span class="dv">10_000</span>)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>Counter(samples)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Good! That’s exactly what we would expect to see (<code>1 / n_possible_events * 10_000 = 1666.666</code>) when drawing so many samples from a uniform distribution. But what if we had drawn a smaller number of samples? Let’s do few more simulations and visualize the results (Figure <span class="quarto-unresolved-ref">?fig-25_02</span>). We will add a red line showing <span class="math inline">\(E[X]\)</span>, the expected value.</p>
+<p>Good! That’s exactly what we would expect to see (<code>1 / n_possible_events * 10_000 = 1666.666</code>) when drawing so many samples from a uniform distribution. But what if we had drawn a smaller number of samples? Let’s do few more simulations and visualize the results (<span class="quarto-unresolved-ref">?fig-25_02</span>). We will add a red line showing <span class="math inline">\(E[X]\)</span>, the expected value.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>uniform_sim_1 <span class="op">=</span> np.random.randint(<span class="dv">1</span>, n_possible_events<span class="op">+</span><span class="dv">1</span>, <span class="dv">6</span>)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>uniform_sim_2 <span class="op">=</span> np.random.randint(<span class="dv">1</span>, n_possible_events<span class="op">+</span><span class="dv">1</span>, <span class="dv">100</span>)</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>uniform_sim_3 <span class="op">=</span> np.random.randint(<span class="dv">1</span>, n_possible_events<span class="op">+</span><span class="dv">1</span>, <span class="dv">1_000</span>)</span>
@@ -776,7 +776,7 @@ P(3) &amp;= 0.1171875
 <p>Again, let’s use simulations to deepen our understanding. We’ll need to provide the number of Bernoulli trials we would like to run. Since we can calculate the one probability using the other, we only need the probability of the “success” outcome, <span class="math inline">\(p\)</span>, of our Bernoulli trial. We also provide the number of random samples we draw from the binomial distribution.</p>
 <p>It is worth stressing the difference between the number of Bernoulli trials and the number of samples we draw. In the above example, <span class="math inline">\(n\)</span> is the number of Bernoulli trials, or coin flips. The number of samples we draw does not feature in the equation: each time we draw a sample, we are essentially flipping 10 coins and tallying the results.</p>
 <p>Before running the simulations, consider what would you <em>expect</em> to see given different values for the probability of the success condition, <span class="math inline">\(p\)</span>. If <span class="math inline">\(p\)</span> were 0.8, for example, what do you think you might see with an <span class="math inline">\(n\)</span> of 40? How do you think distribution would change with different values for <span class="math inline">\(n\)</span> and <span class="math inline">\(p\)</span>?</p>
-<p>The results are shown in Figure <a href="#fig-25_03" class="quarto-xref">Figure&nbsp;<span>17.2</span></a>.</p>
+<p>The results are shown in <a href="#fig-25_03" class="quarto-xref">Figure&nbsp;<span>17.2</span></a>.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>binomial_sim_1 <span class="op">=</span> np.random.binomial(<span class="dv">20</span>, <span class="fl">0.5</span>, <span class="dv">10_000</span>)</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>binomial_sim_2 <span class="op">=</span> np.random.binomial(<span class="dv">20</span>, <span class="fl">0.8</span>, <span class="dv">10_000</span>)</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>binomial_sim_3 <span class="op">=</span> np.random.binomial(<span class="dv">10</span>, <span class="fl">0.5</span>, <span class="dv">10_000</span>)</span>
@@ -851,7 +851,7 @@ P(x) = \frac{1}{\sigma\sqrt{2\pi}}e^{-\frac{1}{2}(\frac{x-\mu}{\sigma})^2}
 <li><span class="math inline">\(\pi\)</span> is the mathematical constant pi (<span class="math inline">\(\approx\)</span> 3.14159…)</li>
 </ul>
 <p>A standard deviation of 0 indicates that every observation is the same as the mean value. The larger the standard deviation, the further away from the mean the average observation will be.</p>
-<p>Let’s start simulating! We’ll use Numpy’s <code>random.normal()</code> to perform four simulations, each pulling 10,000 samples from normal distributions with slightly different parameters. The first two arguments indicate the mean and standard deviation for the normal distribution, and the third indicates the number of samples we’ll draw. Results are shown in Figure <a href="#fig-25_04" class="quarto-xref">Figure&nbsp;<span>17.3</span></a>.</p>
+<p>Let’s start simulating! We’ll use Numpy’s <code>random.normal()</code> to perform four simulations, each pulling 10,000 samples from normal distributions with slightly different parameters. The first two arguments indicate the mean and standard deviation for the normal distribution, and the third indicates the number of samples we’ll draw. Results are shown in <a href="#fig-25_04" class="quarto-xref">Figure&nbsp;<span>17.3</span></a>.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>normal_sim_1 <span class="op">=</span> np.random.normal(<span class="dv">0</span>, <span class="fl">0.1</span>, <span class="dv">10_000</span>)</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>normal_sim_2 <span class="op">=</span> np.random.normal(<span class="dv">0</span>, <span class="fl">0.2</span>, <span class="dv">10_000</span>)</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>normal_sim_3 <span class="op">=</span> np.random.normal(<span class="dv">0</span>, <span class="fl">0.3</span>, <span class="dv">10_000</span>)</span>
@@ -905,7 +905,7 @@ P(x) = \lambda e^{\lambda x}
 <p><span class="math display">\[
 P(x) = \frac{1}{\beta} e^{-\frac{x}{\beta}}
 \]</span></p>
-<p>Let’s jump right into the simulations. Results shown in Figure <a href="#fig-25_05" class="quarto-xref">Figure&nbsp;<span>17.4</span></a>.</p>
+<p>Let’s jump right into the simulations. Results shown in <a href="#fig-25_05" class="quarto-xref">Figure&nbsp;<span>17.4</span></a>.</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>exponential_sim_1 <span class="op">=</span> np.random.exponential(<span class="dv">1</span>, <span class="dv">10000</span>)</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>exponential_sim_2 <span class="op">=</span> np.random.exponential(<span class="dv">2</span>, <span class="dv">10000</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots()</span>

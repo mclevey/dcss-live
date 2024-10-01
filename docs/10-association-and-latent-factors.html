@@ -86,7 +86,7 @@ div.csl-indent {
 <meta name="quarto:offset" content="./">
 <link href="./11-text-as-data.html" rel="next">
 <link href="./09-exploratory-data-analysis-and-visualization.html" rel="prev">
-<link href="./media/logo.png" rel="icon" type="image/png">
+<link href="./figures/logo.png" rel="icon" type="image/png">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -181,7 +181,7 @@ window.Quarto = {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
       <a href="./index.html" class="sidebar-logo-link">
-      <img src="./media/logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      <img src="./figures/logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
       </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Doing Computational Social Science<br><span class="small">The <strong>Continuous Development</strong> Edition</span></a> 
@@ -558,26 +558,19 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link active" data-scroll-target="#learning-objectives"><span class="header-section-number">10.1</span> LEARNING OBJECTIVES</a></li>
-  <li><a href="#learning-materials" id="toc-learning-materials" class="nav-link" data-scroll-target="#learning-materials"><span class="header-section-number">10.2</span> LEARNING MATERIALS</a></li>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction"><span class="header-section-number">10.3</span> INTRODUCTION</a>
+  <li><a href="#imports-and-data-preparation" id="toc-imports-and-data-preparation" class="nav-link active" data-scroll-target="#imports-and-data-preparation"><span class="header-section-number">10.1</span> Imports and Data Preparation</a></li>
+  <li><a href="#latent-variables-and-the-curse-of-dimensionality" id="toc-latent-variables-and-the-curse-of-dimensionality" class="nav-link" data-scroll-target="#latent-variables-and-the-curse-of-dimensionality"><span class="header-section-number">10.2</span> LATENT VARIABLES AND THE CURSE OF DIMENSIONALITY</a>
   <ul class="collapse">
-  <li><a href="#imports-and-data-preparation" id="toc-imports-and-data-preparation" class="nav-link" data-scroll-target="#imports-and-data-preparation"><span class="header-section-number">10.3.1</span> Imports and Data Preparation</a></li>
+  <li><a href="#theory-first-measuring-latent-variables-with-exploratory-factor-analysis" id="toc-theory-first-measuring-latent-variables-with-exploratory-factor-analysis" class="nav-link" data-scroll-target="#theory-first-measuring-latent-variables-with-exploratory-factor-analysis"><span class="header-section-number">10.2.1</span> Theory First: Measuring Latent Variables with Exploratory Factor Analysis</a></li>
   </ul></li>
-  <li><a href="#latent-variables-and-the-curse-of-dimensionality" id="toc-latent-variables-and-the-curse-of-dimensionality" class="nav-link" data-scroll-target="#latent-variables-and-the-curse-of-dimensionality"><span class="header-section-number">10.4</span> LATENT VARIABLES AND THE CURSE OF DIMENSIONALITY</a>
+  <li><a href="#conducting-a-principal-component-analysis-in-sklearn" id="toc-conducting-a-principal-component-analysis-in-sklearn" class="nav-link" data-scroll-target="#conducting-a-principal-component-analysis-in-sklearn"><span class="header-section-number">10.3</span> CONDUCTING A PRINCIPAL COMPONENT ANALYSIS IN SKLEARN</a>
   <ul class="collapse">
-  <li><a href="#theory-first-measuring-latent-variables-with-exploratory-factor-analysis" id="toc-theory-first-measuring-latent-variables-with-exploratory-factor-analysis" class="nav-link" data-scroll-target="#theory-first-measuring-latent-variables-with-exploratory-factor-analysis"><span class="header-section-number">10.4.1</span> Theory First: Measuring Latent Variables with Exploratory Factor Analysis</a></li>
+  <li><a href="#standardization" id="toc-standardization" class="nav-link" data-scroll-target="#standardization"><span class="header-section-number">10.3.1</span> Standardization</a></li>
+  <li><a href="#back-to-pca" id="toc-back-to-pca" class="nav-link" data-scroll-target="#back-to-pca"><span class="header-section-number">10.3.2</span> Back to PCA!</a></li>
+  <li><a href="#matrix-decomposition-eigenvalues-eigenvectors-and-extracting-components" id="toc-matrix-decomposition-eigenvalues-eigenvectors-and-extracting-components" class="nav-link" data-scroll-target="#matrix-decomposition-eigenvalues-eigenvectors-and-extracting-components"><span class="header-section-number">10.3.3</span> Matrix Decomposition: Eigenvalues, Eigenvectors, and Extracting Components</a></li>
   </ul></li>
-  <li><a href="#conducting-a-principal-component-analysis-in-sklearn" id="toc-conducting-a-principal-component-analysis-in-sklearn" class="nav-link" data-scroll-target="#conducting-a-principal-component-analysis-in-sklearn"><span class="header-section-number">10.5</span> CONDUCTING A PRINCIPAL COMPONENT ANALYSIS IN SKLEARN</a>
-  <ul class="collapse">
-  <li><a href="#standardization" id="toc-standardization" class="nav-link" data-scroll-target="#standardization"><span class="header-section-number">10.5.1</span> Standardization</a></li>
-  <li><a href="#back-to-pca" id="toc-back-to-pca" class="nav-link" data-scroll-target="#back-to-pca"><span class="header-section-number">10.5.2</span> Back to PCA!</a></li>
-  <li><a href="#matrix-decomposition-eigenvalues-eigenvectors-and-extracting-components" id="toc-matrix-decomposition-eigenvalues-eigenvectors-and-extracting-components" class="nav-link" data-scroll-target="#matrix-decomposition-eigenvalues-eigenvectors-and-extracting-components"><span class="header-section-number">10.5.3</span> Matrix Decomposition: Eigenvalues, Eigenvectors, and Extracting Components</a></li>
-  </ul></li>
-  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">10.6</span> CONCLUSION</a>
-  <ul class="collapse">
-  <li><a href="#key-points" id="toc-key-points" class="nav-link" data-scroll-target="#key-points"><span class="header-section-number">10.6.1</span> Key Points</a></li>
-  </ul></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">10.4</span> CONCLUSION</a></li>
+  <li><a href="#key-points" id="toc-key-points" class="nav-link" data-scroll-target="#key-points"><span class="header-section-number">10.5</span> Key Points</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/UWNETLAB/dcss_supplementary/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -603,25 +596,30 @@ window.Quarto = {
 </header>
 
 
-<section id="learning-objectives" class="level2" data-number="10.1">
-<h2 data-number="10.1" class="anchored" data-anchor-id="learning-objectives"><span class="header-section-number">10.1</span> LEARNING OBJECTIVES</h2>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Learning Objectives
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>By the end of this chapter, you should be able to:</p>
 <ul>
 <li>Explain what latent variables, components, dimensions, and clusters are</li>
 <li>Explain what the the ‘curse of dimensionality’ is, and why it matters in computational social science</li>
 <li>Explain what dimensionality reduction methods are, and describe the basic logic of linear dimensionality reduction using theory-driven approaches (Exploratory Factor Analysis) and data-driven approaches (Principal Component Analysis)</li>
 <li>Perform linear dimensionality reduction using Principle Component Analysis (PCA)</li>
 </ul>
-</section>
-<section id="learning-materials" class="level2" data-number="10.2">
-<h2 data-number="10.2" class="anchored" data-anchor-id="learning-materials"><span class="header-section-number">10.2</span> LEARNING MATERIALS</h2>
-<p>You can find the online learning materials for this chapter in <code>doing_computational_social_science/Chapter_09</code>. <code>cd</code> into the directory and launch your Jupyter Server.</p>
-</section>
-<section id="introduction" class="level2" data-number="10.3">
-<h2 data-number="10.3" class="anchored" data-anchor-id="introduction"><span class="header-section-number">10.3</span> INTRODUCTION</h2>
+</div>
+</div>
+<p><br></p>
 <p>This chapter introduces additional methods for conducting exploratory data analysis and inductive discovery. You may have encountered them previously when learning multivariate statistics. In machine learning, these methods are typically referred to as “unsupervised” because we discover and interpret latent patterns in the data <em>inductively</em>, but for now, you can think of them as a form of multivariate exploratory data analysis.</p>
 <p>We will begin with an introduction to the idea of latent variables: abstract constructs that we cannot observe, but which we hypothesize to have effects in the data. We will distinguish between two main ways of dealing with this problem: Exploratory Factor Analysis (EFA) for theory-driven efforts to measure latent variables, and Principal Component Analysis (PCA) for data-driven efforts to mitigate the “curse of dimensionality,” facilitate more inductive and interpretive work, and improve the quality of downstream analyses.</p>
-<section id="imports-and-data-preparation" class="level3" data-number="10.3.1">
-<h3 data-number="10.3.1" class="anchored" data-anchor-id="imports-and-data-preparation"><span class="header-section-number">10.3.1</span> Imports and Data Preparation</h3>
+<section id="imports-and-data-preparation" class="level2" data-number="10.1">
+<h2 data-number="10.1" class="anchored" data-anchor-id="imports-and-data-preparation"><span class="header-section-number">10.1</span> Imports and Data Preparation</h2>
 <p>We will make extensive use of the Sklearn package in this chapter. Sklearn is very important and widely-used in machine learning, and it features heavily in the rest of this book. Some of the methods we introduce here are also implemented in other Python packages, including statsmodels, which implements a wide-variety of statistical models. If it suits your needs better, you should feel free to use statsmodels instead.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -647,9 +645,14 @@ window.Quarto = {
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df.query(<span class="st">'year == 2019'</span>).reset_index()</span>
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>df.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Now that we have the VDEM data from 2019 loaded up, we can select the columns we will use in our analyses. In this case, we want the country name as well as a series of variables related to political deliberation, civil society, media and internet, private and political liberties, and the executive. The specific variables we will use in each of these categories are given in the table below. Given that I don’t have space to discuss each variable (there are 35 of them in total), I recommend that you consult the VDEM codebook to ensure you know what each represents.</p>
+<p>Now that we have the VDEM data from 2019 loaded up, we can select the columns we will use in our analyses. In this case, we want the country name as well as a series of variables related to political deliberation, civil society, media and internet, private and political liberties, and the executive. The specific variables we will use in each of these categories are given in <a href="#tbl-vdemvars" class="quarto-xref">Table&nbsp;<span>10.1</span></a>. Given that I don’t have space to discuss each variable (there are 35 of them in total), I recommend that you consult the VDEM codebook to ensure you know what each represents.</p>
+<div id="tbl-vdemvars" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-vdemvars-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;10.1: Table: VDEM variables used in this chapter.
+</figcaption>
+<div aria-describedby="tbl-vdemvars-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="caption-top table">
-<caption>VDEM variables used in this chapter.</caption>
 <colgroup>
 <col style="width: 15%">
 <col style="width: 16%">
@@ -739,6 +742,9 @@ window.Quarto = {
 </tr>
 </tbody>
 </table>
+</div>
+</figure>
+</div>
 <p>We will create a list of these indicator variables names that we can use to subset the larger dataframe.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>indicators <span class="op">=</span> [</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'v2dlreason'</span>, </span>
@@ -786,13 +792,12 @@ window.Quarto = {
 <p>All we need to finish preparing our data is to get our indicator variables into a Numpy array. We will do some additional cleaning a bit later in the chapter.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> df.to_numpy() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-</section>
-<section id="latent-variables-and-the-curse-of-dimensionality" class="level2" data-number="10.4">
-<h2 data-number="10.4" class="anchored" data-anchor-id="latent-variables-and-the-curse-of-dimensionality"><span class="header-section-number">10.4</span> LATENT VARIABLES AND THE CURSE OF DIMENSIONALITY</h2>
+<section id="latent-variables-and-the-curse-of-dimensionality" class="level2" data-number="10.2">
+<h2 data-number="10.2" class="anchored" data-anchor-id="latent-variables-and-the-curse-of-dimensionality"><span class="header-section-number">10.2</span> LATENT VARIABLES AND THE CURSE OF DIMENSIONALITY</h2>
 <p>Before getting into “latent variables,” let’s clear up a bit of terminology. In this chapter, and many that follow, we’ll talk about the “dimensions” and “dimensionality” of dataframes and matrices. All of this talk of “dimensions” is really just about the number of variables we are using. If we have 10 variables, we have 10 dimensions; 147,002 variables, 147,002 dimensions. When we have a <em>lot</em> of variables, we often describe our dataset as “high-dimensional.”</p>
 <p>High-dimensional datasets pose all sorts of problems for statistical and machine learning models that low-dimensional datasets do not. That’s why we refer to this situation as the <strong>curse of dimensionality</strong> even if it might seem like an embarrassment of riches. Typically, we reduce the number of variables we are working with by manually selecting the variables of interest, or by performing some sort of <strong>dimensionality reduction</strong> on the dataset that mitigates problems associated with the curse of dimensionality. Below, you will learn about two different but related approaches to dimensionality reduction, one driven by theory and measurement, the other by data-driven induction.</p>
-<section id="theory-first-measuring-latent-variables-with-exploratory-factor-analysis" class="level3" data-number="10.4.1">
-<h3 data-number="10.4.1" class="anchored" data-anchor-id="theory-first-measuring-latent-variables-with-exploratory-factor-analysis"><span class="header-section-number">10.4.1</span> Theory First: Measuring Latent Variables with Exploratory Factor Analysis</h3>
+<section id="theory-first-measuring-latent-variables-with-exploratory-factor-analysis" class="level3" data-number="10.2.1">
+<h3 data-number="10.2.1" class="anchored" data-anchor-id="theory-first-measuring-latent-variables-with-exploratory-factor-analysis"><span class="header-section-number">10.2.1</span> Theory First: Measuring Latent Variables with Exploratory Factor Analysis</h3>
 <p>We social scientists spend a huge amount of time trying to measure things that we can’t directly observe. If you take a moment, you can probably list dozens of such things: political ideology, religiosity, well-being, job satisfaction, social capital, opportunity costs, social anxiety, confirmation bias, populism, introversion, personality types, emotional labour, resource mobilization, and so on. In earlier chapters of this book we spent a fair amount of time working with five variables that measure things we can’t directly observe:</p>
 <ul>
 <li>a country-level measure of the principle of electoral democracy (polyarchy),</li>
@@ -818,11 +823,15 @@ window.Quarto = {
 <p>For example, the <em>freedom of expression</em> dimension represented by the index variable <code>v2x_freexp_altinf</code> is constructed from the values of the variables government censorship effort (<code>v2mecenefm</code>), harassment of journalists (<code>v2meharjrn</code>), media self-censorship (<code>v2meslfcen</code>), freedom of discussion (<code>v2xcl_disc</code>), freedom of academic and cultural expression (<code>v2clacfree</code>), levels of media bias (<code>v2mebias</code>), how critical the media is (<code>v2mecrit</code>), and the diversity of perspectives promoted by the media (<code>v2merange</code>). These lower-level indicators are easier to observe than the higher level index variables above them, or the even higher still indices representing types of democracies. If you want to learn more about the conceptual and operational definitions of these principles of democracy, as well as the specific measurement models used, you can consult Coppedge et al.&nbsp;(2020 <strong>CITE</strong>).</p>
 <p>The difference between these indices and indicator variables maps directly back to the process of specification; the variables we use to record observations about the specific dimensions of concepts are indicator variables because they <em>indicate</em> part of the concept, and the overall concept is measures by combining the values for those indicators into an index. Indices are <strong>composite measures</strong> because they are created by systematically and transparently combining multiple indicators.</p>
 <p>When we want (or need) to measure something really big and abstract like a concept that is part of a larger theory (e.g.&nbsp;the amount of deliberative democracy that we see in a given country at some point in time), we break the big abstract concept down into various different dimensions, and sometimes we break <em>those</em> dimensions down into even smaller ones. The measures for the higher-level concepts are indices constructed by combining the values of lower-level indicator variables.</p>
-<p>This general idea is sketched out in Figure <span class="quarto-unresolved-ref">?fig-09_01</span> below, with example indicator variables on the top feeding into mid-level index measures for latent concepts (in gray), which in turn feed in to the high-level index measures of the latent concept of the principle of electoral democracy, or “polyarchy” (also in gray). The <code>...</code>s are meant to emphasize that there are other indicators that feed into the mid-level indices in addition to those shown here.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><embed src="figures/latent.pdf" class="img-fluid"></p>
-<figcaption>cap</figcaption>
+<p>This general idea is sketched out in <a href="#fig-09_01" class="quarto-xref">Figure&nbsp;<span>10.1</span></a> below, with example indicator variables on the top feeding into mid-level index measures for latent concepts (in gray), which in turn feed in to the high-level index measures of the latent concept of the principle of electoral democracy, or “polyarchy” (also in gray). The <code>...</code>s are meant to emphasize that there are other indicators that feed into the mid-level indices in addition to those shown here.</p>
+<div id="fig-09_01" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-09_01-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/latent.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-09_01-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;10.1: cap
+</figcaption>
 </figure>
 </div>
 <p>When trying to measure latent variables, degree of electoral democracy or freedom of association, we typically perform some sort of <strong>factor analysis</strong> that tells us whether the indicators we observed and measured (e.g.&nbsp;the share of adult citizens with voting rights and the power of the Head of State relative to the Head of Government) are indeed likely to reflect some underlying “<strong>factor</strong>.”</p>
@@ -837,16 +846,16 @@ window.Quarto = {
 </blockquote>
 </section>
 </section>
-<section id="conducting-a-principal-component-analysis-in-sklearn" class="level2" data-number="10.5">
-<h2 data-number="10.5" class="anchored" data-anchor-id="conducting-a-principal-component-analysis-in-sklearn"><span class="header-section-number">10.5</span> CONDUCTING A PRINCIPAL COMPONENT ANALYSIS IN SKLEARN</h2>
-<section id="standardization" class="level3" data-number="10.5.1">
-<h3 data-number="10.5.1" class="anchored" data-anchor-id="standardization"><span class="header-section-number">10.5.1</span> Standardization</h3>
+<section id="conducting-a-principal-component-analysis-in-sklearn" class="level2" data-number="10.3">
+<h2 data-number="10.3" class="anchored" data-anchor-id="conducting-a-principal-component-analysis-in-sklearn"><span class="header-section-number">10.3</span> CONDUCTING A PRINCIPAL COMPONENT ANALYSIS IN SKLEARN</h2>
+<section id="standardization" class="level3" data-number="10.3.1">
+<h3 data-number="10.3.1" class="anchored" data-anchor-id="standardization"><span class="header-section-number">10.3.1</span> Standardization</h3>
 <p>We did most of the necessary pre-processing at the start of the chapter when we imported our data, filtered the rows, selected the relevant columns, and then converted the data to a Numpy <code>ndarray</code>, which is a nice way of storing matrix data. There is, however, one very important piece of pre-processing that we need to do before we conduct a PCA: scaling our variables via z-score normalization, or “<strong>standardization</strong>.”</p>
 <p>Remember, PCA reduces the dimensionality of a dataset by constructing “principle components” from highly correlated features. If the variance contained in any one component differs from the variance contained in another <em>because of the scales for the features that contribute to it</em>, then PCA will make consequential mistakes. In short, PCA is <em>heavily</em> impacted by feature scaling. To prevent any such issues, we can use Sklearn’s <code>StandardScaler()</code>, which performs z-score normalization on each feature. The z-score normalization ensures we are comparing things on the same scales.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> StandardScaler().fit_transform(X) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Many statistical and machine learning models require standardization. If you need a refresher, you can consult the sub-section below. Otherwise you are free to skip over it. I recommend consulting the documentation whenever you use a model with which you are unfamiliar.</p>
-<section id="a-brief-refresher-on-variance-standard-deviation-and-z-score-normalization" class="level4" data-number="10.5.1.1">
-<h4 data-number="10.5.1.1" class="anchored" data-anchor-id="a-brief-refresher-on-variance-standard-deviation-and-z-score-normalization"><span class="header-section-number">10.5.1.1</span> A Brief Refresher on Variance, Standard Deviation, and Z-score Normalization</h4>
+<section id="a-brief-refresher-on-variance-standard-deviation-and-z-score-normalization" class="level4" data-number="10.3.1.1">
+<h4 data-number="10.3.1.1" class="anchored" data-anchor-id="a-brief-refresher-on-variance-standard-deviation-and-z-score-normalization"><span class="header-section-number">10.3.1.1</span> A Brief Refresher on Variance, Standard Deviation, and Z-score Normalization</h4>
 <p>First, let’s <em>very</em> briefly revisit the concepts of variance and standard deviation. <em>Variance</em> is a statistical measure of how spread out or clustered the values in a data set are. More specifically, it’s a measure of how far each value is from the mean. Variance is usually represented with the symbol <span class="math inline">\(\sigma^2\)</span>. A larger variance means that the values are more spread out, while a smaller variance means that they are more clustered around the mean. Let’s use some very simple examples to see how this works.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>ABCD <span class="op">=</span> {</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'A'</span>: [<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>], <span class="co"># no variance...</span></span>
@@ -869,8 +878,8 @@ z = \frac{x - \mu}{\sigma}
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f'The values in </span><span class="sc">{</span>k<span class="sc">}</span><span class="ss"> have the following Z-scores: </span><span class="sc">{</span>np<span class="sc">.</span><span class="bu">round</span>(zscore(v), <span class="dv">3</span>)<span class="sc">}</span><span class="ss">.'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 </section>
-<section id="back-to-pca" class="level3" data-number="10.5.2">
-<h3 data-number="10.5.2" class="anchored" data-anchor-id="back-to-pca"><span class="header-section-number">10.5.2</span> Back to PCA!</h3>
+<section id="back-to-pca" class="level3" data-number="10.3.2">
+<h3 data-number="10.3.2" class="anchored" data-anchor-id="back-to-pca"><span class="header-section-number">10.3.2</span> Back to PCA!</h3>
 <p>Now that our data has been standardized, we can conduct the PCA. When we initialize the model object with <code>PCA()</code>, we have the option of telling sklean to compute a specific number of components (e.g.&nbsp;pass the number 15 to get back the 15 principal components that account for the most variance) or a float specifying the amount of variance we want to be accounted for by the PCA (e.g.&nbsp;pass the number .9 to produce a solution that accounts for 90% of the variance). In this example, we will not specify either.</p>
 <p>Once we initialize the model object, we can use the <code>.fit_transform()</code> method on our standardized array <span class="math inline">\(X\)</span>.</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>pca <span class="op">=</span> PCA()</span>
@@ -893,7 +902,7 @@ z = \frac{x - \mu}{\sigma}
 <div class="sourceCode" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>cve <span class="op">=</span> pd.Series(np.cumsum(evr))</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>cve[:<span class="dv">12</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>In this case, a simple preview of the cumulative explained variance tells us that the first two components alone account for 68% of the variance in the dataset, which is a <em>very</em> substantial amount. Similarly, we can see that the first 12 components still account for 90% of the variance – pretty good considering we started with 35 indicator variables!</p>
-<p>This is only part of the picture, though. Let’s plot the proportion of cumulative explained variance for each successive principal component. Notice that, by default, PCA will construct a number of components equal to the number of original variables in the dataset. You should be able to see the diminishing returns, here, even if they set in rather smoothly. The code below produces Figure <a href="#fig-08_01" class="quarto-xref">Figure&nbsp;<span>10.1</span></a>.</p>
+<p>This is only part of the picture, though. Let’s plot the proportion of cumulative explained variance for each successive principal component. Notice that, by default, PCA will construct a number of components equal to the number of original variables in the dataset. You should be able to see the diminishing returns, here, even if they set in rather smoothly. The code below produces <a href="#fig-08_01" class="quarto-xref">Figure&nbsp;<span>10.2</span></a>.</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots()</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>sns.lineplot(x<span class="op">=</span>cve.index, y<span class="op">=</span>cve)</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>plt.scatter(x<span class="op">=</span>cve.index, y<span class="op">=</span>cve)</span>
@@ -908,17 +917,17 @@ z = \frac{x - \mu}{\sigma}
 <img src="figures/08-01.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-08_01-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;10.1: png
+Figure&nbsp;10.2: png
 </figcaption>
 </figure>
 </div>
 </section>
-<section id="matrix-decomposition-eigenvalues-eigenvectors-and-extracting-components" class="level3" data-number="10.5.3">
-<h3 data-number="10.5.3" class="anchored" data-anchor-id="matrix-decomposition-eigenvalues-eigenvectors-and-extracting-components"><span class="header-section-number">10.5.3</span> Matrix Decomposition: Eigenvalues, Eigenvectors, and Extracting Components</h3>
+<section id="matrix-decomposition-eigenvalues-eigenvectors-and-extracting-components" class="level3" data-number="10.3.3">
+<h3 data-number="10.3.3" class="anchored" data-anchor-id="matrix-decomposition-eigenvalues-eigenvectors-and-extracting-components"><span class="header-section-number">10.3.3</span> Matrix Decomposition: Eigenvalues, Eigenvectors, and Extracting Components</h3>
 <p>When you conduct a principal component analysis, you only want to keep some components. You’re trying to <em>reduce dimensionality</em> while preserving as much information (in the form of variance) possible. So, which components do you extract?</p>
 <p>The above plot of cumulative variance accounted for can be helpful if you want to preserve a certain amount of variance in the data. An alternative approach is to construct a <strong>scree plot</strong> to determine which components are substantively important enough to use. To understand how to construct and interpret a scree plot, you need to know a little bit more about how PCA works, and more specifically what role eigenvalues and eigenvectors play in a PCA, and how those roles differ from loadings in factor analysis.</p>
 <p>As discussed earlier, PCA creates a covariance matrix of standardized variables (or sometimes a correlation matrix). We can understand the structure and other properties of these matrices mathematically using <strong>eigen-decomposition</strong>. We won’t get into the linear algebra here, but here’s the basic idea: We can decompose the matrix into two parts. The first are the principal components themselves, which are <em>directions</em> of axes where there is the most variance (<strong>eigenvectors</strong>). The second part is the <em>amount</em> of variance that is accounted for by the principal components (<strong>eigenvalues</strong>). Every eigenvector has an eigenvalue and there is an eigenvector (principal component) for every variable in the original data. A very important feature of PCA is that the first principal component accounts for the greatest possible variance in the data set. The second principal component is calculated in the same way as the first, except that it cannot be correlated with the first. This continues for each principal component until you have as many as you do variables. It is important to remember that all of the information about scale (the amount of variance explained) is contained in the eigenvalues. The eigenvectors in a PCA do not tell us anything about the magnitude of explained variance.</p>
-<p>Scree plots graph the eigenvalues for each component in the PCA, which you now know represents the amount of variance that each component accounts for. The higher the eigenvalue, <em>the more important the component</em>. Because eigenvalues represent the amount of explained variance, Sklearn helpfully stores them in the <code>explained_variance_</code> attribute of the PCA model object.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> This also makes it very straightforward to create a scree plot. The code below produces Figure <a href="#fig-08_03" class="quarto-xref">Figure&nbsp;<span>10.2</span></a>.</p>
+<p>Scree plots graph the eigenvalues for each component in the PCA, which you now know represents the amount of variance that each component accounts for. The higher the eigenvalue, <em>the more important the component</em>. Because eigenvalues represent the amount of explained variance, Sklearn helpfully stores them in the <code>explained_variance_</code> attribute of the PCA model object.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> This also makes it very straightforward to create a scree plot. The code below produces <a href="#fig-08_03" class="quarto-xref">Figure&nbsp;<span>10.3</span></a>.</p>
 <div class="sourceCode" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>eigenvalues <span class="op">=</span> pd.Series(pca.explained_variance_)</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots()</span>
@@ -933,11 +942,11 @@ Figure&nbsp;10.1: png
 <img src="figures/08-03.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-08_03-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;10.2: png
+Figure&nbsp;10.3: png
 </figcaption>
 </figure>
 </div>
-<p>This chart should be straightforward to understand. The first few components are more important than the others. In a scree plot, you are usually looking for an <strong>inflection point</strong>, i.e., a point where the slope of the line changes rather abruptly. Usually, that point is clear, but we can also inspect the eigenvalues themselves if we want a bit more precision, just remember that the eigenvalues are 0-indexed, so 0 represents the first component, 1 represents the second component, and so on.</p>
+<p>This figure should be straightforward to understand. The first few components are more important than the others. In a scree plot, you are usually looking for an <strong>inflection point</strong>, i.e., a point where the slope of the line changes rather abruptly. Usually, that point is clear, but we can also inspect the eigenvalues themselves if we want a bit more precision, just remember that the eigenvalues are 0-indexed, so 0 represents the first component, 1 represents the second component, and so on.</p>
 <div class="sourceCode" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>eigenvalues.head(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>We might use the fact that dropping from 3.14 to 1.48 (a decrease of more than 50%) is significantly greater than the drop from 1.48 to 1.12, and from 1.12 to 1.01, to identify an inflection point at 1.48. The general rule is that you extract the components to the left of the inflection point, excluding the component at the inflection point itself. However, there are debates about whether it is best to keep all components with eigenvalues higher than some threshold, such as 1, the idea being that this is still quite a lot of variation <em>even if less than the other components</em>. In this example, cutting at the inflection point would be the third component, which means we would extract the first two. On the other hand, if we go with a threshold of 1, then we would take the first 5.</p>
 <p>When different rules suggest different courses of action, the best solution is the one most aligned with your goals. One reason why researchers perform PCA is because they want to do some sort of regression analysis but have a <em>bad</em> multi-collinearity problem. In that case, keep lots of components! It is better to keep information than throw it away unless you <em>really</em> need to throw some away. If, conversely, you are trying to visualize a high-dimensional dataset by collapsing it down to two significant dimensions, then you should only extract those two components <em>provided they contain a lot of variance</em>.</p>
@@ -964,30 +973,34 @@ Figure&nbsp;10.2: png
 <span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>    ylabel<span class="op">=</span></span>
 <span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>    <span class="ss">f'$\longleftarrow$ PC2 (eigenvalue: </span><span class="sc">{</span>np<span class="sc">.</span><span class="bu">round</span>(eigenvalues.loc[<span class="dv">1</span>], <span class="dv">2</span>)<span class="sc">}</span><span class="ss">) $\longrightarrow$'</span></span>
 <span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'figures/08-04.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'figures/08-04.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="fig-08_04" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-08_04-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="figures/08-04.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-08_04-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;10.3: png
+Figure&nbsp;10.4: png
 </figcaption>
 </figure>
 </div>
-<p>While the text is dense in Figure <a href="#fig-08_04" class="quarto-xref">Figure&nbsp;<span>10.3</span></a> (a high resolution version is available in the online supplement), careful inspection should lead to noticing several patterns. The first principal component is defined by the opposition between countries like Norway, Denmark, Switzerland, Luxembourg, and Germany on the one hand, and by Burundi, Tukmenistan, Syria, Eritrea, and North Korea on the other. The second principal component is defined by the opposition of countries like Haiti, Dominican Republic, Nigeria, Gabon, and Honduras on the one hand, and Laos, Eritrea, United Arab Emirates, China, and Singapore on the other. The eigenvalue is <em>much</em> higher for the first principal component, suggesting that the interpretation of the differences between countries on the left and the right of the graph is most important.</p>
+<p>While the text is dense in <a href="#fig-08_04" class="quarto-xref">Figure&nbsp;<span>10.4</span></a> (a high resolution version is available in the online supplement), careful inspection should lead to noticing several patterns. The first principal component is defined by the opposition between countries like Norway, Denmark, Switzerland, Luxembourg, and Germany on the one hand, and by Burundi, Tukmenistan, Syria, Eritrea, and North Korea on the other. The second principal component is defined by the opposition of countries like Haiti, Dominican Republic, Nigeria, Gabon, and Honduras on the one hand, and Laos, Eritrea, United Arab Emirates, China, and Singapore on the other. The eigenvalue is <em>much</em> higher for the first principal component, suggesting that the interpretation of the differences between countries on the left and the right of the graph is most important.</p>
 <p>This is not a factor analysis. We have not guided the PCA towards this solution. Instead, we have obtained these two latent dimensions <em>mathematically</em>, through matrix decomposition, and projected the countries onto that latent space. These two dimensions only represent 68% of the variance in the dataset, but when you think about it, that’s a lot of information for just two variables. The challenge, given that this is computationally <em>inductive</em>, is to do the qualitative and historical work necessary to interpret this representation of the latent structure in the data. However, don’t forget that the only information the PCA has to work with comes from our original variables, so those variables are a great place to start.</p>
 </section>
 </section>
-<section id="conclusion" class="level2" data-number="10.6">
-<h2 data-number="10.6" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">10.6</span> CONCLUSION</h2>
-<section id="key-points" class="level3" data-number="10.6.1">
-<h3 data-number="10.6.1" class="anchored" data-anchor-id="key-points"><span class="header-section-number">10.6.1</span> Key Points</h3>
+<section id="conclusion" class="level2" data-number="10.4">
+<h2 data-number="10.4" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">10.4</span> CONCLUSION</h2>
+<hr>
+</section>
+<section id="key-points" class="level2" data-number="10.5">
+<h2 data-number="10.5" class="anchored" data-anchor-id="key-points"><span class="header-section-number">10.5</span> Key Points</h2>
 <ul>
 <li>We learned about latent variables and the differences between theory-driven and data-driven dimensionality reduction</li>
 <li>Discussed distinctions between Factor Analysis and Principal Component Analysis</li>
 <li>Conducted a PCA</li>
 </ul>
+<hr>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
@@ -1010,7 +1023,6 @@ Müller, Andreas, and Sarah Guido. 2016. <em>Introduction to Machine Learning wi
 Tabachnick, Barbara G, Linda S Fidell, and Jodie B Ullman. 2007. <em>Using Multivariate Statistics</em>. Vol. 5. Pearson Boston, MA.
 </div>
 </div>
-</section>
 </section>
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr>

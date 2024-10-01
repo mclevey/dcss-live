@@ -67,7 +67,7 @@ $$
 \cap P(A_{i}) = \emptyset, \text{ then } \cup P(A_i) = P(A_1) + P(A_2) + ... + P(A_n)
 $$
 
-These two expressions are saying the same thing. The $\cup$ represents the set theoretic concept of the union of two events and the $\cap$ symbol represents their intersection. Consider the simple venn diagram in Figure @fig-25_01. 
+These two expressions are saying the same thing. The $\cup$ represents the set theoretic concept of the union of two events and the $\cap$ symbol represents their intersection. Consider the simple venn diagram in @fig-25_01. 
 
 ![](figures/sets.pdf)
 
@@ -123,7 +123,7 @@ samples = np.random.randint(1, n_possible_events+1, 10_000)
 Counter(samples)
 ```
 
-Good! That's exactly what we would expect to see (`1 / n_possible_events * 10_000 = 1666.666`) when drawing so many samples from a uniform distribution. But what if we had drawn a smaller number of samples? Let's do few more simulations and visualize the results (Figure @fig-25_02). We will add a red line showing $E[X]$, the expected value.
+Good! That's exactly what we would expect to see (`1 / n_possible_events * 10_000 = 1666.666`) when drawing so many samples from a uniform distribution. But what if we had drawn a smaller number of samples? Let's do few more simulations and visualize the results (@fig-25_02). We will add a red line showing $E[X]$, the expected value.
 
 ```python
 uniform_sim_1 = np.random.randint(1, n_possible_events+1, 6)
@@ -230,7 +230,7 @@ It is worth stressing the difference between the number of Bernoulli trials and 
 
 Before running the simulations, consider what would you *expect* to see given different values for the probability of the success condition, $p$. If $p$ were 0.8, for example, what do you think you might see with an $n$ of 40? How do you think distribution would change with different values for $n$ and $p$?
 
-The results are shown in Figure @fig-25_03.
+The results are shown in @fig-25_03.
 
 ```python
 binomial_sim_1 = np.random.binomial(20, 0.5, 10_000)
@@ -306,7 +306,7 @@ Where:
 
 A standard deviation of 0 indicates that every observation is the same as the mean value. The larger the standard deviation, the further away from the mean the average observation will be.
 
-Let's start simulating! We'll use Numpy's `random.normal()` to perform four simulations, each pulling 10,000 samples from normal distributions with slightly different parameters. The first two arguments indicate the mean and standard deviation for the normal distribution, and the third indicates the number of samples we'll draw. Results are shown in Figure @fig-25_04.
+Let's start simulating! We'll use Numpy's `random.normal()` to perform four simulations, each pulling 10,000 samples from normal distributions with slightly different parameters. The first two arguments indicate the mean and standard deviation for the normal distribution, and the third indicates the number of samples we'll draw. Results are shown in @fig-25_04.
 
 ```python
 normal_sim_1 = np.random.normal(0, 0.1, 10_000)
@@ -367,7 +367,7 @@ $$
 P(x) = \frac{1}{\beta} e^{-\frac{x}{\beta}}
 $$
 
-Let's jump right into the simulations. Results shown in Figure @fig-25_05.
+Let's jump right into the simulations. Results shown in @fig-25_05.
 
 ```python
 exponential_sim_1 = np.random.exponential(1, 10000)

@@ -8,19 +8,19 @@ execute:
 book:
   title: "Doing Computational Social Science<br>[The **Continuous Development** Edition]{.small}"
   author: "[John McLevey](https://www.johnmclevey.com/)<br>University of Waterloo"
-  favicon: media/logo.png
+  favicon: figures/logo.png
   keyword: python, computational social science, data science, data engineering, research computing, bayesian inference, bayesian data analysis, generative modelling, probabilistic modelling, natural language processing, text analysis, network analysis, network science, simulation modelling, agent-based modelling
   url: https://www.johnmclevey.com/dcss-supplementary/
   sidebar: 
     background: "#F5F5F5"
-    logo: media/logo.png
+    logo: figures/logo.png
     search: true
   repo-url: https://github.com/UWNETLAB/dcss_supplementary
   repo-subdir: book
   repo-branch: master
   repo-actions: [issue]
   sharing: [twitter, facebook, linkedin]
-  image: media/logo.png
+  image: figures/logo.png
 
   chapters:
     - index.qmd
@@ -32,19 +32,19 @@ book:
         - 03-python-102.qmd
     - part: Obtaining Data
       chapters:
-        - 04-sampling-and-survey-data.qmd # Harm reduction survey; European Values Survey; Chris Bail's work; Total survey error framework; Gelman XBox study
+        - 04-sampling-and-survey-data.qmd # redesign as survey / readymade data chapter? Harm reduction survey; European Values Survey; Chris Bail's work; Total survey error framework; Gelman XBox study
         - 05-web-data-apis.qmd # trace, found (Salganik)
         - 06-web-data-scraping.qmd
         - 07-audio-image-and-document-data.qmd # in development
     - part: Exploring Data # This whole section is being revised
       chapters:
         # Add workflow to the start of chapters 9, 11, 13
-        - 08-processing-structured-data.qmd # redesign as survey / readymade data chapter?
-        - 09-exploratory-data-analysis-and-visualization.qmd # redesign to be more purposeful and lead into latent factors and components
-        - 10-association-and-latent-factors.qmd # update this chapter given other changes to the book narrative; hint forward to generative models
-        - 11-text-as-data.qmd # redesign as "text as data" chapter? + content from the text EDA chapter
-        - 12-text-similarity-and-latent-semantic-space.qmd # hint forward to generative models
-        - 13-social-networks-and-relational-thinking.qmd # same pattern here as with other chapters; general introduction, then an EDA chapter; can centrality analysis stuff go in here, or should it be elsewhere?
+        - 08-exploratory-data-analysis-and-visualization.qmd # redesign to be more purposeful and lead into latent factors and components
+        - 09-association-and-latent-factors.qmd # update this chapter given other changes to the book narrative; hint forward to generative models
+        - 10-text-as-data.qmd # redesign as "text as data" chapter? + content from the text EDA chapter
+        - 11-text-similarity-and-latent-semantic-space.qmd # hint forward to generative models
+        - 12-social-networks-and-relational-thinking.qmd # same pattern here as with other chapters; general introduction, then an EDA chapter; can centrality analysis stuff go in here, or should it be elsewhere?
+        - 13-centrality.qmd # update this with 2023 McElreath critique and generative perspective
         - 14-structural-similarity-and-latent-social-space.qmd
     - part: Prediction and Inference
       chapters:

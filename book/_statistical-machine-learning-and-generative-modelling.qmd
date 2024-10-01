@@ -7,10 +7,6 @@
 - Compare the Frequentist and Bayesian paradigms given differences in their interpretations of the meaning of probability
 - Compare discriminative and generative models
 
-## LEARNING MATERIALS
-
-You can find the online learning materials for this chapter in `doing_computational_social_science/Chapter_25`. `cd` into the directory and launch your Jupyter Server.
-
 ## INTRODUCTION
 
 Our discussion of machine learning has focused on a selection of models that are central to the symbolic and connectionist paradigms, specifically linear and logistic regression models and tree-based methods such as Decision Trees, Random Forests, and Gradient Boosted Machines, and finally connectionist neural network models. These models are mathematically inductive but can be put to good use in a wide-variety of research designs, regardless of whether your goals are primarily inductive or deductive, theory-building or theory-testing, basic or applied. 

@@ -86,7 +86,7 @@ div.csl-indent {
 <meta name="quarto:offset" content="./">
 <link href="./07-audio-image-and-document-data.html" rel="next">
 <link href="./05-web-data-apis.html" rel="prev">
-<link href="./media/logo.png" rel="icon" type="image/png">
+<link href="./figures/logo.png" rel="icon" type="image/png">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -152,7 +152,7 @@ div.csl-indent {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
       <a href="./index.html" class="sidebar-logo-link">
-      <img src="./media/logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      <img src="./figures/logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
       </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Doing Computational Social Science<br><span class="small">The <strong>Continuous Development</strong> Edition</span></a> 
@@ -529,20 +529,14 @@ div.csl-indent {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#collecting-data-from-the-web-scraping" id="toc-collecting-data-from-the-web-scraping" class="nav-link active" data-scroll-target="#collecting-data-from-the-web-scraping"><span class="header-section-number">7</span> Collecting Data from the Web: Scraping</a>
+  <li><a href="#an-html-and-css-primer-for-web-scrapers" id="toc-an-html-and-css-primer-for-web-scrapers" class="nav-link active" data-scroll-target="#an-html-and-css-primer-for-web-scrapers"><span class="header-section-number">6.1</span> AN HTML AND CSS PRIMER FOR WEB SCRAPERS</a>
   <ul class="collapse">
-  <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link" data-scroll-target="#learning-objectives"><span class="header-section-number">7.1</span> LEARNING OBJECTIVES</a></li>
-  <li><a href="#learning-materials" id="toc-learning-materials" class="nav-link" data-scroll-target="#learning-materials"><span class="header-section-number">7.2</span> LEARNING MATERIALS</a></li>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction"><span class="header-section-number">7.3</span> INTRODUCTION</a></li>
-  <li><a href="#an-html-and-css-primer-for-web-scrapers" id="toc-an-html-and-css-primer-for-web-scrapers" class="nav-link" data-scroll-target="#an-html-and-css-primer-for-web-scrapers"><span class="header-section-number">7.4</span> AN HTML AND CSS PRIMER FOR WEB SCRAPERS</a>
-  <ul class="collapse">
-  <li><a href="#developing-your-first-web-scraper" id="toc-developing-your-first-web-scraper" class="nav-link" data-scroll-target="#developing-your-first-web-scraper"><span class="header-section-number">7.4.1</span> DEVELOPING YOUR FIRST WEB SCRAPER</a></li>
-  <li><a href="#ethical-and-legal-issues-in-web-scraping" id="toc-ethical-and-legal-issues-in-web-scraping" class="nav-link" data-scroll-target="#ethical-and-legal-issues-in-web-scraping"><span class="header-section-number">7.4.2</span> ETHICAL AND LEGAL ISSUES IN WEB SCRAPING</a></li>
+  <li><a href="#developing-your-first-web-scraper" id="toc-developing-your-first-web-scraper" class="nav-link" data-scroll-target="#developing-your-first-web-scraper"><span class="header-section-number">6.1.1</span> DEVELOPING YOUR FIRST WEB SCRAPER</a></li>
+  <li><a href="#ethical-and-legal-issues-in-web-scraping" id="toc-ethical-and-legal-issues-in-web-scraping" class="nav-link" data-scroll-target="#ethical-and-legal-issues-in-web-scraping"><span class="header-section-number">6.1.2</span> ETHICAL AND LEGAL ISSUES IN WEB SCRAPING</a></li>
   </ul></li>
-  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">7.5</span> CONCLUSION</a>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">6.2</span> CONCLUSION</a>
   <ul class="collapse">
-  <li><a href="#key-points" id="toc-key-points" class="nav-link" data-scroll-target="#key-points"><span class="header-section-number">7.5.1</span> Key Points</a></li>
-  </ul></li>
+  <li><a href="#key-points" id="toc-key-points" class="nav-link" data-scroll-target="#key-points"><span class="header-section-number">6.2.1</span> Key Points</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/UWNETLAB/dcss_supplementary/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
@@ -569,10 +563,16 @@ div.csl-indent {
 </header>
 
 
-<section id="collecting-data-from-the-web-scraping" class="level1" data-number="7">
-<h1 data-number="7"><span class="header-section-number">7</span> Collecting Data from the Web: Scraping</h1>
-<section id="learning-objectives" class="level2" data-number="7.1">
-<h2 data-number="7.1" class="anchored" data-anchor-id="learning-objectives"><span class="header-section-number">7.1</span> LEARNING OBJECTIVES</h2>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Learning Objectives
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <p>By the end of this chapter, you should be able to:</p>
 <ul>
 <li>Learn how to study the source code for a website to make a plan for collecting the data you need.</li>
@@ -581,19 +581,14 @@ div.csl-indent {
 <li>Change URLs programmatically to scrape multiple pages of a website.</li>
 <li>Explain the ethical and legal issues involved in web scraping projects.</li>
 </ul>
-</section>
-<section id="learning-materials" class="level2" data-number="7.2">
-<h2 data-number="7.2" class="anchored" data-anchor-id="learning-materials"><span class="header-section-number">7.2</span> LEARNING MATERIALS</h2>
-<p>You can find the online learning materials for this chapter in <code>doing_computational_social_science/Chapter_06</code>. <code>cd</code> into the directory and launch your Jupyter Server.</p>
-</section>
-<section id="introduction" class="level2" data-number="7.3">
-<h2 data-number="7.3" class="anchored" data-anchor-id="introduction"><span class="header-section-number">7.3</span> INTRODUCTION</h2>
+</div>
+</div>
+<p><br></p>
 <p>This chapter introduces web scraping as a method of programmatically collecting data from the web. While Application Programming Interfaces (APIs) provide direct access to the data behind a website using documented protocols, web scraping requires studying the source code of a website as displayed in a browser, and then writing scripts that take advantage of HTML and CSS to extract specific pieces of data.</p>
 <p>We will begin by introducing the basics of HTML and CSS, which are essential to understand when developing a web scraper, followed by an explanation of how to use browser-based developer tools to study the source code of a website and isolate the data you want to extract. We will then work through several examples of scraping text data from websites using the packages <code>requests</code> and <code>BeautifulSoup</code>. These examples cover many common web scraping needs and can easily be extended to cover more.</p>
 <p>It is possible to collect virtually any data from the web by writing web scrapers, but that doesn’t mean you should. As with APIs, you always need to ensure you that you are collecting data in a way that meets high ethical standards, and that you are respecting a website’s Terms of Service. We’ll discuss ethics, including for digital data collection, in detail in Chapter 19.</p>
-</section>
-<section id="an-html-and-css-primer-for-web-scrapers" class="level2" data-number="7.4">
-<h2 data-number="7.4" class="anchored" data-anchor-id="an-html-and-css-primer-for-web-scrapers"><span class="header-section-number">7.4</span> AN HTML AND CSS PRIMER FOR WEB SCRAPERS</h2>
+<section id="an-html-and-css-primer-for-web-scrapers" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="an-html-and-css-primer-for-web-scrapers"><span class="header-section-number">6.1</span> AN HTML AND CSS PRIMER FOR WEB SCRAPERS</h2>
 <p>This chapter builds on the previous chapter’s foundations; I will begin by describing how the content on webpages is structured using HTML and CSS, and then explain how to write web scrapers that take advantage of these types of markup to programmatically extract data from web pages. As you learn this material, keep in mind that <em>it takes far less knowledge to scrape a website than it does to develop it in the first place</em>. A little knowledge goes a long way.</p>
 <p>As someone who frequently reads and writes “documents” (news stories, blog posts, journal articles, Tweets, etc.), you are already familiar with the basics of structuring and organizing documents using headings, subheadings, and so on. This chapter, for example, has all those features and more. As humans, we parse these organizational features of documents <em>visually</em>.</p>
 <p>If you create a document using a WYSIWYG (“what you see is what you get”) word processor like Open Office, Microsoft Word, or Google Docs, you apply different styles to parts of the text to indicate whether something is a title, a heading, a paragraph, a list, etc. HTML documents also have these organizational features but use special ‘markup’ to describe structural features of the document (HTML) as well as how things should appear (Cascading Style Sheets, or ‘CSS’).</p>
@@ -605,7 +600,7 @@ div.csl-indent {
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&lt;</span><span class="kw">body</span><span class="dt">&gt;</span></span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">h1</span><span class="dt">&gt;</span>This is a first-level heading<span class="dt">&lt;/</span><span class="kw">h1</span><span class="dt">&gt;</span></span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">p</span><span class="dt">&gt;</span>A paragraph with some <span class="dt">&lt;</span><span class="kw">emph</span><span class="dt">&gt;</span>italicized<span class="dt">&lt;/</span><span class="kw">emph</span><span class="dt">&gt;</span> text.<span class="dt">&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">img</span><span class="ot"> src</span><span class="op">=</span><span class="st">"image.pdf"</span><span class="ot"> alt</span><span class="op">=</span><span class="st">"This is an image"</span><span class="dt">&gt;</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">img</span><span class="ot"> src</span><span class="op">=</span><span class="st">"image.png"</span><span class="ot"> alt</span><span class="op">=</span><span class="st">"This is an image"</span><span class="dt">&gt;</span></span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">p</span><span class="dt">&gt;</span>A paragraph with some <span class="dt">&lt;</span><span class="kw">strong</span><span class="dt">&gt;</span>bold<span class="dt">&lt;/</span><span class="kw">strong</span><span class="dt">&gt;</span> text.<span class="dt">&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span></span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">h2</span><span class="dt">&gt;</span>This is a second-level heading<span class="dt">&lt;/</span><span class="kw">h2</span><span class="dt">&gt;</span></span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>        <span class="dt">&lt;</span><span class="kw">ul</span><span class="dt">&gt;</span></span>
@@ -625,20 +620,24 @@ div.csl-indent {
 <p><strong>Further Reading</strong></p>
 <p>With this foundational knowledge, you’ll be able fill gaps in your knowledge of HTML and CSS with web searches as you develop scrapers to collect data for a research project. Still, I recommend setting aside a bit of time to browse some basic tutorials. Better yet, spend some time browsing Jon Duckett’s <span class="citation" data-cites="duckett2011html">(<a href="references.html#ref-duckett2011html" role="doc-biblioref">2011</a>)</span> beautiful resource book <em>HTML &amp; CSS: Design and Build Websites</em>, which is an excellent resource for learning the basics.</p>
 </blockquote>
-<section id="developing-your-first-web-scraper" class="level3" data-number="7.4.1">
-<h3 data-number="7.4.1" class="anchored" data-anchor-id="developing-your-first-web-scraper"><span class="header-section-number">7.4.1</span> DEVELOPING YOUR FIRST WEB SCRAPER</h3>
+<section id="developing-your-first-web-scraper" class="level3" data-number="6.1.1">
+<h3 data-number="6.1.1" class="anchored" data-anchor-id="developing-your-first-web-scraper"><span class="header-section-number">6.1.1</span> DEVELOPING YOUR FIRST WEB SCRAPER</h3>
 <p>Now that you have a baseline understanding of how your computer retrieves and renders websites, and the role that HTML and CSS play in that process, we can demystify web scraping even further. First, we know that the information we want to retrieve from a website will be sent to our computer from a remote web server following a <code>GET</code> request. Webpages are provided as source code, which is parsed and rendered by our web browser of choice.</p>
 <p>Before jumping into coding a scraper, you need to familiarize yourself with the sources you plan to gather data from – this is good advice to apply to any data you plan to use for research purposes. The best way to study the source code of a website is to use the <strong>developer tools</strong> built into browsers like Firefox, Chrome, or Brave. Here, and throughout the rest of this book, I will use Firefox, but the developer tools we use here are available in the other browsers as well. We’ll start by learning how to study the source code of a webpage we want to scrape, and then move into writing the actual code for the scraper.</p>
-<section id="studying-website-source-code-with-developer-tools" class="level4" data-number="7.4.1.1">
-<h4 data-number="7.4.1.1" class="anchored" data-anchor-id="studying-website-source-code-with-developer-tools"><span class="header-section-number">7.4.1.1</span> Studying Website Source Code with Developer Tools</h4>
+<section id="studying-website-source-code-with-developer-tools" class="level4" data-number="6.1.1.1">
+<h4 data-number="6.1.1.1" class="anchored" data-anchor-id="studying-website-source-code-with-developer-tools"><span class="header-section-number">6.1.1.1</span> Studying Website Source Code with Developer Tools</h4>
 <p>First, navigate to a website in Firefox. I’ve selected a story from the front page of <em>The Guardian</em> on August 2nd 2019, “Charming but dishonest and duplicitous: Europe’s verdict on Boris Johnson.” The specific story you select doesn’t really matter, however. If you are writing and executing code along with me as you read this book, and for some reason this story is no longer available, you could select another story from <em>The Guardian</em> instead and follow along just fine.</p>
 <p>Once the story is loaded in Firefox, I can right-click anywhere on the page and select “Inspect Element” to open a pane of developer tools. (You can also open this pane by selecting “Toggle Tools” from the “Web Developer” section of the “Tools” menu in the toolbar.) We can use these tools to study our target webpage interactively, viewing the rendered content and the raw source code of the webpage simultaneously.</p>
 <p>One especially useful strategy is to highlight some information of interest on the webpage and then right-click and select ‘Inspect Source’ (or ‘View Selection Source’ or ‘Inspect Element’ or similar). This will jump to that specific highlighted information in the HTML code, making it much easier to quickly find what tags the information you need is stored in. From here, we can strategize how best to retrieve the data we want.</p>
-<p>Figure <a href="08-processing-structured-data.html#fig-06_01" class="quarto-xref">Figure&nbsp;<span>8.1</span></a> is a screenshot of the developer tools pane open in a Firefox tab for the story about Boris Johnson. Unfortunately it might be a bit difficult to fully read on this printed page. If that’s the case, you can consult the high resolution screenshot available in the online materials. The text “As the Brexit deadline looms, Europe remains wary of the poker player behind the clown mask” is highlighted and revealed in the inspector tool at the bottom of the page. We can see in the developer tools that the text we’ve highlighted is enclosed in simple paragraph tags (<code>&lt;p&gt;As the Brexit deadline looms, Europe remains wary of the poker player behind the clown mask&lt;/p&gt;</code>). That’s precisely the kind of information we can exploit when developing a web scraper. Let’s see how exactly it’s done.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><embed src="figures/boris.pdf" class="img-fluid"></p>
-<figcaption>A screenshot of the Firefox developer tools pane open for the story “Charming but dishonest: Europe’s verdict on Boris Johnson,” published in <em>The Guardian</em> on August 2, 2019.</figcaption>
+<p><a href="08-processing-structured-data.html#fig-06_01" class="quarto-xref">Figure&nbsp;<span>8.1</span></a> is a screenshot of the developer tools pane open in a Firefox tab for the story about Boris Johnson. Unfortunately it might be a bit difficult to fully read on this printed page. If that’s the case, you can consult the high resolution screenshot available in the online materials. The text “As the Brexit deadline looms, Europe remains wary of the poker player behind the clown mask” is highlighted and revealed in the inspector tool at the bottom of the page. We can see in the developer tools that the text we’ve highlighted is enclosed in simple paragraph tags (<code>&lt;p&gt;As the Brexit deadline looms, Europe remains wary of the poker player behind the clown mask&lt;/p&gt;</code>). That’s precisely the kind of information we can exploit when developing a web scraper. Let’s see how exactly it’s done.</p>
+<div id="fig-06_01" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-06_01-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/boris.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-06_01-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6.1: A screenshot of the Firefox developer tools pane open for the story “Charming but dishonest: Europe’s verdict on Boris Johnson,” published in <em>The Guardian</em> on August 2, 2019.
+</figcaption>
 </figure>
 </div>
 <p>As we develop our web scraper, we progressively narrow down to the information we need, clean it by stripping out unwanted information (e.g.&nbsp;white spaces, new line characters), and then write it to some sort of dataset for later use. Next, we’ll cover the steps one might take to develop a functional scraper from the ground up.</p>
@@ -647,8 +646,8 @@ div.csl-indent {
 <p>This family tree structure of the DOM is useful to understand, especially in cases when you need to grab data from an element that doesn’t have an <code>id</code> and also doesn’t have a unique <code>class attribute</code>, such as what you often find for the headlines of news stories. In such cases, we can exploit the nested, hierarchical structure of the DOM to find the information we want: all we need to do is locate the element’s parent, at which point we can get information about all of its children and extract the data we need.</p>
 <p>If you find that the website design is consistent across the pages you want to scrape, you could determine whether the element you want is always <em>nested</em> at the same level. If it is, you could provide a full path to the data you want to scrape, even when given the vaguest of elements. This might mean that you want to always grab the text located at <code>&lt;body&gt;&lt;div&gt;&lt;div&gt;&lt;article&gt;&lt;div&gt;&lt;h1&gt;</code>. If you need to access the second of two <code>&lt;div&gt;</code> elements that are at the same depth (and, thus, a sibling of the first), it can be referred to in the same way you would access an element in aPython list, by <code>&lt;div[1]&gt;</code>.</p>
 </section>
-<section id="coding-a-web-scraper-for-a-single-page" class="level4" data-number="7.4.1.2">
-<h4 data-number="7.4.1.2" class="anchored" data-anchor-id="coding-a-web-scraper-for-a-single-page"><span class="header-section-number">7.4.1.2</span> Coding a Web Scraper for a Single Page</h4>
+<section id="coding-a-web-scraper-for-a-single-page" class="level4" data-number="6.1.1.2">
+<h4 data-number="6.1.1.2" class="anchored" data-anchor-id="coding-a-web-scraper-for-a-single-page"><span class="header-section-number">6.1.1.2</span> Coding a Web Scraper for a Single Page</h4>
 <p>In order to get our scraper operational, we’ll need a way to actually get data from the web pages into Python. Normally, the process of requesting and rendering a page is handled by our browser, but as you learned in the previous chapter, this isn’t the only way to request HTML documents from a web server. We can also connect to a web server from a Python script using a package such as <strong><code>requests</code></strong>, and load the HTML provided by the web server into our computer’s memory. Once we have this HTML in memory (rather than rendered in a browser), we can move onto the next step, which is to start parsing the HTML and extracting the information we want.</p>
 <p>When we load an HTML document in Python, we’re looking at the raw markup, not the rendered version we see when we load that file in a browser. If we’re lucky, the information we want will be consistently stored in elements that are easy to isolate and don’t contain a lot of irrelevant information. In order to get that information, we need to parse the HTML file, which can be done using a Python package called <code>BeautifulSoup</code>. Note that BeautifulSoup’s naming conventions are a little confusing. The package is called <strong><code>BeautifulSoup</code></strong> but you have to install it using <code>beautifulsoup4</code> and import it into Python using <code>bs4</code>. Clear as mud. Let’s make all of this a little less abstract by working through a specific example.</p>
 <p>To get started, let’s grab the title and body text of the article on Boris Johnson mentioned previously. We will (1) request the HTML document from <em>The Guardian’s</em> web server using the <code>requests</code> package, (2) feed that HTML data into <code>BeautifulSoup</code> to construct a <code>soup</code> object that we can parse, and then (3) extract the article title and text, then store them in a couple of lists.</p>
@@ -690,15 +689,19 @@ div.csl-indent {
 <p>We’ll use a <code>dataframe</code> to summarize the result; <code>dataframes</code> are a form of structured data that we will be using frequently throughout the book; in the next chapter, we’ll go over them in detail. In this <code>dataframe</code>, the titles appear in one column and the article text in another.</p>
 <p>Obviously, a simple script like this would not be especially helpful to us if we were only analyzing the text of three or four articles. But social scientists are almost <em>never</em> concerned with the content of just a few articles. With very little code, we can collect a lot of text very efficiently and store it in a dataset that we can analyze using a variety of methods, from traditional content analysis methods to applied natural language processing. All you need is a list of urls, which you can construct manually (although this is not the best approach), by scraping links from some sort of index page (or possibly the front page), or by writing a more complex web crawler (which is beyond the scope of this chapter but you can read about it in Ryan Mitchell’s <span class="citation" data-cites="mitchell2018web">(<a href="references.html#ref-mitchell2018web" role="doc-biblioref">2018</a>)</span> excellent book <em>Web Scraping with Python</em>).</p>
 </section>
-<section id="working-with-many-webpages" class="level4" data-number="7.4.1.3">
-<h4 data-number="7.4.1.3" class="anchored" data-anchor-id="working-with-many-webpages"><span class="header-section-number">7.4.1.3</span> Working with Many Webpages</h4>
+<section id="working-with-many-webpages" class="level4" data-number="6.1.1.3">
+<h4 data-number="6.1.1.3" class="anchored" data-anchor-id="working-with-many-webpages"><span class="header-section-number">6.1.1.3</span> Working with Many Webpages</h4>
 <p>In many cases, the data you want to scrape isn’t neatly packaged for you on a single webpage but is instead spread out across several different pages on a single website. In most cases, there will be some kind of ordering principle that undergirds each of those webpages’ URLs; we can take advantage of this to greatly simplify and expedite the scraping process. Just as we studied the source code for a webpage to determine how best to scrape it, we have to study how the website handles URLs to determine how best to get the data we want from multiple pages.</p>
 <p>Let’s talk first about detecting patterns when you browse through pages on a website. This is as simple as navigating though your page, from some starting point (say the front page of <code>nytimes.com</code>), and then clicking through to different sections and news stories. As you do this, you’ll notice that some parts of the URL change and other parts stay the same. For example, you might see that a new chunk of string is added to the URL when you navigate to parts of the website that cover international news, and a different string appears when you’re reading op-eds or the lifestyle section.</p>
-<p>As you click through pages, make notes on how the URL changes. Then start simply entering new values into parts of the URL (such as different numbers for pages) and see what the results are. Does it return a valid page or not? Did it return what you expected? This is just one way of doing the necessary detective work – both in terms of the webpage source code and how the website handles URLs – to get the content we want from those pages. Figure <a href="08-processing-structured-data.html#fig-06_02" class="quarto-xref">Figure&nbsp;<span>8.2</span></a> below presents an overview of these two interconnected processes.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><embed src="figures/scraping.pdf" class="img-fluid"></p>
-<figcaption>An overview of the front end investigatory work that goes into web scraping. You must spend time studying URLs and the source code of the pages you want to scrape.</figcaption>
+<p>As you click through pages, make notes on how the URL changes. Then start simply entering new values into parts of the URL (such as different numbers for pages) and see what the results are. Does it return a valid page or not? Did it return what you expected? This is just one way of doing the necessary detective work – both in terms of the webpage source code and how the website handles URLs – to get the content we want from those pages. <a href="08-processing-structured-data.html#fig-06_02" class="quarto-xref">Figure&nbsp;<span>8.2</span></a> below presents an overview of these two interconnected processes.</p>
+<div id="fig-06_02" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-06_02-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/scraping.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-06_02-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6.2: An overview of the front end investigatory work that goes into web scraping. You must spend time studying URLs and the source code of the pages you want to scrape.
+</figcaption>
 </figure>
 </div>
 <p>Let’s make this all a little less abstract by looking at a specific example of programmatically iterating over URLs to scrape a page.</p>
@@ -752,8 +755,8 @@ div.csl-indent {
 <p>So, now we have a <code>dataframe</code> containing text describing 30 different projects from the UNSD website and we’ve accomplished this without having to navigate the site using links or redirects – we just changed one number! While such an approach is extremely useful, it isn’t compatible with all websites. If the approaches we’ve covered thus far won’t work (which can happen when a website is dynamically generated or interactive, for instance), then we’ll have to call in the cavalry. In this case, the cavalry is a Python package called <code>selenium</code>. Since my publishers have unreasonably insisted that this book should be carryable without the assistance of a hydraulic lift, we’re not going to have room to cover <code>selenium</code> in-text. If you want to read more about how to scrape the interactive web, we’ve prepared an online supplement that will guide you through the process.</p>
 </section>
 </section>
-<section id="ethical-and-legal-issues-in-web-scraping" class="level3" data-number="7.4.2">
-<h3 data-number="7.4.2" class="anchored" data-anchor-id="ethical-and-legal-issues-in-web-scraping"><span class="header-section-number">7.4.2</span> ETHICAL AND LEGAL ISSUES IN WEB SCRAPING</h3>
+<section id="ethical-and-legal-issues-in-web-scraping" class="level3" data-number="6.1.2">
+<h3 data-number="6.1.2" class="anchored" data-anchor-id="ethical-and-legal-issues-in-web-scraping"><span class="header-section-number">6.1.2</span> ETHICAL AND LEGAL ISSUES IN WEB SCRAPING</h3>
 <p>While it’s theoretically possible to systematically step through every page and element of a website and store it (sometimes called a site-dump), most websites would prefer you didn’t, may forbid it in their Terms of Service, or in some cases, may seek legal recourse if you were to use that data anywhere. Thankfully, academic researchers are under greater scrutiny over the ethics of their work than your average web-hacker trying to harvest content, but you may not have your research plan vetted by people who understand the legal and ethical issues involved in web scraping, and even if you do, you shouldn’t rely on them to tell you whether your plan is going to violate the Terms of Service for a website. You most definitely want to avoid a threat of legal action when web scraping, so be sure you are <em>always</em> checking the Terms of Service for any website you scrape.</p>
 <p>A general rule to follow here is that if a website wants to provide users access to data at scale, they will setup an API to provide it. If they haven’t, err on the side of <em>not</em> collecting data at scale, and limit your data collection efforts to what you need rather than gathering all of it and filtering later. You may recall that websites will sometimes deny service after receiving too many requests. Sometimes, their infrastructure can struggle to even send out the needed denials of service, and will crash. It’s very unlikely that you could cause this type of problem, which is usually performed by many computers at once in a distributed denial of service (DDoS) attack that is either orchestrated or the product of computer viruses. That said, it is likely you will run across denial of service errors, perhaps when doing a more extensive URL iteration like in the example above, and may want to think about implementing a modest rate limit in your script.</p>
 <p>Finally, there is not yet a widely-held standard, in academia or elsewhere, for the boundaries between ethical and unethical web scraping. The most widely-held position seems to be that public content online should be treated with the same standards that one would apply when observing people in public settings, as ethnographers do. If this is the position you take, you may sometimes need to think very carefully about what types of online content is “reasonably public.” If you were scraping some personal blog platform, for example, and found that you could iterate through URLs to access pages that aren’t linked to anywhere, this likely would not be considered “reasonably public” because it’s possible the blog owner thought they were no longer accessible. This ongoing debate will inevitably include web-scraping practices, so should be an important one to research and keep track of. We’ll discuss these issues in more depth in Chapter 19.</p>
@@ -762,16 +765,18 @@ div.csl-indent {
 </blockquote>
 </section>
 </section>
-<section id="conclusion" class="level2" data-number="7.5">
-<h2 data-number="7.5" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">7.5</span> CONCLUSION</h2>
-<section id="key-points" class="level3" data-number="7.5.1">
-<h3 data-number="7.5.1" class="anchored" data-anchor-id="key-points"><span class="header-section-number">7.5.1</span> Key Points</h3>
+<section id="conclusion" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">6.2</span> CONCLUSION</h2>
+<hr>
+<section id="key-points" class="level3" data-number="6.2.1">
+<h3 data-number="6.2.1" class="anchored" data-anchor-id="key-points"><span class="header-section-number">6.2.1</span> Key Points</h3>
 <ul>
 <li>Web scraping is a powerful approach to collecting data from the web, useful for when data is not available in an API, but could still be obtained ethically and legally</li>
 <li>BeautifulSoup is a very useful tool for processing HTML from websites, but cannot obviate the need to understand a web page’s Document Object Model (DOM)</li>
 <li>The “iron rule of web scraping”: you must put in the proper time and energy to investigating the source code for the pages you want to scrape</li>
 <li>The only true limits on the data you can collect from scraping the web are ethical and legal</li>
 </ul>
+<hr>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
@@ -782,7 +787,6 @@ Duckett, Jon. 2011. <em>HTML &amp; CSS: Design and Build Websites</em>. Vol. 15.
 Mitchell, Ryan. 2018. <em>Web Scraping with Python: Collecting More Data from the Modern Web</em>. "O’Reilly".
 </div>
 </div>
-</section>
 </section>
 </section>
 

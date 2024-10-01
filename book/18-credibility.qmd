@@ -177,7 +177,7 @@ Fortunately, you don't need a rigorous understanding of the underlying math in o
 
 #### Markov Chains
 
-At the root of everything we're going to cover in this section is the **Markov Chain**. Named after Russian mathematician Andrey Markov, a Markov Chain is a simple machine that transitions from one state to another based on some pre-defined set of inter-state probabilities. Markov Chain models are 'memoryless,' which is a fancy way of saying that when they decide to switch states, they do so using information about the current state of the machine and nothing else. Figure @fig-26_01 is a model that describes (pretty accurately) how my two cats, Dorothy and Lando Catrissian, spend their days.
+At the root of everything we're going to cover in this section is the **Markov Chain**. Named after Russian mathematician Andrey Markov, a Markov Chain is a simple machine that transitions from one state to another based on some pre-defined set of inter-state probabilities. Markov Chain models are 'memoryless,' which is a fancy way of saying that when they decide to switch states, they do so using information about the current state of the machine and nothing else. @fig-26_01 is a model that describes (pretty accurately) how my two cats, Dorothy and Lando Catrissian, spend their days.
 
 ![](figures/markov_chain_vis.png){#fig-26_01}
 
@@ -233,7 +233,7 @@ Rather than skipping straight to the answer, we're going to take a diversion int
 
 ### Mapping a Skate Bowl
 
-Imagine we've made a bet with a friend that we can create a topographical map of the bottom of a skate bowl. The bowl is highly irregular in shape and depth, with several local minima scattered around, and there's no easy way to mathematically describe it. This poses a bit of a challenge already, but the *real* challenge is that the rules of the bet prevent us from ever seeing the skate park! All we know in advance is that there are several low areas scattered throughout the skate bowl (relative to their steeply sloping surroundings), and that our friend is more interested in the lower areas of the bowl than the steeply sloping sides of the bowl. They're completely uninterested in the completely flat, high area surrounding the bowl. The 3D plots in Figure @fig-26_02 offer three perspectives that are *similar*, but not the same, as the shape of the skate bowl we're trying to map in this example.
+Imagine we've made a bet with a friend that we can create a topographical map of the bottom of a skate bowl. The bowl is highly irregular in shape and depth, with several local minima scattered around, and there's no easy way to mathematically describe it. This poses a bit of a challenge already, but the *real* challenge is that the rules of the bet prevent us from ever seeing the skate park! All we know in advance is that there are several low areas scattered throughout the skate bowl (relative to their steeply sloping surroundings), and that our friend is more interested in the lower areas of the bowl than the steeply sloping sides of the bowl. They're completely uninterested in the completely flat, high area surrounding the bowl. The 3D plots in @fig-26_02 offer three perspectives that are *similar*, but not the same, as the shape of the skate bowl we're trying to map in this example.
 
 ![](figures/skate_bowl.png){#fig-26_02}
 

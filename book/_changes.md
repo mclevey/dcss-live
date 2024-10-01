@@ -2,7 +2,6 @@
 
 > This document tracks changes made to each chapter. It's not everything, but it should be MOST of everything... It will eventually make it into changes.qmd, at the end of the revision process.
 
-
 # Python 101
 
 **Explanation of Changes to the First Python Chapter**
@@ -245,7 +244,7 @@ Is there anything else you'd like me to assist with?
 
    - **Zipping and Unzipping Lists**
 
-     - **Added Visual Illustration**: Mentioned that Figure @fig-04_02 illustrates the `zip()` function to help readers visualize how it works.
+     - **Added Visual Illustration**: Mentioned that @fig-04_02 illustrates the `zip()` function to help readers visualize how it works.
 
      - **Clarified the Use of `zip()`**: Explained that `zip()` creates a zip object containing tuples, and how to convert it to a list.
 
@@ -467,7 +466,7 @@ The additions and clarifications are designed to deepen understanding without ov
 
 # APIs
 
-> Note: I hated these changes and rejected most of them. 
+> Note: I hated these changes and rejected most of them.
 
 ## Detailed Explanation of Changes
 

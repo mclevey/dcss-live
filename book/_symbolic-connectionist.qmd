@@ -49,7 +49,7 @@ I described "labeling" a sample of speeches because it is a widely-used term in 
 
 We want our machine to learn whether a given speech should be **classified** as containing no references, negative references, or positive references to renewable energy transitions (a categorical outcome), which makes this a **classification problem**. If we were predicting the intensity of positive or negative support on a 10 point scale (a quantitative outcome), then we might model this as a kind of **regression problem** instead. This is true even if we don't make our quantitative predictions using a regression model, or if we make a categorical prediction using a regression model (e.g. multinomial logistic). In a situation such as this, where you are labeling the data yourself, you are free to treat this as either type of problem. The specific decision here is informed by good research design, not machine learning.
 
-Figure @fig-20_01 shows a simple framework for thinking about types of machine learning. It separates supervised learning into two general types of problems: regression problems and classification problems. Immediately under that distinction are two simplified representations of datasets organized for supervised machine learning. Let's start with the one on the top left, under supervised learning.
+@fig-20_01 shows a simple framework for thinking about types of machine learning. It separates supervised learning into two general types of problems: regression problems and classification problems. Immediately under that distinction are two simplified representations of datasets organized for supervised machine learning. Let's start with the one on the top left, under supervised learning.
 
 ![](figures/ml.png)
 
@@ -131,7 +131,7 @@ The development of machine learning algorithms has been strongly influenced by a
 
 Probabilistic machine learning is the other major paradigm. It's generally closer to symbolic learning than connectionist learning (though there are exceptions, many fairly recent), and is generally considered the most interpretable of the three paradigms. It's also the least "home grown," as many important probabilists have been statisticians as much as they are computer scientists and AI researchers. We will discuss this further in Chapter 25.
 
-Figure @fig-20_02 below is a sketch of the types of models that are widely-used within the symbolic, probabilistic, and connectionist paradigms. Below, we will consider the "learning" analogies that inform these various different models to build an intuition of how they work, and how they relate to one another. 
+@fig-20_02 below is a sketch of the types of models that are widely-used within the symbolic, probabilistic, and connectionist paradigms. Below, we will consider the "learning" analogies that inform these various different models to build an intuition of how they work, and how they relate to one another. 
 
 ![](figures/machine_learning_paradigms.png)
 

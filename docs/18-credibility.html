@@ -86,7 +86,7 @@ div.csl-indent {
 <meta name="quarto:offset" content="./">
 <link href="./19-causality.html" rel="next">
 <link href="./17-probability.html" rel="prev">
-<link href="./media/logo.png" rel="icon" type="image/png">
+<link href="./figures/logo.png" rel="icon" type="image/png">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -181,7 +181,7 @@ window.Quarto = {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
       <a href="./index.html" class="sidebar-logo-link">
-      <img src="./media/logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      <img src="./figures/logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
       </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Doing Computational Social Science<br><span class="small">The <strong>Continuous Development</strong> Edition</span></a> 
@@ -737,7 +737,7 @@ y = mx + b
 <p>Fortunately, you don’t need a rigorous understanding of the underlying math in order to become a pretty good sampler medic; you will, however, need a strong intuitive understanding of how they work. In what follows, and over the course of the next two chapters, my goal is to help you build that essential intuition. Rather than wasting your time starting from first principles and working our way up to something interesting, I’m going to briefly introduce an especially important concept, Markov Chains. Then we’ll dive straight into the deep end of a grotesquely extended metaphor. We’ll get into the details of diagnosing and fixing problems with samplers in the chapters to come. Let’s begin.</p>
 <section id="markov-chains" class="level4" data-number="18.5.0.1">
 <h4 data-number="18.5.0.1" class="anchored" data-anchor-id="markov-chains"><span class="header-section-number">18.5.0.1</span> Markov Chains</h4>
-<p>At the root of everything we’re going to cover in this section is the <strong>Markov Chain</strong>. Named after Russian mathematician Andrey Markov, a Markov Chain is a simple machine that transitions from one state to another based on some pre-defined set of inter-state probabilities. Markov Chain models are ‘memoryless,’ which is a fancy way of saying that when they decide to switch states, they do so using information about the current state of the machine and nothing else. Figure <a href="20-linear-regression.html#fig-26_01" class="quarto-xref">Figure&nbsp;<span>20.1</span></a> is a model that describes (pretty accurately) how my two cats, Dorothy and Lando Catrissian, spend their days.</p>
+<p>At the root of everything we’re going to cover in this section is the <strong>Markov Chain</strong>. Named after Russian mathematician Andrey Markov, a Markov Chain is a simple machine that transitions from one state to another based on some pre-defined set of inter-state probabilities. Markov Chain models are ‘memoryless,’ which is a fancy way of saying that when they decide to switch states, they do so using information about the current state of the machine and nothing else. <a href="20-linear-regression.html#fig-26_01" class="quarto-xref">Figure&nbsp;<span>20.1</span></a> is a model that describes (pretty accurately) how my two cats, Dorothy and Lando Catrissian, spend their days.</p>
 <div id="fig-26_01" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-26_01-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -780,7 +780,7 @@ Figure&nbsp;18.1
 </section>
 <section id="mapping-a-skate-bowl" class="level3" data-number="18.5.2">
 <h3 data-number="18.5.2" class="anchored" data-anchor-id="mapping-a-skate-bowl"><span class="header-section-number">18.5.2</span> Mapping a Skate Bowl</h3>
-<p>Imagine we’ve made a bet with a friend that we can create a topographical map of the bottom of a skate bowl. The bowl is highly irregular in shape and depth, with several local minima scattered around, and there’s no easy way to mathematically describe it. This poses a bit of a challenge already, but the <em>real</em> challenge is that the rules of the bet prevent us from ever seeing the skate park! All we know in advance is that there are several low areas scattered throughout the skate bowl (relative to their steeply sloping surroundings), and that our friend is more interested in the lower areas of the bowl than the steeply sloping sides of the bowl. They’re completely uninterested in the completely flat, high area surrounding the bowl. The 3D plots in Figure <a href="20-linear-regression.html#fig-26_02" class="quarto-xref">Figure&nbsp;<span>20.2</span></a> offer three perspectives that are <em>similar</em>, but not the same, as the shape of the skate bowl we’re trying to map in this example.</p>
+<p>Imagine we’ve made a bet with a friend that we can create a topographical map of the bottom of a skate bowl. The bowl is highly irregular in shape and depth, with several local minima scattered around, and there’s no easy way to mathematically describe it. This poses a bit of a challenge already, but the <em>real</em> challenge is that the rules of the bet prevent us from ever seeing the skate park! All we know in advance is that there are several low areas scattered throughout the skate bowl (relative to their steeply sloping surroundings), and that our friend is more interested in the lower areas of the bowl than the steeply sloping sides of the bowl. They’re completely uninterested in the completely flat, high area surrounding the bowl. The 3D plots in <a href="20-linear-regression.html#fig-26_02" class="quarto-xref">Figure&nbsp;<span>20.2</span></a> offer three perspectives that are <em>similar</em>, but not the same, as the shape of the skate bowl we’re trying to map in this example.</p>
 <div id="fig-26_02" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-26_02-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">

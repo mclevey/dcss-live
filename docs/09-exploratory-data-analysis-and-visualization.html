@@ -86,7 +86,7 @@ div.csl-indent {
 <meta name="quarto:offset" content="./">
 <link href="./10-association-and-latent-factors.html" rel="next">
 <link href="./08-processing-structured-data.html" rel="prev">
-<link href="./media/logo.png" rel="icon" type="image/png">
+<link href="./figures/logo.png" rel="icon" type="image/png">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -181,7 +181,7 @@ window.Quarto = {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
       <a href="./index.html" class="sidebar-logo-link">
-      <img src="./media/logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      <img src="./figures/logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
       </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Doing Computational Social Science<br><span class="small">The <strong>Continuous Development</strong> Edition</span></a> 
@@ -558,22 +558,29 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#learning-outcomes" id="toc-learning-outcomes" class="nav-link active" data-scroll-target="#learning-outcomes"><span class="header-section-number">9.1</span> LEARNING OUTCOMES</a></li>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction"><span class="header-section-number">9.2</span> INTRODUCTION</a></li>
-  <li><a href="#iterative-research-workflows-eda-and-boxs-loop" id="toc-iterative-research-workflows-eda-and-boxs-loop" class="nav-link" data-scroll-target="#iterative-research-workflows-eda-and-boxs-loop"><span class="header-section-number">9.3</span> ITERATIVE RESEARCH WORKFLOWS: EDA AND BOX’S LOOP</a></li>
-  <li><a href="#effective-visualization" id="toc-effective-visualization" class="nav-link" data-scroll-target="#effective-visualization"><span class="header-section-number">9.4</span> EFFECTIVE VISUALIZATION</a></li>
-  <li><a href="#univariate-eda-describing-and-visualizing-distributions" id="toc-univariate-eda-describing-and-visualizing-distributions" class="nav-link" data-scroll-target="#univariate-eda-describing-and-visualizing-distributions"><span class="header-section-number">9.5</span> UNIVARIATE EDA: DESCRIBING AND VISUALIZING DISTRIBUTIONS</a>
+  <li><a href="#iterative-research-workflows-eda-and-boxs-loop" id="toc-iterative-research-workflows-eda-and-boxs-loop" class="nav-link active" data-scroll-target="#iterative-research-workflows-eda-and-boxs-loop"><span class="header-section-number">9.1</span> ITERATIVE RESEARCH WORKFLOWS: EDA AND BOX’S LOOP</a></li>
+  <li><a href="#effective-visualization" id="toc-effective-visualization" class="nav-link" data-scroll-target="#effective-visualization"><span class="header-section-number">9.2</span> EFFECTIVE VISUALIZATION</a>
   <ul class="collapse">
-  <li><a href="#imports" id="toc-imports" class="nav-link" data-scroll-target="#imports"><span class="header-section-number">9.5.1</span> Imports</a></li>
+  <li><a href="#guidelines-for-effective-visualization" id="toc-guidelines-for-effective-visualization" class="nav-link" data-scroll-target="#guidelines-for-effective-visualization"><span class="header-section-number">9.2.1</span> Guidelines for Effective Visualization</a></li>
   </ul></li>
-  <li><a href="#multivariate-eda" id="toc-multivariate-eda" class="nav-link" data-scroll-target="#multivariate-eda"><span class="header-section-number">9.6</span> MULTIVARIATE EDA</a>
+  <li><a href="#univariate-eda-describing-and-visualizing-distributions" id="toc-univariate-eda-describing-and-visualizing-distributions" class="nav-link" data-scroll-target="#univariate-eda-describing-and-visualizing-distributions"><span class="header-section-number">9.3</span> UNIVARIATE EDA: DESCRIBING AND VISUALIZING DISTRIBUTIONS</a>
   <ul class="collapse">
-  <li><a href="#visualization-with-more-informational-density" id="toc-visualization-with-more-informational-density" class="nav-link" data-scroll-target="#visualization-with-more-informational-density"><span class="header-section-number">9.6.1</span> Visualization with More Informational Density</a></li>
+  <li><a href="#imports" id="toc-imports" class="nav-link" data-scroll-target="#imports"><span class="header-section-number">9.3.1</span> Imports</a></li>
+  <li><a href="#visualizing-marginal-distributions" id="toc-visualizing-marginal-distributions" class="nav-link" data-scroll-target="#visualizing-marginal-distributions"><span class="header-section-number">9.3.2</span> Visualizing Marginal Distributions</a></li>
   </ul></li>
-  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">9.7</span> CONCLUSION</a>
+  <li><a href="#multivariate-eda" id="toc-multivariate-eda" class="nav-link" data-scroll-target="#multivariate-eda"><span class="header-section-number">9.4</span> MULTIVARIATE EDA</a>
   <ul class="collapse">
-  <li><a href="#key-points" id="toc-key-points" class="nav-link" data-scroll-target="#key-points"><span class="header-section-number">9.7.1</span> Key Points</a></li>
+  <li><a href="#visualizing-conditional-distributions" id="toc-visualizing-conditional-distributions" class="nav-link" data-scroll-target="#visualizing-conditional-distributions"><span class="header-section-number">9.4.1</span> Visualizing Conditional Distributions</a></li>
+  <li><a href="#visualizing-joint-distributions" id="toc-visualizing-joint-distributions" class="nav-link" data-scroll-target="#visualizing-joint-distributions"><span class="header-section-number">9.4.2</span> VISUALIZING JOINT DISTRIBUTIONS</a></li>
+  <li><a href="#correlation" id="toc-correlation" class="nav-link" data-scroll-target="#correlation"><span class="header-section-number">9.4.3</span> Correlation</a></li>
   </ul></li>
+  <li><a href="#visualization-with-more-informational-density" id="toc-visualization-with-more-informational-density" class="nav-link" data-scroll-target="#visualization-with-more-informational-density"><span class="header-section-number">9.5</span> Visualization with More Informational Density</a>
+  <ul class="collapse">
+  <li><a href="#layering-marginal-and-joint-distributions" id="toc-layering-marginal-and-joint-distributions" class="nav-link" data-scroll-target="#layering-marginal-and-joint-distributions"><span class="header-section-number">9.5.1</span> Layering Marginal and Joint Distributions</a></li>
+  <li><a href="#quick-comparisons-with-pair-plots" id="toc-quick-comparisons-with-pair-plots" class="nav-link" data-scroll-target="#quick-comparisons-with-pair-plots"><span class="header-section-number">9.5.2</span> Quick Comparisons with Pair Plots</a></li>
+  </ul></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">9.6</span> CONCLUSION</a></li>
+  <li><a href="#key-points" id="toc-key-points" class="nav-link" data-scroll-target="#key-points"><span class="header-section-number">9.7</span> Key Points</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/UWNETLAB/dcss_supplementary/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -599,34 +606,64 @@ window.Quarto = {
 </header>
 
 
-<section id="learning-outcomes" class="level2" data-number="9.1">
-<h2 data-number="9.1" class="anchored" data-anchor-id="learning-outcomes"><span class="header-section-number">9.1</span> LEARNING OUTCOMES</h2>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Learning Objectives
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>By the end of this chapter, you should be able to:</p>
 <ul>
 <li>Learn about Iterative Research Workflows and Box’s Loop</li>
 <li>Build an intuitive understanding of what makes visualization intuitive and effective</li>
 <li>Explore techniques for visualizaing univariate data and distributions</li>
 <li>Explore techniques for Exploratory Data Analysis for multivariate data</li>
 </ul>
-</section>
-<section id="introduction" class="level2" data-number="9.2">
-<h2 data-number="9.2" class="anchored" data-anchor-id="introduction"><span class="header-section-number">9.2</span> INTRODUCTION</h2>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Planned Updates
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The current emphasis in this chapter is on learning how to work with Pandas in order to perform EDA. I am revising it to instead emphasize the process and logic of purposeful EDA and will teach Pandas in that context. These revisions will be complete in fall 2024.</p>
+</div>
+</div>
+<p><br></p>
 <p>In this chapter, we’ll continue to build foundational data processing skills by introducing the basics of data visualization and <strong>exploratory data analysis (EDA)</strong>. EDA encompasses a broad range of data processing activities that you should <em>always</em> undertake before developing models, but EDA is <em>not</em> limited to beginning of a project. EDA is an important part of developing, criticizing, and re-developing statistical and machine learning models. EDA and model development are intimately linked in <em>iterative</em> workflows. We will focus specifically on the types of EDA that you might perform when you start working with some new data, but you will see EDA throughout the rest of the book in the context of <em>iteratively</em> developing, critiquing, and re-developing models. To clarify, we’ll discuss a simplified version of a generic data analysis workflow known as “Box’s loop”.</p>
 <p>We will make extensive use of the Seaborn package (V0.11+), a high-level statistical visualization package built on top of the older, <em>and more complex</em>, Matplotlib package. Because it’s built on top of Matplotlib, you can usually combine Matplotlib code and Seaborn code, which we will occasionally do to take advantage of the low-level capabilities of Matploblib while working in more user-friendly Seaborn.</p>
-</section>
-<section id="iterative-research-workflows-eda-and-boxs-loop" class="level2" data-number="9.3">
-<h2 data-number="9.3" class="anchored" data-anchor-id="iterative-research-workflows-eda-and-boxs-loop"><span class="header-section-number">9.3</span> ITERATIVE RESEARCH WORKFLOWS: EDA AND BOX’S LOOP</h2>
+<section id="iterative-research-workflows-eda-and-boxs-loop" class="level2" data-number="9.1">
+<h2 data-number="9.1" class="anchored" data-anchor-id="iterative-research-workflows-eda-and-boxs-loop"><span class="header-section-number">9.1</span> ITERATIVE RESEARCH WORKFLOWS: EDA AND BOX’S LOOP</h2>
 <p>The term <strong>exploratory data analysis</strong> (<strong>EDA</strong>) has generally come to refer to the work you do to explore, examine, clean, and make sense of a dataset prior to any formal statistical modelling (<strong>confirmatory data analysis</strong>). The idea is that one should carefully examine their data (i.e., exploration) before getting into hypothesis testing (i.e., confirmation). However, it is important to understand that the relationship between “exploratory” and “confirmatory” analysis is rarely clear cut. Some prominent statisticians and social scientists have proposed approaches that intentionally combine the two. Andrew <span class="citation" data-cites="gelman2004exploratory">Gelman (<a href="references.html#ref-gelman2004exploratory" role="doc-biblioref">2004</a>)</span> has pointed out that we can think of both approaches to analysis as sharing the same underlying logic: comparing what we observe relative to an <em>implicit</em> or <em>explicit</em> statistical model. In between these two views – EDA as first steps, EDA as a kind of implicit modelling – is the idea that EDA is an important part of iteratively developing almost any model, simple or complex. Let’s briefly consider this framework for thinking about the role of EDA in quantitative and computational research. We will do so using an idealized framework known as <strong>Box’s loop</strong>, first proposed by the statistician George Box.</p>
 <p>In our idealized framework, the first thing we do is <em>build a model</em>. Note that data hasn’t entered the picture yet. In our ideal world, we have a question that we want to answer. Perhaps we want to know “How does education relate to yearly income in Canada?” To answer that question, we create a model that captures the salient features of our question. “I think education is positively associated with income, but I also think income is related to age, and education is probably related to age.” This model should tell us what kind of data we will need, which is why data enters in the second step: we should be collecting or using data with our model in mind <em>first</em>. One of the things that makes data “good” is its appropriateness for the model you are using. It doesn’t matter how accurate your data on house fly reproduction cycles are if you want to answer a question about dragonfly eating habits. In step 2, we <em>analyze our data</em> to answer our question. Oftentimes, we get a much better idea about how good our data really is after we analyze it. Technically, we should now have an answer to our question. However, in step three, we consider the process and results of our analysis. Does the model make sense? Is there anything surprising? If there is, does that mean there’s an unforseen issue with the data? Is this the best answer to my question that I can get? Science is messy, and it’s a rare person indeed who never makes a mistake or knows exactly how a research project will proceed. So, rather than accept the first answer we find, we find things that worked, things that didn’t, and we <em>criticize our model</em>. In step 4, we take our critique from step 3 and use that to <em>revise our model</em>, which takes us back to step 1. We continue this process until we are satisfied with our model and data, at which point we can break the loop and apply the model.</p>
 <p>Returning to exploratory data analysis, let’s pretend to be Gelman and consider why we visualize data. We want to answer a question, even if the question is something as simple as “how is height distributed in Canada?” To answer that question, we (1) <em>build a model</em>. Perhaps our model is “Height is measured in centimeters, which is a continuous variable. I can make a histogram that will tell me how it is distributed.” Then, we (2) <em>analyze our data</em>. We make our histogram. Then, we consider how good our visualization is at answering our question; we <em>criticize our model</em> by considering what worked, what didn’t. Perhaps we noticed that height is actually a bimodal distribution after visualizing it. Then we (4) use that critique to <em>revise our model</em>. Perhaps we decide to plot height as a histogram, but conditional on sex. We repeat this process until we are satisfied and (5) <em>apply our model</em>, actually drawing conclusions about the distribution of height in Canada.</p>
-<p>When we get to statistical models later, you may discover that this is a doubly-nested process. You will build a statistical model, analyze data, criticize the model using EDA (start a sub-loop here), revise the statistical model, and repeat the main loop until you’re satisfied or give up. This process is summarized in Figure <a href="10-association-and-latent-factors.html#fig-08_01" class="quarto-xref">Figure&nbsp;<span>10.1</span></a>. In later chapters, you’ll see variations on this basic loop.</p>
-<p><embed src="figures/boxes_loop_init.pdf" class="img-fluid"></p>
+<p>When we get to statistical models later, you may discover that this is a doubly-nested process. You will build a statistical model, analyze data, criticize the model using EDA (start a sub-loop here), revise the statistical model, and repeat the main loop until you’re satisfied or give up. This process is summarized in <a href="10-association-and-latent-factors.html#fig-08_01" class="quarto-xref">Figure&nbsp;<span>10.2</span></a>. In later chapters, you’ll see variations on this basic loop.</p>
+<div id="fig-08_01" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-08_01-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/boxes_loop_init.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-08_01-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.1: Cap
+</figcaption>
+</figure>
+</div>
 <p>For our purposes we will work on developing your EDA skills in the more classical sense: the first steps you take with a new dataset. However, I will continue to emphasize the iterative development process of visualizations, in part to help prepare you; once you have those skills, you can and should use them in the broader context of statistical model criticism and iterative development. You will continue to develop these skills as you work through the book, and you may find yourself further appreciating Gelman’s argument that even this EDA work is a kind of modelling, which further tightens the links between the kind of work we will consider here and the more complex statistical and machine learning models we will focus on in later chapters.</p>
 <p>EDA is often broken down into graphical and non-graphical methods for analyzing single variables (i.e., <strong>univariate graphical</strong> and <strong>univariate non-graphical</strong>) and graphical and non-graphical methods for analyzing two or more variables (i.e., <strong>multivariate graphical</strong> and <strong>multivariate non-graphical</strong>). We will discuss methods within these four categories that can be used for categorical and quantitative data. First, let’s first discuss visualization <em>in general</em> - specifically what differentiates good plots from bad plots, and ways to make creating good plots a bit easier.</p>
 </section>
-<section id="effective-visualization" class="level2" data-number="9.4">
-<h2 data-number="9.4" class="anchored" data-anchor-id="effective-visualization"><span class="header-section-number">9.4</span> EFFECTIVE VISUALIZATION</h2>
-<section id="guidelines-for-effective-visualization" class="level4" data-number="9.4.0.1">
-<h4 data-number="9.4.0.1" class="anchored" data-anchor-id="guidelines-for-effective-visualization"><span class="header-section-number">9.4.0.1</span> Guidelines for Effective Visualization</h4>
+<section id="effective-visualization" class="level2" data-number="9.2">
+<h2 data-number="9.2" class="anchored" data-anchor-id="effective-visualization"><span class="header-section-number">9.2</span> EFFECTIVE VISUALIZATION</h2>
+<section id="guidelines-for-effective-visualization" class="level3" data-number="9.2.1">
+<h3 data-number="9.2.1" class="anchored" data-anchor-id="guidelines-for-effective-visualization"><span class="header-section-number">9.2.1</span> Guidelines for Effective Visualization</h3>
 <p>I’ll admit, I’m fastidious when it comes to the aesthetics of data visualization. But when I talk about good visualizations versus bad ones, I’m <em>not</em> talking about the fine distinctions between colors or typefaces. You can create good visualizations while being clueless about those things. No, I’m talking about more fundamental things like knowing what you want to learn or communicate.</p>
 <p>Creating graphs to visualize distributions, relationships, and so on, is relatively straightforward in Python. Creating <em>good</em> graphs has little to do with Python and everything to do with the decisions you make about what to show and how to show it. Some of those decisions are high level, like the <em>kind</em> of graph and how it should be structured. Other decisions are low-level, like selecting colors and shapes. What differentiates a really good visualization from a really bad one is rarely taste. It’s almost always the amount of thought behind those fundamental decisions.</p>
 <p>As Kieran Healy points out, “bad graphs” tend to be bad for one of three reasons:</p>
@@ -664,11 +701,11 @@ window.Quarto = {
 </blockquote>
 </section>
 </section>
-<section id="univariate-eda-describing-and-visualizing-distributions" class="level2" data-number="9.5">
-<h2 data-number="9.5" class="anchored" data-anchor-id="univariate-eda-describing-and-visualizing-distributions"><span class="header-section-number">9.5</span> UNIVARIATE EDA: DESCRIBING AND VISUALIZING DISTRIBUTIONS</h2>
+<section id="univariate-eda-describing-and-visualizing-distributions" class="level2" data-number="9.3">
+<h2 data-number="9.3" class="anchored" data-anchor-id="univariate-eda-describing-and-visualizing-distributions"><span class="header-section-number">9.3</span> UNIVARIATE EDA: DESCRIBING AND VISUALIZING DISTRIBUTIONS</h2>
 <p>We’re going to make use of the VDEM data we used in the previous chapter as the basis for our exploratory data analysis. You should refresh yourself on the data and variables description before proceeding. We will start by reading in the filtered and subsetted dataframe <code>fsdf</code> that we produced earlier and saved as a CSV and produce get the mean, median, and standard deviation from some of its variables.</p>
-<section id="imports" class="level3" data-number="9.5.1">
-<h3 data-number="9.5.1" class="anchored" data-anchor-id="imports"><span class="header-section-number">9.5.1</span> Imports</h3>
+<section id="imports" class="level3" data-number="9.3.1">
+<h3 data-number="9.3.1" class="anchored" data-anchor-id="imports"><span class="header-section-number">9.3.1</span> Imports</h3>
 <div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -695,12 +732,13 @@ window.Quarto = {
 <p>With a categorical variable like this, you can also use the <code>value_counts()</code> method to see how many observations you have for <code>country_name</code> in the dataset. Since there are 73, don’t print everything to screen, just peek at the top and the bottom 10 rows.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>fsdf[<span class="st">'country_name'</span>].value_counts().head(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>fsdf[<span class="st">'country_name'</span>].value_counts().tail(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<section id="visualizing-marginal-distributions" class="level4" data-number="9.5.1.1">
-<h4 data-number="9.5.1.1" class="anchored" data-anchor-id="visualizing-marginal-distributions"><span class="header-section-number">9.5.1.1</span> Visualizing Marginal Distributions</h4>
+</section>
+<section id="visualizing-marginal-distributions" class="level3" data-number="9.3.2">
+<h3 data-number="9.3.2" class="anchored" data-anchor-id="visualizing-marginal-distributions"><span class="header-section-number">9.3.2</span> Visualizing Marginal Distributions</h3>
 <p>You should visualize distributions for individual variables (i.e.&nbsp;“<strong>marginal distributions</strong>”) before any more complex analyses. As with numerical summaries, graphical approaches to examining distributions will typically answer questions about the range of values, their central tendency, whether they are highly skewed, whether there are potentially influential outliers, and so on.</p>
-<section id="count-plots-and-frequency-tables-for-categorical-variables" class="level5" data-number="9.5.1.1.1">
-<h5 data-number="9.5.1.1.1" class="anchored" data-anchor-id="count-plots-and-frequency-tables-for-categorical-variables"><span class="header-section-number">9.5.1.1.1</span> Count Plots and Frequency Tables for Categorical Variables</h5>
-<p>For a single categorical variable, we are limited to examining frequencies, percentages, and proportions. For example, you can visualize the number of countries in each geographical region defined by the United Nations (the <code>e_regiongeo</code> categorical variable) using the <code>.countplot()</code> function. You want the bars in the countplot to be horizontal rather than vertical, so use the argument <code>y='e_regiongeo'</code> instead of <code>x='e_regiongeo'</code>. The code below produces Figure <a href="#fig-07_01" class="quarto-xref">Figure&nbsp;<span>9.1</span></a>.</p>
+<section id="count-plots-and-frequency-tables-for-categorical-variables" class="level4" data-number="9.3.2.1">
+<h4 data-number="9.3.2.1" class="anchored" data-anchor-id="count-plots-and-frequency-tables-for-categorical-variables"><span class="header-section-number">9.3.2.1</span> Count Plots and Frequency Tables for Categorical Variables</h4>
+<p>For a single categorical variable, we are limited to examining frequencies, percentages, and proportions. For example, you can visualize the number of countries in each geographical region defined by the United Nations (the <code>e_regiongeo</code> categorical variable) using the <code>.countplot()</code> function. You want the bars in the countplot to be horizontal rather than vertical, so use the argument <code>y='e_regiongeo'</code> instead of <code>x='e_regiongeo'</code>. The code below produces <a href="#fig-07_01" class="quarto-xref">Figure&nbsp;<span>9.2</span></a>.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> sns.countplot(data<span class="op">=</span>fsdf, y<span class="op">=</span><span class="st">'e_regiongeo'</span>, color<span class="op">=</span><span class="st">'darkgray'</span>)</span>
@@ -712,12 +750,12 @@ window.Quarto = {
 <img src="figures/07-01.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-07_01-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;9.1: caption…
+Figure&nbsp;9.2: caption…
 </figcaption>
 </figure>
 </div>
 <p>This graph could use some improvements. Let’s iterate! First, it would be better if the data were in descending order by counts. Second, it would be better it had region names rather than number IDs. Third, a few small aesthetic adjustments that would improve the overall look of the graph, like removing the black line on the left side of the graph.</p>
-<p>Remember, address these issues one at a time. First deal with the order issue, which can be solved by using the <code>order</code> argument for <code>.countplot()</code>. Tell it to order the bars by sorting the <code>fsdf['e_regiongeo']</code> Series. The code below produces Figure <a href="#fig-07_02" class="quarto-xref">Figure&nbsp;<span>9.2</span></a>.</p>
+<p>Remember, address these issues one at a time. First deal with the order issue, which can be solved by using the <code>order</code> argument for <code>.countplot()</code>. Tell it to order the bars by sorting the <code>fsdf['e_regiongeo']</code> Series. The code below produces <a href="#fig-07_02" class="quarto-xref">Figure&nbsp;<span>9.3</span></a>.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> sns.countplot(</span>
@@ -736,7 +774,7 @@ Figure&nbsp;9.1: caption…
 <img src="figures/07-02.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-07_02-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;9.2: caption…
+Figure&nbsp;9.3: caption…
 </figcaption>
 </figure>
 </div>
@@ -764,7 +802,7 @@ Figure&nbsp;9.2: caption…
 <span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>You can now use a Pandas method called <code>.replace()</code> to replace each numerical ID with the string representation.</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>fsdf.replace({<span class="st">'e_regiongeo'</span>: region_strings}, inplace<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p><code>inplace=True</code> changes the values in the original dataframe. If you create the same countplot again, the region names will be used as the labels on the y-axis. The code below produces Figure <a href="#fig-07_03" class="quarto-xref">Figure&nbsp;<span>9.3</span></a>.</p>
+<p><code>inplace=True</code> changes the values in the original dataframe. If you create the same countplot again, the region names will be used as the labels on the y-axis. The code below produces <a href="#fig-07_03" class="quarto-xref">Figure&nbsp;<span>9.4</span></a>.</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> sns.countplot(</span>
@@ -784,17 +822,17 @@ Figure&nbsp;9.2: caption…
 <img src="figures/07-03.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-07_03-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;9.3: caption…
+Figure&nbsp;9.4: caption…
 </figcaption>
 </figure>
 </div>
 <p>We can easily produce frequency tables with Pandas; in fact, we have already done this using <code>.value_counts()</code> at the country-level. The code below creates a frequency table for the same data you just plotted.</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>fsdf[<span class="st">'e_regiongeo'</span>].value_counts()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="univariate-histograms-and-density-estimation" class="level5" data-number="9.5.1.1.2">
-<h5 data-number="9.5.1.1.2" class="anchored" data-anchor-id="univariate-histograms-and-density-estimation"><span class="header-section-number">9.5.1.1.2</span> Univariate Histograms and Density Estimation</h5>
+<section id="univariate-histograms-and-density-estimation" class="level4" data-number="9.3.2.2">
+<h4 data-number="9.3.2.2" class="anchored" data-anchor-id="univariate-histograms-and-density-estimation"><span class="header-section-number">9.3.2.2</span> Univariate Histograms and Density Estimation</h4>
 <p>One of the first things you can do in EDA is create a histogram for each of the variables you are interested in. A histogram visualizes “where” your data is clustered. It’s a bar chart, where the x-axis contains the range of all values for a particular variable and the y-axis indicates a count of the number of observations. The height of each bar represents the number of observations of x values between the left and right boundaries of each bar. Histograms are a more easily digestible summary of a variable than the <code>.describe()</code> method used earlier.</p>
-<p>Let’s use Seaborn’s <code>histplot()</code> to create a histogram of the egalitarian democracy index variable from the <code>fsdf</code> dataframe. The code below produces Figure <a href="#fig-07_04" class="quarto-xref">Figure&nbsp;<span>9.4</span></a>.</p>
+<p>Let’s use Seaborn’s <code>histplot()</code> to create a histogram of the egalitarian democracy index variable from the <code>fsdf</code> dataframe. The code below produces <a href="#fig-07_04" class="quarto-xref">Figure&nbsp;<span>9.5</span></a>.</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> sns.histplot(data<span class="op">=</span>fsdf, x<span class="op">=</span><span class="st">'v2x_egaldem'</span>)</span>
@@ -808,12 +846,12 @@ Figure&nbsp;9.3: caption…
 <img src="figures/07-04.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-07_04-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;9.4: caption…
+Figure&nbsp;9.5: caption…
 </figcaption>
 </figure>
 </div>
 <p>The histogram clearly shows that most of the <code>v2x_egaldem</code> values in the dataset can be found at the lower end of the range, quickly sloping down and then evening out with a few gentle peaks. Note that the function has made an important decision implicitly - you did’ntt specify the number of bins, so it used a built-in method that provides generally good defaults. However, you should always double-check default parameters. Overly wide bins can “hide” peaks or troughs in the distribution if they fit entirely inside a bin. Overly narrow bins can produce visualizations that are especially sensitive to “noise”. Narrower bins will tend to result in graphs with sharper spikes as small clusters and gaps get magnified.</p>
-<p>You can manually check for these cases by providing explicit values to the <code>bins</code> or <code>binwidth</code> parameters. Below, I provide extreme examples of overly wide and narrow bins to highlight the issues with both. The code below produces Figure <a href="#fig-07_05" class="quarto-xref">Figure&nbsp;<span>9.5</span></a>.</p>
+<p>You can manually check for these cases by providing explicit values to the <code>bins</code> or <code>binwidth</code> parameters. Below, I provide extreme examples of overly wide and narrow bins to highlight the issues with both. The code below produces <a href="#fig-07_05" class="quarto-xref">Figure&nbsp;<span>9.6</span></a>.</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> sns.histplot(data<span class="op">=</span>fsdf, x<span class="op">=</span><span class="st">'v2x_egaldem'</span>, bins<span class="op">=</span><span class="dv">3</span>)</span>
@@ -827,11 +865,11 @@ Figure&nbsp;9.4: caption…
 <img src="figures/07-05.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-07_05-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;9.5: caption…
+Figure&nbsp;9.6: caption…
 </figcaption>
 </figure>
 </div>
-<p>The code below produces Figure <a href="#fig-07_06" class="quarto-xref">Figure&nbsp;<span>9.6</span></a>.</p>
+<p>The code below produces <a href="#fig-07_06" class="quarto-xref">Figure&nbsp;<span>9.7</span></a>.</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> sns.histplot(data<span class="op">=</span>fsdf, x<span class="op">=</span><span class="st">'v2x_egaldem'</span>, binwidth <span class="op">=</span> <span class="fl">0.001</span>)</span>
@@ -845,12 +883,12 @@ Figure&nbsp;9.5: caption…
 <img src="figures/07-06.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-07_06-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;9.6: caption…
+Figure&nbsp;9.7: caption…
 </figcaption>
 </figure>
 </div>
 <p>We can also use kernel density estimation (KDE) to visualize a distribution. KDE is a technique for estimating the probability density function of a random variable. Rather than visualizing the raw counts in combined bins, it estimates the probability of every possible value using a smooth function. KDE attempts to reduce the random noise in the data, smoothing out the spikes.</p>
-<p>You can add a KDE line to histograms by providing the parameter <code>kde = True</code>. The code below produces Figure <a href="#fig-07_07" class="quarto-xref">Figure&nbsp;<span>9.7</span></a>.</p>
+<p>You can add a KDE line to histograms by providing the parameter <code>kde = True</code>. The code below produces <a href="#fig-07_07" class="quarto-xref">Figure&nbsp;<span>9.8</span></a>.</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> sns.histplot(data<span class="op">=</span>fsdf, x<span class="op">=</span><span class="st">'v2x_egaldem'</span>, kde<span class="op">=</span><span class="va">True</span>)</span>
@@ -864,11 +902,11 @@ Figure&nbsp;9.6: caption…
 <img src="figures/07-07.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-07_07-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;9.7: caption…
+Figure&nbsp;9.8: caption…
 </figcaption>
 </figure>
 </div>
-<p>Seaborn provides a large number of ways to customize and refine your visualizations. However, with great power comes great responsibility. In this case, you are responsible for creating visualizations that make sense, because the package may not stop you from making mistakes. Consider the previous histogram with <code>binwidth=1</code>. The entire range of <code>v2x_egaldem</code> is less than 1. The visualization is technically possible, though certainly useless. I left the KDE line to help keep track of where the data actually is. The code below produces Figure <a href="#fig-07_08" class="quarto-xref">Figure&nbsp;<span>9.8</span></a>.</p>
+<p>Seaborn provides a large number of ways to customize and refine your visualizations. However, with great power comes great responsibility. In this case, you are responsible for creating visualizations that make sense, because the package may not stop you from making mistakes. Consider the previous histogram with <code>binwidth=1</code>. The entire range of <code>v2x_egaldem</code> is less than 1. The visualization is technically possible, though certainly useless. I left the KDE line to help keep track of where the data actually is. The code below produces <a href="#fig-07_08" class="quarto-xref">Figure&nbsp;<span>9.9</span></a>.</p>
 <div class="sourceCode" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> sns.histplot(fsdf[<span class="st">'v2x_egaldem'</span>], kde<span class="op">=</span><span class="va">True</span>, binwidth<span class="op">=</span><span class="dv">1</span>)</span>
@@ -882,19 +920,19 @@ Figure&nbsp;9.7: caption…
 <img src="figures/07-08.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-07_08-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;9.8: caption…
+Figure&nbsp;9.9: caption…
 </figcaption>
 </figure>
 </div>
 </section>
-<section id="marginal-empirical-cumulative-distributions" class="level5" data-number="9.5.1.1.3">
-<h5 data-number="9.5.1.1.3" class="anchored" data-anchor-id="marginal-empirical-cumulative-distributions"><span class="header-section-number">9.5.1.1.3</span> Marginal Empirical Cumulative Distributions</h5>
+<section id="marginal-empirical-cumulative-distributions" class="level4" data-number="9.3.2.3">
+<h4 data-number="9.3.2.3" class="anchored" data-anchor-id="marginal-empirical-cumulative-distributions"><span class="header-section-number">9.3.2.3</span> Marginal Empirical Cumulative Distributions</h4>
 <p>Empirical Cumulative Distributions (ECDs) combine several of the advantages of the previously described visualizations. Unlike histograms, you do not need to bin your data because every data point is represented. This makes it easy to assess the shape of the distribution. For example, one can easily visually identify the five-number summary. Finally, they make it much easier to compare multiple distributions.</p>
 </section>
-<section id="plotting-empirical-cumulative-distributions" class="level5" data-number="9.5.1.1.4">
-<h5 data-number="9.5.1.1.4" class="anchored" data-anchor-id="plotting-empirical-cumulative-distributions"><span class="header-section-number">9.5.1.1.4</span> Plotting Empirical Cumulative Distributions</h5>
+<section id="plotting-empirical-cumulative-distributions" class="level4" data-number="9.3.2.4">
+<h4 data-number="9.3.2.4" class="anchored" data-anchor-id="plotting-empirical-cumulative-distributions"><span class="header-section-number">9.3.2.4</span> Plotting Empirical Cumulative Distributions</h4>
 <p>To visualize an ECD, set one axis to be the variable of interest. The second axis represents the <em>proportion of observations that have a value equal to or lower than a given cutoff point</em>. Consider a five-number summary. The five numbers are the minimum value, the first, second, and third quartiles, and the maximum value. If a point on an ECD represents a value of our variable and the proportion of observations with equal or lower value, the minimum value must be given by the very first point: the lowest, and leftmost point on the plot. The first quartile is necessarily found at the point where proportion equals 0.25. The second quartile is where proportion equals 0.50, and so on for the third quartile, and the maximum value.</p>
-<p>Since the proportion axis captures each observation and all lower-valued ones, proportion <em>can never decrease as the variable increases</em>. Unfortunately, ECDs are less common than point or box-based visualization techniques, so we have less experience reading them. Like all skills though, it can be developed with time and practice. Most importantly, you can think of the slope of the line as telling you where data is clustered. A steep slope indicates a large portion of the data is clustered around those values. Consider the ECD of <code>v2x_egaldem</code>. The code below produces Figure <a href="#fig-07_09" class="quarto-xref">Figure&nbsp;<span>9.9</span></a>.</p>
+<p>Since the proportion axis captures each observation and all lower-valued ones, proportion <em>can never decrease as the variable increases</em>. Unfortunately, ECDs are less common than point or box-based visualization techniques, so we have less experience reading them. Like all skills though, it can be developed with time and practice. Most importantly, you can think of the slope of the line as telling you where data is clustered. A steep slope indicates a large portion of the data is clustered around those values. Consider the ECD of <code>v2x_egaldem</code>. The code below produces <a href="#fig-07_09" class="quarto-xref">Figure&nbsp;<span>9.10</span></a>.</p>
 <div class="sourceCode" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> sns.displot(fsdf, x<span class="op">=</span><span class="st">"v2x_egaldem"</span>, kind<span class="op">=</span><span class="st">"ecdf"</span>, color<span class="op">=</span><span class="st">'darkgray'</span>)</span>
@@ -908,7 +946,7 @@ Figure&nbsp;9.8: caption…
 <img src="figures/07-09.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-07_09-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;9.9: caption…
+Figure&nbsp;9.10: caption…
 </figcaption>
 </figure>
 </div>
@@ -917,16 +955,15 @@ Figure&nbsp;9.9: caption…
 </section>
 </section>
 </section>
-</section>
-<section id="multivariate-eda" class="level2" data-number="9.6">
-<h2 data-number="9.6" class="anchored" data-anchor-id="multivariate-eda"><span class="header-section-number">9.6</span> MULTIVARIATE EDA</h2>
-<section id="visualizing-conditional-distributions" class="level4" data-number="9.6.0.1">
-<h4 data-number="9.6.0.1" class="anchored" data-anchor-id="visualizing-conditional-distributions"><span class="header-section-number">9.6.0.1</span> Visualizing Conditional Distributions</h4>
+<section id="multivariate-eda" class="level2" data-number="9.4">
+<h2 data-number="9.4" class="anchored" data-anchor-id="multivariate-eda"><span class="header-section-number">9.4</span> MULTIVARIATE EDA</h2>
+<section id="visualizing-conditional-distributions" class="level3" data-number="9.4.1">
+<h3 data-number="9.4.1" class="anchored" data-anchor-id="visualizing-conditional-distributions"><span class="header-section-number">9.4.1</span> Visualizing Conditional Distributions</h3>
 <p>Sometimes we might want to visualize a variable of interest conditioned on another variable. Perhaps we want to visualize only those instances of a variable <span class="math inline">\(X\)</span> that are associated with a particular value of <span class="math inline">\(Y\)</span>.</p>
-<section id="conditional-histograms" class="level5" data-number="9.6.0.1.1">
-<h5 data-number="9.6.0.1.1" class="anchored" data-anchor-id="conditional-histograms"><span class="header-section-number">9.6.0.1.1</span> Conditional Histograms</h5>
+<section id="conditional-histograms" class="level4" data-number="9.4.1.1">
+<h4 data-number="9.4.1.1" class="anchored" data-anchor-id="conditional-histograms"><span class="header-section-number">9.4.1.1</span> Conditional Histograms</h4>
 <p>Let’s visualize the egalitarian index of countries, conditioned on whether the country is a democracy or not. A conditional distribution will exclude any observations that do not meet the condition, so for completeness, we can visualize both cases separately, but side-by-side.</p>
-<p>The <code>displot</code> function allows us to visualize univariate (a single variable) or bivariate (two variables) data distributions across multiple subplots. Below, we will create a visualization that displays a <code>v2x_egaldem</code> histogram for each value of <code>e_boix_regime</code>, a binary variable. Thus, when we give the column parameter <code>col</code> the values for <code>e_boix_regime</code>, we should get 2 columns, one for each value it can take. The code below produces Figure <a href="#fig-07_10" class="quarto-xref">Figure&nbsp;<span>9.10</span></a>.</p>
+<p>The <code>displot</code> function allows us to visualize univariate (a single variable) or bivariate (two variables) data distributions across multiple subplots. Below, we will create a visualization that displays a <code>v2x_egaldem</code> histogram for each value of <code>e_boix_regime</code>, a binary variable. Thus, when we give the column parameter <code>col</code> the values for <code>e_boix_regime</code>, we should get 2 columns, one for each value it can take. The code below produces <a href="#fig-07_10" class="quarto-xref">Figure&nbsp;<span>9.11</span></a>.</p>
 <div class="sourceCode" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> sns.displot(fsdf, x<span class="op">=</span><span class="st">"v2x_egaldem"</span>, col<span class="op">=</span><span class="st">"e_boix_regime"</span>, multiple<span class="op">=</span><span class="st">"dodge"</span>)</span>
@@ -938,11 +975,11 @@ Figure&nbsp;9.9: caption…
 <img src="figures/07-10.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-07_10-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;9.10: caption…
+Figure&nbsp;9.11: caption…
 </figcaption>
 </figure>
 </div>
-<p>The result we get is the two conditional distribution histograms above. If you were to add the two together, you would get the original <code>v2x_egaldem</code> marginal distribution histogram we produced earlier. While this method makes very clean graphs, it can be hard to compare the graphs, especially if you want to graph many different conditions. One way around this would be to plot both conditional distributions on the same plot, but colour them differently and make them slightly transparent. We can do this by passing <code>e_boix_regime</code> to the <code>hue</code> parameter, rather than <code>col</code>. The code below produces Figure <a href="#fig-07_11" class="quarto-xref">Figure&nbsp;<span>9.11</span></a>.</p>
+<p>The result we get is the two conditional distribution histograms above. If you were to add the two together, you would get the original <code>v2x_egaldem</code> marginal distribution histogram we produced earlier. While this method makes very clean graphs, it can be hard to compare the graphs, especially if you want to graph many different conditions. One way around this would be to plot both conditional distributions on the same plot, but colour them differently and make them slightly transparent. We can do this by passing <code>e_boix_regime</code> to the <code>hue</code> parameter, rather than <code>col</code>. The code below produces <a href="#fig-07_11" class="quarto-xref">Figure&nbsp;<span>9.12</span></a>.</p>
 <div class="sourceCode" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>grayscale_cmap <span class="op">=</span> sns.cubehelix_palette(</span>
@@ -971,15 +1008,15 @@ Figure&nbsp;9.10: caption…
 <img src="figures/07-11.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-07_11-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;9.11: caption…
+Figure&nbsp;9.12: caption…
 </figcaption>
 </figure>
 </div>
 <p>This plot makes it much easier to compare the two distributions, and we can clearly see where they overlap and don’t. However, it adds visual clutter and can quickly become hard to read as more conditions are added.</p>
 </section>
-<section id="conditional-kde" class="level5" data-number="9.6.0.1.2">
-<h5 data-number="9.6.0.1.2" class="anchored" data-anchor-id="conditional-kde"><span class="header-section-number">9.6.0.1.2</span> Conditional KDE</h5>
-<p>As before, we can add KDEs to existing histograms by passing <code>kde = True</code>, or we may visualize just the KDE to reduce visual clutter by passing <code>kind = "kde"</code>. The code below produces Figure <a href="#fig-07_12" class="quarto-xref">Figure&nbsp;<span>9.12</span></a>.</p>
+<section id="conditional-kde" class="level4" data-number="9.4.1.2">
+<h4 data-number="9.4.1.2" class="anchored" data-anchor-id="conditional-kde"><span class="header-section-number">9.4.1.2</span> Conditional KDE</h4>
+<p>As before, we can add KDEs to existing histograms by passing <code>kde = True</code>, or we may visualize just the KDE to reduce visual clutter by passing <code>kind = "kde"</code>. The code below produces <a href="#fig-07_12" class="quarto-xref">Figure&nbsp;<span>9.13</span></a>.</p>
 <div class="sourceCode" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> sns.displot(fsdf, x<span class="op">=</span><span class="st">"v2x_egaldem"</span>, hue<span class="op">=</span><span class="st">"e_boix_regime"</span>, kde <span class="op">=</span> <span class="va">True</span>, palette<span class="op">=</span>grayscale_palette)</span>
@@ -991,11 +1028,11 @@ Figure&nbsp;9.11: caption…
 <img src="figures/07-12.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-07_12-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;9.12: caption…
+Figure&nbsp;9.13: caption…
 </figcaption>
 </figure>
 </div>
-<p>The code below produces Figure <a href="#fig-07_13" class="quarto-xref">Figure&nbsp;<span>9.13</span></a>.</p>
+<p>The code below produces <a href="#fig-07_13" class="quarto-xref">Figure&nbsp;<span>9.14</span></a>.</p>
 <div class="sourceCode" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> sns.displot(</span>
@@ -1013,15 +1050,15 @@ Figure&nbsp;9.12: caption…
 <img src="figures/07-13.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-07_13-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;9.13: caption…
+Figure&nbsp;9.14: caption…
 </figcaption>
 </figure>
 </div>
 <p>In all of these plots, countries with a value of <code>1.0</code> for <code>e_boix_regime</code> are electoral democracies. Those with <code>0.0</code> are not. The comparative plots we have been creating show, unsurprisingly, that non-democratic countries tend to have lower scores on the Egalitarian Democracy Index.</p>
 </section>
-<section id="conditional-ecds" class="level5" data-number="9.6.0.1.3">
-<h5 data-number="9.6.0.1.3" class="anchored" data-anchor-id="conditional-ecds"><span class="header-section-number">9.6.0.1.3</span> Conditional ECDs</h5>
-<p>Extending an ECD to conditional distributions is as easy as passing <code>e_boix_regime</code> to the <code>hue</code> parameter. Consider the previous example of plotting the histograms of <code>v2x_egaldem</code> conditioned on <code>e_boix_regime</code>. Histograms involve a lot of “ink”, resulting in a lot of visual clutter compared to ECDs, and get hard to read very quickly as the number of conditions increases. The code below produces Figure <a href="#fig-07_14" class="quarto-xref">Figure&nbsp;<span>9.14</span></a>.</p>
+<section id="conditional-ecds" class="level4" data-number="9.4.1.3">
+<h4 data-number="9.4.1.3" class="anchored" data-anchor-id="conditional-ecds"><span class="header-section-number">9.4.1.3</span> Conditional ECDs</h4>
+<p>Extending an ECD to conditional distributions is as easy as passing <code>e_boix_regime</code> to the <code>hue</code> parameter. Consider the previous example of plotting the histograms of <code>v2x_egaldem</code> conditioned on <code>e_boix_regime</code>. Histograms involve a lot of “ink”, resulting in a lot of visual clutter compared to ECDs, and get hard to read very quickly as the number of conditions increases. The code below produces <a href="#fig-07_14" class="quarto-xref">Figure&nbsp;<span>9.15</span></a>.</p>
 <div class="sourceCode" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> sns.displot(fsdf, x<span class="op">=</span><span class="st">"v2x_egaldem"</span>, kind <span class="op">=</span> <span class="st">"ecdf"</span>, </span>
@@ -1036,18 +1073,18 @@ Figure&nbsp;9.13: caption…
 <img src="figures/07-14.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-07_14-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;9.14: caption…
+Figure&nbsp;9.15: caption…
 </figcaption>
 </figure>
 </div>
 <p>We can see from slope for <code>e_boix_regime = 0.0</code> (non-democratic countries) that observations are very clustered towards the lower values of <code>v2x_egaldem</code>, and they very rapidly taper off. The maximum value can be found around <code>v2x_egaldem = 0.5</code>. Conversely, the slope for <code>e_boix_regime = 1.0</code> (democratic countries) is more gradual, telling us that the distribution is much more evenly distributed across all values, with a few spikes where the slope increases around 0.55 and 0.75. If we look back at the histograms, we can confirm that the visualizations agree with one another.</p>
 </section>
 </section>
-<section id="visualizing-joint-distributions" class="level4" data-number="9.6.0.2">
-<h4 data-number="9.6.0.2" class="anchored" data-anchor-id="visualizing-joint-distributions"><span class="header-section-number">9.6.0.2</span> VISUALIZING JOINT DISTRIBUTIONS</h4>
+<section id="visualizing-joint-distributions" class="level3" data-number="9.4.2">
+<h3 data-number="9.4.2" class="anchored" data-anchor-id="visualizing-joint-distributions"><span class="header-section-number">9.4.2</span> VISUALIZING JOINT DISTRIBUTIONS</h3>
 <p>While the marginal and conditional distributions of the earlier section are useful for understanding the shape of our data, we often want to examine the relationships between variables. We can visually represent these relationships by visualizing <em>joint</em> distributions. Let’s first look at two of the most common ways of visualizing joint distributions: cross tables for categorical variables and scatter plots for continuous variables.</p>
-<section id="cross-tables" class="level5" data-number="9.6.0.2.1">
-<h5 data-number="9.6.0.2.1" class="anchored" data-anchor-id="cross-tables"><span class="header-section-number">9.6.0.2.1</span> Cross Tables</h5>
+<section id="cross-tables" class="level4" data-number="9.4.2.1">
+<h4 data-number="9.4.2.1" class="anchored" data-anchor-id="cross-tables"><span class="header-section-number">9.4.2.1</span> Cross Tables</h4>
 <p>When we want to visualize the joint distribution of two categorical variables we can produce a cross-table: an extension of a frequency table. A cross table, sometimes shortened to crosstab, shows a grid, with the possible values of one categorical variable along one axis and the same for the other variable along the other axis. Each cell in the grid shows the number of observations that have <em>both</em> (hence joint) categorical variable values corresponding to its row and column.</p>
 <p>Let’s create a cross table using the <code>.crosstab()</code> function for the categorical variables <code>e_regiongeo</code> and <code>e_boix_regime</code>. The resulting table will tell us how many observations (country-year combinations) there are of each regime type for each geographic region.</p>
 <div class="sourceCode" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>ct <span class="op">=</span> pd.crosstab(fsdf.e_regiongeo, fsdf.e_boix_regime)</span>
@@ -1055,9 +1092,9 @@ Figure&nbsp;9.14: caption…
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>ct</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>If we want to know how many non-democratic countries there were in Western Europe across all years in the VDEM dataset, we would look at the corresponding row value for the “Not democracies” column, which shows 110. The number of democratic observations, 703, is shown in the “Democracies” column.</p>
 </section>
-<section id="scatter-plots" class="level5" data-number="9.6.0.2.2">
-<h5 data-number="9.6.0.2.2" class="anchored" data-anchor-id="scatter-plots"><span class="header-section-number">9.6.0.2.2</span> Scatter Plots</h5>
-<p>A scatter plot shows the relationship between two variables by plotting each observation on a graph, where the x-axis represents the value of one variable, while the y-axis represents the value of the other. Let’s use the <code>scatterplot</code> function to plot the relationship between the egalitarian democracy and polyarchy indices. The code below produces Figure <a href="#fig-07_15" class="quarto-xref">Figure&nbsp;<span>9.15</span></a>.</p>
+<section id="scatter-plots" class="level4" data-number="9.4.2.2">
+<h4 data-number="9.4.2.2" class="anchored" data-anchor-id="scatter-plots"><span class="header-section-number">9.4.2.2</span> Scatter Plots</h4>
+<p>A scatter plot shows the relationship between two variables by plotting each observation on a graph, where the x-axis represents the value of one variable, while the y-axis represents the value of the other. Let’s use the <code>scatterplot</code> function to plot the relationship between the egalitarian democracy and polyarchy indices. The code below produces <a href="#fig-07_15" class="quarto-xref">Figure&nbsp;<span>9.16</span></a>.</p>
 <div class="sourceCode" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
 <span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> sns.scatterplot(data <span class="op">=</span> fsdf, x<span class="op">=</span><span class="st">"v2x_egaldem"</span>, y<span class="op">=</span><span class="st">"v2x_polyarchy"</span>)</span>
@@ -1072,11 +1109,11 @@ Figure&nbsp;9.14: caption…
 <img src="figures/07-15.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-07_15-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;9.15: caption…
+Figure&nbsp;9.16: caption…
 </figcaption>
 </figure>
 </div>
-<p>At first glance, this seems to suggest a non-linear, but definitely positive relationship between the two variables. If an observation has a high value for one of the two variables, the other is also high. At lower values, the relationship is a bit less tight where we can see the points are less densely clustered, but the overall pattern remains visible. We can use different alpha (transparency) values to see where overlapping points are obscuring underlying points. The code below produces Figure <a href="#fig-07_16" class="quarto-xref">Figure&nbsp;<span>9.16</span></a>.</p>
+<p>At first glance, this seems to suggest a non-linear, but definitely positive relationship between the two variables. If an observation has a high value for one of the two variables, the other is also high. At lower values, the relationship is a bit less tight where we can see the points are less densely clustered, but the overall pattern remains visible. We can use different alpha (transparency) values to see where overlapping points are obscuring underlying points. The code below produces <a href="#fig-07_16" class="quarto-xref">Figure&nbsp;<span>9.17</span></a>.</p>
 <div class="sourceCode" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> sns.scatterplot(data <span class="op">=</span> fsdf, x<span class="op">=</span><span class="st">"v2x_egaldem"</span>, y<span class="op">=</span><span class="st">"v2x_polyarchy"</span>, alpha <span class="op">=</span> <span class="fl">0.1</span>)</span>
@@ -1091,11 +1128,11 @@ Figure&nbsp;9.15: caption…
 <img src="figures/07-16.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-07_16-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;9.16: caption…
+Figure&nbsp;9.17: caption…
 </figcaption>
 </figure>
 </div>
-<p>The code below produces Figure <a href="#fig-07_17" class="quarto-xref">Figure&nbsp;<span>9.17</span></a>.</p>
+<p>The code below produces <a href="#fig-07_17" class="quarto-xref">Figure&nbsp;<span>9.18</span></a>.</p>
 <div class="sourceCode" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
 <span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> sns.scatterplot(data <span class="op">=</span> fsdf, x<span class="op">=</span><span class="st">"v2x_egaldem"</span>, y<span class="op">=</span><span class="st">"v2x_polyarchy"</span>, alpha <span class="op">=</span> <span class="fl">0.01</span>)</span>
@@ -1110,14 +1147,14 @@ Figure&nbsp;9.16: caption…
 <img src="figures/07-17.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-07_17-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;9.17: caption…
+Figure&nbsp;9.18: caption…
 </figcaption>
 </figure>
 </div>
 </section>
-<section id="bivariate-histograms" class="level5" data-number="9.6.0.2.3">
-<h5 data-number="9.6.0.2.3" class="anchored" data-anchor-id="bivariate-histograms"><span class="header-section-number">9.6.0.2.3</span> Bivariate Histograms</h5>
-<p>We can extend the idea of histograms to bivariate visualizations. To do so, we divide both the x and y-axes into bins, producing square bins. The square bins are coloured based on the number of observations within each box. Since our y-axis is now being used to define another dimension of the box, we use colour instead of bar height to indicate how densely observations are clustered within a bin. The code below produces Figure <a href="#fig-07_18" class="quarto-xref">Figure&nbsp;<span>9.18</span></a>.</p>
+<section id="bivariate-histograms" class="level4" data-number="9.4.2.3">
+<h4 data-number="9.4.2.3" class="anchored" data-anchor-id="bivariate-histograms"><span class="header-section-number">9.4.2.3</span> Bivariate Histograms</h4>
+<p>We can extend the idea of histograms to bivariate visualizations. To do so, we divide both the x and y-axes into bins, producing square bins. The square bins are coloured based on the number of observations within each box. Since our y-axis is now being used to define another dimension of the box, we use colour instead of bar height to indicate how densely observations are clustered within a bin. The code below produces <a href="#fig-07_18" class="quarto-xref">Figure&nbsp;<span>9.19</span></a>.</p>
 <div class="sourceCode" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
 <span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> sns.displot(fsdf, x<span class="op">=</span><span class="st">"v2x_egaldem"</span>, y<span class="op">=</span><span class="st">"v2x_polyarchy"</span>)</span>
@@ -1132,12 +1169,12 @@ Figure&nbsp;9.17: caption…
 <img src="figures/07-18.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-07_18-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;9.18: caption…
+Figure&nbsp;9.19: caption…
 </figcaption>
 </figure>
 </div>
 <p>Upon inspection, the majority of observations can be found clustering around low values of <code>v2x_polyarchy</code> and <code>v2x_egaldem</code>. There appears to be another, less dense cluster at the top right portion of the distribution as well.</p>
-<p>Like univariate histograms, we can refine our visualization by explicitly setting parameter values, like <code>binwidth</code>. We can even provide a further layer of information by including a rug plot, which acts like a one-dimensional scatterplot for each axis. For visualizations with lots of data, use of alpha values to avoid solid black bars like below. The code below produces Figure <a href="#fig-07_19" class="quarto-xref">Figure&nbsp;<span>9.19</span></a>.</p>
+<p>Like univariate histograms, we can refine our visualization by explicitly setting parameter values, like <code>binwidth</code>. We can even provide a further layer of information by including a rug plot, which acts like a one-dimensional scatterplot for each axis. For visualizations with lots of data, use of alpha values to avoid solid black bars like below. The code below produces <a href="#fig-07_19" class="quarto-xref">Figure&nbsp;<span>9.20</span></a>.</p>
 <div class="sourceCode" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
 <span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> sns.displot(fsdf, x<span class="op">=</span><span class="st">"v2x_egaldem"</span>, y<span class="op">=</span><span class="st">"v2x_polyarchy"</span>, binwidth <span class="op">=</span> <span class="fl">0.01</span>, rug<span class="op">=</span><span class="va">True</span>)</span>
@@ -1152,14 +1189,14 @@ Figure&nbsp;9.18: caption…
 <img src="figures/07-19.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-07_19-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;9.19: caption…
+Figure&nbsp;9.20: caption…
 </figcaption>
 </figure>
 </div>
 </section>
-<section id="bivariate-kernel-density-estimation" class="level5" data-number="9.6.0.2.4">
-<h5 data-number="9.6.0.2.4" class="anchored" data-anchor-id="bivariate-kernel-density-estimation"><span class="header-section-number">9.6.0.2.4</span> Bivariate Kernel Density Estimation</h5>
-<p>Like histograms, we can also use kernel density estimation (KDE) to smooth the bins to give an idea of the underlying probability distribution. In this case, it takes the form of a 2D contour plot. Let’s also improve the appearance of the rug plot by providing <code>rug_kws</code> with a dictionary describing values for its parameters: in this case setting an alpha of 0.01. The code below produces Figure <a href="#fig-07_20" class="quarto-xref">Figure&nbsp;<span>9.20</span></a>.</p>
+<section id="bivariate-kernel-density-estimation" class="level4" data-number="9.4.2.4">
+<h4 data-number="9.4.2.4" class="anchored" data-anchor-id="bivariate-kernel-density-estimation"><span class="header-section-number">9.4.2.4</span> Bivariate Kernel Density Estimation</h4>
+<p>Like histograms, we can also use kernel density estimation (KDE) to smooth the bins to give an idea of the underlying probability distribution. In this case, it takes the form of a 2D contour plot. Let’s also improve the appearance of the rug plot by providing <code>rug_kws</code> with a dictionary describing values for its parameters: in this case setting an alpha of 0.01. The code below produces <a href="#fig-07_20" class="quarto-xref">Figure&nbsp;<span>9.21</span></a>.</p>
 <div class="sourceCode" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
 <span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> sns.displot(fsdf, x<span class="op">=</span><span class="st">"v2x_egaldem"</span>, y<span class="op">=</span><span class="st">"v2x_polyarchy"</span>, kind<span class="op">=</span><span class="st">"kde"</span>, rug <span class="op">=</span> <span class="va">True</span>, rug_kws <span class="op">=</span> {<span class="st">"alpha"</span>: <span class="fl">0.01</span>})</span>
@@ -1172,20 +1209,20 @@ Figure&nbsp;9.19: caption…
 <img src="figures/07-20.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-07_20-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;9.20: caption…
+Figure&nbsp;9.21: caption…
 </figcaption>
 </figure>
 </div>
 <p>If you are familiar with reading contour maps, many closely spaced lines indicate areas of rapid change in elevation, or in this case, density. The slopes of our ECD plots are very analogous to the slopes described by contour plots. Looking at the above visualization, we can see two major clusters: one at the lower left and a smaller, but still significant one in the upper right.</p>
 </section>
-<section id="line-of-best-fit" class="level5" data-number="9.6.0.2.5">
-<h5 data-number="9.6.0.2.5" class="anchored" data-anchor-id="line-of-best-fit"><span class="header-section-number">9.6.0.2.5</span> Line of Best Fit</h5>
+<section id="line-of-best-fit" class="level4" data-number="9.4.2.5">
+<h4 data-number="9.4.2.5" class="anchored" data-anchor-id="line-of-best-fit"><span class="header-section-number">9.4.2.5</span> Line of Best Fit</h4>
 <p>The visualizations in this section try to strike a balance between showing as much of the data as possible while conveying the relationship between the two variables as simply as possible. These two goals are in conflict with each other. The more data you visualize, the more complicated your plots become. If we want to display the relationship between two variables as simply as possible, we can produce a <em>line of best fit</em>. A line of best fit is a straight line that tries to minimize the distance between itself and each observation.</p>
 <p>The concept is very closely tied to regression techniques, which we will discuss in later chapters. For now, we can take for granted that a line of best fit is a way of mathematically describing a linear relationship between two variables. Consider the earlier scatter plot. While we can see some kind of postive relationship between the two variables, a scatter plot only provides a qualitative description of that relationship. A line, on the other hand can be described <em>exactly</em> by a formula:</p>
 <p><span class="math display">\[
 y = mx + b
 \]</span></p>
-<p>It is a common practice to include a line of best fit on a scatter plot. Scatter plots display the data in great detail, while the line of best fit describes the relationship within the data very concisely. Together, the two provide a lot of information about the data. Let’s reproduce the earlier scatter plot with a line of best fit. To do this, we will use the <code>regplot</code> function. The code below produces Figure <a href="#fig-07_21" class="quarto-xref">Figure&nbsp;<span>9.21</span></a>.</p>
+<p>It is a common practice to include a line of best fit on a scatter plot. Scatter plots display the data in great detail, while the line of best fit describes the relationship within the data very concisely. Together, the two provide a lot of information about the data. Let’s reproduce the earlier scatter plot with a line of best fit. To do this, we will use the <code>regplot</code> function. The code below produces <a href="#fig-07_21" class="quarto-xref">Figure&nbsp;<span>9.22</span></a>.</p>
 <div class="sourceCode" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
 <span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> sns.regplot(data <span class="op">=</span> fsdf, x <span class="op">=</span> <span class="st">"v2x_egaldem"</span>, y <span class="op">=</span> <span class="st">"v2x_polyarchy"</span>, color<span class="op">=</span><span class="st">'darkgray'</span>, scatter_kws <span class="op">=</span> {<span class="st">"alpha"</span>: <span class="fl">0.05</span>}, line_kws<span class="op">=</span>{<span class="st">"color"</span>: <span class="st">"black"</span>})</span>
@@ -1198,14 +1235,14 @@ y = mx + b
 <img src="figures/07-21.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-07_21-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;9.21: caption…
+Figure&nbsp;9.22: caption…
 </figcaption>
 </figure>
 </div>
 </section>
 </section>
-<section id="correlation" class="level4" data-number="9.6.0.3">
-<h4 data-number="9.6.0.3" class="anchored" data-anchor-id="correlation"><span class="header-section-number">9.6.0.3</span> Correlation</h4>
+<section id="correlation" class="level3" data-number="9.4.3">
+<h3 data-number="9.4.3" class="anchored" data-anchor-id="correlation"><span class="header-section-number">9.4.3</span> Correlation</h3>
 <p>You likely have an idea of what correlation is about, but it’s important to get these things right. Firstly and very generally, correlation is a measure of how closely random variables are related to one another, or how linearly dependent they are. What does that mean?</p>
 <p>If a variable is closely related to another (there is a high degree of dependence between them) we can use an observation of one to predict the other. For example, a person’s weight in kilograms is perfectly correlated/dependent on their weight in pounds. If you know one, you also know the other. The fuel economy of a car (usually expressed in L/100km or mpg) and the distance it traveled on a full tank are strongly correlated variables, though not perfect. Other factors can influence the distance traveled, but knowing the fuel economy of a car lets you make an accurate guess.</p>
 <p>More rigorously, <em>Correlation</em> describes the standardized direction of a linear relationship between variables <em>as well as its strength</em>. Correlation values, or correlation coefficients, range between -1 and +1. A coefficient of 1 represents a perfectly linearly dependent relationship for <em>any</em> two variables. A coefficient of -1 <em>also</em> represents a perfectly linearly dependent relationship, but in the opposite direction. For example, the number of eggs in a standard 12-pack egg carton is linearly dependent on the number of eggs I removed from it. The difference is that, with weight in lbs and weight in kilograms, when one goes up, the other also goes up. Hence, a positive linear relationship. With eggs in the carton and eggs removed from the carton, when one goes up, the other necessarily goes down: a negative linear relationship. In both cases, <em>if you know one value, you also know the other</em>.</p>
@@ -1226,20 +1263,19 @@ Figure&nbsp;9.21: caption…
 <span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Correlation of v2x_libdem and v2x_partipdem: </span><span class="sc">{</span>new_corr_libdem_partipdem<span class="sc">}</span><span class="ss">'</span>)</span>
 <span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Correlation of v2x_libdem and year*100: </span><span class="sc">{</span>new_corr_libdem_year<span class="sc">}</span><span class="ss">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>The correlation remains the same, despite multiplying one of the variables by 100. This is because the correlation coefficient is defined so that its value will always be between -1 and 1: it is actually another measure (covariance, which we will discuss in another chapter) that has been standardized to those values. As for linear relationships, recall the line of best fit in a scatter plot. If we plot observations of two variables, the strength of the linear relationship between the two is how closely those points lie on a straight line. If you can draw a straight line through every single point, the two variables have a perfect linear relationship. When we multiplied <code>year</code> by 100, all we did was change the angle of the line; we did not change the direction of the relationship, or the strength of it, so the coefficient remains the same.</p>
-<section id="correlation-coefficient-pearson-and-spearman" class="level5" data-number="9.6.0.3.1">
-<h5 data-number="9.6.0.3.1" class="anchored" data-anchor-id="correlation-coefficient-pearson-and-spearman"><span class="header-section-number">9.6.0.3.1</span> Correlation Coefficient: Pearson and Spearman</h5>
+<section id="correlation-coefficient-pearson-and-spearman" class="level4" data-number="9.4.3.1">
+<h4 data-number="9.4.3.1" class="anchored" data-anchor-id="correlation-coefficient-pearson-and-spearman"><span class="header-section-number">9.4.3.1</span> Correlation Coefficient: Pearson and Spearman</h4>
 <p>Just as there are different kinds of data, there are different ways of calculating correlation coefficients. We have been using the default Pearson correlation. A full discussion of different correlation coefficients is beyond our scope, so I will briefly mention one of the most common alternatives to Pearson correlation. Spearman correlation is intended for use with rank data, where a variable has some order, but the distance between values is not necessarily consistent. Consider the placings of runners in a race. We know that the first-place runner finished before second-place, but we don’t know <em>by how much</em>. The distance between first and second could be very different than the distance between second and third place. To calculate the Spearman rank order correlation coefficient in Pandas, we simply provide the <code>.corr()</code> function with the appropriate <code>method</code> parameter.</p>
 </section>
-</section>
-<section id="correlation-matrices-and-heatmaps" class="level4" data-number="9.6.0.4">
-<h4 data-number="9.6.0.4" class="anchored" data-anchor-id="correlation-matrices-and-heatmaps"><span class="header-section-number">9.6.0.4</span> Correlation Matrices and Heatmaps</h4>
+<section id="correlation-matrices-and-heatmaps" class="level4" data-number="9.4.3.2">
+<h4 data-number="9.4.3.2" class="anchored" data-anchor-id="correlation-matrices-and-heatmaps"><span class="header-section-number">9.4.3.2</span> Correlation Matrices and Heatmaps</h4>
 <p>Sometimes we want to explore our data to see if there are any strong or weak relationships that we might not expect. We could calculate a correlation coefficient for each pair of variables in our data, but it’s more efficient to create a correlation matrix and visualize the results. A correlation matrix shows the correlation coefficient for every pairing of variables in a given data set. Since every variable is being compared to every other variable, we will get an <span class="math inline">\(n \times n\)</span> table, where <span class="math inline">\(n\)</span> is the number of variables.</p>
 <p>To create a correlation matrix, we need to select only the appropriate columns. Since we’re using Pearson correlation, that will be continuous variables. Previously, we used the <code>.corr()</code> method to calculate the correlation between two columns. If we provide it a dataframe without specifying any columns, it will produce a correlation matrix with all possible pairings.</p>
 <div class="sourceCode" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>fsdf_corr <span class="op">=</span> fsdf[[<span class="st">'v2x_polyarchy'</span>, <span class="st">'v2x_libdem'</span>, <span class="st">'v2x_partipdem'</span>, <span class="st">'v2x_delibdem'</span>, <span class="st">'v2x_egaldem'</span>]].corr()</span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>fsdf_corr</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Note the diagonal line of 1s arranged from top left to bottom right. Any variable correlated with itself should provide a coefficient of 1: a variable will always be perfectly associated with itself. Secondly, the coefficients are mirrored across the diagonal. The coefficient for the <code>v2x_polyarchy</code> row and the <code>v2x_libdem</code> column is the same as the one for the <code>v2x_libdem</code> row and the <code>v2x_polyarchy</code> column. Recall that Pearson correlation is <em>commutative</em>, so <span class="math inline">\(corr(X,Y) = corr(Y,X)\)</span>.</p>
-<p>We can also create a heatmap to help us scan the data quickly for correlations that especially stand out. The code below produces Figure <a href="#fig-07_22" class="quarto-xref">Figure&nbsp;<span>9.22</span></a>. Unlike me, you have more color options. I would recommend using a color palette other than grayscale.</p>
+<p>We can also create a heatmap to help us scan the data quickly for correlations that especially stand out. The code below produces <a href="#fig-07_22" class="quarto-xref">Figure&nbsp;<span>9.23</span></a>. Unlike me, you have more color options. I would recommend using a color palette other than grayscale.</p>
 <div class="sourceCode" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
 <span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> sns.heatmap(</span>
@@ -1253,12 +1289,12 @@ Figure&nbsp;9.21: caption…
 <img src="figures/07-22.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-07_22-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;9.22: caption…
+Figure&nbsp;9.23: caption…
 </figcaption>
 </figure>
 </div>
 <p>First, note the scale. I have disregarded my own guideline that scales should start at 0. This is because the values are highly clustered at top of the range, and <em>what I want to learn</em> is which correlations stand out from the others. If I included the whole scale, each box would be a nearly identical colour. Guidelines can help you make decisions about visualizations, but they can’t replace thinking about what you’re doing and why.</p>
-<p>To create a heatmap that doesn’t duplicate data and is less cluttered, we can use a “mask” to cover up the upper triangle. The code below produces Figure <a href="#fig-07_23" class="quarto-xref">Figure&nbsp;<span>9.23</span></a>.</p>
+<p>To create a heatmap that doesn’t duplicate data and is less cluttered, we can use a “mask” to cover up the upper triangle. The code below produces <a href="#fig-07_23" class="quarto-xref">Figure&nbsp;<span>9.24</span></a>.</p>
 <div class="sourceCode" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
 <span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>mask <span class="op">=</span> np.triu(np.ones_like(fsdf_corr, dtype <span class="op">=</span> <span class="bu">bool</span>))</span>
@@ -1271,18 +1307,20 @@ Figure&nbsp;9.22: caption…
 <img src="figures/07-23.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-07_23-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;9.23: caption…
+Figure&nbsp;9.24: caption…
 </figcaption>
 </figure>
 </div>
 </section>
-<section id="visualization-with-more-informational-density" class="level3" data-number="9.6.1">
-<h3 data-number="9.6.1" class="anchored" data-anchor-id="visualization-with-more-informational-density"><span class="header-section-number">9.6.1</span> Visualization with More Informational Density</h3>
+</section>
+</section>
+<section id="visualization-with-more-informational-density" class="level2" data-number="9.5">
+<h2 data-number="9.5" class="anchored" data-anchor-id="visualization-with-more-informational-density"><span class="header-section-number">9.5</span> Visualization with More Informational Density</h2>
 <p>I’ve mentioned that good visualization practice involves thinking about what to display. That requires exercising restraint regarding what you add to a graph. Less is <em>usually</em>, but not always, more. We often find ourselves in situations where the best option is to layer several simple visualizations together in ways that substantially increase the overall information density of a visualization <em>while still keeping the parts and the whole as simple as possible</em>. This is often preferable to, for example, generating multiple simple graphs that you, or a reader would have to consult simultaneously to learn from. Again, think about what <em>exactly</em> you are trying to learn or show, and construct a visualization for that purpose and <em>no other</em>.</p>
 <p>The two primary examples of more informationally-dense visualizations we will consider here, and which we will use in various parts of the books, are graphs that combine marginal and joint distributions, and small multiples and pair plots. We will only briefly introduce these visualizations here. In later parts of the book, you will see many examples of using and refining them in specific data analysis contexts.</p>
-<section id="layering-marginal-and-joint-distributions" class="level4" data-number="9.6.1.1">
-<h4 data-number="9.6.1.1" class="anchored" data-anchor-id="layering-marginal-and-joint-distributions"><span class="header-section-number">9.6.1.1</span> Layering Marginal and Joint Distributions</h4>
-<p>Previously, we have occasionally combined different distributions or visualizations in the same plot. We plotted conditional histograms together, histograms with KDEs, scatter plots with lines of best fit, and heat maps and contour maps with rug plots. Lets focus on supplementing our scatterplot with line of best fit. Rather than the rug plots we used earlier, let’s include a histogram with a KDE to easily visualize the marginal distributions of each variable to complement the joint distribution. The code below produces Figure <a href="#fig-07_24" class="quarto-xref">Figure&nbsp;<span>9.24</span></a>.</p>
+<section id="layering-marginal-and-joint-distributions" class="level3" data-number="9.5.1">
+<h3 data-number="9.5.1" class="anchored" data-anchor-id="layering-marginal-and-joint-distributions"><span class="header-section-number">9.5.1</span> Layering Marginal and Joint Distributions</h3>
+<p>Previously, we have occasionally combined different distributions or visualizations in the same plot. We plotted conditional histograms together, histograms with KDEs, scatter plots with lines of best fit, and heat maps and contour maps with rug plots. Lets focus on supplementing our scatterplot with line of best fit. Rather than the rug plots we used earlier, let’s include a histogram with a KDE to easily visualize the marginal distributions of each variable to complement the joint distribution. The code below produces <a href="#fig-07_24" class="quarto-xref">Figure&nbsp;<span>9.25</span></a>.</p>
 <div class="sourceCode" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
 <span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> sns.jointplot(</span>
@@ -1304,15 +1342,15 @@ Figure&nbsp;9.23: caption…
 <img src="figures/07-24.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-07_24-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;9.24: caption…
+Figure&nbsp;9.25: caption…
 </figcaption>
 </figure>
 </div>
 <p>The above visualization provides us with a wealth of information, letting us see individual points as well as the relationship between the two variables with the joint distribution. The marginal distributions show us the observed distributions and an estimate of the underlying probability distribution.</p>
 </section>
-<section id="quick-comparisons-with-pair-plots" class="level4" data-number="9.6.1.2">
-<h4 data-number="9.6.1.2" class="anchored" data-anchor-id="quick-comparisons-with-pair-plots"><span class="header-section-number">9.6.1.2</span> Quick Comparisons with Pair Plots</h4>
-<p>When we get an entirely new data set, we often want to perform some exploratory analysis to get a sense of the data and potential relationships that we may not even be aware of. Rather than choosing which variables to plot against each other, we can cover all of our bases and use the <code>pairplot</code> function to plot all variables against each other. This will produce a grid of scatter plots, pairing every variable against every other variable. Where a variable would be paired with itself (the diagonal of the grid), we instead get a histogram of the marginal distribution of that variable. A <code>pairplot</code> is a great way to get a sense of your data before letting theory and research questions guide more focused analysis and visualization. The code below produces Figure <a href="#fig-07_25" class="quarto-xref">Figure&nbsp;<span>9.25</span></a>.</p>
+<section id="quick-comparisons-with-pair-plots" class="level3" data-number="9.5.2">
+<h3 data-number="9.5.2" class="anchored" data-anchor-id="quick-comparisons-with-pair-plots"><span class="header-section-number">9.5.2</span> Quick Comparisons with Pair Plots</h3>
+<p>When we get an entirely new data set, we often want to perform some exploratory analysis to get a sense of the data and potential relationships that we may not even be aware of. Rather than choosing which variables to plot against each other, we can cover all of our bases and use the <code>pairplot</code> function to plot all variables against each other. This will produce a grid of scatter plots, pairing every variable against every other variable. Where a variable would be paired with itself (the diagonal of the grid), we instead get a histogram of the marginal distribution of that variable. A <code>pairplot</code> is a great way to get a sense of your data before letting theory and research questions guide more focused analysis and visualization. The code below produces <a href="#fig-07_25" class="quarto-xref">Figure&nbsp;<span>9.26</span></a>.</p>
 <div class="sourceCode" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
 <span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>high_level_indexes <span class="op">=</span> [<span class="st">'v2x_polyarchy'</span>, <span class="st">'v2x_libdem'</span>, <span class="st">'v2x_partipdem'</span>, <span class="st">'v2x_delibdem'</span>, <span class="st">'v2x_egaldem'</span>]</span>
@@ -1324,7 +1362,7 @@ Figure&nbsp;9.24: caption…
 <img src="figures/07-25.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-07_25-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;9.25: caption…
+Figure&nbsp;9.26: caption…
 </figcaption>
 </figure>
 </div>
@@ -1335,16 +1373,18 @@ Figure&nbsp;9.25: caption…
 </blockquote>
 </section>
 </section>
+<section id="conclusion" class="level2" data-number="9.6">
+<h2 data-number="9.6" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">9.6</span> CONCLUSION</h2>
+<hr>
 </section>
-<section id="conclusion" class="level2" data-number="9.7">
-<h2 data-number="9.7" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">9.7</span> CONCLUSION</h2>
-<section id="key-points" class="level3" data-number="9.7.1">
-<h3 data-number="9.7.1" class="anchored" data-anchor-id="key-points"><span class="header-section-number">9.7.1</span> Key Points</h3>
+<section id="key-points" class="level2" data-number="9.7">
+<h2 data-number="9.7" class="anchored" data-anchor-id="key-points"><span class="header-section-number">9.7</span> Key Points</h2>
 <ul>
 <li>This chapter introduced the concept of Exploratory Data Analysis alongside Box’s Loop and Iterative research workflows</li>
 <li>We explored some basic guidelines for creating effective visualizations</li>
 <li>We then applied those guidelines to univariate and multivariate data drawn from a (very large!) real-world dataset</li>
 </ul>
+<hr>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
@@ -1361,7 +1401,6 @@ Healy, Kieran, and James Moody. 2014. <span>“Data Visualization in Sociology.�
 VanderPlas, Jake. 2016. <em>Python Data Science Handbook: Essential Tools for Working with Data</em>. " O’Reilly Media, Inc.".
 </div>
 </div>
-</section>
 </section>
 
 </main> <!-- /main -->
