@@ -38,33 +38,33 @@ Every value in Python has a specific data type. The key data types to know are:
 
 Strings are sequences of characters wrapped in single or double quotes. Both work the same way, but you must be consistent when starting and ending a string, and you can't use quotes of one type inside quotes of the same type. Having the option for both enables us to include quotes and apostrophes within a string.
 
-```python
+```{python}
 "That's correct."
 ```
 
-```python
+```{python}
 'My teacher said, "That is correct."'
 ```
 
 An **expression** consists of values joined by operators. The following examples use Python like a calculator.
 
-```python
+```{python}
 2 + 2  # Addition
 ```
 
-```python
+```{python}
 2 * 9  # Multiplication
 ```
 
-```python
+```{python}
 10 / 2  # Division
 ```
 
-```python
+```{python}
 2 ** 6  # Exponentiation
 ```
 
-```python
+```{python}
 2 + 9 * 7  # Python follows the order of operations
 ```
 
@@ -72,7 +72,7 @@ Python has mathematical operators for addition (`+`), subtraction (`-`), multipl
 
 Some of these operators can also be used to perform operations on strings, but they represent different things. For example, when used in an expression with two strings, the `+` operator performs **string concatenation** by joining the two strings together. We demonstrate this below. The following expression is contained inside a `print()` function, which appropriately prints the result inline for notebooks or to the screen if you are executing scripts.
 
-```python
+```{python}
 print('Miyoko is interested in ' + 'a career in data science.')
 ```
 
@@ -93,19 +93,19 @@ Python determines whether `+` should be addition or string concatenation based o
     TypeError: unsupported operand type(s) for +: 'int' and 'str'
 
 
-```python
+```{python}
 '42 ' + 'is the answer'
 ```
 
 Alternatively, we can convert numbers to strings with the `str()` function.
 
-```python
+```{python}
 str(42) + ' is the answer'
 ```
 
 We can also use the `*` operator with strings, where it becomes a **string replicator**, which requires a string and an integer. For example,
 
-```python
+```{python}
 print('Sociology ' * 5)
 ```
 
@@ -121,31 +121,31 @@ Variable names are case-sensitive, so `Variable`, `variable`, and `VARIABLE` are
 
 You can think of a variable as a labeled container that stores specific information. In the example below, the container has a label called `a_number` and stores the integer value `16`:
 
-```python
+```{python}
 a_number = 16
 print(a_number)
 ```
 
 Once you have created a variable, you can use it in expressions. For example:
 
-```python
+```{python}
 a_number * a_number
 ```
 
-```python
+```{python}
 city = 'Cologne'
 country = 'Germany'
 
 print(city + country)
 ```
 
-```python
+```{python}
 print(city + ' is the fourth-most populous city in ' + country)
 ```
 
 We are not limited to printing the results of an expression. We can save our results in a new variable.
 
-```python
+```{python}
 sentence = city + ' is the fourth-most populous city in ' + country
 print(sentence)
 ```
@@ -160,21 +160,21 @@ In Python, (almost) *everything* is an object of one kind or another. Like Boo a
 
 The examples below illustrate some common string manipulation tasks. Any time we use a method, we provide the name of the object followed by a `.` and the name of the method. For example, to change the case of the characters in a string, we can use the `.upper()`, `.lower()`, and `.title()` methods. Let's try on the `city` variable from earlier:
 
-```python
+```{python}
 city.upper()
 ```
 
-```python
+```{python}
 city.lower()
 ```
 
-```python
+```{python}
 city.title()
 ```
 
 Technically, strings in Python are **immutable**, which means they cannot be changed after they are created. Methods like `.upper()` and `.lower()` do not actually change the original string; they create a new string. The code above printed those new strings, but Python did not change the string contained in `city`. To do that, we need to overwrite `city` with the new string.
 
-```python
+```{python}
 print(city)
 city = city.upper()
 print(city)
@@ -184,19 +184,19 @@ print(city)
 
 We can check whether a string contains another string using the `in` operator. Python will return `True` if the substring is in the string or `False` if it is not.
 
-```python
+```{python}
 'GERMANY' in sentence
 ```
 
 We can also use the `.index()` method to return the starting index position where a substring appears in a string. If the substring is not in the string, this method will throw an error.
 
-```python
+```{python}
 sentence.index('Germany')
 ```
 
 To replace one substring with another substring, we can use the `.replace()` method. For example, to replace 'COLOGNE' with 'KÖLN':
 
-```python
+```{python}
 sentence = sentence.replace('Cologne', 'Köln')
 print(sentence)
 ```
@@ -205,31 +205,31 @@ print(sentence)
 
 When working with strings and other text data, you will often find yourself needing to split a string into multiple pieces or to join items together into a specific string. If we use the `.split()` method on a string with no arguments, it will split the string on whitespace and return a list.
 
-```python
+```{python}
 sent_split_1 = sentence.split()
 print(sent_split_1)
 ```
 
 Alternatively, we can tell the `.split()` method to split a string at specific substrings.
 
-```python
+```{python}
 sent_split_2 = sentence.split('populous')
 print(sent_split_2)
 ```
 
-```python
+```{python}
 sent_split_3 = sentence.split('-')
 print(sent_split_3)
 ```
 
 To join these items back into a single string, we use `.join()`. To use this method, we first provide the `separator` we want `.join()` to place between the items and then pass the items we want to reassemble into a string.
 
-```python
+```{python}
 joined = " ".join(sent_split_1)
 joined
 ```
 
-```python
+```{python}
 also_joined = "-".join(sent_split_1)
 also_joined
 ```
@@ -238,20 +238,20 @@ also_joined
 
 Strings containing text data from the real world often have a lot of whitespace. To remove this whitespace, we can use the `.strip()`, `.lstrip()`, or `.rstrip()` methods to strip out extra whitespace from the whole string (not including the spaces between words) or from the beginning or end of the string.
 
-```python
+```{python}
 with_whitespaces = '   This string has     extra whitespace. '
 print(with_whitespaces)
 ```
 
-```python
+```{python}
 print(with_whitespaces.strip())
 ```
 
-```python
+```{python}
 print(with_whitespaces.lstrip())
 ```
 
-```python
+```{python}
 print(with_whitespaces.rstrip())
 ```
 
@@ -259,13 +259,13 @@ print(with_whitespaces.rstrip())
 
 While we can use `+` for string concatenation, it is usually better to use Python's built-in tools for string formatting. One such tool is the **f-string**, which was introduced in Python 3.6 and is the recommended way to format strings. By putting an `f` before our string, we can include the name of the variable containing the relevant value inside each `{}`.
 
-```python
+```{python}
 print(f"{city.title()} is the fourth-most populous city in {country}.")
 ```
 
 This is more readable and efficient than older methods like `str.format()`. However, for completeness, here's how you could use the `format()` method:
 
-```python
+```{python}
 a_string = "{} is the fourth-most populous city in {}."
 print(a_string.format(city.title(), country))
 ```
@@ -274,7 +274,7 @@ print(a_string.format(city.title(), country))
 
 In Python, a string can be as short as zero characters (`""` contains no characters but is a valid string) or arbitrarily long (provided it fits in your system's memory). Sometimes, you'll want to create or manipulate longer strings, such as the chapter of a book or the entirety of a congressional report. In such cases, it's possible to preserve a long text's layout using 'newline' characters (`\n`) wherever there's a paragraph break in the text. As you can imagine, however, this gets messy very quickly. Luckily, Python has a built-in syntax for representing multi-line strings: three single (`'''`) or double (`"""`) quotation marks in a row.
 
-```python
+```{python}
 multiline_string = """
 You can work with strings longer than War and Peace, if you want.
 
@@ -304,23 +304,23 @@ Control flow statements include a **condition** that can be evaluated to either 
 : Python Comparison Operators {#tbl-comparison-operators tbl-colwidths="[25,75]"}
 
 
-```python
+```{python}
 country == country.upper()
 ```
 
-```python
+```{python}
 country != country.upper()
 ```
 
-```python
+```{python}
 country == country
 ```
 
-```python
+```{python}
 23 < 33
 ```
 
-```python
+```{python}
 33 >= 33
 ```
 
@@ -332,7 +332,7 @@ An `if` statement starts with `if`, followed by an expression that can be evalua
 
 The cell below illustrates control flow using a simple `if` statement. It executes the same if-statement on two variables, checking if a variable has the value `'COLOGNE'` and printing a string if the condition evaluates to `True`.
 
-```python
+```{python}
 if city == 'COLOGNE':
     print("city has the value: 'COLOGNE'")
 else:
@@ -348,7 +348,7 @@ Notice that we have included an `else` statement, which indicates that if the pr
 
 Let's examine that `==` operator more closely.
 
-```python
+```{python}
 if 'doing computational social science' == 'Doing Computational Social Science':
     print("The second two strings are equal to each other!")
 if 'doing computational social science ' == 'doing computational social science':
@@ -361,7 +361,7 @@ There are a few things to note here. First, Python cares about differences in ca
 
 This might seem frustrating at first, but Python's capacity for specificity can pay dividends. We can also anticipate these issues and use some string manipulation methods to exert a bit more control over the comparison. For example, we can enforce title case and strip out whitespace using the string methods we just learned.
 
-```python
+```{python}
 if 'doing computational social science '.title().strip() == 'Doing Computational Social Science':
     print("These two items are equal to one another!")
 else:
@@ -370,7 +370,7 @@ else:
 
 In this example, there are only two options: if the strings are equal, do one thing; if not, do another. We can use `elif`, or *else-if statements*, to introduce code to execute under different conditions. Note that using an `elif` statement is functionally equivalent to nesting an if-statement within the clause of an else-statement. It will only run if the previous condition has evaluated to `False`.
 
-```python
+```{python}
 we_do_sentence = "We're learning control flow"
 learning_string = "learning control flow"
 
@@ -394,7 +394,7 @@ Very importantly, the indentation in our code is meaningful. All indented code f
 
 In the following example, we will use a while loop to print a string until we have reached the end of a course. In plain language, we say "while the current week is less than or equal to the last week, print 'The course is still in progress' and increase the week by 1."
 
-```python
+```{python}
 week = 1
 
 while week <= 12:
@@ -416,7 +416,7 @@ You may already be anticipating this, but it is possible to write your code in a
 
 It's often useful to combine comparisons in a condition with logical operators such as `and`, `or`, and `not` to exert even more control over the code that is executed under various conditions. For example, to use the `and` operator in a conditional:
 
-```python
+```{python}
 book = 'Doing Computational Social Science'
 if len(book) > 30 and book == 'Doing Computational Social Science':
     print("Correct! That's the name of this book")
@@ -426,14 +426,14 @@ The conditional on Line 1 above uses `and` to chain together two comparisons. Wh
 
 Alternatively, we could use the `or` operator. Below, Line 1 evaluates to `True` if *either* of the two comparisons evaluates to `True`.
 
-```python
+```{python}
 if len(book) > 30 or book == 'Doing Computational Social Science':
     print("Correct! That's the name of this book")
 ```
 
 It might sound a bit strange, but we can also use `not` to make an expression return `True` (and therefore execute a clause) if it evaluates to `False`.
 
-```python
+```{python}
 if not book == 'Doing Computational Social Science':
     print("Sorry, that's not the name of this book")
 else:
@@ -442,7 +442,7 @@ else:
 
 It's possible to combine as many comparisons as you like, though this can make your code a little more difficult to read. The convention in Python is to wrap each comparison in `()`, which makes the code cleaner and easier to read.
 
-```python
+```{python}
 if (len(book) > 30 and len(book) < 100) or (book == 'Doing Computational Social Science'):
     print("Correct! That's the name of this book")
 ```
@@ -496,7 +496,7 @@ print('\nThe course is "complete". Congratulations!')
 
 You should see a `ValueError` exception. This makes sense. Python isn't inherently aware of how to interpret the string `"seven"` as an integer. We can use `try` and `except` to catch some of the cases of the value error without sacrificing any of our original functionality. To do this, we'll have to start by figuring out where the error is coming from. We can do this by using the Traceback Python printed when it encountered the exception: looks like line 3 is the culprit. Let's try wrapping that line in a `try` block, and then using `except ValueError` plus some hand-written string comprehension to handle the error. Let's assume that people can only start the course in the first three weeks, and account for those in our `try` block:
 
-```python
+```{python}
 print("Please enter which of weeks.")
 user_input = "three"
 try:

@@ -1,7 +1,7 @@
-# Getting Started
+#  Getting Started
 
 ::: {.callout-note}
-### Learning Objectives
+## Learning Objectives
 
 In this chapter, you will:
 
@@ -13,13 +13,13 @@ In this chapter, you will:
 
 :::
 
-<br>
+# Introduction
 
 This chapter is devoted entirely to the practical knowledge about research computing that you need to run Python code and undertake computational social science research. I'll start by walking you through a few key pieces of software to download and install: Docker Desktop, VS Code, and Git. I'll briefly explain what each is, followed by instructions on how to use Git inside VS Code to access the course materials (which are hosted on GitHub). The rest of the chapter will introduce the basics of command-line computing and version control tools. It assumes you've followed the initial instructions.
 
 Once we have the software downloaded and installed and you've accessed the course materials using Git inside of VS Code, I'll offer some initial advice on using VS Code for computational social science, followed by an introduction to using "the shell" to interact with your computer and Git for version control. For simplicity's sake, we'll focus primarily on the Git GUI in VS Code and secondarily on using Git on the command line. Finally, the last section of this chapter compares two major types of "virtualization" we use in this book: Docker + DevContainers, which we use throughout the course, and virtual environments with Poetry and Conda, which we use in several chapters as needed. If all of this is new to you, feel free to skip this section and come back to it later.
 
-## Open Source Software
+# Open Source Software
 
 I've developed a specialized computing environment that you can use for this book, and your computational social science research more generally. Like all good research computing setups, this one starts with a good text editor: VS Code. Whether you work in the cloud using GitHub Codespaces or locally on your own computer, you'll be using VS Code.
 
@@ -33,7 +33,7 @@ The key benefit of this setup is that you'll be working in a **containerized env
 
 There are two main ways to use this computing setup: in the cloud using GitHub Codespaces, or locally on your own machine. If you are entirely new to this stuff, I would recommend starting in the cloud and setting up your local environment later. But select whatever approach you prefer!
 
-### Working in the Cloud with GitHub Codespaces
+## Working in the Cloud with GitHub Codespaces
 
 If you're new to all of this and want to simplify the setup process, I recommend working in the cloud using GitHub Codespaces. First, you'll need to sign up for a free GitHub account at [github.com](https://github.com). GitHub Codespaces is a cloud-based development environment that allows you to run VS Code directly in your web browser, complete with all the tools and extensions you need. It's especially convenient because it eliminates the need to install software on your own computer; everything runs on GitHub's servers. As a student, you can access Codespaces for free. However, keep in mind that if your codespace remains inactive for a while, GitHub may prompt you to save your changes so that the codespace can be deleted to free up resources.
 
@@ -41,21 +41,13 @@ To get started, navigate to the supplementary materials repository for this book
 
 While working in the cloud with GitHub Codespaces is convenient, you might prefer to set up the environment on your own computer, especially if you want more control or if you anticipate working without a stable internet connection. In the next section, I'll guide you through setting up the necessary software on your local machine so you can work offline and have all your tools directly at your fingertips.
 
-### Working Locally on Your Own Computer
+## Working Locally on Your Own Computer
 
 If you want to work locally on your own machine, instead of remotely in GitHub Codespaces, you'll need to download and install **Docker Desktop**, **Git**, and **VS Code** on your computer. Once these are installed, you'll be able to clone the course repository from GitHub, open it in VS Code, and start working in the container environment.
 
-Here's how to get set up:
+To get set up, install **Docker Desktop** and **VS Code**. Docker is the software that allows you to run the container, which contains the entire computing environment. To install Docker Desktop, go to the [Docker Desktop](https://www.docker.com/products/docker-desktop) page for your operating system. Download the installer and follow the instructions. Once Docker is installed, you'll see its icon in your system's toolbar or taskbar. Make sure it's running before you proceed to the next steps.
 
-### Step-by-Step Setup Instructions
-
-#### 1. Install Docker Desktop
-
-Docker is the software that allows you to run the container, which contains the entire computing environment. To install Docker Desktop, go to the [Docker Desktop](https://www.docker.com/products/docker-desktop) page for your operating system. Download the installer and follow the instructions. Once Docker is installed, you'll see its icon in your system's toolbar or taskbar. Make sure it's running before you proceed to the next steps.
-
-#### 2. Install VS Code
-
-Next, you'll need **Visual Studio Code** (VS Code), which I will assume you are using as your text editor and IDE for this course. You can download it for free at [code.visualstudio.com](https://code.visualstudio.com/Download). After installing, open VS Code and head to the **Extensions** tab (on the left sidebar). Search for and install the following extensions:
+You can download **Visual Studio Code** (VS Code) for free at [code.visualstudio.com](https://code.visualstudio.com/Download). After installing, open VS Code and head to the **Extensions** tab (on the left sidebar). Search for and install the following extensions:
 
 - **Dev Containers** (this lets you work in the container environment seamlessly)
 - **Python** (for Python code development)
@@ -63,30 +55,28 @@ Next, you'll need **Visual Studio Code** (VS Code), which I will assume you are 
 
 These extensions will make it easy to work with Python code and documents, as well as interact with the pre-configured container I've built for you.
 
-#### 3. Install Git
-
 Finally, you'll need **Git**, which will help you manage the course materials from GitHub. Install it from [git-scm.com](https://git-scm.com/downloads) and follow the instructions for your operating system.
 
 Once you have these tools installed, you're ready to start working in the pre-configured environment. You don't need to worry about installing Python, data science libraries, or Quarto—they're all set up inside the container.
 
-### Launching the Container and Getting Started
+## Launching the Container and Getting Started
 
 Now that everything is installed, here's how to set up the course materials and start working in the containerized environment:
 
-#### Clone the Course Repository:
+### Clone the Course Repository
 
 1. Open VS Code.
 2. Click on **View** in the top menu, then select **Command Palette** (or press `Ctrl+Shift+P` on Windows/Linux or `Cmd+Shift+P` on Mac).
 3. In the command palette, type **Git: Clone** and select it.
-4. When prompted for the repository URL, enter `https://github.com/UWNETLAB/dcss_supplementary.git`.
+4. When prompted for the repository URL, enter `https://github.com/UWNETLAB/dcss_supplementary.git`. # update this
 5. Choose a local folder where you want to clone the repository.
 
-#### Open the Repository in VS Code:
+### Open the Repository in VS Code
 
 1. After cloning, a prompt may appear asking if you want to open the cloned repository. Click **Open**.
 2. If not, you can manually open it by going to **File > Open Folder** and navigating to where you cloned the repository.
 
-#### Open in a Dev Container:
+### Open in a Dev Container
 
 1. Once the repository is open in VS Code, you might see a prompt at the bottom right corner asking if you want to **Reopen in Container**. Click on it.
 2. If you don't see the prompt, you can click on the green icon in the bottom-left corner of VS Code (the **Dev Containers** icon) and select **Reopen in Container**.
@@ -94,11 +84,11 @@ Now that everything is installed, here's how to set up the course materials and 
 
 That's it! You're now set up to work within a complete computational social science environment, with everything you need installed and ready to go. In the rest of this chapter, I'll introduce some basic knowledge and skills for command-line computing and using Git for version control. Then I'll describe the differences between two types of virtualization used in this book: Docker containers and DevContainers on the one hand, and virtual environments managed by Poetry and/or Conda on the other. Feel free to skip this content and come back to it later if and when you need it.
 
-## Command-Line Computing
+# Command-Line Computing
 
 Doing computational social science or data science often requires interacting with computers using a **Command-Line Interface (CLI)**. This may feel unfamiliar and inefficient in the age of mobile computing, beautifully designed **Graphical User Interfaces (GUIs)**, and touch screens, but it is what enables us to do computational research in the first place. A bit of knowledge unlocks a vast world of high-quality open-source tools and enables us to benefit from the expertise and experience of many other researchers, scientists, and engineers around the world. Among a great many other things, command-line computing also enables us to work on remote computers; organize our software, data, and models according to best practices; efficiently manage and track our research projects; and make collaboration much easier, and transparency, accountability, and reproducibility possible. The command line is our common point of departure, regardless of which operating system you happen to be using. In what follows, I'll introduce some essentials of command-line computing, starting with an introduction to "the shell."
 
-### The Shell
+## The Shell
 
 When I talk about working "on the command line" or "in a terminal," what I really mean is that we tell our computer's operating system what we want it to do by interacting with a program called the **shell**. We interact with the shell by typing commands into a **terminal emulator**, or "terminal." Linux, macOS, and Windows all come with pre-installed terminal emulators, but for the sake of convenience we'll use the one that's built into VS Code. You can open it by clicking on the 'View' and then 'Terminal' menu items, or by using a keyboard shortcut.
 
@@ -115,11 +105,9 @@ cal
 
 `cal` is a command-line program installed on your computer; when you type the command `cal`, your computer executes that program and prints a calendar to the screen with the current day highlighted. Other commands we pass to the shell are also programs, and as we will see below, they tend to be most useful when we provide those programs with additional information about what we want. If you happen to issue a command that your computer does not recognize, nothing bad will happen. Your computer will just tell you that it doesn't understand what you want it to do. Go ahead and type something like `Hi, shell!` and hit return. We can do almost anything we want on the command line, but we have to use commands that our computer knows about.
 
-### The Structure of Shell Commands
+## The Structure of Shell Commands
 
 Generally, the commands you execute will have the same basic structure, though the components of a command may be called different things by different people. The first word you type is the command itself, or the name of the program you are going to execute. Often, the default behavior can be modified by using **options**, which can be specified using a "short" version (a letter following a `-`, such as `ls -l`) or a long version (a word following `--`, such as `ls --long`). When using the short version, you can string multiple options together following a single `-`, such as `ls -ltS`. In addition to the command itself and the options that follow, commands may take **arguments**, such as the name of a file or directory that a command should act on. This may seem very abstract now, but if you follow along with the commands below in your terminal, it will become more concrete.
-
-**Command Structure:**
 
 ```bash
 [COMMAND] [OPTIONS] [ARGUMENTS]
@@ -129,11 +117,11 @@ While there are different terminal applications available, they all do the same 
 
 Now that you're set up with a good terminal emulator that runs in a Linux environment, let's discuss a few very simple but essential actions for getting work done on the command line. We'll focus on a small subset of commands for navigating the file system and performing various operations with directories and files.
 
-### Getting Around the File System
+## Getting Around the File System
 
 The commands you will use most frequently are those that enable you to navigate a computer's file system and perform basic operations on directories (i.e., "folders") and files. Let's focus on those commands first. I recommend that you work through this chapter with your terminal open. You are likely to learn faster and more deeply if you execute these commands as you read, and if you take little breaks along the way to practice what you've learned.
 
-#### Directories and Files
+### Directories and Files
 
 Although there are some differences across operating systems—chiefly between Windows and the \*nix systems Linux and macOS—these operating systems all organize **directories** (or "folders") as hierarchical trees. The `root` directory sits at the top of that tree; all files and subdirectories are contained within it. We call it 'root', but in most operating systems, it'll just look like a single forward slash (/). In what follows, we'll use the pre-built computing environment, which, again, is Linux.
 
@@ -169,9 +157,7 @@ Because this path starts at the root directory, I can execute it regardless of w
 cd supervision/grad_students/
 ```
 
-In this case, the command worked because we were "in" the Documents directory. But if `/users/johnmclevey/Dropbox/` was my current working directory and I typed the same command, the shell would tell me that there is no such
-
- file or directory. When using relative paths, you have to provide the path from the current working directory to the directory where you want to be.
+In this case, the command worked because we were "in" the Documents directory. But if `/users/johnmclevey/Dropbox/` was my current working directory and I typed the same command, the shell would tell me that there is no such file or directory. When using relative paths, you have to provide the path from the current working directory to the directory where you want to be.
 
 To list the files in a directory, you can use the command `ls`. If we execute `ls` without any arguments, it will default to printing the files in the current working directory, but if provided with an absolute or relative path, it will list the contents of that directory instead. Below, for example, we list the contents of the current working directory's parent directory.
 
@@ -187,7 +173,7 @@ ls -l
 
 We can string together a number of these short options to change the behavior of the command. For example, adding the option `t` to our command (`ls -lt`) changes the order of the files printed to screen such that the most recently modified files are at the top of the list, whereas `ls -lS` prints them with the largest files on top. Using `ls -a` will display "hidden" files, some of which we will discuss below.
 
-### Creating Files and Directories
+## Creating Files and Directories
 
 It is also possible to create new directories and files from the command line. For example, to make a new directory inside the current working directory, we can use the command `mkdir` followed by the name of the directory we want to create. Once created, we can move into it using `cd`.
 
@@ -236,13 +222,13 @@ You can then page through the results using your spacebar, and return to the com
 
 If you are looking to expand your general command-line toolkit even further, there is an enormous number of high-quality tutorials online. Now that you have a basic foundation, learning will be faster. However, as mentioned earlier, I recommend against taking a completionist approach. Instead of trying to learn everything at once, get comfortable with this foundation and expand your knowledge in a problem-driven way. That way you will have time to practice and make interacting with your computer this way feel more natural, fast, and automatic.
 
-### Further Reading
+## Further Reading
 
 In general, the best way to deepen your knowledge of open-source computing, for research or otherwise, is to learn more about Linux and command-line computing. You'll find plenty of excellent free resources about Linux and open-source computing online, but if you're looking for a more guided and scaffolded tour that doesn't throw you right into the deep end, I would recommend William Shotts' [*The Linux Command Line*](https://linuxcommand.org/tlcl.php) or Brian Ward's [*How Linux Works*](https://www.nostarch.com/howlinuxworks3).
 
 Now let's learn how to use version control software, specifically Git, in order to do our work in more transparent, auditable, and reproducible ways. I'll focus on using a visual interface for Git (a "GUI") inside VS Code and then I'll explain how to use Git on the command line. Use whichever approach you prefer.
 
-## Version Control Tools
+# Version Control Tools
 
 Real research projects can become complex messes very quickly. While there are organizational strategies you can adopt to keep the messiness to a minimum, a good version control system is essential. Version control systems watch your full project and record all the changes that happen everywhere, to every file (unless you tell it to ignore a file or subdirectory). It keeps logs of who did what, to what files, when, and if you use it properly, it can even keep log files and other notes associated with each change to the project. It eliminates the "need" for long descriptive file names with information about dates, authors' comments, and revision stages, or emailing the "final version" of a `.docx` file back and forth between collaborators. At any given point, you can roll back in time to a previous state of the project. They also unlock *enormous* potential for collaboration—in fact, the version control system I recommend, Git, is used to manage what is arguably the largest and most complex software development project in the world, the Linux kernel, built by over 5,000 individual developers from over 400 organizations around the world.
 
@@ -250,7 +236,7 @@ The model for Git and other version control systems is that you store your proje
 
 As you do this, you build up a complete record of the history of your project, including who (your past self included) did what and why. You can roll back to any place in the history of your project, create experimental branches of the project to explore other lines of inquiry, and so on. Your collaborators can also have access to the remote repositories and can "clone" (i.e., download) the repository with the full history, make their own changes, add them, commit them, and push them back to the remote repository. You can get those changes yourself by "pulling" down new changes.
 
-### Git from Inside VS Code
+## Git from Inside VS Code
 
 Using Git within VS Code provides a user-friendly way to manage version control without needing to remember all the command-line instructions. Here's how you can use Git inside VS Code:
 
@@ -262,7 +248,7 @@ Using Git within VS Code provides a user-friendly way to manage version control 
 
 Using Git within VS Code makes version control more visual and can help you better understand what's happening in your project. It also integrates well with other features of VS Code, such as the built-in terminal and extensions.
 
-### Git from the Command Line
+## Git from the Command Line
 
 It's also possible to use Git from the command line—in fact, it was designed for the command line! Let's say you are starting a new web scraping project. You've written some code, all stored inside a directory called `scraping_project`. To use Git to manage your project, you would `cd` into the project directory and initialize Git. You only have to initialize Git once for a project.
 
@@ -299,19 +285,19 @@ Git provides a number of other useful commands that you'll make frequent use of.
 
 Using version control software like Git has many benefits, not the least of which is that when you return to your work after a period of working on something else—say, when a chapter is being reviewed by your committee or a paper is under review—you will know exactly what you did and why later. When it comes to accountability, transparency, and reproducibility, this is perhaps the most important thing: **you must always know what you did**.
 
-### Further Reading
+## Further Reading
 
 Using tools like Git makes transparency, accountability, and reproducibility possible, but only if you use them properly. As you become more comfortable with these tools, you'll want to seek out advice on how people use them for different types of projects. I recommend Patrick Ball's [-@ballPdpp] *"Principled Data Processing (PDP)"* framework. Eric Ma's [-@ma] *Data Science Bootstrap: A Practical Guide to Getting Organized for Your Best Data Science Work* also provides a lot of excellent advice for scientific computing more generally, and for setting up workflows for projects that don't lend themselves well to the PDP framework.
 
 Finally, as a computational social scientist, you'll need to understand and make use of virtualization tools. I've already set all of this up for you in our pre-built environment, so if all of this is new to you, it's okay to skip over this next section and come back if and when you need it.
 
-## VIRTUALIZATION TOOLS
+# Virtualization Tools
 
 As a computational social scientist, you'll need to understand and utilize virtualization tools to ensure your work is consistent, reproducible, and portable across different computing environments. While this might seem complex at first, virtualization allows you to create isolated environments that encapsulate all the dependencies your projects require. This ensures that your code runs exactly as intended, regardless of where or how it's executed.
 
 We'll focus on two primary types of virtualization: **containers** and **virtual environments**. Both serve the purpose of isolating your project's dependencies but operate at different levels.
 
-### Containers
+## Containers
 
 **Containers** are a form of operating system virtualization that allows you to run applications in isolated environments. They package up software with all its necessary components—code, runtime, system tools, libraries, and settings—so it runs consistently across different computing environments.
 
@@ -327,81 +313,59 @@ Using Docker and DevContainers has several advantages:
 
 To get started with containers in this book, all you need is Docker Desktop and the Dev Containers extension in VS Code (which we've covered earlier). When you open the course repository in VS Code, it will automatically detect the DevContainer configuration and prompt you to reopen the project inside the container. Once you do, you'll be working inside the pre-configured environment we've provided.
 
-### Creating and Using Virtual Environments
+## Creating and Using Virtual Environments
 
 While containers isolate the entire operating system environment, **virtual environments** allow you to isolate Python dependencies at the project level. This is particularly useful when you have multiple projects requiring different versions of the same packages.
 
 In this book, we'll occasionally use virtual environments managed by **Conda** or **Poetry**. These tools help you create and manage project-specific environments, ensuring your Python packages and dependencies are neatly organized.
 
-#### Using Conda for Virtual Environments
+### Using Conda for Virtual Environments
 
-**Conda** is an open-source package and environment management system that works across Windows, macOS, and Linux. It's especially popular in the data science community.
+**Conda** is an open-source package and environment management system that works across Windows, macOS, and Linux. It's especially popular in the data science community. We can create and activate a Conda environment from the command line within VS Code:
 
-Here's how to create and activate a Conda environment within VS Code:
+First, **Open the Terminal in VS Code**. Click on 'Terminal' in the top menu and select 'New Terminal', or use the shortcut `Ctrl+Shift+` (Windows/Linux) or `Cmd+Shift+` (macOS). Then **Create a New Environment**. Navigate (`cd`) to your project directory and create a new environment with
 
-1. **Open the Terminal in VS Code**: Click on 'Terminal' in the top menu and select 'New Terminal', or use the shortcut `Ctrl+Shift+` (Windows/Linux) or `Cmd+Shift+` (macOS).
+```bash
+conda create --name dcss
+```
 
-2. **Create a New Environment**: Navigate (`cd`) to your project directory and create a new environment:
+where `dcss` is the name of the environment. (You can use whatever name you like.)
 
-   ```bash
-   conda create --name myenv
-   ```
+Once you've done that, you can **Activate the Environment** with
 
-   Replace `myenv` with the name you want for your environment.
+```bash
+conda activate dcss
+```
 
-3. **Activate the Environment**:
+You'll notice your terminal prompt now starts with `(dcss)`, indicating the environment is active. You can **Install Packages** (e.g., `numpy` and `pandas`) into your environment using `conda install`:
 
-   ```bash
-   conda activate myenv
-   ```
+```bash
+conda install numpy pandas
+```
 
-   You'll notice your terminal prompt now starts with `(myenv)`, indicating the environment is active.
+### Using Poetry for Virtual Environments
 
-4. **Install Packages**: You can now install the packages you need:
+**Poetry** is a tool that manages Python dependencies and virtual environments, simplifying the process of setting up and maintaining your project. It's installed in the Docker container we're working in, and we're using it to manage our dependencies right now! I won't get into all the details of using Poetry here, but there are a couple of useful commands you should know about. 
 
-   ```bash
-   conda install numpy pandas
-   ```
+First, to install Python packages (e.g., `bambi`) into the course environment, you can run 
 
-   This installs the latest versions of NumPy and pandas into your environment.
+```bash
+poetry add bambi
+```
 
-#### Using Poetry for Virtual Environments
+Second, to install or update all packages, run
 
-**Poetry** is a tool that manages Python dependencies and virtual environments, simplifying the process of setting up and maintaining your project.
+```bash
+poetry install
+```
 
-To use Poetry within VS Code:
+::: {.callout-note}
+## Planned Updates
 
-1. **Install Poetry**: If you haven't already, install Poetry by following the instructions on the [Poetry website](https://python-poetry.org/docs/#installation).
+I am going to add a lot of content on Poetry at some point soon. Most likely in fall 2024.
+:::
 
-2. **Navigate to Your Project Directory**:
-
-   ```bash
-   cd /path/to/your/project
-   ```
-
-3. **Initialize a New Poetry Project**:
-
-   ```bash
-   poetry init
-   ```
-
-   Follow the prompts to set up your project configuration.
-
-4. **Add Dependencies**:
-
-   ```bash
-   poetry add numpy pandas
-   ```
-
-5. **Activate the Virtual Environment**:
-
-   ```bash
-   poetry shell
-   ```
-
-   This spawns a new shell within the virtual environment, indicated by the `(my-project-name)` prefix in your terminal prompt.
-
-#### Activating Virtual Environments in VS Code
+### Activating Virtual Environments in VS Code
 
 VS Code is adept at recognizing and working with virtual environments. After creating and activating a virtual environment, you might need to tell VS Code to use it for running Python code:
 
@@ -411,7 +375,7 @@ VS Code is adept at recognizing and working with virtual environments. After cre
 
 This ensures that when you run or debug your code in VS Code, it uses the correct environment.
 
-#### When to Use Virtual Environments
+### When to Use Virtual Environments
 
 While our pre-built Docker environment covers most of the computational needs for this book, there are instances—like when we explore generative models for networks—where you'll need to create and manage virtual environments. Virtual environments are particularly useful when:
 
@@ -421,7 +385,7 @@ While our pre-built Docker environment covers most of the computational needs fo
 
 If you're new to this, don't worry. You can rely on the container setup for now and revisit virtual environments when we reach those chapters.
 
-## CONCLUSION
+# CONCLUSION
 
 Starting with computational social science might seem overwhelming due to the array of tools and technologies involved. However, each tool serves a specific purpose in streamlining your workflow, enhancing collaboration, and ensuring reproducibility.
 
@@ -429,7 +393,7 @@ While the initial setup requires effort, investing time in learning these tools 
 
 Remember, it's perfectly normal to feel a bit lost when diving into something new. Take it step by step, refer back to this chapter as needed, and don't hesitate to seek out additional resources or ask questions. Soon enough, using these tools will become second nature, and you'll be well-equipped to tackle any computational challenge in your research.
 
-## KEY POINTS
+# KEY POINTS
 
 - **Command Line Proficiency**: Understanding how to navigate and operate in the shell is foundational for computational social science.
 - **VS Code**: A versatile text editor and IDE that integrates seamlessly with tools like Git, Docker, and virtual environments.
