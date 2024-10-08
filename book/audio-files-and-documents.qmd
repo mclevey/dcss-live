@@ -1,0 +1,22 @@
+# Audio files and documents
+
+::: {.callout-note}
+
+## Coming Soon!
+
+This is a new chapter. I am actively working on it in fall 2024 and intend to publish a working draft in early winter 2025. It will include using some deep learning models for the audio and document data, so I need to think about how best to integrate the chapter this early in the book, long before deep learning is introduced. Stay tuned! 😎
+:::
+
+<!--
+## Audio Data
+
+- Focus will be on OpenAI's Whisper model
+
+
+## Document Data
+
+- Word documents
+- PDFs
+    - Older tools
+    - Deep learning models (including images)
+-->

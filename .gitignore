@@ -1,5 +1,7 @@
 .DS_Store
 /.quarto/
+book/scratch/
+book/.quarto/
 data/*.csv
 *.spacy
 data/*.json

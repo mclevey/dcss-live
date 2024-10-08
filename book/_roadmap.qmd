@@ -1,0 +1,110 @@
+### Introduction
+
+The introduction sets the stage for your journey into computational social science. It includes:
+
+|     |                                             |
+|:---:|:--------------------------------------------|
+| 🏠  | About this edition                           |
+| 00  | Learning to do computational social science |
+
+: Introduction {.striped .hover .responsive tbl-colwidths="[10,90]"}
+
+I've updated this chapter to reflect changes in assumed backgrounds and added a new section offering guidance on using large language models (LLMs) like ChatGPT and GitHub Copilot for learning and doing computational social science.
+
+### Part I | Research Computing
+
+In Part I, we dive right into programming with Python, laying the groundwork for all the computational methods to come. These chapters have been revised to reflect current best practices, while keeping the core content similar to previous versions.
+
+|     |                                       |
+|:---:|:--------------------------------------|
+| 01  | Getting started with Python           |
+| 02  | Python 101                            |
+| 03  | Python 102                            |
+
+In **Chapter 1: Getting started with research computing**, we set up the computational environment and go over essential tools for research computing, such as version control and basic command-line skills. **Chapters 2 and 3** cover Python fundamentals, including basic data types, control flow, functions, data structures, and working with files.
+
+### Part II | Obtaining Data
+
+Part II focuses on acquiring and working with different types of data. This section includes updates and new chapters, making the learning experience more streamlined.
+
+|     |                                  |
+|:---:|:---------------------------------|
+| 04  | Sampling and survey data         |
+| 05  | Web data (APIs)                  |
+| 06  | Web data (Scraping)              |
+| 07  | Audio, image, and document data  |
+
+**Chapter 4** is a new chapter that introduces essential knowledge and skills for working with real world survey data using `Pandas`. We'll use several public opinion surveys, including the Eurobarometer and European Values surveys and a Canadian survey on attitudes about harm reduction initiatives for people who use drugs (PWUD).
+
+In **Chapter 5**, you'll learn how to collect data from APIs, with practical examples like *The Guardian* for news data and the YouTube Data API for social media data. **Chapter 6** focuses on web scraping, with updates to reflect changes in web technologies and ethical considerations. **Chapter 7** is a new chapter that introduces working with multimedia data, such as audio, images, and documents—an increasingly important skill in modern computational social science. This chapter is currently in development and should be publically available in winter 2025.
+
+### Part III | Exploring Data
+
+Part III delves into exploratory data analysis (EDA) and introduces a central theme in this book: latent factors, components, and variables. This content has been extensively revised to focus on the *process* of exploratory data analysis (EDA) with different types of data and research problems (rather than focusing on how to use Python for EDA, which was an unintended consequence of the approach I took in the print edition).
+
+|     |                                     |
+|:---:|:------------------------------------|
+| 08  | Processing structured data          |
+| 09  | Exploratory data analysis and visualization |
+| 10  | Association and latent factors      |
+| 11  | Text as data                        |
+| 12  | Text similarity and latent semantic space |
+| 13  | Social networks and relational thinking |
+| 14  | Structural similarity and latent social space |
+
+**Chapter 8** covers processing structured data like survey or readymade datasets. **Chapter 9: Exploratory data analysis and visualization** focuses on purposeful EDA as part of a broader workflow. **Chapter 10: Association and latent factors** introduces latent factors and components, preparing you for more complex models in later parts. **Chapters 11-14** introduce text analysis and network modeling, with an emphasis on latent structures in both text and social networks.
+
+### Part IV | Prediction and Inference
+
+This section has undergone significant changes, focusing more deeply on prediction in supervised machine learning, followed by probabilistic reasoning, Bayesian inference, and causal inference.
+
+|     |             |
+|:---:|:------------|
+| 15  | Machine and statistical learning |
+| 16  | Prediction                       |
+| 17  | Probability                      |
+| 18  | Credibility                      |
+| 19  | Causality                        |
+
+**Chapter 15: Machine and statistical learning** introduces supervised learning and prediction. **Chapters 16-18** develop a strong foundation in probabilistic reasoning and Bayesian inference. **Chapter 19: Causality** introduces causal inference with observational data using directed acyclic graphs (DAGs) and Bayesian causal models.
+
+### Part V | Generative Modeling
+
+Part V builds on the previous part by introduces generative models, including linear models, network models, text models, and agent-based simulations. All of these chapters have been extensively revised and explicitly build on one another.
+
+|     |                                |
+|:---:|:-------------------------------|
+| 20  | Linear regression              |
+| 21  | Multilevel regression with post-stratification |
+| 22  | Generalized linear models      |
+| 23  | Causal analysis                |
+| 24  | Latent structure in networks   |
+| 25  | Latent topics in text (LDA/STM) |
+| 26  | Complex adaptive systems       |
+| 27  | Developing agent-based models  |
+
+**Chapter 20-22** guide you through core statistical models in a Bayesian framework, emphasizing Bambi and PyMC integration. **Chapter 23** explains how to use these kinds of models for causal analysis, and **Chapters 24-27** take you into advanced generative modeling for networks, topics, and agent-based models.
+
+### Part VI | Deep Learning Demystified
+
+Part VI introduces neural networks, natural language processing (NLP), and transformer-based models.
+
+|     |                                                                   |
+|:---:|:------------------------------------------------------------------|
+| 28  | Artificial neural networks (FNN, RNN, CNN)                        |
+| 29  | Processing natural language data (SpaCy and embeddings)           |
+| 30  | Transformers and self-attention                                   |
+| 31  | Latent topics in text and images using transformers               |
+
+In **Chapter 28**, we cover neural networks with traditional feed-forward, recurrent, and convolutional architectures, which sets the stage for **Chapter 29** on processing natural language data and understanding word vectors / embeddings. **Chapter 30** introduces the attention architecture used by transformer models and demonstrates how to use transformers from HuggingFace for senitment analysis and named entity recognition. **Chapter 31** introduces transformer-based topic models for text and image data.
+
+### Part VII | Professional Responsibilities and Ethical Practice
+
+The final section of the book addresses our professional responsibilities as computational social scientists, specifically doing ethical research in reproducible, transparent, and accountable ways.
+
+|     |                                        |
+|:---:|:---------------------------------------|
+| 32  | Research ethics and politics           |
+| 33  | Next steps                             |
+
+**Chapter 32** retains it's original content, but has been expanded to include debates about LLMs, "alignment," and "uncensored" models. **Chapter 33** offers guidance on further developing your skills in computational social science.

@@ -1,0 +1,33 @@
+### Learning Objectives, Key Concepts, Recommended Content, and Key Points
+
+Each chapter in this book follows a few conventions to help you learn. First, each chapter starts with a set of itemized learning objectives and ends with a bulleted set of key points in the chapter. Of course, these are not meant to cover *everything*. The learning objectives highlight some of the key things you should ensure you understand before moving on to the next chapter. The key points that conclude each chapter are intended to help connect the end of each chapter with the start of the next; note that they are not detailed enough to stand in for carefully working your way through the chapter (by design).
+
+Throughout each chapter, you will find the first mention of all key concepts in bold text. That's where I define many key terms, so you'll want to be especially attentive to that content. Finally, each chapter also contains boxes that provide some additional advice and recommendations. Most of the time, I'll point you to other readings and resources that you can use to further develop your knowledge and skills.
+
+### Online Supplementary Learning Materials
+
+- **TODO**: Update this for the new and revised supplementary learning materials.
+
+The central design decision that has guided all other decisions in the creation of this book—to **show** you how to **do** computational social science—means that many of the additional learning materials are not well-suited to the printed page. Every chapter in this book is accompanied by a wide variety of supplementary materials created by myself, Pierson Browne, Tyler Crick, Alexander Graham, Jillian Anderson, and a number of other computational social scientists and data scientists. These materials are all provided as an **online** supplement because (1) it makes them vastly more useful to you, and (2) it frees up an astonishingly large number of words in the book that can be put to other uses, like teaching more methods and models in greater depth than otherwise possible.
+
+All of the supplementary learning materials for this book are provided in a git repository (which you will learn about shortly) available at [github.com/UWNETLAB/doing_computational_social_science](https://github.com/UWNETLAB/doing_computational_social_science). Among other things, you will find:
+
+1. A set of carefully scaffolded **problem sets** accompanying each chapter in the book. These problem sets are much more extensively developed than what you would typically find at the end of each chapter in books such as this one. These are the problems that I use in my own classes at the University of Waterloo. An answer key for instructors is available upon request.
+2. A copy of the **datasets** we use in this book, though filtered and subsetted to include only the portions I actually use in each chapter. You will also find instructions to secure the full datasets if you wish.
+3. A set of **perspectives and practical advice** from other computational social scientists and data scientists. Many of these were initially part of the book manuscript itself, but the combination of life interrupted via COVID-19 and with more than 100,000 words to cut from the penultimate draft, they've been moved to the online materials. An unintended benefit of this change is that more perspectives can be included afterwards. Expect this part of the online materials to grow over time.
+4. **High-resolution color images** of every one of the figures in this book, with file names that are easily matched back to images in the book.
+5. Instructions on how to download and use dozens of **large-scale pre-trained language models** trained by Tyler Crick and myself at the University of Waterloo.
+6. A wealth of **additional materials on scientific computing** that will take you *well* beyond the basics introduced in Chapter 2.
+7. **Course syllabi**.
+8. A **DCSS virtual environment** (explained below and in Chapter 2).
+9. And more...
+
+These supplementary materials are intended to help you work interactively through every chapter of the book, to test your knowledge and practice your skills, to share important views and experiences other than my own, and to provide some additional chapter-specific material that is worthwhile but doesn't 'fit' in this version of the book for one reason or another.
+
+Chapter 2 explains how to download these materials and get your scientific computing environment set up. Once you've done that, you'll be able to make extensive use of all of the accompanying materials as you work through the book.
+
+### The DCSS Computing Setup and Python Package
+
+Finally, this book also ships with its very own pre-built computing environment that ensures you will be able to use all the exact packages (with the exact same versions) that are used in this book no matter which operating system you are using, and no matter what changes occur between the time this book goes to the printers and when you pick it up to read it. It will make your life a *lot* more convenient, not to mention that of instructors who may assign this book in a course while looking to spend less time on technical support. Everything you need to know about this carefully crafted environment, including how to access it and use it, is provided in the next chapter. Note that this is setup is completely different than the one that was designed for the print edition.
+
+I've also created a Python package, appropriately called `dcss`, to accompany this book. It's been extensively redesigned and refactored since the initial release. It's included in the installations managed by the virtual environment, so you don't need to do anything special to install it.

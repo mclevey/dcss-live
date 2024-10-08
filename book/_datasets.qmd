@@ -1,0 +1,52 @@
+As I mentioned previously, the examples in this book are based around a variety of real-world datasets that are likely more similar to what you would work with on a daily basis than the convenient toy datasets that are often used in other learning materials. These datasets generally fall into one of three categories:
+
+1. **"Structured" datasets**, for lack of a better term. If you've worked with real-world statistical data before, the format of these structured datasets is likely to be familiar to you: their rows represent observations (or cases), and their columns represent variables. We will make frequent use of four such datasets, each described in the subsection below.
+    - Varieties of Democracy
+    - European Values Study (EVS)
+    - Freedom House "Freedom on the Net"
+    - US 2020 Election Dataset
+2. **Relational/network datasets**. These are also "structured" data, but they differ from the structured data listed above in that they describe meaningful *relationships* between entities (e.g., people). We will make frequent use of four relational datasets, also described below.
+    - SocioPatterns friendship networks
+    - The Copenhagen Networks Study data
+    - The Enron email communication network
+    - A series of networks constructed by parsing information from text data
+3. **Text datasets**. We will make use of a number of text datasets throughout the book, but the two most important by far are datasets of millions of political speeches by Canadian and British politicians.
+    - The Canadian Hansards, 1867–2020
+    - The British Hansards, 1802–2020
+
+Below, I provide a general overview of these datasets and explain where to go if you want to learn more about them. You may want to come back to these descriptions as you work through the book.
+
+### "Structured" Datasets
+
+The **Varieties of Democracy (V-Dem)** dataset [@coppedge2020v] is the result of a massive project with collaborators from nearly every country in the world, headquartered at the V-Dem Institute at the University of Gothenburg, Sweden. It contains a dizzying array of data points that are, in aggregate, used to measure key aspects of political regimes for countries around the world along a continuum of democratic and autocratic, grounded in five major theoretical traditions in political science, political sociology, and political theory and philosophy. The dataset includes over 4,000 variables per country-year, including a set of five high-level scales used to assess the extent of electoral, liberal, participatory, deliberative, and egalitarian democracy in a given country per year, stretching back to the 1800s. We will be using subsets of the larger V-Dem dataset extensively, especially in the first half of the book. You can learn a *lot* about the V-Dem project, and everything you would ever want to know about this dataset and more, from @coppedge2020v, and from the codebook for Version 11 of the dataset [@coppedge2021v].
+
+The **European Values Study (EVS)** [@evs2017], housed at the Data Archive for the Social Sciences of GESIS – Leibniz Institute in Cologne, is a set of standardized surveys of participants across Europe on topics including religion, national identity, morality, politics, family, work, society, and the environment, among other things. Each survey dataset includes over 400 variables spanning demographics and the aforementioned focal areas. They are administered in the context of one-hour face-to-face interviews with an additional questionnaire. Participation in all EVS surveys is on the basis of informed consent and is completely voluntary. Participation in the study is confidential, all data is anonymized, and direct identifiers are never added to the EVS database.
+
+The **Freedom on the Net** dataset is created and maintained by Freedom House [-@fh2020], a U.S. nonprofit headquartered in Washington, D.C. Unlike the two massive datasets preceding this one, the Freedom on the Net dataset consists of five substantive variables for each of the 65 countries included. Three of those variables are sector scores, tracking 'Obstacles to Access', 'Limits on Content', and 'Violations of User Rights'. The final two are an overall numerical score measuring internet freedom and a categorical label derived from the overall numerical score that labels countries as having either 'Free', 'Partly Free', or 'Not Free' access to the internet. We primarily use the Freedom House dataset as a companion to the V-Dem dataset to see if it's possible to predict a country's internet freedoms using other (non-internet-related) democratic indices.
+
+The final "structured" dataset we will use in this book is a **US 2020 Election Dataset**, created by my PhD student Pierson Browne specifically for this book. The dataset was built from components of three different datasets:
+
+- 'Individual Contributions', from the U.S. Government's Federal Election Commission [-@us2020],
+- The 2017 Cook Partisan Voting Index [@cook2017], and
+- Raphael Fontes' "US Election 2020" dataset, publicly available on Kaggle [@Fontes2020].
+
+The dataset covers Campaign Spending Differential, Vote Differential, Cook Partisan Voting Index, Republican Incumbency, and Democratic Incumbency, for each of the 435 Federal Congressional Districts electing Voting Representatives contested in the 2020 U.S. General Election. We will use this dataset extensively throughout our chapters on Bayesian Regression and Bayesian Hierarchical Linear Regression.
+
+### Relational/Network Datasets
+
+The **Copenhagen Networks Study** dataset was created by Piotr Sapiezynski, Arkadiusz Stopczynski, David Dreyer Lassen, and Sune Lehmann [-@sapiezynski2019interaction]. It consists of a multi-layered relational network based on digital interactions between 700 undergraduate students from the Technical University of Denmark. We will use this dataset in the chapters that discuss contagion dynamics on social networks. The data was primarily collected from questionnaires, Facebook, and participants' smartphones. It includes measures of digital interaction, physical proximity, and online 'friendship.' There are too many details to fully recount here, but @sapiezynski2019interaction provide extensive details in their *Nature (Scientific Data)* article. All participants gave free and informed consent and were aware of their ability to withdraw from the study at any time and/or to have their data deleted. The authors took great pains to ensure participant privacy throughout. All of the automatically logged data was anonymized.
+
+The **Enron email communication network dataset** was collated by my PhD student Tyler Crick specifically for this book, once again by doing extensive work cleaning and augmenting existing datasets. The base download of the data came from a version with corrections made by Arne Ruhe [@ruhe_2016]. This version was later found to have inconsistencies with other available versions, such as the many available from EnronData.org under a Creative Commons Attribution 3.0 United States license. A significant number of job titles were still missing from these datasets, so thorough searches of LinkedIn, Google's web cache, and the Internet Archive were used to either verify the identified job titles and correct missing or vague ones ("Employee," for example, quite often was actually a trader). The data was used here only for social network analysis, so only the relational aspects (sender and receiver email address) were retained from the emails—no text content from the email bodies is reproduced here.
+
+The **SocioPatterns** dataset [@mastrandrea2015contact] is the result of a collaborative research project run by the ISI Foundation in Turin, Italy; the Centre de Physique Théorique in Marseille, France; and Bitmanufactory in Cambridge, United Kingdom. There are a number of datasets contained therein, but we will only use two:
+
+- A directed self-reported friendship network between high-school students in Marseille, France, in December 2013
+- A directed contact network constructed from students' contact diaries
+
+All participants were over 18 at the time of study deployment and offered free and informed consent. The *Commission Nationale de l’Informatique et des Libertés* approved the study, including its privacy measures.
+
+### Text Datasets
+
+Nearly all of the text analysis we do in this book will focus on examples from two massive text datasets: The Canadian Commons Hansard and the British Commons Hansard. Both are very similar but are unique to their national contexts. The **British Commons Hansard** is created by the British Government [@britHans] and contains transcripts (not verbatim, but close) of recorded speeches in British Parliament, dating back to 1802. It consists of all of the speeches made by politicians in Parliamentary sessions, recorded, transcribed, and entered into public record. Similarly, the **Canadian Commons Hansard** [@canHans] is created by the Canadian Government and consists of transcripts (not verbatim, but close) of recorded speeches in Canadian Parliament, dating back to 1867.
+
+There is, of course, much more to say about these datasets than what is included here, or in the specific chapters where we use these datasets. I encourage you to consult the citations for each dataset to learn more. There are also additional details available in the online supplementary materials (described below).

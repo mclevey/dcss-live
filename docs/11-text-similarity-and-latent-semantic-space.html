@@ -1,0 +1,1279 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.56">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>11&nbsp; Text similarity and latent semantic space – Doing Computational Social Science&lt;br&gt;[The **Continuous Development** Edition]{.small}</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./12-social-networks-and-relational-thinking.html" rel="next">
+<link href="./10-text-as-data.html" rel="prev">
+<link href="./figures/logo.png" rel="icon" type="image/png">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="custom.css">
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./08-exploratory-data-analysis-and-visualization.html">Exploring Data</a></li><li class="breadcrumb-item"><a href="./11-text-similarity-and-latent-semantic-space.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Text similarity and latent semantic space</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="./index.html" class="sidebar-logo-link">
+      <img src="./figures/logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      </a>
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Doing Computational Social Science<br><span class="small">The <strong>Continuous Development</strong> Edition</span></a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/UWNETLAB/dcss_supplementary/tree/master/book/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <div class="dropdown">
+      <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=|url|">
+              <i class="bi bi-twitter pe-1"></i>
+            Twitter
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://www.facebook.com/sharer/sharer.php?u=|url|">
+              <i class="bi bi-facebook pe-1"></i>
+            Facebook
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://www.linkedin.com/sharing/share-offsite/?url=|url|">
+              <i class="bi bi-linkedin pe-1"></i>
+            LinkedIn
+            </a>
+          </li>
+      </ul>
+    </div>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">👋 Hello!</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./00-introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Learning to Do Computational Social Science</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Research Computing</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-getting-started.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Getting started</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-python-101.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Python 101</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-python-102.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Python 102</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Obtaining Data</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04-sampling-and-survey-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Processing Structured Data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-web-data-apis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Web data (APIs)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06-web-data-scraping.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Web data (Scraping)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-audio-image-and-document-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Audio, image, and document data</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Exploring Data</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08-exploratory-data-analysis-and-visualization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Exploratory data analysis and visualization</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09-association-and-latent-factors.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Association and latent factors</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10-text-as-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Text as Data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11-text-similarity-and-latent-semantic-space.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Text similarity and latent semantic space</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./12-social-networks-and-relational-thinking.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Networks: Relationships as Data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./13-centrality.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Centrality</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./14-structural-similarity-and-latent-social-space.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Structural similarity</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Prediction and Inference</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./15-machine-and-statistical-learning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Machine Learning 101</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./16-prediction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Prediction</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./17-probability.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Probability 101</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./18-credibility.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Credibility</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./19-causality.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Causality</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Generative Modeling</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./20-linear-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Bayesian Regression Models with Probabilistic Programming</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./21-multilevel-regression-with-post-stratification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Multilevel regression with post-stratification</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./22-generalized-linear-models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Generalized Linear Models</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./23-causal-analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Causal analysis</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./24-latent-structure-networks.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Latent structure in networks</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./25-latent-topics-text-lda.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Latent topics in text (LDA)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./26-complex-adaptive-systems.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Agent-based Models</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./27-developing-agent-based-models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Diffusion</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">Deep Learning Demystified</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./28-artificial-neural-networks-fnn-rnn-cnn.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Neural networks 101</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./29-processing-natural-language-data-spacy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Processing Natural Language Data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./30-transformers-self-attention.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Transformers, Self-attention architecture</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./31-latent-topics-text-transformers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Modelling latent topics (Transformers)</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text">Professional Responsibilities</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./32-research-ethics-politics-and-practices.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Research Ethics, Politics, and Practices</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./33-next-steps.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Next steps</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./acknowledgements.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Acknowledgements</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./changelog.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Changelog</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./appendix-centrality-formulas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Centrality Formulas</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./appendix-courses.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Courses and Workshops</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#package-imports" id="toc-package-imports" class="nav-link active" data-scroll-target="#package-imports"><span class="header-section-number">11.1</span> Package Imports</a></li>
+  <li><a href="#tf-idf-vectorization" id="toc-tf-idf-vectorization" class="nav-link" data-scroll-target="#tf-idf-vectorization"><span class="header-section-number">11.2</span> TF-IDF Vectorization</a></li>
+  <li><a href="#computing-semantic-similarity-and-clustering-documents" id="toc-computing-semantic-similarity-and-clustering-documents" class="nav-link" data-scroll-target="#computing-semantic-similarity-and-clustering-documents"><span class="header-section-number">11.3</span> Computing Semantic Similarity and Clustering Documents</a></li>
+  <li><a href="#exploring-latent-semantic-space-with-matrix-decomposition" id="toc-exploring-latent-semantic-space-with-matrix-decomposition" class="nav-link" data-scroll-target="#exploring-latent-semantic-space-with-matrix-decomposition"><span class="header-section-number">11.4</span> EXPLORING LATENT SEMANTIC SPACE WITH MATRIX DECOMPOSITION</a>
+  <ul class="collapse">
+  <li><a href="#latent-semantic-analysis-lsa-with-singular-value-decomposition-svd" id="toc-latent-semantic-analysis-lsa-with-singular-value-decomposition-svd" class="nav-link" data-scroll-target="#latent-semantic-analysis-lsa-with-singular-value-decomposition-svd"><span class="header-section-number">11.4.1</span> Latent Semantic Analysis (LSA) with Singular Value Decomposition (SVD)</a></li>
+  </ul></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">11.5</span> CONCLUSION</a>
+  <ul class="collapse">
+  <li><a href="#key-points" id="toc-key-points" class="nav-link" data-scroll-target="#key-points"><span class="header-section-number">11.5.1</span> Key Points</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/UWNETLAB/dcss_supplementary/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./08-exploratory-data-analysis-and-visualization.html">Exploring Data</a></li><li class="breadcrumb-item"><a href="./11-text-similarity-and-latent-semantic-space.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Text similarity and latent semantic space</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Text similarity and latent semantic space</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Learning Objectives
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>By the end of this chapter, you should be able to:</p>
+<ul>
+<li>Compute and interpret TF-IDF weights for terms in a corpus</li>
+<li>Represent documents in latent semantic space using matrix decomposition methods, more specifically Latent Semantic Analysis (LSA) via truncated Singular Value Decomposition (SVD)</li>
+<li>Compute the similarity between pairs of documents using cosine similarity</li>
+</ul>
+</div>
+</div>
+<p><br></p>
+<p>The previous chapters focused on (<em>i</em>) using SpaCy and gensim to process natural language data stored in the form of unstructured text, (<em>ii</em>) considered how various different types of text processing and modelling fit together into larger pipelines, and (<em>iii</em>) discussed the differences between two ways of creating quantitative representations of text data: coding (or “labelling” / “annotation”) and count-based feature extraction. In this chapter, I will show how to use sklearn to construct feature matrices with term counts or TF-IDF weights, followed by a discussion of some descriptive and exploratory methods of text analysis. In particular, I’ll emphasize the difference between high-level patterns of language use that we can observe directly (e.g., words used, not used), and latent patterns that we can’t observe directly. You will learn how to explore “latent semantic space” using a method called Singular Value Decomposition (SVD), which is closely related to the latent variable and dimensionality reduction methods introduced in Chapter 9.</p>
+<section id="package-imports" class="level2" data-number="11.1">
+<h2 data-number="11.1" class="anchored" data-anchor-id="package-imports"><span class="header-section-number">11.1</span> Package Imports</h2>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pickle</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pprint <span class="im">import</span> pprint</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> spacy</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.decomposition <span class="im">import</span> TruncatedSVD</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.feature_extraction.text <span class="im">import</span> CountVectorizer, TfidfVectorizer</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> Normalizer</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dcss <span class="im">import</span> set_style</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dcss.text <span class="im">import</span> bigram_process, bow_to_df, get_topic_word_scores, preprocess</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dcss.utils <span class="im">import</span> sparse_groupby</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>set_style()</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>nlp <span class="op">=</span> spacy.load(<span class="st">'en_core_web_sm'</span>, disable<span class="op">=</span>[<span class="st">'ner'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="tf-idf-vectorization" class="level2" data-number="11.2">
+<h2 data-number="11.2" class="anchored" data-anchor-id="tf-idf-vectorization"><span class="header-section-number">11.2</span> TF-IDF Vectorization</h2>
+<p>When analyzing <em>content</em>, we are rarely interested in the most and least frequent words, as the former tend to be domain- or group-specific stop words and the latter are too rare. As discussed in Chapter 11, the main benefit of using TF-IDF is that it preserves <em>all</em> tokens (words) in the corpus, but decreases the weights of tokens that are at the exremes of the frequency distribution.</p>
+<p>When we call <code>TfidfVectorizer</code> instead of <code>CountVectorizer</code>, the values assigned to each token (i.e.&nbsp;features) are TF-IDF scores rather than binary presence / absence or frequency counts. Similar to the example in Chapter 12, we can use this vectorizer to produce a DTM. (Alternatively, we could use sklearn’s <code>TfidfTransformer()</code> to convert the count-based DTM from Chapter 12 to TF-IDF.) The shape of the resulting matrix would be identical to before, but only because we are passing the exact same arguments to the vectorizer, which is deterministic. If parameters were different, we would obtain different results.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span> (<span class="st">'data/british_hansard_processed_sample.pkl'</span>, <span class="st">'rb'</span>) <span class="im">as</span> fp:</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    preprocessed <span class="op">=</span> pickle.load(fp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>tfidf_vectorizer <span class="op">=</span> TfidfVectorizer(</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    max_df<span class="op">=</span><span class="fl">.1</span>,</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    min_df<span class="op">=</span><span class="dv">3</span>,</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    strip_accents<span class="op">=</span><span class="st">'ascii'</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>tfidf_matrix <span class="op">=</span> tfidf_vectorizer.fit_transform(preprocessed) </span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>tfidf_matrix.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>To help clarify the differences between the count data and the TF-IDF scores, let’s construct a dataframe with the counts from the previous chapter and the above TF-IDF scores for each token across all documents. Given that the TF-IDF vectorized documents here have the same matrix shape as the count vectorized ones – so, <code>num_documents x num_features</code> – it follows that we have the same documents and features here. This means the vocabulary is identical and we can use the same one for both matrixes!</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span> (<span class="st">'data/british_hansard_sample_dtm.pkl'</span>, <span class="st">'rb'</span>) <span class="im">as</span> fp:</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    count_matrix <span class="op">=</span> pickle.load(fp)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>tfidf_scores <span class="op">=</span> np.ravel(tfidf_matrix.<span class="bu">sum</span>(<span class="dv">0</span>))</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>tfidf_scores <span class="op">=</span> tfidf_scores<span class="op">/</span>np.linalg.norm(tfidf_scores)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>term_counts <span class="op">=</span> np.ravel(count_matrix.<span class="bu">sum</span>(<span class="dv">0</span>))</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>term_counts <span class="op">=</span> term_counts<span class="op">/</span>np.linalg.norm(term_counts)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>vocabulary <span class="op">=</span> tfidf_vectorizer.get_feature_names_out()</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame({<span class="st">'Term'</span>: vocabulary, <span class="st">'TFIDF'</span>: tfidf_scores, <span class="st">'Count'</span>: term_counts})</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>df.sort_values(by<span class="op">=</span><span class="st">'TFIDF'</span>, ascending<span class="op">=</span><span class="va">False</span>, inplace<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The code below creates a scatterplot showing each token in the corpus by count and TF-IDF. The result is <a href="#fig-12_01" class="quarto-xref">Figure&nbsp;<span>11.1</span></a>.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>sns.jointplot(data<span class="op">=</span>df.head(<span class="dv">5000</span>), x<span class="op">=</span><span class="st">'Count'</span>, y<span class="op">=</span><span class="st">'TFIDF'</span>, kind<span class="op">=</span><span class="st">'hist'</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'figures/12_01.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-12_01" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-12_01-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/12_01.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-12_01-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;11.1: png
+</figcaption>
+</figure>
+</div>
+<p>When you inspect this plot, you should notice that:</p>
+<ol type="1">
+<li>most tokens in the vocabulary are used very rarely, and so the marginal distribution of counts is skewed towards low values,</li>
+<li>most tokens in the vocabulary have relatively low TF-IDF scores,</li>
+<li>the tokens with high count values almost always have low TF-IDF values, and</li>
+<li>the tokens with high TF-IDF scores tend to have lower counts.</li>
+</ol>
+<p>If you understand the TF-IDF formula, this should make intuitive sense. If it doesn’t, I recommend reviewing the formula, as you don’t want to proceed with a text analysis that relies on a token scoring method that you don’t understand.</p>
+<p>To visualize the relationship between counts and TF-IDF weights, we used two matrices (<code>count_matrix</code> and <code>tfidf_matrix</code>) with the same shape. The reason why those two matrices have the same shape is because we passed the same arguments to both vectorizers. But actually, <em>we should not really be using the <code>min_df</code> and <code>max_df</code> arguments with <code>TfidfVectorizer</code></em>. The reason is because TF-IDF assigns very low scores to the tokens at the top and bottom of the frequency distribution, so removing them is unhelpful and can change the actual scores that are computed. Before continuing to analyze our dataset with tokens weighted by TF-IDF, let’s construct a final TF-IDF DTM without the <code>min_df</code> and <code>max_df</code> arguments.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>tfidf_vectorizer <span class="op">=</span> TfidfVectorizer(strip_accents<span class="op">=</span><span class="st">'ascii'</span>, sublinear_tf<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>tfidf_matrix <span class="op">=</span> tfidf_vectorizer.fit_transform(preprocessed)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>tfidf_matrix.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="computing-semantic-similarity-and-clustering-documents" class="level2" data-number="11.3">
+<h2 data-number="11.3" class="anchored" data-anchor-id="computing-semantic-similarity-and-clustering-documents"><span class="header-section-number">11.3</span> Computing Semantic Similarity and Clustering Documents</h2>
+<p>In the previous chapter, I mentioned that each feature and each document has an associated vector of numbers. The documents, or row vectors, assign a specific value to the document for each feature in the DTM. The features, or column vectors, tell you how a specific feature is distributed across documents. Because each document is represented by a vector, this approach is also known as a <strong>vector space model</strong>; the documents are represented by ‘long and sparse’ vectors that position them <em>in relation to one another in multi-dimensional vector space</em>. This makes it relatively simple to assess the semantic similarity between documents using measures of the distance or similarity between their vectors representations.</p>
+<p>Perhaps the most basic of these measures is <strong>Euclidean distance</strong>, which is a flat measure of the distance between two points in a Euclidean space like you find in classical geometry. This measure works fine when you just want to compare the literal text contained in documents, as in plagiarism detection software. For that purpose, the importance of individual tokens in a document matters less than the degree to which two documents have similar tokens that appear with similar frequency. This is a pretty reliable measure of how similar the text strings are between documents.</p>
+<p>Euclidean distance has some limitations when it comes to measuring semantic similarity, however, and especially when we are working with term counts rather than TF-IDF weights. This is because Euclidean distance tends to overestimate the importance of tokens that appear frequently, as they increase the magnitude of the vectors in space. For example, imagine two documents about natural language processing in some larger corpus. If the term “language_processing” appears 100 times in the first document about that topic but only once in the other, then there’s a good chance the the Euclidean distance between these two documents will be large, suggesting (incorrectly) that they are about totally different topics! This overestimation is most pronounced when comparing texts of different lengths, as longer documents will of course have higher token counts. One benefit of using similarity and distance-based measures to compare vectors of TF-IDF scores is that the vectors themselves take these document length differences into account.</p>
+<p>Unlike Euclidean distance, <strong>cosine similarity</strong> compares the angle between two vectors; whereas Euclidean distance measures how far the vector has extended into space in a given direction, cosine distance considers only the direction the vector is headed in. To paraphrase Gregory Bateson, it’s the difference that makes a difference. The result is a document similarity score that better compares the two documents in terms of their conceptual/abstract similarity, rather than their physical make-up. Let’s see what this looks like by comparing the cosine similarity between speeches by MPs from different parties using the <code>tfidf_matrix</code> produced above.</p>
+<p>We’ll use the same <code>sparse_groupby</code> function we used in the previous chapter to aggregate the TF-IDF scores into a dataframe where each row is a vector for the entire party.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># with open ('data/british_hansard_processed_sample.pkl', 'rb') as fp:</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co">#     speech_df = pickle.load(fp)</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>speech_df <span class="op">=</span> pd.read_csv(<span class="st">'data/sampled_british_hansard_speeches.csv'</span>)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>party_names <span class="op">=</span> speech_df[<span class="st">'party'</span>]</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>tfidf_vocabulary <span class="op">=</span> tfidf_vectorizer.get_feature_names_out()</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>party_scores <span class="op">=</span> sparse_groupby(party_names, tfidf_matrix, tfidf_vocabulary)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="bu">len</span>(party_names)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Because we’ve aggregated the TF-IDF scores by summing them, we should normalize them again to unit norm. We can use the <code>Normalizer()</code> preprocessing utility from sklearn to handle the math for us here. The main benefit of doing it this way is that the sklearn code is highly optimized (it’s actually running C code in the background, which is super efficient) and operates on the whole matrix at once.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>normalize <span class="op">=</span> Normalizer()</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>party_scores_n <span class="op">=</span> normalize.fit_transform(party_scores)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Now that we’ve normalized the matrix, we’ll compute the cosine similarity between each pair of vectors. The maths are beyond the scope of this chapter, but what you need to do to compute the cosine similarity between political parties here is to compute the product of our rectangular party-by-feature and a transpose of that same matrix. The result with be a square “self-to-self” cosine similarity matrix. In the code below, the <code>@</code> symbol is used to compute the product of two matrices.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>sim_matrix <span class="op">=</span> party_scores_n <span class="op">@</span> party_scores_n.T</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>sim_df <span class="op">=</span> pd.DataFrame.sparse.from_spmatrix(sim_matrix).sparse.to_dense()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The top-left to bottom-right diagonal will always be 1 in a self-to-self cosine similarity matrix because the diagonal reports how similar each entity (in this case, political party) is to itself. Perfect similarity every time! You might also notice that the data below the diagonal is mirrored above the diagonal. We can use Numpy to clean it up a bit for us by filling the diagonal and one of the triangles (above or below the diagonal, it doesn’t matter which) with <code>np.nan</code>. If we use the <code>.values</code> attribute for Pandas dataframes, we can use Numpy array functions directly without doing any conversions from Pandas to Numpy.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>np.fill_diagonal(sim_df.values, np.nan)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>sim_df.values[np.tril_indices(sim_df.shape[<span class="dv">0</span>], <span class="op">-</span><span class="dv">1</span>)] <span class="op">=</span> np.nan</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Now let’s add in the party names as the index and column names for our fresh, shiny, new cosine similarity matrix.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>sim_df.index <span class="op">=</span> party_scores.index</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>sim_df.columns <span class="op">=</span> party_scores.index</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>With a matrix this size, it’s possible to eyeball what’s going on, but when you have a lot of comparisons to make it can be handy to write a bit of code to show you the highlights. For example, we might want to print the 3 most similar and the 3 least similar party pairings for each party. We can do this by using Pandas’ <code>.stack()</code> method to flatten the dataframe dimensions so that <code>.nlargest()</code> and <code>.nsmallest()</code> return results for the entire matrix rather than row by row.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(sim_df.stack().nlargest(<span class="dv">3</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(sim_df.stack().nsmallest(<span class="dv">3</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>We can see that Labour and Labour (Co-op) have very high similarity, and that both have similarities with the Liberal Democrats (who from time to time have had pacts with Labour). All three of these parties are considered left-of-centre. On the other hand, the Green Party and Plaid Cymru are also considered left-leaning, but Plaid Cymru is a Welsh nationalist party seeking independence from the UK, so we should expect to see that they differ from the other parties despite being social democratic. The Democratic Unionist Party is a right-leaning socially conservative party in Ireland, so their lower similarity to the other two parties also makes some sense.</p>
+<p>We know that there are similarities between the <em>content</em> of what Labour and Lib Dem MPs have focused on in their speeches, and that Plaid Cymru and the Democratic Unionist Party differ from the others. One way to gain a bit of insight into these comparisons is to look at the tokens that are most strongly associated with each party. Below, we’ll print the 10 most associated tokens for each of the four parties. Note that these will differ a bit from the scores we previously computed because we are working with TF-IDF scores, not counts.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>party_scores_df <span class="op">=</span> pd.DataFrame.sparse.from_spmatrix(party_scores_n)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>party_scores_df.index <span class="op">=</span> party_scores.index</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>party_scores_df.columns <span class="op">=</span> tfidf_vectorizer.get_feature_names_out()</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> party <span class="kw">in</span> [<span class="st">'Labour'</span>,<span class="st">'Liberal Democrat'</span>, <span class="st">'Democratic Unionist Party'</span>, <span class="st">'Plaid Cymru'</span>]:</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(party <span class="op">+</span> <span class="st">'</span><span class="ch">\n</span><span class="st">'</span>)</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(party_scores_df.loc[party].nlargest(<span class="dv">10</span>))</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'</span><span class="ch">\n</span><span class="st">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The highest scoring tokens for Labour and the Liberal Democrats are not particularly noteworthy in this case. The Irish and Welsh parties, on the other hand, have very high scores for the terms that refer to their respective countries. Remember that TF-IDF scores terms highly if they appear frequently in a given document but don’t appear in many documents in the corpus. The high scores in this case may indicate that these parties often refer to their home countries in parliament or that the rest of the parties don’t talk about them much - it’s likely some combination of these two factors.</p>
+<p>While cosine similarity performed on token count (e.g., <code>count__matrix</code> from the <code>CountVectorizer()</code>) and TF-IDF weights (e.g., <code>tfidf_matrix</code> from the <code>TfidfVectorizer()</code>) does a better job of measuring meaningful similarity between documents, it still relies on exact term matches to calculate the spatial distances. This is a significant limitation of using long sparse vector representations. In later chapters, we will discuss short dense vector representations called word embeddings that allow us to go beyond identical token matches to compare the semantic similarity of tokens and documents that are <em>conceptually</em> close. Using these short and dense word embeddings in similarity analysis means that seemingly identical words with different meanings can be differentiated based on their usage contexts, while other words that are not identical can be considered <em>conceptually</em> close. For now, we’ll move onto another set of exploratory text analysis methods: Latent Semantic Analysis, or LSA.</p>
+</section>
+<section id="exploring-latent-semantic-space-with-matrix-decomposition" class="level2" data-number="11.4">
+<h2 data-number="11.4" class="anchored" data-anchor-id="exploring-latent-semantic-space-with-matrix-decomposition"><span class="header-section-number">11.4</span> EXPLORING LATENT SEMANTIC SPACE WITH MATRIX DECOMPOSITION</h2>
+<p>So far, we’ve discussed how to represent unstructured text data as long and sparse vectors. These vectors are stored as structured matrices, where the rows are documents, the columns are tokens, and the cells are either Boolean (a token is present or absent), frequencies, or TF-IDF weights. You saw how we can use token frequencies and proportions to do some preliminary comparisons of language-use across document collections, and how to perform some simple semantic similarity comparisons. While useful, there are some limitations in using these methods to learn about the actual topical content of the documents in our corpus.</p>
+<p>Remember, our DTMs are made up of <em>long and sparse vectors</em>. One of the first substantial breakthroughs in contemporary topic modelling was the realization that one could use matrix decomposition methods (i.e., dimensionality reduction) to construct a set of latent variables that could be used to position documents in relation to one another in <strong>latent semantic space</strong>. These latent variables could be interpreted as <strong>latent topics</strong> or <strong>concepts</strong> that are more abstract than the individual tokens that make them up.</p>
+<p>These are the same type of latent variable and dimensionality reduction methods that you learned about in Chapter 9, only applied to matrices that represent the text content of a document collection. Remember that latent variables are variables that exist but which cannot be directly observed or measured. Instead, we use dimensionality reduction methods to infer them from the lower-level features that <em>can</em> be observed and measured. In the case of text analysis, the observed and measured low-level features are specific tokens. We can interpret the latent variables several ways, but generally, we refer to them as <em>latent topics</em>.</p>
+<p>In Chapter 9 you learned about dimensionality reduction methods with an emphasis on Principal Component Analysis (PCA). As a brief reminder, PCA and other dimensionality reduction methods reduce the number of features in a dataset by combining highly correlated, or covarying, features into principal components. These principal components represent <em>latent</em> dimensions of a dataset, always at a higher level of abstraction than the original features. When we are performing dimensionality reduction on text data, we often used a method called <strong>truncated Singular Value Decomposition (SVD)</strong> rather than PCA. SVD and PCA are very similar, but SVD is an extension that can be used for non-square matrices (recall that PCA starts by converting data to a square matrix, e.g., correlation) and it handles sparse matrices efficiently. When SVD is used in the context of text analysis and the vector space model, it is called <strong>Latent Semantic Analysis (LSA)</strong>.</p>
+<section id="latent-semantic-analysis-lsa-with-singular-value-decomposition-svd" class="level3" data-number="11.4.1">
+<h3 data-number="11.4.1" class="anchored" data-anchor-id="latent-semantic-analysis-lsa-with-singular-value-decomposition-svd"><span class="header-section-number">11.4.1</span> Latent Semantic Analysis (LSA) with Singular Value Decomposition (SVD)</h3>
+<p>Singular Value Decomposition is a dimensionality reduction method comparable to PCA introduced in Chapter 9. Other than relatively small differences in how PCA and SVD decompose matrices, the salient difference between the latent variable analyses here and from Chapter 9 is <em>interpretation</em>. When the original features are individual tokens from the vocabulary, the latent components that are produced via the linear combination of highly-correlated features are <em>interpreted as topics</em>. This is just another latent variable problem where we attempt to learn about the latent variables by decomposing matrices using methods from linear algebra.</p>
+<p>We won’t get deep into the mathematics here, but it important that you have at least a conceptual understanding of how SVD works. It all starts with a feature matrix, which in a text analysis like this will typically be a DTM. In this example, we will use our <code>tfidf_matrix</code> DTM.</p>
+<p>SVD decomposes the DTM into three smaller matrices, each of which contains essential information that can be used to reconstruct the original matrix:</p>
+<ul>
+<li><span class="math inline">\(U\)</span>, which is a matrix with documents in the rows and latent topics in the columns,</li>
+<li><span class="math inline">\(S\)</span>, which is a diagonal matrix of singular values indicating the importance of each topic, and</li>
+<li><span class="math inline">\(V\)</span>, which is a matrix with latent topics in the rows and tokens from the vocabulary in the columns.</li>
+</ul>
+<p>The columns in matrix <span class="math inline">\(U\)</span> are orthogonal to one another, and the rows in matrix <span class="math inline">\(V\)</span> are orthogonal to one another. When you multiply these three matrices, you get a matrix that is extremely close, or approximately equivalent, to the original matrix (i.e., our DTM). This is represented in the equation:</p>
+<p><span class="math display">\[
+\text{DTM} \thickapprox U \cdot S \cdot V
+\]</span></p>
+<p><a href="#fig-13_02" class="quarto-xref">Figure&nbsp;<span>11.2</span></a> below further clarifies the relationships between these three matrices.</p>
+<div id="fig-13_02" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-13_02-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/svd.png" id="fig-13_02" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-13_02-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;11.2
+</figcaption>
+</figure>
+</div>
+<p>We can use these three matrices to interpret the latent topics in our dataset. We can use <span class="math inline">\(V\)</span> to learn about the tokens most strongly associated with each latent topic, enabling us to interpret what that latent topic represents. We can use <span class="math inline">\(S\)</span> to learn roughly how important the topic is relative to the other topics. Finally, we can use <span class="math inline">\(U\)</span> to better understand how the discovered topics are distributed across the documents in our corpus.</p>
+<p>As with PCA, when we perform an SVD we will get back a number of latent components equal to the number of features in the original matrix, and those components will be sorted such that the ones explaining the most variance come first, and those explaining the least amount of variance come last. We are almost never interested in using all of the topics, so we usually select some subset of the latent components to interpret. This is called <strong>truncated SVD</strong>, and is the approach implemented in sklearn. This means we have to tell sklearn in advance how many components we want.</p>
+<section id="lsa-via-svd-in-sklearn" class="level4" data-number="11.4.1.1">
+<h4 data-number="11.4.1.1" class="anchored" data-anchor-id="lsa-via-svd-in-sklearn"><span class="header-section-number">11.4.1.1</span> LSA via SVD in sklearn</h4>
+<p>To conduct an LSA analysis with sklearn, we first initialize a <code>TruncatedSVD()</code> object and indicate the number of latent topics we want by using the <code>n_components</code> argument. In this case, we will set the number of components to work with to 20.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>lsa <span class="op">=</span> TruncatedSVD(n_components<span class="op">=</span><span class="dv">100</span>, n_iter<span class="op">=</span><span class="dv">6</span>, random_state<span class="op">=</span><span class="dv">12</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Now we can fit it to our <code>tfidf_matrix</code> (or <code>count_matrix</code>, for that matter) to actually execute the LSA.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>lsa <span class="op">=</span> lsa.fit(tfidf_matrix)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>As previously mentioned, the singular values (the diagonal matrix <span class="math inline">\(S\)</span>) summarize the relative importance of each of the latent dimensions. We can access these values from the <code>.singular_values_</code> attribute of the fitted <code>lsa</code> model object. Plotting them gives us a quick view of how important each latent dimension is. Let’s look at the top 20 singular values.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>svs <span class="op">=</span> lsa.singular_values_[:<span class="dv">20</span>]</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>svs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Each dimensions contains a <em>little bit</em> of pretty much every term in the vocabulary. When you are interpreting the meaning of the dimensions, what you want to look for is the terms that have the highest values.</p>
+<p>To make this a bit easier, we can transpose the <code>lsa.components_</code> matrix (<code>V</code> <a href="#fig-13_02" class="quarto-xref">Figure&nbsp;<span>11.2</span></a>) to create a dataframe where the rows are terms in the vocabulary and each column represents one of the latent dimensions. The score in each cell tells you how strongly associated that word is for the given topic.</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># transpose the dataframe so WORDS are in the rows</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>word_topics <span class="op">=</span> pd.DataFrame(lsa.components_).T </span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>column_names <span class="op">=</span> [<span class="ss">f'Topic </span><span class="sc">{</span>c<span class="sc">}</span><span class="ss">'</span> <span class="cf">for</span> c <span class="kw">in</span> np.arange(<span class="dv">1</span>,<span class="dv">101</span>,<span class="dv">1</span>)]</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>word_topics.columns <span class="op">=</span> column_names</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>word_topics.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Let’s get a list of the tokens in the vocabulary and use them as an index for our dataframe.</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>terms <span class="op">=</span> tfidf_vectorizer.get_feature_names_out()</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>word_topics.index <span class="op">=</span> terms</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>word_topics.sort_values(by<span class="op">=</span><span class="st">'Topic 2'</span>, ascending <span class="op">=</span> <span class="va">False</span>)[<span class="st">'Topic 2'</span>].head(<span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Now we can easily use <code>.loc[]</code> on our dataframe to get the scores for any specific word across all latent topics. To get the topic scores for England, we would pull the row vector for the row indexed with <code>england</code>. Since the result is simply a Pandas Series, we can sort it to print the topics in order of most to least strongly associated. Note that we have to make-do with <code>wale</code> rather than <code>wales</code> because the word has been lemmatized during pre-processing. Using named entity recognition, which you will learn about later chapters, you can ensure that this doesn’t happen during pre-processing.</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>compare_df <span class="op">=</span> pd.DataFrame()</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>compare_terms <span class="op">=</span> [<span class="st">'england'</span>, <span class="st">'scotland'</span>, <span class="st">'wale'</span>, <span class="st">'ireland'</span>]</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, term <span class="kw">in</span> <span class="bu">enumerate</span>(compare_terms):</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>    scores <span class="op">=</span> word_topics.loc[term].sort_values(ascending<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>    compare_df[i] <span class="op">=</span> scores.index</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>    compare_df[term] <span class="op">=</span> scores.values</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>compare_df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Note that for many terms (including <code>england</code> and <code>ireland</code>) the requested terms are not strongly loaded for any particular theme. This is different for <code>scotland</code> and <code>wale</code>, however. This suggests that there may be a topic here that is focused on issues related to Ireland, but perhaps not for Scotland and Wales. Now, it turns out this is a bit tricky, so let’s think things through for a moment. Perhaps most importantly, we need to understand what these loadings (weights) tell us. When looking at a given topic, the loading of a word between -1 and 1 is the contribution it makes to the composition of that latent topic. A score closer to 1 means the <em>presence</em> of that word contributes, while a score closer to -1 means the <em>absence</em> of that word contributes to the definition of the topic. Scores around 0 have very little impact. In LSA, words are considered in relation to the words they appear with, so a focal word might only indicate a certain topic if some other word isn’t in the document.</p>
+<p>An example of an ideal outcome can be helpful here: if your focal word was <code>escape</code> and it appeared in the same document as <code>backslash</code>, you could assume the topic of the document was related to computers or programming. If instead the word <code>prison</code> appeared in the document, it would suggest the topic of the document was a prison escape. So for the latent topic of “computing”, the word <code>prison</code> could end up fairly negatively loaded, as it distinguishes between the two different uses of <code>escape</code>. LSA is capable of distinguishing between different uses of the same word, but it’s important to put some thought into what the negative loadings mean in relation to the positive ones.</p>
+<p>In both of these cases, we can find out what topics a given word is most associated with, but since there is no guarantee that the word we are interested in is actually important (or even really relevant) to the topic, this is not an especially helpful way to discover what the topic is about. Instead, if we want to know what words are most strongly associated with each topic, we can pull the top (and bottom!) scoring words for each.</p>
+<p>To do so, we can use the utility function <code>get_topic_word_scores()</code> from the dcss package. One of the arguments is <code>all_topics</code>. By default, this argument is set to <code>False</code>, which means the function will return data on the top <span class="math inline">\(n\)</span> words and their scores for the specified topic. If changed to <code>True</code>, the function returns a full dataframe with all the other topics alongside the topic of interest. The word scores for these other topics tell you the relationship that the top words for the topic of interest have across the other topics, so it is important to interpret this properly. Let’s explore the topic that’s most relevant to “scotland”.</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>word_topics.loc[<span class="st">'scotland'</span>].sort_values(ascending<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>get_topic_word_scores(word_topics, <span class="dv">10</span>, <span class="st">'Topic 8'</span>)    </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>So with LSA, we can have a topic that is significantly “latent” that we have to decipher. A key topic related to Scotland is about business and school but is also distinguished by <em>not</em> being about crime and police. It’s important to know that computational methods are improving all the time, so earlier ones may have revealed very solid topics but without telling us what they are. In this case, we might have to examine why Scotland, business, police, and school would be a topic of British parliamentary debate. Thankfully, new methods are being developed all of the time, for market goals rather than social science ones, so we’ll explore those in later chapters. Before moving on, let’s briefly take stock of what we’ve done here. First, we constructed a document term-matrix using sklearn’s <code>TfidfVectorizer()</code>. Then we decomposed the DTM with truncated SVD, which produced a matrix with the component coefficients for each of the 67,204 sampled political speeches on 100 latent dimensions, which we can interpret as representing <em>latent topics</em>. The final step is to interpret the results by inspecting the terms that contribute the most to each latent dimension.</p>
+<blockquote class="blockquote">
+<p><strong>Further Reading</strong></p>
+<p>If you want to deepen your understanding of latent semantic analysis, and what it was originally developed to do, I would suggest reading papers by some of the major contributors to the methodology. I recommend <span class="citation" data-cites="dumais2004latent">Dumais (<a href="references.html#ref-dumais2004latent" role="doc-biblioref">2004</a>)</span> and <span class="citation" data-cites="deerwester1990indexing">Deerwester et al. (<a href="references.html#ref-deerwester1990indexing" role="doc-biblioref">1990</a>)</span>. This work is an important foundation for some of the machine learning models used for text analysis that we discuss later in the book.</p>
+</blockquote>
+</section>
+</section>
+</section>
+<section id="conclusion" class="level2" data-number="11.5">
+<h2 data-number="11.5" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">11.5</span> CONCLUSION</h2>
+<hr>
+<section id="key-points" class="level3" data-number="11.5.1">
+<h3 data-number="11.5.1" class="anchored" data-anchor-id="key-points"><span class="header-section-number">11.5.1</span> Key Points</h3>
+<ul>
+<li>Used SpaCy’s TfidfVectorizer to compute TF-IDF scores for weighting tokens</li>
+<li>Vector space models represent documents using vectors that are long (many features) and sparse (few non-zero values)</li>
+<li>Learned about semantic similarity measures including Euclidean Distance and Cosine similarity</li>
+<li>Conducted a Latent Semantic Analysis (LSA) using Singular Value Decomposition (SVD)</li>
+</ul>
+<hr>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-deerwester1990indexing" class="csl-entry" role="listitem">
+Deerwester, Scott, Susan Dumais, George Furnas, Thomas Landauer, and Richard Harshman. 1990. <span>“Indexing by Latent Semantic Analysis.”</span> <em>Journal of the American Society for Information Science</em> 41 (6): 391–407.
+</div>
+<div id="ref-dumais2004latent" class="csl-entry" role="listitem">
+Dumais, Susan. 2004. <span>“Latent Semantic Analysis.”</span> <em>Annual Review of Information Science and Technology</em> 38 (1): 188–230.
+</div>
+</div>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./10-text-as-data.html" class="pagination-link" aria-label="Text as Data">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Text as Data</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./12-social-networks-and-relational-thinking.html" class="pagination-link" aria-label="Networks: Relationships as Data">
+        <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Networks: Relationships as Data</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/UWNETLAB/dcss_supplementary/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>

@@ -24,65 +24,65 @@ book:
 
   chapters:
     - index.qmd
-    - 00-introduction.qmd
-    - part: Research Computing
+    - part: "**RESEARCH COMPUTING**"
       chapters:
-        - 01-getting-started.qmd
-        - 02-python-101.qmd
-        - 03-python-102.qmd
-    - part: Obtaining Data
+        - getting-started.qmd
+        - python-101.qmd
+        - python-102.qmd
+    - part: "**MINDFUL MODELING**"
       chapters:
-        - 04-sampling-and-survey-data.qmd # redesign as survey / readymade data chapter? Harm reduction survey; European Values Survey; Chris Bail's work; Total survey error framework; Gelman XBox study
-        - 05-web-data-apis.qmd # trace, found (Salganik)
-        - 06-web-data-scraping.qmd
-        - 07-audio-image-and-document-data.qmd # in development
-    - part: Exploring Data # This whole section is being revised
+        - metaphor-map-reduction.qmd
+        - iterative-workflow.qmd
+    - part: "**OBTAINING DATA**"
       chapters:
-        # Add workflow to the start of chapters 9, 11, 13
-        - 08-exploratory-data-analysis-and-visualization.qmd # redesign to be more purposeful and lead into latent factors and components
-        - 09-association-and-latent-factors.qmd # update this chapter given other changes to the book narrative; hint forward to generative models
-        - 10-text-as-data.qmd # redesign as "text as data" chapter? + content from the text EDA chapter
-        - 11-text-similarity-and-latent-semantic-space.qmd # hint forward to generative models
-        - 12-social-networks-and-relational-thinking.qmd # same pattern here as with other chapters; general introduction, then an EDA chapter; can centrality analysis stuff go in here, or should it be elsewhere?
-        - 13-centrality.qmd # update this with 2023 McElreath critique and generative perspective
-        - 14-structural-similarity-and-latent-social-space.qmd
-    - part: Prediction and Inference
+        - sampling-and-survey-data.qmd
+        - web-data-apis.qmd
+        - web-data-scraping.qmd
+        - audio-files-and-documents.qmd
+    - part: "**EXPLORING**"
       chapters:
-        - 15-machine-and-statistical-learning.qmd # another mashup of chapters
-        - 16-prediction.qmd
-        - 17-probability.qmd
-        - 18-credibility.qmd
-        - 19-causality.qmd # NEW
-    - part: Generative Modeling # Add measurement and missing data stuff throughout 
+        - exploratory-data-analysis.qmd
+        - association-and-latent-variables.qmd
+        - text-as-data.qmd
+        - mapping-text.qmd
+        - networks-as-not-data.qmd
+        - centrality.qmd
+        - mapping-network-structure.qmd
+    - part: "**PREDICTION & INFERENCE**"
       chapters:
-        - 20-linear-regression.qmd
-        - 21-multilevel-regression-with-post-stratification.qmd
-        - 22-generalized-linear-models.qmd # NEW
-        - 23-causal-analysis.qmd # CHAPTER OR SECTION?
-        - 24-latent-structure-networks.qmd # Nested SBMs
-        - 25-latent-topics-text-lda.qmd # LDA models (+ STM if possible)
-        - 26-complex-adaptive-systems.qmd
-        - 27-developing-agent-based-models.qmd 
-    - part: Deep Learning Demystified
+        - supervised-learning.qmd
+        - prediction-and-classification.qmd
+        - causality.qmd
+        - probability.qmd
+        - credibility.qmd
+        - measurement-and-missingness.qmd
+    - part: "**MODELING**"
       chapters:
-        - 28-artificial-neural-networks-fnn-rnn-cnn.qmd # ANNs with layer-based architectures; FNNs, RNNs, and CNNs; # filter in some of the connectionist stuff 
-        - 29-processing-natural-language-data-spacy.qmd # practical: Spacy and word vectors; link back to pre-processing and then mention that we generally don't need that with deep learning coming up; focus on vectors/embeddings, similarities, and named entity recognition maybe; # I think this spacy chapter could easily be combined with word vectors chapter (do all embeddings with spacy?) but weird to do things like lemmatization and so on here when I am not doing those with transformers? Or should I highlight other aspects of spacy such as similarity measures and so on? ; # modelling meaning, word2vec, and then contextual embeddings; drop TWEC
-        - 30-transformers-self-attention.qmd # theory + practical: attention-based architecture; BERT, GPT, and so on; + transfer learning and fine-tuning; practical: Hugging Face models for sentiment analysis, named entity recognition, and so on # GESIS + print edition stuff + sentiment analysis chapter with Tyler
-        - 31-latent-topics-text-transformers.qmd # practical: KeyBERT and BERTopic; Multi-modal stuff too 
-    - part: Professional Responsibilities
+        - linear-regression.qmd
+        - multilevel-regression.qmd
+        - generalized-linear-models.qmd
+        - structural-causal-models.qmd
+        - modeling-texts-lda.qmd
+        - modeling-networks.qmd
+        - agent-based-models.qmd
+        - diffusion-opinion-cultural-cognition.qmd
+    - part: "**DEEP LEARNING**"
       chapters:
-        - 32-research-ethics-politics-and-practices.qmd
-        - 33-next-steps.qmd
-    - references.qmd  
+        - artificial-neural-networks-fnn-rnn-cnn.qmd
+        - language-models-and-embeddings.qmd
+        - transformer-revolution.qmd
+        - modeling-text-transformer-topic-models.qmd
+    - part: "**PROFESSIONAL RESPONSIBILITIES**"
+      chapters:
+        - ethical-css.qmd
+        - open-css.qmd
+        - future-css.qmd
+    - references.qmd
     - acknowledgements.qmd
-    - changelog.qmd
-  appendices:
-      - appendix-centrality-formulas.qmd
-      - appendix-courses.qmd
-      
+    - courses.qmd
 bibliography: references.bib
     
-    
+
 format:
   html:
     theme:
