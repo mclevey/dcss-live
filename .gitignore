@@ -2,11 +2,14 @@
 /.quarto/
 book/scratch/
 book/.quarto/
-data/*.csv
+data/
+# data/*.csv
 *.spacy
 data/*.json
 *.ipynb
 *.ipynb_checkpoints
+_changes.md
+_COMPARE.qmd
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
