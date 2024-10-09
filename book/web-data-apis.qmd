@@ -1,7 +1,6 @@
 # Web data (APIs)
 
 ::: {.callout-note}
-
 ## Learning Objectives
 
 By the end of this chapter, you should be able to:
@@ -12,7 +11,7 @@ By the end of this chapter, you should be able to:
 - Work effectively with _The Guardian_ REST API and the YouTube Data API.
 - Handle API authentication securely and efficiently.
 - Manage API rate limits and implement error handling.
-  :::
+:::
 
 <br>
 

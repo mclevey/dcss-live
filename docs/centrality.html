@@ -1,0 +1,1854 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.56">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>15&nbsp; Centrality – Doing Computational Social Science&lt;br&gt;[The **Continuous Development** Edition]{.small}</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./mapping-network-structure.html" rel="next">
+<link href="./networks-as-not-data.html" rel="prev">
+<link href="./figures/logo.png" rel="icon" type="image/png">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="custom.css">
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./exploratory-data-analysis.html"><strong>EXPLORING</strong></a></li><li class="breadcrumb-item"><a href="./centrality.html"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Centrality</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="./index.html" class="sidebar-logo-link">
+      <img src="./figures/logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      </a>
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Doing Computational Social Science<br><span class="small">The <strong>Continuous Development</strong> Edition</span></a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/UWNETLAB/dcss_supplementary/tree/master/book/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <div class="dropdown">
+      <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=|url|">
+              <i class="bi bi-twitter pe-1"></i>
+            Twitter
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://www.facebook.com/sharer/sharer.php?u=|url|">
+              <i class="bi bi-facebook pe-1"></i>
+            Facebook
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://www.linkedin.com/sharing/share-offsite/?url=|url|">
+              <i class="bi bi-linkedin pe-1"></i>
+            LinkedIn
+            </a>
+          </li>
+      </ul>
+    </div>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">🏠</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text"><strong>RESEARCH COMPUTING</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./getting-started.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Getting Started</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./python-101.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Python 101</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./python-102.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Python 102</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text"><strong>MINDFUL MODELING</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./metaphor-map-reduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Modeling as metaphor, map, and reduction</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./iterative-workflow.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Iterative workflows</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text"><strong>OBTAINING DATA</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./sampling-and-survey-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title"><del>Processing Structured Data</del> Sampling and Survey Data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./web-data-apis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Web data (APIs)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./web-data-scraping.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Web data (Scraping)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./audio-files-and-documents.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Audio files and documents</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text"><strong>EXPLORING</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./exploratory-data-analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Exploratory data analysis (EDA) <!-- Exploring with purpose --></span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./association-and-latent-variables.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Association and latent variables</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./text-as-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Text as Data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./mapping-text.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Text similarity and latent semantic space</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./networks-as-not-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Networks and relational thinking</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./centrality.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Centrality</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./mapping-network-structure.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Mapping network structure</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text"><strong>PREDICTION &amp; INFERENCE</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./supervised-learning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Supervised Machine Learning</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./prediction-and-classification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Prediction and classification</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./causality.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Causality</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./probability.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Probability 101</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./credibility.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Credibility</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./measurement-and-missingness.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Measurement and missingness</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text"><strong>MODELING</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./linear-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Bayesian Regression Models with Probabilistic Programming</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./multilevel-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Multilevel regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./generalized-linear-models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Generalized Linear Models</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./structural-causal-models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Structural causal models</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./modeling-texts-lda.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Modeling text with LDA topic models</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./modeling-networks.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Latent structure in networks</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./agent-based-models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Agent-based models (ABMs)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./diffusion-opinion-cultural-cognition.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Diffusion, opinion dynamics, and cultural cognition</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text"><strong>DEEP LEARNING</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./artificial-neural-networks-fnn-rnn-cnn.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Artificial neural networks 101</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./language-models-and-embeddings.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Processing Natural Language Data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./transformer-revolution.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">The transformer revolution</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./modeling-text-transformer-topic-models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Modeling text: transformer topic models</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
+ <span class="menu-text"><strong>PROFESSIONAL RESPONSIBILITIES</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ethical-css.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Research Ethics, Politics, and Practices</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./open-css.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">Open computational social science</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./future-css.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">Future computational social science</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./acknowledgements.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Acknowledgements</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./courses.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">Courses and Workshops</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#package-imports" id="toc-package-imports" class="nav-link active" data-scroll-target="#package-imports"><span class="header-section-number">15.1</span> Package Imports</a></li>
+  <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data"><span class="header-section-number">15.2</span> Data</a></li>
+  <li><a href="#centrality-measures-the-big-picture" id="toc-centrality-measures-the-big-picture" class="nav-link" data-scroll-target="#centrality-measures-the-big-picture"><span class="header-section-number">15.3</span> CENTRALITY MEASURES: THE BIG PICTURE</a></li>
+  <li><a href="#shortest-paths-and-network-flow" id="toc-shortest-paths-and-network-flow" class="nav-link" data-scroll-target="#shortest-paths-and-network-flow"><span class="header-section-number">15.4</span> SHORTEST PATHS AND NETWORK FLOW</a>
+  <ul class="collapse">
+  <li><a href="#shortest-paths-geodesics" id="toc-shortest-paths-geodesics" class="nav-link" data-scroll-target="#shortest-paths-geodesics"><span class="header-section-number">15.4.1</span> Shortest Paths / Geodesics</a></li>
+  </ul></li>
+  <li><a href="#betweenness-centrality-two-ways" id="toc-betweenness-centrality-two-ways" class="nav-link" data-scroll-target="#betweenness-centrality-two-ways"><span class="header-section-number">15.5</span> BETWEENNESS CENTRALITY, TWO WAYS</a></li>
+  <li><a href="#popularity-power-and-influence" id="toc-popularity-power-and-influence" class="nav-link" data-scroll-target="#popularity-power-and-influence"><span class="header-section-number">15.6</span> POPULARITY, POWER, AND INFLUENCE</a>
+  <ul class="collapse">
+  <li><a href="#degree-degree-centrality-and-connection-inequality" id="toc-degree-degree-centrality-and-connection-inequality" class="nav-link" data-scroll-target="#degree-degree-centrality-and-connection-inequality"><span class="header-section-number">15.6.1</span> Degree, Degree Centrality, and Connection Inequality</a></li>
+  <li><a href="#eigenvector-centrality" id="toc-eigenvector-centrality" class="nav-link" data-scroll-target="#eigenvector-centrality"><span class="header-section-number">15.6.2</span> Eigenvector Centrality</a></li>
+  <li><a href="#bonacich-power-centrality" id="toc-bonacich-power-centrality" class="nav-link" data-scroll-target="#bonacich-power-centrality"><span class="header-section-number">15.6.3</span> Bonacich Power Centrality</a></li>
+  </ul></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">15.7</span> CONCLUSION</a>
+  <ul class="collapse">
+  <li><a href="#key-points" id="toc-key-points" class="nav-link" data-scroll-target="#key-points"><span class="header-section-number">15.7.1</span> Key Points</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/UWNETLAB/dcss_supplementary/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./exploratory-data-analysis.html"><strong>EXPLORING</strong></a></li><li class="breadcrumb-item"><a href="./centrality.html"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Centrality</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Centrality</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Learning Objectives
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Explain what centrality analysis is and how it relates to theoretical ideas</li>
+<li>Explain what a shortest path is</li>
+<li>Compare shortest path and current flow betweenness</li>
+<li>Compare degree, eigenvector, and Bonacich power centrality</li>
+<li>Explain the conceptual and graph-theoretic underpinnings of
+<ul>
+<li>shortest path and current flow betweenness centrality</li>
+<li>degree centrality, eigenvector centrality, and Bonacich power centrality</li>
+</ul></li>
+<li>Explain why it is <em>essential</em> to think carefully about what specific centrality measures mean given the nature of the edges in an observed network</li>
+</ul>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Planned Revision
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This chapter has been revised to compute Bonacich power centrality in Python instead of R (I implemented it in the <code>dcss</code> networks module).</p>
+<p>I will be making some relatively minor changes to this chapter in fall 2024 that will present more of a generative perspective on centrality. The idea will be to emphasize uncertainty and measurement issue to setup some of the more inferential content coming later in the book.</p>
+<p>Finally, I’m going to switch from networkx to graph-tool in this chapter</p>
+</div>
+</div>
+<p><br></p>
+<!-- Influence, Inequality, and Power in Social Networks -->
+<!-- paths-positions-and-power -->
+<p>This chapter focuses on “centrality analysis,” which is widely-used for analyzing social networks with an emphasis on influence, inequality, status, dependence, and power (among many other things). The literature on social networks contains a huge number of centrality measures, each designed to operationalize and measure some specific theoretical idea. It’s not possible to cover all of them here, nor especially desirable. I will cover two important frameworks for thinking about centrality. For each framework, I will describe some of the most foundational centrality measures, and clarify the connections between these empirical measures and their conceptual and theoretical underpinnings. This should help you develop a good understanding of centrality <em>in general</em> so you can make sense of other centralities.</p>
+<p>This chapter is organized into three main sections. The first section begins with a brief high-level discussion of centrality. I then introduce the first centrality framework: a “central” node describes a network position that has more influence over the flow of things through the network. This perspective is anchored in ideas of “walks” on a network and “contagions” that “flow” through those walks, two ideas that were briefly introduced in the previous chapter. The second section of this chapter builds up an intuitive understanding of these concepts and culminates in a discussion of “shortest path betweenness centrality” and “current flow betweenness centrality.”</p>
+<p>The third section addresses the second centrality framework, which ultimately boil down to counting connections, the sum of which is known as a node’s “degree.” At the most basic level, nodes that are connected to many other nodes (high degree) are more popular than nodes with few relationships (low degree). This simple idea is the foundation of more complex ideas. For example, the popularity of the nodes that one is connected to also matters, and because of the structure of social networks this idea expands out to include all reachable nodes in a network. In other words, being connected to a small to moderate number of very well-connected nodes can unlock more advantages in a network than being connected to a very large number of nodes who are not themselves well-connected (e.g.&nbsp;it’s probably better to have 20 friends who each have 5 friends than to have 100 friends who are only connected to you). This is will lead us to eigenvector centrality and its close relation Bonacich power centrality.</p>
+<p>These different ways of thinking about – and operationalizing – influence, inequality, status, dependence, and power came from researchers studying different networks in a wide array of contexts. A centrality measure developed to measure the influence in a friendship network may not translate well to measuring influence in an information brokerage network. As <span class="citation" data-cites="kitts2014beyond">Kitts (<a href="references.html#ref-kitts2014beyond" role="doc-biblioref">2014</a>)</span> has argued, a common problem with centrality analysis is that researchers implicitly assume there is some inherent meaning behind specific centrality measures that holds up regardless of the type of relationships that are operationalized as the edges of a network. In fact, the interpretation of a measure depends as much on the nature of the relations measured than it does on the mathematics of the measure itself <span class="citation" data-cites="kitts2020rethinking">(see also <a href="references.html#ref-kitts2020rethinking" role="doc-biblioref">Kitts and Quintane 2020</a>)</span>.</p>
+<p>As always, we’re just scratching the surface of what is possible here, but if you really understand the conceptual basis of these measures and how they are computed from network data, you’ll have a solid foundation for learning about other centrality measures.</p>
+<section id="package-imports" class="level2" data-number="15.1">
+<h2 data-number="15.1" class="anchored" data-anchor-id="package-imports"><span class="header-section-number">15.1</span> Package Imports</h2>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> collections</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> random</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib <span class="im">import</span> cm</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib.colors <span class="im">import</span> Normalize</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib.cm <span class="im">import</span> ScalarMappable</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> networkx <span class="im">as</span> nx</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dcss <span class="im">import</span> set_style</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dcss.networks <span class="im">import</span> <span class="op">*</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>set_style()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="data" class="level2" data-number="15.2">
+<h2 data-number="15.2" class="anchored" data-anchor-id="data"><span class="header-section-number">15.2</span> Data</h2>
+<p>We will continue to work with data from the SocioPatterns project – specifically, the relational data reported by students in their contact diaries.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>contact_diaries <span class="op">=</span> pd.read_csv(<span class="st">"data/SocioPatterns/Contact-diaries-network_data_2013.csv"</span>, sep<span class="op">=</span><span class="st">' '</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>G <span class="op">=</span> nx.from_pandas_edgelist(contact_diaries, <span class="st">'i'</span>, <span class="st">'j'</span>, create_using<span class="op">=</span>nx.Graph())</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>G.name <span class="op">=</span> <span class="st">'Reported Contacts (Diary Data)'</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(G)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Recall from the previous chapter that <code>create_using=nx.Graph()</code> means we are creating an undirected network. The output of the <code>info()</code> function confirms this by telling us we have a <code>Graph</code> object, not a <code>DiGraph</code> object (directed).</p>
+</section>
+<section id="centrality-measures-the-big-picture" class="level2" data-number="15.3">
+<h2 data-number="15.3" class="anchored" data-anchor-id="centrality-measures-the-big-picture"><span class="header-section-number">15.3</span> CENTRALITY MEASURES: THE BIG PICTURE</h2>
+<p>A node’s location in a social network matters. It determines what they are exposed to; the support, opportunities, and resources they have access to; their social status and prestige; and their ability to exercise power and influence over others. In network science, centrality measures are one of the main ways in which abstract concepts such as these are mapped onto concrete measurable variables that can be computed from relational data.</p>
+<p>Consider power. Like many other social scientific approaches to conceptualizing power, the network perspective is relational. It emphasizes relationships and situations where one person is dependent upon another, with the assumption that these dependency relations determine consequential things in our lives, both good and bad. We are embedded in a complex intersection of many such relationships, regardless of how aware we are of the dependency dynamics. To name just a few examples:</p>
+<ul>
+<li>a child or young adult who depends upon a parent for <em>everything</em>;</li>
+<li>a graduate student who depends upon a supervisor’s expertise, support, and connections;</li>
+<li>an academic department chair whose approval or disapproval partially determines a faculty member’s performance evaluations and salary increases (in a non-unionized context); or</li>
+<li>a friend who depends upon another friend for support in a crisis.</li>
+</ul>
+<p>These dependency relations can, of course, be exploited. Parents can be unloving, and physically or emotionally abusive. Supervisors can be take credit for work. Department chairs can be jealous, or petty, and favour others. Friends can take advantage of us.</p>
+<p>In these cases, one person has asymmetric control and power in the relationship. They can impose their will and make life better or worse for the dependent individual. The point is <em>outcomes for ego, such as health and wellbeing, are at least partially in the hands of alter</em>. But it’s not just about one-to-one relationships, and this is one of the critical reasons for thinking about these dependency relations in the context of larger networks of relations, not just dyads.</p>
+<p>If a student can jump ship and find a better supervisor, if a friend can turn to another friend, if a faculty member can be evaluated by committee rather than by a department chair, then the dependency is lessened and power is less concentrated. Children and adults in toxic and abusive relationships are more obviously constrained in their ability to reduce their dependencies. Children don’t get to choose their parents and there are most certainly specific reasons why people are prevented from leaving toxic and abusive relationships. The structure of social networks can constrain people in comparable ways, making it difficult to break free from the control of others. This is further complicated by the fact that most of us don’t <em>really</em> know all that much about the structure of the networks that we live our lives in. As <span class="citation" data-cites="hanneman2005introduction">Hanneman and Riddle (<a href="references.html#ref-hanneman2005introduction" role="doc-biblioref">2005</a>)</span> put it so pithily, “ego’s power is alter’s dependence.”</p>
+<p>This insight has profound implications. The structural properties of a social network determine the amount of power available in general, its distribution among nodes, and therefore the extent to which some nodes can influence others. In some networks, power may be relatively evenly distributed and opportunities for control and domination are rare. In others, it may be centralized around a small subset of nodes. In other words, the structure of our social networks determine the extent to which we are <em>able</em> to influence and control one another, with some network structures enabling more influence and control and others enabling less. We can change lives <em>dramatically</em>, for better or for worse, by changing the structure of dependency relations.</p>
+<p>Centrality analysis provides tools we can use to examine power empirically via dependency relations, but this is only one possibility. Centrality analysis can be used to assess the opportunities and constraints for any node, given the specific ways they connect to other nodes in a network, which we can refer to as a node’s “position.”<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> Some positions may be more or less likely to result in exposure to novel information and ideas, or they may afford easy access to elites or resources that are more difficult for others in less advantageous positions to access.</p>
+<p>There are various centrality measures designed to capture these differences and others. At this point it’s important to note:</p>
+<ol type="1">
+<li>Being central is not <em>inherently</em> good or desirable. The same types of central positions that give one early access to useful information can also mean early exposure to infectious diseases.<br>
+</li>
+<li>Being central is not a guarantee that a node will experience the hypothesized effects of their position, good or bad. Having the opportunity to access elites is not the same thing as seizing that opportunity.</li>
+</ol>
+<p>There are usually specific types of structural positions that you expect to be important given your research question. As always, <em>theory is really important here</em>. Rather than computing every centrality score, you should select those that correspond to your research question or operationalize a relevant concept. You may want to identify information brokers in a collaboration network. This could help you study whether people who are in a position to influence the flow of information over walks (a concept we will turn to momentarily) in the collaboration network have different career outcomes than those who are not in such positions, or perhaps find key individuals in a needle sharing network for a public health intervention. In that case, you could use betweenness centrality, which we discuss shortly. While you certainly should analyze multiple centralities, you need to think deeply about the question you are trying to answer, what these specific centralities mean and how they work, and how well those align.</p>
+</section>
+<section id="shortest-paths-and-network-flow" class="level2" data-number="15.4">
+<h2 data-number="15.4" class="anchored" data-anchor-id="shortest-paths-and-network-flow"><span class="header-section-number">15.4</span> SHORTEST PATHS AND NETWORK FLOW</h2>
+<section id="shortest-paths-geodesics" class="level3" data-number="15.4.1">
+<h3 data-number="15.4.1" class="anchored" data-anchor-id="shortest-paths-geodesics"><span class="header-section-number">15.4.1</span> Shortest Paths / Geodesics</h3>
+<p>The first framework for thinking about centrality is interested in the access that a node has to the rest of the network. It’s probably intuitive that the most efficient way to exchange something (information, resources, power) between two points is to find the shortest distance between them (i.e.&nbsp;the path between two nodes that involves the smallest number of nodes and edges). Those “shortest paths” are also called <strong>geodesics</strong>.</p>
+<p>We can identify the <em>shortest</em> path between any two nodes using the <code>shortest_path()</code> function in NetworkX. If we use the function without specifying a specific pair of nodes, it will compute all of the shortest paths between every possible start and end point between every pair of nodes in a network. Even for small networks, that’s a <em>lot</em> of paths.</p>
+<p>To help build some intuition about paths, we will define a couple of functions that will let us quickly query the paths between any pair of nodes, and then highlight those paths in simple network visualizations. Note that we are constructing our visualizations a little differently than we did in the last chapter.</p>
+<p>Our <code>plot_path()</code> function requires a layout for the network visualization. We will use the <code>kamada_kawai_layout()</code> function to compute the layout for a visualization of the contact diary network data from SocioPatterns, which we used to construct the network object <code>G</code> at the start of this chapter.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>layout <span class="op">=</span> nx.kamada_kawai_layout(G)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The nodes in the SocioPatterns data are, of course, anonymized. The research team assigned each node an integer ID. You can see those IDs with <code>G.nodes()</code>.</p>
+<p>Now that we have our functions defined, and we know what the IDs are for the nodes in our network, let’s look at a few examples. We will provide our <code>get_shortest_paths()</code> function with the integer IDs for our source and target nodes. For example, let’s find the shortest path between node <code>173</code> and node <code>48</code>.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>path_a, es_a <span class="op">=</span> get_shortest_paths(G, <span class="dv">173</span>, <span class="dv">48</span>) </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(path_a)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>In order for some information that <code>173</code> has to reach <code>48</code> along the shortest path, it would have to first go through nodes <code>295</code>, <code>954</code>, and so on. What does this path look like? Let’s visualize it. In <a href="#fig-15_01" class="quarto-xref">Figure&nbsp;<span>15.1</span></a>, the shortest path between <code>173</code> and <code>48</code> will be highlighted.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>plot_path(G, layout, path_a, es_a)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'figures/15_01.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-15_01" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-15_01-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/15_01.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-15_01-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;15.1: png
+</figcaption>
+</figure>
+</div>
+<section id="multiple-shortest-paths" class="level4" data-number="15.4.1.1">
+<h4 data-number="15.4.1.1" class="anchored" data-anchor-id="multiple-shortest-paths"><span class="header-section-number">15.4.1.1</span> Multiple Shortest Paths</h4>
+<p>If there are more than one shortest paths between nodes, then <code>get_shortest_paths()</code> picks one at random to return. We can get the full list of shortest paths using the <code>all_shortest_paths()</code> function. Let’s see the other paths between <code>173</code> and <code>48</code>.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>sps <span class="op">=</span> [path <span class="cf">for</span> path <span class="kw">in</span> nx.all_shortest_paths(G, source<span class="op">=</span><span class="dv">173</span>, target<span class="op">=</span><span class="dv">48</span>)]</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>path_nodes <span class="op">=</span> <span class="bu">set</span>([item <span class="cf">for</span> sublist <span class="kw">in</span> sps <span class="cf">for</span> item <span class="kw">in</span> sublist])</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> path <span class="kw">in</span> sps:</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(path)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Notice that in these shortest paths that <em>start</em> with <code>173</code> and <em>end</em> with <code>48</code>, there are some nodes that appear on <em>all</em> the shortest paths, such as <code>295</code> and <code>954</code>. This enables us to count the number of shortest paths that involve any given node. Nodes that are involved in a larger number of shortest paths may be considered more central, as being involved in more shortest paths offers some distinct advantages for power and influence.</p>
+<p>Let’s plot all of these paths (<a href="#fig-15_02" class="quarto-xref">Figure&nbsp;<span>15.2</span></a>).</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">8</span>))</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>nx.draw_networkx_nodes(</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    G, </span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    pos<span class="op">=</span>layout, </span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    node_size<span class="op">=</span><span class="dv">200</span>, </span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    node_color<span class="op">=</span><span class="st">'#32363A'</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>nx.draw_networkx_edges(</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    G,</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    pos<span class="op">=</span>layout,</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    edge_color<span class="op">=</span><span class="st">'darkgray'</span>,</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    width<span class="op">=</span><span class="dv">1</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="co">## THE PATHS!</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>nx.draw_networkx_nodes(</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>    G,</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>    pos<span class="op">=</span>layout,</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>    node_size<span class="op">=</span><span class="dv">200</span>,</span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>    node_color<span class="op">=</span><span class="st">'crimson'</span>,</span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>    nodelist<span class="op">=</span>path_nodes</span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> p <span class="kw">in</span> sps:</span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>    edges <span class="op">=</span> <span class="bu">set</span>(<span class="bu">zip</span>(p, p[<span class="dv">1</span>:]))</span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>    nx.draw_networkx_edges(G,</span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>                           pos<span class="op">=</span>layout,</span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>                           edgelist<span class="op">=</span>edges,</span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>                           edge_color<span class="op">=</span><span class="st">'crimson'</span>,</span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>                           width<span class="op">=</span><span class="dv">4</span>)</span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a>plt.axis(<span class="st">'off'</span>)</span>
+<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'figures/15_02.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-15_02" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-15_02-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/15_02.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-15_02-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;15.2: png
+</figcaption>
+</figure>
+</div>
+<p>Shortest path lengths can also be computed, which can be useful when the <strong>distance</strong> between two nodes matters more than the specific paths connecting them. We can do this with the <code>shortest_path_length()</code> function. Recall from earlier that we are counting <em>edges</em> on a path between a source and target node, so the length will always be equal to 1 - the number of nodes in the path itself. This can be useful to know because information and influence usually degrade over longer distances. That’s why shorter paths are likely to be more important than longer ones. The <code>shortest_path_length()</code> function tells us that, regardless of the specific path, the closest that <code>173</code> and <code>48</code> can be is 10 steps.</p>
+<p>Sometimes, depending on the network and the data, edges might vary in length, which can be encoded as edge weights. In these cases, the number of edges between two nodes is no longer the best measure of distance. Thankfully, many algorithms, like shortest paths, can take these weights into consideration. We will see an example of an algorithm that accounts for edge weight shortly when we discuss current flow betweenness centrality.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>nx.shortest_path_length(G, source<span class="op">=</span><span class="dv">173</span>, target<span class="op">=</span><span class="dv">48</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Finally, we can also compute the average length shortest paths in a connected network using the <code>average_shortest_paths()</code> function. This is an average across <em>all pairs</em> of <span class="math inline">\(i,j\)</span> nodes in the full network.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>np.<span class="bu">round</span>(nx.average_shortest_path_length(G), <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Note that the path lengths between <code>173</code> and <code>48</code> are higher than the average path lengths in the network.</p>
+</section>
+</section>
+</section>
+<section id="betweenness-centrality-two-ways" class="level2" data-number="15.5">
+<h2 data-number="15.5" class="anchored" data-anchor-id="betweenness-centrality-two-ways"><span class="header-section-number">15.5</span> BETWEENNESS CENTRALITY, TWO WAYS</h2>
+<p>This discussion of paths and network walk-structure has been building a foundation for our discussion of betweenness centrality. In brief, the idea is that nodes that lie <strong>between</strong> nodes, or better yet, between groups of densely connected nodes (a concept we will turn to in the next chapter), often have advantages and opportunities that other nodes do not have. For example, information tends to be more homogenous within clusters of densely connected nodes and more diverse across such clusters. As a result, nodes that are embedded <em>within</em> a cluster tend not to have information that is unknown to their adjacent peers, but nodes that lie <em>between</em> clusters get access to diverse sources of information. In some cases, these nodes may be able to influence and perhaps even control the flow of information through the network. For example, they may filter and frame information in ways that increase their own power over others who depend on them for access to that information. In other words, they are in potential <strong>brokerage</strong> positions. Consider the hypothetical network in <a href="#fig-15_03" class="quarto-xref">Figure&nbsp;<span>15.3</span></a>. Which node is the in-between broker? If we consider the shortest paths in this network, which nodes will be on more shortest paths than others?</p>
+<blockquote class="blockquote">
+<p><strong>Further Reading</strong></p>
+<p>If you want to deepen your understanding of brokerage dynamics in social networks, I recommend Katherine Stovel and Lynette Shaw’s <span class="citation" data-cites="stovel2012brokerage">(<a href="references.html#ref-stovel2012brokerage" role="doc-biblioref">2012</a>)</span> review article “brokerage,” which touches on many interesting theoretical ideas related to centrality.</p>
+</blockquote>
+<div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>nx.draw(nx.barbell_graph(<span class="dv">5</span>,<span class="dv">1</span>), node_size<span class="op">=</span><span class="dv">300</span>, node_color<span class="op">=</span><span class="st">'#32363A'</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'figures/15_03.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-15_03" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-15_03-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/15_03.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-15_03-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;15.3: png
+</figcaption>
+</figure>
+</div>
+<p>There are two main ways of computing betweenness centrality: shortest path and current flow. As you might expect, <strong>shortest path betweenness</strong> is computed based on shortest paths, which are central to the any process where a contagion (e.g.&nbsp;information) spreads through a network.</p>
+<p>To compute shortest path betweenness for any given node, we first determine the shortest paths between every pair of nodes in the network. We then compute the proportion of shortest paths that include the node in question for each <span class="math inline">\(i,j\)</span> pair of nodes in the network. Those proportions are then summed to obtain a single number. If a node does not lie on <em>any</em> shortest paths, then its betweenness score will be 0 (e.g.&nbsp;if it is an isolate). It will have the maximum value if it lies on <em>all</em> shortest paths between <em>all</em> pairs of nodes in the network. Note that this is a systematic implementation of the general idea we considered earlier when noting that some nodes lie on more shortest paths than others.</p>
+<p>Let’s quickly visualize the distribution of betweenness scores with a histogram (<a href="#fig-15_04" class="quarto-xref">Figure&nbsp;<span>15.4</span></a>).</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>sp_bet <span class="op">=</span> pd.Series(nx.betweenness_centrality(G))</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> sns.histplot(sp_bet, kde<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">'Shortest path betweenness centrality'</span>, </span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>      ylabel<span class="op">=</span><span class="st">'Number of nodes'</span>)</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'figures/15_04.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-15_04" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-15_04-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/15_04.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-15_04-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;15.4: png
+</figcaption>
+</figure>
+</div>
+<p>Most nodes in the network have low shortest path betweenness; only a few have higher scores.</p>
+<p>Unlike shortest paths betweenness, <strong>current flow betweenness</strong> takes into account the strength of relationships when it conceptualizes how a contagion flows through a network. Current flow betweenness draws on the analogy of electrical current flowing through a <em>resistance network</em>, where edges are resistors. A detailed discussion of electromagnetism is beyond the scope of this book, so we will gloss over the details and focus on some quick takeaways.</p>
+<p>A circuit where resistors are arranged in a single line between the source and the target is a series circuit. The current can only flow through one path, so the current is the same between each node on the path between the source and the target. The <em>effective resistance</em> of the circuit is the sum of the resistances of all the resistors. Thus, for a given path, adding another edge at the end can only increase the effective resistance: information flows less well through longer chains. Consider the flow of people leaving a crowded stadium. This stadium is poorly designed and everyone has to leave via a single path consisting of a series of rooms. Each time you add a room, you add a door that has to be opened, you give people more chances to stumble, and generally the whole flow of people from the stadium (source) to the exit (target) will slow down.</p>
+<p>A circuit where resistors are arranged such that multiple paths lie between the source and the target is a parallel circuit. The current will split where paths branch and flow down each of the possible paths, with more current flowing through more efficient paths. As you add parallel resistors, the effective resistance of the whole circuit decreases. Consider the stadium example: if we have multiple exits, people will be leaving through all of them. Some exits will be more efficient because they have fewer rooms and/or larger doors, and people will flow through those faster. If you add another exit, even if it’s a small side door, people will necessarily be able to leave faster. In current flow betweenness, the strength of a relationship corresponds to how efficient the flow of current is between nodes. In our example, rooms with larger doorways between them could be represented with greater edge weights.</p>
+<p>This example sounds like a directed network, but the network we are working with is undirected. To calculate the circuit flow betweenness of a node, we consider that each node in the network could be a source or a target, and calculate the current flow for that node averaged across every possible pairing of source and target nodes. Bringing it back to the stadium example, this is like shuffling the stadium seats and the stadium exit through all the rooms so that we consider every possible pairing and take the average flow through a room across all those pairings.</p>
+<p>The code below computes current flow betweenness and then constructs a scatterplot (<a href="#fig-15_05" class="quarto-xref">Figure&nbsp;<span>15.5</span></a>) to compare the scores against the shortest path version.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>cf_bet <span class="op">=</span> pd.Series(nx.current_flow_betweenness_centrality(G))</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>betweenness <span class="op">=</span> pd.concat([sp_bet, cf_bet], axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>betweenness.columns <span class="op">=</span> [<span class="st">'Shortest Path Betweenness'</span>, <span class="st">'Current Flow Betweenness'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>sns.jointplot(data<span class="op">=</span>betweenness,</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>              x<span class="op">=</span><span class="st">'Shortest Path Betweenness'</span>,</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>              y<span class="op">=</span><span class="st">'Current Flow Betweenness'</span>,</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>              alpha<span class="op">=</span><span class="fl">.7</span>)</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'figures/15_05.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-15_05" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-15_05-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/15_05.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-15_05-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;15.5: png
+</figcaption>
+</figure>
+</div>
+<p>While similar, the two measures are not equivalent to one another. At very low values, shortest path betweenness and current flow betweenness are quite densely clustered and the relationship between the two seems stronger, but as we look at the larger (and rarer) values, the relationship becomes much weaker. Consider why this might be. Being on a single shortest path will necessarily have a low shortest path and low current flow betweenness score because the flow of contagion/current can only be a small amount of the larger network. However, as we increase the number of shortest paths that a node is on, we are also increasing the chances of a node being part of a parallel circuits (metaphorically speaking). Current flow betweenness conceptualizes that flow between nodes take the routes other than the shortest path, albeit at a reduced rate. Thus, we would likely expect a wider distribution of current flow betweenness values.</p>
+<p>Let’s move on from the idea of things flowing through a network and consider another way of thinking about centrality.</p>
+</section>
+<section id="popularity-power-and-influence" class="level2" data-number="15.6">
+<h2 data-number="15.6" class="anchored" data-anchor-id="popularity-power-and-influence"><span class="header-section-number">15.6</span> POPULARITY, POWER, AND INFLUENCE</h2>
+<p>The second centrality framework is focused less on the ideas of paths and flow, and more on popularity, status, and prestige. The idea is that more – and “better” – relationships are associated with greater popularity, status, and prestige.</p>
+<p>To demonstrate this, let’s work with another network dataset collected from the same French high school students by the SocioPatterns team. The previous network represented reported <em>contacts</em> that we coerced into an undirected network. This network is a directed friendship network produced by students identifying other students as their friends. Unfortunately, some friendships are asymmetrical; one may feel the relationship is strong enough to nominate the other, but it may not be reciprocated. For this, we will use a DiGraph (directed graph).</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>reported_friendships <span class="op">=</span> pd.read_csv(<span class="st">"data/SocioPatterns/Friendship-network_data_2013.csv"</span>,</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>                                   sep<span class="op">=</span><span class="st">' '</span>)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>G_friendships <span class="op">=</span> nx.from_pandas_edgelist(</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    reported_friendships,</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">'i'</span>, <span class="st">'j'</span>, </span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>    create_using<span class="op">=</span>nx.DiGraph()</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>G_friendships.name <span class="op">=</span> <span class="st">'Reported Friendships'</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(G_friendships)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>layout <span class="op">=</span> nx.nx_pydot.graphviz_layout(G_friendships)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="degree-degree-centrality-and-connection-inequality" class="level3" data-number="15.6.1">
+<h3 data-number="15.6.1" class="anchored" data-anchor-id="degree-degree-centrality-and-connection-inequality"><span class="header-section-number">15.6.1</span> Degree, Degree Centrality, and Connection Inequality</h3>
+<p>One of the most critical pieces of information in this approach to centrality is the number of connections a node has. For an undirected network, that count is called <strong>degree</strong>. If I have 50 connections my degree is 50. Nodes with higher degree are, by definition, more connected. For a directed network, we distinguish between edges leaving a node, <em>out-degree</em>, and edges arriving at a node, <em>in-degree</em>. In a hypothetical advice network at a business where a directed edge represents “gave advice to”, we would expect the most senior and experienced employees to have higher out-degree (they are giving advice to more people) and the most junior would have higher in-degree (they are receiving from more people). While an individual node can have different in-degree and out-degree, the network <em>as a whole</em> will have a balanced in-degree and out-degree because each directed edge is necessarily an outgoing <em>and</em> an incoming edge for two different nodes. We can still use the concept of degree for directed networks, simply by adding a node’s in-degree and out-degree to count all edges connected to a node.</p>
+<p>Let’s compute the out and in-degrees for the nodes in the SocioPatterns contact network. Then we’ll visualize the network a couple of times, once with the node sizes as a function of indegree and once as a function of outdegree. Since we intend to execute the visualization code a couple of times, let’s define a custom function.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> visualize_digraph(</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    network, layout, node_size<span class="op">=</span><span class="dv">50</span>, title<span class="op">=</span><span class="st">''</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>):</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">8</span>))</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    ax.set_title(title, fontsize<span class="op">=</span><span class="dv">16</span>)</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    nx.draw_networkx_nodes(network,</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>                       pos<span class="op">=</span>layout,</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>                       node_size<span class="op">=</span>node_size,</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>                       node_color<span class="op">=</span><span class="st">'#32363A'</span>)</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>    nx.draw_networkx_edges(network,</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>                       pos<span class="op">=</span>layout,</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>                       edge_color<span class="op">=</span><span class="st">'#98989C'</span>,</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>                       arrowsize<span class="op">=</span><span class="dv">5</span>,</span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>                       width<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>    plt.axis(<span class="st">'off'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>in_degree <span class="op">=</span> <span class="bu">dict</span>(G_friendships.in_degree())</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>out_degree <span class="op">=</span> <span class="bu">dict</span>(G_friendships.out_degree())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If we supply networkx with the original in and out degree scores as node sizes, even the most popular and active nodes will be extremely tiny. Instead we will multiply every score by 20 to get them into a range of values that are large enough to use as node sizes in the visualization (<a href="#fig-15_06" class="quarto-xref">Figure&nbsp;<span>15.6</span></a>).</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>sized_by_indegree <span class="op">=</span> [v <span class="op">*</span> <span class="dv">20</span> <span class="cf">for</span> v <span class="kw">in</span> in_degree.values()]</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>sized_by_outdegree <span class="op">=</span> [v <span class="op">*</span> <span class="dv">20</span> <span class="cf">for</span> v <span class="kw">in</span> out_degree.values()]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>visualize_digraph(G_friendships, layout, sized_by_indegree)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'figures/15_06.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-15_06" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-15_06-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/15_06.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-15_06-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;15.6: png
+</figcaption>
+</figure>
+</div>
+<p>And now we’ll do the same for outdegree (<a href="#fig-15_07" class="quarto-xref">Figure&nbsp;<span>15.7</span></a>).</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>visualize_digraph(G_friendships, layout, sized_by_outdegree)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'figures/15_07.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-15_07" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-15_07-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/15_07.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-15_07-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;15.7: png
+</figcaption>
+</figure>
+</div>
+<p>If you squint, you might notice some apparent differences in the popularity (indegree) and activity (outdegree) across nodes in the network, but for the most part it seems as if the nodes that have higher indegree also have higher outdegree. We can confirm our hunch by plotting the two degree scores (<a href="#fig-15_08" class="quarto-xref">Figure&nbsp;<span>15.8</span></a>).</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots()</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(x<span class="op">=</span>in_degree, y<span class="op">=</span>out_degree, alpha <span class="op">=</span> <span class="fl">0.2</span>)</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">'Indegree'</span>,</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>       ylabel<span class="op">=</span><span class="st">'Outdegree'</span>)</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'figures/15_08.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-15_08" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-15_08-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/15_08.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-15_08-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;15.8: png
+</figcaption>
+</figure>
+</div>
+<p>Recall we are working with reported friendships, where outdegree means that one node, <span class="math inline">\(i\)</span>, has nominated another node, <span class="math inline">\(j\)</span>, as a friend. If <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span> are indeed friends, then they should both nominate each other. (<em>Reciprocity!</em>) It follows that in a network such as this one, nodes that have a high score on one of the two degree measures will likely also have a high score on the other. The network visualizations and the scatterplot clearly suggests that there are some high-activity students who both nominated, and were nominated by more people, and while closely related, it is also clear that in-degree and out-degree are not equal for all students. Not every friendship in this network was reciprocated.</p>
+<section id="connection-inequality" class="level4" data-number="15.6.1.1">
+<h4 data-number="15.6.1.1" class="anchored" data-anchor-id="connection-inequality"><span class="header-section-number">15.6.1.1</span> Connection Inequality</h4>
+<p>Inequalities in connectedness, visible as inequalities in node in-/out-/degree, can have many consequences. We are often concerned with extreme levels of inequality, which in network science are analyzed in terms of cumulative advantage processes – the rich get richer, the more well-connected become more connected <span class="citation" data-cites="merton1968matthew barabasi1999emergence price1965networks price1986little diprete2006cumulative">(<a href="references.html#ref-merton1968matthew" role="doc-biblioref">Merton 1968</a>; <a href="references.html#ref-barabasi1999emergence" role="doc-biblioref">Barabási and Albert 1999</a>; <a href="references.html#ref-price1965networks" role="doc-biblioref">Price 1965</a>, <a href="references.html#ref-price1986little" role="doc-biblioref">1986</a>; <a href="references.html#ref-diprete2006cumulative" role="doc-biblioref">DiPrete and Eirich 2006</a>)</span>.</p>
+<p>Even moderate levels of inequality can have surprising effects, however. Consider what Scott <span class="citation" data-cites="feld1991your">Feld (<a href="references.html#ref-feld1991your" role="doc-biblioref">1991</a>)</span> has called “<strong>the friendship paradox</strong>,” which states: on average, people’s friends have more friends than they do (on average, people have fewer friends than their friends do). To demonstrate, consider the following: a person (ego) has 20 friends (alters) who each have 10 friends. As a consequence of this inequality, every alter has a below-average number of friends. This connection inequality in personal networks can impact how we perceive the world around us and what we judge to be “normal.” Although they are a minority overall, the most well-connected people are over-represented in most people’s personal networks, and everyone else, though quantitatively more common, are under-represented in other people’s networks <span class="citation" data-cites="feld1991your">(<a href="references.html#ref-feld1991your" role="doc-biblioref">Feld 1991</a>)</span>.</p>
+<p>The preferences and behaviours of the most popular people are more visible in our lives than those of their underrepresented peers. As a result, our personal connections are rarely a good indication of the types of preferences and behaviours that are more common in the general population because the most well-connected are disproportionately represented. In other words, our everyday perceptions of what is “normal” are biased.</p>
+<p>Let’s use degree as a measure of popularity for now, though in-degree may also be suitable. We can visualize connection inequalities by plotting the <strong>degree distribution</strong>. In <span class="quarto-unresolved-ref">?fig-15_09</span>, we see the number of nodes (<span class="math inline">\(y\)</span>-axis) with each possible degree value (<span class="math inline">\(x\)</span>-axis).</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>degree_sequence <span class="op">=</span> <span class="bu">sorted</span>([d <span class="cf">for</span> n, d <span class="kw">in</span> G_friendships.degree()], reverse<span class="op">=</span><span class="va">True</span>)  <span class="co"># degree sequence</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>degreeCount <span class="op">=</span> collections.Counter(degree_sequence)</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>deg, cnt <span class="op">=</span> <span class="bu">zip</span>(<span class="op">*</span>degreeCount.items())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>,<span class="dv">4</span>))</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>plt.bar(deg, cnt, width<span class="op">=</span><span class="fl">0.80</span>, color<span class="op">=</span><span class="st">"#32363A"</span>)</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>ax.spines[<span class="st">'right'</span>].set_visible(<span class="va">False</span>)</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>ax.spines[<span class="st">'top'</span>].set_visible(<span class="va">False</span>)</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">'Degree'</span>)</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">'Number of nodes'</span>)</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'figures/15_09.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-15-09" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-15-09-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/15_09.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-15-09-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;15.9: png
+</figcaption>
+</figure>
+</div>
+<p>Because there is often a lot of inequality in connectedness, especially in larger networks, it is often more informative to plot the degree distribution with both axes on a log scale. If the result is a relatively straight negative line from the upper right to the bottom left, you might want to formally check for a power law distribution, which would indicate extreme inequality and potentially some sort of cumulative advantage process.</p>
+<p>Another way of inspecting the degree distribution is to produce a plot that ranks nodes based on their degree and plots their rank and degree on a log-log scale (<span class="quarto-unresolved-ref">?fig-15_10</span>). The top <em>ranked</em> node in the graph is shown in the upper left of the graph (at <span class="math inline">\(10^{0}\)</span>, which is 1). As you would expect, nodes in this upper left corner have higher degree centrality than any other nodes in the network (27). We see the decreasing degree of each successive node in the ranked list as we move along the <span class="math inline">\(x\)</span>-axis. As we get towards the end of the list, we start to see nodes with very low degree. As there are no isolates in this network, the lowest degree score is 1 (or <span class="math inline">\(10^{0}\)</span>).</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>,<span class="dv">4</span>))</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>ax.loglog(degree_sequence, </span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>          <span class="st">'black'</span>, </span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>          marker<span class="op">=</span><span class="st">'o'</span>, </span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>          markersize<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Degree Rank Plot"</span>)</span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Degree"</span>)</span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Rank"</span>)</span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>ax.spines[<span class="st">'right'</span>].set_visible(<span class="va">False</span>)</span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>ax.spines[<span class="st">'top'</span>].set_visible(<span class="va">False</span>)</span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'figures/15_10.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-5_10" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-5_10-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/15_10.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-5_10-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;15.10: png
+</figcaption>
+</figure>
+</div>
+<p>Degree is commonly treated as a proxy for “popularity,” but that’s not the only option. Our interpretation of any centrality measure <em>must be based on the type of ties in the network</em>. In the earlier example of the contact diary network, the edges in the network simply indicate whether two nodes came into contact with each other within a given time frame. One could make an argument for “popularity” there, but it would make more sense to think of degree in the contact network as something like mobility: moving more may produce more opportunities for contact. Returning to the idea of contagions flowing through a network, degree could be a measure for exposure, with more connections indicating more exposure. The specific details of the relations encoded in the network matter as much, or more than, the formal mathematics of the measure when it comes to interpreting centrality.</p>
+</section>
+</section>
+<section id="eigenvector-centrality" class="level3" data-number="15.6.2">
+<h3 data-number="15.6.2" class="anchored" data-anchor-id="eigenvector-centrality"><span class="header-section-number">15.6.2</span> Eigenvector Centrality</h3>
+<p>Degree centrality is an intuitive way of thinking about how connected people are, but analytically it doesn’t get us very far on its own. However, many other centrality measures are built on degree, and can be used to operationalize more complex and interesting ideas. <strong>Eigenvector centrality</strong> is based on the simple idea that being connected to well-connected people matters: even if your degree doesn’t change, if your neighbour’s degree increases, your connection to the network also increases.</p>
+<p>Consider our friendship network again. This time we are going to look at the “<strong>neighborhoods</strong>” (immediate alters) of two specific nodes and their extended neighbourhoods (alters’ alters). I will pick two focal nodes, <code>1519</code> and <code>196</code> and assign them the color crimson. Their immediate alters will be plotted in black, their extended neighbourhood in dark gray, and the rest of the nodes light gray. I have chosen these two nodes to compare because they have the same degree (the size of their immediate neighbourhoods are identical).</p>
+<p>We’ll use the <code>plot_nodes()</code> function defined below to simplify some of the visualization code. The resulting plots is shown in Figures <span class="quarto-unresolved-ref">?fig-15_11</span> and <a href="#fig-15_12" class="quarto-xref">Figure&nbsp;<span>15.12</span></a>.</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_nodes(which_network, which_nodes, what_color, where):</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">type</span>(which_nodes) <span class="kw">is</span> <span class="bu">list</span>:</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>        nx.draw_networkx_nodes(</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>            which_network, </span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>            pos<span class="op">=</span>where, </span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>            node_size<span class="op">=</span><span class="dv">100</span>, </span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>            node_color<span class="op">=</span>what_color,</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>            nodelist<span class="op">=</span>which_nodes</span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>        ) </span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>        nx.draw_networkx_nodes(</span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>            which_network, </span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>            pos<span class="op">=</span>where, </span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>            node_size<span class="op">=</span><span class="dv">100</span>, </span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>            node_color<span class="op">=</span>what_color,</span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>            nodelist<span class="op">=</span>[which_nodes]</span>
+<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a>        ) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>alters <span class="op">=</span> nx.ego_graph(G_friendships, <span class="dv">1519</span>, radius<span class="op">=</span><span class="dv">1</span>, undirected<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>alters_2 <span class="op">=</span> nx.ego_graph(G_friendships, <span class="dv">1519</span>, radius<span class="op">=</span><span class="dv">2</span>, undirected<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">8</span>))</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>plot_nodes(</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>    G_friendships, </span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">list</span>(G_friendships.nodes()), </span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">'lightgray'</span>, </span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>    layout</span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>plot_nodes(</span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>    G_friendships, </span>
+<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a>    <span class="bu">list</span>(alters_2.nodes()), </span>
+<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a>    <span class="st">'gray'</span>, </span>
+<span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a>    layout</span>
+<span id="cb26-19"><a href="#cb26-19" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb26-20"><a href="#cb26-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-21"><a href="#cb26-21" aria-hidden="true" tabindex="-1"></a>plot_nodes(</span>
+<span id="cb26-22"><a href="#cb26-22" aria-hidden="true" tabindex="-1"></a>    G_friendships, </span>
+<span id="cb26-23"><a href="#cb26-23" aria-hidden="true" tabindex="-1"></a>    <span class="bu">list</span>(alters.nodes()), </span>
+<span id="cb26-24"><a href="#cb26-24" aria-hidden="true" tabindex="-1"></a>    <span class="st">'black'</span>, </span>
+<span id="cb26-25"><a href="#cb26-25" aria-hidden="true" tabindex="-1"></a>    layout</span>
+<span id="cb26-26"><a href="#cb26-26" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb26-27"><a href="#cb26-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-28"><a href="#cb26-28" aria-hidden="true" tabindex="-1"></a>plot_nodes(</span>
+<span id="cb26-29"><a href="#cb26-29" aria-hidden="true" tabindex="-1"></a>    G_friendships, </span>
+<span id="cb26-30"><a href="#cb26-30" aria-hidden="true" tabindex="-1"></a>    <span class="dv">1519</span>, </span>
+<span id="cb26-31"><a href="#cb26-31" aria-hidden="true" tabindex="-1"></a>    <span class="st">'crimson'</span>, </span>
+<span id="cb26-32"><a href="#cb26-32" aria-hidden="true" tabindex="-1"></a>    layout</span>
+<span id="cb26-33"><a href="#cb26-33" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb26-34"><a href="#cb26-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-35"><a href="#cb26-35" aria-hidden="true" tabindex="-1"></a>nx.draw_networkx_edges(</span>
+<span id="cb26-36"><a href="#cb26-36" aria-hidden="true" tabindex="-1"></a>    G_friendships, </span>
+<span id="cb26-37"><a href="#cb26-37" aria-hidden="true" tabindex="-1"></a>    pos<span class="op">=</span>layout,edge_color<span class="op">=</span><span class="st">'lightgray'</span>,</span>
+<span id="cb26-38"><a href="#cb26-38" aria-hidden="true" tabindex="-1"></a>    arrowsize<span class="op">=</span><span class="dv">3</span>,</span>
+<span id="cb26-39"><a href="#cb26-39" aria-hidden="true" tabindex="-1"></a>    width<span class="op">=</span><span class="dv">1</span></span>
+<span id="cb26-40"><a href="#cb26-40" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb26-41"><a href="#cb26-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-42"><a href="#cb26-42" aria-hidden="true" tabindex="-1"></a>plt.axis(<span class="st">'off'</span>)</span>
+<span id="cb26-43"><a href="#cb26-43" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'figures/15_11.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-15-11" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-15-11-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/15_11.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-15-11-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;15.11: png
+</figcaption>
+</figure>
+</div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>alters <span class="op">=</span> nx.ego_graph(</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>    G_friendships, </span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>    <span class="dv">196</span>, </span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>    radius <span class="op">=</span> <span class="dv">1</span>, </span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>    undirected <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>alters_2 <span class="op">=</span> nx.ego_graph(</span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>    G_friendships, </span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>    <span class="dv">196</span>, </span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>    radius <span class="op">=</span> <span class="dv">2</span>, </span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>    undirected <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">12</span>,<span class="dv">8</span>))</span>
+<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a>plot_nodes(G_friendships, <span class="bu">list</span>(G_friendships.nodes()), <span class="st">'lightgray'</span>, layout)</span>
+<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a>plot_nodes(</span>
+<span id="cb27-20"><a href="#cb27-20" aria-hidden="true" tabindex="-1"></a>    G_friendships, </span>
+<span id="cb27-21"><a href="#cb27-21" aria-hidden="true" tabindex="-1"></a>    <span class="bu">list</span>(alters_2.nodes()), </span>
+<span id="cb27-22"><a href="#cb27-22" aria-hidden="true" tabindex="-1"></a>    <span class="st">'gray'</span>, </span>
+<span id="cb27-23"><a href="#cb27-23" aria-hidden="true" tabindex="-1"></a>    layout</span>
+<span id="cb27-24"><a href="#cb27-24" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb27-25"><a href="#cb27-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-26"><a href="#cb27-26" aria-hidden="true" tabindex="-1"></a>plot_nodes(</span>
+<span id="cb27-27"><a href="#cb27-27" aria-hidden="true" tabindex="-1"></a>    G_friendships, </span>
+<span id="cb27-28"><a href="#cb27-28" aria-hidden="true" tabindex="-1"></a>    <span class="bu">list</span>(alters.nodes()), </span>
+<span id="cb27-29"><a href="#cb27-29" aria-hidden="true" tabindex="-1"></a>    <span class="st">'black'</span>, </span>
+<span id="cb27-30"><a href="#cb27-30" aria-hidden="true" tabindex="-1"></a>    layout</span>
+<span id="cb27-31"><a href="#cb27-31" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb27-32"><a href="#cb27-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-33"><a href="#cb27-33" aria-hidden="true" tabindex="-1"></a>plot_nodes(</span>
+<span id="cb27-34"><a href="#cb27-34" aria-hidden="true" tabindex="-1"></a>    G_friendships, </span>
+<span id="cb27-35"><a href="#cb27-35" aria-hidden="true" tabindex="-1"></a>    <span class="dv">196</span>, </span>
+<span id="cb27-36"><a href="#cb27-36" aria-hidden="true" tabindex="-1"></a>    <span class="st">'crimson'</span>, </span>
+<span id="cb27-37"><a href="#cb27-37" aria-hidden="true" tabindex="-1"></a>    layout</span>
+<span id="cb27-38"><a href="#cb27-38" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb27-39"><a href="#cb27-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-40"><a href="#cb27-40" aria-hidden="true" tabindex="-1"></a>nx.draw_networkx_edges(</span>
+<span id="cb27-41"><a href="#cb27-41" aria-hidden="true" tabindex="-1"></a>    G_friendships, </span>
+<span id="cb27-42"><a href="#cb27-42" aria-hidden="true" tabindex="-1"></a>    pos<span class="op">=</span>layout, </span>
+<span id="cb27-43"><a href="#cb27-43" aria-hidden="true" tabindex="-1"></a>    edge_color<span class="op">=</span><span class="st">'lightgray'</span>,</span>
+<span id="cb27-44"><a href="#cb27-44" aria-hidden="true" tabindex="-1"></a>    arrowsize<span class="op">=</span><span class="dv">3</span>,</span>
+<span id="cb27-45"><a href="#cb27-45" aria-hidden="true" tabindex="-1"></a>    width<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb27-46"><a href="#cb27-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-47"><a href="#cb27-47" aria-hidden="true" tabindex="-1"></a>plt.axis(<span class="st">'off'</span>)</span>
+<span id="cb27-48"><a href="#cb27-48" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'figures/15_12.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-15_12" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-15_12-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/15_12.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-15_12-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;15.12: png
+</figcaption>
+</figure>
+</div>
+<p>Despite their immediate neighbourhoods (black) being the same size, <code>196</code> has much greater reach with their extended neighbourhood because their immediate neighbours are better connected.</p>
+<p>Think about <em>influence</em> in this context. <code>196</code> influences and is influenced by their direct alters, who in turn influence and are influenced by <em>their</em> direct alters. Influence on <code>196</code> is most strong from their immediate alters, followed by their alters’ alters, followed by her alters’ alters’ alters, and so on.</p>
+<p>Let’s consider how this is reflected in eigenvector centrality. Technically, a node’s eigenvector centrality is proportional to the sum of the centralities of their alters <span class="citation" data-cites="borgatti2018analyzing">(<a href="references.html#ref-borgatti2018analyzing" role="doc-biblioref">Borgatti, Everett, and Johnson 2018</a>)</span>. In this sense eigenvector centrality can also be interpreted as a measure of popularity, but it differs from degree centrality because a node can have high eigenvector centrality but low degree centrality (i.e., they are connected to only a few people, but those people are well-connected).</p>
+<p>Both <code>1519</code> and <code>196</code> have degrees of 11 (5 reciprocated nominations and one unreciprocated), but when we look at the network we can probably intuit that they occupy different types of positions given <em>who</em> they are connected to, and how those people are connected. Just by eyeballing the network, we can see that <code>196</code>’s connections are more connected than <code>1519</code>’s are. When it comes to <em>influence</em> and <em>power</em> in a network, being connected to well-connected people is more useful than being connected to less well-connected people.</p>
+<p>Eigenvector centrality is based on this fundamental idea that, when it comes to influence, the connections of the people we are connected to matter. We have to think, and “see” beyond our immediate social neighborhoods.</p>
+<section id="computing-eigenvector-centrality" class="level4" data-number="15.6.2.1">
+<h4 data-number="15.6.2.1" class="anchored" data-anchor-id="computing-eigenvector-centrality"><span class="header-section-number">15.6.2.1</span> Computing Eigenvector Centrality</h4>
+<p>Let’s take a look at the distribution of eigenvector centrality scores to degree (<a href="#fig-15_13" class="quarto-xref">Figure&nbsp;<span>15.13</span></a>).</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>dn <span class="op">=</span> pd.Series(<span class="bu">dict</span>(nx.degree(G_friendships)))</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>ec <span class="op">=</span> pd.Series(nx.eigenvector_centrality(G_friendships))</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots()</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(x<span class="op">=</span>dn, y<span class="op">=</span>ec, alpha<span class="op">=</span><span class="fl">.6</span>)</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">'Degree'</span>, ylabel<span class="op">=</span><span class="st">'Eigenvector centrality'</span>)</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'figures/15_13.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-15_13" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-15_13-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/15_13.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-15_13-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;15.13: png
+</figcaption>
+</figure>
+</div>
+<p>We can see that degree and eigenvector centrality are somewhat positively correlated. As degree increases, eigenvector tends to increase as well, though some individuals with high degree centrality are especially well-positioned and take a lion’s share of the eigenvector centrality.</p>
+</section>
+</section>
+<section id="bonacich-power-centrality" class="level3" data-number="15.6.3">
+<h3 data-number="15.6.3" class="anchored" data-anchor-id="bonacich-power-centrality"><span class="header-section-number">15.6.3</span> Bonacich Power Centrality</h3>
+<p>Eigenvector centrality is often used, among other things, as a proxy for power. However, as Phillip <span class="citation" data-cites="bonacich1987power">Bonacich (<a href="references.html#ref-bonacich1987power" role="doc-biblioref">1987</a>)</span> pointed out, being more “central” is not necessarily the same thing as being more powerful. Being connected to well-connected others makes you more reachable, <em>but less powerful</em>, because the people you are connected to are connected to many others; they do not <em>depend</em> on you because they have alternative connections. On the other hand, if the people you are connected to are <em>not</em> themselves well-connected, then their connection to you matters more; they are more dependent on you, and therefore you are more powerful. For Bonacich, then, ego is more central when their alters are densely connected with one another, but this makes ego <em>less</em> powerful; instead, ego gains power when their alters have few connections to others.</p>
+<p>We might expect to see this in access and exchange networks, where being connected to people who have a lot of other exchange partners reduces your “bargaining power.” Being connected to people who have few exchange partners, on the other hand, increases your bargaining power. Bonacich power centrality conceptualizes power in terms of an ego’s access to alters who are dependent on them.</p>
+<p>Bonacich power centrality introduces an <strong>attenuation factor</strong> – the parameter <span class="math inline">\(\beta\)</span> – that controls how a node’s centrality is influenced by the centralities of its alters. <span class="math inline">\(\beta\)</span> can be positive or negative, reflecting different notions of power and centrality. For example, a <strong>positive <span class="math inline">\(\beta\)</span></strong> indicates that being connected to well-connected alters increases your centrality. This is similar to the idea of eigenvector centrality, where centrality flows through well-connected nodes. A <strong>negative <span class="math inline">\(\beta\)</span></strong> indicates that being connected to poorly connected alters increases your power. This captures the idea that you are more powerful when your alters depend on you because they lack alternative connections. Finally, <span class="math inline">\(\beta\)</span> of <strong>zero</strong> indicates that the centrality of a node is independent of the centralities of its alters, effectively reducing Bonacich centrality to degree centrality.</p>
+<p>In this way, Bonacich power centrality is a flexible measure that can capture different dimensions of centrality and power depending on the value of <span class="math inline">\(\beta\)</span>. However, this flexibility comes with the need to carefully choose an appropriate <span class="math inline">\(\beta\)</span> value, or range or <span class="math inline">\(\beta\)</span> values. Importantly, not all values of <span class="math inline">\(\beta\)</span> are valid for a given network. The attenuation factor <span class="math inline">\(\beta\)</span> must be within certain bounds to ensure that the centrality calculation is mathematically valid and numerically stable.</p>
+<section id="valid-ranges-of-beta" class="level4" data-number="15.6.3.1">
+<h4 data-number="15.6.3.1" class="anchored" data-anchor-id="valid-ranges-of-beta"><span class="header-section-number">15.6.3.1</span> Valid Ranges of <span class="math inline">\(\beta\)</span></h4>
+<p>Computing Bonacich power centrality involves inverting the matrix <span class="math inline">\((I - \beta A)\)</span>, where <span class="math inline">\(I\)</span> is the identity matrix and <span class="math inline">\(A\)</span> is the adjacency matrix of the network. For the inverse <span class="math inline">\((I - \beta A)^{-1}\)</span> to exist, the matrix <span class="math inline">\((I - \beta A)\)</span> must be invertible, which depends on the eigenvalues of <span class="math inline">\(A\)</span>.</p>
+<p>For <strong>positive attenuation factors</strong>, <span class="math inline">\(\beta\)</span> must be less than the absolute value of the recipricol of the largest eigenvalue of <span class="math inline">\(A\)</span>,</p>
+<p><span class="math display">\[
+\beta &lt; \frac{1}{\lambda_{\text{max}}}
+\]</span></p>
+<p>where <span class="math inline">\(\lambda_{\text{max}}\)</span> is the largest eigenvalue of <span class="math inline">\(A\)</span>.</p>
+<p>For <strong>negative attenuation factors</strong>, <span class="math inline">\(\beta\)</span> must be greater than the recipricol of the smallest eigenvalue of <span class="math inline">\(A\)</span></p>
+<p><span class="math display">\[
+\beta &gt; \frac{1}{\lambda_{\text{min}}}
+\]</span></p>
+<p>where <span class="math inline">\(\lambda_{\text{min}}\)</span>.</p>
+<p>These upper and lower bounds ensure that the matrix <span class="math inline">\((I - \beta A)\)</span> is invertible, thereby avoiding issues with singularity and numerical instability.</p>
+<p>Choosing a single <span class="math inline">\(\beta\)</span> parameter within these bounds can be challenging, but that is not what we want to do in practice. Instead, we want to explore a range of <span class="math inline">\(\beta\)</span> values to understand how the centrality measures change.</p>
+<p>At the time of writing, Bonacich power centrality is not implemented in NetworkX, graph-tool, or igraph for Python. However, I’ve implemented it in the networks module of the dcss package. It correctly handles the attenuation factor <span class="math inline">\(\beta\)</span> and the necessary bounds by default.</p>
+<p>Let’s compute Bonacich power centrality scores for a network constructed from the SocioPatterns contact diary data.</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>G <span class="op">=</span> nx.from_pandas_edgelist(</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>    contact_diaries, </span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'i'</span>, <span class="st">'j'</span>, </span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>    create_using<span class="op">=</span>nx.Graph()</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>G.name <span class="op">=</span> <span class="st">'Reported Contacts (Diary Data)'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Let’s define a range of <span class="math inline">\(\beta\)</span> values that are within the valid bounds for this network.</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>attenuation_bounds <span class="op">=</span> get_attenuation_bounds(G)</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>attenuation_bounds</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>betas <span class="op">=</span> generate_attenuation_factors(</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>    attenuation_bounds,</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>    num_points<span class="op">=</span><span class="dv">19</span>)</span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Valid beta values including zero:"</span>)</span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(betas)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Now we can compute the Bonacich power centrality scores for the valid <span class="math inline">\(\beta\)</span> values.</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>centralities <span class="op">=</span> bonacich_centrality_multiple_betas(</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>    G, betas</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>centralities_df <span class="op">=</span> pd.DataFrame.from_dict(</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>    centralities, orient<span class="op">=</span><span class="st">'index'</span></span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>).T</span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>centralities_df[<span class="st">'Node'</span>] <span class="op">=</span> centralities_df.index</span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>centralities_df <span class="op">=</span> centralities_df.<span class="bu">round</span>(<span class="dv">4</span>)</span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>centralities_df.head(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Let’s compare the Bonacich power centrality scores for different <span class="math inline">\(\beta\)</span> values to normalized degree centrality. <a href="#fig-15_bpc_ndc" class="quarto-xref">Figure&nbsp;<span>15.14</span></a> shows scatter plots of power centrality versus normalized degree centrality for a range of <span class="math inline">\(\beta\)</span> values, with each subplot corresponding to a different <span class="math inline">\(\beta\)</span>.</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>degree_centrality <span class="op">=</span> nx.degree_centrality(G)</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>degree_centrality_df <span class="op">=</span> pd.DataFrame.from_dict(</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>    degree_centrality, orient<span class="op">=</span><span class="st">'index'</span>, columns<span class="op">=</span>[<span class="st">'degree_centrality'</span>]</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>degree_centrality_df.reset_index(inplace<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>degree_centrality_df.rename(columns<span class="op">=</span>{<span class="st">'index'</span>: <span class="st">'Node'</span>}, inplace<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.merge(centralities_df, degree_centrality_df, on<span class="op">=</span><span class="st">'Node'</span>)</span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>beta_columns <span class="op">=</span> [</span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>    col </span>
+<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> col <span class="kw">in</span> df.columns </span>
+<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> col <span class="kw">not</span> <span class="kw">in</span> [<span class="st">'Node'</span>, <span class="st">'degree_centrality'</span>]</span>
+<span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>num_plots <span class="op">=</span> <span class="bu">len</span>(beta_columns)</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>num_cols <span class="op">=</span> <span class="dv">4</span>  </span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>num_rows <span class="op">=</span> num_plots <span class="op">//</span> num_cols <span class="op">+</span> <span class="bu">int</span>(num_plots <span class="op">%</span> num_cols <span class="op">&gt;</span> <span class="dv">0</span>)</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(</span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>    num_rows, </span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>    num_cols, </span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>    figsize<span class="op">=</span>(<span class="dv">20</span>, </span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>    num_rows <span class="op">*</span> <span class="dv">5</span>), </span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>    sharex<span class="op">=</span><span class="va">True</span>, </span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>    sharey<span class="op">=</span><span class="va">True</span></span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a>axes <span class="op">=</span> axes.flatten()</span>
+<span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-16"><a href="#cb33-16" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> idx, beta_col <span class="kw">in</span> <span class="bu">enumerate</span>(beta_columns):</span>
+<span id="cb33-17"><a href="#cb33-17" aria-hidden="true" tabindex="-1"></a>    ax <span class="op">=</span> axes[idx]</span>
+<span id="cb33-18"><a href="#cb33-18" aria-hidden="true" tabindex="-1"></a>    ax.scatter(df[<span class="st">'degree_centrality'</span>], df[beta_col], alpha<span class="op">=</span><span class="fl">0.6</span>)</span>
+<span id="cb33-19"><a href="#cb33-19" aria-hidden="true" tabindex="-1"></a>    ax.set_title(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Beta = </span><span class="sc">{</span><span class="bu">round</span>(beta_col, <span class="dv">4</span>)<span class="sc">}</span><span class="ss">"</span>, loc<span class="op">=</span><span class="st">'left'</span>)</span>
+<span id="cb33-20"><a href="#cb33-20" aria-hidden="true" tabindex="-1"></a>    ax.set_xlabel(<span class="st">'Normalized Degree Centrality'</span>)</span>
+<span id="cb33-21"><a href="#cb33-21" aria-hidden="true" tabindex="-1"></a>    ax.set_ylabel(<span class="st">'Power Centrality'</span>)</span>
+<span id="cb33-22"><a href="#cb33-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-23"><a href="#cb33-23" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> idx <span class="kw">in</span> <span class="bu">range</span>(num_plots, <span class="bu">len</span>(axes)):</span>
+<span id="cb33-24"><a href="#cb33-24" aria-hidden="true" tabindex="-1"></a>    fig.delaxes(axes[idx])</span>
+<span id="cb33-25"><a href="#cb33-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-26"><a href="#cb33-26" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb33-27"><a href="#cb33-27" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'figures/15_bpc_ndc.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-15_bpc_ndc" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-15_bpc_ndc-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figures/15_bpc_ndc.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-15_bpc_ndc-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;15.14: cap
+</figcaption>
+</figure>
+</div>
+<p>These scatter plots reveal how the relationship between degree centrality and Bonacich power centrality changes as <span class="math inline">\(\beta\)</span> varies. At <span class="math inline">\(\beta = 0\)</span>, Bonacich power centrality reduces to degree centrality, which is reflected in the perfect linear relationship in the corresponding subplot, where each node’s power centrality score is directly proportional to its normalized degree centrality. For positive <span class="math inline">\(\beta\)</span> values, the centrality scores begin to emphasize nodes connected to well-connected alters. The correlation with degree centrality remains positive, but with more dispersion. Nodes with high degree centrality connected to other well-connected nodes may have disproportionately higher power centrality scores.</p>
+<p>The relationship between degree centrality and power centrality changes considerably for negative <span class="math inline">\(\beta\)</span> values. As Bonacich argued should be the case, nodes connected to poorly connected alters have higher power centrality scores. The scatter plots show negative trends, highlighting how nodes with lower degree centrality have higher power centrality, due to their alters’ dependence on them.</p>
+<p>To deepen our understanding of how the attenuation factor <span class="math inline">\(\beta\)</span> influences the Bonacich power centrality scores, let’s visualize the network graphs with nodes sized and colored according to their power centrality scores for each <span class="math inline">\(\beta\)</span> value. <span class="quarto-unresolved-ref">?fig-15_bpc_networks</span> presents a series of network visualizations (small multiples), each corresponding to a different <span class="math inline">\(\beta\)</span> value.</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>centralities_df.set_index(<span class="st">'Node'</span>, inplace<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>pos <span class="op">=</span> nx.nx_pydot.graphviz_layout(G)</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>beta_columns <span class="op">=</span> centralities_df.columns.tolist()</span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>num_plots <span class="op">=</span> <span class="bu">len</span>(beta_columns)</span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>num_cols <span class="op">=</span> <span class="dv">4</span>  <span class="co"># Number of plots per row</span></span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>num_rows <span class="op">=</span> num_plots <span class="op">//</span> num_cols <span class="op">+</span> <span class="bu">int</span>(num_plots <span class="op">%</span> num_cols <span class="op">&gt;</span> <span class="dv">0</span>)</span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(</span>
+<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a>    num_rows,</span>
+<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a>    num_cols,</span>
+<span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a>    figsize<span class="op">=</span>(<span class="dv">20</span>, num_rows <span class="op">*</span> <span class="dv">5</span>),</span>
+<span id="cb34-14"><a href="#cb34-14" aria-hidden="true" tabindex="-1"></a>    constrained_layout<span class="op">=</span><span class="va">True</span></span>
+<span id="cb34-15"><a href="#cb34-15" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb34-16"><a href="#cb34-16" aria-hidden="true" tabindex="-1"></a>axes <span class="op">=</span> axes.flatten()</span>
+<span id="cb34-17"><a href="#cb34-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-18"><a href="#cb34-18" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> idx, beta_col <span class="kw">in</span> <span class="bu">enumerate</span>(beta_columns):</span>
+<span id="cb34-19"><a href="#cb34-19" aria-hidden="true" tabindex="-1"></a>    ax <span class="op">=</span> axes[idx]</span>
+<span id="cb34-20"><a href="#cb34-20" aria-hidden="true" tabindex="-1"></a>    centrality <span class="op">=</span> centralities_df[beta_col]</span>
+<span id="cb34-21"><a href="#cb34-21" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb34-22"><a href="#cb34-22" aria-hidden="true" tabindex="-1"></a>    <span class="co"># normalize centrality values within the beta, noit globally</span></span>
+<span id="cb34-23"><a href="#cb34-23" aria-hidden="true" tabindex="-1"></a>    beta_min <span class="op">=</span> centrality.<span class="bu">min</span>()</span>
+<span id="cb34-24"><a href="#cb34-24" aria-hidden="true" tabindex="-1"></a>    beta_max <span class="op">=</span> centrality.<span class="bu">max</span>()</span>
+<span id="cb34-25"><a href="#cb34-25" aria-hidden="true" tabindex="-1"></a>    norm <span class="op">=</span> Normalize(vmin<span class="op">=</span>beta_min, vmax<span class="op">=</span>beta_max)</span>
+<span id="cb34-26"><a href="#cb34-26" aria-hidden="true" tabindex="-1"></a>    cmap <span class="op">=</span> cm.viridis</span>
+<span id="cb34-27"><a href="#cb34-27" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb34-28"><a href="#cb34-28" aria-hidden="true" tabindex="-1"></a>    sm <span class="op">=</span> ScalarMappable(cmap<span class="op">=</span>cmap, norm<span class="op">=</span>norm)</span>
+<span id="cb34-29"><a href="#cb34-29" aria-hidden="true" tabindex="-1"></a>    sm.set_array([])</span>
+<span id="cb34-30"><a href="#cb34-30" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb34-31"><a href="#cb34-31" aria-hidden="true" tabindex="-1"></a>    node_colors <span class="op">=</span> [cmap(norm(centrality.loc[node])) <span class="cf">for</span> node <span class="kw">in</span> G.nodes()]</span>
+<span id="cb34-32"><a href="#cb34-32" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb34-33"><a href="#cb34-33" aria-hidden="true" tabindex="-1"></a>    min_size <span class="op">=</span> <span class="dv">50</span></span>
+<span id="cb34-34"><a href="#cb34-34" aria-hidden="true" tabindex="-1"></a>    max_size <span class="op">=</span> <span class="dv">300</span></span>
+<span id="cb34-35"><a href="#cb34-35" aria-hidden="true" tabindex="-1"></a>    size_range <span class="op">=</span> max_size <span class="op">-</span> min_size</span>
+<span id="cb34-36"><a href="#cb34-36" aria-hidden="true" tabindex="-1"></a>    sizes <span class="op">=</span> [((centrality.loc[node] <span class="op">-</span> beta_min) <span class="op">/</span> (beta_max <span class="op">-</span> beta_min) <span class="op">*</span> size_range <span class="op">+</span> min_size) <span class="cf">if</span> beta_max <span class="op">!=</span> beta_min <span class="cf">else</span> min_size <span class="op">+</span> size_range <span class="op">/</span> <span class="dv">2</span> <span class="cf">for</span> node <span class="kw">in</span> G.nodes()]</span>
+<span id="cb34-37"><a href="#cb34-37" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb34-38"><a href="#cb34-38" aria-hidden="true" tabindex="-1"></a>    nx.draw_networkx(</span>
+<span id="cb34-39"><a href="#cb34-39" aria-hidden="true" tabindex="-1"></a>        G,</span>
+<span id="cb34-40"><a href="#cb34-40" aria-hidden="true" tabindex="-1"></a>        pos<span class="op">=</span>pos,</span>
+<span id="cb34-41"><a href="#cb34-41" aria-hidden="true" tabindex="-1"></a>        with_labels<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb34-42"><a href="#cb34-42" aria-hidden="true" tabindex="-1"></a>        node_color<span class="op">=</span>node_colors,</span>
+<span id="cb34-43"><a href="#cb34-43" aria-hidden="true" tabindex="-1"></a>        node_size<span class="op">=</span>sizes,</span>
+<span id="cb34-44"><a href="#cb34-44" aria-hidden="true" tabindex="-1"></a>        edge_color<span class="op">=</span><span class="st">'gray'</span>,</span>
+<span id="cb34-45"><a href="#cb34-45" aria-hidden="true" tabindex="-1"></a>        ax<span class="op">=</span>ax</span>
+<span id="cb34-46"><a href="#cb34-46" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb34-47"><a href="#cb34-47" aria-hidden="true" tabindex="-1"></a>    ax.set_title(<span class="vs">r'$\beta$'</span> <span class="op">+</span> <span class="ss">f" = </span><span class="sc">{</span><span class="bu">round</span>(<span class="bu">float</span>(beta_col), <span class="dv">4</span>)<span class="sc">}</span><span class="ss">"</span>, loc<span class="op">=</span><span class="st">'left'</span>)</span>
+<span id="cb34-48"><a href="#cb34-48" aria-hidden="true" tabindex="-1"></a>    ax.axis(<span class="st">'off'</span>)</span>
+<span id="cb34-49"><a href="#cb34-49" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb34-50"><a href="#cb34-50" aria-hidden="true" tabindex="-1"></a>    cbar <span class="op">=</span> fig.colorbar(</span>
+<span id="cb34-51"><a href="#cb34-51" aria-hidden="true" tabindex="-1"></a>        sm,</span>
+<span id="cb34-52"><a href="#cb34-52" aria-hidden="true" tabindex="-1"></a>        ax<span class="op">=</span>ax,</span>
+<span id="cb34-53"><a href="#cb34-53" aria-hidden="true" tabindex="-1"></a>        orientation<span class="op">=</span><span class="st">'horizontal'</span>,</span>
+<span id="cb34-54"><a href="#cb34-54" aria-hidden="true" tabindex="-1"></a>        fraction<span class="op">=</span><span class="fl">0.046</span>,</span>
+<span id="cb34-55"><a href="#cb34-55" aria-hidden="true" tabindex="-1"></a>        pad<span class="op">=</span><span class="fl">0.04</span></span>
+<span id="cb34-56"><a href="#cb34-56" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb34-57"><a href="#cb34-57" aria-hidden="true" tabindex="-1"></a>    cbar.ax.tick_params(labelsize<span class="op">=</span><span class="dv">8</span>)</span>
+<span id="cb34-58"><a href="#cb34-58" aria-hidden="true" tabindex="-1"></a>    cbar.set_label(<span class="st">'Power Centrality'</span>, fontsize<span class="op">=</span><span class="dv">8</span>)</span>
+<span id="cb34-59"><a href="#cb34-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-60"><a href="#cb34-60" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> idx <span class="kw">in</span> <span class="bu">range</span>(num_plots, <span class="bu">len</span>(axes)):</span>
+<span id="cb34-61"><a href="#cb34-61" aria-hidden="true" tabindex="-1"></a>    fig.delaxes(axes[idx])</span>
+<span id="cb34-62"><a href="#cb34-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-63"><a href="#cb34-63" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'figures/15_bpc_networks.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>)</span>
+<span id="cb34-64"><a href="#cb34-64" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'figures/15_bpc_small_multiples_force_directed.png'</span>, dpi<span class="op">=</span><span class="dv">600</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><span class="quarto-unresolved-ref">?fig-15_bpc_networks</span> reveals a few notable patterns.</p>
+<p>As previously noted, at <span class="math inline">\(\beta = 0\)</span> (all purple nodes), the node sizes and colors reflect degree centrality. As <span class="math inline">\(\beta\)</span> increases to positive values, nodes that are connected to well-connected alters have higher centrality. As such, nodes in densely connected clusters become larger and more prominently colored. This effect is similar to eigenvector centrality, where being connected to highly central nodes increases one’s own centrality. The visualizations show centrality clustering in densely connected parts of the network.</p>
+<p>As <span class="math inline">\(\beta\)</span> decreases to negative values, the centrality scores highlight nodes connected to poorly connected alters. Nodes that serve as bridges to less-connected parts of the network become more central. In the visualizations, some previously large nodes shrink relative to their neighbors, while nodes connected to less-connected alters increase in size. This reflects the concept that power can come from brokering alters who lack alternative connections.</p>
+<p>These graphs shed light on how the attenuation factor, <span class="math inline">\(\beta\)</span>, affects what we learn about power and centrality in a network through the lens of Bonacich’s power centrality. As always, the choice of <span class="math inline">\(\beta\)</span> should align with the theoretical considerations of power and influence in the specific research context, and should always consider a range of parameter values.</p>
+<blockquote class="blockquote">
+<p><strong>Further Reading</strong></p>
+<p>If you are looking to learn more on centrality analysis, Chapter 10 of Borgatti, Everett, and Johnson’s <span class="citation" data-cites="borgatti2018analyzing">(<a href="references.html#ref-borgatti2018analyzing" role="doc-biblioref">2018</a>)</span> <em>Analyzing Social Networks</em> provides a good overview. <span class="citation" data-cites="borgatti2020three">Borgatti and Everett (<a href="references.html#ref-borgatti2020three" role="doc-biblioref">2020</a>)</span> contrast three different perspectives on network centrality. <span class="citation" data-cites="kitts2014beyond">Kitts (<a href="references.html#ref-kitts2014beyond" role="doc-biblioref">2014</a>)</span> and <span class="citation" data-cites="kitts2020rethinking">Kitts and Quintane (<a href="references.html#ref-kitts2020rethinking" role="doc-biblioref">2020</a>)</span> offer a useful perspective on social networks in “the era of computational social science,” with implications of how we interpret centrality measures with networks constructed using behavioural and interactional data.</p>
+</blockquote>
+</section>
+</section>
+</section>
+<section id="conclusion" class="level2" data-number="15.7">
+<h2 data-number="15.7" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">15.7</span> CONCLUSION</h2>
+<hr>
+<section id="key-points" class="level3" data-number="15.7.1">
+<h3 data-number="15.7.1" class="anchored" data-anchor-id="key-points"><span class="header-section-number">15.7.1</span> Key Points</h3>
+<ul>
+<li>Learned two major ways of thinking about what centrality means: shortest paths through the network, and counting edges</li>
+<li>Learned some of the most common centrality measures</li>
+<li>Connected centrality measures to the theories and concepts they operationalize</li>
+<li>Visualized the distribution of different centrality measures within the same network</li>
+</ul>
+<hr>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-barabasi1999emergence" class="csl-entry" role="listitem">
+Barabási, Albert-László, and Réka Albert. 1999. <span>“Emergence of Scaling in Random Networks.”</span> <em>Science</em> 286 (5439): 509–12.
+</div>
+<div id="ref-bonacich1987power" class="csl-entry" role="listitem">
+Bonacich, Phillip. 1987. <span>“Power and Centrality: A Family of Measures.”</span> <em>American Journal of Sociology</em> 92 (5): 1170–82.
+</div>
+<div id="ref-borgatti2020three" class="csl-entry" role="listitem">
+Borgatti, Stephen, and Martin Everett. 2020. <em>Three Perspectives on Centrality</em>. Edited by Ryan Light and James Moody. Oxford University Press.
+</div>
+<div id="ref-borgatti2018analyzing" class="csl-entry" role="listitem">
+Borgatti, Stephen, Martin Everett, and Jeffrey Johnson. 2018. <em>Analyzing Social Networks</em>. Sage.
+</div>
+<div id="ref-diprete2006cumulative" class="csl-entry" role="listitem">
+DiPrete, Thomas, and Gregory Eirich. 2006. <span>“Cumulative Advantage as a Mechanism for Inequality: A Review of Theoretical and Empirical Developments.”</span> <em>Annu. Rev. Sociol.</em> 32: 271–97.
+</div>
+<div id="ref-feld1991your" class="csl-entry" role="listitem">
+Feld, Scott. 1991. <span>“Why Your Friends Have More Friends Than You Do.”</span> <em>American Journal of Sociology</em> 96 (6): 1464–77.
+</div>
+<div id="ref-hanneman2005introduction" class="csl-entry" role="listitem">
+Hanneman, Robert, and Mark Riddle. 2005. <span>“Introduction to Social Network Methods.”</span> University of California Riverside.
+</div>
+<div id="ref-kitts2014beyond" class="csl-entry" role="listitem">
+Kitts, James. 2014. <span>“Beyond Networks in Structural Theories of Exchange: Promises from Computational Social Science.”</span> In <em>Advances in Group Processes</em>. Emerald Group Publishing Limited.
+</div>
+<div id="ref-kitts2020rethinking" class="csl-entry" role="listitem">
+Kitts, James, and Eric Quintane. 2020. <span>“Rethinking Social Networks in the Era of Computational Social Science.”</span> <em>The Oxford Handbook of Social Networks</em>, 71.
+</div>
+<div id="ref-merton1968matthew" class="csl-entry" role="listitem">
+Merton, Robert K. 1968. <span>“The Matthew Effect in Science: The Reward and Communication Systems of Science Are Considered.”</span> <em>Science</em> 159 (3810): 56–63.
+</div>
+<div id="ref-price1965networks" class="csl-entry" role="listitem">
+Price, Derek De Solla. 1965. <span>“Networks of Scientific Papers.”</span> <em>Science</em>, 510–15.
+</div>
+<div id="ref-price1986little" class="csl-entry" role="listitem">
+———. 1986. <em>Little Science, Big Science... And Beyond</em>. Vol. 480. Columbia University Press New York.
+</div>
+<div id="ref-stovel2012brokerage" class="csl-entry" role="listitem">
+Stovel, Katherine, and Lynette Shaw. 2012. <span>“Brokerage.”</span> <em>Annual Review of Sociology</em> 38: 139–58.
+</div>
+</div>
+</section>
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>In the next chapter we will expand the idea of positions in a network, but for the time being we can think of position primarily in terms of centrality.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./networks-as-not-data.html" class="pagination-link" aria-label="Networks and relational thinking">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Networks and relational thinking</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./mapping-network-structure.html" class="pagination-link" aria-label="Mapping network structure">
+        <span class="nav-page-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Mapping network structure</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/UWNETLAB/dcss_supplementary/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>

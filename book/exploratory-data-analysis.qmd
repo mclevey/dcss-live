@@ -1,4 +1,4 @@
-# Exploratory data analysis (EDA) <!-- Exploring with purpose -->
+# Exploring with purpose
 
 ::: {.callout-note}
 ## Learning Objectives
@@ -11,7 +11,7 @@ By the end of this chapter, you should be able to:
 - Explore techniques for Exploratory Data Analysis for multivariate data
 :::
 
-::: {.callout-note}
+::: {.callout-warning}
 ## Planned Updates
 
 The current emphasis in this chapter is on learning how to work with Pandas in order to perform EDA. I am revising it to instead emphasize the process and logic of purposeful EDA and will teach Pandas in that context. These revisions will be complete in fall 2024.

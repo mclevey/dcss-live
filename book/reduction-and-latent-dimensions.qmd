@@ -1,4 +1,4 @@
-# Association and latent variables 
+# Reduction and latent dimensions
 <!-- Measurement and latent constructs -->
 <!-- Association and dependency structures -->
 

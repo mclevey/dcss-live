@@ -6,9 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="John McLevey University of Waterloo">
 
-<title>Doing Computational Social Science The Continuous Development Edition</title>
+<title>4&nbsp; Modeling as metaphor, map, and reduction – Doing Computational Social Science&lt;br&gt;[The **Continuous Development** Edition]{.small}</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -31,7 +30,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./getting-started.html" rel="next">
+<link href="./iterative-workflow.html" rel="next">
+<link href="./python-102.html" rel="prev">
 <link href="./figures/logo.png" rel="icon" type="image/png">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -70,35 +70,6 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="custom.css">
 </head>
@@ -112,7 +83,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">🏠</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./metaphor-map-reduction.html"><strong>THINKING THROUGH MODELS</strong></a></li><li class="breadcrumb-item"><a href="./metaphor-map-reduction.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Modeling as metaphor, map, and reduction</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -168,14 +139,14 @@ window.Quarto = {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">🏠</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
- <span class="menu-text"><strong>COMPUTING</strong></span></a>
+ <span class="menu-text"><strong>RESEARCH COMPUTING</strong></span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -204,7 +175,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
- <span class="menu-text"><strong>WORKFLOW</strong></span></a>
+ <span class="menu-text"><strong>THINKING THROUGH MODELS</strong></span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -212,14 +183,14 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./mindful-modelling.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Mindful modelling</span></span></a>
+  <a href="./metaphor-map-reduction.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Modeling as metaphor, map, and reduction</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./iteration.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Iteration</span></span></a>
+  <a href="./iterative-workflow.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Iterative workflows</span></span></a>
   </div>
 </li>
       </ul>
@@ -227,7 +198,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
- <span class="menu-text"><strong>DATA</strong></span></a>
+ <span class="menu-text"><strong>OBTAINING DATA</strong></span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -235,8 +206,8 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./survey-data.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title"><del>Processing Structured Data</del> Survey Data</span></span></a>
+  <a href="./sampling-and-survey-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title"><del>Processing Structured Data</del> Sampling and Survey Data</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -253,20 +224,8 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./audio-and-document-data.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Audio and document data</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./text-as-data.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Text as Data</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./relational-data.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Relational data</span></span></a>
+  <a href="./audio-files-and-documents.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Audio files and documents</span></span></a>
   </div>
 </li>
       </ul>
@@ -274,7 +233,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
- <span class="menu-text"><strong>DISCOVERY</strong></span></a>
+ <span class="menu-text"><strong>EXPLORING</strong></span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -283,19 +242,31 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./exploratory-data-analysis.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Exploring with purpose</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Exploratory data analysis (EDA) <!-- Exploring with purpose --></span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./reduction-and-latent-dimensions.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Reduction and latent dimensions</span></span></a>
+  <a href="./association-and-latent-variables.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Association and latent variables</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./text-as-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Text as Data</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./mapping-text.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Text similarity and latent semantic space</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Text similarity and latent semantic space</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./networks-as-not-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Networks and relational thinking</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -456,7 +427,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
- <span class="menu-text"><strong>RESPONSIBILITIES</strong></span></a>
+ <span class="menu-text"><strong>PROFESSIONAL RESPONSIBILITIES</strong></span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -505,44 +476,21 @@ window.Quarto = {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
-   
-  <ul>
-  <li><a href="#section" id="toc-section" class="nav-link active" data-scroll-target="#section">🏠</a>
-  <ul class="collapse">
-  <li><a href="#updates-to-the-book" id="toc-updates-to-the-book" class="nav-link" data-scroll-target="#updates-to-the-book">Updates to the Book</a>
-  <ul class="collapse">
-  <li><a href="#planned-updates" id="toc-planned-updates" class="nav-link" data-scroll-target="#planned-updates">Planned Updates</a></li>
-  </ul></li>
-  <li><a href="#updates-to-the-computing-setup" id="toc-updates-to-the-computing-setup" class="nav-link" data-scroll-target="#updates-to-the-computing-setup">Updates to the Computing Setup</a></li>
-  <li><a href="#updates-to-the-python-package" id="toc-updates-to-the-python-package" class="nav-link" data-scroll-target="#updates-to-the-python-package">Updates to the Python Package</a></li>
-  <li><a href="#the-supplementary-learning-materials" id="toc-the-supplementary-learning-materials" class="nav-link" data-scroll-target="#the-supplementary-learning-materials">The Supplementary Learning Materials</a></li>
-  <li><a href="#about-the-author" id="toc-about-the-author" class="nav-link" data-scroll-target="#about-the-author">About the Author</a></li>
-  <li><a href="#dedication" id="toc-dedication" class="nav-link" data-scroll-target="#dedication">Dedication</a></li>
-  </ul></li>
-  </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/UWNETLAB/dcss_supplementary/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./metaphor-map-reduction.html"><strong>THINKING THROUGH MODELS</strong></a></li><li class="breadcrumb-item"><a href="./metaphor-map-reduction.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Modeling as metaphor, map, and reduction</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Doing Computational Social Science<br><span class="small">The <strong>Continuous Development</strong> Edition</span></h1>
+<h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Modeling as metaphor, map, and reduction</span></h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p><a href="https://www.johnmclevey.com/">John McLevey</a><br>University of Waterloo </p>
-          </div>
-  </div>
     
   
     
@@ -553,61 +501,8 @@ window.Quarto = {
 </header>
 
 
-<section id="section" class="level1 unnumbered">
-<h1 class="unnumbered">🏠</h1>
-<div class="callout callout-style-default callout-warning callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Under Construction
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>You’ve found the <strong>continuous development</strong> edition of <em><a href="https://www.amazon.ca/Doing-Computational-Social-Science-Introduction/dp/1526468182">Doing Computational Social Science</a></em>. This version contains numerous corrections, updates, and improvements, but <strong>is still a work in progress!</strong> Expect the content to evolve as I work through planned revisions. If you notice any issues or have feedback, I’d love to hear from you! Please use the “<strong>Report an issue</strong>” link in the right margin <span class="math inline">\(\longrightarrow\)</span> to open an issue on GitHub.</p>
-<p>John<br>
-October 2024</p>
-</div>
-</div>
-<section id="updates-to-the-book" class="level2">
-<h2 class="anchored" data-anchor-id="updates-to-the-book">Updates to the Book</h2>
-<p>I am thoroughly revising <em>Doing Computational Social Science</em>. Here’s an overview of the most important changes I’ve made, with a note about what to expect in fall 2024 and winter 2025:</p>
-<ol type="1">
-<li><p>In the print edition, I assumed that readers had already taken at least one course in quantitative research methods for the social sciences. In this edition, I’ve dropped that assumption. I now see the first half of this edition as an introduction to modern quantitative research methods, and the second half as an introduction to computational methods and models. Of course, it doesn’t really matter where “quantitative” methods end and “computational” methods begin; these are just labels and symbolic boundaries. The appendix <a href="_courses.qmd">Courses and chapter sequences</a> outlines several proposed chapter sequences tailored for 12-week undergraduate and graduate-level courses in quantitative and/or computational methods, as well as for courses on specialized methods (like text or network analysis), substantive topics (e.g., culture, sociology of science), or short workshops.</p></li>
-<li><p>This edition introduces research workflows much earlier and emphasizes a “generative” modeling approach throughout. The basics of this approach are covered in the early chapters and gradually developed as the book progresses, resulting in a more streamlined learning experience that unfolds more deliberately and with greater depth.</p></li>
-<li><p>Computational social science, quantitative social science, and data science have evolved rapidly since the print edition, even though it’s only been a couple of years. The most important shift is in natural language processing and text analysis, where transformers have completely revolutionized the game. In response, I’ve revised how machine learning and artificial intelligence are introduced, with significant changes to sections on text analysis and deep learning. Additionally, I’ve woven content throughout the book on the ethical use of large language models (LLMs) – such as OpenAI’s ChatGPT, Anthropic’s Claude, Meta’s LLaMA, Google’s Gemini, and various open-source models available via Ollama – in computational social science research.</p></li>
-<li><p>All code examples have been updated to use the latest versions of popular packages, ensuring compatibility with current tools and best practices.</p></li>
-<li><p>Finally, I’ve made numerous minor revisions and corrections to improve clarity and fix small errors.</p></li>
-</ol>
-<section id="planned-updates" class="level3">
-<h3 class="anchored" data-anchor-id="planned-updates">Planned Updates</h3>
-<p>Several changes are still in progress, including new chapters that I’ll be working on through fall 2024 and early winter 2025. Pending updates are flagged throughout the book, but the impact on readers should be minimal. Stay tuned!</p>
-</section>
-</section>
-<section id="updates-to-the-computing-setup" class="level2">
-<h2 class="anchored" data-anchor-id="updates-to-the-computing-setup">Updates to the Computing Setup</h2>
-<p>My recommendations for setting up your computing environment have changed to reflect recent innovations in open-source scientific computing. The new approach is outlined in <a href="setting-up.qmd">Getting Started</a>. In short, you’ll need to install Docker, VS Code, and git. Once you clone the course materials and open them in VS Code, you’ll be prompted to reopen the files in a “Container.” Simply say yes, and everything should work smoothly. Alternatively, you can skip local installation entirely and run everything in the cloud using GitHub Codespaces. Detailed instructions are provided in <a href="setting-up.qmd">Getting Started</a>.</p>
-</section>
-<section id="updates-to-the-python-package" class="level2">
-<h2 class="anchored" data-anchor-id="updates-to-the-python-package">Updates to the Python Package</h2>
-<p>The <code>dcss</code> Python package has been completely redesigned and refactored. I’ve simplified the software dependencies, added unit tests, implemented type hinting (which enhances modern editor features like code auto-completion), and improved the package documentation. It’s now easier to install, maintain, and update, and it’s more efficient and broadly applicable to research problems beyond those covered in the book.</p>
-</section>
-<section id="the-supplementary-learning-materials" class="level2">
-<h2 class="anchored" data-anchor-id="the-supplementary-learning-materials">The Supplementary Learning Materials</h2>
-<p>I’m in the process of redesigning and developing new supplementary materials, including problem sets and interactive learning tools like flashcards and quizzes for each chapter. I’ve updated the suggested chapter sequences for various university courses, and—most importantly—I’ve launched this “continuous development” edition. 🔥</p>
-</section>
-<section id="about-the-author" class="level2">
-<h2 class="anchored" data-anchor-id="about-the-author">About the Author</h2>
-<p><strong>John McLevey (he/him)</strong> is Professor and Chair of the Department of Sociology at Memorial University in St.&nbsp;John’s, NL, Canada (since 2024). From 2013–2024, he was an Associate Professor in Knowledge Integration, Faculty of Environment, and Sociology &amp; Legal Studies at the University of Waterloo (Waterloo, ON, Canada). His current research focuses on disinformation, censorship, and political polarization across a wide range of national contexts and political regimes. This book is informed by his experiences as a researcher, advisor, and teacher in computational social science, data science, and quantitative research methods, working with students from diverse disciplinary backgrounds at both undergraduate and graduate levels.</p>
-</section>
-<section id="dedication" class="level2">
-<h2 class="anchored" data-anchor-id="dedication">Dedication</h2>
-<p>For Quinn and Nora.</p>
 
 
-</section>
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -1032,10 +927,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
+      <a href="./python-102.html" class="pagination-link" aria-label="Python 102">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Python 102</span></span>
+      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./getting-started.html" class="pagination-link" aria-label="Getting Started">
-        <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Getting Started</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./iterative-workflow.html" class="pagination-link" aria-label="Iterative workflows">
+        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Iterative workflows</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -1044,4 +942,4 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/UWNETLAB/dcss_supplementary/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions"><ul><li><a href="https://github.com/UWNETLAB/dcss_supplementary/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>

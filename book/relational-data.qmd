@@ -1,4 +1,4 @@
-# Networks and relational thinking 
+# Relational data
 
 <!-- NEW CHAPTER: Networks as not-data -->
 

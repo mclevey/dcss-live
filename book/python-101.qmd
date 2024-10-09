@@ -1,7 +1,6 @@
 # Python 101
 
 ::: {.callout-note}
-
 ## Learning Objectives
 
 By the end of this chapter, you should be able to:
@@ -12,7 +11,7 @@ By the end of this chapter, you should be able to:
 - Understand and use comparison operators and control flow statements to perform conditional execution.
 - Interpret Python's `Tracebacks` to debug errors in your code.
 - Use `try` and `except` blocks to handle exceptions and manage potential interruptions in code execution.
-  :::
+:::
 
 <br>
 

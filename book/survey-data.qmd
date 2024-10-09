@@ -1,16 +1,48 @@
-# ~~Processing Structured Data~~ Sampling and Survey Data
+# ~~Processing Structured Data~~ Survey Data
 
 ::: {.callout-note}
-
 ## Planned Updates
 
-The current emphasis in this chapter is on learning use Pandas to process data. I am revising it to align with revisions of the chapter on EDA, and to focus on processing survey data. The final chapter will be quite different and will likely have the title "**Sampling and survey data**". I am actively working on it in fall 2024 and intend to publish a working draft in early winter 2025. Stay tuned! 😎
+The current emphasis in this chapter is on learning use Pandas to process data. I am revising it to align with revisions of the chapter on EDA, and to focus on processing survey data. The final chapter will be quite different and will likely have the title "**Survey data**". I am actively working on it in fall 2024 and intend to publish a working draft in early winter 2025. Stay tuned! 😎
+
+On this page,
+
+- the section [Survey Data](#survey-data) contains some code and text outlines for the revised chapter
+- the section [Processing Structured Data](#processing-structured-data) temporarily contains the print version of the chapter
 :::
 
-# Processing Structured Data
+# Survey Data
+
+## Sample surveys in the 21st-century
+
+## Processing survey data
+
+## Import Packages and Load Data
+
+```{python}
+import pandas as pd
+import dcss
+
+dcss.set_style()
+```
+
+You can either download the data from the [Dataverse repo](https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/XBZHKC) and save the results in `data/canadian_election_studies/`, or you can use the `download_dataset` from `dcss`.
+
+```{python}
+ces_url = "https://www.dropbox.com/scl/fo/hdqfapeqaiwk47t885iwg/ANjnpc8u4rnuMQ83TXExzQ4?rlkey=t6olw4xekzjm46mx8ndjgqrit&st=dlunronk&dl=0"
+
+download_dataset(
+    ces_url, 'data/canadian_election_studies/'
+)
+```
+
+
+
+
+
+# Processing Structured Data {.unnumbered}
 
 ::: {.callout-note}
-
 ## Learning Objectives
 
 By the end of this chapter, you should be able to:
@@ -22,7 +54,7 @@ By the end of this chapter, you should be able to:
 - Group observations in a dataframe and perform operations on groups to enable systematic comparisons
 - Combine multiple dataframes by row and by column
 - Understand the power (and pitfalls) of record linkage
-  :::
+:::
 
 <br>
 

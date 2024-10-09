@@ -1,0 +1,9 @@
+# Mindful modelling
+
+<!-- Modeling as metaphor, map, and reduction -->
+
+::: {.callout-warning}
+## In Progress
+
+This is a new chapter! I'm currently revising an initial draft, which I will publish here in the coming weeks.
+:::

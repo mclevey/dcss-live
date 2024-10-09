@@ -1,7 +1,6 @@
-# Getting Started
+# Setting up
 
 ::: {.callout-note}
-
 ## Learning Objectives
 
 In this chapter, you will:

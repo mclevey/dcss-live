@@ -24,28 +24,28 @@ book:
 
   chapters:
     - index.qmd
-    - part: "**RESEARCH COMPUTING**"
+    - part: "**COMPUTING**"
       chapters:
-        - getting-started.qmd
+        - setting-up.qmd
         - python-101.qmd
         - python-102.qmd
-    - part: "**MINDFUL MODELING**"
+    - part: "**WORKFLOW**"
       chapters:
-        - metaphor-map-reduction.qmd
-        - iterative-workflow.qmd
-    - part: "**OBTAINING DATA**"
+        - mindful-modelling.qmd
+        - iteration.qmd
+    - part: "**DATA**"
       chapters:
-        - sampling-and-survey-data.qmd
+        - survey-data.qmd
         - web-data-apis.qmd
         - web-data-scraping.qmd
-        - audio-files-and-documents.qmd
-    - part: "**EXPLORING**"
+        - audio-and-document-data.qmd
+        - text-as-data.qmd
+        - relational-data.qmd
+    - part: "**DISCOVERY**"
       chapters:
         - exploratory-data-analysis.qmd
-        - association-and-latent-variables.qmd
-        - text-as-data.qmd
+        - reduction-and-latent-dimensions.qmd
         - mapping-text.qmd
-        - networks-as-not-data.qmd
         - centrality.qmd
         - mapping-network-structure.qmd
     - part: "**PREDICTION & INFERENCE**"
@@ -72,7 +72,7 @@ book:
         - language-models-and-embeddings.qmd
         - transformer-revolution.qmd
         - modeling-text-transformer-topic-models.qmd
-    - part: "**PROFESSIONAL RESPONSIBILITIES**"
+    - part: "**RESPONSIBILITIES**"
       chapters:
         - ethical-css.qmd
         - open-css.qmd
