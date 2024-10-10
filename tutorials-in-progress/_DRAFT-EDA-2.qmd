@@ -1,0 +1,263 @@
+## Chapter: Exploratory Data Analysis (EDA) Workflow for Public Opinion on Harm Reduction
+
+### Introduction
+
+In this chapter, we will guide you through a comprehensive Exploratory Data Analysis (EDA) process using the Canadian Harm Reduction Policy Project dataset. EDA is an essential first step in any data analysis project, allowing us to uncover patterns, spot anomalies, test assumptions, and frame hypotheses. As we work through the data, we will gradually build our understanding of the relationships between key variables such as respondents’ demographics, their opinions on harm reduction policies, and personal experiences with substance use.
+
+We will use Python libraries like Pandas, Matplotlib, and Seaborn to perform descriptive statistics, data visualizations, and basic data wrangling. The goal is not only to conduct a thorough EDA but also to develop the necessary programming skills for data science, setting a solid foundation for the more complex Bayesian models that we will explore in later chapters.
+
+Our dataset contains variables that measure demographic characteristics, public opinions on various harm reduction services, and respondents' personal experiences with substance use. By the end of this chapter, you will have a deep understanding of how to explore datasets using a structured EDA approach, leveraging both summary statistics and visualizations.
+
+---
+
+### 1. Getting Started: Loading and Understanding the Data
+
+Before diving into any analysis, it's essential to get familiar with the dataset. We will start by loading the data into a Pandas DataFrame and exploring its structure. This will help us understand what we are working with, including the number of observations, types of variables, and the first glimpse into the data's overall quality.
+
+#### 1.1 Loading the Data
+
+We will load the dataset using the Pandas library and inspect the first few rows of the data.
+
+```python
+import pandas as pd
+
+# Load the dataset
+df = pd.read_csv('data/harm-reduction.csv')
+
+# Display the first few rows of the dataset
+df.head()
+```
+
+We can see that the dataset contains the following columns:
+
+- `Respondent_Serial`: Unique identifier for each respondent
+- `resp_age`: Respondent's age
+- `resp_gender`: Respondent's gender
+- `HCAL_Region1_Label_CA`: Province of residence
+- `QA1` to `QA7`: Opinions on law enforcement, treatment, prevention, and harm reduction
+- `QB1a` to `QB7b_4`: Opinions about harm reduction programs like supervised injection sites, naloxone, syringe distribution
+- `QC1_01` to `QC5_22`: Personal experiences and attitudes towards substance use
+- `QD1_1` to `QD5`: Demographics such as political views, education level, and income
+- `Weight`: Survey weight
+
+Let’s confirm that the dataset has been loaded correctly and check its dimensions (number of rows and columns).
+
+```python
+# Check the dimensions of the dataset
+df.shape
+```
+
+The shape of the data gives us a good sense of its size. Now let’s get a summary of the basic information such as data types and missing values:
+
+```python
+# Summary of data types and non-null values
+df.info()
+```
+
+At this stage, we may notice some categorical variables represented as numeric codes. For example, `resp_gender` is coded as 1 for male and 2 for female. We will need to clean and transform these variables later in the chapter. For now, let’s move on to a high-level view of the data.
+
+---
+
+### 2. Exploring Descriptive Statistics
+
+Descriptive statistics allow us to understand the central tendencies and distributions of our data. We will calculate summary statistics for both numerical and categorical variables to gain insight into the distribution of key variables.
+
+#### 2.1 Numerical Variables
+
+Let’s start by calculating summary statistics for numerical variables such as age (`resp_age`) and survey weights (`Weight`).
+
+```python
+# Summary statistics for numerical variables
+df[['resp_age', 'Weight']].describe()
+```
+
+This will return key metrics like the mean, standard deviation, minimum, and maximum values for each numerical variable. From this, we can see the average age of respondents and understand how survey weights are distributed. 
+
+#### 2.2 Categorical Variables
+
+For categorical variables such as gender and province, we will look at the frequency distribution to understand the composition of the sample.
+
+```python
+# Frequency distribution for gender
+df['resp_gender'].value_counts()
+
+# Frequency distribution for provinces
+df['HCAL_Region1_Label_CA'].value_counts()
+```
+
+The output will show how respondents are distributed across gender and regions. This is particularly useful for understanding potential sampling biases or identifying any unexpected patterns.
+
+---
+
+### 3. Visualizing the Data
+
+While summary statistics provide a useful overview, visualizing the data helps us identify patterns and relationships that may not be immediately obvious from numbers alone. In this section, we will use Seaborn and Matplotlib to create various plots that help us explore the relationships between key variables.
+
+#### 3.1 Age Distribution
+
+Let’s start by visualizing the distribution of respondents' ages to understand the sample’s demographic profile.
+
+```python
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# Plotting age distribution
+plt.figure(figsize=(10, 6))
+sns.histplot(df['resp_age'], bins=20, kde=True)
+plt.title('Age Distribution of Respondents')
+plt.xlabel('Age')
+plt.ylabel('Frequency')
+plt.show()
+```
+
+This histogram provides a clear picture of the age distribution and helps us identify if the data is skewed or centered around a specific age group.
+
+#### 3.2 Gender Distribution
+
+Next, we will create a bar plot to visualize the distribution of respondents by gender.
+
+```python
+# Bar plot for gender distribution
+plt.figure(figsize=(6, 6))
+sns.countplot(x='resp_gender', data=df)
+plt.title('Gender Distribution of Respondents')
+plt.xlabel('Gender')
+plt.ylabel('Count')
+plt.xticks([0, 1], ['Male', 'Female'])
+plt.show()
+```
+
+#### 3.3 Public Opinion on Harm Reduction
+
+Now, we’ll explore how public opinion on harm reduction (measured by `QA4`) varies across respondents. `QA4` contains respondents' opinions on whether Canada is investing enough in harm reduction programs.
+
+```python
+# Bar plot for opinions on harm reduction (QA4)
+plt.figure(figsize=(10, 6))
+sns.countplot(x='QA4', data=df)
+plt.title('Public Opinion on Harm Reduction')
+plt.xlabel('Opinion on Harm Reduction')
+plt.ylabel('Count')
+plt.xticks([0, 1, 2], ['Not enough', 'Just right', 'Too much'])
+plt.show()
+```
+
+This chart shows how respondents’ opinions are distributed across the three possible responses: not enough, just right, and too much. 
+
+#### 3.4 Cross-Tabs: Gender and Harm Reduction Opinions
+
+Let’s explore the interaction between gender (`resp_gender`) and opinions on harm reduction (`QA4`). We will create a cross-tabulation followed by a visualization.
+
+```python
+# Cross-tabulation of gender and harm reduction opinions
+cross_tab = pd.crosstab(df['resp_gender'], df['QA4'])
+
+# Heatmap of the cross-tabulation
+plt.figure(figsize=(8, 6))
+sns.heatmap(cross_tab, annot=True, fmt='d', cmap='coolwarm')
+plt.title('Gender vs. Opinion on Harm Reduction')
+plt.xlabel('Opinion on Harm Reduction')
+plt.ylabel('Gender')
+plt.xticks([0.5, 1.5, 2.5], ['Not enough', 'Just right', 'Too much'])
+plt.yticks([0.5, 1.5], ['Male', 'Female'])
+plt.show()
+```
+
+This heatmap shows how different genders align with different views on harm reduction programs, helping us explore whether there are notable gender differences in public opinion.
+
+---
+
+### 4. Handling Missing Data
+
+Before we can move on to more complex analysis, we need to handle any missing data. Missing data can arise for various reasons, such as respondents skipping questions or choosing "prefer not to say" options. Pandas makes it easy to identify and handle missing values.
+
+#### 4.1 Identifying Missing Values
+
+Let’s check for missing data across the dataset.
+
+```python
+# Checking for missing values
+df.isnull().sum()
+```
+
+This will show us the number of missing values for each variable. Once we’ve identified which columns have missing data, we can decide how to handle them. 
+
+#### 4.2 Dropping or Imputing Missing Values
+
+There are different strategies for dealing with missing values. We could choose to drop rows with missing data or impute missing values based on the distribution of the data.
+
+For now, we will drop rows with missing values in key variables for simplicity.
+
+```python
+# Dropping rows with missing values in key variables
+df_cleaned = df.dropna(subset=['resp_age', 'resp_gender', 'QA4'])
+```
+
+---
+
+### 5. Exploring Relationships Between Variables
+
+EDA is not just about understanding individual variables; it’s also about exploring relationships between variables. In this section, we will look at the relationships between demographics, opinions, and personal experiences.
+
+#### 5.1 Age and Opinions on Harm Reduction
+
+Let’s explore how respondents' age relates to their opinion on harm reduction (`QA4`).
+
+```python
+# Box plot: Age vs. Opinion on harm reduction
+plt.figure(figsize=(10, 6))
+sns.boxplot(x='QA4', y='resp_age', data=df_cleaned)
+plt.title('Age vs. Opinion on Harm Reduction')
+plt.xlabel('Opinion on Harm Reduction')
+plt.ylabel('Age')
+plt.xticks([0, 1, 2], ['Not enough', 'Just right', 'Too much'])
+plt.show()
+```
+
+Box plots provide a quick way to compare the distribution of age across different opinion categories, highlighting potential age-related trends in support for harm reduction.
+
+#### 5.2 Personal Experience and Support for Harm Reduction
+
+The dataset also contains variables (`QC1_01` to `QC1_12`) that capture respondents’ personal experiences with substance use. Let’s explore whether people with more personal experience are more likely to support harm reduction.
+
+```python
+# Create a new variable indicating if the respondent has any personal experience
+df_cleaned['has_personal_experience'] = df_cleaned[['QC1_01', 'QC1_02', 'QC1_03', 'QC1_04', 'QC1_05', 
+                                                    'QC1_06', 'QC1_07', 'QC1_08', 'QC1_09', 'QC1_10']].sum(axis=1) > 0
+
+# Bar plot: Personal experience vs. Opinion on harm reduction
+plt.figure(figsize=(10, 6))
+sns.countplot(x='QA4', hue='has_personal_experience', data=df_cleaned)
+plt.title('Personal Experience vs. Opinion on Harm Reduction')
+plt.xlabel('Opinion on Harm Reduction')
+plt.ylabel('Count')
+plt.xticks([0, 1, 2], ['Not enough', 'Just right', 'Too much'])
+plt.legend(title='Has Personal Experience')
+plt.show()
+```
+
+This chart allows us to compare opinions on harm reduction between those with and without personal experience of substance use.
+
+---
+
+### 6. Refining the EDA Workflow
+
+By now, we’ve gained a solid understanding of the dataset’s key features and explored some interesting relationships between variables. However, this is just the first step in a larger data analysis process. To conclude this chapter, let’s review the main lessons we’ve learned from our EDA and outline the next steps in our modeling workflow.
+
+#### 6.1 Key Takeaways
+
+- **Understanding the Data**: Loading and inspecting the data is crucial for identifying the types of variables you are working with, as well as understanding the quality of the data.
+- **Descriptive Statistics**: Summary statistics provide a useful overview of the central tendencies and distributions in the data, helping you spot any anomalies early on.
+- **Visualizations**: Histograms, bar plots, and cross-tabulations allow you to explore patterns and relationships that may not be immediately obvious from summary statistics.
+- **Handling Missing Data**: Addressing missing values is a key step in preparing your data for analysis. Pandas offers flexible tools for both identifying and dealing with missing data.
+- **Exploring Relationships**: EDA isn’t just about understanding individual variables but also about uncovering relationships between variables, which will guide your future modeling decisions.
+
+#### 6.2 Looking Ahead
+
+In the next chapter, we will begin developing our first Bayesian models, starting with simple linear regressions and gradually building up to more complex multilevel models. The insights gained from this EDA will help us choose the right model structure and ensure that our analysis is grounded in a thorough understanding of the data.
+
+---
+
+### Conclusion
+
+Exploratory Data Analysis is a critical first step in any data project. By following a structured approach, we’ve been able to uncover key patterns in the Canadian Harm Reduction Policy dataset. This process has laid the groundwork for the more complex Bayesian models we’ll develop in the next chapter, where we’ll begin formal modeling to explain public attitudes towards harm reduction policies in Canada.

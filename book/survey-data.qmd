@@ -1,23 +1,140 @@
-# ~~Processing Structured Data~~ Survey Data
-
-::: {.callout-note}
-## Planned Updates
-
-The current emphasis in this chapter is on learning use Pandas to process data. I am revising it to align with revisions of the chapter on EDA, and to focus on processing survey data. The final chapter will be quite different and will likely have the title "**Survey data**". I am actively working on it in fall 2024 and intend to publish a working draft in early winter 2025. Stay tuned! 😎
-
-On this page,
-
-- the section [Survey Data](#survey-data) contains some code and text outlines for the revised chapter
-- the section [Processing Structured Data](#processing-structured-data) temporarily contains the print version of the chapter
-:::
-
 # Survey Data
 
-## Sample surveys in the 21st-century
+<!-- And open data portals, Toronto shelters, etc.? -->
 
-## Processing survey data
+::: {.callout-warning}
+## Planned Updates
 
-## Import Packages and Load Data
+This is a new chapter. I am actively working on it in fall 2024. Stay tuned!
+:::
+
+::: {.callout-note}
+## Learning Objectives
+
+By the end of this chapter, you should be able to:
+
+- Understand the evolving role of surveys in the 21st century
+- Describe the key challenges in survey methodology and how they have changed
+- Perform essential data processing for working with survey data
+- Understand survey weights and how to use them appropriately
+- Handle common issues such as missing data, inconsistent responses, and outliers
+- Recode variables, including Likert and matrix questions, as needed for analysis
+:::
+
+
+As you likely already know, survey research has a long history in the social sciences. Directly asking people what they think, believe, feel, and do is essential for most research in the social sciences, but declining response rates, non-representative samples, and other challenges has made it increasingly difficult to do good survey research. But survey research is evolving. For example, innovative methods such as **post-stratification** and **Bayesian multilevel regression with post-stratification (MRP)** enable us to make valid inferences from non-probability samples, and the rise of smart phones has prompted innovations in how surveys are administed, how questions are asked, and how data are linked with other datasets (e.g., social media data). 
+
+Even with advances such as these, the fundamental principles of **survey methodology** still apply, and the **total survey error** framework is a helpful way to think about this. It emphasizes the distinction between **sampling error** and **non-sampling errors**, such as **measurement error** (e.g., when people misunderstand a question or misreport their views) and **nonresponse bias** (e.g., when certain groups are underrepresented because they are less likely to respond to the survey). These errors affect all surveys, and while some can be mitigated through careful design, others need to be addressed in the data cleaning phase.
+
+This chapter will address all of these themes to varying degrees, with a heavy emphasis on cleaning survey data for future analysis. We'll start with... 
+
+## Foundations of survey methodology: The total survey error framework
+
+The **Total Survey Error (TSE)** framework is a comprehensive approach used in survey methodology to identify, evaluate, and minimize the errors that can occur throughout the survey process, compromising validity and reliability. These series of figures below -- reproduced / adapted from Groves et al. [-@groves2011survey] *Survey Methodology* -- illustrate different aspects of the survey lifecycle and identifies critical points where errors may arise, both in the design and execution of a survey. 
+
+![Remake this.](figures/groves_surveys_pdf__page_31_of_42__pdf__page_1_of_1_.png){#fig-survey-design-perspective}
+
+@fig-survey-design-perspective illustrates the survey lifecycle from a design perspective**, broken down into two main components: **measurement** and **representation**. On one hand, **measurement** starts from the construct—the concept researchers aim to measure—and moves through the stages of actual response collection to the final **survey statistic**. Errors in this part of the process include **measurement error**, which occurs when there is a discrepancy between the concept researchers want to measure and what is actually measured (due to poorly designed questions, interviewer bias, etc.). On the other hand, **Representation** starts with the target population and moves through sampling to the final **respondents** who actually complete the survey. At each stage, **sampling error**, **coverage error**, and **nonresponse error** can occur, affecting how well the sample represents the broader population. Finally, **post-survey adjustments** help mitigate errors from nonresponse or misrepresentation but can also introduce **adjustment error** if done incorrectly.
+
+![Remake this.](figures/groves_surveys_pdf__page_33_of_42__pdf__page_1_of_1_.png){#fig-survey-process-perspective}
+
+@fig-survey-process-perspective outlines the stages involved in conducting a survey, starting with **defining research objectives**, and moving through sampling, questionnaire construction, data collection, data processing, and analysis. At the beginning of this process, researchers define research objectives that guide decisions about the sampling frame and mode of collection (in-person, telephone, online, etc.). These decisions influence both **coverage** and **nonresponse errors**. The process also includes **pretesting the questionnaire** to ensure clarity and reliability, which is an important step to minimize **measurement error**—errors that arise due to poorly worded questions or ambiguous response options. Finally, **data adjustments** and **post-survey edits** address additional errors that might occur, such as processing errors or misreporting during data entry. 
+
+![Remake this.](figures/groves_surveys_pdf__page_34_of_42__pdf__page_1_of_1_.png){#fig-survey-quality-perspective}
+
+@fig-survey-quality-perspective offers a closer look at the survey lifecycle, specifically through the lens of errors that can affect measurement and representation. On **the measurement side**, errors are introduced from the moment the construct is conceptualized through measurement validity (whether the survey measures what it is supposed to) and measurement error (differences between the true value and the reported value). These can arise due to issues like unclear questions, recall bias, or misunderstanding by respondents. On **the representation side**, errors can occur at several stages: 
+
+- **Coverage error** happens when the sampling frame doesn't fully cover the target population, leading to undercoverage or overcoverage.
+- **Sampling error** occurs due to random chance when selecting a sample from the population.
+- **Nonresponse error** is when certain individuals from the sample do not respond, potentially leading to biased results if non-respondents differ significantly from respondents.
+- **Adjustment error** can arise during weighting or imputation when researchers attempt to correct for nonresponse or other biases.
+
+
+![Remake this.](figures/groves_surveys_pdf__page_37_of_42__pdf__page_1_of_1_.png){#fig-survey-coverage}
+
+Finally, @fig-survey-coverage highlights **coverage error**, more specifically the relationship between a **target population** (the group you want to generalize to) and the **frame population** (the group you can actually sample from). The **covered population** is the overlap between the target and frame populations, representing the portion of the target population that is actually included in the sampling frame. **Undercoverage** occurs when parts of the target population are not included in the sampling frame, meaning some eligible respondents are left out of the survey. A related problem is **overcoverage**, which can result when **ineligible units** are mistakenly included in the sampling frame even though they do not belong to the target population. Minimizing coverage error is critical for ensuring that survey results can be generalized accurately to the broader population.
+
+Overall, the Total Survey Error framework emphasizes that errors can arise at all stages of the survey process, from design to data collection, and from data processing to analysis. It classifies errors broadly into **representation errors** (which occur due to issues with sampling and coverage) and **measurement errors** (which arise due to problems in how responses are collected and interpreted). Understanding and mitigating each type of error is crucial for improving survey accuracy. For example, careful question design (addressed in the article content you referenced on question characteristics and methods for assessing them) can reduce **measurement error**, while using appropriate sampling methods and post-survey adjustments can mitigate problems with **coverage error** and **nonresponse error**.
+
+## How survey research has evolved
+
+While the classic foundation of survey methodology -- as articulated in the Total Survey Error Framework -- remains important, survey methodology has evolved significantly along the two lines of **representation** and **measurement** (via question asking). Let's consider some of those changes now. 
+
+### Sampling and representation
+
+In the early days of survey research, political pollsters often used **quota sampling**, a non-probability sampling method where researchers try to match their sample to the population by selecting respondents based on certain demographic characteristics (like age, gender, and income). The aim was to create a microcosm of the broader population by setting quotas for each demographic group, making sure to include a proportional number of individuals from each category. This method was considered state-of-the-art at the time, and, in many cases, it worked reasonably well. However, it was not without its flaws, as the **1936 U.S. presidential election** famously made obvious.
+
+In 1936, the American magazine **Readers Digest** conducted one of the largest surveys ever attempted up to that time: **2.4 million people**. Based on that survey, *Readers Digest* confidently predicted that the Republican candidate, **Alf Landon**, would win the presidential election in a landslide, beating the Democratic incumbent **Franklin D. Roosevelt**. Yet Roosevelt won with over **60% of the popular vote**, carrying all but two states in one of the most decisive victories in U.S. history. 
+
+What went wrong with the *Readers Digest* poll? Easy: They had a very **biased sample**. Although the poll attempted to match the population demographically via quota sampling, it relied heavily on lists of telephone subscribers, car owners, and magazine subscribers to do so. In the 1930s, during the Great Depression, all three of these groups were disproportionately wealthy, white, and conservative. Since many Americans could not afford to own telephones or cars, the less affluent were severely underrepresented in the sample, and they who more likely to support Roosevelt over Landon. Quota sampling, while well-intentioned, could not overcome the bias introduced by the faulty sampling frame and resulted in wildly inaccurate predictions.
+
+This famous failure highlighted the dangers of **non-probability samples** (where every member of a population does *not* have a known, equal chance of being selected) and drove innovations in sampling, chiefly the development of **probability sampling** techniques that produce more representative samples.
+
+Contemporary survey research faces some similar challenges due to the rise of **online panels** and **non-probability samples**. Online panels are often based on **voluntary participation**; rather than randomly sampling people from a population, people opt into a survey panel, introducing potential biases. Like the 1936 Readers Digest poll, these modern non-probability samples may fail to represent certain segments of the population. People who spend time answering online questionnaires for survey panels differ from people who don't. However, contemporary statistical techniques like **post-stratification** and **Bayesian multilevel modeling** have made non-probability samples much more useful.
+
+- **TODO**: Update the text below.
+
+One of the most striking examples of this is **cite Gelman's Xbox study**. In 2012, Gelman and his collaborators used a **non-representative sample** of Xbox users—mostly younger men who were much more conservative than the general population—to predict voting behavior in the 2012 U.S. presidential election. Xbox users are not a random cross-section of the population; they tend to be younger, more male, and more politically conservative, characteristics that could introduce severe bias if the sample were analyzed without adjustments. However, using advanced techniques, Gelman's team was able to produce remarkably accurate predictions. Here's how they did it: 
+
+1. The researchers used **post-stratification** to adjust the data to better reflect the known characteristics of the U.S. voting population. Post-stratification works by dividing the population into different demographic groups (called "strata") based on factors like age, gender, race, and education. After gathering the data, weights are applied to each group based on its proportion in the actual population. For example, since young, conservative men were overrepresented in the Xbox sample, their responses were down-weighted, while responses from older women were up-weighted to correct for their underrepresentation.
+   
+2. The researchers also used **Bayesian multilevel regression** to improve their predictions. This method allows for **partial pooling**, meaning that estimates for smaller or underrepresented groups (e.g., older women in the Xbox sample) are "borrowed" from similar groups to avoid overfitting and to stabilize the estimates. In this way, the model could leverage patterns across different groups to make better predictions even when some strata had fewer respondents.
+
+Despite using a highly non-representative sample, these techniques allowed Gelman's team to accurately predict the outcome of the election. This study marked a significant shift in how researchers think about survey sampling, showing that **non-probability samples**—if adjusted properly with techniques like post-stratification—can still yield valuable insights.
+
+To fully understand these developments, it's helpful to clarify a few key concepts:
+
+- **Quota Sampling**: In quota sampling, the researcher sets quotas for certain demographic categories (e.g., gender, age, income) to ensure that the sample reflects the population's composition on these variables. However, within each category, respondents are selected non-randomly, which can lead to bias if certain subgroups are over- or under-sampled (as happened in the 1936 Readers Digest poll).
+- **Non-Probability Samples**: A non-probability sample is one where not every individual in the population has a known or equal chance of being selected. This includes **convenience samples** (e.g., surveying people who are easily accessible), **voluntary response samples** (e.g., online panels where participants opt in), and **snowball samples** (e.g., respondents recruit others to participate). The challenge with non-probability samples is that they may not accurately represent the population, leading to biased results.
+- **Post-Stratification**: This is a technique used to correct for biases in non-probability samples by weighting the data according to known population characteristics. It's often used in conjunction with Bayesian methods to adjust for the over- or under-representation of certain groups in the sample.
+
+By combining non-probability samples with advanced techniques like post-stratification and Bayesian modeling, contemporary researchers can make surprisingly accurate inferences about the broader population, even from biased or incomplete samples. This represents a major evolution from the quota sampling methods of the early 20th century, highlighting the power of modern statistical methods to overcome the limitations of non-probability sampling.
+
+In sum, while early attempts at survey sampling, like the 1936 Readers Digest poll, illustrated the pitfalls of non-representative samples, modern techniques have transformed the way we handle survey data. Non-probability samples, once considered unreliable, can now produce accurate results through methods like post-stratification and Bayesian multilevel modeling, as shown in the Xbox study. These advances mark a major shift in survey research, allowing us to better navigate the challenges of representation and make more informed inferences about public opinion and behavior. We will learn about both in this book, *but not yet*! There's a good amount of foundational work to do first.
+
+### The science of asking questions: past and present
+
+The second major change in survey methodology is related to how we ask questions. The way questions are phrased can dramatically influence responses—a phenomenon known as **question wording effects**. Even small changes in phrasing can lead to different answers. For example, asking "Do you approve of the government's handling of the economy?" might yield different results than "Do you think the government has done a good job managing the economy?" This is partly due to **social desirability bias**, where respondents may choose answers they think are socially acceptable rather than ones that reflect their true thoughts. Moreover, **context effects**, such as the order in which questions are asked or the types of response options available, can further bias responses by subtly guiding respondents toward certain answers. 
+
+The structure of **response options** has long played a critical role in survey design. Researchers have known for decades that the placement of response options can lead to **order effects** (respondents are more likely to choose options that appear at the beginning or end of a list). Similarly, the way response options are framed, such as presenting extreme versus moderate choices, can nudge respondents toward particular answers. For example, if a question offers responses ranging from "terrible" to "excellent," respondents may gravitate toward moderate choices. Effective survey design must account for these influences to minimize bias and elicit more reliable and valid responses. Crafting survey questions is both an art and a science. 
+
+While the fundamental challenges of question design have persisted over time, the science of asking questions has evolved significantly. In a recent review article, @schaeffer2020advances highlighted how survey design and methodology has moved toward **decision-based frameworks** that seek to identify question characteristics that influence respondent behavior. This marks a shift from earlier research that often focused on isolated elements like question wording, toward a more comprehensive approach that accounts for the co-occurrence of question characteristics. (**TODO**: Provide an example here.)
+
+One significant change is the expanded use of **fully labelled options for response categories**. In the past, it was common to rely on numeric scales or partial labeling, but recent research shows that using fully labeled response categories, like "not at all" to "extremely," increases **reliability** across diverse modes of data collection, particularly in self-administered surveys. The use of five response categories has become a standard, as this number strikes a balance between providing enough granularity for nuanced responses without overwhelming the respondent.
+
+Another important shift in recent years is that **item-specific (IS) response formats** that ask respondents about the topic in question directly (e.g., "How satisfied are you with your job?") are now heavily favoured over traditional **agree-disagree (AD) scales** that pose a statement and ask the respondent whether they agree (e.g. "I am satisfied with my job" — agree or disagree?). 
+
+AS scales such as these are falling out of favour for several reasons, most importantly their susceptibility to biases like **acquiescence** (the tendency to agree with statements) and **extreme responding**. IS formats have been shown to providing more accurate data by reducing these biases. This shift represents an important development in the field, addressing long-standing issues with response quality.
+
+The rise of **self-administered web and mobile surveys** has also brought new challenges and innovations in question design. In earlier decades, most surveys were administered face-to-face or via telephone, which allowed interviewers to clarify questions and guide respondents through the survey process. With the shift toward self-administered surveys, researchers have had to design questions that work across diverse modes and platforms, including small mobile screens where question length, complexity, and presentation can significantly impact data quality.
+
+One response to this challenge has been the development of **dynamic filtering**, which allows follow-up questions to be triggered based on respondents' initial answers. This technique reduces cognitive load and improves data quality by preventing respondents from having to answer irrelevant questions. Similarly, **yes-no checklists** are now preferred over traditional **check-all-that-apply (CATA)** formats, which tend to under-report responses. Yes-no checklists prompt respondents to actively consider each option, leading to more complete and accurate answers.
+
+- **TODO** Add some screenshots of old and new designs here to help clarify these points.
+
+Additionally, the shift to mobile-first design has led to a reconsideration of **grid formats** and **question batteries**. While early research suggested that grids, which present multiple related questions in a single visual format, could save time and reduce respondent burden, more recent research shows that grids can lead to **straightlining**, where respondents provide the same answer across all questions to expedite the process. This is particularly problematic in mobile surveys, where the small screen size makes grids harder to navigate. Presenting questions individually has been found to improve data quality, especially in mobile contexts.
+
+As researchers continue to refine methods for assessing data quality, new challenges will emerge, particularly in an era of **mixed-mode** and **mobile-first surveys**. The current state of the art includes innovations like **item-specific formats**, **fully labeled response scales**, and adaptive technologies such as **dynamic filtering**, all of which reflect an ongoing effort to optimize survey design across modes and respondent groups. These advancements show a clear trajectory toward more respondent-friendly surveys that reduce bias and improve the validity of the data collected.
+
+In sum, the field of survey question design has moved from focusing on individual elements of question structure to a holistic, decision-based approach that accounts for the complexities of modern data collection environments. This evolution reflects broader changes in the landscape of survey research, where technological advancements and an increasingly diverse respondent base demand ever-more sophisticated tools for capturing reliable, valid data.
+
+### Linked data
+
+A third and final development in modern survey research is a greater reliance on **linking** survey data with other datasets. 
+
+Another exciting development in recent years has been the integration of **social media data** into surveys. Researchers like **Chris Bail** have pioneered methods for linking social media behavior with survey responses, allowing us to explore how online activity shapes opinions and behaviors. In my own work with David, we've taken this a step further by asking survey respondents to provide their social media handles, allowing us to combine **readymade** and **custommade** data sources in innovative ways. This combination of direct and passive data collection opens up new possibilities for understanding complex social phenomena.
+
+- Harper government and the census, recordlinkage in government
+- Henrickson and the socio-ecological systems stuff
+- Bail and the social media surveys
+
+## Processing Survey Data
+
+Now that we've covered the broader context of survey methodology, past and present, let's dive into the practical side of working with survey data. Before you can even begin to analyze your data, there are a number of essential tasks you'll need to complete to ensure your data is clean and ready for analysis. This data processing work is a crucial part of any research project; talk to anyone with experience doing this kind of work and they'll tell you how important, and time consuming, this work can be.
+
+Some of these tasks are common to all datasets, while others are specific to survey data, such as dealing with missing responses or applying survey weights. In this chapter, we'll go through these steps one by one, using a panel survey from Canada as our working example.
+
+As always, we'll start by importing packages.
 
 ```{python}
 import pandas as pd
@@ -26,677 +143,176 @@ import dcss
 dcss.set_style()
 ```
 
-You can either download the data from the [Dataverse repo](https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/XBZHKC) and save the results in `data/canadian_election_studies/`, or you can use the `download_dataset` from `dcss`.
+### The Canadian Election Studies
+
+For this chapter, we'll be using data from the **2021 Canadian Election Study (CES-2021)**. The CES consists of two main surveys: the **Campaign Period Survey (CPS)**, which was conducted during the 2021 federal election campaign, and the **Post-Election Survey (PES)**, which followed shortly after the election.
+
+The **CPS** ran from August 17 to September 19, 2021, and was divided into three waves:
+
+- The first wave, **the CPS**, was the initial survey.
+- The **CPS Modules** included additional questions and ran later in the campaign.
+- The **CPS Oversample** wave was designed to collect responses from regions that were underrepresented in the initial waves.
+
+After the election, all CPS participants were re-contacted for the **Post-Election Survey (PES)**. The response rate for this follow-up was 72%, resulting in 15,069 completed surveys. The CES is a great example of a large, complex survey dataset, with multiple waves and extensive data cleaning procedures.
+
+One of the key features of the CES is the use of **survey weights**, which are designed to make the sample more representative of the Canadian population. The weights adjust for differences in the likelihood of respondents being selected based on factors like region, gender, and age. **In a later section,** we'll explore how to apply these weights in your analysis to ensure your results are valid.
+
+### Download the data
+
+You can download the datasets as zip files from their respective Dataverse repositories.^[Dataverse provides an API for accessing data programatically. You might want to experiment with it after working through the chapter [Web data (APIs)](web-data-apis.qmd)]
+
+- [2019 Phone Survey](https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/8RHLG1)
+    - Store in `data/canadian_election_studies/Canadian-Election-Study-2019`
+- [2019 Online Survey](https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/DUS88V)
+    - Store in `data/canadian_election_studies/Canadian-Election-Study-2019`
+- [2021 Surveys](https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/XBZHKC)
+    - Store in `data/canadian_election_studies/Canadian-Election-Study-2021`
+
+Alternatively, you can use the `download_dataset` function from `dcss`, which will download and file the datasets for you.
 
 ```{python}
 ces_url = "https://www.dropbox.com/scl/fo/hdqfapeqaiwk47t885iwg/ANjnpc8u4rnuMQ83TXExzQ4?rlkey=t6olw4xekzjm46mx8ndjgqrit&st=dlunronk&dl=0"
 
-download_dataset(
+dcss.download_dataset(
     ces_url, 'data/canadian_election_studies/'
 )
 ```
 
+### Load the Data
 
+In this case, the researchers **CITE** have made the data available as `.dta` files, which are a format used by the proprietary software Stata. We can read these files into memory using Pandas `read_stata()` function, which we do for the 2021 survey data below.
 
-
-
-# Processing Structured Data {.unnumbered}
-
-::: {.callout-note}
-## Learning Objectives
-
-By the end of this chapter, you should be able to:
-
-- Use Pandas to load, manipulate, and summarize data
-- Preview data using head, tail, and sample
-- Understand Pandas data structures (Series and dataframes), indexes, and `datetime` objects
-- Extract subsets of a dataset by selecting columns and filtering rows
-- Group observations in a dataframe and perform operations on groups to enable systematic comparisons
-- Combine multiple dataframes by row and by column
-- Understand the power (and pitfalls) of record linkage
-:::
-
-<br>
-
-It's time to shift from using Python as a general programming language to using it to process data using specialized data management and analysis packages. We are going to rely primarily on two packages from a collection of packages widely referred to as Python's "scientific stack." The first is Pandas, which was created by Wes McKinney for analyzing **pan**el **da**ta (hence the name). It comes with special data structures, functions, and methods that you can use to take care of the vast majority of data processing operations for structured quantitative data. The second is Numpy, which is a lower-level package for efficient computation and maths. Numpy is the foundation that many other packages, including Pandas, are built on. We're not going to cover Numpy in any significant detail here, but it's worth knowing that Numpy provides arrays of arbitrary size and dimensionality, and is one of the pillars upon which Pandas is built.
-
-In this chapter, I will start with the basics of getting data in and out of Pandas dataframes, and previewing subsets of data. Next, I will dig deeper into Pandas core data structures (Series and dataframes), as well as `index` and `datetime` objects. I then discuss more advanced operations, such as grouping data for systematic comparisons, working with `datetime` objects for time series analysis, and combining dataframes.
-
-Pandas is a very large and complex package with an enormous amount of power, but you don't have to learn it all at once. In fact, you shouldn't even try! Like most other packages you will encounter in this book, you will use a small number of features very heavily, and a large number of features very rarely.
-
-## Imports
-
-```python
-import os
-import pandas as pd
-import seaborn as sns
-import matplotlib.pyplot as plt
-
-from dcss import download_dataset
-from dcss import set_style
-set_style()
+```{python}
+ces21 = pd.read_stata(
+    'data/canadian_election_studies/Canadian-Election-Study-2021/2021 Canadian Election Study v2.0.dta', convert_categoricals=False)
 ```
 
-## PRACTICAL PANDAS: FIRST STEPS
+Once the data is loaded, one of the first things you'll want to check is the size of the dataset—how many rows and columns are there? This will give you a sense of how large the survey is and help you plan your analysis. We can do this using the `.shape` attribute for dataframes. 
 
-### Getting Data into Pandas
-
-The Pandas package makes it easy to load data from an external file directly into a `dataframe` object. It uses one of many reader functions that are part of a suite of **I/O (input / output, read / write) tools**. I've listed some common examples in the table below. Information on these and other reader functions can be found in the Pandas [documentation](https://pandas.pydata.org/pandas-docs/stable/user_guide/io.html), which also provides useful information about the parameters for each method (e.g. how to specify what sheet you want from an Excel spreadsheet, or whether to write the index to a new CSV file).
-
-| Data Description                | Reader         | Writer       |
-| :------------------------------ | :------------- | :----------- |
-| CSV                             | `read_csv()`   | `to_csv()`   |
-| JSON                            | `read_json()`  | `to_json()`  |
-| MS Excel and OpenDocument (ODF) | `read_excel()` | `to_excel()` |
-| Stata                           | `read_stata()` | `to_stata()` |
-| SAS                             | `read_sas()`   | NA           |
-| SPSS                            | `read_spss()`  | NA           |
-
-Table: I/0 Methods for Pandas
-
-I will focus on the `read_csv()` function to demonstrate the general process. The only _required_ argument is that we provide the path to the file location, but there are many useful arguments that you can pass, such as the file encoding. By default, Pandas assumes your data is encoded with UTF-8. If you see an encoding error or some strange characters in your data, you can try a different encoding, such as latin1.
-
-This chapter will use data from the Varities of Democracy (VDEM) dataset. VDEM is an ongoing research project to measure the level of democracy in governments around the world and updated versions of the dataset are released on an ongoing basis. The research is led by a team of over 50 social scientists who coordinate the collection and analysis of expert assessments from over 3,200 historians and Country Experts (CEs). From these assessments, the VDEM project has created a remarkably complex array of indicators designed to align with five high-level facets of democracy: electoral, liberal, participatory, deliberative, and egalitarian. The dataset extends back to 1789 and is considered the gold standard of quantitative data about global democratic developments. You can find the full codebook online, and I strongly recommend that you download it and consult it as you work with this data. You can find the full dataset at (https://www.v-dem.net/en/data/data/v-dem-dataset-v11/) and the codebook here (https://www.v-dem.net/figures/filer_public/e0/7f/e07f672b-b91e-4e98-b9a3-78f8cd4de696/v-dem_codebook_v8.pdf). The filtered and subsetted version we will use in this book can be downloaded using the `download_dataset()` function. Note that this will also download additional VDEM materials, including the codebook.
-
-Let's load the CSV file into a Pandas `dataframe`.
-
-```python
-vdem_data_url = "https://www.dropbox.com/scl/fo/6ay4x2qo4svyo92wbvlxt/ACtUxCDoLYxLujkekHdXiJ4?rlkey=lhmhiasjkv3ndvyxjxapi24sk&st=2p76a0dw&dl=0"
-
-download_dataset(
-    vdem_data_url,
-    save_path='data/vdem'
-)
+```{python}
+ces21.shape
 ```
 
-```python
-df = pd.read_csv(
-    'data/vdem/V-Dem-CY-Full+Others-v10.csv',
-    low_memory=False
-)
+We can also get a quick overview of the dataset by using the `.info()` function, which will show us the number of columns, their data types, and whether there are any missing values.
+
+```{python}
+ces21.info()
 ```
 
-Once you have your data loaded, one of the first things you will want to know is how many rows and columns there are. You can do this using the `.shape` attribute of the dataframe.
+In this dataset, we have a wide variety of data types. Some variables are stored as integers, while others are stored as floats or strings. Note that Pandas *infers* these `dtypes` when it loads the data. As we shall soon see, some may not be ideal for our purposes. It's important that the data types are appropriate for each variable before proceeding with analysis, as misclassified types can cause problems later on. We'll do that shortly.
 
-```python
-df.shape
+## Study the Codebook
+
+Before diving deeper into the data, it's essential to take a close look at the **codebook**. The codebook is your guide to understanding what each variable represents, how the data was collected, and any quirks you should be aware of (such as how missing data is coded or how questions were worded). You can find the codebook for this dataset in the **Technical Report and Codebook** PDF file.
+
+In particular, pay attention to the **survey design** and **sample design** sections, as they explain how the data was collected and the rationale behind the survey weights. After that, you'll want to spend some time familiarizing yourself with the variables in the dataset, especially any you expect to be working with.
+
+### Understanding the sample design and survey weights
+
+- **TODO**: Add content on the CES design here instead? Or not?
+
+One of the most important features of survey data is the use of **survey weights**. These weights are used to adjust the sample so that it more accurately reflects the population from which it was drawn. For example, if women are overrepresented in the sample, the weights will adjust their contribution to the analysis to prevent bias.
+
+There are different types of weights, including **base weights**, which correct for unequal probabilities of selection, and **post-stratification weights**, which adjust for nonresponse and other factors. In the CES, we have a variety of weights to choose from, depending on the specific analysis we want to conduct.
+
+### Applying Survey Weights
+
+Applying weights is straightforward in most statistical software, and Pandas is no exception. Let's say we want to compare the weighted and unweighted mean of a particular variable. We can do this by applying the appropriate weight variable to our analysis.
+
+- **TODO**: Add an example to illustrate how applying weights can shift survey results. For instance, show a comparison between unweighted vs. weighted means or proportions in a simple analysis, using the CES dataset.
+
+```{python}
+# Example here
 ```
 
-This is a fairly large dataset. It has 27,013 observations and 4,108 variables! First, I will construct a new dataframe _from this one_ that contains only the columns I want.
+### Assessing Data Quality
 
-### What Do You Need? Selecting Columns
+Once you've familiarized yourself with the sample design and applied the necessary weights, your next step should be to carefully assess the quality of the survey data. There are a few common problems to look out for, including inconsistencies, outliers, and missing data.
 
-I will create a list of the variable names I want to retain, and call the original dataframe followed by the name of the list in square brackets. In this case, I will retain the following variables:
+Survey data often contains inconsistencies, particularly in **panel surveys** where the same respondents are surveyed multiple times. For example, a respondent's age or region of residence might be reported differently across waves. It's important to identify and correct these inconsistencies before proceeding with analysis.
 
-1. the country name,
-2. the country ID,
-3. the geographic region,
-4. the year,
-5. the polyarchy index,
-6. the liberal democracy index,
-7. the participatory democracy index,
-8. the deliberative democracy index, and
-9. the egalitarian democracy index,
-10. whether Internet users’ privacy and their data is legally protected,
-11. how polarized the country is on political issues, and
-12. levels of political violence.
-13. whether or not the country is a democracy<!-- e_boix_regime -->
-
-I will call the new dataframe `sdf`, for 'subsetted dataframe.' Of course, you can call it anything you like. If you are going to be working with multiple dataframes in the same script or notebook, then it's a good idea to give them much more descriptive names. For now, I am only working with two, so I will use `df` for the full dataframe and `sdf` for the dataframe with a subset of the original variables. I will make careful note of any dataframes I add.
-
-```python
-subset_vars = ['country_name', 'country_text_id', 'e_regiongeo', 'year', 'v2x_polyarchy', 'v2x_libdem', 'v2x_partipdem', 'v2x_delibdem', 'v2x_egaldem', 'v2smprivex', 'v2smpolsoc', 'v2caviol', 'e_boix_regime']
-sdf = df[subset_vars]
-sdf.shape
+```{python}
+# Example here
 ```
 
-We've created a new dataframe called `sdf`. It still has 27,013 rows, but only 13 variables. We can print their names using the `.columns` attribute for the dataframe.
+In addition to inconsistencies, you should also check for **outliers**—extreme values that might skew your results. In survey data, these can sometimes be caused by respondents rushing through the survey or providing inaccurate answers. One way to detect this is by checking the **distribution of survey completion times**. Respondents who completed the survey in an unusually short time may not have been paying full attention.
 
-```python
-list(sdf.columns)
+```{python}
+# Example here
 ```
 
-#### What's in Your dataframe?
+Speeders—respondents who rush through the survey—can introduce bias into your data. There are a number of techniques for identifying speeders, including setting a minimum threshold for survey completion time or using **attention-check questions** to detect inattentiveness. If you suspect that certain respondents weren't paying attention, you may want to exclude them from your analysis.
 
-We can use the `.info()` method to see: the total number of observations, the total number of columns, the names of the columns, the number of non-missing observations for each, the datatype for each variable, the number of variables that contain data of each type (e.g. integers and floats), and the total amount of memory used by the dataframe.
-
-```python
-sdf.info()
+```{python}
+# Example here
 ```
 
-The datatypes in this dataframe are **`float64`** (numbers with decimals), **`int64`** (integers), and **`object`**. In Pandas, `object` refers to columns that contain `strings`, or mixed types, such as `strings` and `integers` (`object` encompasses many more things, too: it's a catchall category). Pandas can also work with booleans (True or False), categorical variables, and some specialized `datetime` objects. Recall how we selected columns to make our dataset. In the code below, I use the same idea to show only a few variables, rather than all 35, to save space. We will explain this a little more later in the chapter.
+Another common issue in survey data is **response bias**, where respondents may answer questions in a way that reflects social desirability rather than their true opinions. For example, people might be reluctant to express unpopular views or admit to certain behaviors. While it's difficult to eliminate response bias entirely, being aware of it and using techniques like **randomized response** -- **DEFINE** -- can help mitigate its effects.
 
-We can also use the `.describe()` method to get summary information about the quantitative variables in our dataset, including the number of non-missing information, the mean and standard deviation, and a five number summary:
+## Handling missing data: Bad, less bad, and good imputation practices
 
-```python
-sdf[['e_regiongeo', 'year', 'v2x_polyarchy']].describe()
+Survey data often contains missing responses, and how you handle them can have a big impact on your analysis. There are three main types of missing data, all fairly poorly named in my opinion: 
+
+- **Missing Completely at Random (MCAR)**, where the missingness is entirely random and unrelated to any other variable;
+- **Missing at Random (MAR)**, where the missingness is related to some observed variable but not to the missing data itself; and finally 
+- **Missing Not at Random (MNAR)**, where the missingness is related to the value of the missing data.
+
+In most cases, we assume that data is **MAR**, and there are several methods that we might use in response, including:
+
+- **listwise deletion** (removing all cases with missing data), 
+- **mean imputation** (replacing missing values with the mean),
+- **multiple imputation** (**define**), and 
+- **Bayesian imputation** (**define**).
+
+While **listwise deletion** and **mean imputation** are easy to implement, they are generally poor choices. **Mean imputation**, for example, ignores variability in the data and can lead to biased estimates. A better approach is to use **multiple imputation**, which accounts for uncertainty in the missing data by creating several different datasets with imputed values and then combines the results. However, there are problems with this approach as well, such as **limitations**. The gold standard is **Bayesian imputation**, which is fully integrated into Bayesian models. Since I haven't even defined "Bayesian" yet, we'll set this method aside for now and return to it in later chapters. When we do, you'll be delighted to learn that we don't have to do anything special; Bayesian inference gives it to us for free!
+
+- **TODO**: Missing data in this chapter specifically...
+
+```{python}
+# Example here
 ```
 
-### Heads, Tails, and Samples
 
-We can also inspect the "head" or the "tail" of our dataframe using the `.head()` and `.tail()` methods, which default to the first or last 5 rows in a dataframe unless you provide a different number as an argument, such as `.head(10)`.
+### Recoding Variables
 
-```python
-sdf[['country_name', 'year', 'v2x_libdem']].head()
+One of the most common tasks in survey data processing is **recoding variables**. This is especially important for categorical variables, where you might need to **collapse categories** or **create dummy variables**. For example, if you have a variable with multiple levels of education, you might want to recode it into a simpler variable with just two categories: "college degree" vs. "no college degree."
+
+In addition to recoding categories, you may also need to **reverse score** some variables. This is common with **Likert-scale questions**, where higher values indicate more agreement or approval. If some items are negatively worded, you'll need to reverse the scale so that all items point in the same direction.
+
+```{python}
+# Example here
 ```
 
-```python
-sdf[['country_name', 'year', 'v2x_libdem']].tail(3)
+## Grid Questions
+
+As I mentioned earlier, grid questions are falling out of favour in survey methodology. However, you've very likely to encounter them, especially if you are working with longitudinal data or older surveys. With these questions, respondents are asked to rate a series of items on the same scale (e.g., a series of agree/disagree statements). These questions can present some challenges when it comes to data processing, particularly if there are missing responses. One approach is to **collapse related questions into indices** or **standardize scales** so that the responses are comparable across different items.
+
+The CES survey data contains several such questions, including... 
+
+```{python}
+# Example here
 ```
 
-If you would prefer a random sample of rows, you can use the `.sample()` method, which requires you to specify the number of rows you want to sample.
+### Categorical Data
 
-```python
-sdf[['country_name', 'year', 'v2x_libdem']].sample(15)
+Most surveys include quite a lot of categorical data, which should be handled very carefully in any modeling. 
+
+When working with categorical data in Pandas, it's important to make sure that our categorical variables are **ordered** properly and that "Don't know / prefer not to answer" responses -- which don't fit neatly into ordinal data -- are handled consistently. You'll also need to decide how to represent your categorical variables in your analysis. In nearly all cases you'll want to treat categories as **index variables**, but in some cases you may wish to do things the old-fashioned way and use  **one-hot encoding** (i.e., creating dummy variables). The implications of this choice will become clear a little later in the book, when we get to multilevel models. For now, we'll ...
+
+```{python}
+# Example here
 ```
 
-### What Do You Need? Filtering Rows
+<!-- 
+## Back to Survey Representation
 
-When we executed the `.describe()` method earlier, you may have noticed that the range for the `year` variable is 1789-2019. Let's say we have a good reason to focus on the years from 1900-2019. We will have to filter the data to have only the rows that meet my needs.
+Finally, we return to the question of representation and sampling. Survey weights are a key tool for ensuring that your sample is representative of the population, and they should be used in both descriptive statistics and regression models. In the next chapter, we'll explore how to apply survey weights in more detail and see how they can help correct for over- or under-sampled subgroups. 
+-->
 
-There are several ways to filter rows, including slices (e.g. all observations between index $i$ and index $j$), or according to some sort of explicit condition, such as "rows where the year >= 1900." Note that when we filter or slice a dataframe, the new object is just a _view_ of the original and still refers to the same data. Pandas will warn us if we try to modify the filtered object, so a lot of the time, things are smoother if we make a new copy.
+## Reproducibility and Non-destructive Workflows
 
-```python
-rowfilter = sdf['year'] >= 1900
-fsdf = sdf[rowfilter].copy()
-fsdf.info()
-```
+Before we conclude, I want to emphasize the importance of **reproducibility** and **transparency** in survey data work. It's essential to work **non-destructively**, meaning that you should never modify your original data files. Instead, document all of your data cleaning and recoding decisions in your scripts and notebooks. This might seem tedious at first, but with practice, it becomes second nature and ensures that your work is both reproducible and ethical.
 
-We could also do this using the `.query()` method, which accepts a boolean expression as a string.
+## Conclusion
 
-```python
-alternate_fsdf = sdf.query('year >= 1900').copy()
-alternate_fsdf.info()
-```
-
-Our final dataframe -- which I have called `fsdf` for **f**iltered and **s**ubsetted **d**ata**f**rame -- now has 13 columns (from 4,108) and 18,787 observations (from 27,013).
-
-### Writing Data to Disk
-
-Just as I read our initial CSV file into Pandas using the `read_csv()` function, I can write this new dataframe to disk using the `write_csv()` function.
-
-```python
-fsdf.to_csv('data/vdem_filtered_subset.csv', index=False)
-```
-
-## UNDERSTANDING PANDAS DATA STRUCTURES
-
-Now let's discuss Pandas' main data structures, Series and DataFrames, and how they relate to one another.
-
-### The `Series`
-
-Each column in a dataframe is an object called **a Series**. A Series is a one-dimensional object (e.g. a vector of numbers) with an index, which is itself a vector, or array, of labels.
-
-For example, the column `v2x_delibdem` in `fsdf` is a Series containing floats and the index label for each observation. Printing a sample of 15 observations gives me a numerical index for each observation on the left and the actual value on the right. The index values are ordered in the Series itself, but they are out of sequence here because we pulled a random sample. As this is for demonstration purposes, I've included a random_state value to ensure you get the same sample that I do if you re-run this block.
-
-```python
-fsdf['v2x_delibdem'].sample(15, random_state = 42)
-```
-
-In most cases, the default `index` for a Series or dataframe is an immutable vector of integers:
-
-```python
-fsdf.index
-```
-
-We can easily modify an index so that it is made of up some other type of vector instead, including a `string`. Surprisingly, index values do not need to be unique. This enables some powerful techniques, but most of the time, you should avoid manually changing indexes.
-
-#### Accessing a Specific Row by its Index
-
-We can use the index to retrieve specific rows from a dataframe or specific values from a Series, much as we would if we were selecting an element from a `list`, `tuple`, or `array`. The easiest way to do this is to pass the index value (e.g. 202) to `.loc[]`. As you can see below, the result is the observation-specific value for each variable in the dataframe.
-
-```python
-fsdf.loc[202]
-```
-
-```python
-fsdf['v2x_delibdem'].loc[202]
-```
-
-```python
-fsdf['v2x_delibdem'].loc[20000]
-```
-
-Note that `.loc` does _not_ refer to the 202nd row of the dataframe. If you were looking closely at the `.index` command above, you might have noticed the dataframe only contains 18,787 rows but `.loc` can still return row 20,000 - the index didn't change when you removed a bunch of rows from the dataframe. Think of `.loc` as accessing a dictionary of the index values - it will even give a `KeyError` if you ask for an element that doesn't exist.
-
-Instead, if we want the access the n-th row of a dataframe, we can use `.iloc[n]`. Think of the index as a list and you're referring to an element of that list by its list index. Let's use `.iloc` to select the last element in the dataframe. Note that the index position for the last element will be 18,786 even though the dataframe length is 18,787, because Python data structures are almost always 0-indexed. Here you see the index of the row, which was formerly the row number, as the `Name` at the bottom.
-
-```python
-fsdf.iloc[18786]
-```
-
-If there isn't a reason to retain the original indexing of the unfiltered dataframe, it's usually a good idea to reset the index.
-
-```python
-fsdf.reset_index(inplace = True, drop = True)
-fsdf.loc[18786]
-```
-
-Afterwards, `.loc` and `.iloc` become fairly interchangeable, with a few exceptions: `.loc` has dictionary-like capabilities whereas `.iloc` is more list-like. Now, let's take a closer look at the dataframe.
-
-### Dataframes
-
-**Dataframes** in Pandas are really just collections of Series that are aligned on the same index values. In other words, the Series we worked with previously have their own indices when we work with them as standalone Series, but in the `fsdf` dataframe, they share an index.
-
-As you've already seen, dataframes are organized with variables in the columns and observations in the rows, and you can grab a single Series from a dataframe using square brakets -- let's do that now, using the `fsdf` dataframe:
-
-```python
-deliberative = fsdf['v2x_delibdem']
-```
-
-Note that we can also use dot notation to select columns. `fsdf.v2x_delibdem` is functionally equivalent to `fsdf['v2x_delibdem']`, and may be used interchangeably.
-
-We are not limited to selecting columns that already exist in our dataset. You can also create and add new ones. For example, you can create a new column called "21 Century" and assign Boolean value based on whether the observation is in the 2000s.
-
-```python
-fsdf['21 Century'] = fsdf['year'] >= 2000
-fsdf[['21 Century']].value_counts().reset_index()
-```
-
-Sometimes, the new columns created are transformations of a Series that already exists in the dataframe. For example, you can create a new `missing_political_violence_data` column which will be `True` when the `v2caviol` Series (levels of political violence) is empty and `False` otherwise.
-
-```python
-fsdf['missing_political_violence_data'] = fsdf['v2caviol'].isna()
-fsdf['missing_political_violence_data'].value_counts().reset_index()
-```
-
-As you can see from executing `value_counts()`, there is missing data on levels of political violence for 6042 observations.
-
-### Missing Data
-
-It's important to understand how missing data is handled. Missing data is common in real-world datasets, and it can be missing for multiple reasons! Generally, Pandas uses the `np.nan` value to represent missing data. NumPy's `np.nan` value is a special case of a floating point number representing an unrepresentable value. These kinds of values are called **`NaNs`** (Not a Number).
-
-```python
-import numpy as np
-
-type(np.nan)
-```
-
-`np.nan` cannot be used in equality tests, since any comparison to a `np.nan` value will evaluate as False. This includes comparing `np.nan` to itself.
-
-```python
-n = np.nan
-n == n
-```
-
-`np.nan` values do not evaluate to `False` or `None`. This can make it difficult to distinguish missing values. You can use the `np.isnan()` function for this purpose, and it is especially useful in control flow.
-
-```python
-if np.nan is None:
-    print('NaN is None')
-if np.nan:
-    print('NaN evaluates to True in control flow')
-if np.isnan(np.nan):
-    print('NaN is considered a NaN value in NumPy')
-```
-
-Additionally, `np.nan` values are generally excluded from Pandas functions that perform calculations over dataframes, rows, or columns. For example, documentation often stipulates that a calculation is done over all values, excluding `NaN` or `NULL` values.
-
-```python
-total = len(fsdf['v2caviol'])
-count = fsdf['v2caviol'].count()
-print(f'Total: {total}')
-print(f'Count: {count}')
-print(f'Diff: {total-count}')
-```
-
-The total number of items in the `v2caviol` column (political violence) is much higher than the counts received from the count() function. If what we learned above is correct, this difference should be accounted for when we discover how many items in this column are `NaNs`.
-
-```python
-nans = fsdf['v2caviol'].isna().sum()
-print(' NaNs: {}'.format(nans))
-```
-
-As you can probably tell, the `.isna()` method, which is similar to `np.isnan()` but covers additional cases, can be very useful in transforming and filtering data.
-
-## AGGREGATION & GROUPED OPERATIONS
-
-Data analysis projects often involve aggregation or grouped operations. For example, we might want to compute and compare summary statistics for observations that take different values on a categorical variable. It can be helpful to be able to carve up the dataset itself, performing operations on different subsets of data. We're going to do that using the `.groupby()` method, which partitions the dataframe into groups based on the values of a given variable. We can then perform operations on the resulting groups. Let's group our countries into geographic regions using the `e_regiongeo` variable.
-
-```python
-grouped = fsdf.groupby('e_regiongeo')
-```
-
-The above code returns a grouped object that we can work with. Let's say we want to pull out a specific group, like South East Asia, which is represented in the data using the numerical ID `13`. I know this because the relevant information is provided in the VDEM codebook, which I suggest you keep open whenever you are working with the VDEM data.
-
-We can use the `get_group()` method to pull a group from the grouped object. (Note that the `.get_group()` code below is equivalent to `fsdf[fsdf['e_regiongeo'] == 13]`.)
-
-```python
-south_east_asia = grouped.get_group(13)
-south_east_asia[['country_name', 'year', 'e_boix_regime']].head()
-```
-
-The data stored in `south_east_asia` are all of the observations of South East Asian countries in the VDEM data, stored now in their own dataframe. `.get_group()` is yet another way to extract a subset of a dataframe (by way of a `groupby` object), and is especially useful when the subset of data you want to work with is only observations with a particular value for a categorical variable in your data.
-
-Generally speaking, when we group a dataset like this it's because we want to compute something for a group within the dataset, or for multiple groups that we want to compare. We can do this by specifying the grouped object, the `Series` we want to perform an operation on, and finally the operation we want to perform. For example, let's compute the median polyarchy score for countries in each of the regions in the dataset.
-
-```python
-poly = grouped['v2x_polyarchy'].median()
-poly.head()
-```
-
-It would be more useful to see the name of the region rather than its numeric label. We can do this by creating a dictionary that maps the numeric IDs to the region name, and then use the `.map()` method to tell Pandas were to lookup the values it needs to create a new column with the country names. First, the dictionary:
-
-```python
-regions = {
-    1:'Western Europe',
-    2:'Northern Europe',
-    3:'Southern Europe',
-    4:'Eastern Europe',
-    5:'Northern Africa',
-    6:'Western Africa',
-    7:'Middle Africa',
-    8:'Eastern Africa',
-    9:'Southern Africa',
-    10:'Western Asia',
-    11:'Central Asia',
-    12:'East Asia',
-    13:'South-East Asia',
-    14:'South Asia',
-    15:'Oceania', # (including Australia and the Pacific)
-    16:'North America',
-    17:'Central America',
-    18:'South America',
-    19:'Caribbean' # (including Belize Cuba Haiti Dominican Republic)
-}
-```
-
-And now we can pass this dictionary into the `.map()` method applied to the `fsdf['e_regiongeo']` Series, creating a new Series called `fsdf['Region']`
-
-```python
-fsdf['Region'] = fsdf['e_regiongeo'].map(regions)
-```
-
-It is also possible to group by multiple variables, such as geographic region and year, and then perform an operation on _those_ slightly more fine-grained groups. This will result in 2,211 groups, so we will preview a random sample of 10.
-
-```python
-grouped = fsdf.groupby(['Region', 'year'])
-poly = grouped['v2x_polyarchy'].median()
-poly.reset_index()
-pd.DataFrame(poly).reset_index().sample(10)
-```
-
-We can perform other types of operations on the grouped object itself, such as computing the number of observations in each group (equivalent to `value_counts()`).
-
-```python
-grouped.size().sort_values(ascending=False)
-```
-
-Finally, we can perform _multiple_ operations on a grouped object by using the `agg()` method. The `agg()` method will apply one or more aggregate functions _to a grouped object_, returning the results of each.
-
-```python
-#| warning: false
-with_agg = grouped['v2x_polyarchy'].agg([min, np.median, 'max', 'count'])
-with_agg.reset_index().sample(10)
-```
-
-We can even define our own function for `agg()` to use! If we're willing to pass a dictionary, `.agg()` also lets us apply different functions to multiple variables at the same time! Instead of passing one list per function, you can use a dictionary where the column names are the keys and the functions are the values (you can also pass a list of functions) to perform some truly involved aggregration all in one line of code.
-
-## WORKING WITH TIME SERIES DATA
-
-Many real world datasets include a temporal component. This is especially true if you are working with data that comes from the web, which may have precise timestamps for things like the time an email was sent, or a news story was published. Strings are often used to store dates and times, but this is not ideal because strings don't take advantage of the unique properties of time. It is difficult to sort dates if they are stored in strings with strange formats, for example.
-
-```python
-"Monday Mar 2, 1999" > "Friday Feb 21, 2020"
-```
-
-Extracting features like day, month, or timezone from strings can be time-consuming an error-prone. This is why Pandas and Python have implemented special types for date/time objects, called **[`Timestamp`]**(https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Timestamp.html) and **[`Datetime`]**(https://docs.python.org/2/library/datetime.html), respectively. These are essentially equivalent to one another.
-
-The VDEM data contains an enormous amount of temporal data, but all at the level of the year. Let's switch over to a different dataset that has more fine-grained temporal data, and more closely resembles data that you would obtain from the web. In this case, we are going to use some data on Russian information operations targeting the 2016 American Presidential Election. You can read a bit about this data on the FiveThirtyEight blogpost [Why We’re Sharing 3 Million Russian Troll Tweets](https://fivethirtyeight.com/features/why-were-sharing-3-million-russian-troll-tweets/).
-
-Unlike the VDEM data, the Russian Troll Tweets come as a collection of `csv` files. We will use a clever little trick to load up all the data in a single dataframe. The code block below iterates over each file in the `russian-troll-tweets/` subdirectory in the data directory. If the file extension is `csv`, is reads the `csv` into memory as a dataframe. All of the dataframes are then concatenated into a single dataframe containing data on ~ 3M tweets.
-
-```python
-russian_troll_data_url = "https://www.dropbox.com/scl/fo/a3uxioa2wd7k8x8nas0iy/AH5qjXAZvtFpZeIID0sZ1xA?rlkey=p1471igxmzgyu3lg2x93b3r1y&st=xvhtn8gi&dl=0"
-
-download_dataset(
-    russian_troll_data_url,
-    save_path='data/russian_troll_tweets'
-)
-```
-
-```python
-data_dir = os.listdir("data/russian_troll_tweets/")
-
-files = [f for f in data_dir if 'csv' in f]
-
-tweets_df = pd.concat((pd.read_csv(
-    f'{"data/russian_troll_tweets/"}/{f}',
-    encoding='utf-8', low_memory=False) for f in files), ignore_index=True)
-
-tweets_df.info()
-```
-
-As you can see, we have two datatypes in our dataframe: `object` and `int64`. Remember that Pandas uses `object` to refer to columns that contain strings, or which contain mixed types, such as strings and integers. In this case, they refer to strings.
-
-One further thing to note about this dataset: each row is a tweet from a specific account, but some of the variables describe attributes of the tweeting accounts, not of the tweet itself. For example, followers describes the number of followers that the account had at the time it sent the tweet. This makes sense, because tweets don't have followers, but accounts do. We need to keep this in mind when working with this dataset.
-
-We can convert date strings from a column or `Series` into Timestamps using the `to_datetime` function. We will do that here, assigning the new `datetime` objects to new variables. Note that this code will take a bit of time to run when executed on all 3 million tweets (if your computer isn't the strongest, you might want to consider first using `tweets_df.sample()` to reduce the size of the dataframe).
-
-```python
-tweets_df['dt_publish_date'] = pd.to_datetime(tweets_df['publish_date'])
-tweets_df['dt_harvested_date'] = pd.to_datetime(tweets_df['harvested_date'])
-```
-
-```python
-tweets_df[['author', 'content', 'publish_date']].sample(5)
-```
-
-In order, the datetime object fields are as follows:
-`year-month-day hour:minute:second:microsecond`. To retrieve an integer corresponding to the month when the tweet was published:
-
-```python
-tweets_df['dt_publish_date'].dt.month
-```
-
-When our date and time variables are stored as `datetime` objects, we can access many time-specific attributes using dot notation. The Pandas documentation includes many examples of the kinds of temporal units and other functionality.
-
-We can also sort our dataframe based on `publish_date` because Pandas knows that it is working with `datetime` objects.
-
-```python
-sorted_df = tweets_df.sort_values(['dt_publish_date'])
-```
-
-We can also add and subtract datetime columns to create new columns.
-
-```python
-tweets_df['days_until_harvest'] = tweets_df['dt_harvested_date'] - tweets_df['dt_publish_date']
-tweets_df['days_until_harvest'].sample(10)
-```
-
-Let's create new variables for the Year, Month, and Day each tweet was created on. We can do this by using the year, month, and day attributes on the `datetime` object.
-
-```python
-tweets_df['Year'] = tweets_df['dt_publish_date'].dt.year
-tweets_df['Month'] = tweets_df['dt_publish_date'].dt.month
-tweets_df['Day'] = tweets_df['dt_publish_date'].dt.day
-```
-
-Pandas offers specialized tools for grouping data into various segments of time. This involves converting a time series at one level into another (e.g. from days to weeks), and is known as **resampling**. Within resampling broadly, **upsampling** aggregates dates / times and **downsampling** disaggregates dates / times. Let's upsample our data to plot the number of Tweets per day.
-
-The first thing we will do is use the `datetime` object `dt_publish_date` as an index. This will let us easily group observations by resampling dates.
-
-```python
-tweets_df = tweets_df.set_index('dt_publish_date')
-```
-
-We can now use the `.resample()` method with the argument `D` to specify that we want to group by day. The table below provides some other options you can use when resampling dates.
-
-| Value | Description                                  |
-| :---- | :------------------------------------------- |
-| B     | business day frequency                       |
-| C     | custom business day frequency (experimental) |
-| D     | calendar day frequency                       |
-| W     | weekly frequency                             |
-| M     | month end frequency                          |
-| BM    | business month end frequency                 |
-| CBM   | custom business month end frequency          |
-| MS    | month start frequency                        |
-| BMS   | business month start frequency               |
-| CBMS  | custom business month start frequency        |
-| Q     | quarter end frequency                        |
-| BQ    | business quarter endfrequency                |
-| QS    | quarter start frequency                      |
-| BQS   | business quarter start frequency             |
-| A     | year end frequency                           |
-| BA    | business year end frequency                  |
-| AS    | year start frequency                         |
-| BAS   | business year start frequency                |
-| BH    | business hour frequency                      |
-| H     | hourly frequency                             |
-| T     | minutely frequency                           |
-| S     | secondly frequency                           |
-| L     | milliseonds                                  |
-| U     | microseconds                                 |
-| N     | nanosecondsa                                 |
-
-Table: Units of time in Pandas. You can use any of these units to upsample or downsample temporal data.
-
-We will also use the `.size()` method to determine the number of tweets that were produced each day.
-
-```python
-grouped_cal_day = tweets_df.resample('D').size()
-grouped_cal_day
-```
-
-At this point, we are going to visualize the results of our work with a line plot. We are going to do this with the Seaborn and matplotlib packages, which we will discuss in the next chapter. For now, focus on the visualization and ignore the code. The code blocks below produces Figures @fig-06_01 and @fig-06_02.
-
-```python
-#| output: false
-sns.lineplot(data=grouped_cal_day, color='#32363A')
-sns.despine()
-plt.savefig('figures/06_01.png', dpi=300)
-```
-
-![caption...](figures/06_01.png){#fig-06_01}
-
-Days may not be the best unit of time to work with in this case. We can, of course, upsample from days to weeks instead, and produce the same plot.
-
-```python
-weekly = tweets_df.resample('W').size()
-weekly.head()
-```
-
-```python
-#| output: false
-ax = sns.lineplot(data=weekly, color='#32363A')
-ax.set_xlabel('\nWeekly observations')
-ax.set_ylabel('Number of Tweets\n')
-sns.despine()
-plt.savefig('figures/06_02.png', dpi=300)
-```
-
-![caption...](figures/06_02.png){#fig-06_02}
-
-The plot is much cleaner when we count at the level of weeks rather than days.
-
-## COMBINING DATAFRAMES
-
-Combining dataframes is a _very_ common task. In fact, though it might not seem obvious, combining datasets is one of the most valuable skills you can have when doing computational social science. Here, we will consider some of the most common approaches: **concatenating** and **merging**, and we will briefly describe a more advanced set of methods commonly referred to as **record linkage**.
-
-Concatenating a dataframe is conceptually pretty simple - think of it like attaching the rows or columns of one dataframe below/to the right of the last row/column of another dataframe. For this to be useful, the two dataframes should have at least one row or column in common, but usually you would only concatenate if there were many such overlapping entries.
-
-```python
-full_df =  pd.read_csv("data/vdem/filtered_subset.csv")
-df_australia = full_df.query("country_name == 'Australia'")
-len(df_australia)
-```
-
-```python
-df_sa = full_df.query("country_name == 'South Africa'")
-len(df_sa)
-```
-
-The default behaviour for `pd.concat()` is to perform a row-wise join, which it refers to as `axis=0`. We can override this default by specifying `axis=1`, which will produce a column-wise join:
-
-```python
-concatenated = pd.concat([df_australia, df_sa], axis=1)
-len(concatenated)
-```
-
-When we concatenate the two dataframes the number of columns stays the same but the number of rows increases, accounting for the rows in both the original dataframes. Normally, this kind of concatenation would result in a different number of columns, but in this case, the two dataframes we joined had the _exact_ same columns (which makes sense, given that they were both extracted from the same parent dataframe).
-
-### Merging
-
-An alternative way to combine datasets is to **merge** them. If you want to create a dataframe that contains columns from multiple datasets but is aligned on rows according to some column (or set of columns), you probably want to use the `merge()` function. To illustrate this, we will work with data from two different sources. The first is the VDEM data we used in first part of this chapter (`fsdf`). The second is a dataset from Freedom House on levels of internet freedom in 65 countries. More information is available at https://freedomhouse.org/countries/freedom-net/scores.
-
-```python
-download_dataset(
-    'https://www.dropbox.com/scl/fo/fnw5yrslxza9plhqnqhxr/AA7997oGIdd3k3EjluHyLBc?rlkey=hr93qtcdp6uh7d3lsfzbc6nr6&st=bz0xzw41&dl=0',
-    'data/freedom_house/'
-)
-
-freedom_df = pd.read_csv( "data/freedom_house/internet_freedoms_2020.csv")
-```
-
-To merge these dataframes we need to find a column which can be used to match rows from one dataframe to the rows in the other. The columns don't need to have the same name, just values that can be matched with one another. Whatever columns we choose will be called "keys" in our merge. In our case this will be the country name columns from each dataset.
-
-```python
-fsdf.columns
-```
-
-```python
-freedom_df.columns
-```
-
-We will use the `merge` function to combine these two dataframes using 'country_name' and 'Country'. We're going to do an `inner` merge, which is the default if the option isn't set, and will keep only the keys (ie. countries) that appear in both dataframes.
-
-```python
-merged = pd.merge(fsdf, freedom_df, how='inner', left_on='country_name', right_on='Country')
-print('merged has {} rows and {} columns'.format(len(merged), len(merged.columns)))
-```
-
-```python
-len(fsdf) + len(freedom_df)
-```
-
-You should see 5 new columns in the `merged` dataframe compared to the `fsdf` one. Notice how many rows each of the dataframes have: many fewer rows than the original VDEM dataframe but many more than the Freedom House dataframe. So in our case, if a row's country doesn't appear in the other dataset, that row will not be included in the merged dataframe.
-
-This can be adjusted using the `how` parameter. There are five ways of merging dataframes in Pandas: left, right, outer, inner, and cross. Check out the [documentation](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.dataframe.merge.html) to see how the other four methods work.
-
-There are ways to improve the matching, either manual methods or semi-automated methods such as record linkage, described below. Let's see which countries aren't common between the dataframes, using a set operation **`^` (XOR)**, which returns a set of elements from the combination of set1 and set2 that are either not in set1 or not in set2.
-
-```python
-fsdf_set = set(fsdf['country_name'].tolist())
-freedom_set = set(freedom_df['Country'].tolist())
-
-unmatched = fsdf_set ^ freedom_set
-
-print('Total countries: ' + str(len(fsdf_set) + len(freedom_set)))
-print('Unmatched countries: ' + str(len(unmatched)))
-```
-
-We can then use the `&` set operator to see which of the missing countries are present in each of the country sets. If the data is small enough, we can print the two sets as sorted lists in a dataframe. The most obvious manual change we could do here is make "United States" and "United States of America" consistent but we would also expect Myanmar to be in the VDEM data. We could also make this change manually by knowing that Myanmar was referred to as Burma until 1989. However, it just so happens that at the top of the `south_east_asia` aggregated group dataframe from earlier, "Burma/Myanmar" was the name used, rather than Burma alone. For a more complex but automated solution to disambiguating different versions of country names, we would have to use some form of record linkage, discussed briefly below.
-
-```python
-fsdf_missing = list(fsdf_set & unmatched)
-fsdf_missing.sort()
-freedom_missing = list(freedom_set & unmatched)
-freedom_missing.sort()
-pd.DataFrame({'VDEM': pd.Series(fsdf_missing), 'Freedom': pd.Series(freedom_missing)})
-```
-
-### Record Linkage
-
-The `merge` function works great when you can make _exact_ matches between columns. It also works really well because checking for exact matches has been optimized in Pandas. However, it's often the case that we need to combine datasets which cannot be merged based on exact matches.
-
-Instead, we often have to use **inexact matching** (aka "fuzzy matching" or "approximate matching") to combine datasets. Typically, this involves using some similarity metric to measure how close two keys are to one another. Then a match is made based on thresholds, rules, or a nearest-neighbour approach. However, naively calculating similarity between all possible key combinations results in incredibly lengthy compute times. Instead, there are ways to exclude some key pairs from the beginning. This allows you to drastically reduce the number of comparisons you need to make. Additionally, inexact matching can leverage machine learning techniques which uses human curated examples to learn to predict whether two rows should be matched with one another.
-
-If this "more advanced" approach to combining datasets is of interest, I highly suggest looking into the [`recordlinkage`](https://github.com/J535D165/recordlinkage) Python package.
-
-> **Further Reading**
->
-> Much of what I introduce in this chapter is foundational; you'll build on that foundation in later chapters. But if you are looking for a slower and more comprehensive introduction to Pandas and Numpy, then I would recommend VanderPlas' [-@vanderplas2016python] _Python Data Science Handbook_.
-
-## CONCLUSION
-
----
-
-## Key Points
-
-- In this chapter, we expanded into the world of processing structured data using Pandas; these are _critical_ skills for computational social scientists
-- We covered the basic Pandas data structures, Series and dataframes, and the `index` and `datetime` objects
-- We discussed how to subset dataframes by selecting columns and filtering rows, followed by a discussion of how to do systematic comparisons by performing operations on grouped dataframes
-- We then discussed how to combine multiple dataframes using `merge` and `concatenate` and introduced the general idea of record linkage.
-
----
+In this chapter, we've covered the essential steps in processing and cleaning survey data, from understanding the sample design and applying weights to handling missing data and recoding variables. These are the foundational tasks that will set you up for more advanced analysis in future chapters. In the next chapter, we'll explore web and document data, where we'll encounter many of the same issues—like missing data and recoding—but in a different context. Stay tuned!

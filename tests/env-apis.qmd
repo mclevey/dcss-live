@@ -1,0 +1,27 @@
+```python
+from dcss import utils
+```
+
+```python
+KEY_NAMES = ['GUARDIAN_KEY']
+API_KEYS = utils.load_api_key_list(KEY_NAMES)
+GUARDIAN_KEY = API_KEYS[0]
+```
+
+```python
+GUARDIAN_KEY
+```
+
+
+```python
+import requests
+import pprint as pp  # pretty print!
+
+API_ENDPOINT = 'http://content.guardianapis.com/search'
+PARAMS = {'api-key': GUARDIAN_KEY}
+
+response = requests.get(API_ENDPOINT, params=PARAMS)
+response_dict = response.json()['response']
+print(len(response_dict))
+```
+

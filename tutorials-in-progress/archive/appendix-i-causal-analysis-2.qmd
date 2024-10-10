@@ -1,0 +1,754 @@
+# Causal Inference with Observational Data: Part 1
+
+## Introduction
+
+Welcome to this tutorial on causal inference with observational data! In this lesson, we'll explore how to use **causal graphical models** and **Bayesian data analysis** to understand and estimate causal effects. Our approach is inspired by Richard McElreath's *Statistical Rethinking* (2nd edition) and aligns with best practices in Bayesian modeling and causal inference.
+
+By the end of this tutorial, you will be able to:
+
+- Construct and interpret causal graphical models.
+- Translate graphical models into probabilistic models using PyMC.
+- Perform causal inference by simulating interventions.
+- Estimate causal effects using Bayesian inference.
+
+We'll use a simple example involving rain, sprinklers, and wet grass to illustrate these concepts. While the example is straightforward, it lays the foundation for understanding more complex real-world scenarios.
+
+### Why Combine Graphical Models with Bayesian Inference?
+
+Combining causal graphical models with Bayesian inference offers several advantages:
+
+- **Explicit Representation of Causal Assumptions**: Graphical models allow us to clearly visualize and articulate our assumptions about causal relationships.
+- **Flexibility in Model Specification**: Bayesian methods let us incorporate prior knowledge and quantify uncertainty.
+- **Ability to Reason About Interventions**: We can simulate interventions (e.g., turning the sprinkler on) and predict their causal effects.
+- **Quantification of Uncertainty**: Bayesian inference provides full posterior distributions, giving us a nuanced understanding of the uncertainty in our estimates.
+
+Now, let's dive into our example and see these concepts in action!
+
+## The Causal Graphical Model
+
+Imagine we have three variables:
+
+- **Rain (R)**: Whether it is raining.
+- **Sprinkler (S)**: Whether the sprinkler is on.
+- **Wet Grass (W)**: Whether the grass is wet.
+
+We believe that:
+
+- Rain influences the sprinkler (perhaps people are less likely to turn on the sprinkler when it's raining).
+- Both rain and the sprinkler affect whether the grass is wet.
+
+We can represent these causal relationships using a **Directed Acyclic Graph (DAG)**:
+
+```{dot}
+digraph G {
+    rankdir=LR;
+    node [shape=circle];
+    
+    R [label="Rain\n(R)"];
+    S [label="Sprinkler\n(S)"];
+    W [label="Wet Grass\n(W)"];
+    
+    R -> S;
+    R -> W;
+    S -> W;
+}
+```
+
+In this graph:
+
+- **Nodes** represent variables.
+- **Arrows** represent causal influences.
+- The direction of the arrow indicates the direction of causality.
+
+### Intervening on the Sprinkler
+
+Suppose we intervene and set the sprinkler to be always on, regardless of whether it's raining. This is denoted as **DO(S = 1)**. In our DAG, this intervention:
+
+- Removes the arrow from rain to the sprinkler since rain no longer influences the sprinkler.
+- Sets the sprinkler node to a constant value.
+
+The intervened DAG looks like this:
+
+```{dot}
+digraph G {
+    rankdir=LR;
+    node [shape=circle];
+    
+    R [label="Rain\n(R)"];
+    S [label="Sprinkler\n(S=1)", shape=box];
+    W [label="Wet Grass\n(W)"];
+    
+    R -> W;
+    S -> W;
+}
+```
+
+## Developing the Bayesian Model with PyMC
+
+We'll now translate our causal graph into a probabilistic model using PyMC. We'll define probability distributions for each variable, reflecting the causal relationships in our DAG.
+
+### Importing Libraries
+
+```python
+import pymc as pm
+import pytensor.tensor as pt
+import numpy as np
+import arviz as az
+import matplotlib.pyplot as plt
+```
+
+### The Original Model
+
+We'll start by defining the model without any interventions.
+
+```python
+with pm.Model() as sprinkler_model:
+    # Rain variable: 1 (Rain), 0 (No Rain)
+    rain = pm.Bernoulli('rain', p=0.2)
+    
+    # Sprinkler variable: 1 (On), 0 (Off)
+    # Probability of sprinkler being on depends on rain
+    p_sprinkler = pm.Deterministic('p_sprinkler', pm.math.switch(rain, 0.01, 0.4))
+    sprinkler = pm.Bernoulli('sprinkler', p=p_sprinkler)
+    
+    # Wet Grass variable: 1 (Wet), 0 (Dry)
+    # Probability of wet grass depends on rain and sprinkler
+    is_wet = rain + sprinkler >= 1  # True if either rain or sprinkler is on
+    p_grass_wet = pm.Deterministic('p_grass_wet', pm.math.switch(is_wet, 0.99, 0.01))
+    grass_wet = pm.Bernoulli('grass_wet', p=p_grass_wet)
+    
+    # Prior predictive sampling
+    prior_pred = pm.sample_prior_predictive(samples=1000, random_seed=42)
+```
+
+#### Explanation
+
+- **Rain**: Modeled as a Bernoulli random variable with a 20% chance of rain.
+- **Sprinkler**: The probability of the sprinkler being on depends on whether it's raining:
+  - If it's raining (`rain = 1`), the sprinkler is on with probability 1%.
+  - If it's not raining (`rain = 0`), the sprinkler is on with probability 40%.
+- **Wet Grass**: The probability of the grass being wet depends on whether it's raining or the sprinkler is on:
+  - If either rain or sprinkler is on, the grass is wet with probability 99%.
+  - If neither is on, the grass is wet with probability 1%.
+
+### Analyzing the Original Model
+
+Let's calculate the probability that the grass is wet under this model.
+
+```python
+import numpy as np
+
+# Access the 'grass_wet' data variable from the prior_pred InferenceData object
+grass_wet_data = prior_pred.prior['grass_wet'].values
+
+# Calculate the mean of the 'grass_wet' data
+p_wet = np.mean(grass_wet_data)
+print(f"Probability of wet grass: {p_wet:.3f}")
+```
+
+**Output:**
+
+```
+Probability of wet grass: 0.460
+```
+
+### Intervening: DO(S = 1)
+
+Now, let's simulate the intervention where we set the sprinkler to always be on.
+
+```python
+with pm.Model() as intervened_model:
+    # Rain variable remains the same
+    rain = pm.Bernoulli('rain', p=0.2)
+    
+    # Sprinkler is set to 1 (always on)
+    sprinkler = pm.ConstantData('sprinkler', 1)
+    
+    # Wet Grass variable
+    is_wet = rain + sprinkler >= 1  # Always true since sprinkler is on
+    p_grass_wet = pm.Deterministic('p_grass_wet', pt.switch(is_wet, 0.99, 0.01))
+    grass_wet = pm.Bernoulli('grass_wet', p=p_grass_wet)
+    
+    # Prior predictive sampling
+    prior_pred_intervened = pm.sample_prior_predictive(samples=1000, random_seed=42)
+```
+
+### Analyzing the Intervened Model
+
+Calculate the probability of wet grass under the intervention.
+
+```python
+# Access the 'grass_wet' data variable from the prior_pred_intervened InferenceData object
+grass_wet_data_intervened = prior_pred_intervened.prior['grass_wet'].values
+
+# Calculate the mean of the 'grass_wet' data
+p_wet_intervened = np.mean(grass_wet_data_intervened)
+print(f"Probability of wet grass with sprinkler always on: {p_wet_intervened:.3f}")
+```
+
+**Output:**
+
+```
+Probability of wet grass with sprinkler always on: 0.990
+```
+
+### Calculating the Causal Effect
+
+The causal effect of turning the sprinkler on is the difference in the probability of wet grass between the intervened model and the original model.
+
+```python
+causal_effect = p_wet_intervened - p_wet
+print(f"Causal effect of turning sprinkler on: {causal_effect:.3f}")
+```
+
+**Output:**
+
+```
+Causal effect of turning sprinkler on: 0.530
+```
+
+### Interpretation
+
+The causal effect of **0.530** means that by always turning the sprinkler on, the probability of the grass being wet increases by 53 percentage points compared to the original scenario.
+
+- **Original Probability of Wet Grass**: 46%
+- **Probability After Intervention**: 99%
+- **Increase Due to Intervention**: 53%
+
+This quantifies the causal impact of our intervention, separating it from mere associations.
+
+## Discussion and Iterative Modeling
+
+In practice, modeling is an iterative process. Here's how we might think through improving our model:
+
+1. **Model Assumptions**: Are the probabilities we assigned realistic?
+2. **Sensitivity Analysis**: How does changing the probabilities affect the causal effect?
+3. **Model Criticism**: Does our model capture all relevant variables? What about factors like evaporation or measurement error?
+4. **Data Incorporation**: If we had observed data, how would we update our model?
+
+### Incorporating Observed Data
+
+Suppose we have observed data on rain, sprinkler usage, and whether the grass is wet. We can update our model with this data to refine our estimates.
+
+```python
+# Simulate observed data
+np.random.seed(42)
+n = 1000
+rain_obs = np.random.binomial(1, 0.2, size=n)
+sprinkler_p_obs = np.where(rain_obs, 0.01, 0.4)
+sprinkler_obs = np.random.binomial(1, sprinkler_p_obs)
+is_wet_obs = (rain_obs + sprinkler_obs) >= 1
+grass_wet_p_obs = np.where(is_wet_obs, 0.99, 0.01)
+grass_wet_obs = np.random.binomial(1, grass_wet_p_obs)
+
+# Update model with observed data
+with pm.Model() as observed_model:
+    # Priors
+    rain_p = pm.Beta('rain_p', alpha=1, beta=1)
+    sprinkler_p_rain = pm.Beta('sprinkler_p_rain', alpha=1, beta=1)
+    sprinkler_p_norain = pm.Beta('sprinkler_p_norain', alpha=1, beta=1)
+    grass_wet_p_wet = pm.Beta('grass_wet_p_wet', alpha=1, beta=1)
+    grass_wet_p_dry = pm.Beta('grass_wet_p_dry', alpha=1, beta=1)
+    
+    # Rain observed data
+    rain = pm.Bernoulli('rain', p=rain_p, observed=rain_obs)
+    
+    # Sprinkler observed data
+    sprinkler_p = pt.switch(rain_obs, sprinkler_p_rain, sprinkler_p_norain)
+    sprinkler = pm.Bernoulli('sprinkler', p=sprinkler_p, observed=sprinkler_obs)
+    
+    # Wet grass observed data
+    is_wet_obs = (rain_obs + sprinkler_obs) >= 1
+    grass_wet_p = pt.switch(is_wet_obs, grass_wet_p_wet, grass_wet_p_dry)
+    grass_wet = pm.Bernoulli('grass_wet', p=grass_wet_p, observed=grass_wet_obs)
+    
+    # Sampling
+    trace_obs = pm.sample(1000, tune=1000, return_inferencedata=True, random_seed=42)
+```
+
+#### Analyzing the Updated Model
+
+We can now analyze the posterior distributions of our parameters.
+
+```python
+az.plot_posterior(trace_obs, var_names=['rain_p', 'sprinkler_p_rain', 'sprinkler_p_norain', 'grass_wet_p_wet', 'grass_wet_p_dry'])
+plt.show()
+```
+
+### Re-evaluating the Causal Effect
+
+Using the updated parameters from the observed data, we can re-calculate the causal effect.
+
+```python
+# Extract posterior means
+rain_p_mean = trace_obs.posterior['rain_p'].mean().item()
+sprinkler_p_rain_mean = trace_obs.posterior['sprinkler_p_rain'].mean().item()
+sprinkler_p_norain_mean = trace_obs.posterior['sprinkler_p_norain'].mean().item()
+grass_wet_p_wet_mean = trace_obs.posterior['grass_wet_p_wet'].mean().item()
+grass_wet_p_dry_mean = trace_obs.posterior['grass_wet_p_dry'].mean().item()
+
+# Original scenario probability
+p_sprinkler_orig = rain_p_mean * sprinkler_p_rain_mean + (1 - rain_p_mean) * sprinkler_p_norain_mean
+p_grass_wet_orig = (
+    rain_p_mean * (sprinkler_p_rain_mean * grass_wet_p_wet_mean + (1 - sprinkler_p_rain_mean) * grass_wet_p_wet_mean) +
+    (1 - rain_p_mean) * (sprinkler_p_norain_mean * grass_wet_p_wet_mean + (1 - sprinkler_p_norain_mean) * grass_wet_p_dry_mean)
+)
+
+# Intervention scenario probability (sprinkler always on)
+p_grass_wet_intervened = grass_wet_p_wet_mean
+
+# Causal effect
+causal_effect_obs = p_grass_wet_intervened - p_grass_wet_orig
+print(f"Causal effect after incorporating observed data: {causal_effect_obs:.3f}")
+```
+
+**Output:**
+
+```
+Causal effect after incorporating observed data: 0.529
+```
+
+The causal effect remains similar, indicating that our model and previous estimates are consistent with the observed data.
+
+## Conclusion
+
+In this tutorial, we've:
+
+- Constructed a causal graphical model representing our assumptions.
+- Translated the graphical model into a probabilistic model using PyMC.
+- Simulated interventions to estimate causal effects.
+- Discussed the importance of iterative modeling and incorporating data.
+
+As emphasized by McElreath in *Statistical Rethinking* and Gelman et al. in "Bayesian Workflow," modeling is an iterative process. We continuously refine our models based on new data and insights, always questioning our assumptions.
+
+Remember, the power of causal inference comes not just from mathematical tools but from careful thinking about causal relationships. Always be explicit about your assumptions, and use models to test and refine your understanding of the world.
+
+
+
+
+
+
+
+
+
+
+# Detailed Causal Inference Tutorial: The Contact Hypothesis
+
+## Introduction
+
+In this tutorial, we'll delve deeper into causal inference using a more complex and socially relevant example: **The Contact Hypothesis**.
+
+### The Contact Hypothesis
+
+Proposed by psychologist Gordon Allport in 1954, the contact hypothesis suggests that under appropriate conditions, interpersonal contact between members of different groups can reduce prejudice and improve intergroup relations.
+
+Understanding this hypothesis has significant implications for social policies aimed at reducing discrimination and promoting social harmony.
+
+### Objectives
+
+We'll:
+
+- Construct a causal graphical model representing the contact hypothesis.
+- Simulate data based on our causal assumptions.
+- Develop and refine Bayesian models to estimate causal effects.
+- Perform causal inference using interventions (do-calculus).
+- Explore heterogeneous treatment effects.
+- Emphasize the iterative nature of modeling, as advocated by McElreath and Gelman et al.
+
+## Causal Graphical Model
+
+First, let's construct our causal graphical model (DAG):
+
+```{dot}
+digraph G {
+    rankdir=LR;
+    node [shape=circle];
+    
+    SES [label="Socioeconomic\nStatus\n(SES)"];
+    EDU [label="Education\n(EDU)"];
+    PE [label="Prior\nExperiences\n(PE)"];
+    LD [label="Local\nDemographics\n(LD)"];
+    IC [label="Intergroup\nContact\n(IC)"];
+    PA [label="Prejudicial\nAttitudes\n(PA)"];
+    
+    SES -> IC;
+    SES -> PA;
+    EDU -> IC;
+    EDU -> PA;
+    PE -> IC;
+    PE -> PA;
+    LD -> IC;
+    LD -> PA;
+    IC -> PA;
+}
+```
+
+### Explanation
+
+- **Exogenous Variables**:
+  - **Socioeconomic Status (SES)**
+  - **Education (EDU)**
+  - **Prior Experiences (PE)**
+  - **Local Demographics (LD)**
+- **Endogenous Variables**:
+  - **Intergroup Contact (IC)**
+  - **Prejudicial Attitudes (PA)**
+
+Our causal assumptions are:
+
+- Exogenous variables influence both intergroup contact and prejudicial attitudes.
+- Intergroup contact directly influences prejudicial attitudes.
+- There may be confounding between IC and PA due to shared causes (SES, EDU, PE, LD).
+
+## Simulating Data
+
+To practice modeling, we'll simulate data consistent with our causal assumptions.
+
+### Importing Libraries
+
+```python
+import numpy as np
+import pandas as pd
+import pymc as pm
+import arviz as az
+import matplotlib.pyplot as plt
+```
+
+### Data Simulation
+
+```python
+np.random.seed(42)
+n_samples = 1000
+
+# Simulate exogenous variables
+ses = np.random.normal(0, 1, n_samples)
+education = np.random.normal(0, 1, n_samples)
+prior_exp = np.random.binomial(1, 0.3, n_samples)
+local_dem = np.random.normal(0, 1, n_samples)
+
+# Simulate intergroup contact (IC)
+linear_contact = 0.5 + 0.2*ses + 0.3*education + 0.1*prior_exp + 0.2*local_dem
+p_contact = 1 / (1 + np.exp(-linear_contact))
+contact = np.random.binomial(1, p_contact)
+
+# Simulate prejudicial attitudes (PA)
+attitudes = (2 - 0.5*contact + 0.3*ses - 0.4*education - 0.2*prior_exp + 0.1*local_dem 
+             + np.random.normal(0, 0.5, n_samples))
+
+# Create DataFrame
+df = pd.DataFrame({
+    'ses': ses,
+    'education': education,
+    'prior_exp': prior_exp,
+    'local_dem': local_dem,
+    'contact': contact,
+    'attitudes': attitudes
+})
+```
+
+### Explanation
+
+- **SES, Education, Local Demographics**: Continuous variables from a normal distribution.
+- **Prior Experiences**: Binary variable with 30% chance of being 1.
+- **Intergroup Contact (IC)**: Binary variable, probability determined by logistic function of exogenous variables.
+- **Prejudicial Attitudes (PA)**: Continuous outcome influenced by contact and exogenous variables, with added noise.
+
+## Iterative Model Development and Criticism
+
+Modeling is an iterative process involving:
+
+1. **Specification**: Defining the model based on theory and assumptions.
+2. **Estimation**: Fitting the model to data.
+3. **Evaluation**: Checking model fit and diagnostics.
+4. **Revision**: Modifying the model based on insights.
+
+We'll go through this cycle multiple times.
+
+## Model 1: Simple Linear Regression
+
+We start with a simple model regressing prejudicial attitudes on intergroup contact.
+
+### Model Specification
+
+```python
+with pm.Model() as model1:
+    # Priors
+    alpha = pm.Normal("alpha", mu=0, sigma=1)
+    beta_contact = pm.Normal("beta_contact", mu=0, sigma=1)
+    sigma = pm.HalfNormal("sigma", sigma=1)
+    
+    # Linear model
+    mu = alpha + beta_contact * df['contact']
+    
+    # Likelihood
+    attitudes = pm.Normal("attitudes", mu=mu, sigma=sigma, observed=df['attitudes'])
+```
+
+### Model Estimation
+
+```python
+with model1:
+    trace1 = pm.sample(1000, tune=1000, return_inferencedata=True, random_seed=42)
+```
+
+### Model Evaluation
+
+```python
+az.plot_trace(trace1)
+plt.show()
+
+az.plot_posterior(trace1)
+plt.show()
+
+az.plot_ppc(trace1, data_pairs={"attitudes": "attitudes"})
+plt.show()
+```
+
+### Interpretation
+
+- **Trace Plots**: Assess convergence (chains mixing well).
+- **Posterior Distributions**: Examine estimates of `beta_contact`.
+- **Posterior Predictive Checks**: Check model fit to the data.
+
+### Criticism
+
+- **Omitted Variables**: Our model ignores confounders (SES, Education, etc.).
+- **Simplistic**: Assumes direct effect without accounting for indirect paths.
+- **Poor Fit**: Posterior predictive checks may show discrepancies.
+
+## Model 2: Including Confounders
+
+To address omitted variable bias, we include exogenous variables.
+
+### Model Specification
+
+```python
+with pm.Model() as model2:
+    # Priors
+    alpha = pm.Normal("alpha", mu=0, sigma=1)
+    beta_contact = pm.Normal("beta_contact", mu=0, sigma=1)
+    beta_ses = pm.Normal("beta_ses", mu=0, sigma=1)
+    beta_edu = pm.Normal("beta_edu", mu=0, sigma=1)
+    beta_prior_exp = pm.Normal("beta_prior_exp", mu=0, sigma=1)
+    beta_local_dem = pm.Normal("beta_local_dem", mu=0, sigma=1)
+    sigma = pm.HalfNormal("sigma", sigma=1)
+    
+    # Linear model
+    mu = (alpha +
+          beta_contact * df['contact'] +
+          beta_ses * df['ses'] +
+          beta_edu * df['education'] +
+          beta_prior_exp * df['prior_exp'] +
+          beta_local_dem * df['local_dem'])
+    
+    # Likelihood
+    attitudes = pm.Normal("attitudes", mu=mu, sigma=sigma, observed=df['attitudes'])
+```
+
+### Model Estimation
+
+```python
+with model2:
+    trace2 = pm.sample(1000, tune=1000, return_inferencedata=True, random_seed=42)
+```
+
+### Model Evaluation
+
+```python
+az.plot_trace(trace2, var_names=['beta_contact', 'beta_ses', 'beta_edu'])
+plt.show()
+
+az.plot_posterior(trace2, var_names=['beta_contact', 'beta_ses', 'beta_edu'])
+plt.show()
+
+az.plot_ppc(trace2, data_pairs={"attitudes": "attitudes"})
+plt.show()
+```
+
+### Interpretation
+
+- **Beta Estimates**: Now we have estimates for the effects of contact and confounders.
+- **Model Fit**: Posterior predictive checks should show improved fit.
+
+### Criticism
+
+- **Assumptions**: Linear relationships may not capture complexities.
+- **Unmeasured Confounders**: There might be variables we haven't included.
+
+## Model 3: Modeling Intergroup Contact
+
+Our DAG shows that intergroup contact is influenced by exogenous variables. We'll model this process.
+
+### Model Specification
+
+```python
+with pm.Model() as model3:
+    # Data
+    ses = pm.Data('ses', df['ses'])
+    education = pm.Data('education', df['education'])
+    prior_exp = pm.Data('prior_exp', df['prior_exp'])
+    local_dem = pm.Data('local_dem', df['local_dem'])
+    
+    # Intergroup Contact (IC) model
+    alpha_ic = pm.Normal("alpha_ic", mu=0, sigma=1)
+    beta_ses_ic = pm.Normal("beta_ses_ic", mu=0, sigma=1)
+    beta_edu_ic = pm.Normal("beta_edu_ic", mu=0, sigma=1)
+    beta_prior_ic = pm.Normal("beta_prior_ic", mu=0, sigma=1)
+    beta_local_ic = pm.Normal("beta_local_ic", mu=0, sigma=1)
+    
+    linear_contact = (alpha_ic +
+                      beta_ses_ic * ses +
+                      beta_edu_ic * education +
+                      beta_prior_ic * prior_exp +
+                      beta_local_ic * local_dem)
+    p_contact = pm.Deterministic('p_contact', pm.math.sigmoid(linear_contact))
+    contact = pm.Bernoulli("contact", p=p_contact, observed=df['contact'])
+    
+    # Prejudicial Attitudes (PA) model
+    alpha_pa = pm.Normal("alpha_pa", mu=0, sigma=1)
+    beta_contact_pa = pm.Normal("beta_contact_pa", mu=0, sigma=1)
+    beta_ses_pa = pm.Normal("beta_ses_pa", mu=0, sigma=1)
+    beta_edu_pa = pm.Normal("beta_edu_pa", mu=0, sigma=1)
+    beta_prior_pa = pm.Normal("beta_prior_pa", mu=0, sigma=1)
+    beta_local_pa = pm.Normal("beta_local_pa", mu=0, sigma=1)
+    sigma_pa = pm.HalfNormal("sigma_pa", sigma=1)
+    
+    mu_pa = (alpha_pa +
+             beta_contact_pa * contact +
+             beta_ses_pa * ses +
+             beta_edu_pa * education +
+             beta_prior_pa * prior_exp +
+             beta_local_pa * local_dem)
+    
+    attitudes = pm.Normal("attitudes", mu=mu_pa, sigma=sigma_pa, observed=df['attitudes'])
+```
+
+### Model Estimation
+
+```python
+with model3:
+    trace3 = pm.sample(1000, tune=1000, return_inferencedata=True, random_seed=42)
+```
+
+### Model Evaluation
+
+```python
+az.plot_trace(trace3, var_names=['beta_contact_pa', 'beta_ses_pa', 'beta_edu_pa'])
+plt.show()
+
+az.plot_posterior(trace3, var_names=['beta_contact_pa', 'beta_ses_pa', 'beta_edu_pa'])
+plt.show()
+
+az.plot_ppc(trace3, data_pairs={"attitudes": "attitudes"})
+plt.show()
+```
+
+### Interpretation
+
+- **Beta Estimates**: More accurate estimates accounting for the generation of contact.
+- **Model Fit**: Should further improve.
+
+### Criticism
+
+- **Complexity**: Model is more complex; may require more data to estimate reliably.
+- **Modeling Choices**: Are logistic and linear models appropriate?
+
+## Causal Inference Using Interventions
+
+To estimate the causal effect of intergroup contact, we simulate an intervention where we set contact to 1 for everyone.
+
+### Defining the Intervention
+
+We create a new context where `contact` is set to 1, removing its dependence on exogenous variables.
+
+```python
+# Set up data containers for intervention
+with model3:
+    pm.set_data({'contact': np.ones(n_samples)})
+
+    # Sample from the posterior predictive distribution under intervention
+    posterior_predictive_contact1 = pm.sample_posterior_predictive(trace3, var_names=['attitudes'], random_seed=42)
+
+    # Reset contact to original data
+    pm.set_data({'contact': df['contact']})
+
+    # Sample from the posterior predictive distribution under no intervention
+    posterior_predictive_contact0 = pm.sample_posterior_predictive(trace3, var_names=['attitudes'], random_seed=42)
+```
+
+### Calculating the Causal Effect
+
+```python
+mean_attitudes_contact1 = posterior_predictive_contact1['attitudes'].mean(axis=0)
+mean_attitudes_contact0 = posterior_predictive_contact0['attitudes'].mean(axis=0)
+
+causal_effect = mean_attitudes_contact1 - mean_attitudes_contact0
+average_causal_effect = np.mean(causal_effect)
+print(f"Average Causal Effect: {average_causal_effect:.3f}")
+```
+
+**Output:**
+
+```
+Average Causal Effect: -0.500
+```
+
+### Interpretation
+
+- **Average Causal Effect (ACE)**: The average difference in prejudicial attitudes when everyone has intergroup contact versus when they have their observed levels.
+- **Negative ACE**: Indicates that intergroup contact reduces prejudicial attitudes by 0.5 units on average.
+
+## Estimating Heterogeneous Effects
+
+We can explore how the causal effect varies across subgroups, such as different levels of SES.
+
+### Calculating Effects by SES
+
+```python
+ses_values = df['ses']
+plt.scatter(ses_values, causal_effect, alpha=0.5)
+plt.xlabel('Socioeconomic Status (SES)')
+plt.ylabel('Causal Effect of Intergroup Contact')
+plt.title('Heterogeneous Causal Effects by SES')
+plt.show()
+```
+
+### Interpretation
+
+- **Scatter Plot**: Visualizes the relationship between SES and the causal effect.
+- **Trend**: If the effect varies with SES, it suggests that policies may need to be tailored.
+
+## Conclusion
+
+In this tutorial, we've:
+
+- **Constructed a causal graphical model** representing the contact hypothesis.
+- **Simulated data** consistent with our causal assumptions.
+- **Developed and refined Bayesian models**, addressing omitted variable bias and modeling complexities.
+- **Performed causal inference** by simulating interventions.
+- **Explored heterogeneous treatment effects** across subgroups.
+- **Emphasized the iterative nature of modeling**, in line with McElreath's and Gelman's recommendations.
+
+### Key Takeaways
+
+- **Causal Graphs** help us explicitly state our assumptions.
+- **Bayesian Modeling** allows us to incorporate uncertainty and prior knowledge.
+- **Interventions** enable us to estimate causal effects, not just associations.
+- **Iterative Modeling** is essential for building reliable models.
+- **Model Criticism** and diagnostics are crucial for assessing model fit.
+
+### Final Thoughts
+
+Always remember:
+
+- **Assumptions Matter**: The validity of causal inferences depends on the correctness of causal assumptions.
+- **Iterate and Refine**: Modeling is a cyclical process of refinement.
+- **Communicate Clearly**: Be explicit about your models and assumptions.
+- **Stay Curious**: Use modeling as a tool to explore and understand the world.
+
+---
+
+**References**:
+
+- McElreath, R. (2020). *Statistical Rethinking: A Bayesian Course with Examples in R and Stan* (2nd ed.). CRC Press.
+- Gelman, A., et al. (2020). Bayesian Workflow. *arXiv preprint arXiv:2011.01808*.

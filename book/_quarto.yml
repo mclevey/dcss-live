@@ -29,6 +29,7 @@ book:
         - setting-up.qmd
         - python-101.qmd
         - python-102.qmd
+        - processing-data.qmd
     - part: "**WORKFLOW**"
       chapters:
         - mindful-modelling.qmd
