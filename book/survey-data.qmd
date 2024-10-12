@@ -3,9 +3,9 @@
 <!-- And open data portals, Toronto shelters, etc.? -->
 
 ::: {.callout-warning}
-## Planned Updates
+## In Progress
 
-This is a new chapter. I am actively working on it in fall 2024. Stay tuned!
+This is a "[shitty first draft](https://www.amazon.ca/Bird-Some-Instructions-Writing-Life/dp/0385480016)," with some sections being shittier than others. Normally I wouldn't share work so early in it's development, but I'm interested in your feedback. Feel free to skim, but know that I am actively developing this chapter and it will be going through some very extensive changes in the coming weeks.
 :::
 
 ::: {.callout-note}
