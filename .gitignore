@@ -10,6 +10,7 @@ data/*.json
 *.ipynb_checkpoints
 _changes.md
 _COMPARE.qmd
+tufte-style.md
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
