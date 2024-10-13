@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>32&nbsp; Processing Natural Language Data – Doing Computational Social Science&lt;br&gt;[The **Continuous Development** Edition]{.small}</title>
+<title>33&nbsp; Language models and word embeddings – Doing Computational Social Science&lt;br&gt;[The **Continuous Development** Edition]{.small}</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -166,7 +166,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./artificial-neural-networks-fnn-rnn-cnn.html"><strong>DEEP LEARNING</strong></a></li><li class="breadcrumb-item"><a href="./language-models-and-embeddings.html"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Processing Natural Language Data</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./artificial-neural-networks-fnn-rnn-cnn.html"><strong>DEEP LEARNING</strong></a></li><li class="breadcrumb-item"><a href="./language-models-and-embeddings.html"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Language models and word embeddings</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -226,10 +226,16 @@ window.Quarto = {
  <span class="menu-text">🏠</span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction</span></a>
+  </div>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
- <span class="menu-text"><strong>RESEARCH COMPUTING</strong></span></a>
+ <span class="menu-text"><strong>COMPUTING</strong></span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -237,8 +243,8 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./getting-started.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Getting Started</span></span></a>
+  <a href="./setting-up.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Setting up</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -253,12 +259,18 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Python 102</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./processing-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Processing Data</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
- <span class="menu-text"><strong>MINDFUL MODELING</strong></span></a>
+ <span class="menu-text"><strong>WORKFLOW</strong></span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -266,14 +278,14 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./metaphor-map-reduction.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Modeling as metaphor, map, and reduction</span></span></a>
+  <a href="./mindful-modelling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Mindful modelling</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./iterative-workflow.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Iterative workflows</span></span></a>
+  <a href="./iteration.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title"><del>Sequential</del> iterative modelling</span></span></a>
   </div>
 </li>
       </ul>
@@ -281,7 +293,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
- <span class="menu-text"><strong>OBTAINING DATA</strong></span></a>
+ <span class="menu-text"><strong>DATA</strong></span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -289,26 +301,38 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./sampling-and-survey-data.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title"><del>Processing Structured Data</del> Sampling and Survey Data</span></span></a>
+  <a href="./survey-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Survey Data</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./web-data-apis.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Web data (APIs)</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Web data (APIs)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./web-data-scraping.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Web data (Scraping)</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Web data (Scraping)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./audio-files-and-documents.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Audio files and documents</span></span></a>
+  <a href="./audio-and-document-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Audio and document data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./text-as-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Text as Data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./relational-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Relational data</span></span></a>
   </div>
 </li>
       </ul>
@@ -316,7 +340,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
- <span class="menu-text"><strong>EXPLORING</strong></span></a>
+ <span class="menu-text"><strong>DISCOVERY</strong></span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -325,43 +349,31 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./exploratory-data-analysis.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Exploratory data analysis (EDA) <!-- Exploring with purpose --></span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Exploring with purpose</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./association-and-latent-variables.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Association and latent variables</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./text-as-data.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Text as Data</span></span></a>
+  <a href="./reduction-and-latent-dimensions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Reduction and latent dimensions</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./mapping-text.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Text similarity and latent semantic space</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./networks-as-not-data.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Networks and relational thinking</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Text similarity and latent semantic space</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./centrality.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Centrality</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Centrality</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./mapping-network-structure.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Mapping network structure</span></span></a>
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Mapping network structure</span></span></a>
   </div>
 </li>
       </ul>
@@ -378,37 +390,37 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./supervised-learning.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Supervised Machine Learning</span></span></a>
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Supervised Machine Learning</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./prediction-and-classification.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Prediction and classification</span></span></a>
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Prediction and classification</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./causality.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Causality</span></span></a>
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Causality</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./probability.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Probability 101</span></span></a>
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Probability 101</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./credibility.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Credibility</span></span></a>
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Credibility</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./measurement-and-missingness.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Measurement and missingness</span></span></a>
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Measurement and missingness</span></span></a>
   </div>
 </li>
       </ul>
@@ -425,49 +437,49 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./linear-regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Bayesian Regression Models with Probabilistic Programming</span></span></a>
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Bayesian Regression Models with Probabilistic Programming</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./multilevel-regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Multilevel regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Multilevel regression</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./generalized-linear-models.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Generalized Linear Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Generalized Linear Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./structural-causal-models.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Structural causal models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Structural causal models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./modeling-texts-lda.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Modeling text with LDA topic models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Modeling text with LDA topic models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./modeling-networks.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Latent structure in networks</span></span></a>
+ <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Latent structure in networks</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./agent-based-models.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Agent-based models (ABMs)</span></span></a>
+ <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Agent-based models (ABMs)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./diffusion-opinion-cultural-cognition.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Diffusion, opinion dynamics, and cultural cognition</span></span></a>
+ <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Diffusion, opinion dynamics, and cultural cognition</span></span></a>
   </div>
 </li>
       </ul>
@@ -484,25 +496,25 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./artificial-neural-networks-fnn-rnn-cnn.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Artificial neural networks 101</span></span></a>
+ <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Artificial neural networks</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./language-models-and-embeddings.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Processing Natural Language Data</span></span></a>
+ <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Language models and word embeddings</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./transformer-revolution.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">The transformer revolution</span></span></a>
+ <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">The transformer revolution</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./modeling-text-transformer-topic-models.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Modeling text: transformer topic models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Modeling text: transformer topic models</span></span></a>
   </div>
 </li>
       </ul>
@@ -510,7 +522,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
- <span class="menu-text"><strong>PROFESSIONAL RESPONSIBILITIES</strong></span></a>
+ <span class="menu-text"><strong>RESPONSIBILITIES</strong></span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -519,19 +531,19 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ethical-css.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Research Ethics, Politics, and Practices</span></span></a>
+ <span class="menu-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">Ethical CSS</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./open-css.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">Open computational social science</span></span></a>
+ <span class="menu-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">Open CSS</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./future-css.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">Future computational social science</span></span></a>
+ <span class="menu-text"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">Future CSS</span></span></a>
   </div>
 </li>
       </ul>
@@ -551,7 +563,7 @@ window.Quarto = {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./courses.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">Courses and Workshops</span></span></a>
+ <span class="menu-text"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title">Courses and Workshops</span></span></a>
   </div>
 </li>
     </ul>
@@ -564,58 +576,58 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link active" data-scroll-target="#learning-objectives"><span class="header-section-number">32.1</span> LEARNING OBJECTIVES</a></li>
-  <li><a href="#learning-materials" id="toc-learning-materials" class="nav-link" data-scroll-target="#learning-materials"><span class="header-section-number">32.2</span> LEARNING MATERIALS</a></li>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction"><span class="header-section-number">32.3</span> INTRODUCTION</a>
+  <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link active" data-scroll-target="#learning-objectives"><span class="header-section-number">33.1</span> LEARNING OBJECTIVES</a></li>
+  <li><a href="#learning-materials" id="toc-learning-materials" class="nav-link" data-scroll-target="#learning-materials"><span class="header-section-number">33.2</span> LEARNING MATERIALS</a></li>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction"><span class="header-section-number">33.3</span> INTRODUCTION</a>
   <ul class="collapse">
-  <li><a href="#package-imports" id="toc-package-imports" class="nav-link" data-scroll-target="#package-imports"><span class="header-section-number">32.3.1</span> Package Imports</a></li>
+  <li><a href="#package-imports" id="toc-package-imports" class="nav-link" data-scroll-target="#package-imports"><span class="header-section-number">33.3.1</span> Package Imports</a></li>
   </ul></li>
-  <li><a href="#text-processing" id="toc-text-processing" class="nav-link" data-scroll-target="#text-processing"><span class="header-section-number">32.4</span> TEXT PROCESSING</a>
+  <li><a href="#text-processing" id="toc-text-processing" class="nav-link" data-scroll-target="#text-processing"><span class="header-section-number">33.4</span> TEXT PROCESSING</a>
   <ul class="collapse">
-  <li><a href="#getting-to-know-spacy" id="toc-getting-to-know-spacy" class="nav-link" data-scroll-target="#getting-to-know-spacy"><span class="header-section-number">32.4.1</span> Getting to Know SpaCy</a></li>
+  <li><a href="#getting-to-know-spacy" id="toc-getting-to-know-spacy" class="nav-link" data-scroll-target="#getting-to-know-spacy"><span class="header-section-number">33.4.1</span> Getting to Know SpaCy</a></li>
   </ul></li>
-  <li><a href="#normalizing-text-via-lemmatization" id="toc-normalizing-text-via-lemmatization" class="nav-link" data-scroll-target="#normalizing-text-via-lemmatization"><span class="header-section-number">32.5</span> NORMALIZING TEXT VIA LEMMATIZATION</a></li>
-  <li><a href="#part-of-speech-tagging" id="toc-part-of-speech-tagging" class="nav-link" data-scroll-target="#part-of-speech-tagging"><span class="header-section-number">32.6</span> PART-OF-SPEECH TAGGING</a></li>
-  <li><a href="#syntactic-dependency-parsing" id="toc-syntactic-dependency-parsing" class="nav-link" data-scroll-target="#syntactic-dependency-parsing"><span class="header-section-number">32.7</span> SYNTACTIC DEPENDENCY PARSING</a>
+  <li><a href="#normalizing-text-via-lemmatization" id="toc-normalizing-text-via-lemmatization" class="nav-link" data-scroll-target="#normalizing-text-via-lemmatization"><span class="header-section-number">33.5</span> NORMALIZING TEXT VIA LEMMATIZATION</a></li>
+  <li><a href="#part-of-speech-tagging" id="toc-part-of-speech-tagging" class="nav-link" data-scroll-target="#part-of-speech-tagging"><span class="header-section-number">33.6</span> PART-OF-SPEECH TAGGING</a></li>
+  <li><a href="#syntactic-dependency-parsing" id="toc-syntactic-dependency-parsing" class="nav-link" data-scroll-target="#syntactic-dependency-parsing"><span class="header-section-number">33.7</span> SYNTACTIC DEPENDENCY PARSING</a>
   <ul class="collapse">
-  <li><a href="#noun-chunks" id="toc-noun-chunks" class="nav-link" data-scroll-target="#noun-chunks"><span class="header-section-number">32.7.1</span> Noun Chunks</a></li>
-  <li><a href="#extracting-words-by-dependency-labels-subject-verb-object-triplets" id="toc-extracting-words-by-dependency-labels-subject-verb-object-triplets" class="nav-link" data-scroll-target="#extracting-words-by-dependency-labels-subject-verb-object-triplets"><span class="header-section-number">32.7.2</span> Extracting Words by Dependency Labels: Subject, Verb, Object Triplets</a></li>
+  <li><a href="#noun-chunks" id="toc-noun-chunks" class="nav-link" data-scroll-target="#noun-chunks"><span class="header-section-number">33.7.1</span> Noun Chunks</a></li>
+  <li><a href="#extracting-words-by-dependency-labels-subject-verb-object-triplets" id="toc-extracting-words-by-dependency-labels-subject-verb-object-triplets" class="nav-link" data-scroll-target="#extracting-words-by-dependency-labels-subject-verb-object-triplets"><span class="header-section-number">33.7.2</span> Extracting Words by Dependency Labels: Subject, Verb, Object Triplets</a></li>
   </ul></li>
-  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">32.8</span> CONCLUSION</a>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">33.8</span> CONCLUSION</a>
   <ul class="collapse">
-  <li><a href="#key-points" id="toc-key-points" class="nav-link" data-scroll-target="#key-points"><span class="header-section-number">32.8.1</span> Key Points</a></li>
+  <li><a href="#key-points" id="toc-key-points" class="nav-link" data-scroll-target="#key-points"><span class="header-section-number">33.8.1</span> Key Points</a></li>
   </ul></li>
-  <li><a href="#word-vectors" id="toc-word-vectors" class="nav-link" data-scroll-target="#word-vectors"><span class="header-section-number">33</span> Word vectors</a>
+  <li><a href="#word-vectors" id="toc-word-vectors" class="nav-link" data-scroll-target="#word-vectors"><span class="header-section-number">34</span> Word vectors</a>
   <ul class="collapse">
-  <li><a href="#learning-objectives-1" id="toc-learning-objectives-1" class="nav-link" data-scroll-target="#learning-objectives-1"><span class="header-section-number">33.1</span> LEARNING OBJECTIVES</a></li>
-  <li><a href="#learning-materials-1" id="toc-learning-materials-1" class="nav-link" data-scroll-target="#learning-materials-1"><span class="header-section-number">33.2</span> LEARNING MATERIALS</a></li>
-  <li><a href="#introduction-1" id="toc-introduction-1" class="nav-link" data-scroll-target="#introduction-1"><span class="header-section-number">33.3</span> INTRODUCTION</a></li>
-  <li><a href="#can-we-model-meaning" id="toc-can-we-model-meaning" class="nav-link" data-scroll-target="#can-we-model-meaning"><span class="header-section-number">33.4</span> CAN WE MODEL MEANING?</a>
+  <li><a href="#learning-objectives-1" id="toc-learning-objectives-1" class="nav-link" data-scroll-target="#learning-objectives-1"><span class="header-section-number">34.1</span> LEARNING OBJECTIVES</a></li>
+  <li><a href="#learning-materials-1" id="toc-learning-materials-1" class="nav-link" data-scroll-target="#learning-materials-1"><span class="header-section-number">34.2</span> LEARNING MATERIALS</a></li>
+  <li><a href="#introduction-1" id="toc-introduction-1" class="nav-link" data-scroll-target="#introduction-1"><span class="header-section-number">34.3</span> INTRODUCTION</a></li>
+  <li><a href="#can-we-model-meaning" id="toc-can-we-model-meaning" class="nav-link" data-scroll-target="#can-we-model-meaning"><span class="header-section-number">34.4</span> CAN WE MODEL MEANING?</a>
   <ul class="collapse">
-  <li><a href="#the-distributional-hypothesis" id="toc-the-distributional-hypothesis" class="nav-link" data-scroll-target="#the-distributional-hypothesis"><span class="header-section-number">33.4.1</span> The Distributional Hypothesis</a></li>
+  <li><a href="#the-distributional-hypothesis" id="toc-the-distributional-hypothesis" class="nav-link" data-scroll-target="#the-distributional-hypothesis"><span class="header-section-number">34.4.1</span> The Distributional Hypothesis</a></li>
   </ul></li>
-  <li><a href="#what-are-neural-word-embeddings" id="toc-what-are-neural-word-embeddings" class="nav-link" data-scroll-target="#what-are-neural-word-embeddings"><span class="header-section-number">33.5</span> WHAT ARE NEURAL WORD EMBEDDINGS?</a>
+  <li><a href="#what-are-neural-word-embeddings" id="toc-what-are-neural-word-embeddings" class="nav-link" data-scroll-target="#what-are-neural-word-embeddings"><span class="header-section-number">34.5</span> WHAT ARE NEURAL WORD EMBEDDINGS?</a>
   <ul class="collapse">
-  <li><a href="#learning-embeddings-with-word2vec" id="toc-learning-embeddings-with-word2vec" class="nav-link" data-scroll-target="#learning-embeddings-with-word2vec"><span class="header-section-number">33.5.1</span> Learning Embeddings with Word2Vec</a></li>
+  <li><a href="#learning-embeddings-with-word2vec" id="toc-learning-embeddings-with-word2vec" class="nav-link" data-scroll-target="#learning-embeddings-with-word2vec"><span class="header-section-number">34.5.1</span> Learning Embeddings with Word2Vec</a></li>
   </ul></li>
-  <li><a href="#cultural-cartography-getting-a-feel-for-vector-space" id="toc-cultural-cartography-getting-a-feel-for-vector-space" class="nav-link" data-scroll-target="#cultural-cartography-getting-a-feel-for-vector-space"><span class="header-section-number">33.6</span> CULTURAL CARTOGRAPHY: GETTING A FEEL FOR VECTOR SPACE</a>
+  <li><a href="#cultural-cartography-getting-a-feel-for-vector-space" id="toc-cultural-cartography-getting-a-feel-for-vector-space" class="nav-link" data-scroll-target="#cultural-cartography-getting-a-feel-for-vector-space"><span class="header-section-number">34.6</span> CULTURAL CARTOGRAPHY: GETTING A FEEL FOR VECTOR SPACE</a>
   <ul class="collapse">
-  <li><a href="#king---man-woman-neq-queen" id="toc-king---man-woman-neq-queen" class="nav-link" data-scroll-target="#king---man-woman-neq-queen"><span class="header-section-number">33.6.1</span> King - Man + Woman <span class="math inline">\(\neq\)</span> Queen</a></li>
+  <li><a href="#king---man-woman-neq-queen" id="toc-king---man-woman-neq-queen" class="nav-link" data-scroll-target="#king---man-woman-neq-queen"><span class="header-section-number">34.6.1</span> King - Man + Woman <span class="math inline">\(\neq\)</span> Queen</a></li>
   </ul></li>
-  <li><a href="#learning-embeddings-with-gensim" id="toc-learning-embeddings-with-gensim" class="nav-link" data-scroll-target="#learning-embeddings-with-gensim"><span class="header-section-number">33.7</span> LEARNING EMBEDDINGS WITH GENSIM</a>
+  <li><a href="#learning-embeddings-with-gensim" id="toc-learning-embeddings-with-gensim" class="nav-link" data-scroll-target="#learning-embeddings-with-gensim"><span class="header-section-number">34.7</span> LEARNING EMBEDDINGS WITH GENSIM</a>
   <ul class="collapse">
-  <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data"><span class="header-section-number">33.7.1</span> Data</a></li>
+  <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data"><span class="header-section-number">34.7.1</span> Data</a></li>
   </ul></li>
-  <li><a href="#comparing-embeddings" id="toc-comparing-embeddings" class="nav-link" data-scroll-target="#comparing-embeddings"><span class="header-section-number">33.8</span> COMPARING EMBEDDINGS</a>
+  <li><a href="#comparing-embeddings" id="toc-comparing-embeddings" class="nav-link" data-scroll-target="#comparing-embeddings"><span class="header-section-number">34.8</span> COMPARING EMBEDDINGS</a>
   <ul class="collapse">
-  <li><a href="#imports" id="toc-imports" class="nav-link" data-scroll-target="#imports"><span class="header-section-number">33.8.1</span> Imports</a></li>
-  <li><a href="#aligning-your-vector-spaces" id="toc-aligning-your-vector-spaces" class="nav-link" data-scroll-target="#aligning-your-vector-spaces"><span class="header-section-number">33.8.2</span> Aligning Your Vector Spaces!</a></li>
-  <li><a href="#step-1-train-the-compass" id="toc-step-1-train-the-compass" class="nav-link" data-scroll-target="#step-1-train-the-compass"><span class="header-section-number">33.8.3</span> Step 1: Train the Compass</a></li>
-  <li><a href="#step-2-train-a-series-of-aligned-embedding-models" id="toc-step-2-train-a-series-of-aligned-embedding-models" class="nav-link" data-scroll-target="#step-2-train-a-series-of-aligned-embedding-models"><span class="header-section-number">33.8.4</span> Step 2: Train a Series of Aligned Embedding Models</a></li>
+  <li><a href="#imports" id="toc-imports" class="nav-link" data-scroll-target="#imports"><span class="header-section-number">34.8.1</span> Imports</a></li>
+  <li><a href="#aligning-your-vector-spaces" id="toc-aligning-your-vector-spaces" class="nav-link" data-scroll-target="#aligning-your-vector-spaces"><span class="header-section-number">34.8.2</span> Aligning Your Vector Spaces!</a></li>
+  <li><a href="#step-1-train-the-compass" id="toc-step-1-train-the-compass" class="nav-link" data-scroll-target="#step-1-train-the-compass"><span class="header-section-number">34.8.3</span> Step 1: Train the Compass</a></li>
+  <li><a href="#step-2-train-a-series-of-aligned-embedding-models" id="toc-step-2-train-a-series-of-aligned-embedding-models" class="nav-link" data-scroll-target="#step-2-train-a-series-of-aligned-embedding-models"><span class="header-section-number">34.8.4</span> Step 2: Train a Series of Aligned Embedding Models</a></li>
   </ul></li>
-  <li><a href="#conclusion-1" id="toc-conclusion-1" class="nav-link" data-scroll-target="#conclusion-1"><span class="header-section-number">33.9</span> CONCLUSION</a>
+  <li><a href="#conclusion-1" id="toc-conclusion-1" class="nav-link" data-scroll-target="#conclusion-1"><span class="header-section-number">34.9</span> CONCLUSION</a>
   <ul class="collapse">
-  <li><a href="#key-points-1" id="toc-key-points-1" class="nav-link" data-scroll-target="#key-points-1"><span class="header-section-number">33.9.1</span> Key Points</a></li>
+  <li><a href="#key-points-1" id="toc-key-points-1" class="nav-link" data-scroll-target="#key-points-1"><span class="header-section-number">34.9.1</span> Key Points</a></li>
   </ul></li>
   </ul></li>
   </ul>
@@ -624,9 +636,9 @@ window.Quarto = {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./artificial-neural-networks-fnn-rnn-cnn.html"><strong>DEEP LEARNING</strong></a></li><li class="breadcrumb-item"><a href="./language-models-and-embeddings.html"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Processing Natural Language Data</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./artificial-neural-networks-fnn-rnn-cnn.html"><strong>DEEP LEARNING</strong></a></li><li class="breadcrumb-item"><a href="./language-models-and-embeddings.html"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Language models and word embeddings</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Processing Natural Language Data</span></h1>
+<h1 class="title"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Language models and word embeddings</span></h1>
 </div>
 
 
@@ -644,10 +656,10 @@ window.Quarto = {
 
 
 <ul>
-<li>Note the word embeddings chapter is below this one; integrate them</li>
+<li>Note the word embeddings chapter is below this one; condense, integrate, and update them</li>
 </ul>
-<section id="learning-objectives" class="level2" data-number="32.1">
-<h2 data-number="32.1" class="anchored" data-anchor-id="learning-objectives"><span class="header-section-number">32.1</span> LEARNING OBJECTIVES</h2>
+<section id="learning-objectives" class="level2" data-number="33.1">
+<h2 data-number="33.1" class="anchored" data-anchor-id="learning-objectives"><span class="header-section-number">33.1</span> LEARNING OBJECTIVES</h2>
 <p>By the end of this chapter, you should be able to:</p>
 <ul>
 <li>Describe the main components of SpaCy’s natural language processing pipeline</li>
@@ -659,15 +671,15 @@ window.Quarto = {
 <li>Examine Subject, Verb, Object Triplets</li>
 </ul>
 </section>
-<section id="learning-materials" class="level2" data-number="32.2">
-<h2 data-number="32.2" class="anchored" data-anchor-id="learning-materials"><span class="header-section-number">32.2</span> LEARNING MATERIALS</h2>
+<section id="learning-materials" class="level2" data-number="33.2">
+<h2 data-number="33.2" class="anchored" data-anchor-id="learning-materials"><span class="header-section-number">33.2</span> LEARNING MATERIALS</h2>
 <p>You can find the online learning materials for this chapter in <code>doing_computational_social_science/Chapter_10</code>. <code>cd</code> into the directory and launch your Jupyter Server.</p>
 </section>
-<section id="introduction" class="level2" data-number="32.3">
-<h2 data-number="32.3" class="anchored" data-anchor-id="introduction"><span class="header-section-number">32.3</span> INTRODUCTION</h2>
+<section id="introduction" class="level2" data-number="33.3">
+<h2 data-number="33.3" class="anchored" data-anchor-id="introduction"><span class="header-section-number">33.3</span> INTRODUCTION</h2>
 <p>In this chapter, we will shift our focus from working with structured quantitative data to natural language data stored in the form of unstructured text. We will begin by learning how to use the package SpaCy for common natural language processing (NLP) tasks, such as cleaning and normalizing text data, followed by a discussion of labeling words by their part-of-speech, manipulating syntactic dependencies betweens words, and using all of this to create a rough 3-word summary of the content in a sentence. Later, we will put this knowledge to use for custom text pre-processing functions to use for downstream tasks in other chapters of the book.</p>
-<section id="package-imports" class="level3" data-number="32.3.1">
-<h3 data-number="32.3.1" class="anchored" data-anchor-id="package-imports"><span class="header-section-number">32.3.1</span> Package Imports</h3>
+<section id="package-imports" class="level3" data-number="33.3.1">
+<h3 data-number="33.3.1" class="anchored" data-anchor-id="package-imports"><span class="header-section-number">33.3.1</span> Package Imports</h3>
 <div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -681,12 +693,12 @@ window.Quarto = {
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>set_style()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 </section>
-<section id="text-processing" class="level2" data-number="32.4">
-<h2 data-number="32.4" class="anchored" data-anchor-id="text-processing"><span class="header-section-number">32.4</span> TEXT PROCESSING</h2>
+<section id="text-processing" class="level2" data-number="33.4">
+<h2 data-number="33.4" class="anchored" data-anchor-id="text-processing"><span class="header-section-number">33.4</span> TEXT PROCESSING</h2>
 <p>With the exception of some recent neural network and embedding-based text methods that we will consider later in this book, the quality of most text analyses can be dramatically improved with careful text processing prior to any modelling. For data cleaning, common text processing tasks include removing punctuation, converting to lower case, normalizing words using techniques like stemming or lemmatization, and selecting some subset of terms to use in the analysis. When selecting the subset of terms, it is possible to use a vocabulary that you curate yourself (in which case it is referred to as a <strong>dictionary</strong>) or to select terms based on some sort of criteria, such as their frequency or part-of-speech (e.g., noun, adjectives).</p>
 <p>You can process your text data any number of ways in Python, but my advice is that you use a package called SpaCy. SpaCy is, to put it plainly, head and shoulders above the rest when it comes to processing natural language data in Python, or in any other language for that matter. If you are interested in natural language processing, SpaCy alone is reason to do your work entirely in Python. In this first part of the chapter, we will introduce SpaCy with an emphasis on its built in data processing pipelines and data structures, and then we will practice using it to process a data set consisting of political speeches.</p>
-<section id="getting-to-know-spacy" class="level3" data-number="32.4.1">
-<h3 data-number="32.4.1" class="anchored" data-anchor-id="getting-to-know-spacy"><span class="header-section-number">32.4.1</span> Getting to Know SpaCy</h3>
+<section id="getting-to-know-spacy" class="level3" data-number="33.4.1">
+<h3 data-number="33.4.1" class="anchored" data-anchor-id="getting-to-know-spacy"><span class="header-section-number">33.4.1</span> Getting to Know SpaCy</h3>
 <p>One of the major benefits of using SpaCy is that it is tightly integrated with state-of-the-art statistical language models, trained using deep learning methods that you will start learning in later chapters.</p>
 <p>We are not yet ready to get into the details of pre-trained statistical language models, but we will briefly touch on them here since knowing a <em>bit</em> about them is an important part of learning how to use SpaCy to process natural language data.</p>
 <p>Some recent advances have begun revolutionizing natural language processing. To grossly oversimplify things, <strong>transfer learning</strong> means that the output of a machine learning model that was trained in one context is reused in another context. In fields like computer vision and natural language processing, we are almost always talking about deep learning models that take an enormous amount of time and energy to train. In NLP, the basic idea is to train such a model on truly massive datasets (e.g., crawls of the entire open web). In doing so, the model learns a lot about language <em>in general</em>, but perhaps not much about any specific domain. The output from the pre-trained model can be made available to researchers, who can update it using annotated data from the specific domain they are interested in, such as news stories reporting on the Black Lives Matter movement. For most tasks, this transfer learning approach outperforms models that have been trained on a massive dataset but have not been updated with domain-specific data, or models trained the other way around.</p>
@@ -702,8 +714,8 @@ window.Quarto = {
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>python <span class="op">-</span>m spacy download en_core_web_sm</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>nlp <span class="op">=</span> spacy.load(<span class="st">"en_core_web_sm"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>We’ve now created an instance of spaCy’s text processing pipeline. Let’s put it to use!</p>
-<section id="the-spacy-nlp-pipeline" class="level4" data-number="32.4.1.1">
-<h4 data-number="32.4.1.1" class="anchored" data-anchor-id="the-spacy-nlp-pipeline"><span class="header-section-number">32.4.1.1</span> The SpaCy NLP Pipeline</h4>
+<section id="the-spacy-nlp-pipeline" class="level4" data-number="33.4.1.1">
+<h4 data-number="33.4.1.1" class="anchored" data-anchor-id="the-spacy-nlp-pipeline"><span class="header-section-number">33.4.1.1</span> The SpaCy NLP Pipeline</h4>
 <p>Once the language model has been loaded (<code>nlp</code>), we can start processing our raw text by passing it through SpaCy’s default text processing pipeline, which is illustrated in <span class="quarto-unresolved-ref">?fig-10_01</span>. This is often the slowest part of a natural language processing workflow because SpaCy does a <em>lot</em> of heavy lifting right at the start. The result of this process will be something called a <code>Doc</code> object, which we will discuss momentarily; for now, let’s focus on the big picture and then circle back and fill in the details on each pipeline component and data structure later.</p>
 <p><embed src="figures/spacy.pdf" class="img-fluid"></p>
 <p>As shown in Figure XXX, as soon as our original text enters SpaCy’s pipeline, it encounters the <strong>tokenizer</strong>, which identifies the boundaries of words and sentences. Most of the time, punctuation makes it relatively simple for computers to detect sentence boundaries but periods in abbreviations and acronyms (e.g.&nbsp;U.K., U.S.A) can complicate this simple approach. Even tokenizing individual words can be tricky, as this process involves making decisions like whether to convert contractions to one token or two (e.g.&nbsp;it’s vs.&nbsp;it is), or whether to tokenize special characters like emoji. SpaCy tokenizes text using language-specific rules, differentiating between punctuation marking the end of a sentence and punctuation used in acronyms and abbreviations. It will also use pre-defined language-specific rules to split tokens like <code>don't</code> into <code>do</code> and <code>n't</code>. Although these rules are language-specific, if SpaCy doesn’t already have a tokenizer for a language you need, it is possible to add new languages. (Instructions on how to do this are available in the SpaCy documentation.)</p>
@@ -711,8 +723,8 @@ window.Quarto = {
 <p>The general processing pipeline I have just described is summarized in the Figure below, which is reproduced from <a href="https://spacy.io/usage/spacy-101">the spaCy documentation</a>. Note the “Custom Pipeline Components” on the right side of the processing pipeline. This indicates the option of adding additional steps to the pipeline, such as categorizing texts based on some pre-defined set of labels, assigning customized attributes to the <code>Doc</code>, <code>Token</code>, and <code>Span</code> objects, merging noun chunks or named entities into single tokens, and so on. Technically you can add your own custom steps to any part of the SpaCy pipeline, not just the end. These custom steps are beyond the scope of this chapter, but now you know it’s possible to add them.</p>
 <p>Now that we understand how to download, load, and use pre-trained statistical models as part of SpaCy’s default text processing pipeline, it’s time to learn about SpaCy’s containers: <code>Doc</code>s, <code>token</code>s, and <code>span</code>s.</p>
 </section>
-<section id="the-spacy-containers" class="level4" data-number="32.4.1.2">
-<h4 data-number="32.4.1.2" class="anchored" data-anchor-id="the-spacy-containers"><span class="header-section-number">32.4.1.2</span> The SpaCy Containers</h4>
+<section id="the-spacy-containers" class="level4" data-number="33.4.1.2">
+<h4 data-number="33.4.1.2" class="anchored" data-anchor-id="the-spacy-containers"><span class="header-section-number">33.4.1.2</span> The SpaCy Containers</h4>
 <p>We’ll use a simple example to illustrate SpaCy’s containers. We start by passing some raw input text into the processing pipeline and then demonstrate how to work with the containers that store the output of that pipeline.</p>
 <p>As an example, let’s consider the abstract for Bart Bonikowski’s <span class="citation" data-cites="bonikowski2017ethno">(<a href="references.html#ref-bonikowski2017ethno" role="doc-biblioref">2017</a>)</span> journal article “Ethno-nationalist populism and the mobilization of collective resentment” published in <em>The British Journal of Sociology</em>. Here is the raw text of the abstract:</p>
 <blockquote class="blockquote">
@@ -721,8 +733,8 @@ window.Quarto = {
 <p>I have the abstract saved in a text file called “bonikowski_2017.txt”. To feed this abstract into the SpaCy pipeline we’ll read it into memory, assign it to a variable, and then call our <code>nlp()</code> object on it.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">'data/bonikowski_2017.txt'</span>, <span class="st">'r'</span>) <span class="im">as</span> f:</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    abstract <span class="op">=</span> f.read()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<section id="docs" class="level5" data-number="32.4.1.2.1">
-<h5 data-number="32.4.1.2.1" class="anchored" data-anchor-id="docs"><span class="header-section-number">32.4.1.2.1</span> <code>Doc</code>s</h5>
+<section id="docs" class="level5" data-number="33.4.1.2.1">
+<h5 data-number="33.4.1.2.1" class="anchored" data-anchor-id="docs"><span class="header-section-number">33.4.1.2.1</span> <code>Doc</code>s</h5>
 <p>In SpaCy, the first data structure to understand is the <strong><code>Doc</code></strong> object returned from the default processing pipeline indicated in the Figure above. The <code>Doc</code> object contains the linguistic annotations that we will use in our analyses, such as information about parts-of-speech. As indicated in the Figure above, we create the <code>Doc</code> object by running our data through the NLP pipeline. We’ll call the <code>Doc</code> object <code>doc</code>, but of course we could call it pretty much anything we want.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>doc <span class="op">=</span> nlp(abstract)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'There are </span><span class="sc">{</span><span class="bu">len</span>(doc)<span class="sc">}</span><span class="ss"> tokens in this document.'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -747,15 +759,15 @@ window.Quarto = {
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'There are </span><span class="sc">{</span><span class="bu">len</span>(doc)<span class="sc">}</span><span class="ss"> tokens in this document.'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <pre><code>There are 346 tokens in this document.</code></pre>
 </section>
-<section id="token" class="level5" data-number="32.4.1.2.2">
-<h5 data-number="32.4.1.2.2" class="anchored" data-anchor-id="token"><span class="header-section-number">32.4.1.2.2</span> <code>Token</code></h5>
+<section id="token" class="level5" data-number="33.4.1.2.2">
+<h5 data-number="33.4.1.2.2" class="anchored" data-anchor-id="token"><span class="header-section-number">33.4.1.2.2</span> <code>Token</code></h5>
 <p>The second type of object to know about is the <strong><code>Token</code></strong>. A token is each individual element of the raw text, such as words and punctuation. The <code>Token</code> object stores information about lexical types, adjacent whitespace, the parent <code>Doc</code> that a token belongs to, and “offsets” that index precisely where the token occurs within the parent <code>Doc</code>. As we will see in subsequent chapters, all of this <code>Token</code> metadata can be used to accomplish specific natural language processing tasks with a high-degree of accuracy, such as the information extraction tasks covered in later chapters.</p>
 <p><code>Tokens</code> are stored as hash values to save memory, but just as we can access the raw input text of a <code>Doc</code> object using <code>.text</code>, we can see the textual representation of a given token using <code>.text</code>. We can also access each token by specifying its index position in the <code>Doc</code> or by iterating over the <code>Doc</code>.</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> token <span class="kw">in</span> doc:</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(token.text)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>An enormous amount of information is stored about each <code>Token</code>, most of which can be retrieved using methods discussed extensively in the documentation. We’ll cover examples of some fairly important ones, including methods for accessing the normalized forms of the token such as a lemma, its part-of-speech, the dependency relations it’s embedded in, and in some cases, even an estimate of the token’s sentiment.</p>
-<section id="span" class="level6" data-number="32.4.1.2.2.1">
-<h6 data-number="32.4.1.2.2.1" class="anchored" data-anchor-id="span"><span class="header-section-number">32.4.1.2.2.1</span> <code>Span</code></h6>
+<section id="span" class="level6" data-number="33.4.1.2.2.1">
+<h6 data-number="33.4.1.2.2.1" class="anchored" data-anchor-id="span"><span class="header-section-number">33.4.1.2.2.1</span> <code>Span</code></h6>
 <p>The final data structure to understand before moving on is the <strong><code>Span</code></strong>, which is a slice of a <code>Doc</code> object that consists of multiple <code>tokens</code> but is smaller than the full <code>Doc</code>. When you iterate of sentences in a document, each of those is actually a <code>Span</code>. Knowing how spans work can be very useful for data exploration, as well as programmatically gathering contextual words that are adjacent to a target type of token, such as a type of named entity. We can specify a span by using slice notation. For example, we could define a <code>Span</code> by providing the range of token indexes from 5 to 15. Note that this span will include token 5 but not token 15!</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>a_span <span class="op">=</span> doc[<span class="dv">5</span>:<span class="dv">15</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Given a span, we can use many of the same methods available for <code>Docs</code> and <code>Tokens</code>, as well as merging and splitting <code>Spans</code>, or copying them into their own <code>Doc</code> objects.</p>
@@ -765,8 +777,8 @@ window.Quarto = {
 </section>
 </section>
 </section>
-<section id="normalizing-text-via-lemmatization" class="level2" data-number="32.5">
-<h2 data-number="32.5" class="anchored" data-anchor-id="normalizing-text-via-lemmatization"><span class="header-section-number">32.5</span> NORMALIZING TEXT VIA LEMMATIZATION</h2>
+<section id="normalizing-text-via-lemmatization" class="level2" data-number="33.5">
+<h2 data-number="33.5" class="anchored" data-anchor-id="normalizing-text-via-lemmatization"><span class="header-section-number">33.5</span> NORMALIZING TEXT VIA LEMMATIZATION</h2>
 <p>When we work with natural language data, we have to decide how to handle words that mean more or less the same thing but have different surface forms (e.g.&nbsp;compute, computing). On the one hand, leaving words as they appear preserves nuances in language that may be useful. However, those words are tokenized and counted separately, as if they had no semantic similarity. An alternative approach is to normalize the text by grouping together words that mean more or less the same thing and reducing them to the same token. The idea, in short, is to define classes of equivalent words and treat them as a single token. Doing so loses some of the nuance but can dramatically improve the results of most text analysis algorithms. The two most widely-used approaches to text normalization are stemming and lemmatization.</p>
 <p><strong>Stemming</strong> is a rule-based approach to normalizing words regardless of what role the word plays in a sentence (e.g.&nbsp;noun or verb), or of the surrounding context. For example, the Snowball stemmer takes in each individual word and follows rules about what parts of the word (e.g.&nbsp;“ing”) should be cut off. As you might imagine, the results you get back are usually not themselves valid words.</p>
 <p>Rather than chopping off parts of tokens to get to a word stem, <strong>lemmatization</strong> normalizes words by reducing them to their dictionary form. As a result, it always returns valid words, which makes it considerably easier to interpret the results of almost any text analysis. In addition, lemmatization can be done either with a simple language-specific lookup table or in a rule-based way that considers a token’s part-of-speech (discussed below), which enables it to differentiate between ways of using the same word (e.g.&nbsp;“meeting” as a noun, “meeting” as a verb) and identical words that have different normalisation rules in different contexts. Lemmatization is extremely accurate and is almost always going to be a better choice than stemming. It is also more widely used.</p>
@@ -805,8 +817,8 @@ consequences (consequence)
 existing (exist)</code></pre>
 <p>This simple process of iterating over tokens and selecting some, but not all, is something we will do again and again in this chapter. There are more efficient ways to do this kind of pre-processing work – specifically by writing a custom function – but we will put that task on hold until we’ve covered each of the individual pieces.</p>
 </section>
-<section id="part-of-speech-tagging" class="level2" data-number="32.6">
-<h2 data-number="32.6" class="anchored" data-anchor-id="part-of-speech-tagging"><span class="header-section-number">32.6</span> PART-OF-SPEECH TAGGING</h2>
+<section id="part-of-speech-tagging" class="level2" data-number="33.6">
+<h2 data-number="33.6" class="anchored" data-anchor-id="part-of-speech-tagging"><span class="header-section-number">33.6</span> PART-OF-SPEECH TAGGING</h2>
 <p>In some research applications, you may want to restrict the subset of words that you include in your text analysis. For example, if you are primarily interested in understanding <em>what</em> people are writing or talking about (as opposed to <em>how</em> they are talking about something), then you may decide to include only nouns and proper nouns, or noun chunks (discussed below) in your analysis. In our example abstract, nouns and noun chunks like “Europe,” “radical-right politics,” “Brexit referendum,” “Trump campaign,” “causes and consequences,” “ethno-nationalist populism,” and so on tell us far more about the <em>content</em> of this abstract than words such as “and,” “has,” “recent,” or “available.” We can do this by filtering words based on their <strong>part-of-speech</strong>.</p>
 <p>If you’re a little lost at this point, that’s a good thing; it means you’re paying attention, and are justifiably struggling to conceptualize the reconstitution of language we’ve covered in the last few paragraphs. At this point, an example might help show how these processes play out in action. Returning to our example abstract, we’ll start by examining each word and its part of speech.</p>
 <div class="sourceCode" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> item <span class="kw">in</span> doc[:<span class="dv">20</span>]:</span>
@@ -885,8 +897,8 @@ States (PROPN)
  'coterminous']</code></pre>
 <p>The accuracy of the part-of-speech tagger in version 3 of SpaCy is 97% for the small English core model and 97.4% for the large English core models, both of which are trained using convolutional neural networks. As mentioned earlier, you will only see modest gains in accuracy by switching to a larger statistical model. Ultimately, as you will soon learn, the accuracy of these kinds of models depends in large part on the data they’re trained on. The good news is that the accuracy rates for part-of-speech tagging are consistently high regardless of the corpus used for training, and for researchers like us who are more interested in applying these algorithms, rather than developing them, have nothing to gain from trying to beat 97% accuracy.</p>
 </section>
-<section id="syntactic-dependency-parsing" class="level2" data-number="32.7">
-<h2 data-number="32.7" class="anchored" data-anchor-id="syntactic-dependency-parsing"><span class="header-section-number">32.7</span> SYNTACTIC DEPENDENCY PARSING</h2>
+<section id="syntactic-dependency-parsing" class="level2" data-number="33.7">
+<h2 data-number="33.7" class="anchored" data-anchor-id="syntactic-dependency-parsing"><span class="header-section-number">33.7</span> SYNTACTIC DEPENDENCY PARSING</h2>
 <p>The third component of the SpaCy processing pipeline (see Figure 1) is the syntactic dependency parser. This rule-based parser rests on a solid foundation of linguistic research and, when combined with machine learning models, greatly increases the accuracy of a variety of important text processing tasks. It also makes it possible to extract meaningful sequences of words from texts, such as short phrases, or components of larger narratives and frames. We will consider the power of this approach by looking at how SpaCy extracts <strong>noun chunks</strong> from text, setting aside more complex manipulations of the dependency tree until later.</p>
 <p>When we communicate in natural languages such as English, we follow sets of commonly held rules that govern how we arrange words, clauses, and phrases in sentences. For the most part, we learn these rules – <strong>grammar</strong> – implicitly via socialization as children, and then more explicitly later in life. For non-linguists, some explicit forms of instruction about the “correct” and “incorrect” way of doing things in a language is what probably comes to mind when we think about grammar, but from a linguistic point of view grammatical rules should <em>not</em> be seen as proscriptive but rather as cultural and evolving in populations over time. Grammatical “rules” are about dominant patterns in usage in a population (linguists use the word ‘rule’ in the way sociologists and political scientists do, not the way physicists do). They are one of the best examples of shared culture and implicit cultural rules we have! Rather than proscription, linguists are focused on <em>description</em> and <em>explanation</em> of grammatical rules, and there is an enormous amount of formal linguistic theory and research on modelling grammar. In fact, Pãnini’s study of the grammatical structure of Sanskrit was written in the 4th-century and is still discussed today <span class="citation" data-cites="jurafsky2000speech">(<a href="references.html#ref-jurafsky2000speech" role="doc-biblioref">Jurafsky and Hand 2009</a>)</span>!</p>
 <p>One of the most enduring ways of modelling grammar is <strong>dependency parsing</strong>, which has its origins in ancient Greek and Indian linguistics <span class="citation" data-cites="jurafsky2000speech">(<a href="references.html#ref-jurafsky2000speech" role="doc-biblioref">Jurafsky and Hand 2009</a>)</span>. Dependency parsing is a rules-based approach that models the relationships between words in a sentence as a directed network. The edges in the network represent various kinds of grammatical relationships between pairs of words. You may already be able to think of some important grammatical relations, such as <strong>clausal argument relations</strong> (e.g.&nbsp;a word can be a <em>nominal subject</em> of another word, a <em>direct</em> or <em>indirect object</em>, or a <em>clausal complement</em>), <strong>modifier relations</strong> (e.g.&nbsp;<em>adjectives</em> that modify a noun, <em>adverbs</em> that modify a verb), or others such as <strong>coordinating conjunctions</strong> that connect phrases and clauses in sentences. Linguists have documented many important grammatical relations and have systematically compared how they operate across different languages <span class="citation" data-cites="nivre2017universal">(e.g. <a href="references.html#ref-nivre2017universal" role="doc-biblioref">Nivre and Fang 2017</a>)</span>. SpaCy combines this rules-based dependency parsing with machine learning models, which results in extremely high levels of accuracy for a broad range of NLP tasks, such as part-of-speech tagging, discussed earlier.</p>
@@ -999,8 +1011,8 @@ States (PROPN)
 </tbody>
 </table>
 <p>For now, what’s important to understand is that SpaCy does this dependency parsing as part of the default processing pipeline (and like other parts of the pipeline, it is possible to disable it if you don’t need it). However, we can extract information about these dependency relations directly from the syntactic tree, which in turn enables us to extract a variety of useful information from text with a very high degree of precision, and makes it possible to partially automate methods such as quantitative narrative analysis, briefly discussed below, which are otherwise very laborious and time consuming.</p>
-<section id="noun-chunks" class="level3" data-number="32.7.1">
-<h3 data-number="32.7.1" class="anchored" data-anchor-id="noun-chunks"><span class="header-section-number">32.7.1</span> Noun Chunks</h3>
+<section id="noun-chunks" class="level3" data-number="33.7.1">
+<h3 data-number="33.7.1" class="anchored" data-anchor-id="noun-chunks"><span class="header-section-number">33.7.1</span> Noun Chunks</h3>
 <p>One substantial benefit of dependency parsing is the ability to extract coherent phrases and other sub-sentence chunks of meaning from text. We will learn a bit about how to navigate the dependency tree shortly, but for now we can get a sense of the power of dependency parsing by looking at the example of noun phrases, which SpaCy calls “noun chunks.”</p>
 <p><strong>Noun chunks</strong> consist of a single word (the noun) or a string of words including a noun and the words that modify that noun. These are usually “pre-modifiers,” meaning words (e.g.&nbsp;adjectives) that appear <em>before</em> the focal noun, not after. A <strong>base noun phrase</strong> is a phrase that has a noun as its head, and which does not itself contain another noun phrase.</p>
 <p>Below, we iterate over the <code>doc</code> containing the text of Bonikowski’s article and print each noun chunk:</p>
@@ -1008,8 +1020,8 @@ States (PROPN)
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(item.text)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Remember, the computer doesn’t actually know the meaning of any of these words or phrases. Given that, the results are surprisingly accurate; it should be clear how useful this kind of simplification could be for working with large volumes of text! In a later chapter, we will take a closer look at detecting noun chunks, using a machine learning approach designed specifically for this task.</p>
 </section>
-<section id="extracting-words-by-dependency-labels-subject-verb-object-triplets" class="level3" data-number="32.7.2">
-<h3 data-number="32.7.2" class="anchored" data-anchor-id="extracting-words-by-dependency-labels-subject-verb-object-triplets"><span class="header-section-number">32.7.2</span> Extracting Words by Dependency Labels: Subject, Verb, Object Triplets</h3>
+<section id="extracting-words-by-dependency-labels-subject-verb-object-triplets" class="level3" data-number="33.7.2">
+<h3 data-number="33.7.2" class="anchored" data-anchor-id="extracting-words-by-dependency-labels-subject-verb-object-triplets"><span class="header-section-number">33.7.2</span> Extracting Words by Dependency Labels: Subject, Verb, Object Triplets</h3>
 <p>Earlier, you learned how to process a large collection of <code>Doc</code>s and extract <code>Token</code>s from each based on several criteria, including their part-of-speech. We can also extract tokens from documents based on other criteria, such as their dependency relationships with other words. For example, if we wanted to extract a very small representation of an action-object narrative from a sentence (e.g., “<strong>Kat</strong> (subject) <strong>plays</strong> (verb) <strong>bass</strong> (object).”), we could extract the transitive verb (i.e., a verb that takes an object, “plays”) and the direct object of that transitive verb (i.e., “bass”). To do this, we simply check the <code>.dep_</code> tags for each token rather than the <code>.pos_</code> tags. For example, the loops below creates a list of tuples containing the transitive verbs and direct objects for each sentence in <code>doc</code>.</p>
 <div class="sourceCode" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> sent <span class="kw">in</span> doc.sents:</span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>    tvdo <span class="op">=</span> [(token.head.text, token.text) <span class="cf">for</span> token <span class="kw">in</span> sent <span class="cf">if</span> token.dep_ <span class="op">==</span> <span class="st">'dobj'</span>]</span>
@@ -1026,10 +1038,10 @@ States (PROPN)
 </blockquote>
 </section>
 </section>
-<section id="conclusion" class="level2" data-number="32.8">
-<h2 data-number="32.8" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">32.8</span> CONCLUSION</h2>
-<section id="key-points" class="level3" data-number="32.8.1">
-<h3 data-number="32.8.1" class="anchored" data-anchor-id="key-points"><span class="header-section-number">32.8.1</span> Key Points</h3>
+<section id="conclusion" class="level2" data-number="33.8">
+<h2 data-number="33.8" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">33.8</span> CONCLUSION</h2>
+<section id="key-points" class="level3" data-number="33.8.1">
+<h3 data-number="33.8.1" class="anchored" data-anchor-id="key-points"><span class="header-section-number">33.8.1</span> Key Points</h3>
 <ul>
 <li>We discussed a variety of common text processing tasks and demonstrated how to use them on a small text dataset and a very large one.</li>
 <li>Learned about how SpaCy’s text processing pipeline is organized, and how to use its data structures</li>
@@ -1039,28 +1051,28 @@ States (PROPN)
 </ul>
 </section>
 </section>
-<section id="word-vectors" class="level1" data-number="33">
-<h1 data-number="33"><span class="header-section-number">33</span> Word vectors</h1>
+<section id="word-vectors" class="level1" data-number="34">
+<h1 data-number="34"><span class="header-section-number">34</span> Word vectors</h1>
 <!-- Can We Model Meaning? Contextual Representation and Neural Word Embeddings -->
-<section id="learning-objectives-1" class="level2" data-number="33.1">
-<h2 data-number="33.1" class="anchored" data-anchor-id="learning-objectives-1"><span class="header-section-number">33.1</span> LEARNING OBJECTIVES</h2>
+<section id="learning-objectives-1" class="level2" data-number="34.1">
+<h2 data-number="34.1" class="anchored" data-anchor-id="learning-objectives-1"><span class="header-section-number">34.1</span> LEARNING OBJECTIVES</h2>
 <ul>
 <li>Learn what word embeddings models are, and what they can be used for</li>
 <li>Learn what Word2Vec is and how the CBOW and Skip-gram architectures differ</li>
 <li>Understand why we should not trust intuitions about complex high-dimensional vector spaces</li>
 </ul>
 </section>
-<section id="learning-materials-1" class="level2" data-number="33.2">
-<h2 data-number="33.2" class="anchored" data-anchor-id="learning-materials-1"><span class="header-section-number">33.2</span> LEARNING MATERIALS</h2>
+<section id="learning-materials-1" class="level2" data-number="34.2">
+<h2 data-number="34.2" class="anchored" data-anchor-id="learning-materials-1"><span class="header-section-number">34.2</span> LEARNING MATERIALS</h2>
 <p>You can find the online learning materials for this chapter in <code>doing_computational_social_science/Chapter_32</code>. <code>cd</code> into the directory and launch your Jupyter Server.</p>
 </section>
-<section id="introduction-1" class="level2" data-number="33.3">
-<h2 data-number="33.3" class="anchored" data-anchor-id="introduction-1"><span class="header-section-number">33.3</span> INTRODUCTION</h2>
+<section id="introduction-1" class="level2" data-number="34.3">
+<h2 data-number="34.3" class="anchored" data-anchor-id="introduction-1"><span class="header-section-number">34.3</span> INTRODUCTION</h2>
 <p>The text analysis models we’ve been working with to this point in the book have primarly been focused on fairly traditional content analytic tasks, such as describing and comparing the thematic content contained in a collection of text documents. Nearly all of these models have been based on long and sparse vector representations of text data, otherwise known as a “bag-of-words.” In this chapter, we will learn how to represent text data with short dense vectors, otherwise known as word embeddings. Embeddings have interesting implications if used to understand how different words are used in similar contexts, giving us insights into patterns of language use. There is a tendency to think of embeddings are modelling meaning, but for reasons that will become clear in this chapter, we should be careful to avoid imputing meaning to embeddings.</p>
 <p>In what follows, we’ll discuss some of the challenges involved with modelling meaning in general, followed by an introduction to using neural word embedding models. As always, we’ll break the models down to better understand how they work, and we’ll spend a bit of time working with pre-trained embeddings to deepen your understanding of embeddings, and to get a feel for vector space. We’ll emphasize fairly simple vector math operations with these embeddings to help you understand why we should <em>not</em> assume that embeddings are good proxies for meaning, and why we need to be very careful with how we interpret the results of analyses that bundle together many vector operations to construct larger “dimensions” of cultural meaning. Finally, I’ll close the chapter by showing you how to train your own word embedding models, including how to train multiple models in a way that facilitates valid cross-sectional comparisons and historical / temporal analysis.</p>
 </section>
-<section id="can-we-model-meaning" class="level2" data-number="33.4">
-<h2 data-number="33.4" class="anchored" data-anchor-id="can-we-model-meaning"><span class="header-section-number">33.4</span> CAN WE MODEL MEANING?</h2>
+<section id="can-we-model-meaning" class="level2" data-number="34.4">
+<h2 data-number="34.4" class="anchored" data-anchor-id="can-we-model-meaning"><span class="header-section-number">34.4</span> CAN WE MODEL MEANING?</h2>
 <p>Word embeddings have received a lot of interest as quantitative representations of what words “mean.” It’s an astoundingly complex problem, and we need to tread very carefully. So, before we get into the specifics of the models, let’s take a moment to briefly consider some of the relevant theoretical background here.</p>
 <p>Questions about <em>meaning</em> and its consequences for social scientific inquiry have been at the center of some of the biggest theoretical and methodological debates and divides in sociology and other social sciences since at least the early 20th century <span class="citation" data-cites="mohr2020measuring">(see <a href="references.html#ref-mohr2020measuring" role="doc-biblioref">Mohr et al. 2020</a> for a fascinating discussion in the context of contemporary cultural sociology)</span>. Researchers primarily concerned with understanding meaning have tended to prefer more qualitative and interpretivist approaches. Historically, this complexity has led many quantitatively-minded researchers to concede serious efforts to understand meaning to interpretivists, and to focus instead on describing and comparing <em>content</em>.</p>
 <p>Despite this longstanding paradigmatic and methodological fault line, these have never been the only two options for social scientific text analysis. For example, relational sociologists working at the intersection of cultural sociology and social network analysis have developed a wide variety of formal and mathematical models of the cultural-cognitive dimensions of institutions, and for inductively exploring and modelling “meaning structures” <span class="citation" data-cites="mohr1998measuring mohr2015toward edelmann2018formal mohr2013introduction">(<a href="references.html#ref-mohr1998measuring" role="doc-biblioref">Mohr 1998</a>; <a href="references.html#ref-mohr2015toward" role="doc-biblioref">Mohr, Wagner-Pacifici, and Breiger 2015</a>; <a href="references.html#ref-edelmann2018formal" role="doc-biblioref">Edelmann and Mohr 2018</a>; <a href="references.html#ref-mohr2013introduction" role="doc-biblioref">Mohr and Bogdanov 2013</a>)</span>. Much of the theoretical and methodological considerations guiding text-analytic work in “relational sociology” have evolved in lockstep with network analysis <span class="citation" data-cites="emirbayer1997manifesto crossley2010towards mische2011relational">(see <a href="references.html#ref-emirbayer1997manifesto" role="doc-biblioref">Emirbayer 1997</a>; <a href="references.html#ref-crossley2010towards" role="doc-biblioref">Crossley 2010</a>; <a href="references.html#ref-mische2011relational" role="doc-biblioref">Mische 2011</a>)</span>, and in particular with the evolution of network analytic methods that are focused on understanding relational identities, the cultural-cognitive dimensions of institutions, and the dynamics of socio-semantic networks (which combine network analysis with various kinds of natural language processing). These developments are interesting in part because much of 1970s and 80s-era network analysis energetically eschewed all questions of culture and meaning, considered intractable and unscientific, in pursuit of establishing a thoroughly <em>structural</em> paradigm. But from the 1990s onward, even the most fervent structuralists were taking culture and meaning seriously <span class="citation" data-cites="white1992identity">(e.g., <a href="references.html#ref-white1992identity" role="doc-biblioref">White 1992</a>)</span>, in search of a deeper understanding of the <strong>co-constitution</strong> of social structure (networks) and culture (meanings, practices, identities, etc.). Much has happened since then.</p>
@@ -1070,16 +1082,16 @@ States (PROPN)
 <p><span class="citation" data-cites="elbourne2011meaning">Elbourne (<a href="references.html#ref-elbourne2011meaning" role="doc-biblioref">2011</a>)</span> provides many examples of the “mind-boggling complexity” involved in giving adequate definitions to the meanings of words. His larger point is that any definition-based approach to assigning meanings to words (including dictionaries) will <em>always</em> be unsatisfactory. A serious theory or approach to modelling meaning needs much more than definitions. His comparison of different cognitive and linguistic theories are well worth reading but are beyond the scope of this chapter, but one of the key take-aways is that meanings are <em>not definitions</em> and they are not determined by the characteristics of the things they refer to. Instead, meanings are concepts that reside in our heads and are generally attached to low-level units like words, which are strongly modified by the contexts in which they’re used and scale up to higher-level units like sentences. These meanings are shared but not universal. When it comes to any given thing – say the word “populist” – the concept in my head is not <em>identical</em> to the concept in your head, but communication does not break down because our concepts are qualitatively similar. We might not mean <em>exactly</em> the same thing by the word populist, but our concepts overlap sufficiently enough that we can have a meaningful conversation and our interactions don’t descend into conceptual chaos.</p>
 <p>The core sociological idea here is grounded in a critique of two extremes. Traditional philosophical approaches to cognition and meaning have been overly-focused on individual thinking and meaning. Conversely, neuroscience primarily focuses on processes presumed to be more-or-less universal, such as understanding the biological and chemical mechanisms that enable thought <em>in general</em> rather than explaining specific thoughts. But as Karen Cerulo and many others have pointed out, even if the cognitive <em>processes</em> are universal, cognitive <em>products</em> are not <span class="citation" data-cites="lizardo2019can cerulo2010mining cerulo2002culture ignatow2009culture">(<a href="references.html#ref-lizardo2019can" role="doc-biblioref">Lizardo et al. 2019</a>; <a href="references.html#ref-cerulo2010mining" role="doc-biblioref">K. A. Cerulo 2010</a>; <a href="references.html#ref-cerulo2002culture" role="doc-biblioref">K. Cerulo 2002</a>; <a href="references.html#ref-ignatow2009culture" role="doc-biblioref">Ignatow 2009</a>)</span>. There is variation in how groups of people – societies, subcultures, whatever – perceive the world, draw boundaries, employ metaphors and analogies, and so on <span class="citation" data-cites="dimaggio1997culture brekhus2019oxford">(<a href="references.html#ref-dimaggio1997culture" role="doc-biblioref">DiMaggio 1997</a>; <a href="references.html#ref-brekhus2019oxford" role="doc-biblioref">Brekhus and Ignatow 2019</a>)</span>. These meaning structures are not reducible to concepts in individual people’s heads; they are embedded in different cultural systems that are external to any individual person, and are <em>shared but not universal.</em> Given this variability and the staggering complexity of meaning <em>in general</em>, we can best understand <em>meaning</em> by understanding how people use language in context.</p>
 <p>The idea that we could best understand shared but not necessarily universal meanings by studying how groups of people use language was, surprisingly, a revolutionary idea as recently as the 1950s. It was most famously posited by the famed philosopher Ludwig <span class="citation" data-cites="anscombe1953philosophical">Wittgenstein (<a href="references.html#ref-anscombe1953philosophical" role="doc-biblioref">1953</a>)</span>, whose argument that ‘meaning resides in use’ was the inspiration behind the <em>specific</em> linguistic hypothesis that informs embedding models and is a common theme underlying many of the recent breakthroughs in natural language processing: the distributional hypothesis.</p>
-<section id="the-distributional-hypothesis" class="level3" data-number="33.4.1">
-<h3 data-number="33.4.1" class="anchored" data-anchor-id="the-distributional-hypothesis"><span class="header-section-number">33.4.1</span> The Distributional Hypothesis</h3>
+<section id="the-distributional-hypothesis" class="level3" data-number="34.4.1">
+<h3 data-number="34.4.1" class="anchored" data-anchor-id="the-distributional-hypothesis"><span class="header-section-number">34.4.1</span> The Distributional Hypothesis</h3>
 <p>Wittgenstein’s <span class="citation" data-cites="anscombe1953philosophical">(<a href="references.html#ref-anscombe1953philosophical" role="doc-biblioref">1953</a>)</span> proposal that empirical observations of how people actually use language could reveal far more about meaning than formal rules derived through logical analysis was taken up by a group of linguists in the 1950s <span class="citation" data-cites="joos1950description harris1954distributionalstructure firth1957synopsis">(especially <a href="references.html#ref-joos1950description" role="doc-biblioref">Joos 1950</a>; <a href="references.html#ref-harris1954distributionalstructure" role="doc-biblioref">Harris 1954</a>; <a href="references.html#ref-firth1957synopsis" role="doc-biblioref">Firth 1957</a>)</span> who first proposed <strong>the distributional hypothesis</strong>, which has informed approaches to measuring and modelling meaning in language data ever since.</p>
 <p>According to the <strong>distributional hypothesis</strong>, words that appear in similar semantic contexts, or “environments,” will tend to have similar meanings.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> In one of the foundational statements of the idea, Zellig <span class="citation" data-cites="harris1954distributionalstructure">Harris (<a href="references.html#ref-harris1954distributionalstructure" role="doc-biblioref">1954</a>)</span> defined a word’s context in terms of the other words that it <em>co-occurs</em> with, given some boundary such as a phrase or a sentence. For example, we can infer that “physician” and “doctor” mean similar things if we see that they tend to be used interchangeably in sentences like “Alondra is looking for a <code>[physician, doctor, ...]</code> specializing in pain management.” Across many texts, we might also learn that “doctor” and “professor” are also more or less interchangeable but in different types of context. While the former pair of words might co-occur in contexts shared with words such as “pain”, “medicine”, “nurse”, and “injury”, the latter pair may co-occur in contexts shared with words like “university”, “students”, “research”, “teaching”, and “knowledge”. “Professor” and “physician” may also co-occur, but more rarely. In any instance, the meaning of the words depends on the other words surrounding it. Words that have identical, or nearly identical contexts are synonyms. In fact, the distributional hypothesis bears a striking resemblance to the idea of structural equivalence in social network analysis, which was introduced in Chapter 30. (Like synonyms, people that are structurally similar tend to be connected to the same alters.)</p>
 <p>Distributionalists like Harris and Firth believe that formal theories of language should be kept to a minimum and knowledge should be produced by rigorous analysis of empirical data on language use. Given enough data on natural language use (e.g.&nbsp;in everyday interactions, in email messages and social media posts, in news stories and scientific publications, etc.), we can learn an enormous amount about the contextual relationships between words as they are actually used. In practice, this idea is operationalized in terms of <strong>vector semantics</strong>, and is the foundation of all modern natural language processing that is concerned with understanding <em>meaning</em> <span class="citation" data-cites="jurafsky2000speech">(<a href="references.html#ref-jurafsky2000speech" role="doc-biblioref">Jurafsky and Hand 2009</a>)</span>.</p>
 <p>With that briefest of context introduced, let’s turn our attention to word embeddings.</p>
 </section>
 </section>
-<section id="what-are-neural-word-embeddings" class="level2" data-number="33.5">
-<h2 data-number="33.5" class="anchored" data-anchor-id="what-are-neural-word-embeddings"><span class="header-section-number">33.5</span> WHAT ARE NEURAL WORD EMBEDDINGS?</h2>
+<section id="what-are-neural-word-embeddings" class="level2" data-number="34.5">
+<h2 data-number="34.5" class="anchored" data-anchor-id="what-are-neural-word-embeddings"><span class="header-section-number">34.5</span> WHAT ARE NEURAL WORD EMBEDDINGS?</h2>
 <p>In previous chapters, we used bag-of-words models to represent individual documents as <em>long</em> and <em>sparse</em> vectors, and document collections as <em>wide</em>, <em>sparse</em> matrices (i.e., DTMs). These matrices are long because each feature represents a unique word in the vocabulary, and each cell represents something like presence / absence, frequency, or some sort of weight such as TF-IDF for each word in each document. They are sparse because most words do not appear in most documents, which means that most cells have values of 0. This approach can be very powerful for modelling latent distributions of topical content, but we actually gain more insight into what words mean by using shorter, denser vector representations, generally referred as <strong>word embeddings</strong>. Words are just the beginning, though. They provide a foundation we can build on to explore and model meaning and larger cultural systems in ways that were not possible just a short time ago.</p>
 <p>In bag-of-word models, we represent <em>documents</em> with long sparse vectors indicating the presence or absence, frequency, or weight of a word in each document. Embeddings differ in that they represent <em>words</em> with short dense vectors that define the local semantic contexts within wich words are used. <span class="quarto-unresolved-ref">?fig-32_01</span> illustrates this idea of local semantic contexts using a window of 5 words that slides over each word in sentence from <span class="citation" data-cites="neblo2018politics">Neblo, Esterling, and Lazer (<a href="references.html#ref-neblo2018politics" role="doc-biblioref">2018</a>)</span>. This sliding window approach gives us much deeper insight into how words relate to other words, but it comes at the cost of fine-grained information about how each word relates to the documents in which they appeared.</p>
 <p><embed src="figures/word2vec.pdf" class="img-fluid"></p>
@@ -1091,8 +1103,8 @@ States (PROPN)
 - **TODO**: discussion of the social scientific literature, emphasis on GoC, bias, etc. 
 - **PIERSON: REVIEW CONTENT SHOULD BE WORKED IN HERE.**
 - **TODO: This tone will be different than I imagined originally. Instead of "the point is to do these larger things," it will be more like "there are some interesting proposals, but let's be careful and not leap to big interpretations here; this is some tricky shit. don't jump into just adding and subtracting vectors and pretend you've got a perfect mathematical model of meaning.** -->
-<section id="learning-embeddings-with-word2vec" class="level3" data-number="33.5.1">
-<h3 data-number="33.5.1" class="anchored" data-anchor-id="learning-embeddings-with-word2vec"><span class="header-section-number">33.5.1</span> Learning Embeddings with Word2Vec</h3>
+<section id="learning-embeddings-with-word2vec" class="level3" data-number="34.5.1">
+<h3 data-number="34.5.1" class="anchored" data-anchor-id="learning-embeddings-with-word2vec"><span class="header-section-number">34.5.1</span> Learning Embeddings with Word2Vec</h3>
 <p>Now that we have some context for understanding embeddings, let’s discuss one of the most important recent breakthroughs in <em>learning</em> word embeddings from text data – <strong>word2vec</strong>. As with previous chapters, the goal here is mainly to clarify the way the models work at a relatively high-level.</p>
 <p>The development of <strong>word2vec</strong> by Tomas Mikolov and a team of researchers at Google <span class="citation" data-cites="mikolov2013distributed mikolov2013efficient">(<a href="references.html#ref-mikolov2013distributed" role="doc-biblioref">Tomas Mikolov, Sutskever, et al. 2013</a>; <a href="references.html#ref-mikolov2013efficient" role="doc-biblioref">Tomas Mikolov, Chen, et al. 2013</a>)</span> was a transformative development in natural language processing. As we’ve already discussed, word embedding models in general are focused on the local semantic contexts that words are used in rather than the documents they appear in; they <em>learn</em> these short dense representations from the data rather than relying on count-based features. Let’s break down the modelling process, as we have with previous models in the book.</p>
 <p>Word2vec has two different architectures: <strong>Continuous Bag-of-Words (CBOW)</strong> and <strong>Skip-gram</strong>. Both use word co-occurrence data generated from local semantic contexts, such as a moving window of 5 words around a focal word as shown in the example in Figure XXX. However, CBOW and Skip-gram use this co-occurrence data differently; CBOW uses the <em>context words</em> (within each thin crimson box) in a shallow neural network model trained to predict the target word (in each thick crimson box), whereas skip-gram uses the target word to predict the context words. The interesting thing about the neural network model used in these two architectures is that <em>we don’t actually care about their predictions</em>. What we care about are the feature weights that the neural networks learn in the context of figuring out how to make their predictions well. <em>Those feature weights are our word embeddings!</em> We only train the neural network models to obtain the embeddings. That’s their raison d’etre.</p>
@@ -1108,11 +1120,11 @@ States (PROPN)
 <p>Both model architectures, then, have their strengths and weaknesses. The CBOW architecture is a bit better at learning syntactic relationships, so is likely to produce embeddings where word pairs like ‘neuron’ and ‘neurons’ or ‘broken’ and ‘broke’ will be very similar. CBOW also tends to better represent frequently appearing words and is faster to train, so is well-suited to large corpuses. Skip-gram models produce more precise word embeddings in general, and especially for rare words. The embeddings it produces can be especially good at finding words that are near-synonyms. The cost of these improvements are increases in runtime, but in cases where that is less of a concern (e.g., working with smaller datasets), the improvements can certainly be worth the wait. The differences between these architectures are less significant given the specific model parameters used and given enough iterations.</p>
 </section>
 </section>
-<section id="cultural-cartography-getting-a-feel-for-vector-space" class="level2" data-number="33.6">
-<h2 data-number="33.6" class="anchored" data-anchor-id="cultural-cartography-getting-a-feel-for-vector-space"><span class="header-section-number">33.6</span> CULTURAL CARTOGRAPHY: GETTING A FEEL FOR VECTOR SPACE</h2>
+<section id="cultural-cartography-getting-a-feel-for-vector-space" class="level2" data-number="34.6">
+<h2 data-number="34.6" class="anchored" data-anchor-id="cultural-cartography-getting-a-feel-for-vector-space"><span class="header-section-number">34.6</span> CULTURAL CARTOGRAPHY: GETTING A FEEL FOR VECTOR SPACE</h2>
 <p>Word embeddings are very powerful for many applications and sometimes the results are astonishing. But there are some very important caveats to keep in mind when using word2vec-style embeddings. We will illustrate those caveats with perhaps the most iconic and oft-referenced example of word embedding “analogies”.</p>
-<section id="king---man-woman-neq-queen" class="level3" data-number="33.6.1">
-<h3 data-number="33.6.1" class="anchored" data-anchor-id="king---man-woman-neq-queen"><span class="header-section-number">33.6.1</span> King - Man + Woman <span class="math inline">\(\neq\)</span> Queen</h3>
+<section id="king---man-woman-neq-queen" class="level3" data-number="34.6.1">
+<h3 data-number="34.6.1" class="anchored" data-anchor-id="king---man-woman-neq-queen"><span class="header-section-number">34.6.1</span> King - Man + Woman <span class="math inline">\(\neq\)</span> Queen</h3>
 <p>Recall that part of the CBOW training process is to average (or just sum) the context vectors. <span class="citation" data-cites="mikolov2013linguistic">Tomáš Mikolov, Yih, and Zweig (<a href="references.html#ref-mikolov2013linguistic" role="doc-biblioref">2013</a>)</span> found that if you take the word embedding vector for “king”, add it to the vector for “woman”, and then subtract the vector for “man”, the resulting vector is “very close” to the vector for “queen”. This example has been referenced countless times, from package documentation to social science papers that aim to measure and compare complex cultural concepts.</p>
 <p>We will use the very convenient <code>whatlies</code> package to plot the iconic word embedding example.</p>
 <div class="sourceCode" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> whatlies <span class="im">import</span> Embedding</span>
@@ -1191,11 +1203,11 @@ Woman and Queen without man: 0.7745669</code></pre>
 <p>With that said, if we’re careful about how we use embeddings and the claims we make about them, it’s hard to argue against the results of the embeddings, without manipulation, as indicators of patterns of text use.</p>
 </section>
 </section>
-<section id="learning-embeddings-with-gensim" class="level2" data-number="33.7">
-<h2 data-number="33.7" class="anchored" data-anchor-id="learning-embeddings-with-gensim"><span class="header-section-number">33.7</span> LEARNING EMBEDDINGS WITH GENSIM</h2>
+<section id="learning-embeddings-with-gensim" class="level2" data-number="34.7">
+<h2 data-number="34.7" class="anchored" data-anchor-id="learning-embeddings-with-gensim"><span class="header-section-number">34.7</span> LEARNING EMBEDDINGS WITH GENSIM</h2>
 <p>Now that you have some understanding of what word embeddings are, what they can be used for, and how the models that learn them work, let’s get our hands dirty by actually training some models with Gensim.</p>
-<section id="data" class="level3" data-number="33.7.1">
-<h3 data-number="33.7.1" class="anchored" data-anchor-id="data"><span class="header-section-number">33.7.1</span> Data</h3>
+<section id="data" class="level3" data-number="34.7.1">
+<h3 data-number="34.7.1" class="anchored" data-anchor-id="data"><span class="header-section-number">34.7.1</span> Data</h3>
 <p>We’ll use the Canadian Hansard dataset for the rest of this chapter (and the next).</p>
 <div class="sourceCode" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>datasets <span class="op">=</span> list_files(<span class="st">"data/canadian_hansards/lipad/"</span>, <span class="st">'csv'</span>)</span>
 <span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="bu">len</span>(datasets)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1248,8 +1260,8 @@ Woman and Queen without man: 0.7745669</code></pre>
 <span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> model.wv</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 </section>
-<section id="comparing-embeddings" class="level2" data-number="33.8">
-<h2 data-number="33.8" class="anchored" data-anchor-id="comparing-embeddings"><span class="header-section-number">33.8</span> COMPARING EMBEDDINGS</h2>
+<section id="comparing-embeddings" class="level2" data-number="34.8">
+<h2 data-number="34.8" class="anchored" data-anchor-id="comparing-embeddings"><span class="header-section-number">34.8</span> COMPARING EMBEDDINGS</h2>
 <p>Everything we’ve done so far can also be done comparatively, which makes things much more interesting from a social scientific perspective. The trouble with these sorts of extensions is that the word embedding training process is stochastic, so we can’t just learn embeddings for various different datasets and directly compare them. In fact, there’s no guarantee that two models trained on the exact same data will end up looking even remotely similar! While the relations between the words in vector space may be more or less consistent in the two models (in the sense that the angle between them will be similar) the random starting positions of those words in that vector space can produce wildly differing final states. To do anything comparative, cross-sectional or over time, we need our vector spaces to be aligned.</p>
 <p>There have been a number of solutions proposed to solve this problem <span class="citation" data-cites="ruder2019survey artetxe2016learning mogadala2016bilingual di2019training">(e.g., <a href="references.html#ref-ruder2019survey" role="doc-biblioref">Ruder, Vulić, and Søgaard 2019</a>; <a href="references.html#ref-artetxe2016learning" role="doc-biblioref">Artetxe, Labaka, and Agirre 2016</a>; <a href="references.html#ref-mogadala2016bilingual" role="doc-biblioref">Mogadala and Rettinger 2016</a>; <a href="references.html#ref-di2019training" role="doc-biblioref">Di Carlo, Bianchi, and Palmonari 2019</a>)</span>, but we will focus on the “compass” approach developed by <span class="citation" data-cites="di2019training">Di Carlo, Bianchi, and Palmonari (<a href="references.html#ref-di2019training" role="doc-biblioref">2019</a>)</span> because it’s well-implemented, efficient, and has Gensim at its core. It’s designed with temporal data in mind, but we handle cross-sectional comparisons in the exact same way. Below, I’ll walk you through training a word embedding model “anchor” (the compass) as a basis for comparison, and then we’ll spend a bit of time working through a few temporal and cross-sectional comparisons.</p>
 <blockquote class="blockquote">
@@ -1265,8 +1277,8 @@ Woman and Queen without man: 0.7745669</code></pre>
 </ol>
 <p>If you end up having a lot of trouble getting TWEC up and running, you can use any version of Gensim to load the models that have been pre-trained for this chapter. You can read more about our pre-trained models in the online supplementary materials.</p>
 </blockquote>
-<section id="imports" class="level3" data-number="33.8.1">
-<h3 data-number="33.8.1" class="anchored" data-anchor-id="imports"><span class="header-section-number">33.8.1</span> Imports</h3>
+<section id="imports" class="level3" data-number="34.8.1">
+<h3 data-number="34.8.1" class="anchored" data-anchor-id="imports"><span class="header-section-number">34.8.1</span> Imports</h3>
 <p>Since we are working in a new virtual environment (details provided in Box XXX) with a fresh new Python kernel. We’ll continue to work with the Canadian Hansard data.</p>
 <div class="sourceCode" id="cb50"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> twec.twec <span class="im">import</span> TWEC</span>
 <span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> gensim.models.word2vec <span class="im">import</span> Word2Vec</span>
@@ -1278,8 +1290,8 @@ Woman and Queen without man: 0.7745669</code></pre>
 <span id="cb50-8"><a href="#cb50-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> multiprocessing <span class="im">import</span> Process, Manager</span>
 <span id="cb50-9"><a href="#cb50-9" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> re</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="aligning-your-vector-spaces" class="level3" data-number="33.8.2">
-<h3 data-number="33.8.2" class="anchored" data-anchor-id="aligning-your-vector-spaces"><span class="header-section-number">33.8.2</span> Aligning Your Vector Spaces!</h3>
+<section id="aligning-your-vector-spaces" class="level3" data-number="34.8.2">
+<h3 data-number="34.8.2" class="anchored" data-anchor-id="aligning-your-vector-spaces"><span class="header-section-number">34.8.2</span> Aligning Your Vector Spaces!</h3>
 <p>The general process of using the TWEC approach to train a series of embedding models <em>that are aligned from the start</em> is as follows:</p>
 <ol type="1">
 <li>Train a word2vec model on the <em>entire</em> dataset in one go, retaining the position layer of the neural network model. This layer is called the <strong>compass</strong>. It computes a set of baseline embeddings that a series of embedding models (trained in Step 2) trained on every subset of the data (temporal slices, for example) can use as a common starting point, like a kind of “reference model.”</li>
@@ -1288,8 +1300,8 @@ Woman and Queen without man: 0.7745669</code></pre>
 <p>Once the reference model has been trained, the series of contextual models trained in the next step call all be trained with a common starting point (as opposed to a random one). Then the embeddings for each subset diverge from that common origin as appropriate and the differences and similarities between their vectors can be interpreted as meaningful differences. <span class="citation" data-cites="di2019training">Di Carlo, Bianchi, and Palmonari (<a href="references.html#ref-di2019training" role="doc-biblioref">2019</a>)</span> provide plenty of technical details on how TWEC works, if you are interested in going beyond what I introduce here.</p>
 <p>Let’s perform both steps. We’ll use the compass trained in Step 1 for a series of temporal and cross-sectional comparsons later in the chapter.</p>
 </section>
-<section id="step-1-train-the-compass" class="level3" data-number="33.8.3">
-<h3 data-number="33.8.3" class="anchored" data-anchor-id="step-1-train-the-compass"><span class="header-section-number">33.8.3</span> Step 1: Train the Compass</h3>
+<section id="step-1-train-the-compass" class="level3" data-number="34.8.3">
+<h3 data-number="34.8.3" class="anchored" data-anchor-id="step-1-train-the-compass"><span class="header-section-number">34.8.3</span> Step 1: Train the Compass</h3>
 <p>To train the compass, <code>TWEC</code> expects a text file where each sentence in our dataset is provided on a new line. Since we prepared this exact file in the previous chapter, we’ll reuse it here. It’s stored in <code>speeches.txt</code>.</p>
 <div class="sourceCode" id="cb51"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>compass_path <span class="op">=</span> <span class="st">'data/txt_files/can_hansard_speeches.txt'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Because <code>TWEC</code> uses a custom version of Gensim, it doesn’t automatically receive the many updates that Gensim has had in recent years. One of the package dependencies has been updated since the <span class="citation" data-cites="di2019training">Di Carlo, Bianchi, and Palmonari (<a href="references.html#ref-di2019training" role="doc-biblioref">2019</a>)</span> paper was published and now produces a warning about a function that will eventually be deprecated. To keep things a bit cleaner, we’ll tell Python to suppress those warnings.</p>
@@ -1300,11 +1312,11 @@ Woman and Queen without man: 0.7745669</code></pre>
 <div class="sourceCode" id="cb53"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>aligner <span class="op">=</span> TWEC(size <span class="op">=</span> <span class="dv">300</span>, siter <span class="op">=</span> <span class="dv">5</span>, diter <span class="op">=</span> <span class="dv">5</span>, window <span class="op">=</span> <span class="dv">10</span>, sg <span class="op">=</span> <span class="dv">0</span>, min_count <span class="op">=</span> <span class="dv">10</span>, ns <span class="op">=</span> <span class="dv">5</span>, workers <span class="op">=</span> <span class="dv">4</span>)</span>
 <span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>aligner.train_compass(compass_path, overwrite<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="step-2-train-a-series-of-aligned-embedding-models" class="level3" data-number="33.8.4">
-<h3 data-number="33.8.4" class="anchored" data-anchor-id="step-2-train-a-series-of-aligned-embedding-models"><span class="header-section-number">33.8.4</span> Step 2: Train a Series of Aligned Embedding Models</h3>
+<section id="step-2-train-a-series-of-aligned-embedding-models" class="level3" data-number="34.8.4">
+<h3 data-number="34.8.4" class="anchored" data-anchor-id="step-2-train-a-series-of-aligned-embedding-models"><span class="header-section-number">34.8.4</span> Step 2: Train a Series of Aligned Embedding Models</h3>
 <p>Now that our reference model has been trained and stored in the <code>aligner</code> object, we can proceed with training a series of embedding models on various subsets of our data. In the examples that follow, we will train a series of models to show change over time, followed by a series of models to compare speeches by different political parties. We will use the same <code>aligner</code> object as the reference model for both.</p>
-<section id="research-on-cultural-change-with-temporal-embeddings" class="level4" data-number="33.8.4.1">
-<h4 data-number="33.8.4.1" class="anchored" data-anchor-id="research-on-cultural-change-with-temporal-embeddings"><span class="header-section-number">33.8.4.1</span> Research on Cultural Change with Temporal Embeddings</h4>
+<section id="research-on-cultural-change-with-temporal-embeddings" class="level4" data-number="34.8.4.1">
+<h4 data-number="34.8.4.1" class="anchored" data-anchor-id="research-on-cultural-change-with-temporal-embeddings"><span class="header-section-number">34.8.4.1</span> Research on Cultural Change with Temporal Embeddings</h4>
 <p>Regardless of whether our comparison is cross-sectional or temporal, we need to subset our data <em>prior</em> to training any additional models. Since we are starting using embeddings to compare change over time, let’s divide our data into different temporal slices. We’ll be training a gemsim word2vec model with each subset, so we will prepare the data with one sentence-per-line file for model training.</p>
 <p>In this case, the CSV files in the Canadian Hansard dataset are organized into folders by year. We can use that to our advantage here. First, we’ll load up the CSV files and create some lists to store the file paths for each decade.</p>
 <div class="sourceCode" id="cb54"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>datasets <span class="op">=</span> list_files(<span class="st">"data/canadian_hansards/lipad/"</span>, <span class="st">'csv'</span>)</span>
@@ -1350,8 +1362,8 @@ Woman and Queen without man: 0.7745669</code></pre>
 <div class="sourceCode" id="cb64"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>model_2000s.wv.most_similar(positive <span class="op">=</span> <span class="st">'climate_change'</span>, topn <span class="op">=</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="sourceCode" id="cb65"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a>model_2010s.wv.most_similar(positive <span class="op">=</span> <span class="st">'climate_change'</span>, topn <span class="op">=</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="cross-sectional-comparisons-political-parties-on-climate-change" class="level4" data-number="33.8.4.2">
-<h4 data-number="33.8.4.2" class="anchored" data-anchor-id="cross-sectional-comparisons-political-parties-on-climate-change"><span class="header-section-number">33.8.4.2</span> Cross-sectional Comparisons: Political Parties on Climate Change</h4>
+<section id="cross-sectional-comparisons-political-parties-on-climate-change" class="level4" data-number="34.8.4.2">
+<h4 data-number="34.8.4.2" class="anchored" data-anchor-id="cross-sectional-comparisons-political-parties-on-climate-change"><span class="header-section-number">34.8.4.2</span> Cross-sectional Comparisons: Political Parties on Climate Change</h4>
 <p>Sometimes our research goals are to compare culture and meaning across subgroups in a population, rather than change over time. For example, continuing with the examples we’ve used in this chapter so far, we might be more interested in comparing how different political parties talk about climate change than how political discussions of climate change have evolved over time.</p>
 <p>To make those comparisons, we need to organize our data by political party rather than by decade. To keep things relatively simple, we’ll focus on the three major political parties: the Liberals, the New Democratic Party, and the Conservatives, keeping in mind that the latter is a relatively recent merger of the former Canadian Alliance, Progressive Conservative, and Reform parties. In this case, slicing the data isn’t quite as straightforward, so we’ll create a modified version of <code>get_sentences()</code> that will accept lists of terms to mask (filter) the dataframes with.</p>
 <div class="sourceCode" id="cb66"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>liberal <span class="op">=</span> [<span class="st">'Liberal'</span>]</span>
@@ -1409,10 +1421,10 @@ Woman and Queen without man: 0.7745669</code></pre>
 </section>
 </section>
 </section>
-<section id="conclusion-1" class="level2" data-number="33.9">
-<h2 data-number="33.9" class="anchored" data-anchor-id="conclusion-1"><span class="header-section-number">33.9</span> CONCLUSION</h2>
-<section id="key-points-1" class="level3" data-number="33.9.1">
-<h3 data-number="33.9.1" class="anchored" data-anchor-id="key-points-1"><span class="header-section-number">33.9.1</span> Key Points</h3>
+<section id="conclusion-1" class="level2" data-number="34.9">
+<h2 data-number="34.9" class="anchored" data-anchor-id="conclusion-1"><span class="header-section-number">34.9</span> CONCLUSION</h2>
+<section id="key-points-1" class="level3" data-number="34.9.1">
+<h3 data-number="34.9.1" class="anchored" data-anchor-id="key-points-1"><span class="header-section-number">34.9.1</span> Key Points</h3>
 <ul>
 <li>Word embeddings represent words with short dense vectors that describe the word’s local semantic contexts</li>
 <li>Embeddings as a whole depict patterns of word usage and language structure</li>
@@ -2007,13 +2019,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./artificial-neural-networks-fnn-rnn-cnn.html" class="pagination-link" aria-label="Artificial neural networks 101">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Artificial neural networks 101</span></span>
+      <a href="./artificial-neural-networks-fnn-rnn-cnn.html" class="pagination-link" aria-label="Artificial neural networks">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Artificial neural networks</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./transformer-revolution.html" class="pagination-link" aria-label="The transformer revolution">
-        <span class="nav-page-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">The transformer revolution</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">The transformer revolution</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

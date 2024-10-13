@@ -157,7 +157,7 @@ window.Quarto = {
 <link rel="stylesheet" href="custom.css">
 </head>
 
-<body class="nav-sidebar floating">
+<body class="nav-sidebar floating slimcontent">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -226,6 +226,12 @@ window.Quarto = {
  <span class="menu-text">🏠</span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction</span></a>
+  </div>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
@@ -279,7 +285,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./iteration.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Iteration</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title"><del>Sequential</del> iterative modelling</span></span></a>
   </div>
 </li>
       </ul>
@@ -490,13 +496,13 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./artificial-neural-networks-fnn-rnn-cnn.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Artificial neural networks 101</span></span></a>
+ <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Artificial neural networks</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./language-models-and-embeddings.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Processing Natural Language Data</span></span></a>
+ <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Language models and word embeddings</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -598,7 +604,7 @@ window.Quarto = {
 <div class="toc-actions"><ul><li><a href="https://github.com/UWNETLAB/dcss_supplementary/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content page-columns page-full" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./setting-up.html"><strong>COMPUTING</strong></a></li><li class="breadcrumb-item"><a href="./processing-data.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Processing Data</span></a></li></ol></nav>
 <div class="quarto-title">
@@ -657,11 +663,11 @@ Learning Objectives
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dcss <span class="im">import</span> set_style</span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>set_style()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="practical-pandas-first-steps" class="level2" data-number="4.2">
+<section id="practical-pandas-first-steps" class="level2 page-columns page-full" data-number="4.2">
 <h2 data-number="4.2" class="anchored" data-anchor-id="practical-pandas-first-steps"><span class="header-section-number">4.2</span> PRACTICAL PANDAS: FIRST STEPS</h2>
 <section id="getting-data-into-pandas" class="level3" data-number="4.2.1">
 <h3 data-number="4.2.1" class="anchored" data-anchor-id="getting-data-into-pandas"><span class="header-section-number">4.2.1</span> Getting Data into Pandas</h3>
-<p>The Pandas package makes it easy to load data from an external file directly into a <code>dataframe</code> object. It uses one of many reader functions that are part of a suite of <strong>I/O (input / output, read / write) tools</strong>. I’ve listed some common examples in <a href="#tbl-pandas-io" class="quarto-xref">Table&nbsp;<span class="quarto-unresolved-ref">tbl-pandas-io</span></a>. Information on these and other reader functions can be found in the Pandas <a href="https://pandas.pydata.org/pandas-docs/stable/user_guide/io.html">documentation</a>, which also provides useful information about the parameters for each method (e.g.&nbsp;how to specify what sheet you want from an Excel spreadsheet, or whether to write the index to a new CSV file).</p>
+<p>The Pandas package makes it easy to load data from an external file directly into a <code>dataframe</code> object. It uses one of many reader functions that are part of a suite of <strong>I/O (input / output, read / write) tools</strong>. I’ve listed some common examples in <a href="#tbl-pandas-io" class="quarto-xref">Table&nbsp;<span>4.1</span></a>. Information on these and other reader functions can be found in the Pandas <a href="https://pandas.pydata.org/pandas-docs/stable/user_guide/io.html">documentation</a>, which also provides useful information about the parameters for each method (e.g.&nbsp;how to specify what sheet you want from an Excel spreadsheet, or whether to write the index to a new CSV file).</p>
 <div id="tbl-pandas-io" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-pandas-io-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -762,11 +768,14 @@ Table&nbsp;4.1: I/0 Methods for Pandas
 <div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>sdf[[<span class="st">'e_regiongeo'</span>, <span class="st">'year'</span>, <span class="st">'v2x_polyarchy'</span>]].describe()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 </section>
-<section id="heads-tails-and-samples" class="level3" data-number="4.2.3">
+<section id="heads-tails-and-samples" class="level3 page-columns page-full" data-number="4.2.3">
 <h3 data-number="4.2.3" class="anchored" data-anchor-id="heads-tails-and-samples"><span class="header-section-number">4.2.3</span> Heads, Tails, and Samples</h3>
 <p>We can also inspect the “head” or the “tail” of our dataframe using the <code>.head()</code> and <code>.tail()</code> methods, which default to the first or last 5 rows in a dataframe unless you provide a different number as an argument, such as <code>.head(10)</code>.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>sdf[[<span class="st">'country_name'</span>, <span class="st">'year'</span>, <span class="st">'v2x_libdem'</span>]].head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>sdf[[<span class="st">'country_name'</span>, <span class="st">'year'</span>, <span class="st">'v2x_libdem'</span>]].tail(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+<div class="no-row-height column-margin column-container"><div class="margin-aside">
+<p>Testing tufte-style margin notes…</p>
+</div></div><div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>sdf[[<span class="st">'country_name'</span>, <span class="st">'year'</span>, <span class="st">'v2x_libdem'</span>]].tail(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>If you would prefer a random sample of rows, you can use the <code>.sample()</code> method, which requires you to specify the number of rows you want to sample.</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>sdf[[<span class="st">'country_name'</span>, <span class="st">'year'</span>, <span class="st">'v2x_libdem'</span>]].sample(<span class="dv">15</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
@@ -1063,7 +1072,7 @@ Table&nbsp;4.1: I/0 Methods for Pandas
 <p>We will also use the <code>.size()</code> method to determine the number of tweets that were produced each day.</p>
 <div class="sourceCode" id="cb48"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>grouped_cal_day <span class="op">=</span> tweets_df.resample(<span class="st">'D'</span>).size()</span>
 <span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>grouped_cal_day</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>At this point, we are going to visualize the results of our work with a line plot. We are going to do this with the Seaborn and matplotlib packages, which we will discuss in the next chapter. For now, focus on the visualization and ignore the code. The code blocks below produces Figures <a href="#fig-06_01" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-06_01</span></a> and <a href="#fig-06_02" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-06_02</span></a>.</p>
+<p>At this point, we are going to visualize the results of our work with a line plot. We are going to do this with the Seaborn and matplotlib packages, which we will discuss in the next chapter. For now, focus on the visualization and ignore the code. The code blocks below produces Figures <a href="web-data-scraping.html#fig-06_01" class="quarto-xref">Figure&nbsp;<span>8.1</span></a> and <a href="web-data-scraping.html#fig-06_02" class="quarto-xref">Figure&nbsp;<span>8.2</span></a>.</p>
 <div class="sourceCode" id="cb49"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
 <span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>sns.lineplot(data<span class="op">=</span>grouped_cal_day, color<span class="op">=</span><span class="st">'#32363A'</span>)</span>
 <span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
@@ -1152,7 +1161,7 @@ Figure&nbsp;4.2: caption…
 <p>If this “more advanced” approach to combining datasets is of interest, I highly suggest looking into the <a href="https://github.com/J535D165/recordlinkage"><code>recordlinkage</code></a> Python package.</p>
 <blockquote class="blockquote">
 <p><strong>Further Reading</strong></p>
-<p>Much of what I introduce in this chapter is foundational; you’ll build on that foundation in later chapters. But if you are looking for a slower and more comprehensive introduction to Pandas and Numpy, then I would recommend VanderPlas’ <span class="citation" data-cites="vanderplas2016python">(<a href="#ref-vanderplas2016python" role="doc-biblioref">2016</a>)</span> <em>Python Data Science Handbook</em>.</p>
+<p>Much of what I introduce in this chapter is foundational; you’ll build on that foundation in later chapters. But if you are looking for a slower and more comprehensive introduction to Pandas and Numpy, then I would recommend VanderPlas’ <span class="citation" data-cites="vanderplas2016python">(<a href="references.html#ref-vanderplas2016python" role="doc-biblioref">2016</a>)</span> <em>Python Data Science Handbook</em>.</p>
 </blockquote>
 </section>
 </section>
@@ -1171,7 +1180,7 @@ Figure&nbsp;4.2: caption…
 <hr>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
 <div id="ref-vanderplas2016python" class="csl-entry" role="listitem">
 VanderPlas, Jake. 2016. <em>Python Data Science Handbook: Essential Tools for Working with Data</em>. " O’Reilly Media, Inc.".
 </div>

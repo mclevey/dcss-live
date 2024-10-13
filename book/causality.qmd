@@ -5,16 +5,146 @@
 
 This is a "[shitty first draft](https://www.amazon.ca/Bird-Some-Instructions-Writing-Life/dp/0385480016)," with some sections being shittier than others. Normally I wouldn't share work so early in it's development, but I'm interested in your feedback. Feel free to skim, but know that I am actively developing this chapter and it will be going through some very extensive changes in the coming weeks.
 :::
-
+<!-- 
 ## A brief history and overview of causal inference
 
 ### Experiments, counterfactuals, and the potential outcomes framework
 
-### Observation, path analysis, and structural equation models
+Causal Inference, Experimental Design, and the Potential Outcomes Framework
 
-### Mediation analysis
+To understand the potential outcomes framework and its role in causal inference, it’s important to start with the foundation of causal inference through experimental design. In the social sciences, we often aim to answer questions like: What is the effect of a policy change? or How does an intervention affect outcomes for different groups of people? These are fundamentally causal questions, and answering them requires methods that go beyond correlational analysis.
 
-### DAGs and structural causal models
+Experimental design is one of the most powerful tools for answering causal questions. The randomized controlled trial (RCT) is the gold standard in experimental design because it uses random assignment to balance both observed and unobserved confounders across treatment and control groups. This randomization makes it possible to attribute differences in outcomes directly to the treatment, eliminating concerns about bias from confounding variables. The potential outcomes framework, developed through work by Jerzy Neyman and later formalized by Donald Rubin, builds on this tradition of experimental design.
+
+The Potential Outcomes Framework and Counterfactual Reasoning
+
+The potential outcomes framework is a conceptual and statistical tool for understanding causal effects, particularly in experimental and quasi-experimental settings. The core idea is to define causality in terms of counterfactuals: what would have happened to a subject if they had received a different treatment?
+
+Let’s say we are evaluating the effect of a new education program on student achievement. For each student, there are two potential outcomes:
+
+	•	Y(1): The outcome if the student receives the program (treatment).
+	•	Y(0): The outcome if the student does not receive the program (control).
+
+The causal effect for each student is the difference between these two potential outcomes: Y(1) – Y(0). Of course, in reality, we can only observe one of these outcomes (the one corresponding to the treatment the student actually received). The unobserved outcome is the counterfactual—what would have happened under a different treatment.
+
+The potential outcomes framework helps us estimate the average treatment effect (ATE) by comparing the outcomes across treated and untreated groups. In a randomized experiment, where subjects are randomly assigned to treatment and control groups, we can confidently estimate this causal effect because randomization ensures that the two groups are comparable. In non-experimental settings, methods like propensity score matching are often used to mimic the randomization process and control for confounders.
+
+Is the Potential Outcomes Framework More Frequentist or Bayesian?
+
+The potential outcomes framework is typically associated with frequentist statistics, particularly because of its close ties to experimental design and hypothesis testing. However, this association is not due to any inherent limitation of the framework itself—it’s more a reflection of its intellectual development. Since the framework was formalized within the frequentist tradition, particularly through the work of Neyman and Rubin, its most common applications involve frequentist methods like randomization tests, hypothesis tests, and confidence intervals.
+
+But there’s no reason why the potential outcomes framework has to be exclusively frequentist. In fact, Bayesian methods can be applied to the potential outcomes framework just as effectively. In a Bayesian perspective, we could place priors on the treatment effects (the differences between potential outcomes) and update these priors based on the data we collect. This would lead to a posterior distribution over the treatment effects, allowing us to quantify uncertainty in a more nuanced way than frequentist confidence intervals typically allow.
+
+What distinguishes the potential outcomes framework is not its frequentist or Bayesian orientation, but its experimental nature. It’s rooted in the logic of comparing what did happen with what could have happened under different conditions. Whether we analyze the resulting data using frequentist or Bayesian methods depends more on the philosophical and methodological preferences of the researcher than on the framework itself.
+
+Causal Inference in the Social Sciences: Examples of the Potential Outcomes Framework
+
+The potential outcomes framework has been widely applied across the social sciences, particularly in fields like economics, political science, and education. Here are some examples of how it has been used:
+
+	1.	Education Policy: In evaluating the effects of new educational interventions, such as charter schools or teacher training programs, researchers often use the potential outcomes framework to estimate the impact of the treatment on student achievement. For example, in studies where some students attend charter schools and others attend traditional public schools, the potential outcomes framework helps estimate what would have happened to charter school students if they had instead attended public schools.
+	2.	Labor Economics: The potential outcomes framework is frequently used to estimate the effects of labor market interventions, such as job training programs or wage subsidies. By comparing the outcomes of individuals who received the intervention with similar individuals who did not, researchers can estimate the average treatment effect on employment outcomes, wages, or job satisfaction.
+	3.	Political Science: In studying the effects of campaign spending or media exposure on voter behavior, political scientists use the potential outcomes framework to estimate how changes in one variable (e.g., campaign spending) influence another (e.g., voter turnout). When randomization isn’t feasible, methods like propensity score matching or instrumental variables are often used to estimate causal effects in non-experimental data.
+
+Counterfactuals vs. Interventions: Are They the Same?
+
+The terms counterfactuals and interventions are often used interchangeably in causal inference, but there is a subtle distinction between them.
+
+	•	Counterfactuals refer to hypothetical outcomes that represent what would have happened under a different condition or treatment. In the potential outcomes framework, counterfactual reasoning is used to define causal effects. The key question is: What would the outcome have been if the subject had received a different treatment?
+	•	Interventions, on the other hand, refer to active changes made to a system—such as applying a treatment or policy change. In Judea Pearl’s framework, interventions are formalized using do-calculus, which allows researchers to reason about how an intervention changes the causal structure of a system. The central question in this approach is: What happens to the outcome when we intervene on a particular variable?
+
+While the logic of counterfactuals and interventions is similar in that both involve considering alternate scenarios, the key difference is that interventions are about actively changing a system, whereas counterfactuals are about comparing what happened with what could have happened.
+
+In Pearl’s structural causal models (SCMs), interventions are represented graphically using directed acyclic graphs (DAGs), while counterfactuals are used to reason about different potential outcomes under these interventions. Essentially, interventions change the causal graph by manipulating one or more variables, while counterfactuals compare the different possible outcomes based on that change.
+
+Conclusion: Integrating the Potential Outcomes Framework into Causal Inference
+
+The potential outcomes framework is a powerful tool for understanding causal effects, particularly in experimental and quasi-experimental settings. While it is often associated with frequentist methods due to its origins in experimental design, it is compatible with both frequentist and Bayesian approaches. The framework emphasizes counterfactual reasoning, asking what would have happened under different treatment conditions, and has been widely applied in fields such as education policy, labor economics, and political science.
+
+The distinction between counterfactuals and interventions—while subtle—helps clarify the differences between the potential outcomes framework and Pearl’s causal models. Both approaches aim to understand causality, but interventions are about actively changing a system, while counterfactuals are used to reason about the different possible outcomes of such changes.
+
+By bringing together insights from path models, SEMs, DAGs, and the potential outcomes framework, we can develop a more nuanced understanding of causality that incorporates both experimental and observational data, as well as both counterfactual reasoning and intervention analysis. These complementary methods offer a broad toolkit for answering the complex causal questions that drive much of social science research.
+
+### From path analysis to structural causal models
+
+Let's return to some ideas / themes that originally came up in [Mindful modeling](mindful-modelling.qmd) and [~~Sequential~~ iterative modelling](iteration.qmd)...
+
+Sequential Modeling: From Sewall Wright and Lazarsfeld to Structural Equation Models and Mediation Analysis
+
+Sewall Wright and the Foundations of Path Analysis
+
+The origins of path analysis—a key precursor to structural equation models (SEM)—can be traced back to the work of Sewall Wright, a geneticist and evolutionary biologist. In the early 20th century, Wright developed path analysis as a method to study the complex causal relationships between traits in genetics. His landmark 1921 paper introduced the notion of path coefficients, which could quantify the direct and indirect effects of one variable on another in a series of interconnected variables.
+
+Wright’s approach provided a way to model causal relationships between variables by representing them as paths in a graph. His idea was that any complex system, such as biological traits influenced by multiple genes and environmental factors, could be broken down into a series of linear relationships, each contributing to an overall understanding of the causal structure. Wright introduced a formal method to calculate causal pathways and partition variance, helping to explain how much of the variation in a particular outcome could be attributed to different factors along the path.
+
+Wright’s work on path analysis was foundational because it formalized the idea that we could model causal relationships using statistical techniques. This was a critical step in the development of structural equation modeling (SEM) and paved the way for later work on causal modeling in the social sciences. Although Wright’s work initially focused on biology, his methods were quickly adopted and extended by social scientists, particularly at Columbia University, where Paul Lazarsfeld and others would build on these ideas.
+
+Paul Lazarsfeld and the Extension of Sequential Modeling in Sociology
+
+While Sewall Wright’s path analysis was originally developed to study genetics, Paul Lazarsfeld and his colleagues at Columbia University extended these methods to the study of social phenomena. Lazarsfeld was instrumental in the development of quantitative sociology, applying statistical models to understand the complex relationships between social variables.
+
+Lazarsfeld’s survey methodology and his emphasis on breaking down social phenomena into sequential, step-by-step processes fit naturally with Wright’s path analysis. Lazarsfeld adopted and expanded these ideas to study how variables like social class, education, and media exposure influenced individual behavior. The famous two-step flow of communication model, which posited that media influenced opinion leaders who then influenced the public, was an example of how Lazarsfeld applied Wright’s ideas in a sociological context.
+
+Lazarsfeld’s work at Columbia was pivotal in formalizing the use of path analysis in the social sciences. By treating social behavior as a series of causal paths, Lazarsfeld helped lay the groundwork for the development of structural equation models (SEMs), which would come to dominate quantitative research in fields like sociology, psychology, and economics.
+
+The Development of Structural Equation Models (SEM)
+
+Building on the foundations laid by Sewall Wright and Paul Lazarsfeld, structural equation models (SEM) emerged as a powerful tool for modeling both observed and latent variables and their causal relationships. SEM combined the path analysis developed by Wright with the factor analysis techniques that Lazarsfeld and others were pioneering at Columbia.
+
+SEM allows researchers to model complex relationships between variables, incorporating both direct and indirect effects while accounting for measurement error. By linking observed variables to underlying latent constructs—such as attitudes, beliefs, or social status—SEM provides a way to study concepts that cannot be directly measured. This was especially important for the social sciences, where many of the variables of interest (e.g., intelligence, political ideology) are not directly observable.
+
+One of the key strengths of SEM is that it provides a formal structure for modeling causal relationships. Researchers can specify both the measurement model (how latent variables are measured by observable indicators) and the structural model (the causal paths between latent and observed variables). However, like Wright’s path analysis, SEM often requires that researchers specify the causal paths in advance, limiting the flexibility to revise models as new data or insights become available.
+
+Mediation Analysis in Psychology: Sequential Models in a Different Form
+
+While SEM gained prominence across many fields, a related technique known as mediation analysis became particularly influential in psychology. Baron and Kenny formalized mediation analysis in their 1986 paper, which outlined how researchers could study the relationship between an independent variable (X) and a dependent variable (Y) through an intermediary variable (M).
+
+Mediation models were essentially sequential causal models—X affects M, which then affects Y. This approach was appealing because it provided a way to test for indirect effects, giving researchers insight into the mechanisms by which one variable influences another. For example, psychologists could study how stress affects health outcomes, mediated by coping mechanisms.
+
+Mediation analysis shared common roots with path analysis and SEM, as all these approaches were built on the idea of sequential causality. Researchers would specify a causal path upfront, estimate the parameters of each step, and then interpret the direct and indirect effects of the variables involved.
+
+The Limitations of Sequential and Mediation Models
+
+Despite the widespread adoption of path analysis, SEM, and mediation models, these approaches suffer from several key limitations:
+
+	1.	Underdetermination: Multiple models can explain the same data. For example, in a mediation analysis, several different pathways might explain the relationship between stress, coping mechanisms, and health. Similarly, in a path analysis, many different causal sequences could be consistent with the observed data. This problem of underdetermination means that even a well-fitting model may not reflect the true underlying causal structure.
+	2.	Fixed Causal Assumptions: Like Wright’s original path analysis, both SEM and mediation models require researchers to specify causal paths in advance. This can be problematic when the true causal relationships are more complex or when researchers don’t have enough theoretical knowledge to specify the correct model. Once the paths are set, there is limited opportunity for revision.
+	3.	Lack of Iteration: Traditional mediation models and SEM often lack the iterative refinement that is key to modern approaches like Bayesian modeling. Once a model is specified and tested, it’s typically considered final, leaving little room for the kind of ongoing revision and testing that might reveal better or more accurate models.
+
+From Path Analysis and SEM to Pearl’s DAGs
+
+The ideas underlying path analysis, structural equation modeling, and mediation analysis directly influenced the development of directed acyclic graphs (DAGs) by Judea Pearl. Pearl’s work on causal inference built on these earlier methods but extended them in crucial ways.
+
+Pearl introduced DAGs as a way to represent and reason about causal structures graphically. Each node in a DAG represents a variable, and the directed arrows show the causal relationships between them. While path analysis and SEM also use arrows to depict causal paths, Pearl’s DAGs added several innovations:
+
+	•	Flexibility: Unlike traditional sequential models, DAGs allow for greater flexibility in specifying and revising causal models. Researchers can use DAGs to represent a wide range of potential causal structures and can test these structures using data. If the model needs to be revised based on new evidence, this can be done iteratively, unlike the fixed paths in SEM.
+	•	Do-Calculus: Pearl’s development of do-calculus provided a formal method for reasoning about interventions in causal models. This was a significant step forward from SEM and path analysis, which did not have formal tools for studying how interventions on one variable would affect others.
+
+DAGs and Pearl’s work on causal inference represent a direct evolution from the ideas pioneered by Sewall Wright, Paul Lazarsfeld, and those working on SEM and mediation analysis. But Pearl’s framework is more dynamic and iterative, allowing for continuous model refinement based on both prior knowledge and new data.
+
+McElreath’s Iterative Approach: Structural Causal Models in Action
+
+Richard McElreath’s iterative Bayesian approach builds on the foundation laid by Pearl’s DAGs and extends it further through the integration of Bayesian inference. In McElreath’s framework, we begin with a set of prior beliefs about the causal structure of the world, build models based on those priors, and then iteratively revise those models as we gather more data and insight.
+
+This iterative process represents a departure from the fixed paths of traditional SEM, path analysis, and mediation models. Instead of assuming we know the correct causal structure upfront, McElreath’s approach encourages us to compare multiple models, refine them based on new evidence, and remain open to revising our assumptions.
+
+The flexibility and dynamism of this approach make it better suited for understanding the latent constructs that are central to much of social science research. Latent variable models in McElreath’s approach are treated like instruments that evolve and improve with use, much like the way gravitational wave detectors evolved iteratively in the physical sciences (as explored earlier in Collins’ work).
+
+Conclusion: A Move Toward Iteration and Structural Causal Models
+
+The evolution from Sewall Wright’s path analysis to Lazarsfeld’s sequential models, structural equation modeling, and mediation analysis represents a rich tradition of causal modeling in the social sciences. However, these methods often assume fixed causal sequences, which limit their flexibility and may lead to misspecified models.
+
+The development of DAGs by Judea Pearl and the rise of Bayesian iterative modeling, as championed by McElreath, offer a more robust and flexible approach to causal inference. By allowing for model comparison, refinement, and iteration, these modern approaches overcome many of the limitations of traditional sequential models.
+
+In shifting from the fixed paths of early models to the dynamic, iterative nature of structural causal models, we move closer to capturing the true complexity of social phenomena. This iterative approach better reflects the uncertainty and complexity of real-world data, allowing researchers to build and refine models in a way that leads to deeper and more accurate understanding.
+
+This revision includes Sewall Wright’s foundational role in developing path analysis, integrates it into the historical development of SEM and mediation models, and connects these methods to Pearl’s DAGs and McElreath’s iterative approach. This provides a comprehensive view of how causal modeling has evolved across disciplines and highlights the advantages of modern, flexible methodologies.
+
 
 ## Structural causal models (SCMs)
 
+- **TODO**: Pull some content from above when revising
+
+## Counterfacturals versus interventions
+
+- **TODO**: Pull some content from above when revising
+ -->

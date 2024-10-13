@@ -1,6 +1,6 @@
-# Processing Natural Language Data
+# Language models and word embeddings
 
-- Note the word embeddings chapter is below this one; integrate them
+- Note the word embeddings chapter is below this one; condense, integrate, and update them
 
 ## LEARNING OBJECTIVES
 

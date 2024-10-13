@@ -24,6 +24,7 @@ book:
 
   chapters:
     - index.qmd
+    - introduction.qmd
     - part: "**COMPUTING**"
       chapters:
         - setting-up.qmd
@@ -79,6 +80,7 @@ book:
         - open-css.qmd
         - future-css.qmd
     - references.qmd
+  # - appendices:
     - acknowledgements.qmd
     - courses.qmd
 bibliography: references.bib
@@ -86,8 +88,9 @@ bibliography: references.bib
 
 format:
   html:
-    theme:
-      light: cosmo
+    theme: tufte
     code-fold: false
     css: custom.css
     backgroundcolor: "#F5F5F5"
+  # pdf:
+    # documentclass: tufte-book

@@ -140,6 +140,10 @@ We can also inspect the "head" or the "tail" of our dataframe using the `.head()
 sdf[['country_name', 'year', 'v2x_libdem']].head()
 ```
 
+::: {.aside}
+Testing tufte-style margin notes...
+:::
+
 ```python
 sdf[['country_name', 'year', 'v2x_libdem']].tail(3)
 ```

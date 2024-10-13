@@ -7,6 +7,214 @@
 
 This is a "[shitty first draft](https://www.amazon.ca/Bird-Some-Instructions-Writing-Life/dp/0385480016)," with some sections being shittier than others. Normally I wouldn't share work so early in it's development, but I'm interested in your feedback. Feel free to skim, but know that I am actively developing this chapter and it will be going through some very extensive changes in the coming weeks.
 :::
+<!-- 
+- **TODO**: Draft learning objectives, introduction, and roadmap
+- **TODO**: Open with extended discussion of Gravity's Shadow, emphasize the latent stuff, then dig into these various themes, highlighting how common these challeneges are -->
 
+
+<!-- NOTES / IDEAS
+Underdetermination
+
+1. **Empirical Equivalence**: Several scientific theories may be empirically equivalent, meaning they explain the same data but offer different causal or theoretical explanations. For example, two competing theories in physics might predict the same experimental results, but their internal logic or metaphysical assumptions may differ.
+
+2. **Role of Social Factors**: SSK scholars argue that when data alone can't decide between competing theories, social, cultural, or institutional factors play a crucial role in the "closure" of scientific debates. For example, the social status of scientists, funding, and institutional allegiances might influence which theory becomes dominant.
+
+3. **Interpretive Flexibility**: Data is often seen as having "interpretive flexibility." This means that scientists may interpret the same data in different ways depending on their theoretical commitments, background assumptions, or broader sociocultural contexts.
+
+4. **Knowledge as Socially Constructed**: The Edinburgh School emphasized the *symmetry principle*, suggesting that both true and false beliefs should be treated symmetrically by social scientists, in that both are subject to sociological explanation. Scientific knowledge, they argue, is socially constructed, and its development can't be understood purely through internalist (data-only) frameworks.
+
+### Richard McElreath’s Approach and the Connection
+
+Richard McElreath's approach to statistical modeling, particularly in his *Statistical Rethinking* text, shows an appreciation for the kinds of uncertainty and flexibility that sociologists of science like Bloor, Collins, and Evans emphasize. While McElreath is coming from a Bayesian statistical perspective, not a sociological one, there are deep parallels. Here’s how I see them connecting:
+
+1. **Modeling as a Generative Process**: McElreath emphasizes that models are simplifications of reality and are built based on assumptions, not just driven by data. This echoes the idea of interpretive flexibility—there isn't one "true" model that the data automatically yields. Instead, models represent different perspectives on how the data might have been generated.
+
+2. **Multiple Models, Many Theories**: In Bayesian modeling, we often build multiple models to explore different theoretical perspectives or assumptions. McElreath encourages model comparison, but crucially, Bayesian thinking acknowledges that no single model is the definitive answer. This resonates with the underdetermination thesis: we can have competing models (or theories) that are consistent with the same data, and statistical analysis alone doesn't necessarily "prove" one is the true one.
+
+3. **Priors and Assumptions**: Bayesian modeling involves prior beliefs and assumptions, which shape the inferences drawn from the data. This ties into the sociological notion that background assumptions and theoretical commitments guide how data is interpreted. In Bayesian terms, our priors guide us before seeing the data, and our posteriors update our beliefs in light of the data, but they don't automatically remove subjectivity.
+
+4. **Model Evaluation Beyond Data**: McElreath advocates for using additional criteria (beyond fit to data) to evaluate models—such as parsimony, coherence with prior knowledge, and theoretical plausibility. This connects to the sociological view that adjudicating between competing explanations often involves external criteria, not just data.
+
+5. **Embracing Uncertainty**: A core part of McElreath’s Bayesian approach is the explicit modeling of uncertainty. Rather than trying to force a conclusion, he encourages a probabilistic understanding of the world where we deal with degrees of belief. This aligns with the sociology of scientific knowledge's critique of scientific certainty and its emphasis on the constructed and contingent nature of knowledge.
+
+### Synthesis: Modeling as a Social and Epistemological Process
+
+The connection between SSK and McElreath's Bayesian mindset is this shared awareness of the limitations of data in fully adjudicating between competing explanations. Both perspectives emphasize that data analysis is deeply influenced by theoretical and social factors. 
+
+In the SSK tradition, these factors might include social interests, institutional pressures, and cultural norms. In McElreath’s Bayesian approach, they take the form of modeling choices, priors, and the assumptions embedded in model structure. Both frameworks are cautious about claiming that data alone can "speak for itself"—they instead view the process of modeling and theory selection as one that involves judgment, assumptions, and external criteria.
+
+I think this is the connection you're sensing. Bayesian modeling, as McElreath teaches it, is a tool for navigating uncertainty, not eliminating it. Similarly, SSK views science as a process where data and theory interact within a broader social context, and no amount of empirical evidence can completely eliminate the need for interpretation.
+ -->
+
+
+<!-- 
 ## The underdetermination of theory by evidence
 
+The notion of underdetermination is central to how sociologists of science understand the relationship between data and theory. It suggests that no finite set of data can conclusively determine one single theory or explanation. Instead, data can often support multiple theories or explanations, meaning that factors beyond the data itself—such as social, cultural, or intellectual commitments—play a role in the development and acceptance of scientific knowledge. This concept has been examined in great depth by scholars like David Bloor, Harry Collins, Rob Evans, and Trevor Pinch. Let’s explore some key facets of this idea.
+
+### Empirical Equivalence: More Than One Theory Can Fit the Data
+
+One of the fundamental ideas behind underdetermination is that competing theories can often explain the same set of data equally well. This is called **empirical equivalence**. 
+
+David Bloor, a leading figure from the Edinburgh School, was one of the key proponents of this view, arguing that scientific knowledge is not purely dictated by empirical evidence but also by sociological factors. He introduced the *symmetry principle* in his foundational work *Knowledge and Social Imagery* (1976), which posits that the same sociological mechanisms that explain “true” beliefs should also be applied to explain “false” ones. The underlying assumption here is that the distinction between true and false is not always clear-cut and is often shaped by factors beyond data alone.
+
+For example, in the early development of quantum mechanics, both the wave theory of light and particle theory were empirically adequate for certain experimental results. Scientists had to navigate this empirical equivalence, and it wasn’t solely the data that drove the eventual preference for one theory over the other—it was also shaped by intellectual, institutional, and even personal preferences among physicists of the time.
+
+### Social Factors in Theory Choice: Why Some Theories Prevail
+
+If empirical equivalence holds, why does one theory become dominant over another? This is where the sociological dimension enters. Sociologists like Harry Collins and Trevor Pinch have illustrated that the closure of scientific debates often has as much to do with social and cultural factors as it does with the data itself.
+
+Collins, in his classic study *The Sociology of Scientific Knowledge* (1983), explored how different groups of scientists could interpret the same data differently depending on their prior assumptions, institutional affiliations, and even personal biases. He famously studied the debate over the detection of gravitational waves, where multiple research groups used the same instruments but came to different conclusions. He showed that the decision to accept or reject a discovery was not a straightforward application of empirical data but involved social negotiation within the scientific community.
+
+Rob Evans and Collins further extended this argument in their work on *interactional expertise*—the idea that expertise in science is not only about technical knowledge but also about participating in the social practices and language of a scientific community. This notion reinforces the view that the resolution of scientific debates cannot be reduced to data alone, as social networks and linguistic practices play a significant role in shaping consensus.
+
+### Interpretive Flexibility: Data Is Not Neutral
+
+The concept of **interpretive flexibility** is another key idea in the sociology of scientific knowledge. It means that the same data can be interpreted in multiple ways depending on the theoretical framework or background assumptions of the scientist.
+
+This concept is most famously explored by Trevor Pinch and Harry Collins in their work *The Golem: What You Should Know About Science* (1993). Pinch and Collins use historical case studies to show that scientific facts are not "given" by the data—they are interpreted and constructed by scientists within a particular theoretical and cultural context. For example, in the case of the discovery of pulsars, the initial data could have been interpreted as noise or as an artifact of instrumentation. It took a theoretical leap, shaped by the expectations and assumptions of the scientists involved, to interpret that data as evidence of a new kind of astronomical object.
+
+This notion of interpretive flexibility challenges the idea that data “speaks for itself.” Instead, it suggests that scientific facts are the result of negotiation, interpretation, and the application of theoretical lenses that vary across different groups of scientists.
+
+### Knowledge as Socially Constructed: The Symmetry Principle
+
+At the heart of the Edinburgh School’s approach is the idea that scientific knowledge is **socially constructed**. David Bloor’s *symmetry principle* demands that both successful and unsuccessful theories be explained by the same sociological mechanisms. Whether a theory is later considered true or false doesn't matter for sociological analysis; both outcomes are seen as the product of social processes.
+
+This principle is particularly important because it rejects the idea that true scientific knowledge is exempt from sociological scrutiny. In practice, this means that scientists' choices, preferences, and institutional environments can be just as influential in shaping a scientific theory as the data itself.
+
+A classic example comes from the history of phrenology, a now-discredited science that purported to explain human behavior by examining the shape of the skull. For much of the 19th century, phrenology was considered legitimate science by many researchers. According to Bloor, the eventual rejection of phrenology wasn't purely due to new data; instead, changing social and intellectual climates, as well as shifts in institutional power, played a critical role in its downfall.
+
+### Examples and Case Studies
+
+- **TODO**: Are there better case studies? I think I want to lean on Collin's GW work because it emphasizes iteration and integrity so much. Weave these or other examples into the text above.
+
+- **Gravitational Waves**: Collins’ work on the detection of gravitational waves is a vivid illustration of how different groups of scientists can interpret the same data differently based on social and institutional contexts. Even with the same instrumentation, conclusions varied, showing how data does not dictate a single outcome.
+  
+- **Quantum Mechanics**: The early 20th-century debates between the particle and wave theories of light provide another classic case of underdetermination. Both theories explained the data adequately for certain experimental conditions, but the resolution of this debate was influenced by the broader intellectual currents and the personal inclinations of key figures in the field.
+
+- **Pulsars**: Pinch and Collins’ study of pulsars shows that interpreting new astronomical data wasn’t simply a matter of observation. The interpretation of pulsars as a new kind of star was contingent on the theoretical frameworks and prior assumptions of the astronomers involved.
+
+### Underdetermination and Modern Modeling Practices
+
+This sociological lens on science aligns with the modern approach to statistical modeling, especially in fields like Bayesian inference, where uncertainty, model comparison, and multiple potential explanations are explicitly acknowledged. In Bayesian statistics, as advocated by Richard McElreath, modelers must confront the fact that the data doesn't automatically generate a single "true" model. Instead, multiple models can explain the same data, and choosing between them involves a combination of theoretical assumptions, prior knowledge, and external validation criteria. 
+
+Much like the sociologists of scientific knowledge argue, scientific knowledge and statistical modeling are underdetermined by data alone. This makes the process inherently interpretive, driven by a combination of evidence, judgment, and social context.
+
+## Bayesian Modeling and Underdetermination
+
+In the previous section, we explored how SSK scholars argue that data is often underdetermined by theory—meaning that multiple theories can explain the same set of data. This theme resonates with modern Bayesian statistical modeling, particularly in the framework Richard McElreath develops in *Statistical Rethinking* (2015). Bayesian statistics provides a formal structure for handling uncertainty and acknowledges the role of assumptions and prior beliefs in shaping the interpretation of data, echoing the interpretive flexibility discussed by sociologists of science.
+
+Here are key parallels between the two approaches:
+
+### Priors and Empirical Equivalence: Data Doesn’t Speak for Itself
+
+One of the central features of Bayesian inference is that it combines prior beliefs (or knowledge) with observed data to form a posterior distribution—a probabilistic estimate of the parameters or outcomes of interest. In this framework, **priors** represent what we know (or assume) before seeing the data, and they can strongly influence the resulting posterior distribution, especially when the data is sparse or noisy.
+
+This is closely related to the SSK concept of **empirical equivalence**. When different theories (or models) can explain the same data, it’s the assumptions and priors that distinguish them. In Bayesian terms, two models might fit the data equally well, but their differing priors reflect different theoretical commitments or preconceptions, which is analogous to how scientists with different theoretical frameworks might interpret the same empirical evidence differently.
+
+Take the example of early quantum mechanics from the SSK discussion. Just as the particle and wave theories of light could both account for the experimental data, in a Bayesian framework, we might have two models that predict the same likelihood of observing certain outcomes. The choice between them could depend on the priors we bring to the problem—e.g., the simplicity of one theory, its coherence with other areas of physics, or historical precedents.
+
+In McElreath's approach, modeling starts with the acknowledgment that data does not “speak for itself,” but is interpreted through the lens of priors and assumptions. This is exactly the kind of underdetermination the Edinburgh School talks about—data alone cannot resolve competing models; it must be interpreted with context.
+
+### Multiple Models and the Role of Social Factors in Theory Choice
+
+In Bayesian modeling, one of the key practices is **model comparison**—the idea that we build and test multiple models to explore different hypotheses or theoretical explanations. McElreath’s method often involves specifying multiple models with different assumptions and comparing them using tools like posterior predictive checks, information criteria (like WAIC or LOO), and model averaging. The key here is that the data alone isn’t dictating which model is "right"; rather, model comparison becomes a nuanced process that includes prior beliefs, empirical fit, and theoretical coherence.
+
+This has a clear connection to the SSK's focus on the **social factors** involved in theory choice. Just as the decision about which scientific theory prevails is influenced by non-empirical factors (such as institutional affiliations, intellectual traditions, or social negotiations), the choice between models in a Bayesian framework isn't determined by data alone. McElreath’s framework acknowledges that theory choice is as much about parsimony, interpretability, and prior knowledge as it is about empirical adequacy.
+
+- **NOTE**: I can connect to Tiago here as well. MDL.
+
+Let’s recall the example from Harry Collins about the detection of gravitational waves. Different research groups arrived at different conclusions using the same data, and these differences were not simply about empirical evidence—they involved judgments about which models were more plausible based on prior expectations and institutional practices. In Bayesian terms, this is akin to different groups working with different priors or theoretical assumptions, leading to different posterior beliefs even when confronted with the same likelihood function (data).
+
+### Interpretive Flexibility: Priors and Posteriors in Bayesian Thinking
+
+The concept of **interpretive flexibility**, discussed by Pinch and Collins, holds that data can be interpreted in different ways depending on the theoretical framework in use. Bayesian modeling formalizes this flexibility through the use of priors, which are updated in light of new evidence but do not necessarily converge on a single "truth." The flexibility remains in the system: different priors lead to different posteriors, even if the data is identical.
+
+In the Bayesian framework, this flexibility is not a flaw but a feature. McElreath teaches that our models are simplifications, and multiple valid models can coexist based on different sets of assumptions or data-generating processes. Rather than seeking a singular correct model, McElreath encourages exploration of alternative models and emphasizes understanding the assumptions embedded in each.
+
+Returning to the pulsar discovery case from the SSK section: astronomers had to decide whether their data represented a new celestial object or an instrument error. This decision wasn’t simply dictated by the data; it depended on their theoretical commitments and assumptions. Similarly, in a Bayesian framework, our priors guide us in interpreting ambiguous data and help us decide between competing explanations, even when the data might be equally compatible with both.
+
+### Knowledge as Socially Constructed: Priors Reflect Judgment
+
+Bloor’s **symmetry principle**, which posits that both true and false scientific beliefs are subject to sociological analysis, dovetails with the idea that Bayesian priors represent subjective judgment. In Bayesian inference, priors are not objective truths—they reflect what the modeler (or community) believes before seeing the data. This means that different communities or scientists might use different priors, based on their theoretical or social contexts.
+
+McElreath’s Bayesian approach mirrors this concept by explicitly acknowledging the role of **subjective judgment** in model construction. He advocates for transparency in how priors are chosen, and his approach encourages modelers to be aware of the implications of their prior choices. The Bayesian process doesn't claim to eliminate subjectivity but rather to incorporate it into the analysis in a formalized way.
+
+- **NOTE**: Maximum-entropy priors, etc.
+
+Bloor’s work on the downfall of phrenology provides a useful analogy here. In the 19th century, phrenology was considered legitimate science by many researchers, despite its later rejection. A Bayesian analysis might suggest that the priors of 19th-century scientists—shaped by their social, cultural, and intellectual context—were very different from modern priors. When new data came in, it was filtered through these prior beliefs, and the eventual shift away from phrenology can be seen as a change in the scientific community's priors over time, driven as much by social change as by empirical evidence.
+
+### Connecting the Dots: Underdetermination, Bayesian Modeling, and the Sociology of Knowledge
+
+Both SSK and Bayesian statistics, as articulated by McElreath, embrace the idea that data alone cannot settle scientific debates. Instead, both fields recognize that **assumptions, priors, and social context** shape how data is interpreted and which theories (or models) are favored. Let’s synthesize these connections:
+
+1. **Theoretical Flexibility**: Just as the sociology of scientific knowledge sees multiple theories as potentially explaining the same data (empirical equivalence), Bayesian modeling builds multiple models with different assumptions to explain the same data. Neither approach assumes that one "true" theory or model will automatically emerge from the data alone.
+
+2. **Role of Assumptions**: In both SSK and Bayesian thinking, assumptions are central. For the sociologist of science, these assumptions may be social or institutional (e.g., the credibility of a research group or the cultural context in which a theory is accepted). For McElreath’s Bayesian approach, the assumptions are mathematical and encoded in the priors. But in both cases, it’s clear that data does not operate in isolation from the assumptions used to interpret it.
+
+3. **Model Comparison as Social Process**: Just as the resolution of scientific debates in the sociology of science involves social negotiation, the choice between Bayesian models involves multiple criteria beyond empirical fit—such as parsimony, coherence with prior knowledge, and theoretical plausibility. McElreath’s approach recognizes this and advocates for a holistic view of model comparison, just as SSK scholars advocate for understanding theory choice within its broader social context.
+
+4. **Uncertainty and Multiple Valid Explanations**: Both approaches embrace uncertainty and resist the temptation to find a singular answer. In Bayesian modeling, uncertainty is explicitly modeled, and competing models are compared probabilistically. Similarly, SSK scholars argue that scientific theories are underdetermined by data and must be evaluated in light of broader social and intellectual contexts. In both cases, the aim is not to eliminate uncertainty but to understand and work with it.
+
+### Two Sides of the Same Coin
+
+In the end, Bayesian statistics and the sociology of scientific knowledge are both concerned with understanding the contingent, context-dependent nature of scientific knowledge. Both fields reject the notion that data alone can settle debates and instead focus on how assumptions, priors, and social context shape the production of knowledge.
+
+Whether through Bayesian modeling’s explicit treatment of uncertainty and priors or the SSK’s analysis of the social factors shaping theory choice, both fields highlight that **science is as much about judgment as it is about data**. And in that judgment lies the connection between McElreath’s Bayesian thinking and the ideas of underdetermination developed by Bloor, Collins, and others.
+
+## Why Start with Scientific Models? Causal Thinking Before Statistical Estimation
+
+Richard McElreath, in *Statistical Rethinking*, emphasizes that modeling is not simply about fitting statistical models to data—it’s about articulating a scientific model that reflects your understanding of the underlying causal processes. This distinction is crucial because it shifts our focus from mere pattern recognition to causal explanation. In other words, **statistical models help us estimate relationships, but it’s our scientific models that tell us what those relationships mean**.
+
+This idea connects directly to broader issues in the philosophy of science, where the distinction between describing data and explaining phenomena has long been central. Nancy Cartwright and Judea Pearl’s work on causality further sharpens this distinction by arguing that if we want to understand how the world works, we must go beyond statistical associations and grapple directly with causal structures.
+
+### Statistical Models Describe, Scientific Models Explain
+
+Let’s start with McElreath’s main point: the idea that statistical models are tools for quantifying relationships, but they don’t tell us why those relationships exist. For example, imagine we have data showing a strong correlation between the number of ice creams sold and the number of drownings at the beach. A purely statistical model might capture this association beautifully, but it would tell us nothing about the actual causal mechanism behind it.
+
+Here’s where **scientific models** come into play. A scientific model based on our understanding of the world would suggest a common cause (hot weather) driving both ice cream sales and beachgoers' risk of drowning. By articulating this causal structure, we avoid mistaking correlation for causation. This, in essence, is what McElreath advocates: build a **causal model of the world first**, and then construct your statistical model to estimate the parameters of that causal model. Otherwise, you risk falling into the trap of overfitting patterns without understanding their meaning.
+
+### Nancy Cartwright and the Importance of Mechanisms
+
+Nancy Cartwright, a philosopher of science, extends this argument by emphasizing the importance of **mechanisms** in scientific modeling. In her book *Nature’s Capacities and Their Measurement* (1989), she argues that **statistical regularities alone are not enough**. What we care about in science are the capacities and mechanisms that produce those regularities. For Cartwright, a good scientific model isn’t just one that fits the data—it’s one that represents the causal mechanisms that generate the phenomena we observe.
+
+For example, when studying the impact of a new drug, it’s not enough to say that people who take the drug recover more often than those who don’t. A proper scientific model would also try to capture the **mechanism of action**—how the drug interacts with biological processes to produce the observed effects. This resonates with McElreath’s approach: don’t just describe the data; think about the underlying causal process and represent that in your model.
+
+- **TODO**: Integrate the sociological content on mechanisms here too (Gross, etc.)
+
+### Judea Pearl: Causal Graphs and Do-Calculus
+
+Judea Pearl’s work, particularly his development of **causal diagrams** and **do-calculus**, complements Cartwright’s focus on mechanisms. Pearl argues that causality isn’t just about statistical associations (correlations, regressions, etc.)—it’s about understanding the **causal pathways** that connect variables. His famous use of **directed acyclic graphs (DAGs)** offers a visual and formal way to represent these causal relationships.
+
+Pearl’s DAGs are not just a tool for visually organizing relationships—they are a formal system that helps clarify **causal assumptions**. By mapping out which variables are causes and which are effects, and how they are linked, DAGs let us distinguish between **correlation** and **causation**. This is essential for avoiding common statistical pitfalls, like confusing a common cause with a direct effect (as in our ice cream-drowning example). Pearl formalizes this in his *do-calculus*, which allows us to mathematically reason about interventions and causality in ways that go beyond standard statistical techniques.
+
+Consider a classic example from Pearl’s work: the relationship between smoking and lung cancer. A statistical model might find a strong association between smoking and cancer, but how do we know it’s causal? Using a DAG, we can represent the possible causal structure and adjust for confounding factors like genetic predisposition. This is exactly the kind of thinking that McElreath encourages when he advises us to start with a scientific model first. Pearl’s work provides a robust formalism to represent and interrogate those scientific models.
+
+### Connecting to the Sociology of Science: Underdetermination and Causal Models
+
+It’s worth pausing here to connect this back to the earlier discussion of **underdetermination** in the sociology of scientific knowledge (SSK). Just as we saw with David Bloor and Harry Collins, data alone often underdetermines theory—there can be multiple explanations for the same pattern in the data. Scientific models, particularly causal models, help us navigate this ambiguity by giving us a framework to make **testable predictions** about the world. Cartwright and Pearl’s emphasis on mechanisms and causal pathways can be seen as providing tools to resolve some of the underdetermination we see in data analysis.
+
+Whereas SSK emphasizes the social processes by which scientific theories are chosen, Cartwright and Pearl offer formal tools for testing different causal models and refining our understanding of the mechanisms at play. Still, as Cartwright would remind us, even these tools cannot remove the role of judgment—our models remain simplifications, and they rely on assumptions about the world.
+
+### Examples: Causality in Action
+
+Let’s revisit some of the earlier examples to see how this thinking applies:
+
+- **Gravitational Waves (Collins)**: The discovery of gravitational waves involved competing interpretations of noisy data. From a Bayesian modeling perspective, different scientific teams might have had different priors or causal models about what the data represented. Judea Pearl’s DAGs would encourage us to map out the causal assumptions behind each interpretation, clarifying the distinctions between signal and noise. Cartwright’s emphasis on mechanisms would further push us to think about the physical processes underlying those signals—what’s the actual mechanism producing the waves?
+
+- **Quantum Mechanics (Bloor)**: When choosing between particle and wave theories of light, scientists weren’t just fitting statistical models to data—they were building causal models based on their understanding of how light behaves. Pearl’s DAG framework would allow scientists to formally represent different causal structures and ask: under what circumstances would we expect to see these particular data patterns? Cartwright would remind us to look for the mechanisms that could generate the observed phenomena, rather than just focusing on the fit of the statistical models.
+
+### Setting the Stage for Simulation and Validation
+
+This brings us to the next phase in building good models: **simulating data** and **validating models**. Once we’ve articulated our causal scientific model, we can use tools like DAGs to represent it and simulations to test it. This is a key part of the model-building process that McElreath emphasizes—good models don’t just fit the data we have; they help us make predictions about new data. By simulating data, we can check whether our models capture the underlying causal processes or whether they’re merely overfitting to the data at hand.
+
+### The Role of Directed Acyclic Graphs (DAGs)
+
+Finally, DAGs—first introduced by Judea Pearl—will be a key tool in the next chapter as we dive into model validation. DAGs allow us to visually represent our scientific modeling assumptions and clarify the causal structure we’re working with. By drawing out the relationships between variables, we can test our assumptions, simulate data, and evaluate whether our models are consistent with the scientific story we’re trying to tell.
+
+### Scientific Models First, Statistics Second
+
+In sum, the argument for starting with scientific models before moving to statistical models is not just a practical suggestion from McElreath—it’s grounded in deep philosophical principles about how we understand the world. Nancy Cartwright’s focus on mechanisms reminds us that a good model must capture the causal processes at play, not just statistical regularities. Judea Pearl’s DAGs and do-calculus provide formal tools for representing and testing these causal models, helping us distinguish correlation from causation.
+
+As we move forward into model validation and data simulation, this philosophical grounding will be essential. We’re not just fitting data—we’re testing our understanding of the world, refining our causal models, and ensuring that they can generate predictions about new situations. By keeping our focus on scientific models first, we ensure that our statistical models remain tools for discovery, not just tools for description.
+ -->

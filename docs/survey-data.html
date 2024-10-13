@@ -197,6 +197,12 @@ div.csl-indent {
  <span class="menu-text">🏠</span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction</span></a>
+  </div>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
@@ -250,7 +256,7 @@ div.csl-indent {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./iteration.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">From sequential to iterative</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title"><del>Sequential</del> iterative modelling</span></span></a>
   </div>
 </li>
       </ul>
@@ -461,13 +467,13 @@ div.csl-indent {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./artificial-neural-networks-fnn-rnn-cnn.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Artificial neural networks 101</span></span></a>
+ <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Artificial neural networks</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./language-models-and-embeddings.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Processing Natural Language Data</span></span></a>
+ <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Language models and word embeddings</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -749,7 +755,7 @@ Figure&nbsp;7.4: Remake this.
 <p>Now that we’ve covered the broader context of survey methodology, past and present, let’s dive into the practical side of working with survey data. Before you can even begin to analyze your data, there are a number of essential tasks you’ll need to complete to ensure your data is clean and ready for analysis. This data processing work is a crucial part of any research project; talk to anyone with experience doing this kind of work and they’ll tell you how important, and time consuming, this work can be.</p>
 <p>Some of these tasks are common to all datasets, while others are specific to survey data, such as dealing with missing responses or applying survey weights. In this chapter, we’ll go through these steps one by one, using a panel survey from Canada as our working example.</p>
 <p>As always, we’ll start by importing packages.</p>
-<div id="2120aaef" class="cell" data-execution_count="1">
+<div id="03af2edc" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> dcss</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -785,7 +791,7 @@ Figure&nbsp;7.4: Remake this.
 </ul></li>
 </ul>
 <p>Alternatively, you can use the <code>download_dataset</code> function from <code>dcss</code>, which will download and file the datasets for you.</p>
-<div id="9821ce9c" class="cell" data-execution_count="2">
+<div id="d074346e" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>ces_url <span class="op">=</span> <span class="st">"https://www.dropbox.com/scl/fo/hdqfapeqaiwk47t885iwg/ANjnpc8u4rnuMQ83TXExzQ4?rlkey=t6olw4xekzjm46mx8ndjgqrit&amp;st=dlunronk&amp;dl=0"</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>dcss.download_dataset(</span>
@@ -799,19 +805,19 @@ Figure&nbsp;7.4: Remake this.
 <section id="load-the-data" class="level3" data-number="7.3.3">
 <h3 data-number="7.3.3" class="anchored" data-anchor-id="load-the-data"><span class="header-section-number">7.3.3</span> Load the Data</h3>
 <p>In this case, the researchers <strong>CITE</strong> have made the data available as <code>.dta</code> files, which are a format used by the proprietary software Stata. We can read these files into memory using Pandas <code>read_stata()</code> function, which we do for the 2021 survey data below.</p>
-<div id="7b005d65" class="cell" data-execution_count="3">
+<div id="1b70320d" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>ces21 <span class="op">=</span> pd.read_stata(</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'data/canadian_election_studies/Canadian-Election-Study-2021/2021 Canadian Election Study v2.0.dta'</span>, convert_categoricals<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Once the data is loaded, one of the first things you’ll want to check is the size of the dataset—how many rows and columns are there? This will give you a sense of how large the survey is and help you plan your analysis. We can do this using the <code>.shape</code> attribute for dataframes.</p>
-<div id="4ecaa0da" class="cell" data-execution_count="4">
+<div id="1d068696" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>ces21.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="4">
 <pre><code>(20968, 1059)</code></pre>
 </div>
 </div>
 <p>We can also get a quick overview of the dataset by using the <code>.info()</code> function, which will show us the number of columns, their data types, and whether there are any missing values.</p>
-<div id="d2c0a1f7" class="cell" data-execution_count="5">
+<div id="afe6d3df" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>ces21.info()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
@@ -842,7 +848,7 @@ memory usage: 142.1+ MB</code></pre>
 <ul>
 <li><strong>TODO</strong>: Add an example to illustrate how applying weights can shift survey results. For instance, show a comparison between unweighted vs.&nbsp;weighted means or proportions in a simple analysis, using the CES dataset.</li>
 </ul>
-<div id="66bcb4e3" class="cell" data-execution_count="6">
+<div id="713e4367" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Example here</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
@@ -850,15 +856,15 @@ memory usage: 142.1+ MB</code></pre>
 <h3 data-number="7.4.3" class="anchored" data-anchor-id="assessing-data-quality"><span class="header-section-number">7.4.3</span> Assessing Data Quality</h3>
 <p>Once you’ve familiarized yourself with the sample design and applied the necessary weights, your next step should be to carefully assess the quality of the survey data. There are a few common problems to look out for, including inconsistencies, outliers, and missing data.</p>
 <p>Survey data often contains inconsistencies, particularly in <strong>panel surveys</strong> where the same respondents are surveyed multiple times. For example, a respondent’s age or region of residence might be reported differently across waves. It’s important to identify and correct these inconsistencies before proceeding with analysis.</p>
-<div id="18b14453" class="cell" data-execution_count="7">
+<div id="4d725175" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Example here</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>In addition to inconsistencies, you should also check for <strong>outliers</strong>—extreme values that might skew your results. In survey data, these can sometimes be caused by respondents rushing through the survey or providing inaccurate answers. One way to detect this is by checking the <strong>distribution of survey completion times</strong>. Respondents who completed the survey in an unusually short time may not have been paying full attention.</p>
-<div id="ce472f66" class="cell" data-execution_count="8">
+<div id="76fb3159" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Example here</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Speeders—respondents who rush through the survey—can introduce bias into your data. There are a number of techniques for identifying speeders, including setting a minimum threshold for survey completion time or using <strong>attention-check questions</strong> to detect inattentiveness. If you suspect that certain respondents weren’t paying attention, you may want to exclude them from your analysis.</p>
-<div id="66d6b3b5" class="cell" data-execution_count="9">
+<div id="4f3383aa" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Example here</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Another common issue in survey data is <strong>response bias</strong>, where respondents may answer questions in a way that reflects social desirability rather than their true opinions. For example, people might be reluctant to express unpopular views or admit to certain behaviors. While it’s difficult to eliminate response bias entirely, being aware of it and using techniques like <strong>randomized response</strong> – <strong>DEFINE</strong> – can help mitigate its effects.</p>
@@ -883,14 +889,14 @@ memory usage: 142.1+ MB</code></pre>
 <ul>
 <li><strong>TODO</strong>: Missing data in this chapter specifically…</li>
 </ul>
-<div id="0f237ab1" class="cell" data-execution_count="10">
+<div id="42a089e0" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Example here</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <section id="recoding-variables" class="level3" data-number="7.5.1">
 <h3 data-number="7.5.1" class="anchored" data-anchor-id="recoding-variables"><span class="header-section-number">7.5.1</span> Recoding Variables</h3>
 <p>One of the most common tasks in survey data processing is <strong>recoding variables</strong>. This is especially important for categorical variables, where you might need to <strong>collapse categories</strong> or <strong>create dummy variables</strong>. For example, if you have a variable with multiple levels of education, you might want to recode it into a simpler variable with just two categories: “college degree” vs.&nbsp;“no college degree.”</p>
 <p>In addition to recoding categories, you may also need to <strong>reverse score</strong> some variables. This is common with <strong>Likert-scale questions</strong>, where higher values indicate more agreement or approval. If some items are negatively worded, you’ll need to reverse the scale so that all items point in the same direction.</p>
-<div id="41a08419" class="cell" data-execution_count="11">
+<div id="894d7c70" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Example here</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
@@ -899,14 +905,14 @@ memory usage: 142.1+ MB</code></pre>
 <h2 data-number="7.6" class="anchored" data-anchor-id="grid-questions"><span class="header-section-number">7.6</span> Grid Questions</h2>
 <p>As I mentioned earlier, grid questions are falling out of favour in survey methodology. However, you’ve very likely to encounter them, especially if you are working with longitudinal data or older surveys. With these questions, respondents are asked to rate a series of items on the same scale (e.g., a series of agree/disagree statements). These questions can present some challenges when it comes to data processing, particularly if there are missing responses. One approach is to <strong>collapse related questions into indices</strong> or <strong>standardize scales</strong> so that the responses are comparable across different items.</p>
 <p>The CES survey data contains several such questions, including…</p>
-<div id="deffcbbb" class="cell" data-execution_count="12">
+<div id="6c6d92ae" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Example here</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <section id="categorical-data" class="level3" data-number="7.6.1">
 <h3 data-number="7.6.1" class="anchored" data-anchor-id="categorical-data"><span class="header-section-number">7.6.1</span> Categorical Data</h3>
 <p>Most surveys include quite a lot of categorical data, which should be handled very carefully in any modeling.</p>
 <p>When working with categorical data in Pandas, it’s important to make sure that our categorical variables are <strong>ordered</strong> properly and that “Don’t know / prefer not to answer” responses – which don’t fit neatly into ordinal data – are handled consistently. You’ll also need to decide how to represent your categorical variables in your analysis. In nearly all cases you’ll want to treat categories as <strong>index variables</strong>, but in some cases you may wish to do things the old-fashioned way and use <strong>one-hot encoding</strong> (i.e., creating dummy variables). The implications of this choice will become clear a little later in the book, when we get to multilevel models. For now, we’ll …</p>
-<div id="b0ee57eb" class="cell" data-execution_count="13">
+<div id="04c72d5a" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Example here</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <!-- 
@@ -1364,8 +1370,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./iteration.html" class="pagination-link" aria-label="From sequential to iterative">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">From sequential to iterative</span></span>
+      <a href="./iteration.html" class="pagination-link" aria-label="~~Sequential~~ iterative modelling">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title"><del>Sequential</del> iterative modelling</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">

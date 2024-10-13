@@ -1,4 +1,4 @@
-# Artificial neural networks 101
+# Artificial neural networks
 
 <!-- 
 Maybe incorporate bits from: 
