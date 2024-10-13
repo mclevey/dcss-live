@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.56">
+<meta name="generator" content="quarto-1.3.450">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>32&nbsp; Artificial neural networks – Doing Computational Social Science&lt;br&gt;[The **Continuous Development** Edition]{.small}</title>
+<title>Doing Computational Social ScienceThe Continuous Development Edition - 32&nbsp; Artificial neural networks</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -24,7 +24,6 @@ ul.task-list li input[type="checkbox"] {
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
-  margin-bottom: 0em;
 }
 .hanging-indent div.csl-entry {
   margin-left:2em;
@@ -68,13 +67,7 @@ div.csl-indent {
   "collapse-after": 3,
   "panel-placement": "start",
   "type": "textbox",
-  "limit": 50,
-  "keyboard-shortcut": [
-    "f",
-    "/",
-    "s"
-  ],
-  "show-item-context": false,
+  "limit": 20,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -83,42 +76,14 @@ div.csl-indent {
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
-    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
 }</script>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="custom.css">
 </head>
@@ -129,13 +94,13 @@ window.Quarto = {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./artificial-neural-networks-fnn-rnn-cnn.html"><strong>DEEP LEARNING</strong></a></li><li class="breadcrumb-item"><a href="./artificial-neural-networks-fnn-rnn-cnn.html"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Artificial neural networks</span></a></li></ol></nav>
-        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-        </a>
-      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./artificial-neural-networks-fnn-rnn-cnn.html"><strong>DEEP LEARNING</strong></a></li><li class="breadcrumb-item"><a href="./artificial-neural-networks-fnn-rnn-cnn.html"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Artificial neural networks</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -144,7 +109,7 @@ window.Quarto = {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
       <a href="./index.html" class="sidebar-logo-link">
       <img src="./figures/logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
@@ -152,25 +117,25 @@ window.Quarto = {
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Doing Computational Social Science<br><span class="small">The <strong>Continuous Development</strong> Edition</span></a> 
         <div class="sidebar-tools-main">
-    <a href="https://github.com/UWNETLAB/dcss_supplementary/tree/master/book/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="https://github.com/UWNETLAB/dcss_supplementary/tree/master/book/" rel="" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
     <div class="dropdown">
-      <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
+      <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Share"><i class="bi bi-share"></i></a>
       <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
           <li>
             <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=|url|">
-              <i class="bi bi-twitter pe-1"></i>
+              <i class="bi bi-bi-twitter pe-1"></i>
             Twitter
             </a>
           </li>
           <li>
             <a class="dropdown-item sidebar-tools-main-item" href="https://www.facebook.com/sharer/sharer.php?u=|url|">
-              <i class="bi bi-facebook pe-1"></i>
+              <i class="bi bi-bi-facebook pe-1"></i>
             Facebook
             </a>
           </li>
           <li>
             <a class="dropdown-item sidebar-tools-main-item" href="https://www.linkedin.com/sharing/share-offsite/?url=|url|">
-              <i class="bi bi-linkedin pe-1"></i>
+              <i class="bi bi-bi-linkedin pe-1"></i>
             LinkedIn
             </a>
           </li>
@@ -200,9 +165,9 @@ window.Quarto = {
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
  <span class="menu-text"><strong>COMPUTING</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -235,9 +200,9 @@ window.Quarto = {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
  <span class="menu-text"><strong>WORKFLOW</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -258,9 +223,9 @@ window.Quarto = {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
  <span class="menu-text"><strong>DATA</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -305,9 +270,9 @@ window.Quarto = {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
  <span class="menu-text"><strong>DISCOVERY</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -346,9 +311,9 @@ window.Quarto = {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
  <span class="menu-text"><strong>PREDICTION &amp; INFERENCE</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -393,9 +358,9 @@ window.Quarto = {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true">
  <span class="menu-text"><strong>MODELING</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -452,9 +417,9 @@ window.Quarto = {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true">
  <span class="menu-text"><strong>DEEP LEARNING</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -487,9 +452,9 @@ window.Quarto = {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" aria-expanded="true">
  <span class="menu-text"><strong>RESPONSIBILITIES</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -535,7 +500,7 @@ window.Quarto = {
     </ul>
     </div>
 </nav>
-<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
@@ -572,12 +537,12 @@ window.Quarto = {
   <li><a href="#key-points" id="toc-key-points" class="nav-link" data-scroll-target="#key-points"><span class="header-section-number">32.9.1</span> Key Points</a></li>
   </ul></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/UWNETLAB/dcss_supplementary/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/UWNETLAB/dcss_supplementary/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./artificial-neural-networks-fnn-rnn-cnn.html"><strong>DEEP LEARNING</strong></a></li><li class="breadcrumb-item"><a href="./artificial-neural-networks-fnn-rnn-cnn.html"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Artificial neural networks</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Artificial neural networks</span></h1>
 </div>
@@ -592,9 +557,7 @@ window.Quarto = {
   </div>
   
 
-
 </header>
-
 
 <!-- 
 Maybe incorporate bits from: 
@@ -622,7 +585,7 @@ _developing-neural-network-models-with-keras.qmd
 <section id="the-perceptron" class="level2" data-number="32.4">
 <h2 data-number="32.4" class="anchored" data-anchor-id="the-perceptron"><span class="header-section-number">32.4</span> THE PERCEPTRON</h2>
 <p>To really understand how neural networks work, it’s necessary to understand what happens at the level of individual artificial neurons. For that reason, we’ll start our introduction to neural networks by discussing the first successful attempt to simulate a biological neuron. Recall from Chapter 20 that neural networks are the model family of choice within the <strong>connectionist</strong> paradigm, which is loosely inspired by biological cognition.</p>
-<p>The Perceptron was a highly simplified model of a biological neuron, proposed by psychologist Frank <span class="citation" data-cites="rosenblatt1958perceptron">Rosenblatt (<a href="references.html#ref-rosenblatt1958perceptron" role="doc-biblioref">1958</a>)</span>. The simulated neuron would receive numerical inputs from multiple sources (i.e., other neurons). To simulate differences in the strength of each of those incoming signals, the Perceptron would multiply each by a <strong>weight</strong>. Then it would sum all of the weighted inputs and, if the sum exceeded a specific threshold, then the Perceptron would output 1 (it “fires”); if not, 0 (it does not fire). Recall the threshold model of complex contagion from Chapter 18 as an analogy. If enough neighbours are activated and sending strong enough signals, ego is likely to activate as well.</p>
+<p>The Perceptron was a highly simplified model of a biological neuron, proposed by psychologist Frank <span class="citation" data-cites="rosenblatt1958perceptron">Rosenblatt (<a href="#ref-rosenblatt1958perceptron" role="doc-biblioref">1958</a>)</span>. The simulated neuron would receive numerical inputs from multiple sources (i.e., other neurons). To simulate differences in the strength of each of those incoming signals, the Perceptron would multiply each by a <strong>weight</strong>. Then it would sum all of the weighted inputs and, if the sum exceeded a specific threshold, then the Perceptron would output 1 (it “fires”); if not, 0 (it does not fire). Recall the threshold model of complex contagion from Chapter 18 as an analogy. If enough neighbours are activated and sending strong enough signals, ego is likely to activate as well.</p>
 <p>For a relatively simple model like this, then, the main questions are:</p>
 <ol type="1">
 <li>How do you come up with the <strong>weights</strong> that each simulated neuron uses to multiply incoming signals, and</li>
@@ -630,17 +593,13 @@ _developing-neural-network-models-with-keras.qmd
 </ol>
 <p>Rosenblatt’s solution to these problems was influenced by behaviouralist notions of operant conditioning that were dominant in psychology at the time. In brief, he proposed teaching the Perceptron to learn the connection weights itself using a process that we would now call supervised learning.</p>
 <p>To illustrate the process, imagine you are training a Perceptron to differentiate between black and white photos of cats and dogs (which is a pretty tall order for the Perceptron, but we’ll proceed anyway). In this scenario, your input features are individual pixel values. The number of initial inputs would be equal to however many pixels are in the original image. If each image was 28 pixels by 28 pixels (<em>much less</em> than the images we make these days), it would be represented by a total of 784 numerical input features.</p>
-<p>To keep things really simple, in this example we will work with just four input features. <a href="#fig-22_01" class="quarto-xref">Figure&nbsp;<span>32.1</span></a> illustrates the basic model. First, we start by assigning weights using a random number generator. It doesn’t matter what our initial weights are <em>as long as they are not all the same</em>. Positive weights are “excitatory” and negative weights are “inhibitory.” The Perceptron makes an initial prediction by multiplying each input value with its randomly assigned weight and then summing all of these weighted inputs. For example, in this case, it would perform the following calculation:</p>
+<p>To keep things really simple, in this example we will work with just four input features. <a href="#fig-22_01">Figure&nbsp;<span class="quarto-unresolved-ref">fig-22_01</span></a> illustrates the basic model. First, we start by assigning weights using a random number generator. It doesn’t matter what our initial weights are <em>as long as they are not all the same</em>. Positive weights are “excitatory” and negative weights are “inhibitory.” The Perceptron makes an initial prediction by multiplying each input value with its randomly assigned weight and then summing all of these weighted inputs. For example, in this case, it would perform the following calculation:</p>
 <p><span class="math display">\[(0.2 \cdot 0.9) + (0.1 \cdot 0.1) + (0.08 \cdot 0.7) + (0.92 \cdot 0.2) = 0.43\]</span></p>
 <p>If <span class="math inline">\(0.43\)</span> is greater than the simulated neuron’s fixed threshold, it fires (outputs 1, predicts cat). If not, it does not fire (outputs 0, predicts dog).</p>
-<div id="fig-22_01" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-22_01-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/perceptron_threshold.png" class="img-fluid figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-22_01-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;32.1: The Perceptron received numerical inputs, multiplied them by weights to simulate differences in signal strength, and then “fired” if the sum of weighted inputs was greater than a fixed threshold.
-</figcaption>
+<div id="fig-22_01" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="figures/perceptron_threshold.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;32.1: The Perceptron received numerical inputs, multiplied them by weights to simulate differences in signal strength, and then “fired” if the sum of weighted inputs was greater than a fixed threshold.</figcaption>
 </figure>
 </div>
 <p>Drawing on operant conditioning, if the Perceptron makes an incorrect prediction – the image was a dog (output = 0) but the Percetron guessed cat (output = 1) – then it makes a <em>minor</em> adjustment to the weights, raising some and lowering others (giving us an early version of supervised learning). Then it makes another prediction on another image using these adjusted weights. It makes further minor adjustments to the weights whenever it makes an incorrect prediction and leaves them as they are when it makes correct predictions.</p>
@@ -654,15 +613,11 @@ Figure&nbsp;32.1: The Perceptron received numerical inputs, multiplied them by w
 <p>The Perceptron provided an important foundation for contemporary ANN models. Let’s take a closer look at a powerful extension that is currently in wide use – the <strong>Multilayer Perceptron (MLP)</strong>.</p>
 <section id="making-sense-of-layers" class="level3" data-number="32.5.1">
 <h3 data-number="32.5.1" class="anchored" data-anchor-id="making-sense-of-layers"><span class="header-section-number">32.5.1</span> Making Sense of Layers</h3>
-<p>As you might expect, MLPs organize networks of simulated neurons into multiple layers: an <strong>input layer</strong>, one or more <strong>hidden layers</strong>, and an <strong>output layer</strong>. This layered organization is illustrated in <a href="#fig-22_02" class="quarto-xref">Figure&nbsp;<span>32.2</span></a>.</p>
-<div id="fig-22_02" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-22_02-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/mlp.png" class="img-fluid figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-22_02-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;32.2: Simulated neurons in a Multilayer Perceptron are assigned to specific layers: an <strong>input</strong> layer, one or more <strong>hidden</strong> layers, and an <strong>output</strong> layer. Information propogates <strong>forward</strong> (left to right) through the network from the raw data in the input layer to the predictions made in the output later. In training, information about errors are propagated <em>backward</em> (right to left) from the output later to the input layer.
-</figcaption>
+<p>As you might expect, MLPs organize networks of simulated neurons into multiple layers: an <strong>input layer</strong>, one or more <strong>hidden layers</strong>, and an <strong>output layer</strong>. This layered organization is illustrated in <a href="#fig-22_02">Figure&nbsp;<span class="quarto-unresolved-ref">fig-22_02</span></a>.</p>
+<div id="fig-22_02" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="figures/mlp.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;32.2: Simulated neurons in a Multilayer Perceptron are assigned to specific layers: an <strong>input</strong> layer, one or more <strong>hidden</strong> layers, and an <strong>output</strong> layer. Information propogates <strong>forward</strong> (left to right) through the network from the raw data in the input layer to the predictions made in the output later. In training, information about errors are propagated <em>backward</em> (right to left) from the output later to the input layer.</figcaption>
 </figure>
 </div>
 <p>Our data enter the MLP via the neurons in the input layer. Just like in the Perceptron, the input values are numerical. Every neuron in the input layer is connected to every neuron in the hidden layer, and every neuron in the hidden layer is connected to every neuron in the output layer. Therefore, the hidden layer in this MLP is <strong>dense</strong>. Later we will learn that there are other ways of organizing the connections between neurons. This model architecture is also <strong>sequential</strong> because information has to pass through each layer one at a time to go from one end of the network to another. Non-sequential model architectures are also possible, but we will not discuss them here.</p>
@@ -672,19 +627,15 @@ Figure&nbsp;32.2: Simulated neurons in a Multilayer Perceptron are assigned to s
 <h3 data-number="32.5.2" class="anchored" data-anchor-id="activation-functions"><span class="header-section-number">32.5.2</span> Activation Functions</h3>
 <p>At this point, we encounter another importance difference between MLPs and their predecessor, the Perceptron. Whereas the Perceptron had a fixed threshold and would make deterministic binary decisions about whether to fire (1 for yes, 0 for no), the MLP applies an <strong>activation function</strong> to the sum of weighted inputs and outputs a continuous number. The continuous number is then passed along to all connected neurons in the next layer, which in this case are the neurons in the output layer. There are many possible activation functions one might use, but the most common three are sigmoid, tanh, and ReLU. We will learn about each in a moment, but first let’s clarify what activation functions are simulating <em>in general</em>.</p>
 <p>Recall from Chapter 20, during our brief introduction to biological neural networks, we learned that action potentials are triggered in postsynaptic neurons when they receive a level of stimulation that exceeds some threshold. The Perceptron simulated this with an actual fixed threshold, and then the neuron would deterministically “fire” if the weighted sum of inputs exceeds the neurons threshold. In other words, this is a binary step function that outputs 0s for every number before a threshold and 1s for every number above the threshold. But what if the sum of weighted inputs is just a <em>wee bit above</em> or below the threshold?</p>
-<p>In a biological neural network, relatively low levels of stimulation are insufficient to trigger an action potential, but once the level of stimulation reaches a certain point the probability of an action potential jumps way up. Once that point has been reached, additional stimulation has little additional effect. In the 1980s, researchers realized the many benefits of making this simulated process a bit more like the biological process using activation functions. <a href="#fig-22_03" class="quarto-xref">Figure&nbsp;<span>32.3</span></a> illustrates the differences between four different types of activation functions. For each, the x-axis represents the total input from other neurons, and the y-axis represents the neuron’s output.</p>
-<div id="fig-22_03" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-22_03-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/activation_functions.png" class="img-fluid figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-22_03-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;32.3: Four common activation functions for hidden layer neurons: a binary step function with a hard threshold (A), the sigmoid function (B), the hyperbolic / tanh function (C), and the rectified linear unit function / ReLU (D).
-</figcaption>
+<p>In a biological neural network, relatively low levels of stimulation are insufficient to trigger an action potential, but once the level of stimulation reaches a certain point the probability of an action potential jumps way up. Once that point has been reached, additional stimulation has little additional effect. In the 1980s, researchers realized the many benefits of making this simulated process a bit more like the biological process using activation functions. <a href="#fig-22_03">Figure&nbsp;<span class="quarto-unresolved-ref">fig-22_03</span></a> illustrates the differences between four different types of activation functions. For each, the x-axis represents the total input from other neurons, and the y-axis represents the neuron’s output.</p>
+<div id="fig-22_03" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="figures/activation_functions.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;32.3: Four common activation functions for hidden layer neurons: a binary step function with a hard threshold (A), the sigmoid function (B), the hyperbolic / tanh function (C), and the rectified linear unit function / ReLU (D).</figcaption>
 </figure>
 </div>
-<p>The first activation function (<a href="#fig-22_03" class="quarto-xref">Figure&nbsp;<span>32.3</span></a>, Subplot A) is the original binary step function used in the Perceptron: if the sum of weighted inputs exceeds some threshold (in this hypothetical example, the threshold is set to 2), then the neuron output 1 (i.e., it fires), else it outputs 0 (i.e., does not fire). In a famous paper from 1986, Rumelhart, Hinton, and Williams <span class="citation" data-cites="rumelhart1986learning">(<a href="references.html#ref-rumelhart1986learning" role="doc-biblioref">1986</a>)</span> replaced the binary step function with a sigmoid activation function. (You may recognize the sigmoid function, <a href="#fig-22_03" class="quarto-xref">Figure&nbsp;<span>32.3</span></a> Subplot B, from the context of logistic regression.) One of the many advantages of their revised approach is that it eliminates entirely the need to use hard thresholds and binary outputs. Instead, the sigmoid function returns a real number between 0 and 1, which can be interpreted as a probability. Similarly, the hyperbolic tangent activation function (<a href="#fig-22_03" class="quarto-xref">Figure&nbsp;<span>32.3</span></a>, Subplot C) is continuous and S-shaped, but outputs values between -1 and 1.</p>
-<p>The fourth activation function shown in <a href="#fig-22_03" class="quarto-xref">Figure&nbsp;<span>32.3</span></a> is the Rectified Linear Unit Function, or ReLU, shown in Subplot D. ReLU simply accepts the sum of weight inputs and if the sum is equal to or less than 0, it output a 0. If the sum of weighted inputs is greater than 0, it outputs whatever that positive value is. In other words, it also output continuous values that have a lower bound of 0, but no upper bound.</p>
+<p>The first activation function (<a href="#fig-22_03">Figure&nbsp;<span class="quarto-unresolved-ref">fig-22_03</span></a>, Subplot A) is the original binary step function used in the Perceptron: if the sum of weighted inputs exceeds some threshold (in this hypothetical example, the threshold is set to 2), then the neuron output 1 (i.e., it fires), else it outputs 0 (i.e., does not fire). In a famous paper from 1986, Rumelhart, Hinton, and Williams <span class="citation" data-cites="rumelhart1986learning">(<a href="#ref-rumelhart1986learning" role="doc-biblioref">1986</a>)</span> replaced the binary step function with a sigmoid activation function. (You may recognize the sigmoid function, <a href="#fig-22_03">Figure&nbsp;<span class="quarto-unresolved-ref">fig-22_03</span></a> Subplot B, from the context of logistic regression.) One of the many advantages of their revised approach is that it eliminates entirely the need to use hard thresholds and binary outputs. Instead, the sigmoid function returns a real number between 0 and 1, which can be interpreted as a probability. Similarly, the hyperbolic tangent activation function (<a href="#fig-22_03">Figure&nbsp;<span class="quarto-unresolved-ref">fig-22_03</span></a>, Subplot C) is continuous and S-shaped, but outputs values between -1 and 1.</p>
+<p>The fourth activation function shown in <a href="#fig-22_03">Figure&nbsp;<span class="quarto-unresolved-ref">fig-22_03</span></a> is the Rectified Linear Unit Function, or ReLU, shown in Subplot D. ReLU simply accepts the sum of weight inputs and if the sum is equal to or less than 0, it output a 0. If the sum of weighted inputs is greater than 0, it outputs whatever that positive value is. In other words, it also output continuous values that have a lower bound of 0, but no upper bound.</p>
 <p>The sigmoid, hyperbolic tangent, and ReLU activation functions are all vastly superior to the binary step / hard threshold activation function. Aside from making ANNs slightly closer to their biological counterparts, these functions all output continuous values, which turns out to be <em>very</em> useful when training ANNs.</p>
 </section>
 <section id="what-about-the-output-layer" class="level3" data-number="32.5.3">
@@ -697,7 +648,7 @@ Figure&nbsp;32.3: Four common activation functions for hidden layer neurons: a b
 <p>One of the major challenges that held back advancing this model for quite some time was that training a multi-layered ANN is far more complex than a single neuron (e.g., a Perceptron). When ANNs make incorrect predictions, how do we know which weights in the hidden layer of the network to adjust? The possible paths from input through the hidden layer to the output is very complex, and every mistaken prediction could be the result of any number of thousands or millions of weights and thresholds. Which ones should change, in what direction, and by how much? Backpropagation is an algorithm that enables us to answer those questions and better train our ANNs.</p>
 <section id="backpropagation" class="level3" data-number="32.6.1">
 <h3 data-number="32.6.1" class="anchored" data-anchor-id="backpropagation"><span class="header-section-number">32.6.1</span> Backpropagation</h3>
-<p>When neurons in the hidden layers of an ANN output continuous values, rather than a binary decision, we can quantify the extent to which each individual weighted connection contributed to an overall prediction error. Just as information flows forward from an input to a final prediction, it is possible to send information about errors <em>backwards</em> from the final prediction to the input layers. This is called <strong>backpropagation</strong>. The algorithm itself was developed in the 1970s, but Rumelhart, Hinton, and Williams <span class="citation" data-cites="rumelhart1986learning">(<a href="references.html#ref-rumelhart1986learning" role="doc-biblioref">1986</a>)</span> famously showed its usefulness in the context of neural network modelling, and it has greatly improved the ANN training process. In fact, backpropagation may be the most important algorithm in ANN modelling.</p>
+<p>When neurons in the hidden layers of an ANN output continuous values, rather than a binary decision, we can quantify the extent to which each individual weighted connection contributed to an overall prediction error. Just as information flows forward from an input to a final prediction, it is possible to send information about errors <em>backwards</em> from the final prediction to the input layers. This is called <strong>backpropagation</strong>. The algorithm itself was developed in the 1970s, but Rumelhart, Hinton, and Williams <span class="citation" data-cites="rumelhart1986learning">(<a href="#ref-rumelhart1986learning" role="doc-biblioref">1986</a>)</span> famously showed its usefulness in the context of neural network modelling, and it has greatly improved the ANN training process. In fact, backpropagation may be the most important algorithm in ANN modelling.</p>
 <p>Working backwards from a prediction, the backpropagation algorithm starts by using a loss function to compute an overall measure of prediction error. The specific loss function used depends on context. If you are training a neural network on a regression problem, then Mean Squared Error (MSE) is a good choice. If you are training a neural network for a multi-class classification problem, Categorical Cross Entropy is a better choice. In short, the loss function you use depends on the type of model you are developing. Once the overall error has been computed, the next step is to calculate how much each individual weight in the ANN contributed to that error. Each weight can then be adjusted in the direction that would best minimize the overall prediction error. These adjustments are <em>minor</em> and <em>local</em>. Very small adjustments are made to weights based on the impact those changes would have only on connected neurons.</p>
 <p>Training an ANN with backpropagation involves two processes for each example provided in training: a <strong>forward pass</strong> and a <strong>backward pass</strong>. During the forward pass, information is sent through the network from the input layer, through the hidden layer, and out the output layer. As in Figure XXX, you can picture this as information moving from left to right. The neurons in the hidden layer output continuous values that result from applying an activation function to the inputs they receive from the neurons in the layer below them. The neurons in the output layer apply a different activation function, but we will discuss that later.</p>
 <p>The backward pass starts after a prediction has been made. First, an overall prediction error is computed using a loss function such as Mean Squared Error or Categorical Cross Entropy. Then the contribution that each connection weight makes to that overall error is computed, and then small adjustments are made to the weights such that the overall error is minimized. Once the adjustments are made, training can proceed with the next example.</p>
@@ -705,44 +656,32 @@ Figure&nbsp;32.3: Four common activation functions for hidden layer neurons: a b
 <section id="gradient-descent" class="level3" data-number="32.6.2">
 <h3 data-number="32.6.2" class="anchored" data-anchor-id="gradient-descent"><span class="header-section-number">32.6.2</span> Gradient Descent</h3>
 <p>The changes made to connection weights are governed by an optimization algorithm called Gradient Descent. <em>In general</em>, Gradient Descent is used to find parameter values for some function that minimizes the loss, or cost, as much as possible. In the case of ANN modelling, our goal is to find the optimal values for all of the connection weights across all layers in our ANN. With Gradient Descent, we do that by making small modifications to the connection weights over <em>many</em> iterations. We start with our randomized weights and adjust them iteratively during training, example after example, until we have values that minimize the overall loss measured by our loss function.</p>
-<p>In <a href="#fig-22_04" class="quarto-xref">Figure&nbsp;<span>32.4</span></a>, loss is represented on the Y axis, and the range of possible weight values is represented on the X axis. The connection weights range from -1 to 1, as they might if we were using the hyperbolic tangent activation function (<code>tanh</code>). Let’s say that our randomly selected starting point is the point S1 (for “Step 1”). If this was the value used for the connection weight, the loss for that weight would be the corresponding <code>y</code> value (which in this hypothetical example is not actually shown). If the connection weight was a little higher (e.g., shifted to the right a bit), the loss would decrease. Therefore, we increase our connection weight a bit in the next step, from -0.79 to -0.59 and reduce our loss a little bit.</p>
+<p>In <a href="#fig-22_04">Figure&nbsp;<span class="quarto-unresolved-ref">fig-22_04</span></a>, loss is represented on the Y axis, and the range of possible weight values is represented on the X axis. The connection weights range from -1 to 1, as they might if we were using the hyperbolic tangent activation function (<code>tanh</code>). Let’s say that our randomly selected starting point is the point S1 (for “Step 1”). If this was the value used for the connection weight, the loss for that weight would be the corresponding <code>y</code> value (which in this hypothetical example is not actually shown). If the connection weight was a little higher (e.g., shifted to the right a bit), the loss would decrease. Therefore, we increase our connection weight a bit in the next step, from -0.79 to -0.59 and reduce our loss a little bit.</p>
 <p>At each step, the algorithm calculates how much the loss would change if the weight value was slightly different. Each potential new weight value has a <strong>gradient</strong>, or slope. Since we want to minimize loss, gradient descent will select a weight value that lets it <em>descend</em> (the opposite would be gradient ascent).</p>
 <p>We continue these relatively small steps for S3, S4, S5, and S6, gradually increasing the connection weight and reducing the loss. By S7, we reach a connection weight that minimizes the loss. We have <em>converged</em> to the minimum loss. From this position, any further adjustments to the connection weight <em>regardless of the direction</em> would increase the loss (and would be gradient <em>ascent</em>). We can’t minimize the loss any further.</p>
-<div id="fig-22_04" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-22_04-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/grad_desc_1.png" class="img-fluid figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-22_04-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;32.4: An illustration of Gradient Descent to iteratively find connection weight values that minimize loss. In this example the optimal weight is 0, but it could have been any value between -1 and 1.
-</figcaption>
+<div id="fig-22_04" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="figures/grad_desc_1.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;32.4: An illustration of Gradient Descent to iteratively find connection weight values that minimize loss. In this example the optimal weight is 0, but it could have been any value between -1 and 1.</figcaption>
 </figure>
 </div>
-<p>Each step in <a href="#fig-22_04" class="quarto-xref">Figure&nbsp;<span>32.4</span></a> is a <strong>learning step</strong>. The size of those steps is determined by a learning rate learning parameter in our ANN. In general, small steps are better because they reduce the chance of accidentally stepping over the optimal weight value. In our example, it might mean stepping over the optimal value at the bottom of the curve (0), climbing back up the curve on the other side, and then bouncing back and forth without ever stopping on the optimal value. The downside of using small learning rates is that it takes longer, and more iterations, to find the value that minimizes loss.</p>
-<p>There is no reason to assume that the loss function has a nice single valley shape like the one in <a href="#fig-22_04" class="quarto-xref">Figure&nbsp;<span>32.4</span></a>. It could a wide variety of shapes, such as the one shown in <a href="#fig-22_05" class="quarto-xref">Figure&nbsp;<span>32.5</span></a>. This illustrates another issue that we might encounter when using Gradient Descent to find the optimal value for the connection weights in our ANN. First, imagine you have a random starting point: in this case, the grey S1 point. From here, Gradient Descent makes adjustments, each time reducing the loss by gradually increasing the weights with steps 2 - 6 (all represented with the grey points). After the 6th step, any further increases in the connection weight start <em>increasing</em> the loss. Gradient Descent <em>thinks</em> it has found an optimal weight, but it hasn’t. It’s stuck on a <strong>local minimum</strong> and doesn’t know about the <strong>global minimum</strong> that it might have found if the random starting point had been the black S1 point further to the right of the Figure.</p>
-<p>Clearly the black S6 point in <a href="#fig-22_05" class="quarto-xref">Figure&nbsp;<span>32.5</span></a> is better than the grey S6 point because it has a lower loss value. The more complex the terrain produced by the loss function, the more challenging it is to converge on the <em>global</em> minimum. There are variations on the basic Gradient Descent algorithm that can help with this problem. <strong>Stochastic Gradient Descent (SGD)</strong>, for example, computes the gradients based on a randomly selected subset of the training data. This causes the loss values to jump around a lot more at each step, but over many iterations, it greatly reduces the risk of getting stuck in local minimums and increases the chance we will get at least very close to the global minimum. We will see an example of using SGD in an ANN later in this chapter.</p>
-<div id="fig-22_05" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-22_05-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/grad_desc_2.png" class="img-fluid figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-22_05-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;32.5: An illustration of Gradient Descent to iteratively find connection weight values that minimize loss.
-</figcaption>
+<p>Each step in <a href="#fig-22_04">Figure&nbsp;<span class="quarto-unresolved-ref">fig-22_04</span></a> is a <strong>learning step</strong>. The size of those steps is determined by a learning rate learning parameter in our ANN. In general, small steps are better because they reduce the chance of accidentally stepping over the optimal weight value. In our example, it might mean stepping over the optimal value at the bottom of the curve (0), climbing back up the curve on the other side, and then bouncing back and forth without ever stopping on the optimal value. The downside of using small learning rates is that it takes longer, and more iterations, to find the value that minimizes loss.</p>
+<p>There is no reason to assume that the loss function has a nice single valley shape like the one in <a href="#fig-22_04">Figure&nbsp;<span class="quarto-unresolved-ref">fig-22_04</span></a>. It could a wide variety of shapes, such as the one shown in <a href="#fig-22_05">Figure&nbsp;<span class="quarto-unresolved-ref">fig-22_05</span></a>. This illustrates another issue that we might encounter when using Gradient Descent to find the optimal value for the connection weights in our ANN. First, imagine you have a random starting point: in this case, the grey S1 point. From here, Gradient Descent makes adjustments, each time reducing the loss by gradually increasing the weights with steps 2 - 6 (all represented with the grey points). After the 6th step, any further increases in the connection weight start <em>increasing</em> the loss. Gradient Descent <em>thinks</em> it has found an optimal weight, but it hasn’t. It’s stuck on a <strong>local minimum</strong> and doesn’t know about the <strong>global minimum</strong> that it might have found if the random starting point had been the black S1 point further to the right of the Figure.</p>
+<p>Clearly the black S6 point in <a href="#fig-22_05">Figure&nbsp;<span class="quarto-unresolved-ref">fig-22_05</span></a> is better than the grey S6 point because it has a lower loss value. The more complex the terrain produced by the loss function, the more challenging it is to converge on the <em>global</em> minimum. There are variations on the basic Gradient Descent algorithm that can help with this problem. <strong>Stochastic Gradient Descent (SGD)</strong>, for example, computes the gradients based on a randomly selected subset of the training data. This causes the loss values to jump around a lot more at each step, but over many iterations, it greatly reduces the risk of getting stuck in local minimums and increases the chance we will get at least very close to the global minimum. We will see an example of using SGD in an ANN later in this chapter.</p>
+<div id="fig-22_05" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="figures/grad_desc_2.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;32.5: An illustration of Gradient Descent to iteratively find connection weight values that minimize loss.</figcaption>
 </figure>
 </div>
 </section>
 <section id="learning-curves" class="level3" data-number="32.6.3">
 <h3 data-number="32.6.3" class="anchored" data-anchor-id="learning-curves"><span class="header-section-number">32.6.3</span> Learning Curves</h3>
-<p>As an ANN trains, it uses backpropagation and gradient descent to iteratively tune the weights until it converges on an locally optimal solution (which isn’t always the globally optimal solution). It goes through data <em>repeatedly</em> to do this. Each pass through the data is a single <strong>epoch</strong> of training. As we will see in the next chapter, we can calculate various performance measures during each epoch of training; it is often helpful to plot these measures. <a href="#fig-22_06" class="quarto-xref">Figure&nbsp;<span>32.6</span></a> illustrates this for a hypothetical ANN. In this example, we can see that the accuracy rates for both the training and validation data increases with each epoch, and that the two rates are very close together (which suggests the model is not overfitting).</p>
-<div id="fig-22_06" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-22_06-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/learning_curves_ann.png" class="img-fluid figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-22_06-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;32.6: Accuracy and loss metrics for the test and validation data at each epoch of training.
-</figcaption>
+<p>As an ANN trains, it uses backpropagation and gradient descent to iteratively tune the weights until it converges on an locally optimal solution (which isn’t always the globally optimal solution). It goes through data <em>repeatedly</em> to do this. Each pass through the data is a single <strong>epoch</strong> of training. As we will see in the next chapter, we can calculate various performance measures during each epoch of training; it is often helpful to plot these measures. <a href="#fig-22_06">Figure&nbsp;<span class="quarto-unresolved-ref">fig-22_06</span></a> illustrates this for a hypothetical ANN. In this example, we can see that the accuracy rates for both the training and validation data increases with each epoch, and that the two rates are very close together (which suggests the model is not overfitting).</p>
+<div id="fig-22_06" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="figures/learning_curves_ann.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;32.6: Accuracy and loss metrics for the test and validation data at each epoch of training.</figcaption>
 </figure>
 </div>
 </section>
@@ -785,20 +724,20 @@ Figure&nbsp;32.6: Accuracy and loss metrics for the test and validation data at 
 <section id="biased-training-data-for-computer-vision-ethical-and-political-concerns" class="level3" data-number="32.8.2">
 <h3 data-number="32.8.2" class="anchored" data-anchor-id="biased-training-data-for-computer-vision-ethical-and-political-concerns"><span class="header-section-number">32.8.2</span> Biased Training Data for Computer Vision: Ethical and Political Concerns</h3>
 <p>Earlier, I mentioned that CNNs were initially developed by Yann LeCun in the 1980s, but only recently became ubiquitous in computer vision. The models have changed little since they were first introduced. Rather, the massive explosion of data and the rapid increases in computing power brought CNNs into the spotlight. A number of widely-used training datasets, such as ImageNet, have played an important role in this development, and more recently, social media platforms like Flickr and Facebook that serve up massive collections of labeled datasets harvested from users, such as people tagged in photos posted to Facebook.</p>
-<p>There are some <em>major</em> ethical and political issues to consider here. First, there is the market for your data; it is entirely possible that your images (as in photos you upload to sites like Facebook or Flickr), uploaded and tagged, are in a training dataset somewhere, perhaps even a public one like ImageNet. But a less obvious, and even more consequential, set of issues concern biases embedded in these massive training datasets, and more importantly appaling misogyny and racism <span class="citation" data-cites="crawford2019excavating gebru2020race buolamwini2018gender de2019does steed2021image">(<a href="references.html#ref-crawford2019excavating" role="doc-biblioref">Crawford and Paglen 2019</a>; <a href="references.html#ref-gebru2020race" role="doc-biblioref">Gebru 2020</a>; <a href="references.html#ref-buolamwini2018gender" role="doc-biblioref">Buolamwini and Gebru 2018</a>; <a href="references.html#ref-de2019does" role="doc-biblioref">Vries et al. 2019</a>; <a href="references.html#ref-steed2021image" role="doc-biblioref">Steed and Caliskan 2021</a>)</span>. <span class="citation" data-cites="crawford2019excavating">Crawford and Paglen (<a href="references.html#ref-crawford2019excavating" role="doc-biblioref">2019</a>)</span> state the problem plainly at the start of “Excavating AI: The Politics of Images in Machine Learning Training Sets:”</p>
+<p>There are some <em>major</em> ethical and political issues to consider here. First, there is the market for your data; it is entirely possible that your images (as in photos you upload to sites like Facebook or Flickr), uploaded and tagged, are in a training dataset somewhere, perhaps even a public one like ImageNet. But a less obvious, and even more consequential, set of issues concern biases embedded in these massive training datasets, and more importantly appaling misogyny and racism <span class="citation" data-cites="crawford2019excavating gebru2020race buolamwini2018gender de2019does steed2021image">(<a href="#ref-crawford2019excavating" role="doc-biblioref">Crawford and Paglen 2019</a>; <a href="#ref-gebru2020race" role="doc-biblioref">Gebru 2020</a>; <a href="#ref-buolamwini2018gender" role="doc-biblioref">Buolamwini and Gebru 2018</a>; <a href="#ref-de2019does" role="doc-biblioref">Vries et al. 2019</a>; <a href="#ref-steed2021image" role="doc-biblioref">Steed and Caliskan 2021</a>)</span>. <span class="citation" data-cites="crawford2019excavating">Crawford and Paglen (<a href="#ref-crawford2019excavating" role="doc-biblioref">2019</a>)</span> state the problem plainly at the start of “Excavating AI: The Politics of Images in Machine Learning Training Sets:”</p>
 <blockquote class="blockquote">
 <p>You open up a database of pictures used to train artificial intelligence systems. At first, things seem straightforward. You’re met with thousands of images: apples and oranges, birds, dogs, horses, mountains, clouds, houses, and street signs. But as you probe further into the dataset, people begin to appear: cheerleaders, scuba divers, welders, Boy Scouts, fire walkers, and flower girls. Things get strange: A photograph of a woman smiling in a bikini is labeled a “slattern, slut, slovenly woman, trollop.” A young man drinking beer is categorized as an “alcoholic, alky, dipsomaniac, boozer, lush, soaker, souse.” A child wearing sunglasses is classified as a “failure, loser, non-starter, unsuccessful person.” You’re looking at the “person” category in a dataset called ImageNet, one of the most widely used training sets for machine learning.</p>
 <p>Something is wrong with this picture.</p>
 </blockquote>
-<p>Sometimes the biases are in the relationship between the image and its label, as with the examples that Crawford and Paglen cite. In other situations it is due to asymmetries in who is represented in images and how they are represented <span class="citation" data-cites="gebru2020race buolamwini2018gender">(e.g., <a href="references.html#ref-gebru2020race" role="doc-biblioref">Gebru 2020</a>; <a href="references.html#ref-buolamwini2018gender" role="doc-biblioref">Buolamwini and Gebru 2018</a>)</span>. White men, for example, are generally far more represented in these training datasets than other people, and as a result CNNs trained on these datasets tend to perform far better for white men than they do for women or racialized people. For example, a CNN could classify a person as a women because the person is standing in a kitchen, and the training data contains many more images of women in kitchens than men in kitchens.</p>
-<p>A good example of these issues is the 80 Million Tiny Images dataset that was created by and formerly hosted by researchers at MIT <span class="citation" data-cites="prabhu2020large">(see <a href="references.html#ref-prabhu2020large" role="doc-biblioref">Prabhu and Birhane 2020</a>)</span>. The dataset consisted of images scraped from the web and was annotated using crowd sourcing. However, after being in wide use for 14 years, it was discovered that the training data contained thousands of images annotated with racial slurs, not to mention labels such as “rape suspect.” The dataset was also found to include many deeply problematic images, such as pictures taken up skirts, that were clearly taken (and of course circulated) without consent.</p>
+<p>Sometimes the biases are in the relationship between the image and its label, as with the examples that Crawford and Paglen cite. In other situations it is due to asymmetries in who is represented in images and how they are represented <span class="citation" data-cites="gebru2020race buolamwini2018gender">(e.g., <a href="#ref-gebru2020race" role="doc-biblioref">Gebru 2020</a>; <a href="#ref-buolamwini2018gender" role="doc-biblioref">Buolamwini and Gebru 2018</a>)</span>. White men, for example, are generally far more represented in these training datasets than other people, and as a result CNNs trained on these datasets tend to perform far better for white men than they do for women or racialized people. For example, a CNN could classify a person as a women because the person is standing in a kitchen, and the training data contains many more images of women in kitchens than men in kitchens.</p>
+<p>A good example of these issues is the 80 Million Tiny Images dataset that was created by and formerly hosted by researchers at MIT <span class="citation" data-cites="prabhu2020large">(see <a href="#ref-prabhu2020large" role="doc-biblioref">Prabhu and Birhane 2020</a>)</span>. The dataset consisted of images scraped from the web and was annotated using crowd sourcing. However, after being in wide use for 14 years, it was discovered that the training data contained thousands of images annotated with racial slurs, not to mention labels such as “rape suspect.” The dataset was also found to include many deeply problematic images, such as pictures taken up skirts, that were clearly taken (and of course circulated) without consent.</p>
 <p>One especially high-profile illustration of the implications of racially biased training data happened in 2015 when Google released a new feature in their photo app that would tag images with captions derived from a CNN trained to classify the primary contents of an image. Because of training data biased towards white people, the CNN tagged a selfie of two black people with “Gorillas” (Mitchell 2019). Obviously this is unacceptable, and any applications of CNNs on image data – including for research in computational social science, not just commercial applications – need to directly address the issues of training data with racial and other biases.</p>
 <p>As you know from Chapter 19, there is an ongoing debate about what we should do, given that biases in training data – not just image training data – reflect real biases and inequalities in the real world. On the one hand, we can learn more about these biases and inequalities from the problems that arise from models trained on those biased data. While there may be some merit to this idea within a purely scientific context, datasets used to train these models are very difficult and expensive to collect and build. It’s not like we could easily separate out training datasets for commercial applications, in which we work hard to reduce biases, from those intended for scientific research on bias, where we let those biases remain. The same training data is used in both contexts. So at best, using biased training data to study bias is making the best of a bad situation. These biases are amplified by the models and feed back into society, and as we saw in Chapter 19 these negative feedback loops create and solidify inequalities, especially when they are part of facial recognition systems or are part of opaque automated decision-making processes.</p>
-<p>While CNNs have many positive benefits in the world, including healthcare applications assisting in diagnoses using medical imaging data, others are obviously deeply problematic and rightfully controversial. None moreso than facial recognition (or really anything that involves classifying people), which is used not just to help you find pictures of your friends and adorable cats in your personal digital photo library, but by police departments and many others. Privacy concerns, as well as the negative consequences of mistakes resulting from hidden biases that disproprtionately affect racialized people. Regulation is clearly needed, but we are in the early days of this political debate. Most of the action in Europe right now is focused on transparency and the “right to explanation” in the context of automated decision making, such as whether you get a loan or probation. As Mitchell (2019), <span class="citation" data-cites="timnetTedTalk">Gebru (<a href="references.html#ref-timnetTedTalk" role="doc-biblioref">2018</a>)</span>, and many others have pointed out, debates about the ethics, politics, and risks of deep learning has been far too concerned with the potential threats of intelligent machines and far too unconcerned with the very real and immediate threats of opaque errors rooted in deeply embedded racial and gender biases.</p>
+<p>While CNNs have many positive benefits in the world, including healthcare applications assisting in diagnoses using medical imaging data, others are obviously deeply problematic and rightfully controversial. None moreso than facial recognition (or really anything that involves classifying people), which is used not just to help you find pictures of your friends and adorable cats in your personal digital photo library, but by police departments and many others. Privacy concerns, as well as the negative consequences of mistakes resulting from hidden biases that disproprtionately affect racialized people. Regulation is clearly needed, but we are in the early days of this political debate. Most of the action in Europe right now is focused on transparency and the “right to explanation” in the context of automated decision making, such as whether you get a loan or probation. As Mitchell (2019), <span class="citation" data-cites="timnetTedTalk">Gebru (<a href="#ref-timnetTedTalk" role="doc-biblioref">2018</a>)</span>, and many others have pointed out, debates about the ethics, politics, and risks of deep learning has been far too concerned with the potential threats of intelligent machines and far too unconcerned with the very real and immediate threats of opaque errors rooted in deeply embedded racial and gender biases.</p>
 <p>Data isn’t the only culprit here. Nor is it the only solution. As computational social scientists, it is incumbent upon us to actively interrogate the fairness of the models that we build. If we find them lacking, it is not enough to simply blame the data and move on; we must confront the problem head on. It is up to us to fix our data, proactively build fairness into what we do.</p>
 <blockquote class="blockquote">
 <p><strong>Further Reading</strong></p>
-<p>Chapter 10 from G{’e}ron’s <span class="citation" data-cites="geron2019hands">(<a href="references.html#ref-geron2019hands" role="doc-biblioref">2019</a>)</span> <em>Hands-on Machine Learning</em> and the first several chapters of Chollet’s <span class="citation" data-cites="francois2017deep">(<a href="references.html#ref-francois2017deep" role="doc-biblioref">2018</a>)</span> <em>Deep Learning with Python</em> offer a deeper dive into neural network modelling than the introduction in this book. Chollet is the original developer of Keras, the Python package we’ll use to develop a simple neural network model in the next chapter.</p>
+<p>Chapter 10 from G{’e}ron’s <span class="citation" data-cites="geron2019hands">(<a href="#ref-geron2019hands" role="doc-biblioref">2019</a>)</span> <em>Hands-on Machine Learning</em> and the first several chapters of Chollet’s <span class="citation" data-cites="francois2017deep">(<a href="#ref-francois2017deep" role="doc-biblioref">2018</a>)</span> <em>Deep Learning with Python</em> offer a deeper dive into neural network modelling than the introduction in this book. Chollet is the original developer of Keras, the Python package we’ll use to develop a simple neural network model in the next chapter.</p>
 </blockquote>
 </section>
 </section>
@@ -815,7 +754,7 @@ Figure&nbsp;32.6: Accuracy and loss metrics for the test and validation data at 
 </ul>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="refs" class="references csl-bib-body hanging-indent" role="list">
 <div id="ref-buolamwini2018gender" class="csl-entry" role="listitem">
 Buolamwini, Joy, and Timnit Gebru. 2018. <span>“Gender Shades: Intersectional Accuracy Disparities in Commercial Gender Classification.”</span> In <em>Conference on Fairness, Accountability and Transparency</em>, 77–91. PMLR.
 </div>
@@ -889,7 +828,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const onCopySuccess = function(e) {
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -921,50 +871,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
-  }
-  const getTextToCopy = function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-  }
-  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-    text: getTextToCopy
   });
-  clipboard.on('success', onCopySuccess);
-  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
-    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-      text: getTextToCopy,
-      container: window.document.getElementById('quarto-embedded-source-code-modal')
-    });
-    clipboardModal.on('success', onCopySuccess);
-  }
-    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-    var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp('/' + window.location.host + '/');
-    var isInternal = (href) => {
-        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
-    }
-    // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
-    for (var i=0; i<links.length; i++) {
-      const link = links[i];
-      if (!isInternal(link.href)) {
-        // undo the damage that might have been done by quarto-nav.js in the case of
-        // links that we want to consider external
-        if (link.dataset.originalHref !== undefined) {
-          link.href = link.dataset.originalHref;
-        }
-      }
-    }
-  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+  function tippyHover(el, contentFn) {
     const config = {
       allowHTML: true,
+      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -974,17 +885,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start',
+      placement: 'bottom-start'
     };
-    if (contentFn) {
-      config.content = contentFn;
-    }
-    if (onTriggerFn) {
-      config.onTrigger = onTriggerFn;
-    }
-    if (onUntriggerFn) {
-      config.onUntrigger = onUntriggerFn;
-    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -996,130 +898,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      if (note) {
-        return note.innerHTML;
-      } else {
-        return "";
-      }
-    });
-  }
-  const xrefs = window.document.querySelectorAll('a.quarto-xref');
-  const processXRef = (id, note) => {
-    // Strip column container classes
-    const stripColumnClz = (el) => {
-      el.classList.remove("page-full", "page-columns");
-      if (el.children) {
-        for (const child of el.children) {
-          stripColumnClz(child);
-        }
-      }
-    }
-    stripColumnClz(note)
-    if (id === null || id.startsWith('sec-')) {
-      // Special case sections, only their first couple elements
-      const container = document.createElement("div");
-      if (note.children && note.children.length > 2) {
-        container.appendChild(note.children[0].cloneNode(true));
-        for (let i = 1; i < note.children.length; i++) {
-          const child = note.children[i];
-          if (child.tagName === "P" && child.innerText === "") {
-            continue;
-          } else {
-            container.appendChild(child.cloneNode(true));
-            break;
-          }
-        }
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(container);
-        }
-        return container.innerHTML
-      } else {
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(note);
-        }
-        return note.innerHTML;
-      }
-    } else {
-      // Remove any anchor links if they are present
-      const anchorLink = note.querySelector('a.anchorjs-link');
-      if (anchorLink) {
-        anchorLink.remove();
-      }
-      if (window.Quarto?.typesetMath) {
-        window.Quarto.typesetMath(note);
-      }
-      // TODO in 1.5, we should make sure this works without a callout special case
-      if (note.classList.contains("callout")) {
-        return note.outerHTML;
-      } else {
-        return note.innerHTML;
-      }
-    }
-  }
-  for (var i=0; i<xrefs.length; i++) {
-    const xref = xrefs[i];
-    tippyHover(xref, undefined, function(instance) {
-      instance.disable();
-      let url = xref.getAttribute('href');
-      let hash = undefined; 
-      if (url.startsWith('#')) {
-        hash = url;
-      } else {
-        try { hash = new URL(url).hash; } catch {}
-      }
-      if (hash) {
-        const id = hash.replace(/^#\/?/, "");
-        const note = window.document.getElementById(id);
-        if (note !== null) {
-          try {
-            const html = processXRef(id, note.cloneNode(true));
-            instance.setContent(html);
-          } finally {
-            instance.enable();
-            instance.show();
-          }
-        } else {
-          // See if we can fetch this
-          fetch(url.split('#')[0])
-          .then(res => res.text())
-          .then(html => {
-            const parser = new DOMParser();
-            const htmlDoc = parser.parseFromString(html, "text/html");
-            const note = htmlDoc.getElementById(id);
-            if (note !== null) {
-              const html = processXRef(id, note);
-              instance.setContent(html);
-            } 
-          }).finally(() => {
-            instance.enable();
-            instance.show();
-          });
-        }
-      } else {
-        // See if we can fetch a full url (with no hash to target)
-        // This is a special case and we should probably do some content thinning / targeting
-        fetch(url)
-        .then(res => res.text())
-        .then(html => {
-          const parser = new DOMParser();
-          const htmlDoc = parser.parseFromString(html, "text/html");
-          const note = htmlDoc.querySelector('main.content');
-          if (note !== null) {
-            // This should only happen for chapter cross references
-            // (since there is no id in the URL)
-            // remove the first header
-            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
-              note.children[0].remove();
-            }
-            const html = processXRef(null, note);
-            instance.setContent(html);
-          } 
-        }).finally(() => {
-          instance.enable();
-          instance.show();
-        });
-      }
-    }, function(instance) {
+      return note.innerHTML;
     });
   }
       let selectedAnnoteEl;
@@ -1163,7 +942,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
-            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -1189,32 +967,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
-        // Handle positioning of the toggle
-    window.addEventListener(
-      "resize",
-      throttle(() => {
-        elRect = undefined;
-        if (selectedAnnoteEl) {
-          selectCodeLines(selectedAnnoteEl);
-        }
-      }, 10)
-    );
-    function throttle(fn, ms) {
-    let throttle = false;
-    let timer;
-      return (...args) => {
-        if(!throttle) { // first call gets through
-            fn.apply(this, args);
-            throttle = true;
-        } else { // all the others get throttled
-            if(timer) clearTimeout(timer); // cancel #2
-            timer = setTimeout(() => {
-              fn.apply(this, args);
-              timer = throttle = false;
-            }, ms);
-        }
-      };
-    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -1276,12 +1028,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./diffusion-opinion-cultural-cognition.html" class="pagination-link" aria-label="Diffusion, opinion dynamics, and cultural cognition">
+      <a href="./diffusion-opinion-cultural-cognition.html" class="pagination-link">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Diffusion, opinion dynamics, and cultural cognition</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./language-models-and-embeddings.html" class="pagination-link" aria-label="Language models and word embeddings">
+      <a href="./language-models-and-embeddings.html" class="pagination-link">
         <span class="nav-page-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Language models and word embeddings</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
@@ -1290,5 +1042,4 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
-
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/UWNETLAB/dcss_supplementary/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
+</body></html>

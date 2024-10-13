@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.56">
+<meta name="generator" content="quarto-1.3.450">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>11&nbsp; Relational data – Doing Computational Social Science&lt;br&gt;[The **Continuous Development** Edition]{.small}</title>
+<title>Doing Computational Social ScienceThe Continuous Development Edition - 12&nbsp; Relational data</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -22,7 +22,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -33,7 +33,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -58,7 +58,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
-  margin-bottom: 0em;
 }
 .hanging-indent div.csl-entry {
   margin-left:2em;
@@ -102,13 +101,7 @@ div.csl-indent {
   "collapse-after": 3,
   "panel-placement": "start",
   "type": "textbox",
-  "limit": 50,
-  "keyboard-shortcut": [
-    "f",
-    "/",
-    "s"
-  ],
-  "show-item-context": false,
+  "limit": 20,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -117,42 +110,14 @@ div.csl-indent {
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
-    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
 }</script>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="custom.css">
 </head>
@@ -163,13 +128,13 @@ window.Quarto = {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./survey-data.html"><strong>DATA</strong></a></li><li class="breadcrumb-item"><a href="./relational-data.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Relational data</span></a></li></ol></nav>
-        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-        </a>
-      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./survey-data.html"><strong>DATA</strong></a></li><li class="breadcrumb-item"><a href="./relational-data.html"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Relational data</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -178,7 +143,7 @@ window.Quarto = {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
       <a href="./index.html" class="sidebar-logo-link">
       <img src="./figures/logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
@@ -186,25 +151,25 @@ window.Quarto = {
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Doing Computational Social Science<br><span class="small">The <strong>Continuous Development</strong> Edition</span></a> 
         <div class="sidebar-tools-main">
-    <a href="https://github.com/UWNETLAB/dcss_supplementary/tree/master/book/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="https://github.com/UWNETLAB/dcss_supplementary/tree/master/book/" rel="" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
     <div class="dropdown">
-      <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
+      <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Share"><i class="bi bi-share"></i></a>
       <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
           <li>
             <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=|url|">
-              <i class="bi bi-twitter pe-1"></i>
+              <i class="bi bi-bi-twitter pe-1"></i>
             Twitter
             </a>
           </li>
           <li>
             <a class="dropdown-item sidebar-tools-main-item" href="https://www.facebook.com/sharer/sharer.php?u=|url|">
-              <i class="bi bi-facebook pe-1"></i>
+              <i class="bi bi-bi-facebook pe-1"></i>
             Facebook
             </a>
           </li>
           <li>
             <a class="dropdown-item sidebar-tools-main-item" href="https://www.linkedin.com/sharing/share-offsite/?url=|url|">
-              <i class="bi bi-linkedin pe-1"></i>
+              <i class="bi bi-bi-linkedin pe-1"></i>
             LinkedIn
             </a>
           </li>
@@ -226,19 +191,25 @@ window.Quarto = {
  <span class="menu-text">🏠</span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction</span></a>
+  </div>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
  <span class="menu-text"><strong>COMPUTING</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./getting-started.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Getting Started</span></span></a>
+  <a href="./setting-up.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Setting up</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -253,13 +224,19 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Python 102</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./processing-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Processing Data</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
  <span class="menu-text"><strong>WORKFLOW</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -267,22 +244,22 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./mindful-modelling.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Mindful modelling</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Mindful modelling</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./iteration.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Iteration</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title"><del>Sequential</del> iterative modelling</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
  <span class="menu-text"><strong>DATA</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -290,46 +267,46 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./survey-data.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title"><del>Processing Structured Data</del> Survey Data</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Survey Data</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./web-data-apis.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Web data (APIs)</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Web data (APIs)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./web-data-scraping.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Web data (Scraping)</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Web data (Scraping)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./audio-and-document-data.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Audio and document data</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Audio and document data</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./text-as-data.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Text as Data</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Text as Data</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./relational-data.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Relational data</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Relational data</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
  <span class="menu-text"><strong>DISCOVERY</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -337,40 +314,40 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./exploratory-data-analysis.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Exploring with purpose</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Exploring with purpose</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./reduction-and-latent-dimensions.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Reduction and latent dimensions</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Reduction and latent dimensions</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./mapping-text.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Text similarity and latent semantic space</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Text similarity and latent semantic space</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./centrality.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Centrality</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Centrality</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./mapping-network-structure.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Mapping network structure</span></span></a>
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Mapping network structure</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
  <span class="menu-text"><strong>PREDICTION &amp; INFERENCE</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -378,46 +355,46 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./supervised-learning.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Supervised Machine Learning</span></span></a>
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Supervised Machine Learning</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./prediction-and-classification.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Prediction and classification</span></span></a>
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Prediction and classification</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./causality.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Causality</span></span></a>
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Causality</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./probability.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Probability 101</span></span></a>
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Probability 101</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./credibility.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Credibility</span></span></a>
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Credibility</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./measurement-and-missingness.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Measurement and missingness</span></span></a>
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Measurement and missingness</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true">
  <span class="menu-text"><strong>MODELING</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -425,58 +402,58 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./linear-regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Bayesian Regression Models with Probabilistic Programming</span></span></a>
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Bayesian Regression Models with Probabilistic Programming</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./multilevel-regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Multilevel regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Multilevel regression</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./generalized-linear-models.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Generalized Linear Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Generalized Linear Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./structural-causal-models.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Structural causal models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Structural causal models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./modeling-texts-lda.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Modeling text with LDA topic models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Modeling text with LDA topic models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./modeling-networks.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Latent structure in networks</span></span></a>
+ <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Latent structure in networks</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./agent-based-models.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Agent-based models (ABMs)</span></span></a>
+ <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Agent-based models (ABMs)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./diffusion-opinion-cultural-cognition.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Diffusion, opinion dynamics, and cultural cognition</span></span></a>
+ <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Diffusion, opinion dynamics, and cultural cognition</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true">
  <span class="menu-text"><strong>DEEP LEARNING</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -484,34 +461,34 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./artificial-neural-networks-fnn-rnn-cnn.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Artificial neural networks 101</span></span></a>
+ <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Artificial neural networks</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./language-models-and-embeddings.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Processing Natural Language Data</span></span></a>
+ <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Language models and word embeddings</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./transformer-revolution.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">The transformer revolution</span></span></a>
+ <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">The transformer revolution</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./modeling-text-transformer-topic-models.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Modeling text: transformer topic models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Modeling text: transformer topic models</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
- <span class="menu-text"><strong>PROFESSIONAL RESPONSIBILITIES</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" aria-expanded="true">
+ <span class="menu-text"><strong>RESPONSIBILITIES</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -519,19 +496,19 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ethical-css.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Ethical CSS</span></span></a>
+ <span class="menu-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">Ethical CSS</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./open-css.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">Open CSS</span></span></a>
+ <span class="menu-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">Open CSS</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./future-css.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">Future CSS</span></span></a>
+ <span class="menu-text"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">Future CSS</span></span></a>
   </div>
 </li>
       </ul>
@@ -551,46 +528,46 @@ window.Quarto = {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./courses.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">Courses and Workshops</span></span></a>
+ <span class="menu-text"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title">Courses and Workshops</span></span></a>
   </div>
 </li>
     </ul>
     </div>
 </nav>
-<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#what-are-social-networks" id="toc-what-are-social-networks" class="nav-link active" data-scroll-target="#what-are-social-networks"><span class="header-section-number">11.1</span> WHAT ARE SOCIAL NETWORKS?</a>
+  <li><a href="#what-are-social-networks" id="toc-what-are-social-networks" class="nav-link active" data-scroll-target="#what-are-social-networks"><span class="header-section-number">12.1</span> WHAT ARE SOCIAL NETWORKS?</a>
   <ul class="collapse">
-  <li><a href="#from-independent-individuals-to-networks" id="toc-from-independent-individuals-to-networks" class="nav-link" data-scroll-target="#from-independent-individuals-to-networks"><span class="header-section-number">11.1.1</span> From Independent Individuals to Networks</a></li>
-  <li><a href="#what-is-a-network" id="toc-what-is-a-network" class="nav-link" data-scroll-target="#what-is-a-network"><span class="header-section-number">11.1.2</span> What is a Network?</a></li>
+  <li><a href="#from-independent-individuals-to-networks" id="toc-from-independent-individuals-to-networks" class="nav-link" data-scroll-target="#from-independent-individuals-to-networks"><span class="header-section-number">12.1.1</span> From Independent Individuals to Networks</a></li>
+  <li><a href="#what-is-a-network" id="toc-what-is-a-network" class="nav-link" data-scroll-target="#what-is-a-network"><span class="header-section-number">12.1.2</span> What is a Network?</a></li>
   </ul></li>
-  <li><a href="#working-with-relational-data" id="toc-working-with-relational-data" class="nav-link" data-scroll-target="#working-with-relational-data"><span class="header-section-number">11.2</span> WORKING WITH RELATIONAL DATA</a>
+  <li><a href="#working-with-relational-data" id="toc-working-with-relational-data" class="nav-link" data-scroll-target="#working-with-relational-data"><span class="header-section-number">12.2</span> WORKING WITH RELATIONAL DATA</a>
   <ul class="collapse">
-  <li><a href="#edgelists-and-nodelists" id="toc-edgelists-and-nodelists" class="nav-link" data-scroll-target="#edgelists-and-nodelists"><span class="header-section-number">11.2.1</span> Edgelists and Nodelists</a></li>
-  <li><a href="#graph-objects-from-edgelists-and-matrices-and-more" id="toc-graph-objects-from-edgelists-and-matrices-and-more" class="nav-link" data-scroll-target="#graph-objects-from-edgelists-and-matrices-and-more"><span class="header-section-number">11.2.2</span> Graph Objects from Edgelists (and Matrices and More)</a></li>
+  <li><a href="#edgelists-and-nodelists" id="toc-edgelists-and-nodelists" class="nav-link" data-scroll-target="#edgelists-and-nodelists"><span class="header-section-number">12.2.1</span> Edgelists and Nodelists</a></li>
+  <li><a href="#graph-objects-from-edgelists-and-matrices-and-more" id="toc-graph-objects-from-edgelists-and-matrices-and-more" class="nav-link" data-scroll-target="#graph-objects-from-edgelists-and-matrices-and-more"><span class="header-section-number">12.2.2</span> Graph Objects from Edgelists (and Matrices and More)</a></li>
   </ul></li>
-  <li><a href="#walk-structure-and-network-flow" id="toc-walk-structure-and-network-flow" class="nav-link" data-scroll-target="#walk-structure-and-network-flow"><span class="header-section-number">11.3</span> WALK-STRUCTURE AND NETWORK FLOW</a>
+  <li><a href="#walk-structure-and-network-flow" id="toc-walk-structure-and-network-flow" class="nav-link" data-scroll-target="#walk-structure-and-network-flow"><span class="header-section-number">12.3</span> WALK-STRUCTURE AND NETWORK FLOW</a>
   <ul class="collapse">
-  <li><a href="#walks-trails-paths-and-cycles" id="toc-walks-trails-paths-and-cycles" class="nav-link" data-scroll-target="#walks-trails-paths-and-cycles"><span class="header-section-number">11.3.1</span> Walks, Trails, Paths, and Cycles</a></li>
+  <li><a href="#walks-trails-paths-and-cycles" id="toc-walks-trails-paths-and-cycles" class="nav-link" data-scroll-target="#walks-trails-paths-and-cycles"><span class="header-section-number">12.3.1</span> Walks, Trails, Paths, and Cycles</a></li>
   </ul></li>
-  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">11.4</span> CONCLUSION</a>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">12.4</span> CONCLUSION</a>
   <ul class="collapse">
-  <li><a href="#key-points" id="toc-key-points" class="nav-link" data-scroll-target="#key-points"><span class="header-section-number">11.4.1</span> Key Points</a></li>
+  <li><a href="#key-points" id="toc-key-points" class="nav-link" data-scroll-target="#key-points"><span class="header-section-number">12.4.1</span> Key Points</a></li>
   </ul></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/UWNETLAB/dcss_supplementary/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/UWNETLAB/dcss_supplementary/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./survey-data.html"><strong>DATA</strong></a></li><li class="breadcrumb-item"><a href="./relational-data.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Relational data</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Relational data</span></h1>
+<h1 class="title"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Relational data</span></h1>
 </div>
 
 
@@ -603,9 +580,7 @@ window.Quarto = {
   </div>
   
 
-
 </header>
-
 
 <!-- NEW CHAPTER: Networks as not-data -->
 <div class="callout callout-style-default callout-note callout-titled">
@@ -635,7 +610,7 @@ Learning Objectives
 </div>
 <p><br></p>
 <p>In this chapter and the next, we shift our focus from text analysis to network analysis. We will start with a conceptual and practical foundation for the methods and models introduced in later chapters.</p>
-<p>This chapter is organized into three main sections. The first clarifies what social networks are and why they matter. We’ll start by discussing how structural and relational thinking differentiates network analysis from the predominant focus on attributes of statistically independent individuals in much of traditional quantitative social science. We will briefly discuss some prominent perspectives about what networks are and why they matter. This sets the stage for comparing common ways of conceptualizing social networks, including: as patterns of (<em>i</em>) sentiments, (<em>ii</em>) access and opportunity structures, (<em>iii</em>) socially constructed role relations, and (<em>iv</em>) behavioural interactions <span class="citation" data-cites="kitts2014beyond kitts2020rethinking">(<a href="references.html#ref-kitts2014beyond" role="doc-biblioref">Kitts 2014</a>; <a href="references.html#ref-kitts2020rethinking" role="doc-biblioref">Kitts and Quintane 2020</a>)</span>. These ways of thinking about networks have important implications for the questions, data, theory, methods and models we will use.</p>
+<p>This chapter is organized into three main sections. The first clarifies what social networks are and why they matter. We’ll start by discussing how structural and relational thinking differentiates network analysis from the predominant focus on attributes of statistically independent individuals in much of traditional quantitative social science. We will briefly discuss some prominent perspectives about what networks are and why they matter. This sets the stage for comparing common ways of conceptualizing social networks, including: as patterns of (<em>i</em>) sentiments, (<em>ii</em>) access and opportunity structures, (<em>iii</em>) socially constructed role relations, and (<em>iv</em>) behavioural interactions <span class="citation" data-cites="kitts2014beyond kitts2020rethinking">(<a href="#ref-kitts2014beyond" role="doc-biblioref">Kitts 2014</a>; <a href="#ref-kitts2020rethinking" role="doc-biblioref">Kitts and Quintane 2020</a>)</span>. These ways of thinking about networks have important implications for the questions, data, theory, methods and models we will use.</p>
 <ul>
 <li><strong>TODO</strong>: Update the code in this chapter to include graph-tool implementations. Best solution would likely be to do this in Quarto tabs. <strong>Update:</strong> Instead I’ve added a section on graph-tool with an example of visualizing the political blogs network from the FCIT 607 tutorials. The front end needs to be updated to reflect the new content, and the chapter needs a couple of passes to make sure it flows properly, etc.</li>
 </ul>
@@ -645,29 +620,29 @@ Learning Objectives
 </ul>
 <p>The concepts introduced in this chapter are foundational to many methods and models in network analysis and will be referenced frequently in future chapters, so it is important to be familiar with them before tackling more complex methods and models.</p>
 <ul>
-<li><strong>TODO</strong>: Cite the second edition of the handbook here, especially the introduction with John Scott and Peter Carrington (see <span class="quarto-unresolved-ref">?fig-shsna2-topics</span>).</li>
+<li><strong>TODO</strong>: Cite the second edition of the handbook here, especially the introduction with John Scott and Peter Carrington (see <a href="#fig-shsna2-topics">Figure&nbsp;<span class="quarto-unresolved-ref">fig-shsna2-topics</span></a>).</li>
 </ul>
-<p>Finally, before we dive in, I want to briefly acknowledge that network analysis is a massive interdisciplinary field with a history that is over 100 years old in the social sciences and several decades old in other sciences. While many of the foundational ideas endure, the theories, methods, measures, and models that define the field have transformed many times <span class="citation" data-cites="freeman2004development">(see e.g., <a href="references.html#ref-freeman2004development" role="doc-biblioref">Freeman 2004</a>)</span> and are changing again with the adoption of new kinds of datasets and the creation and improvement of computationally-intensive models. As with all the other topics introduced in this book, it’s impossible to offer a comprehensive introduction to the field in just a few chapters, so I’ve had to make some very difficult decisions about what to emphasize. I’ve elected to focus on a number of foundational ideas and computational approaches to inferential network analysis in later chapters. I’ve set aside many topics that are fascinating and worthy, to keep this a general introduction to computational social science.</p>
+<p>Finally, before we dive in, I want to briefly acknowledge that network analysis is a massive interdisciplinary field with a history that is over 100 years old in the social sciences and several decades old in other sciences. While many of the foundational ideas endure, the theories, methods, measures, and models that define the field have transformed many times <span class="citation" data-cites="freeman2004development">(see e.g., <a href="#ref-freeman2004development" role="doc-biblioref">Freeman 2004</a>)</span> and are changing again with the adoption of new kinds of datasets and the creation and improvement of computationally-intensive models. As with all the other topics introduced in this book, it’s impossible to offer a comprehensive introduction to the field in just a few chapters, so I’ve had to make some very difficult decisions about what to emphasize. I’ve elected to focus on a number of foundational ideas and computational approaches to inferential network analysis in later chapters. I’ve set aside many topics that are fascinating and worthy, to keep this a general introduction to computational social science.</p>
 <ul>
 <li><strong>TODO</strong>: Integrate and explain this figure.</li>
 </ul>
-<p><img src="figures/mclevey_scott_carrington_sna_topic_heatmap.png" id="fig-mclevey_scott_carrington_sna_topic_heatmap" class="img-fluid" alt="Latent topics in Social Networks over time. SNA (and network science more generally) is increasingly computational (see also tindall2022big?). Subgroup analysis, clustering, multilevel models, statistical modelling, Bayesian inference, and social influence are especially important topics. Figure reproduced from (mclevey2023sage?).">{#fig-shsna2-topics}</p>
-<section id="what-are-social-networks" class="level2" data-number="11.1">
-<h2 data-number="11.1" class="anchored" data-anchor-id="what-are-social-networks"><span class="header-section-number">11.1</span> WHAT ARE SOCIAL NETWORKS?</h2>
-<section id="from-independent-individuals-to-networks" class="level3" data-number="11.1.1">
-<h3 data-number="11.1.1" class="anchored" data-anchor-id="from-independent-individuals-to-networks"><span class="header-section-number">11.1.1</span> From Independent Individuals to Networks</h3>
-<p>Lin Freeman’s <span class="citation" data-cites="freeman2004development">(<a href="references.html#ref-freeman2004development" role="doc-biblioref">2004</a>)</span> history of social network analysis starts with a colorful (and slightly unsettling) quote from an American sociologist in the late-1960s that gets straight to the core of the difference between network analysis and the traditional quantitative social science of his day:</p>
+<p><img src="figures/mclevey_scott_carrington_sna_topic_heatmap.png" id="fig-mclevey_scott_carrington_sna_topic_heatmap" class="img-fluid" alt="Latent topics in Social Networks over time. SNA (and network science more generally) is increasingly computational (see also tindall2022big? ). Subgroup analysis, clustering, multilevel models, statistical modelling, Bayesian inference, and social influence are especially important topics. Figure reproduced from (mclevey2023sage?).">{#fig-shsna2-topics}</p>
+<section id="what-are-social-networks" class="level2" data-number="12.1">
+<h2 data-number="12.1" class="anchored" data-anchor-id="what-are-social-networks"><span class="header-section-number">12.1</span> WHAT ARE SOCIAL NETWORKS?</h2>
+<section id="from-independent-individuals-to-networks" class="level3" data-number="12.1.1">
+<h3 data-number="12.1.1" class="anchored" data-anchor-id="from-independent-individuals-to-networks"><span class="header-section-number">12.1.1</span> From Independent Individuals to Networks</h3>
+<p>Lin Freeman’s <span class="citation" data-cites="freeman2004development">(<a href="#ref-freeman2004development" role="doc-biblioref">2004</a>)</span> history of social network analysis starts with a colorful (and slightly unsettling) quote from an American sociologist in the late-1960s that gets straight to the core of the difference between network analysis and the traditional quantitative social science of his day:</p>
 <blockquote class="blockquote">
 <p>For the last thirty years, empirical social research has been dominated by the sample survey. But as usually practiced, using random sampling of individuals, the survey is a sociological meatgrinder, tearing the individual from his (sic.) social context and guaranteeing that nobody in the study interacts with anyone else in it. It is a little like a biologist putting his (sic.) experimental animals through a hamburger machine and looking at every hundredth cell through a microscope; anatomy and physiology get lost, structure and function disappear, and one is left with cell biology… If our aim to is to understand people’s behaviour rather than simply to record it, we want to know about primary groups, neighbourhoods, organizations, social circles, and communities; about interaction, communication, role expectations, and social control.</p>
-<p>Allen <span class="citation" data-cites="barton1968bringing">Barton (<a href="references.html#ref-barton1968bringing" role="doc-biblioref">1968</a>)</span></p>
+<p>Allen <span class="citation" data-cites="barton1968bringing">Barton (<a href="#ref-barton1968bringing" role="doc-biblioref">1968</a>)</span></p>
 </blockquote>
 <p>While many people still practice this kind of “meatgrinder” research, Barton’s distinction is much less salient now than it used to be. Mainstream quantitative social science has changed a <em>lot</em> since he wrote that in 1968, and again since he was quoted by Freeman in 2004. For one thing, network analysis is no longer just an obscure undertaking of mathematically-inclined sociologists, social psychologists, and other social scientists; it’s well within the mainstream of applied quantitative science across dozens of disciplines and is an important research area in contemporary statistics.</p>
 <ul>
 <li><strong>TODO</strong>: Cite the new edition of the handbook here.</li>
 </ul>
-<p>Network analysis is one of several major developments in quantitative data analysis that attempts to model interdependent relationships and institutional contexts. Another, multilevel analysis (or hierarchical modelling), will be covered in Chapter 29. Both seek to explicitly model the complex interdependencies between entities (e.g., people) by emphasizing their shared <em>contexts</em>, <em>relationships</em>, and <em>interactions</em>. However, in network analysis, an entity’s context is typically their connections to other entities and their structural position in a network (a concept we will discuss briefly here and again in later chapters). In multilevel analysis, an entity’s context is typically some sort of institutional environment that is shared with other entities, such as classrooms in a school, teams in a league, provinces or states in a country, or countries in the world polity <span class="citation" data-cites="buhari2010stanford meyer2009world">(see <a href="references.html#ref-buhari2010stanford" role="doc-biblioref">Buhari-Gulmez 2010</a>; <a href="references.html#ref-meyer2009world" role="doc-biblioref">Meyer, Krücken, and Drori 2009</a> on world polity theory and Stanford school institutionalism)</span>. In a multilevel network analysis <span class="citation" data-cites="lazega2015multilevel">(see <a href="references.html#ref-lazega2015multilevel" role="doc-biblioref">Lazega and Snijders 2015</a>)</span>, the context would be the entities’ concrete connections with one another nested in one of many possible shared institutional contexts, such as networks of informal relations between employees nested in the specific firms they work for <span class="citation" data-cites="brailly2016embeddedness">(e.g., <a href="references.html#ref-brailly2016embeddedness" role="doc-biblioref">Brailly et al. 2016</a>)</span>.</p>
+<p>Network analysis is one of several major developments in quantitative data analysis that attempts to model interdependent relationships and institutional contexts. Another, multilevel analysis (or hierarchical modelling), will be covered in Chapter 29. Both seek to explicitly model the complex interdependencies between entities (e.g., people) by emphasizing their shared <em>contexts</em>, <em>relationships</em>, and <em>interactions</em>. However, in network analysis, an entity’s context is typically their connections to other entities and their structural position in a network (a concept we will discuss briefly here and again in later chapters). In multilevel analysis, an entity’s context is typically some sort of institutional environment that is shared with other entities, such as classrooms in a school, teams in a league, provinces or states in a country, or countries in the world polity <span class="citation" data-cites="buhari2010stanford meyer2009world">(see <a href="#ref-buhari2010stanford" role="doc-biblioref">Buhari-Gulmez 2010</a>; <a href="#ref-meyer2009world" role="doc-biblioref">Meyer, Krücken, and Drori 2009</a> on world polity theory and Stanford school institutionalism)</span>. In a multilevel network analysis <span class="citation" data-cites="lazega2015multilevel">(see <a href="#ref-lazega2015multilevel" role="doc-biblioref">Lazega and Snijders 2015</a>)</span>, the context would be the entities’ concrete connections with one another nested in one of many possible shared institutional contexts, such as networks of informal relations between employees nested in the specific firms they work for <span class="citation" data-cites="brailly2016embeddedness">(e.g., <a href="#ref-brailly2016embeddedness" role="doc-biblioref">Brailly et al. 2016</a>)</span>.</p>
 <p>We care about these network connections and shared institutional contexts for many reasons. Perhaps the most obvious is that we think complex interdependencies have important effects on specific outcomes that we care about. For example, we might hypothesize that whether someone believes misinformation that vaccines cause autism depends in part on the beliefs of the people they interact with frequently or whom they trust the most. Or we might hypothesize that one’s overall health and wellbeing depends in part on the health and wellbeing of the people they are connected to. The logic is similar for multilevel analysis, but what follows “depends in part on” would refer to some sort of shared institutional context or environment rather than a complex network of concrete relationships and interactions.</p>
-<p>Not all hypotheses about how networks influence individual outcomes are based on <em>direct</em> connections, however. My friends influence me, but their friends (including those whom I am not friends with) influence them, and my friends’ friends’ friends influence them, and so on. Each step out in such a friendship network usually brings new, but diminished, influences. Networks are <em>complex systems</em>; what happens in one region of the network can affect disparate regions, and seemingly small differences in micro-level interaction processes (e.g., norms around who you interact with, how you interact with them, and what they mean to you) can have dramatic macro-level outcomes. For example, we might design a network study to better understand how micro-level social norms generate macro-level structures that shape disease transmission dynamics <span class="citation" data-cites="bearman2004chains">(<a href="references.html#ref-bearman2004chains" role="doc-biblioref">Bearman, Moody, and Stovel 2004</a>)</span>, or how network structures differently impact the spread of an infectious disease through a population and the adoption of health behaviours necessary to mitigate the spread of that disease <span class="citation" data-cites="centola2018behavior">(<a href="references.html#ref-centola2018behavior" role="doc-biblioref">Centola 2018</a>)</span>.</p>
+<p>Not all hypotheses about how networks influence individual outcomes are based on <em>direct</em> connections, however. My friends influence me, but their friends (including those whom I am not friends with) influence them, and my friends’ friends’ friends influence them, and so on. Each step out in such a friendship network usually brings new, but diminished, influences. Networks are <em>complex systems</em>; what happens in one region of the network can affect disparate regions, and seemingly small differences in micro-level interaction processes (e.g., norms around who you interact with, how you interact with them, and what they mean to you) can have dramatic macro-level outcomes. For example, we might design a network study to better understand how micro-level social norms generate macro-level structures that shape disease transmission dynamics <span class="citation" data-cites="bearman2004chains">(<a href="#ref-bearman2004chains" role="doc-biblioref">Bearman, Moody, and Stovel 2004</a>)</span>, or how network structures differently impact the spread of an infectious disease through a population and the adoption of health behaviours necessary to mitigate the spread of that disease <span class="citation" data-cites="centola2018behavior">(<a href="#ref-centola2018behavior" role="doc-biblioref">Centola 2018</a>)</span>.</p>
 <p>We also care about networks and institutional contexts because, as social scientists, we want to understand networks and institutions for their own sakes, inclusive of the social and political processes that generate different kinds of structural configurations. This might be because we are interested in advancing scientific knowledge by doing rigorous theory-driven research, or because we want to leverage that knowledge for some applied reason, such as intervening in a network to mitigate the effects of misinformation and disinformation, to disrupt the diffusion of a violent political ideology, or to improve health and wellbeing.</p>
 <p>This is what makes networks so interesting and beautiful: we are all linked together in a vast and dense web of intersecting, meaningful, and mutually-influential relationships. But this complexity can quickly get out of hand. There’s a reason why old fashioned quantitative social science worked like a meatgrinder: it was extremely difficult to do much of anything else. Consequently, the history of network analysis is full of fascinating stories of intrepid sociologists, social psychologists, anthropologists, and other social scientists coming up with clever new mathematical models to describe and analyze interdependent relationships, and developing research software to use those models in applied research. Now that network analysis is being practiced across so many scientific fields, methods and models are improving at breakneck speed.</p>
 <p>Just about anything that a social scientist might be interested in can be usefully described in network terms, and just about any research question you might ask could be cast as a question about networks, where the network or some network-based variable might be:</p>
@@ -678,9 +653,9 @@ Learning Objectives
 <p>Does this mean you <em>should</em> model everything as a network and pose every question as a question about networks? No (though as a network scientist and sociologist I’m tempted to say yes). Recall Box’s loop: your model should be whatever will best answer your question.</p>
 <p>Freeman didn’t include it in his excerpt of Barton’s 1968 article, but just a wee bit further down the page, Barton poses an important question: “<em>what do we want?</em>” Different things, of course. Network analysis is diverse and interdisciplinary, and you can find meaningful divisions between different groups of network analysts that use different tools to answer different questions. But what unites network scientists of virtually every social science, now and in the past, is a paradigmatic preference for holistic research strategies that focus on people and groups embedded in complex interdependent relationships. Let’s turn towards some of the various ways network analysts have conceptualized those relationships.</p>
 </section>
-<section id="what-is-a-network" class="level3" data-number="11.1.2">
-<h3 data-number="11.1.2" class="anchored" data-anchor-id="what-is-a-network"><span class="header-section-number">11.1.2</span> What is a Network?</h3>
-<p>The spread of network analysis to and from so many scientific fields, often with developments occurring independently of one another, has produced a variety of synonymous terms in network analysis. These interchangeable terms can be confusing when you first run into them. For clarity, we will say that networks consist of a set of entities, which we will usually call <strong>nodes</strong> (also called <strong>vertices</strong> or <strong>actors</strong>), and the relationships between those entities, <strong>edges</strong> (also called <strong>ties</strong> or <strong>arcs</strong>). In theory, a node can be any kind of entity and an edge can be any kind of relationship or interaction between such entities. In the social sciences, we typically work with <em>social</em> networks where the nodes have some sort of agency, such as individual people or groups of people (e.g., an organization), and the edges represent some sort of meaningful relationship between them. Following <span class="citation" data-cites="kitts2014beyond">Kitts (<a href="references.html#ref-kitts2014beyond" role="doc-biblioref">2014</a>)</span> and <span class="citation" data-cites="kitts2020rethinking">Kitts and Quintane (<a href="references.html#ref-kitts2020rethinking" role="doc-biblioref">2020</a>)</span>, we can categorize these common types of edges as defined by:</p>
+<section id="what-is-a-network" class="level3" data-number="12.1.2">
+<h3 data-number="12.1.2" class="anchored" data-anchor-id="what-is-a-network"><span class="header-section-number">12.1.2</span> What is a Network?</h3>
+<p>The spread of network analysis to and from so many scientific fields, often with developments occurring independently of one another, has produced a variety of synonymous terms in network analysis. These interchangeable terms can be confusing when you first run into them. For clarity, we will say that networks consist of a set of entities, which we will usually call <strong>nodes</strong> (also called <strong>vertices</strong> or <strong>actors</strong>), and the relationships between those entities, <strong>edges</strong> (also called <strong>ties</strong> or <strong>arcs</strong>). In theory, a node can be any kind of entity and an edge can be any kind of relationship or interaction between such entities. In the social sciences, we typically work with <em>social</em> networks where the nodes have some sort of agency, such as individual people or groups of people (e.g., an organization), and the edges represent some sort of meaningful relationship between them. Following <span class="citation" data-cites="kitts2014beyond">Kitts (<a href="#ref-kitts2014beyond" role="doc-biblioref">2014</a>)</span> and <span class="citation" data-cites="kitts2020rethinking">Kitts and Quintane (<a href="#ref-kitts2020rethinking" role="doc-biblioref">2020</a>)</span>, we can categorize these common types of edges as defined by:</p>
 <ol type="1">
 <li><strong>patterns of sentiment</strong>, such as who likes or dislikes whom;</li>
 <li><strong>socially-constructed role relations</strong>, such as friendships, research collaborations, romantic partnerships, doctoral student and supervisor relationships, family;</li>
@@ -688,62 +663,50 @@ Learning Objectives
 <li><strong>providing access to resources, support, information, and opportunities</strong>, such as who contacts whom for advice in a personal crisis, to discuss a problem at work, or to pick up your groceries while quarantining in a global pandemic.</li>
 </ol>
 <p>These four types of edges provide us with a high-level framework for talking about <em>types</em> of networks based on the relational information they encode and, importantly, the questions we want to answer and the theories we are using. In many respects, the type of relation that defines the edges in a network is the most important thing in determining what <em>type</em> of network you have, and what you can reasonably do with it. I emphasize that one of the most common mistakes that novices make is trying to answer a research question, or apply a theory, that is a poor match for the type of network, like trying to answer a question about power and inequality with data on a collaboration network. It <em>can</em> work with the right data and a bit of mental gymnastics, but it shouldn’t have to. <em>As with any other type of research</em>, this is a match that you want to ensure you get right. This is, once again, a matter of good research design.</p>
-<p>Graphically, we can represent <strong>nodes as points</strong> and <strong>edges as lines</strong> that connect those nodes. <a href="#fig-14_01" class="quarto-xref">Figure&nbsp;<span>11.1</span></a> is a hypothetical network with five nodes (Chen, Nate, Anika, Anvita, and Patrick) and the relationships between them. When two nodes are connected, such as Chen and Anvita, we say they are <strong>adjacent</strong>. If we choose to focus on a specific node, we refer to it as the <strong>ego</strong>, and the nodes ego is directly connected to can be referred to as <strong>alters</strong>. Together, an ego’s alters represent a <strong>neighbourhood</strong>. For example, if we are focused on Patrick, Patrick is “ego,” and their neighbourhood would consist of the alters Anvita, Chen, and Anika.</p>
+<p>Graphically, we can represent <strong>nodes as points</strong> and <strong>edges as lines</strong> that connect those nodes. <a href="#fig-14_01">Figure&nbsp;<span class="quarto-unresolved-ref">fig-14_01</span></a> is a hypothetical network with five nodes (Chen, Nate, Anika, Anvita, and Patrick) and the relationships between them. When two nodes are connected, such as Chen and Anvita, we say they are <strong>adjacent</strong>. If we choose to focus on a specific node, we refer to it as the <strong>ego</strong>, and the nodes ego is directly connected to can be referred to as <strong>alters</strong>. Together, an ego’s alters represent a <strong>neighbourhood</strong>. For example, if we are focused on Patrick, Patrick is “ego,” and their neighbourhood would consist of the alters Anvita, Chen, and Anika.</p>
 <p>We’ll come up with a fictitious story about information sharing in this network later in the chapter. For now, let’s just focus on learning some technical vocabulary and understanding how we can represent social networks with relational data structures.</p>
-<div id="fig-14_01" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-14_01-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/walks_2.png" class="img-fluid figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-14_01-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;11.1: Cap
-</figcaption>
+<div id="fig-14_01" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="figures/walks_2.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;12.1: Cap</figcaption>
 </figure>
 </div>
 <p>The edges have arrows because the network is <strong>directed</strong> as opposed to <strong>undirected</strong>. For example, there is an arrow pointing from Anika to Chen because Anika <em>sends</em> something to Chen, or initiates something with Chen, that Chen may not reciprocate. Many interactions and relationships can be represented this way. Email and SMS communication can be modelled as directed interactions: “Anika <strong>emails</strong> Chen” becomes an edge <strong>from</strong> Anika <strong>to</strong> Chen. Requests for support or advice can be modelled as coming from one person (“help, please!”) and the support or advice being sent back in return (“Here you go!”). In a network defined by patterns of sentiment, one person may like another who may or may not like them back. Other types of relationship don’t make sense to represent as directed. While one node might nominate another node as a “friend” and not be nominated in return (tragic!), this really shouldn’t be the case in coauthorship. If Anika wrote a book with Chen, Chen must also have written a book with Anika.</p>
-<p>Networks are simply relational mathematical objects and have no inherent visual form. The image above is just a common and convenient way of <em>representing</em> relational data for small networks. However, just as a scatterplot is a representation of data, rather than the data itself, so too is the above image. With networks, as with text, it’s matrices all the way down. In this case, it’s a square <strong>adjacency matrix</strong>. Consider <a href="#fig-14_02" class="quarto-xref">Figure&nbsp;<span>11.2</span></a>, which shows how the graphical network representations of the network (directed on the left, undirected on the right) align with two different adjacency matrices.</p>
-<div id="fig-14_02" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-14_02-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/matrices_graphs.png" class="img-fluid figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-14_02-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;11.2: Cap
-</figcaption>
+<p>Networks are simply relational mathematical objects and have no inherent visual form. The image above is just a common and convenient way of <em>representing</em> relational data for small networks. However, just as a scatterplot is a representation of data, rather than the data itself, so too is the above image. With networks, as with text, it’s matrices all the way down. In this case, it’s a square <strong>adjacency matrix</strong>. Consider <a href="#fig-14_02">Figure&nbsp;<span class="quarto-unresolved-ref">fig-14_02</span></a>, which shows how the graphical network representations of the network (directed on the left, undirected on the right) align with two different adjacency matrices.</p>
+<div id="fig-14_02" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="figures/matrices_graphs.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;12.2: Cap</figcaption>
 </figure>
 </div>
 <p>First, for both the directed network (left) and the undirected network (right), many cells are empty, which represents 0, or the absence of an edge. The diagonals are highlighted in gray, but this is just to emphasize them. The diagonals are 0 because the nodes in these networks are not permitted to connect to themselves, which means that there are no <strong>self-loops</strong>. In other types of networks, such as email communication networks, self-loops might be possible, and a self-loop could be created by an action such as a node emailing themselves.</p>
 <p>If you look closely at the undirected network’s adjacency matrix, you will notice that the data above and below the diagonal are mirror images of one another, but not in the directed network. That’s because you can have relational asymmetry in a directed network (Anika can send a tie to Chen that Chen does not reciprocate) but not in an undirected network.</p>
 <p>Both of these networks are <strong>binary</strong>; the adjacency matrices contain 0s (not shown) to represent the absence of an edge and 1s to represent their presence. However, we can populate these cells with plenty of other information, often interpreted as some sort of <strong>edge weight</strong>. For example, in an interaction network we might populate cells with count data representing frequency of interaction within a given time frame. In a sentiment network, we might populate the cells with numbers that indicate different types or levels of sentiment, such as a Likert scale from 1 - 5 or a set of distinctions such as “strong” and “weak.” There is a lot of flexibility in how these data are collected, and it is largely up to you are to make decisions that make sense in the context of your research project.</p>
-<p>Traditionally, researchers have focused on <em>positive</em> ties like friendship, support and sharing, or collaboration and collective action. But as <span class="citation" data-cites="harrigan2020negative">Harrigan, Labianca, and Agneessens (<a href="references.html#ref-harrigan2020negative" role="doc-biblioref">2020</a>)</span> and others have pointed out, “some relationships harm. Others are characterised by avoidance, dislike, or conflict” (page 1). These negative ties are (hopefully) less common, but are disproportionately impactful in our lives. They also operate in ways in that are fundamentally different than positive ties. Networks that incorporate data on the positive and negative ties are called <strong>signed graphs</strong>, and are a major area of theoretical and methodological development in contemporary network analysis.</p>
-<p>Let’s make two final distinctions. First, the network we are working with here is <strong>unipartite</strong>, which means there is only one type of node (people) and the matrix storing the data is square, with the same set of nodes in the rows and the columns. However, it is also possible to consider networks with two types of nodes, such as between people and organizational affiliations, or between people and events. This kind of network is <strong>bipartite</strong>, because there are two types of nodes, and the underlying matrix is a rectangular <strong>incidence matrix</strong> (or <strong>affiliation matrix</strong>) with one node type represented on the rows and the other in the columns. There are fascinating theoretical and methodological literatures on bipartite networks <span class="citation" data-cites="breiger1974duality mutzel2020duality">(for some foundational ideas, see <a href="references.html#ref-breiger1974duality" role="doc-biblioref">Breiger 1974</a>; <a href="references.html#ref-mutzel2020duality" role="doc-biblioref">Mützel and Breiger 2020</a>)</span>, but regrettably we don’t have the space to discuss bipartite networks here.</p>
-<p>Finally, the example we are working with is a <strong>whole network</strong>, in contrast to an <strong>ego network</strong>. As I mentioned, we can think of each node in a network as “ego” with a neighbourhood composed of their direct connections (alters). If the network data is collected to capture all of the relevant relationships within some <strong>network boundary</strong> (e.g.&nbsp;all students in a classroom), then we are working with a whole network, and the main data collection tasks include specifying the boundaries of the network (e.g., the classroom) within which we want to record relationships. If, however, we collect some sample of people and then collect data on their individual relationships, then we are working with a collection of <strong>ego networks</strong>, one for each node in the study. Ego networks, fascinating though they are, are also out of scope for this book. If you are interested in learning more about ego network analysis, I recommend <span class="citation" data-cites="crossley2015social">Crossley et al. (<a href="references.html#ref-crossley2015social" role="doc-biblioref">2015</a>)</span> and <span class="citation" data-cites="personal">Small et al. (<a href="references.html#ref-personal" role="doc-biblioref">2021</a>)</span>, as well as the 2020 special issue of <em>Network Science</em> on ego network analysis edited by <span class="citation" data-cites="perry2020introduction">Perry et al. (<a href="references.html#ref-perry2020introduction" role="doc-biblioref">2020</a>)</span>.</p>
+<p>Traditionally, researchers have focused on <em>positive</em> ties like friendship, support and sharing, or collaboration and collective action. But as <span class="citation" data-cites="harrigan2020negative">Harrigan, Labianca, and Agneessens (<a href="#ref-harrigan2020negative" role="doc-biblioref">2020</a>)</span> and others have pointed out, “some relationships harm. Others are characterised by avoidance, dislike, or conflict” (page 1). These negative ties are (hopefully) less common, but are disproportionately impactful in our lives. They also operate in ways in that are fundamentally different than positive ties. Networks that incorporate data on the positive and negative ties are called <strong>signed graphs</strong>, and are a major area of theoretical and methodological development in contemporary network analysis.</p>
+<p>Let’s make two final distinctions. First, the network we are working with here is <strong>unipartite</strong>, which means there is only one type of node (people) and the matrix storing the data is square, with the same set of nodes in the rows and the columns. However, it is also possible to consider networks with two types of nodes, such as between people and organizational affiliations, or between people and events. This kind of network is <strong>bipartite</strong>, because there are two types of nodes, and the underlying matrix is a rectangular <strong>incidence matrix</strong> (or <strong>affiliation matrix</strong>) with one node type represented on the rows and the other in the columns. There are fascinating theoretical and methodological literatures on bipartite networks <span class="citation" data-cites="breiger1974duality mutzel2020duality">(for some foundational ideas, see <a href="#ref-breiger1974duality" role="doc-biblioref">Breiger 1974</a>; <a href="#ref-mutzel2020duality" role="doc-biblioref">Mützel and Breiger 2020</a>)</span>, but regrettably we don’t have the space to discuss bipartite networks here.</p>
+<p>Finally, the example we are working with is a <strong>whole network</strong>, in contrast to an <strong>ego network</strong>. As I mentioned, we can think of each node in a network as “ego” with a neighbourhood composed of their direct connections (alters). If the network data is collected to capture all of the relevant relationships within some <strong>network boundary</strong> (e.g.&nbsp;all students in a classroom), then we are working with a whole network, and the main data collection tasks include specifying the boundaries of the network (e.g., the classroom) within which we want to record relationships. If, however, we collect some sample of people and then collect data on their individual relationships, then we are working with a collection of <strong>ego networks</strong>, one for each node in the study. Ego networks, fascinating though they are, are also out of scope for this book. If you are interested in learning more about ego network analysis, I recommend <span class="citation" data-cites="crossley2015social">Crossley et al. (<a href="#ref-crossley2015social" role="doc-biblioref">2015</a>)</span> and <span class="citation" data-cites="personal">Small et al. (<a href="#ref-personal" role="doc-biblioref">2021</a>)</span>, as well as the 2020 special issue of <em>Network Science</em> on ego network analysis edited by <span class="citation" data-cites="perry2020introduction">Perry et al. (<a href="#ref-perry2020introduction" role="doc-biblioref">2020</a>)</span>.</p>
 <blockquote class="blockquote">
 <p><strong>Further Reading</strong></p>
-<p>There is no shortage of outstanding conceptual introductions to network analysis. <span class="citation" data-cites="crossley2015social">Crossley et al. (<a href="references.html#ref-crossley2015social" role="doc-biblioref">2015</a>)</span> provide a great introduction to ego-network analysis, which regrettably is not covered in this book. Christina Prell’s <span class="citation" data-cites="prell2012social">(<a href="references.html#ref-prell2012social" role="doc-biblioref">2012</a>)</span> <em>Social Network Analysis</em>, John Scott’s <span class="citation" data-cites="scottsocial">(<a href="references.html#ref-scottsocial" role="doc-biblioref">2017</a>)</span> <em>Social Network Analysis</em>, Garry Robins <span class="citation" data-cites="robins2015doing">(<a href="references.html#ref-robins2015doing" role="doc-biblioref">2015</a>)</span> <em>Doing Social Networks Research</em>, and Borgatti, Everett, and Johnson’s <span class="citation" data-cites="borgatti2018analyzing">(<a href="references.html#ref-borgatti2018analyzing" role="doc-biblioref">2018</a>)</span> <em>Analyzing Social Networks</em> are all great general introductions to network analysis. If you want to know more about data collection in network analysis, I recommend jimi adam’s <span class="citation" data-cites="adams2020gathering">(<a href="references.html#ref-adams2020gathering" role="doc-biblioref">2020</a>)</span> <em>Gathering Social Network Data</em>.</p>
+<p>There is no shortage of outstanding conceptual introductions to network analysis. <span class="citation" data-cites="crossley2015social">Crossley et al. (<a href="#ref-crossley2015social" role="doc-biblioref">2015</a>)</span> provide a great introduction to ego-network analysis, which regrettably is not covered in this book. Christina Prell’s <span class="citation" data-cites="prell2012social">(<a href="#ref-prell2012social" role="doc-biblioref">2012</a>)</span> <em>Social Network Analysis</em>, John Scott’s <span class="citation" data-cites="scottsocial">(<a href="#ref-scottsocial" role="doc-biblioref">2017</a>)</span> <em>Social Network Analysis</em>, Garry Robins <span class="citation" data-cites="robins2015doing">(<a href="#ref-robins2015doing" role="doc-biblioref">2015</a>)</span> <em>Doing Social Networks Research</em>, and Borgatti, Everett, and Johnson’s <span class="citation" data-cites="borgatti2018analyzing">(<a href="#ref-borgatti2018analyzing" role="doc-biblioref">2018</a>)</span> <em>Analyzing Social Networks</em> are all great general introductions to network analysis. If you want to know more about data collection in network analysis, I recommend jimi adam’s <span class="citation" data-cites="adams2020gathering">(<a href="#ref-adams2020gathering" role="doc-biblioref">2020</a>)</span> <em>Gathering Social Network Data</em>.</p>
 </blockquote>
 </section>
 </section>
-<section id="working-with-relational-data" class="level2" data-number="11.2">
-<h2 data-number="11.2" class="anchored" data-anchor-id="working-with-relational-data"><span class="header-section-number">11.2</span> WORKING WITH RELATIONAL DATA</h2>
+<section id="working-with-relational-data" class="level2" data-number="12.2">
+<h2 data-number="12.2" class="anchored" data-anchor-id="working-with-relational-data"><span class="header-section-number">12.2</span> WORKING WITH RELATIONAL DATA</h2>
 <p>With these generalities out of the way, let’s start getting into the details of working with relational data.</p>
-<section id="edgelists-and-nodelists" class="level3" data-number="11.2.1">
-<h3 data-number="11.2.1" class="anchored" data-anchor-id="edgelists-and-nodelists"><span class="header-section-number">11.2.1</span> Edgelists and Nodelists</h3>
-<p>As I mentioned earlier, matrices are the heart of network analysis, but they are not ideal ways to enter, store, or manage network data for anything other than small networks. In contemporary practice, most network data is stored in the form of <strong>edgelists</strong> and <strong>nodelists</strong>. In <a href="#fig-14_03" class="quarto-xref">Figure&nbsp;<span>11.3</span></a>, the same relational data that is represented in the graph, and encoded in the adjacency matrix above, is encoded as an edgelist. The first two columns of the edgelist is where the relational data itself is stored. The columns are labelled source and target because the network is directed; the node in the <code>source</code> column sends an edge to the node in the <code>target</code> column.</p>
-<div id="fig-14_03" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-14_03-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/edgelists.png" class="img-fluid figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-14_03-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;11.3: Cap
-</figcaption>
+<section id="edgelists-and-nodelists" class="level3" data-number="12.2.1">
+<h3 data-number="12.2.1" class="anchored" data-anchor-id="edgelists-and-nodelists"><span class="header-section-number">12.2.1</span> Edgelists and Nodelists</h3>
+<p>As I mentioned earlier, matrices are the heart of network analysis, but they are not ideal ways to enter, store, or manage network data for anything other than small networks. In contemporary practice, most network data is stored in the form of <strong>edgelists</strong> and <strong>nodelists</strong>. In <a href="#fig-14_03">Figure&nbsp;<span class="quarto-unresolved-ref">fig-14_03</span></a>, the same relational data that is represented in the graph, and encoded in the adjacency matrix above, is encoded as an edgelist. The first two columns of the edgelist is where the relational data itself is stored. The columns are labelled source and target because the network is directed; the node in the <code>source</code> column sends an edge to the node in the <code>target</code> column.</p>
+<div id="fig-14_03" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="figures/edgelists.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;12.3: Cap</figcaption>
 </figure>
 </div>
 <p>While an edgelist only requires pairs of nodes, we can also include additional columns that provide data <em>about the relationship</em>. There is nothing special or unique about data that describes these edges except for the fact that they describe characteristics of the <em>relationship</em> between two entities rather than characteristics of the entities themselves. Just as we carefully specify variables for describing the attributes of entities, we can carefully specify variables for describing the attributes of relationships between entities. For example, we might have a variable that categorizes edges by the <em>type</em> of relationship (e.g., family, friend, foe, professional, romantic, people who dance together, people who do intravenous drugs with one another) or by it’s sentiment (positive, neural, negative), to suggest just a couple of possibilities. Just as we can with an adjacency matrix, we can record edge weight (such as interaction frequency) as a variable in the edgelist. In longitudinal or dynamic networks (discussed in later chapters), we might also record the wave that a relationship was observed in, or perhaps a timestamp of when the interaction occurred (e.g., when Chen sent an email to Anvita). It may be a simple point, but it’s very important to understand: we can record any empirical observations of the attributes of relationships. The same considerations about what to observe and record apply for edges as with nodes. There is nothing special about edge data except that it describes edges.</p>
 </section>
-<section id="graph-objects-from-edgelists-and-matrices-and-more" class="level3" data-number="11.2.2">
-<h3 data-number="11.2.2" class="anchored" data-anchor-id="graph-objects-from-edgelists-and-matrices-and-more"><span class="header-section-number">11.2.2</span> Graph Objects from Edgelists (and Matrices and More)</h3>
+<section id="graph-objects-from-edgelists-and-matrices-and-more" class="level3" data-number="12.2.2">
+<h3 data-number="12.2.2" class="anchored" data-anchor-id="graph-objects-from-edgelists-and-matrices-and-more"><span class="header-section-number">12.2.2</span> Graph Objects from Edgelists (and Matrices and More)</h3>
 <p>Let’s examine some actual data. In the code block below, we will import a couple of packages and load up some relational data collected from a group of French high school students in 2013. This dataset is one of several collected by the SocioPatterns research team (with collaborators the ISI Foundation in Turin, the Centre de Physique Théorique in Marseille, and Bitmanufactory in Cambridge). The particular dataset we will use describes a network of face-to-face contacts between high school students in Marseille over a five-day period in December 2013. This data was collected via contact diaries, in which students recorded who they came into contact with (restricted to other students in the study) and for how long. Similar data was also collected with wearable sensors, but we will just focus on the contact diaries for now.</p>
 <p>The edge data is provided in a CSV file with three columns: <code>i</code>, <code>j</code>, and <code>weight</code>. Physical co-presence is, of course, naturally undirected. It is not possible to be physically co-present with someone who is not also physically co-present with you. Therefore, the edgelist names the columns with <code>i</code> and <code>j</code> instead of <code>source</code> and <code>target</code>. This also means that a tie from <code>i</code> to <code>j</code> is the same as a tie from <code>j</code> to <code>i</code>. Finally, edge weight data is stored in the <code>weight</code> column and is coded as follows:</p>
 <ul>
@@ -777,7 +740,7 @@ Figure&nbsp;11.3: Cap
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>G.name <span class="op">=</span> <span class="st">'Reported Contacts (Diary Data)'</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(G)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>You might be wondering why the number of rows in the edgelist differs from the number of edges in the network object <code>G</code>. The reason is because different students report the same relation. <code>i</code> might say they spent between 15 and 30 minutes with <code>j</code> and <code>j</code> might later report the same contact with <code>i</code>. However, it seems that not all students reported all interactions (if they had, we would expect there to be 502 reports of 251 edges). Because we believe that students are more likely to forget to record an interaction than they are to fabricate one in their contact diary, we <strong>symmetrize</strong> the relationship, making it undirected (if <code>i</code> spent time with <code>j</code>, then the reverse must necessarily be true). We have informed NetworkX that this network should use undirected edges by specifying a Graph object rather than a DiGraph (directed graph).</p>
-<p>Finally, before moving on, let’s create a quick visualization of this network (<a href="#fig-13_04" class="quarto-xref">Figure&nbsp;<span>11.4</span></a>). This is an inherently challenging task as networks are <em>very</em> high-dimensional objects and we are limited to 2 dimensions. It’s best not to rely on visualizations such as these for any serious analytic work, but for relatively small networks they can still be informative.</p>
+<p>Finally, before moving on, let’s create a quick visualization of this network (<a href="#fig-13_04">Figure&nbsp;<span class="quarto-unresolved-ref">fig-13_04</span></a>). This is an inherently challenging task as networks are <em>very</em> high-dimensional objects and we are limited to 2 dimensions. It’s best not to rely on visualizations such as these for any serious analytic work, but for relatively small networks they can still be informative.</p>
 <ul>
 <li><strong>TODO</strong>: Critique the visualization; hint that we will do better in a couple of chapters.</li>
 </ul>
@@ -790,14 +753,10 @@ Figure&nbsp;11.3: Cap
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>        node_size<span class="op">=</span><span class="dv">10</span>,</span>
 <span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>        width<span class="op">=</span><span class="fl">.5</span>)</span>
 <span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'figures/13_04.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div id="fig-13_04" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-13_04-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/13_04.png" class="img-fluid figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-13_04-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;11.4: png
-</figcaption>
+<div id="fig-13_04" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="figures/13_04.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;12.4: png</figcaption>
 </figure>
 </div>
 <p>You’ll see similar visualizations one in the coming chapters. Each time you’ll develop a deeper understanding of what to look for, such as clusters of densely connected nodes, or pendants hanging off a dense cluster of nodes at the <strong>core</strong> of a network. For now, let’s keep moving.</p>
@@ -805,36 +764,28 @@ Figure&nbsp;11.4: png
 <p>Now it’s time to turn to some important building blocks of network analysis. We will start by briefly discussing the “walk-structure” of a network and the notion of network flow. This is intended to get you to start thinking about networks in a particular way in preparation for content that appears in the next chapter. We will then turn to some of the basic micro-level building blocks of network structure, dyads and triads. Together, these two final sections provide a foundation for much of what follows in later chapters.</p>
 </section>
 </section>
-<section id="walk-structure-and-network-flow" class="level2" data-number="11.3">
-<h2 data-number="11.3" class="anchored" data-anchor-id="walk-structure-and-network-flow"><span class="header-section-number">11.3</span> WALK-STRUCTURE AND NETWORK FLOW</h2>
+<section id="walk-structure-and-network-flow" class="level2" data-number="12.3">
+<h2 data-number="12.3" class="anchored" data-anchor-id="walk-structure-and-network-flow"><span class="header-section-number">12.3</span> WALK-STRUCTURE AND NETWORK FLOW</h2>
 <p>One of the most foundational ideas in social network analysis is that your position in a network affects your ability to access or shape the <strong>flow</strong> of things – such as resources, information, or knowledge – through that network. Those things are often called <strong>contagions</strong>, or <strong>social contagions</strong>, even when they are not literally contagious in the way an infectious disease is (and most contagions that social scientists are interested in do <em>not</em> spread like infectious diseases, as you will learn in Chapter 18). Depending on where a node is positioned in the network, they can control or otherwise manipulate how a contagion is flowing through a network. For example, they may prevent someone from learning about some important information by feeding them incorrect information or by betraying their trust and spilling their secrets to the rest of the office.</p>
 <p>This notion of contagions <em>flowing</em> along the structure of a network enables disparate regions of that network to influence one another. In a friendship network, for example, we are influenced by our friends, by our friends’ friends, by our friends’ friends’ friends, and so on. But exactly <em>how</em> does that happen, and to what degree? Which of the many possible paths do contagions flow on? All of them at once? Some subset of paths? If so, which ones? Perhaps a single <em>most optimal</em> one?</p>
-<section id="walks-trails-paths-and-cycles" class="level3" data-number="11.3.1">
-<h3 data-number="11.3.1" class="anchored" data-anchor-id="walks-trails-paths-and-cycles"><span class="header-section-number">11.3.1</span> Walks, Trails, Paths, and Cycles</h3>
+<section id="walks-trails-paths-and-cycles" class="level3" data-number="12.3.1">
+<h3 data-number="12.3.1" class="anchored" data-anchor-id="walks-trails-paths-and-cycles"><span class="header-section-number">12.3.1</span> Walks, Trails, Paths, and Cycles</h3>
 <p>Earlier I mentioned that we would spin up a fictitious story about our five person network (Chen, Patrick, Anika, Anvita, and Nate). We’ll do that now to help clarify some of the essential terminology, but we’ll start with a slightly smaller version – just Anika, Chen, and Patrick – and then add the others in.</p>
 <p>Imagine a research lab with an upcoming team meeting with an ominous sounding item on the agenda. One member of the team, Chen, knows something about the context for this item and shares it with another member of the team, Patrick. In this scenario, Chen sends the information to Patrick (remember, this makes them <em>adjacent</em>).</p>
 <p>As we’ve discussed, nodes are also linked to other nodes <em>indirectly</em>. Let’s say Chen’s information came from another team member, Anika. Anika and Patrick are not adjacent, but they are indirectly connected via Chen. How can we describe this relationship? And why does it matter whether we describe it at all?</p>
-<p>In network analysis, we are often interested in whether something (e.g., information about the ominous sounding agenda item) can travel from node <span class="math inline">\(i\)</span> (e.g., Anika) to node <span class="math inline">\(j\)</span> (e.g., Patrick). If it is indeed possible for that to happen, how many people would it have to go through to get there? And is there more than one way it might get there? If so, are some ways more efficient than others? If so, which ones? We can answer questions such as these about any nodes in a network by invoking the concept of a <strong>walk</strong>, which also provides both general and specific terminology for describing a wide variety of indirect relationships <span class="citation" data-cites="borgatti2020three">(<a href="references.html#ref-borgatti2020three" role="doc-biblioref">Borgatti and Everett 2020</a>)</span>. Consider, the hypothetical network in <a href="#fig-14_05" class="quarto-xref">Figure&nbsp;<span>11.5</span></a>, which we just described with words.</p>
-<div id="fig-14_05" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-14_05-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/walks.png" class="img-fluid figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-14_05-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;11.5: Cap
-</figcaption>
+<p>In network analysis, we are often interested in whether something (e.g., information about the ominous sounding agenda item) can travel from node <span class="math inline">\(i\)</span> (e.g., Anika) to node <span class="math inline">\(j\)</span> (e.g., Patrick). If it is indeed possible for that to happen, how many people would it have to go through to get there? And is there more than one way it might get there? If so, are some ways more efficient than others? If so, which ones? We can answer questions such as these about any nodes in a network by invoking the concept of a <strong>walk</strong>, which also provides both general and specific terminology for describing a wide variety of indirect relationships <span class="citation" data-cites="borgatti2020three">(<a href="#ref-borgatti2020three" role="doc-biblioref">Borgatti and Everett 2020</a>)</span>. Consider, the hypothetical network in <a href="#fig-14_05">Figure&nbsp;<span class="quarto-unresolved-ref">fig-14_05</span></a>, which we just described with words.</p>
+<div id="fig-14_05" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="figures/walks.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;12.5: Cap</figcaption>
 </figure>
 </div>
 <p>A <em>walk</em> is simply any sequence of adjacent nodes and edges that start with some node and end with a node. They can even start and end with the same node. In fact, the same node can appear in a walk more than once, and so can the same edges! In short, a walk is a very general way of describing <em>any</em> way that you can go from one node to another by “walking” along the edges, even if what you want to do is get back to where you started. There are no restrictions provided the edges to walk on actually exist (or rather, are observed). This opens all kinds of useful ways of thinking about the <em>distances</em> between nodes, operationalized in terms of lengths of walks, which is defined in terms of the number of edges contained in the walk. In the above network, the walk from Anika to Patrick passes through 1 node, Chen, but has a length of 2 because it consists of the relationship between Anika and Chen, and between Chen and Patrick (2 edges).</p>
-<p>Let’s complicate this just a wee bit by introducing a few additional team members, our fictitious friends Anvita and Nate. Chen, especially anxious about the ominous agenda item, shares the information with Anvita and Nate. Anvita doesn’t know Patrick already knows, so shares the information with Patrick. Patrick doesn’t know the information ultimately came from Anika, so sends the information back to Anika. Nate prefers not to pass the information along because they aren’t sure how credible it really is. <a href="#fig-14_06" class="quarto-xref">Figure&nbsp;<span>11.6</span></a> shows the structure of this network with the new information sharing relations. Note that you can’t read this representation left to right! The information flow process started with Anika in this hypothetical example.</p>
-<div id="fig-14_06" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-14_06-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/walks_2.png" class="img-fluid figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-14_06-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;11.6: Cap
-</figcaption>
+<p>Let’s complicate this just a wee bit by introducing a few additional team members, our fictitious friends Anvita and Nate. Chen, especially anxious about the ominous agenda item, shares the information with Anvita and Nate. Anvita doesn’t know Patrick already knows, so shares the information with Patrick. Patrick doesn’t know the information ultimately came from Anika, so sends the information back to Anika. Nate prefers not to pass the information along because they aren’t sure how credible it really is. <a href="#fig-14_06">Figure&nbsp;<span class="quarto-unresolved-ref">fig-14_06</span></a> shows the structure of this network with the new information sharing relations. Note that you can’t read this representation left to right! The information flow process started with Anika in this hypothetical example.</p>
+<div id="fig-14_06" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="figures/walks_2.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;12.6: Cap</figcaption>
 </figure>
 </div>
 <p>Our initial walk from Anika to Patrick still exists, of course, but now we also have the possibility of many other walks. Anika to Chen to Nate is a walk. Anika to Chen to Anvita to Patrick and back to Anika is a walk. More specifically it is a <strong>closed walk</strong> because it starts and ends with the same node: Anika.</p>
@@ -844,11 +795,11 @@ Figure&nbsp;11.6: Cap
 <p>We will leave our discussion of walk-structures for now. The key thing to emphasize right now is the general logic of traversing a social network this way, and to understand that the structure of the network affects the flow of contagions through it, meaning people in the network will be differentially exposed to those contagions, good or bad. We will return to this issue in the next chapter. For now, let’s turn to the some micro building blocks of network structure.</p>
 </section>
 </section>
-<section id="conclusion" class="level2" data-number="11.4">
-<h2 data-number="11.4" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">11.4</span> CONCLUSION</h2>
+<section id="conclusion" class="level2" data-number="12.4">
+<h2 data-number="12.4" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">12.4</span> CONCLUSION</h2>
 <hr>
-<section id="key-points" class="level3" data-number="11.4.1">
-<h3 data-number="11.4.1" class="anchored" data-anchor-id="key-points"><span class="header-section-number">11.4.1</span> Key Points</h3>
+<section id="key-points" class="level3" data-number="12.4.1">
+<h3 data-number="12.4.1" class="anchored" data-anchor-id="key-points"><span class="header-section-number">12.4.1</span> Key Points</h3>
 <ul>
 <li>Relational thinking provides new, different, and valuable ways of approaching social science</li>
 <li>Different types of ties change how we should think about a network</li>
@@ -858,7 +809,7 @@ Figure&nbsp;11.6: Cap
 <hr>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="refs" class="references csl-bib-body hanging-indent" role="list">
 <div id="ref-adams2020gathering" class="csl-entry" role="listitem">
 adams, jimi. 2020. <em>Gathering Social Network Data</em>. SAGE Publications Incorporated.
 </div>
@@ -965,7 +916,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const onCopySuccess = function(e) {
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -997,50 +959,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
-  }
-  const getTextToCopy = function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-  }
-  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-    text: getTextToCopy
   });
-  clipboard.on('success', onCopySuccess);
-  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
-    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-      text: getTextToCopy,
-      container: window.document.getElementById('quarto-embedded-source-code-modal')
-    });
-    clipboardModal.on('success', onCopySuccess);
-  }
-    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-    var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp('/' + window.location.host + '/');
-    var isInternal = (href) => {
-        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
-    }
-    // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
-    for (var i=0; i<links.length; i++) {
-      const link = links[i];
-      if (!isInternal(link.href)) {
-        // undo the damage that might have been done by quarto-nav.js in the case of
-        // links that we want to consider external
-        if (link.dataset.originalHref !== undefined) {
-          link.href = link.dataset.originalHref;
-        }
-      }
-    }
-  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+  function tippyHover(el, contentFn) {
     const config = {
       allowHTML: true,
+      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -1050,17 +973,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start',
+      placement: 'bottom-start'
     };
-    if (contentFn) {
-      config.content = contentFn;
-    }
-    if (onTriggerFn) {
-      config.onTrigger = onTriggerFn;
-    }
-    if (onUntriggerFn) {
-      config.onUntrigger = onUntriggerFn;
-    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -1072,130 +986,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      if (note) {
-        return note.innerHTML;
-      } else {
-        return "";
-      }
-    });
-  }
-  const xrefs = window.document.querySelectorAll('a.quarto-xref');
-  const processXRef = (id, note) => {
-    // Strip column container classes
-    const stripColumnClz = (el) => {
-      el.classList.remove("page-full", "page-columns");
-      if (el.children) {
-        for (const child of el.children) {
-          stripColumnClz(child);
-        }
-      }
-    }
-    stripColumnClz(note)
-    if (id === null || id.startsWith('sec-')) {
-      // Special case sections, only their first couple elements
-      const container = document.createElement("div");
-      if (note.children && note.children.length > 2) {
-        container.appendChild(note.children[0].cloneNode(true));
-        for (let i = 1; i < note.children.length; i++) {
-          const child = note.children[i];
-          if (child.tagName === "P" && child.innerText === "") {
-            continue;
-          } else {
-            container.appendChild(child.cloneNode(true));
-            break;
-          }
-        }
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(container);
-        }
-        return container.innerHTML
-      } else {
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(note);
-        }
-        return note.innerHTML;
-      }
-    } else {
-      // Remove any anchor links if they are present
-      const anchorLink = note.querySelector('a.anchorjs-link');
-      if (anchorLink) {
-        anchorLink.remove();
-      }
-      if (window.Quarto?.typesetMath) {
-        window.Quarto.typesetMath(note);
-      }
-      // TODO in 1.5, we should make sure this works without a callout special case
-      if (note.classList.contains("callout")) {
-        return note.outerHTML;
-      } else {
-        return note.innerHTML;
-      }
-    }
-  }
-  for (var i=0; i<xrefs.length; i++) {
-    const xref = xrefs[i];
-    tippyHover(xref, undefined, function(instance) {
-      instance.disable();
-      let url = xref.getAttribute('href');
-      let hash = undefined; 
-      if (url.startsWith('#')) {
-        hash = url;
-      } else {
-        try { hash = new URL(url).hash; } catch {}
-      }
-      if (hash) {
-        const id = hash.replace(/^#\/?/, "");
-        const note = window.document.getElementById(id);
-        if (note !== null) {
-          try {
-            const html = processXRef(id, note.cloneNode(true));
-            instance.setContent(html);
-          } finally {
-            instance.enable();
-            instance.show();
-          }
-        } else {
-          // See if we can fetch this
-          fetch(url.split('#')[0])
-          .then(res => res.text())
-          .then(html => {
-            const parser = new DOMParser();
-            const htmlDoc = parser.parseFromString(html, "text/html");
-            const note = htmlDoc.getElementById(id);
-            if (note !== null) {
-              const html = processXRef(id, note);
-              instance.setContent(html);
-            } 
-          }).finally(() => {
-            instance.enable();
-            instance.show();
-          });
-        }
-      } else {
-        // See if we can fetch a full url (with no hash to target)
-        // This is a special case and we should probably do some content thinning / targeting
-        fetch(url)
-        .then(res => res.text())
-        .then(html => {
-          const parser = new DOMParser();
-          const htmlDoc = parser.parseFromString(html, "text/html");
-          const note = htmlDoc.querySelector('main.content');
-          if (note !== null) {
-            // This should only happen for chapter cross references
-            // (since there is no id in the URL)
-            // remove the first header
-            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
-              note.children[0].remove();
-            }
-            const html = processXRef(null, note);
-            instance.setContent(html);
-          } 
-        }).finally(() => {
-          instance.enable();
-          instance.show();
-        });
-      }
-    }, function(instance) {
+      return note.innerHTML;
     });
   }
       let selectedAnnoteEl;
@@ -1239,7 +1030,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
-            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -1265,32 +1055,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
-        // Handle positioning of the toggle
-    window.addEventListener(
-      "resize",
-      throttle(() => {
-        elRect = undefined;
-        if (selectedAnnoteEl) {
-          selectCodeLines(selectedAnnoteEl);
-        }
-      }, 10)
-    );
-    function throttle(fn, ms) {
-    let throttle = false;
-    let timer;
-      return (...args) => {
-        if(!throttle) { // first call gets through
-            fn.apply(this, args);
-            throttle = true;
-        } else { // all the others get throttled
-            if(timer) clearTimeout(timer); // cancel #2
-            timer = setTimeout(() => {
-              fn.apply(this, args);
-              timer = throttle = false;
-            }, ms);
-        }
-      };
-    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -1352,13 +1116,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./text-as-data.html" class="pagination-link" aria-label="Text as Data">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Text as Data</span></span>
+      <a href="./text-as-data.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Text as Data</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./exploratory-data-analysis.html" class="pagination-link" aria-label="Exploring with purpose">
-        <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Exploring with purpose</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./exploratory-data-analysis.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Exploring with purpose</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -1366,5 +1130,4 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
-
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/UWNETLAB/dcss_supplementary/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
+</body></html>

@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.56">
+<meta name="generator" content="quarto-1.3.450">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>33&nbsp; Language models and word embeddings – Doing Computational Social Science&lt;br&gt;[The **Continuous Development** Edition]{.small}</title>
+<title>Doing Computational Social ScienceThe Continuous Development Edition - 33&nbsp; Language models and word embeddings</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -22,7 +22,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -33,7 +33,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -58,7 +58,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
-  margin-bottom: 0em;
 }
 .hanging-indent div.csl-entry {
   margin-left:2em;
@@ -102,13 +101,7 @@ div.csl-indent {
   "collapse-after": 3,
   "panel-placement": "start",
   "type": "textbox",
-  "limit": 50,
-  "keyboard-shortcut": [
-    "f",
-    "/",
-    "s"
-  ],
-  "show-item-context": false,
+  "limit": 20,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -117,42 +110,14 @@ div.csl-indent {
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
-    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
 }</script>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="custom.css">
 </head>
@@ -163,13 +128,13 @@ window.Quarto = {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./artificial-neural-networks-fnn-rnn-cnn.html"><strong>DEEP LEARNING</strong></a></li><li class="breadcrumb-item"><a href="./language-models-and-embeddings.html"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Language models and word embeddings</span></a></li></ol></nav>
-        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-        </a>
-      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./artificial-neural-networks-fnn-rnn-cnn.html"><strong>DEEP LEARNING</strong></a></li><li class="breadcrumb-item"><a href="./language-models-and-embeddings.html"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Language models and word embeddings</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -178,7 +143,7 @@ window.Quarto = {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
       <a href="./index.html" class="sidebar-logo-link">
       <img src="./figures/logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
@@ -186,25 +151,25 @@ window.Quarto = {
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Doing Computational Social Science<br><span class="small">The <strong>Continuous Development</strong> Edition</span></a> 
         <div class="sidebar-tools-main">
-    <a href="https://github.com/UWNETLAB/dcss_supplementary/tree/master/book/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="https://github.com/UWNETLAB/dcss_supplementary/tree/master/book/" rel="" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
     <div class="dropdown">
-      <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
+      <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Share"><i class="bi bi-share"></i></a>
       <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
           <li>
             <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=|url|">
-              <i class="bi bi-twitter pe-1"></i>
+              <i class="bi bi-bi-twitter pe-1"></i>
             Twitter
             </a>
           </li>
           <li>
             <a class="dropdown-item sidebar-tools-main-item" href="https://www.facebook.com/sharer/sharer.php?u=|url|">
-              <i class="bi bi-facebook pe-1"></i>
+              <i class="bi bi-bi-facebook pe-1"></i>
             Facebook
             </a>
           </li>
           <li>
             <a class="dropdown-item sidebar-tools-main-item" href="https://www.linkedin.com/sharing/share-offsite/?url=|url|">
-              <i class="bi bi-linkedin pe-1"></i>
+              <i class="bi bi-bi-linkedin pe-1"></i>
             LinkedIn
             </a>
           </li>
@@ -234,9 +199,9 @@ window.Quarto = {
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
  <span class="menu-text"><strong>COMPUTING</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -269,9 +234,9 @@ window.Quarto = {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
  <span class="menu-text"><strong>WORKFLOW</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -292,9 +257,9 @@ window.Quarto = {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
  <span class="menu-text"><strong>DATA</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -339,9 +304,9 @@ window.Quarto = {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
  <span class="menu-text"><strong>DISCOVERY</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -380,9 +345,9 @@ window.Quarto = {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
  <span class="menu-text"><strong>PREDICTION &amp; INFERENCE</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -427,9 +392,9 @@ window.Quarto = {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true">
  <span class="menu-text"><strong>MODELING</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -486,9 +451,9 @@ window.Quarto = {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true">
  <span class="menu-text"><strong>DEEP LEARNING</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -521,9 +486,9 @@ window.Quarto = {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" aria-expanded="true">
  <span class="menu-text"><strong>RESPONSIBILITIES</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -569,7 +534,7 @@ window.Quarto = {
     </ul>
     </div>
 </nav>
-<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
@@ -631,12 +596,12 @@ window.Quarto = {
   </ul></li>
   </ul></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/UWNETLAB/dcss_supplementary/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/UWNETLAB/dcss_supplementary/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./artificial-neural-networks-fnn-rnn-cnn.html"><strong>DEEP LEARNING</strong></a></li><li class="breadcrumb-item"><a href="./language-models-and-embeddings.html"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Language models and word embeddings</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Language models and word embeddings</span></h1>
 </div>
@@ -651,9 +616,7 @@ window.Quarto = {
   </div>
   
 
-
 </header>
-
 
 <ul>
 <li>Note the word embeddings chapter is below this one; condense, integrate, and update them</li>
@@ -716,7 +679,7 @@ window.Quarto = {
 <p>We’ve now created an instance of spaCy’s text processing pipeline. Let’s put it to use!</p>
 <section id="the-spacy-nlp-pipeline" class="level4" data-number="33.4.1.1">
 <h4 data-number="33.4.1.1" class="anchored" data-anchor-id="the-spacy-nlp-pipeline"><span class="header-section-number">33.4.1.1</span> The SpaCy NLP Pipeline</h4>
-<p>Once the language model has been loaded (<code>nlp</code>), we can start processing our raw text by passing it through SpaCy’s default text processing pipeline, which is illustrated in <span class="quarto-unresolved-ref">?fig-10_01</span>. This is often the slowest part of a natural language processing workflow because SpaCy does a <em>lot</em> of heavy lifting right at the start. The result of this process will be something called a <code>Doc</code> object, which we will discuss momentarily; for now, let’s focus on the big picture and then circle back and fill in the details on each pipeline component and data structure later.</p>
+<p>Once the language model has been loaded (<code>nlp</code>), we can start processing our raw text by passing it through SpaCy’s default text processing pipeline, which is illustrated in <a href="#fig-10_01">Figure&nbsp;<span class="quarto-unresolved-ref">fig-10_01</span></a>. This is often the slowest part of a natural language processing workflow because SpaCy does a <em>lot</em> of heavy lifting right at the start. The result of this process will be something called a <code>Doc</code> object, which we will discuss momentarily; for now, let’s focus on the big picture and then circle back and fill in the details on each pipeline component and data structure later.</p>
 <p><embed src="figures/spacy.pdf" class="img-fluid"></p>
 <p>As shown in Figure XXX, as soon as our original text enters SpaCy’s pipeline, it encounters the <strong>tokenizer</strong>, which identifies the boundaries of words and sentences. Most of the time, punctuation makes it relatively simple for computers to detect sentence boundaries but periods in abbreviations and acronyms (e.g.&nbsp;U.K., U.S.A) can complicate this simple approach. Even tokenizing individual words can be tricky, as this process involves making decisions like whether to convert contractions to one token or two (e.g.&nbsp;it’s vs.&nbsp;it is), or whether to tokenize special characters like emoji. SpaCy tokenizes text using language-specific rules, differentiating between punctuation marking the end of a sentence and punctuation used in acronyms and abbreviations. It will also use pre-defined language-specific rules to split tokens like <code>don't</code> into <code>do</code> and <code>n't</code>. Although these rules are language-specific, if SpaCy doesn’t already have a tokenizer for a language you need, it is possible to add new languages. (Instructions on how to do this are available in the SpaCy documentation.)</p>
 <p>In the second step of the pipeline, SpaCy assigns each a tag based on its <strong>part-of-speech</strong> using its pre-trained statistical models. In doing so, SpaCy combines rules-based expertise from linguistics with supervised machine learning models. The third step maps syntactic dependencies between words (e.g., which words in a sentence depend on or modify other words in a sentence) using its neural network model. At its most basic, dependency parsing is the basis for accurate sentence segmentation in SpaCy, but it also enables more complex analysis typical to the field of linguistics. The fourth step in the processing pipeline is to recognize <strong>named entities</strong>. This is a very useful and important task for computational social scientists but is relatively complex and tends to be highly-dependent on the data used to train the model. Therefore, we will set named entity recognition aside until later, where we can explore it in more depth and learn how to train models that are customized to work best for our specific research applications (see Chapter 33). Note that when we loaded the pre-trained language model and initialized the <code>nlp</code> pipeline, we disabled the <code>ner</code> component. Since we are not going to use it here, disabling it in the pipeline speeds up text processing a noticeable amount because it means SpaCy won’t spend time executing that part of the pipeline.</p>
@@ -726,7 +689,7 @@ window.Quarto = {
 <section id="the-spacy-containers" class="level4" data-number="33.4.1.2">
 <h4 data-number="33.4.1.2" class="anchored" data-anchor-id="the-spacy-containers"><span class="header-section-number">33.4.1.2</span> The SpaCy Containers</h4>
 <p>We’ll use a simple example to illustrate SpaCy’s containers. We start by passing some raw input text into the processing pipeline and then demonstrate how to work with the containers that store the output of that pipeline.</p>
-<p>As an example, let’s consider the abstract for Bart Bonikowski’s <span class="citation" data-cites="bonikowski2017ethno">(<a href="references.html#ref-bonikowski2017ethno" role="doc-biblioref">2017</a>)</span> journal article “Ethno-nationalist populism and the mobilization of collective resentment” published in <em>The British Journal of Sociology</em>. Here is the raw text of the abstract:</p>
+<p>As an example, let’s consider the abstract for Bart Bonikowski’s <span class="citation" data-cites="bonikowski2017ethno">(<a href="#ref-bonikowski2017ethno" role="doc-biblioref">2017</a>)</span> journal article “Ethno-nationalist populism and the mobilization of collective resentment” published in <em>The British Journal of Sociology</em>. Here is the raw text of the abstract:</p>
 <blockquote class="blockquote">
 <p>Scholarly and journalistic accounts of the recent successes of radical-right politics in Europe and the United States, including the Brexit referendum and the Trump campaign, tend to conflate three phenomena: populism, ethno-nationalism and authoritarianism. While all three are important elements of the radical right, they are neither coterminous nor limited to the right. The resulting lack of analytical clarity has hindered accounts of the causes and consequences of ethno-nationalist populism. To address this problem, I bring together existing research on nationalism, populism and authoritarianism in contemporary democracies to precisely define these concepts and examine temporal patterns in their supply and demand, that is, politicians’ discursive strategies and the corresponding public attitudes. Based on the available evidence, I conclude that both the supply and demand sides of radical politics have been relatively stable over time, which suggests that in order to understand public support for radical politics, scholars should instead focus on the increased resonance between pre-existing attitudes and discursive frames. Drawing on recent research in cultural sociology, I argue that resonance is not only a function of the congruence between a frame and the beliefs of its audience, but also of shifting context. In the case of radical-right politics, a variety of social changes have engendered a sense of collective status threat among national ethnocultural majorities. Political and media discourse has channelled such threats into resentments toward elites, immigrants, and ethnic, racial and religious minorities, thereby activating previously latent attitudes and lending legitimacy to radical political campaigns that promise to return power and status to their aggrieved supporters. Not only does this form of politics threaten democratic institutions and inter-group relations, but it also has the potential to alter the contours of mainstream public discourse, thereby creating the conditions of possibility for future successes of populist, nationalist, and authoritarian politics.</p>
 </blockquote>
@@ -900,20 +863,20 @@ States (PROPN)
 <section id="syntactic-dependency-parsing" class="level2" data-number="33.7">
 <h2 data-number="33.7" class="anchored" data-anchor-id="syntactic-dependency-parsing"><span class="header-section-number">33.7</span> SYNTACTIC DEPENDENCY PARSING</h2>
 <p>The third component of the SpaCy processing pipeline (see Figure 1) is the syntactic dependency parser. This rule-based parser rests on a solid foundation of linguistic research and, when combined with machine learning models, greatly increases the accuracy of a variety of important text processing tasks. It also makes it possible to extract meaningful sequences of words from texts, such as short phrases, or components of larger narratives and frames. We will consider the power of this approach by looking at how SpaCy extracts <strong>noun chunks</strong> from text, setting aside more complex manipulations of the dependency tree until later.</p>
-<p>When we communicate in natural languages such as English, we follow sets of commonly held rules that govern how we arrange words, clauses, and phrases in sentences. For the most part, we learn these rules – <strong>grammar</strong> – implicitly via socialization as children, and then more explicitly later in life. For non-linguists, some explicit forms of instruction about the “correct” and “incorrect” way of doing things in a language is what probably comes to mind when we think about grammar, but from a linguistic point of view grammatical rules should <em>not</em> be seen as proscriptive but rather as cultural and evolving in populations over time. Grammatical “rules” are about dominant patterns in usage in a population (linguists use the word ‘rule’ in the way sociologists and political scientists do, not the way physicists do). They are one of the best examples of shared culture and implicit cultural rules we have! Rather than proscription, linguists are focused on <em>description</em> and <em>explanation</em> of grammatical rules, and there is an enormous amount of formal linguistic theory and research on modelling grammar. In fact, Pãnini’s study of the grammatical structure of Sanskrit was written in the 4th-century and is still discussed today <span class="citation" data-cites="jurafsky2000speech">(<a href="references.html#ref-jurafsky2000speech" role="doc-biblioref">Jurafsky and Hand 2009</a>)</span>!</p>
-<p>One of the most enduring ways of modelling grammar is <strong>dependency parsing</strong>, which has its origins in ancient Greek and Indian linguistics <span class="citation" data-cites="jurafsky2000speech">(<a href="references.html#ref-jurafsky2000speech" role="doc-biblioref">Jurafsky and Hand 2009</a>)</span>. Dependency parsing is a rules-based approach that models the relationships between words in a sentence as a directed network. The edges in the network represent various kinds of grammatical relationships between pairs of words. You may already be able to think of some important grammatical relations, such as <strong>clausal argument relations</strong> (e.g.&nbsp;a word can be a <em>nominal subject</em> of another word, a <em>direct</em> or <em>indirect object</em>, or a <em>clausal complement</em>), <strong>modifier relations</strong> (e.g.&nbsp;<em>adjectives</em> that modify a noun, <em>adverbs</em> that modify a verb), or others such as <strong>coordinating conjunctions</strong> that connect phrases and clauses in sentences. Linguists have documented many important grammatical relations and have systematically compared how they operate across different languages <span class="citation" data-cites="nivre2017universal">(e.g. <a href="references.html#ref-nivre2017universal" role="doc-biblioref">Nivre and Fang 2017</a>)</span>. SpaCy combines this rules-based dependency parsing with machine learning models, which results in extremely high levels of accuracy for a broad range of NLP tasks, such as part-of-speech tagging, discussed earlier.</p>
+<p>When we communicate in natural languages such as English, we follow sets of commonly held rules that govern how we arrange words, clauses, and phrases in sentences. For the most part, we learn these rules – <strong>grammar</strong> – implicitly via socialization as children, and then more explicitly later in life. For non-linguists, some explicit forms of instruction about the “correct” and “incorrect” way of doing things in a language is what probably comes to mind when we think about grammar, but from a linguistic point of view grammatical rules should <em>not</em> be seen as proscriptive but rather as cultural and evolving in populations over time. Grammatical “rules” are about dominant patterns in usage in a population (linguists use the word ‘rule’ in the way sociologists and political scientists do, not the way physicists do). They are one of the best examples of shared culture and implicit cultural rules we have! Rather than proscription, linguists are focused on <em>description</em> and <em>explanation</em> of grammatical rules, and there is an enormous amount of formal linguistic theory and research on modelling grammar. In fact, Pãnini’s study of the grammatical structure of Sanskrit was written in the 4th-century and is still discussed today <span class="citation" data-cites="jurafsky2000speech">(<a href="#ref-jurafsky2000speech" role="doc-biblioref">Jurafsky and Hand 2009</a>)</span>!</p>
+<p>One of the most enduring ways of modelling grammar is <strong>dependency parsing</strong>, which has its origins in ancient Greek and Indian linguistics <span class="citation" data-cites="jurafsky2000speech">(<a href="#ref-jurafsky2000speech" role="doc-biblioref">Jurafsky and Hand 2009</a>)</span>. Dependency parsing is a rules-based approach that models the relationships between words in a sentence as a directed network. The edges in the network represent various kinds of grammatical relationships between pairs of words. You may already be able to think of some important grammatical relations, such as <strong>clausal argument relations</strong> (e.g.&nbsp;a word can be a <em>nominal subject</em> of another word, a <em>direct</em> or <em>indirect object</em>, or a <em>clausal complement</em>), <strong>modifier relations</strong> (e.g.&nbsp;<em>adjectives</em> that modify a noun, <em>adverbs</em> that modify a verb), or others such as <strong>coordinating conjunctions</strong> that connect phrases and clauses in sentences. Linguists have documented many important grammatical relations and have systematically compared how they operate across different languages <span class="citation" data-cites="nivre2017universal">(e.g. <a href="#ref-nivre2017universal" role="doc-biblioref">Nivre and Fang 2017</a>)</span>. SpaCy combines this rules-based dependency parsing with machine learning models, which results in extremely high levels of accuracy for a broad range of NLP tasks, such as part-of-speech tagging, discussed earlier.</p>
 <p>There are some rules around how these dependency-relation networks are constructed that are helpful to understand. First, every sentence has one root word (i.e.&nbsp;node) that is not dependent on any other words. It’s the starting point for our sentence from which <em>all</em> other words “grow”. Second, with the single exception of the root word, every word has one and only one dependency relationship with another word. Finally, there is a path that starts at the root word and connects to every other word in the tree. This directed acyclic network is usually represented with the text written horizontally left to right, with arcs connecting and labeling specific dependency relationships between words.</p>
 <p>The syntactic dependency parser built into SpaCy is powerful, accurate, and relatively fast. SpaCy also simplifies the process of understanding these syntactic dependencies by using a visualization tool called displacy, which is especially useful for researchers with little background knowledge of formal linguistic theory. For example, let’s use displacy to visualize the syntactic dependencies in a short sentence. Below, we do this for a short and simple sentence. If you’re executing code from a script, you should use the <code>.serve()</code> method. If you’re in a Jupyter Notebook, you should use <code>.render()</code> instead.</p>
 <div class="sourceCode" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>sentence <span class="op">=</span> nlp(<span class="st">"This book is a practical guide to computational social science"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><embed src="figures/displacy.pdf" class="img-fluid"></p>
-<figcaption>A visualization of syntactic dependency relationships between words.</figcaption>
+<figcaption class="figure-caption">A visualization of syntactic dependency relationships between words.</figcaption>
 </figure>
 </div>
-<p>The dependency relations that SpaCy identified in this simple sentence are shown in the Table below and in <span class="quarto-unresolved-ref">?fig-10_02</span> (produced using displacy). As you can see, SpaCy has mapped each word in our document to another word, based on a specific type of dependency relationship. Those dependency types are actually labeled on the arcs in the visualization. In Figure XXX and Table XXX, each word has a “head” (which sends a directed link to the word as a “child”) but only some have “children” (which receive an incoming link from a word if they depend on it).</p>
-<table class="caption-top table">
-<caption>A table view of the syntactic dependencies shown in <span class="quarto-unresolved-ref">?fig-10_02</span>.</caption>
+<p>The dependency relations that SpaCy identified in this simple sentence are shown in the Table below and in <a href="#fig-10_02">Figure&nbsp;<span class="quarto-unresolved-ref">fig-10_02</span></a> (produced using displacy). As you can see, SpaCy has mapped each word in our document to another word, based on a specific type of dependency relationship. Those dependency types are actually labeled on the arcs in the visualization. In Figure XXX and Table XXX, each word has a “head” (which sends a directed link to the word as a “child”) but only some have “children” (which receive an incoming link from a word if they depend on it).</p>
+<table class="table">
+<caption>A table view of the syntactic dependencies shown in <a href="#fig-10_02">Figure&nbsp;<span class="quarto-unresolved-ref">fig-10_02</span></a>.</caption>
 <colgroup>
 <col style="width: 22%">
 <col style="width: 8%">
@@ -1026,7 +989,7 @@ States (PROPN)
 <div class="sourceCode" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> sent <span class="kw">in</span> doc.sents:</span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>    tvdo <span class="op">=</span> [(token.head.text, token.text) <span class="cf">for</span> token <span class="kw">in</span> sent <span class="cf">if</span> token.dep_ <span class="op">==</span> <span class="st">'dobj'</span>]</span>
 <span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(tvdo)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>When analyzing text in terms of these semantic dependencies, we are often looking to extract information in the form of a <strong>semantic triplet</strong> of subject-verb-object, also known as an <strong>SVO</strong>. In social scientific text analysis, these triplets are most closely associated with the quantitative narrative analysis framework developed by Roberto Fransozi <span class="citation" data-cites="franzosi2004words">(<a href="references.html#ref-franzosi2004words" role="doc-biblioref">2004</a>)</span>. The idea, in short, is that these SVOs contain crucial information about <em>who</em> did <em>what</em> to <em>whom</em>. We will see examples of working with this kind of data in later chapters, but let’s take a preliminary look at what the kind of think we can expect when extracting SVOs.</p>
+<p>When analyzing text in terms of these semantic dependencies, we are often looking to extract information in the form of a <strong>semantic triplet</strong> of subject-verb-object, also known as an <strong>SVO</strong>. In social scientific text analysis, these triplets are most closely associated with the quantitative narrative analysis framework developed by Roberto Fransozi <span class="citation" data-cites="franzosi2004words">(<a href="#ref-franzosi2004words" role="doc-biblioref">2004</a>)</span>. The idea, in short, is that these SVOs contain crucial information about <em>who</em> did <em>what</em> to <em>whom</em>. We will see examples of working with this kind of data in later chapters, but let’s take a preliminary look at what the kind of think we can expect when extracting SVOs.</p>
 <p>Walking through the linguistic technicalities of a fully functional SVO workflow is outside the scope of this chapter, but we can use the <code>subject_verb_object_triples()</code> function included in the <code>dcss</code> package to see the results of a reasonably complex implementation of the basic idea, as outlined by researchers such as Fransozi.</p>
 <div class="sourceCode" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dcss.text <span class="im">import</span> subject_verb_object_triples</span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -1034,7 +997,7 @@ States (PROPN)
 <p>Some of these look pretty good, but others leave a little to be desired. As you can probably imagine, there are an enormous number of challenges involved in automating this kind of language processing. To get things <em>just right</em>, you have to consider how people write and speak in different contexts, how sentence construction varies (active, passive; formal, informal), how statements differ from questions, and so on. It is possible to get very high-quality results by building complex logic into the way you walk through the dependency trees, but in general you can expect to find that the signal-to-noise ratio in automated SVO analyses typically means you have to do a good amount of manual work to clean up the results.</p>
 <blockquote class="blockquote">
 <p><strong>Further Reading</strong></p>
-<p><span class="citation" data-cites="vasiliev2020natural">Vasiliev (<a href="references.html#ref-vasiliev2020natural" role="doc-biblioref">2020</a>)</span> provides a fairly deep dive into spaCy for a variety of natural language processing tasks. The spaCy documentation is itself also <em>very</em> good, although some parts of it might be a bit challenging to fully understand until you know a bit more about neural networks and large-scale pre-trained language models. Those topics are covered later in the book.</p>
+<p><span class="citation" data-cites="vasiliev2020natural">Vasiliev (<a href="#ref-vasiliev2020natural" role="doc-biblioref">2020</a>)</span> provides a fairly deep dive into spaCy for a variety of natural language processing tasks. The spaCy documentation is itself also <em>very</em> good, although some parts of it might be a bit challenging to fully understand until you know a bit more about neural networks and large-scale pre-trained language models. Those topics are covered later in the book.</p>
 </blockquote>
 </section>
 </section>
@@ -1074,26 +1037,26 @@ States (PROPN)
 <section id="can-we-model-meaning" class="level2" data-number="34.4">
 <h2 data-number="34.4" class="anchored" data-anchor-id="can-we-model-meaning"><span class="header-section-number">34.4</span> CAN WE MODEL MEANING?</h2>
 <p>Word embeddings have received a lot of interest as quantitative representations of what words “mean.” It’s an astoundingly complex problem, and we need to tread very carefully. So, before we get into the specifics of the models, let’s take a moment to briefly consider some of the relevant theoretical background here.</p>
-<p>Questions about <em>meaning</em> and its consequences for social scientific inquiry have been at the center of some of the biggest theoretical and methodological debates and divides in sociology and other social sciences since at least the early 20th century <span class="citation" data-cites="mohr2020measuring">(see <a href="references.html#ref-mohr2020measuring" role="doc-biblioref">Mohr et al. 2020</a> for a fascinating discussion in the context of contemporary cultural sociology)</span>. Researchers primarily concerned with understanding meaning have tended to prefer more qualitative and interpretivist approaches. Historically, this complexity has led many quantitatively-minded researchers to concede serious efforts to understand meaning to interpretivists, and to focus instead on describing and comparing <em>content</em>.</p>
-<p>Despite this longstanding paradigmatic and methodological fault line, these have never been the only two options for social scientific text analysis. For example, relational sociologists working at the intersection of cultural sociology and social network analysis have developed a wide variety of formal and mathematical models of the cultural-cognitive dimensions of institutions, and for inductively exploring and modelling “meaning structures” <span class="citation" data-cites="mohr1998measuring mohr2015toward edelmann2018formal mohr2013introduction">(<a href="references.html#ref-mohr1998measuring" role="doc-biblioref">Mohr 1998</a>; <a href="references.html#ref-mohr2015toward" role="doc-biblioref">Mohr, Wagner-Pacifici, and Breiger 2015</a>; <a href="references.html#ref-edelmann2018formal" role="doc-biblioref">Edelmann and Mohr 2018</a>; <a href="references.html#ref-mohr2013introduction" role="doc-biblioref">Mohr and Bogdanov 2013</a>)</span>. Much of the theoretical and methodological considerations guiding text-analytic work in “relational sociology” have evolved in lockstep with network analysis <span class="citation" data-cites="emirbayer1997manifesto crossley2010towards mische2011relational">(see <a href="references.html#ref-emirbayer1997manifesto" role="doc-biblioref">Emirbayer 1997</a>; <a href="references.html#ref-crossley2010towards" role="doc-biblioref">Crossley 2010</a>; <a href="references.html#ref-mische2011relational" role="doc-biblioref">Mische 2011</a>)</span>, and in particular with the evolution of network analytic methods that are focused on understanding relational identities, the cultural-cognitive dimensions of institutions, and the dynamics of socio-semantic networks (which combine network analysis with various kinds of natural language processing). These developments are interesting in part because much of 1970s and 80s-era network analysis energetically eschewed all questions of culture and meaning, considered intractable and unscientific, in pursuit of establishing a thoroughly <em>structural</em> paradigm. But from the 1990s onward, even the most fervent structuralists were taking culture and meaning seriously <span class="citation" data-cites="white1992identity">(e.g., <a href="references.html#ref-white1992identity" role="doc-biblioref">White 1992</a>)</span>, in search of a deeper understanding of the <strong>co-constitution</strong> of social structure (networks) and culture (meanings, practices, identities, etc.). Much has happened since then.</p>
-<p>As part of this larger effort to integrate relational theory and methods, we’ve seen a proliferation of new methodological tools and approaches for text analysis – some developed “in-house,” others imported – that try to avoid counter-productive dichotomies (e.g., quantitative and qualitative, inductive and deductive, exploratory and confirmatory). The embedding methods I introduce in this chapter and the next can be seen as another contribution to efforts to measure and model meaning structures. They have opened up new discussions in computational research on culture, knowledge, and ideology <span class="citation" data-cites="kozlowski2019geometry linzhuo2020social stoltz2019concept taylor2020concept rheault2020word mclevey2021embeddings">(<a href="references.html#ref-kozlowski2019geometry" role="doc-biblioref">Kozlowski, Taddy, and Evans 2019</a>; <a href="references.html#ref-linzhuo2020social" role="doc-biblioref">Linzhuo, Lingfei, and James 2020</a>; <a href="references.html#ref-stoltz2019concept" role="doc-biblioref">Stoltz and Taylor 2019</a>; <a href="references.html#ref-taylor2020concept" role="doc-biblioref">Taylor and Stoltz 2020</a>; <a href="references.html#ref-rheault2020word" role="doc-biblioref">Rheault and Cochrane 2020</a>; <a href="references.html#ref-mclevey2021embeddings" role="doc-biblioref">McLevey et al. 2021</a>)</span>, including deeply embedded cultural stereotypes and collective biases <span class="citation" data-cites="garg2018word bolukbasi2016man jones2020stereotypical papakyriakopoulos2020bias">(<a href="references.html#ref-garg2018word" role="doc-biblioref">Garg et al. 2018</a>; <a href="references.html#ref-bolukbasi2016man" role="doc-biblioref">Bolukbasi et al. 2016</a>; <a href="references.html#ref-jones2020stereotypical" role="doc-biblioref">Jones et al. 2020</a>; <a href="references.html#ref-papakyriakopoulos2020bias" role="doc-biblioref">Papakyriakopoulos et al. 2020</a>)</span>. There are also ongoing efforts to develop new methodological tools for using word embeddings to conduct research, informed by intersectionality theory <span class="citation" data-cites="collins2020intersectionality collins2015intersectionality crenshaw1989demarginalizing">(<a href="references.html#ref-collins2020intersectionality" role="doc-biblioref">Collins and Bilge 2020</a>; <a href="references.html#ref-collins2015intersectionality" role="doc-biblioref">Collins 2015</a>; <a href="references.html#ref-crenshaw1989demarginalizing" role="doc-biblioref">Crenshaw 1989</a>)</span>, on the social categories and institutions that intersect to create and maintain social inequality and systems of oppression <span class="citation" data-cites="nelson2021leveraging">(e.g., <a href="references.html#ref-nelson2021leveraging" role="doc-biblioref">Nelson 2021</a>)</span>. We will briefly discuss these and other applications below. It is important to keep in mind my earlier statement: these issues are <em>complex</em>. We need to be careful to exercise caution when presented with “easy” answers that draw the connection between embeddings and meaning.</p>
-<p>Of course, sociologists and other social scientists are not the only ones who’ve struggled long and hard with the problem of measuring and modelling meaning. The dominant way of modelling meaning in the field of computational linguistics has deep affinities with social scientific paradigms. The branch of linguistics concerned with meaning is called <strong>semantics</strong>, and in many respects, its starting point is the failure of dictionary-based approaches for defining the meaning of words. Paul Elbourne’s <span class="citation" data-cites="elbourne2011meaning">(<a href="references.html#ref-elbourne2011meaning" role="doc-biblioref">2011</a>)</span> book <em>Meaning: A Slim Guide to Semantics</em> starts with a thorough debunking of the dictionary approach to meaning, showing the limitations of everyday dictionary definitions when applied to the laborious work done by philosophers over thousands of years to define the meaning of specific words like “knowledge.” Many social scientists who gripe about the lack of broadly-shared definitions of core concepts in our field – e.g.&nbsp;culture, network, field, habitus, system, identity, class, gender, and so on – will be comforted to know that similar concerns are raised in other sciences and in engineering, like metallurgists being unable to reach a consensus on an acceptable definition of metal <span class="citation" data-cites="elbourne2011meaning">(<a href="references.html#ref-elbourne2011meaning" role="doc-biblioref">Elbourne 2011, 9</a>)</span>.</p>
+<p>Questions about <em>meaning</em> and its consequences for social scientific inquiry have been at the center of some of the biggest theoretical and methodological debates and divides in sociology and other social sciences since at least the early 20th century <span class="citation" data-cites="mohr2020measuring">(see <a href="#ref-mohr2020measuring" role="doc-biblioref">Mohr et al. 2020</a> for a fascinating discussion in the context of contemporary cultural sociology)</span>. Researchers primarily concerned with understanding meaning have tended to prefer more qualitative and interpretivist approaches. Historically, this complexity has led many quantitatively-minded researchers to concede serious efforts to understand meaning to interpretivists, and to focus instead on describing and comparing <em>content</em>.</p>
+<p>Despite this longstanding paradigmatic and methodological fault line, these have never been the only two options for social scientific text analysis. For example, relational sociologists working at the intersection of cultural sociology and social network analysis have developed a wide variety of formal and mathematical models of the cultural-cognitive dimensions of institutions, and for inductively exploring and modelling “meaning structures” <span class="citation" data-cites="mohr1998measuring mohr2015toward edelmann2018formal mohr2013introduction">(<a href="#ref-mohr1998measuring" role="doc-biblioref">Mohr 1998</a>; <a href="#ref-mohr2015toward" role="doc-biblioref">Mohr, Wagner-Pacifici, and Breiger 2015</a>; <a href="#ref-edelmann2018formal" role="doc-biblioref">Edelmann and Mohr 2018</a>; <a href="#ref-mohr2013introduction" role="doc-biblioref">Mohr and Bogdanov 2013</a>)</span>. Much of the theoretical and methodological considerations guiding text-analytic work in “relational sociology” have evolved in lockstep with network analysis <span class="citation" data-cites="emirbayer1997manifesto crossley2010towards mische2011relational">(see <a href="#ref-emirbayer1997manifesto" role="doc-biblioref">Emirbayer 1997</a>; <a href="#ref-crossley2010towards" role="doc-biblioref">Crossley 2010</a>; <a href="#ref-mische2011relational" role="doc-biblioref">Mische 2011</a>)</span>, and in particular with the evolution of network analytic methods that are focused on understanding relational identities, the cultural-cognitive dimensions of institutions, and the dynamics of socio-semantic networks (which combine network analysis with various kinds of natural language processing). These developments are interesting in part because much of 1970s and 80s-era network analysis energetically eschewed all questions of culture and meaning, considered intractable and unscientific, in pursuit of establishing a thoroughly <em>structural</em> paradigm. But from the 1990s onward, even the most fervent structuralists were taking culture and meaning seriously <span class="citation" data-cites="white1992identity">(e.g., <a href="#ref-white1992identity" role="doc-biblioref">White 1992</a>)</span>, in search of a deeper understanding of the <strong>co-constitution</strong> of social structure (networks) and culture (meanings, practices, identities, etc.). Much has happened since then.</p>
+<p>As part of this larger effort to integrate relational theory and methods, we’ve seen a proliferation of new methodological tools and approaches for text analysis – some developed “in-house,” others imported – that try to avoid counter-productive dichotomies (e.g., quantitative and qualitative, inductive and deductive, exploratory and confirmatory). The embedding methods I introduce in this chapter and the next can be seen as another contribution to efforts to measure and model meaning structures. They have opened up new discussions in computational research on culture, knowledge, and ideology <span class="citation" data-cites="kozlowski2019geometry linzhuo2020social stoltz2019concept taylor2020concept rheault2020word mclevey2021embeddings">(<a href="#ref-kozlowski2019geometry" role="doc-biblioref">Kozlowski, Taddy, and Evans 2019</a>; <a href="#ref-linzhuo2020social" role="doc-biblioref">Linzhuo, Lingfei, and James 2020</a>; <a href="#ref-stoltz2019concept" role="doc-biblioref">Stoltz and Taylor 2019</a>; <a href="#ref-taylor2020concept" role="doc-biblioref">Taylor and Stoltz 2020</a>; <a href="#ref-rheault2020word" role="doc-biblioref">Rheault and Cochrane 2020</a>; <a href="#ref-mclevey2021embeddings" role="doc-biblioref">McLevey et al. 2021</a>)</span>, including deeply embedded cultural stereotypes and collective biases <span class="citation" data-cites="garg2018word bolukbasi2016man jones2020stereotypical papakyriakopoulos2020bias">(<a href="#ref-garg2018word" role="doc-biblioref">Garg et al. 2018</a>; <a href="#ref-bolukbasi2016man" role="doc-biblioref">Bolukbasi et al. 2016</a>; <a href="#ref-jones2020stereotypical" role="doc-biblioref">Jones et al. 2020</a>; <a href="#ref-papakyriakopoulos2020bias" role="doc-biblioref">Papakyriakopoulos et al. 2020</a>)</span>. There are also ongoing efforts to develop new methodological tools for using word embeddings to conduct research, informed by intersectionality theory <span class="citation" data-cites="collins2020intersectionality collins2015intersectionality crenshaw1989demarginalizing">(<a href="#ref-collins2020intersectionality" role="doc-biblioref">Collins and Bilge 2020</a>; <a href="#ref-collins2015intersectionality" role="doc-biblioref">Collins 2015</a>; <a href="#ref-crenshaw1989demarginalizing" role="doc-biblioref">Crenshaw 1989</a>)</span>, on the social categories and institutions that intersect to create and maintain social inequality and systems of oppression <span class="citation" data-cites="nelson2021leveraging">(e.g., <a href="#ref-nelson2021leveraging" role="doc-biblioref">Nelson 2021</a>)</span>. We will briefly discuss these and other applications below. It is important to keep in mind my earlier statement: these issues are <em>complex</em>. We need to be careful to exercise caution when presented with “easy” answers that draw the connection between embeddings and meaning.</p>
+<p>Of course, sociologists and other social scientists are not the only ones who’ve struggled long and hard with the problem of measuring and modelling meaning. The dominant way of modelling meaning in the field of computational linguistics has deep affinities with social scientific paradigms. The branch of linguistics concerned with meaning is called <strong>semantics</strong>, and in many respects, its starting point is the failure of dictionary-based approaches for defining the meaning of words. Paul Elbourne’s <span class="citation" data-cites="elbourne2011meaning">(<a href="#ref-elbourne2011meaning" role="doc-biblioref">2011</a>)</span> book <em>Meaning: A Slim Guide to Semantics</em> starts with a thorough debunking of the dictionary approach to meaning, showing the limitations of everyday dictionary definitions when applied to the laborious work done by philosophers over thousands of years to define the meaning of specific words like “knowledge.” Many social scientists who gripe about the lack of broadly-shared definitions of core concepts in our field – e.g.&nbsp;culture, network, field, habitus, system, identity, class, gender, and so on – will be comforted to know that similar concerns are raised in other sciences and in engineering, like metallurgists being unable to reach a consensus on an acceptable definition of metal <span class="citation" data-cites="elbourne2011meaning">(<a href="#ref-elbourne2011meaning" role="doc-biblioref">Elbourne 2011, 9</a>)</span>.</p>
 <p>We are used to the idea that dictionaries are an authority on meaning, but of course dictionary definitions change over time in response to how language is used. For example, Merriam-Webster recently added ‘they’ as a personal pronoun, reflecting large-scale social changes in how we think and talk about gender identities. Other new words, phrases, and concepts from popular culture have also been added, such as the Bechdel test, swole, on point, page view, screen time, cybersafety, bottle episode, go cup, gig economy, and climate change denial. Culture and language evolve.</p>
-<p><span class="citation" data-cites="elbourne2011meaning">Elbourne (<a href="references.html#ref-elbourne2011meaning" role="doc-biblioref">2011</a>)</span> provides many examples of the “mind-boggling complexity” involved in giving adequate definitions to the meanings of words. His larger point is that any definition-based approach to assigning meanings to words (including dictionaries) will <em>always</em> be unsatisfactory. A serious theory or approach to modelling meaning needs much more than definitions. His comparison of different cognitive and linguistic theories are well worth reading but are beyond the scope of this chapter, but one of the key take-aways is that meanings are <em>not definitions</em> and they are not determined by the characteristics of the things they refer to. Instead, meanings are concepts that reside in our heads and are generally attached to low-level units like words, which are strongly modified by the contexts in which they’re used and scale up to higher-level units like sentences. These meanings are shared but not universal. When it comes to any given thing – say the word “populist” – the concept in my head is not <em>identical</em> to the concept in your head, but communication does not break down because our concepts are qualitatively similar. We might not mean <em>exactly</em> the same thing by the word populist, but our concepts overlap sufficiently enough that we can have a meaningful conversation and our interactions don’t descend into conceptual chaos.</p>
-<p>The core sociological idea here is grounded in a critique of two extremes. Traditional philosophical approaches to cognition and meaning have been overly-focused on individual thinking and meaning. Conversely, neuroscience primarily focuses on processes presumed to be more-or-less universal, such as understanding the biological and chemical mechanisms that enable thought <em>in general</em> rather than explaining specific thoughts. But as Karen Cerulo and many others have pointed out, even if the cognitive <em>processes</em> are universal, cognitive <em>products</em> are not <span class="citation" data-cites="lizardo2019can cerulo2010mining cerulo2002culture ignatow2009culture">(<a href="references.html#ref-lizardo2019can" role="doc-biblioref">Lizardo et al. 2019</a>; <a href="references.html#ref-cerulo2010mining" role="doc-biblioref">K. A. Cerulo 2010</a>; <a href="references.html#ref-cerulo2002culture" role="doc-biblioref">K. Cerulo 2002</a>; <a href="references.html#ref-ignatow2009culture" role="doc-biblioref">Ignatow 2009</a>)</span>. There is variation in how groups of people – societies, subcultures, whatever – perceive the world, draw boundaries, employ metaphors and analogies, and so on <span class="citation" data-cites="dimaggio1997culture brekhus2019oxford">(<a href="references.html#ref-dimaggio1997culture" role="doc-biblioref">DiMaggio 1997</a>; <a href="references.html#ref-brekhus2019oxford" role="doc-biblioref">Brekhus and Ignatow 2019</a>)</span>. These meaning structures are not reducible to concepts in individual people’s heads; they are embedded in different cultural systems that are external to any individual person, and are <em>shared but not universal.</em> Given this variability and the staggering complexity of meaning <em>in general</em>, we can best understand <em>meaning</em> by understanding how people use language in context.</p>
-<p>The idea that we could best understand shared but not necessarily universal meanings by studying how groups of people use language was, surprisingly, a revolutionary idea as recently as the 1950s. It was most famously posited by the famed philosopher Ludwig <span class="citation" data-cites="anscombe1953philosophical">Wittgenstein (<a href="references.html#ref-anscombe1953philosophical" role="doc-biblioref">1953</a>)</span>, whose argument that ‘meaning resides in use’ was the inspiration behind the <em>specific</em> linguistic hypothesis that informs embedding models and is a common theme underlying many of the recent breakthroughs in natural language processing: the distributional hypothesis.</p>
+<p><span class="citation" data-cites="elbourne2011meaning">Elbourne (<a href="#ref-elbourne2011meaning" role="doc-biblioref">2011</a>)</span> provides many examples of the “mind-boggling complexity” involved in giving adequate definitions to the meanings of words. His larger point is that any definition-based approach to assigning meanings to words (including dictionaries) will <em>always</em> be unsatisfactory. A serious theory or approach to modelling meaning needs much more than definitions. His comparison of different cognitive and linguistic theories are well worth reading but are beyond the scope of this chapter, but one of the key take-aways is that meanings are <em>not definitions</em> and they are not determined by the characteristics of the things they refer to. Instead, meanings are concepts that reside in our heads and are generally attached to low-level units like words, which are strongly modified by the contexts in which they’re used and scale up to higher-level units like sentences. These meanings are shared but not universal. When it comes to any given thing – say the word “populist” – the concept in my head is not <em>identical</em> to the concept in your head, but communication does not break down because our concepts are qualitatively similar. We might not mean <em>exactly</em> the same thing by the word populist, but our concepts overlap sufficiently enough that we can have a meaningful conversation and our interactions don’t descend into conceptual chaos.</p>
+<p>The core sociological idea here is grounded in a critique of two extremes. Traditional philosophical approaches to cognition and meaning have been overly-focused on individual thinking and meaning. Conversely, neuroscience primarily focuses on processes presumed to be more-or-less universal, such as understanding the biological and chemical mechanisms that enable thought <em>in general</em> rather than explaining specific thoughts. But as Karen Cerulo and many others have pointed out, even if the cognitive <em>processes</em> are universal, cognitive <em>products</em> are not <span class="citation" data-cites="lizardo2019can cerulo2010mining cerulo2002culture ignatow2009culture">(<a href="#ref-lizardo2019can" role="doc-biblioref">Lizardo et al. 2019</a>; <a href="#ref-cerulo2010mining" role="doc-biblioref">K. A. Cerulo 2010</a>; <a href="#ref-cerulo2002culture" role="doc-biblioref">K. Cerulo 2002</a>; <a href="#ref-ignatow2009culture" role="doc-biblioref">Ignatow 2009</a>)</span>. There is variation in how groups of people – societies, subcultures, whatever – perceive the world, draw boundaries, employ metaphors and analogies, and so on <span class="citation" data-cites="dimaggio1997culture brekhus2019oxford">(<a href="#ref-dimaggio1997culture" role="doc-biblioref">DiMaggio 1997</a>; <a href="#ref-brekhus2019oxford" role="doc-biblioref">Brekhus and Ignatow 2019</a>)</span>. These meaning structures are not reducible to concepts in individual people’s heads; they are embedded in different cultural systems that are external to any individual person, and are <em>shared but not universal.</em> Given this variability and the staggering complexity of meaning <em>in general</em>, we can best understand <em>meaning</em> by understanding how people use language in context.</p>
+<p>The idea that we could best understand shared but not necessarily universal meanings by studying how groups of people use language was, surprisingly, a revolutionary idea as recently as the 1950s. It was most famously posited by the famed philosopher Ludwig <span class="citation" data-cites="anscombe1953philosophical">Wittgenstein (<a href="#ref-anscombe1953philosophical" role="doc-biblioref">1953</a>)</span>, whose argument that ‘meaning resides in use’ was the inspiration behind the <em>specific</em> linguistic hypothesis that informs embedding models and is a common theme underlying many of the recent breakthroughs in natural language processing: the distributional hypothesis.</p>
 <section id="the-distributional-hypothesis" class="level3" data-number="34.4.1">
 <h3 data-number="34.4.1" class="anchored" data-anchor-id="the-distributional-hypothesis"><span class="header-section-number">34.4.1</span> The Distributional Hypothesis</h3>
-<p>Wittgenstein’s <span class="citation" data-cites="anscombe1953philosophical">(<a href="references.html#ref-anscombe1953philosophical" role="doc-biblioref">1953</a>)</span> proposal that empirical observations of how people actually use language could reveal far more about meaning than formal rules derived through logical analysis was taken up by a group of linguists in the 1950s <span class="citation" data-cites="joos1950description harris1954distributionalstructure firth1957synopsis">(especially <a href="references.html#ref-joos1950description" role="doc-biblioref">Joos 1950</a>; <a href="references.html#ref-harris1954distributionalstructure" role="doc-biblioref">Harris 1954</a>; <a href="references.html#ref-firth1957synopsis" role="doc-biblioref">Firth 1957</a>)</span> who first proposed <strong>the distributional hypothesis</strong>, which has informed approaches to measuring and modelling meaning in language data ever since.</p>
-<p>According to the <strong>distributional hypothesis</strong>, words that appear in similar semantic contexts, or “environments,” will tend to have similar meanings.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> In one of the foundational statements of the idea, Zellig <span class="citation" data-cites="harris1954distributionalstructure">Harris (<a href="references.html#ref-harris1954distributionalstructure" role="doc-biblioref">1954</a>)</span> defined a word’s context in terms of the other words that it <em>co-occurs</em> with, given some boundary such as a phrase or a sentence. For example, we can infer that “physician” and “doctor” mean similar things if we see that they tend to be used interchangeably in sentences like “Alondra is looking for a <code>[physician, doctor, ...]</code> specializing in pain management.” Across many texts, we might also learn that “doctor” and “professor” are also more or less interchangeable but in different types of context. While the former pair of words might co-occur in contexts shared with words such as “pain”, “medicine”, “nurse”, and “injury”, the latter pair may co-occur in contexts shared with words like “university”, “students”, “research”, “teaching”, and “knowledge”. “Professor” and “physician” may also co-occur, but more rarely. In any instance, the meaning of the words depends on the other words surrounding it. Words that have identical, or nearly identical contexts are synonyms. In fact, the distributional hypothesis bears a striking resemblance to the idea of structural equivalence in social network analysis, which was introduced in Chapter 30. (Like synonyms, people that are structurally similar tend to be connected to the same alters.)</p>
-<p>Distributionalists like Harris and Firth believe that formal theories of language should be kept to a minimum and knowledge should be produced by rigorous analysis of empirical data on language use. Given enough data on natural language use (e.g.&nbsp;in everyday interactions, in email messages and social media posts, in news stories and scientific publications, etc.), we can learn an enormous amount about the contextual relationships between words as they are actually used. In practice, this idea is operationalized in terms of <strong>vector semantics</strong>, and is the foundation of all modern natural language processing that is concerned with understanding <em>meaning</em> <span class="citation" data-cites="jurafsky2000speech">(<a href="references.html#ref-jurafsky2000speech" role="doc-biblioref">Jurafsky and Hand 2009</a>)</span>.</p>
+<p>Wittgenstein’s <span class="citation" data-cites="anscombe1953philosophical">(<a href="#ref-anscombe1953philosophical" role="doc-biblioref">1953</a>)</span> proposal that empirical observations of how people actually use language could reveal far more about meaning than formal rules derived through logical analysis was taken up by a group of linguists in the 1950s <span class="citation" data-cites="joos1950description harris1954distributionalstructure firth1957synopsis">(especially <a href="#ref-joos1950description" role="doc-biblioref">Joos 1950</a>; <a href="#ref-harris1954distributionalstructure" role="doc-biblioref">Harris 1954</a>; <a href="#ref-firth1957synopsis" role="doc-biblioref">Firth 1957</a>)</span> who first proposed <strong>the distributional hypothesis</strong>, which has informed approaches to measuring and modelling meaning in language data ever since.</p>
+<p>According to the <strong>distributional hypothesis</strong>, words that appear in similar semantic contexts, or “environments,” will tend to have similar meanings.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> In one of the foundational statements of the idea, Zellig <span class="citation" data-cites="harris1954distributionalstructure">Harris (<a href="#ref-harris1954distributionalstructure" role="doc-biblioref">1954</a>)</span> defined a word’s context in terms of the other words that it <em>co-occurs</em> with, given some boundary such as a phrase or a sentence. For example, we can infer that “physician” and “doctor” mean similar things if we see that they tend to be used interchangeably in sentences like “Alondra is looking for a <code>[physician, doctor, ...]</code> specializing in pain management.” Across many texts, we might also learn that “doctor” and “professor” are also more or less interchangeable but in different types of context. While the former pair of words might co-occur in contexts shared with words such as “pain”, “medicine”, “nurse”, and “injury”, the latter pair may co-occur in contexts shared with words like “university”, “students”, “research”, “teaching”, and “knowledge”. “Professor” and “physician” may also co-occur, but more rarely. In any instance, the meaning of the words depends on the other words surrounding it. Words that have identical, or nearly identical contexts are synonyms. In fact, the distributional hypothesis bears a striking resemblance to the idea of structural equivalence in social network analysis, which was introduced in Chapter 30. (Like synonyms, people that are structurally similar tend to be connected to the same alters.)</p>
+<p>Distributionalists like Harris and Firth believe that formal theories of language should be kept to a minimum and knowledge should be produced by rigorous analysis of empirical data on language use. Given enough data on natural language use (e.g.&nbsp;in everyday interactions, in email messages and social media posts, in news stories and scientific publications, etc.), we can learn an enormous amount about the contextual relationships between words as they are actually used. In practice, this idea is operationalized in terms of <strong>vector semantics</strong>, and is the foundation of all modern natural language processing that is concerned with understanding <em>meaning</em> <span class="citation" data-cites="jurafsky2000speech">(<a href="#ref-jurafsky2000speech" role="doc-biblioref">Jurafsky and Hand 2009</a>)</span>.</p>
 <p>With that briefest of context introduced, let’s turn our attention to word embeddings.</p>
 </section>
 </section>
 <section id="what-are-neural-word-embeddings" class="level2" data-number="34.5">
 <h2 data-number="34.5" class="anchored" data-anchor-id="what-are-neural-word-embeddings"><span class="header-section-number">34.5</span> WHAT ARE NEURAL WORD EMBEDDINGS?</h2>
 <p>In previous chapters, we used bag-of-words models to represent individual documents as <em>long</em> and <em>sparse</em> vectors, and document collections as <em>wide</em>, <em>sparse</em> matrices (i.e., DTMs). These matrices are long because each feature represents a unique word in the vocabulary, and each cell represents something like presence / absence, frequency, or some sort of weight such as TF-IDF for each word in each document. They are sparse because most words do not appear in most documents, which means that most cells have values of 0. This approach can be very powerful for modelling latent distributions of topical content, but we actually gain more insight into what words mean by using shorter, denser vector representations, generally referred as <strong>word embeddings</strong>. Words are just the beginning, though. They provide a foundation we can build on to explore and model meaning and larger cultural systems in ways that were not possible just a short time ago.</p>
-<p>In bag-of-word models, we represent <em>documents</em> with long sparse vectors indicating the presence or absence, frequency, or weight of a word in each document. Embeddings differ in that they represent <em>words</em> with short dense vectors that define the local semantic contexts within wich words are used. <span class="quarto-unresolved-ref">?fig-32_01</span> illustrates this idea of local semantic contexts using a window of 5 words that slides over each word in sentence from <span class="citation" data-cites="neblo2018politics">Neblo, Esterling, and Lazer (<a href="references.html#ref-neblo2018politics" role="doc-biblioref">2018</a>)</span>. This sliding window approach gives us much deeper insight into how words relate to other words, but it comes at the cost of fine-grained information about how each word relates to the documents in which they appeared.</p>
+<p>In bag-of-word models, we represent <em>documents</em> with long sparse vectors indicating the presence or absence, frequency, or weight of a word in each document. Embeddings differ in that they represent <em>words</em> with short dense vectors that define the local semantic contexts within wich words are used. <a href="#fig-32_01">Figure&nbsp;<span class="quarto-unresolved-ref">fig-32_01</span></a> illustrates this idea of local semantic contexts using a window of 5 words that slides over each word in sentence from <span class="citation" data-cites="neblo2018politics">Neblo, Esterling, and Lazer (<a href="#ref-neblo2018politics" role="doc-biblioref">2018</a>)</span>. This sliding window approach gives us much deeper insight into how words relate to other words, but it comes at the cost of fine-grained information about how each word relates to the documents in which they appeared.</p>
 <p><embed src="figures/word2vec.pdf" class="img-fluid"></p>
 <p>In addition to (1) assigning vectors to words instead of documents, (2) observing co-occurrences within small local contexts rather than entire documents, and (3) using short dense vectors instead of long spare vectors, embeddings are also different in that (4) the vector representation for any given word is <em>learned</em> by a neural network trained on positive and negative examples of co-occurrence data. (In fact, we could have extracted embeddings from the neural networks we trained in Chapter 24!) Words that tend to appear in the same contexts, but rarely with one another, tend to share meanings. The learned word embeddings put words with similar meanings close to one another in vector space.</p>
 <!-- ## What Can We Do with Embeddings?
@@ -1106,10 +1069,10 @@ States (PROPN)
 <section id="learning-embeddings-with-word2vec" class="level3" data-number="34.5.1">
 <h3 data-number="34.5.1" class="anchored" data-anchor-id="learning-embeddings-with-word2vec"><span class="header-section-number">34.5.1</span> Learning Embeddings with Word2Vec</h3>
 <p>Now that we have some context for understanding embeddings, let’s discuss one of the most important recent breakthroughs in <em>learning</em> word embeddings from text data – <strong>word2vec</strong>. As with previous chapters, the goal here is mainly to clarify the way the models work at a relatively high-level.</p>
-<p>The development of <strong>word2vec</strong> by Tomas Mikolov and a team of researchers at Google <span class="citation" data-cites="mikolov2013distributed mikolov2013efficient">(<a href="references.html#ref-mikolov2013distributed" role="doc-biblioref">Tomas Mikolov, Sutskever, et al. 2013</a>; <a href="references.html#ref-mikolov2013efficient" role="doc-biblioref">Tomas Mikolov, Chen, et al. 2013</a>)</span> was a transformative development in natural language processing. As we’ve already discussed, word embedding models in general are focused on the local semantic contexts that words are used in rather than the documents they appear in; they <em>learn</em> these short dense representations from the data rather than relying on count-based features. Let’s break down the modelling process, as we have with previous models in the book.</p>
+<p>The development of <strong>word2vec</strong> by Tomas Mikolov and a team of researchers at Google <span class="citation" data-cites="mikolov2013distributed mikolov2013efficient">(<a href="#ref-mikolov2013distributed" role="doc-biblioref">Tomas Mikolov, Sutskever, et al. 2013</a>; <a href="#ref-mikolov2013efficient" role="doc-biblioref">Tomas Mikolov, Chen, et al. 2013</a>)</span> was a transformative development in natural language processing. As we’ve already discussed, word embedding models in general are focused on the local semantic contexts that words are used in rather than the documents they appear in; they <em>learn</em> these short dense representations from the data rather than relying on count-based features. Let’s break down the modelling process, as we have with previous models in the book.</p>
 <p>Word2vec has two different architectures: <strong>Continuous Bag-of-Words (CBOW)</strong> and <strong>Skip-gram</strong>. Both use word co-occurrence data generated from local semantic contexts, such as a moving window of 5 words around a focal word as shown in the example in Figure XXX. However, CBOW and Skip-gram use this co-occurrence data differently; CBOW uses the <em>context words</em> (within each thin crimson box) in a shallow neural network model trained to predict the target word (in each thick crimson box), whereas skip-gram uses the target word to predict the context words. The interesting thing about the neural network model used in these two architectures is that <em>we don’t actually care about their predictions</em>. What we care about are the feature weights that the neural networks learn in the context of figuring out how to make their predictions well. <em>Those feature weights are our word embeddings!</em> We only train the neural network models to obtain the embeddings. That’s their raison d’etre.</p>
-<p>The shallow neural network models that word2vec use to learn the embeddings, illustrated in Figure XXX (which is adapted from <span class="citation" data-cites="mikolov2013distributed">Tomas Mikolov, Sutskever, et al. (<a href="references.html#ref-mikolov2013distributed" role="doc-biblioref">2013</a>)</span>), have a few clever modifications. In CBOW, the <em>non-linear</em> hidden layer is replaced by a much simpler <em>linear</em> projection. For each token in the data, the feature vector of the underlying token is the target, while the input to the neural network is the average of the vectors for each of the individual context tokens (ie. the vectors of the surrounding words). It’s worth mentioning briefly that the Gensim implementation of word2vec gives the option to sum the context vectors rather than average them. After the neural network tries to predict the target word, the resulting probabilities are used to update the feature weights for both the target token <em>and</em> the vectors of the context tokens that were averaged. Once training is done, these updated weights provide each word with a single, dense vector of feature weights. For Skip-gram, rather than sending an averaged context vector to the neural network objective function, the input is the token under consideration and the output is error (probability) vectors for <em>each</em> context word that are then added together, before being used to update feature weights.</p>
-<p>Second, the functions used for the prediction in the output layer are different than what we might typically use in such a neural network. The CBOW architecture replaces the traditional softmax (log-linear) classifier for the output layer with a binary logistic regression classifier, and the Skip-gram architecture replaces it with a much more efficient hierarchical softmax variant. In <span class="quarto-unresolved-ref">?fig-32_02</span>, <span class="math inline">\(T\)</span> represents the target word, and the indices represent word position in relation to the target word.</p>
+<p>The shallow neural network models that word2vec use to learn the embeddings, illustrated in Figure XXX (which is adapted from <span class="citation" data-cites="mikolov2013distributed">Tomas Mikolov, Sutskever, et al. (<a href="#ref-mikolov2013distributed" role="doc-biblioref">2013</a>)</span>), have a few clever modifications. In CBOW, the <em>non-linear</em> hidden layer is replaced by a much simpler <em>linear</em> projection. For each token in the data, the feature vector of the underlying token is the target, while the input to the neural network is the average of the vectors for each of the individual context tokens (ie. the vectors of the surrounding words). It’s worth mentioning briefly that the Gensim implementation of word2vec gives the option to sum the context vectors rather than average them. After the neural network tries to predict the target word, the resulting probabilities are used to update the feature weights for both the target token <em>and</em> the vectors of the context tokens that were averaged. Once training is done, these updated weights provide each word with a single, dense vector of feature weights. For Skip-gram, rather than sending an averaged context vector to the neural network objective function, the input is the token under consideration and the output is error (probability) vectors for <em>each</em> context word that are then added together, before being used to update feature weights.</p>
+<p>Second, the functions used for the prediction in the output layer are different than what we might typically use in such a neural network. The CBOW architecture replaces the traditional softmax (log-linear) classifier for the output layer with a binary logistic regression classifier, and the Skip-gram architecture replaces it with a much more efficient hierarchical softmax variant. In <a href="#fig-32_02">Figure&nbsp;<span class="quarto-unresolved-ref">fig-32_02</span></a>, <span class="math inline">\(T\)</span> represents the target word, and the indices represent word position in relation to the target word.</p>
 <p><embed src="figures/word2vec_models.pdf" class="img-fluid"></p>
 <p>For CBOW, the second innovation is especially valuable, as using a softmax classifier to make and evaluate predictions would require updating feature weights (i.g., embeddings) for every word in the vocabulary every time a prediction is made for a word in the corpus. Instead, word2vec uses a clever innovation called <strong>negative sampling</strong>, in which the target word is evaluated as either co-occurring with the context words from the moving window or not. This enables the use of binary logistic regression for the output layer.</p>
 <p>If you’re thinking “<em>hold up, won’t the context words all have a score of 1?</em>,” you’re right! To deal with this problem, the model randomly selects the required number of negative samples from the rest of the corpus (i.e., not from the local semantic context) and assigns them all 0s for that particular batch. As a result, the weights (again, embeddings) only need to be slightly increased for the target and context words and slightly decreased for the words from the negative sample.</p>
@@ -1125,7 +1088,7 @@ States (PROPN)
 <p>Word embeddings are very powerful for many applications and sometimes the results are astonishing. But there are some very important caveats to keep in mind when using word2vec-style embeddings. We will illustrate those caveats with perhaps the most iconic and oft-referenced example of word embedding “analogies”.</p>
 <section id="king---man-woman-neq-queen" class="level3" data-number="34.6.1">
 <h3 data-number="34.6.1" class="anchored" data-anchor-id="king---man-woman-neq-queen"><span class="header-section-number">34.6.1</span> King - Man + Woman <span class="math inline">\(\neq\)</span> Queen</h3>
-<p>Recall that part of the CBOW training process is to average (or just sum) the context vectors. <span class="citation" data-cites="mikolov2013linguistic">Tomáš Mikolov, Yih, and Zweig (<a href="references.html#ref-mikolov2013linguistic" role="doc-biblioref">2013</a>)</span> found that if you take the word embedding vector for “king”, add it to the vector for “woman”, and then subtract the vector for “man”, the resulting vector is “very close” to the vector for “queen”. This example has been referenced countless times, from package documentation to social science papers that aim to measure and compare complex cultural concepts.</p>
+<p>Recall that part of the CBOW training process is to average (or just sum) the context vectors. <span class="citation" data-cites="mikolov2013linguistic">Tomáš Mikolov, Yih, and Zweig (<a href="#ref-mikolov2013linguistic" role="doc-biblioref">2013</a>)</span> found that if you take the word embedding vector for “king”, add it to the vector for “woman”, and then subtract the vector for “man”, the resulting vector is “very close” to the vector for “queen”. This example has been referenced countless times, from package documentation to social science papers that aim to measure and compare complex cultural concepts.</p>
 <p>We will use the very convenient <code>whatlies</code> package to plot the iconic word embedding example.</p>
 <div class="sourceCode" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> whatlies <span class="im">import</span> Embedding</span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> whatlies.embeddingset <span class="im">import</span> EmbeddingSet</span>
@@ -1144,7 +1107,7 @@ States (PROPN)
 <span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb31-16"><a href="#cb31-16" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dcss <span class="im">import</span> set_style</span>
 <span id="cb31-17"><a href="#cb31-17" aria-hidden="true" tabindex="-1"></a>set_style()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Using the <code>plot()</code> function, we can plot either a single word vector, or some mathematical combination of vectors enclosed in brackets (as shown in <span class="quarto-unresolved-ref">?fig-32_03</span>). If you call <code>plot()</code> multiple times in the same cell, all of the requested vectors will show up in the figure.</p>
+<p>Using the <code>plot()</code> function, we can plot either a single word vector, or some mathematical combination of vectors enclosed in brackets (as shown in <a href="#fig-32_03">Figure&nbsp;<span class="quarto-unresolved-ref">fig-32_03</span></a>). If you call <code>plot()</code> multiple times in the same cell, all of the requested vectors will show up in the figure.</p>
 <div class="sourceCode" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>(lang[<span class="st">'queen'</span>] <span class="op">-</span> lang[<span class="st">'king'</span>]).plot(kind<span class="op">=</span><span class="st">'arrow'</span>, color<span class="op">=</span><span class="st">'lightgray'</span>, show_ops<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>(lang[<span class="st">'king'</span>] <span class="op">+</span> lang[<span class="st">'woman'</span>] <span class="op">-</span> lang[<span class="st">'man'</span>]).plot(kind<span class="op">=</span><span class="st">'arrow'</span>, color<span class="op">=</span><span class="st">'lightgray'</span>, show_ops<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1159,7 +1122,7 @@ States (PROPN)
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><embed src="chapter_32_neural_word_embeddings_files/chapter_32_neural_word_embeddings_12_0.pdf" class="img-fluid"></p>
-<figcaption>png</figcaption>
+<figcaption class="figure-caption">png</figcaption>
 </figure>
 </div>
 <p>The combination vector appears to be virtually identical to the vector for “queen”. But there is more to this than meets the eye. Let’s look at a few comparisons between the vectors with some useful vector combination and comparison functions built-in to whatlies.</p>
@@ -1178,7 +1141,7 @@ Woman and King: 0.7344341</code></pre>
 <pre><code>King and combo-vector:0.19757414
 Queen and combo-vector: 0.21191555</code></pre>
 <p>The combined vector <em>that should be almost the same as “queen”</em> is actually still closer to the vector for “king”. Given the plot above, how is this possible? This is the first caveat: word embedding vectors are <em>multi-dimensional</em> space - in this case, 300 dimensions. The best we can really plot is 3-dimensional space and the plot above is 2-dimensional. In either case, there is a LOT of data-reduction happening.</p>
-<p>Let’s get a different perspective on things by using <code>plot_interactive()</code> (a screenshot of which is shown in <span class="quarto-unresolved-ref">?fig-32_04</span>). First, add the vectors to an <code>EmbeddingSet()</code> class instance. Then it’s as simple as adding <code>.plot_interactive()</code> to that object, along with a few parameters, including the distance metric to use for the axes (cosine distance).</p>
+<p>Let’s get a different perspective on things by using <code>plot_interactive()</code> (a screenshot of which is shown in <a href="#fig-32_04">Figure&nbsp;<span class="quarto-unresolved-ref">fig-32_04</span></a>). First, add the vectors to an <code>EmbeddingSet()</code> class instance. Then it’s as simple as adding <code>.plot_interactive()</code> to that object, along with a few parameters, including the distance metric to use for the axes (cosine distance).</p>
 <div class="sourceCode" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co">## RENAME THE COMBINATION VECTOR BECAUSE THE ORIGINAL ('MAN') WOULD BE USED FOR THE PLOT</span></span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>king_woman_no_man.orig <span class="op">=</span> king_woman_no_man.name </span>
 <span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1199,7 +1162,7 @@ Woman and Queen without man: 0.7745669</code></pre>
 <div class="sourceCode" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Woman and Queen without man: "</span> <span class="op">+</span> <span class="bu">str</span>(Embedding(<span class="st">'halfway'</span>, lang[<span class="st">'woman'</span>].vector<span class="op">-</span>lang[<span class="st">'man'</span>].vector<span class="op">*</span><span class="fl">0.5</span>).distance(lang[<span class="st">'queen'</span>])))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <pre><code>Woman and Queen without man: 0.61308193</code></pre>
 <p>As you can see, removing only half of the vector for ‘man’ dramatically reduces the amount of extra distance between ‘woman’ and ‘queen’. In the section that follows, we’ll take a bit of time to look at groups of embeddings for words that are not quite so universally used in most life contexts.</p>
-<p>You might also be wondering why the <code>king+woman-man</code> example has been used so frequently in the literature, given this issue. You will find that, in some implementations of word2vec, ‘queen’ will be returned as the “most similar” word to the combined vector. Typically, when you use an in-built function to combine words and then return the most similar words, the results returned will <em>not</em> include the constituent words! If they didn’t, those functions would always return the word itself as the top similar word! This is understandable for a convenience function, but also important to be aware of when using embeddings for research. This issue has been noted and discussed in more detail previously, with some heavy caution about the use of word analogy tasks for any serious purposes <span class="citation" data-cites="nissim2020fair">(<a href="references.html#ref-nissim2020fair" role="doc-biblioref">Nissim, Noord, and Goot 2020</a>)</span>. The authors also reference the introductory paper for transformer models, which we’ll cover in detail in the next chapter, noting that they’ve completely eliminated the concept of analogy as either a training task, or model evaluation method.</p>
+<p>You might also be wondering why the <code>king+woman-man</code> example has been used so frequently in the literature, given this issue. You will find that, in some implementations of word2vec, ‘queen’ will be returned as the “most similar” word to the combined vector. Typically, when you use an in-built function to combine words and then return the most similar words, the results returned will <em>not</em> include the constituent words! If they didn’t, those functions would always return the word itself as the top similar word! This is understandable for a convenience function, but also important to be aware of when using embeddings for research. This issue has been noted and discussed in more detail previously, with some heavy caution about the use of word analogy tasks for any serious purposes <span class="citation" data-cites="nissim2020fair">(<a href="#ref-nissim2020fair" role="doc-biblioref">Nissim, Noord, and Goot 2020</a>)</span>. The authors also reference the introductory paper for transformer models, which we’ll cover in detail in the next chapter, noting that they’ve completely eliminated the concept of analogy as either a training task, or model evaluation method.</p>
 <p>With that said, if we’re careful about how we use embeddings and the claims we make about them, it’s hard to argue against the results of the embeddings, without manipulation, as indicators of patterns of text use.</p>
 </section>
 </section>
@@ -1263,7 +1226,7 @@ Woman and Queen without man: 0.7745669</code></pre>
 <section id="comparing-embeddings" class="level2" data-number="34.8">
 <h2 data-number="34.8" class="anchored" data-anchor-id="comparing-embeddings"><span class="header-section-number">34.8</span> COMPARING EMBEDDINGS</h2>
 <p>Everything we’ve done so far can also be done comparatively, which makes things much more interesting from a social scientific perspective. The trouble with these sorts of extensions is that the word embedding training process is stochastic, so we can’t just learn embeddings for various different datasets and directly compare them. In fact, there’s no guarantee that two models trained on the exact same data will end up looking even remotely similar! While the relations between the words in vector space may be more or less consistent in the two models (in the sense that the angle between them will be similar) the random starting positions of those words in that vector space can produce wildly differing final states. To do anything comparative, cross-sectional or over time, we need our vector spaces to be aligned.</p>
-<p>There have been a number of solutions proposed to solve this problem <span class="citation" data-cites="ruder2019survey artetxe2016learning mogadala2016bilingual di2019training">(e.g., <a href="references.html#ref-ruder2019survey" role="doc-biblioref">Ruder, Vulić, and Søgaard 2019</a>; <a href="references.html#ref-artetxe2016learning" role="doc-biblioref">Artetxe, Labaka, and Agirre 2016</a>; <a href="references.html#ref-mogadala2016bilingual" role="doc-biblioref">Mogadala and Rettinger 2016</a>; <a href="references.html#ref-di2019training" role="doc-biblioref">Di Carlo, Bianchi, and Palmonari 2019</a>)</span>, but we will focus on the “compass” approach developed by <span class="citation" data-cites="di2019training">Di Carlo, Bianchi, and Palmonari (<a href="references.html#ref-di2019training" role="doc-biblioref">2019</a>)</span> because it’s well-implemented, efficient, and has Gensim at its core. It’s designed with temporal data in mind, but we handle cross-sectional comparisons in the exact same way. Below, I’ll walk you through training a word embedding model “anchor” (the compass) as a basis for comparison, and then we’ll spend a bit of time working through a few temporal and cross-sectional comparisons.</p>
+<p>There have been a number of solutions proposed to solve this problem <span class="citation" data-cites="ruder2019survey artetxe2016learning mogadala2016bilingual di2019training">(e.g., <a href="#ref-ruder2019survey" role="doc-biblioref">Ruder, Vulić, and Søgaard 2019</a>; <a href="#ref-artetxe2016learning" role="doc-biblioref">Artetxe, Labaka, and Agirre 2016</a>; <a href="#ref-mogadala2016bilingual" role="doc-biblioref">Mogadala and Rettinger 2016</a>; <a href="#ref-di2019training" role="doc-biblioref">Di Carlo, Bianchi, and Palmonari 2019</a>)</span>, but we will focus on the “compass” approach developed by <span class="citation" data-cites="di2019training">Di Carlo, Bianchi, and Palmonari (<a href="#ref-di2019training" role="doc-biblioref">2019</a>)</span> because it’s well-implemented, efficient, and has Gensim at its core. It’s designed with temporal data in mind, but we handle cross-sectional comparisons in the exact same way. Below, I’ll walk you through training a word embedding model “anchor” (the compass) as a basis for comparison, and then we’ll spend a bit of time working through a few temporal and cross-sectional comparisons.</p>
 <blockquote class="blockquote">
 <p>The compass functionality is available in the python package TWEC, which must be installed manually from the source code provided on GitHub. As the authors of the package note, TWEC requires a customized version of Gensim, so it’s advisable to make a virtual environment specifically for working with this package. As a reminder, you can do so with the following steps, all from the command line:</p>
 <ol type="1">
@@ -1297,14 +1260,14 @@ Woman and Queen without man: 0.7745669</code></pre>
 <li>Train a word2vec model on the <em>entire</em> dataset in one go, retaining the position layer of the neural network model. This layer is called the <strong>compass</strong>. It computes a set of baseline embeddings that a series of embedding models (trained in Step 2) trained on every subset of the data (temporal slices, for example) can use as a common starting point, like a kind of “reference model.”</li>
 <li>Train a word2vec model for each subset of the data using the compass layer from Step 1 as the starting point. This ensures the vector spaces are properly aligned and lets the vector coordinates move around according to the embeddings of words in that subset of data.</li>
 </ol>
-<p>Once the reference model has been trained, the series of contextual models trained in the next step call all be trained with a common starting point (as opposed to a random one). Then the embeddings for each subset diverge from that common origin as appropriate and the differences and similarities between their vectors can be interpreted as meaningful differences. <span class="citation" data-cites="di2019training">Di Carlo, Bianchi, and Palmonari (<a href="references.html#ref-di2019training" role="doc-biblioref">2019</a>)</span> provide plenty of technical details on how TWEC works, if you are interested in going beyond what I introduce here.</p>
+<p>Once the reference model has been trained, the series of contextual models trained in the next step call all be trained with a common starting point (as opposed to a random one). Then the embeddings for each subset diverge from that common origin as appropriate and the differences and similarities between their vectors can be interpreted as meaningful differences. <span class="citation" data-cites="di2019training">Di Carlo, Bianchi, and Palmonari (<a href="#ref-di2019training" role="doc-biblioref">2019</a>)</span> provide plenty of technical details on how TWEC works, if you are interested in going beyond what I introduce here.</p>
 <p>Let’s perform both steps. We’ll use the compass trained in Step 1 for a series of temporal and cross-sectional comparsons later in the chapter.</p>
 </section>
 <section id="step-1-train-the-compass" class="level3" data-number="34.8.3">
 <h3 data-number="34.8.3" class="anchored" data-anchor-id="step-1-train-the-compass"><span class="header-section-number">34.8.3</span> Step 1: Train the Compass</h3>
 <p>To train the compass, <code>TWEC</code> expects a text file where each sentence in our dataset is provided on a new line. Since we prepared this exact file in the previous chapter, we’ll reuse it here. It’s stored in <code>speeches.txt</code>.</p>
 <div class="sourceCode" id="cb51"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>compass_path <span class="op">=</span> <span class="st">'data/txt_files/can_hansard_speeches.txt'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Because <code>TWEC</code> uses a custom version of Gensim, it doesn’t automatically receive the many updates that Gensim has had in recent years. One of the package dependencies has been updated since the <span class="citation" data-cites="di2019training">Di Carlo, Bianchi, and Palmonari (<a href="references.html#ref-di2019training" role="doc-biblioref">2019</a>)</span> paper was published and now produces a warning about a function that will eventually be deprecated. To keep things a bit cleaner, we’ll tell Python to suppress those warnings.</p>
+<p>Because <code>TWEC</code> uses a custom version of Gensim, it doesn’t automatically receive the many updates that Gensim has had in recent years. One of the package dependencies has been updated since the <span class="citation" data-cites="di2019training">Di Carlo, Bianchi, and Palmonari (<a href="#ref-di2019training" role="doc-biblioref">2019</a>)</span> paper was published and now produces a warning about a function that will eventually be deprecated. To keep things a bit cleaner, we’ll tell Python to suppress those warnings.</p>
 <div class="sourceCode" id="cb52"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> warnings</span>
 <span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>warnings.filterwarnings(<span class="st">"ignore"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Now we can inialize a TWEC class object, providing the parameters to pass to Gensim for training (note that the <code>negative=</code> argument for negative sampling is replaced by <code>ns=</code> here). We’ll use this object to create the compass and when training the aligned temporal slices.</p>
@@ -1416,7 +1379,7 @@ Woman and Queen without man: 0.7745669</code></pre>
 <p>Of course, everything we did previously with the pre-trained embeddings can be applied and generalized with the models we’ve trained here. Give it a shot!</p>
 <blockquote class="blockquote">
 <p><strong>Further Reading</strong></p>
-<p>Adji Dieng, Francisco Ruiz, and David Blei <span class="citation" data-cites="dieng2020topic">(<a href="references.html#ref-dieng2020topic" role="doc-biblioref">2020</a>)</span> have developed a really interesting probabilistic topic model that uses embeddings to represent text rather than the DTM representations used in LDA topic models. They also generalize this model for dynamic data in <span class="citation" data-cites="dieng2019dynamic">(<a href="references.html#ref-dieng2019dynamic" role="doc-biblioref">A. Dieng, Ruiz, and Blei 2019</a>)</span>. If you are interested in the relationship between topic models and word embeddings, I recommend reading their articles.</p>
+<p>Adji Dieng, Francisco Ruiz, and David Blei <span class="citation" data-cites="dieng2020topic">(<a href="#ref-dieng2020topic" role="doc-biblioref">2020</a>)</span> have developed a really interesting probabilistic topic model that uses embeddings to represent text rather than the DTM representations used in LDA topic models. They also generalize this model for dynamic data in <span class="citation" data-cites="dieng2019dynamic">(<a href="#ref-dieng2019dynamic" role="doc-biblioref">A. Dieng, Ruiz, and Blei 2019</a>)</span>. If you are interested in the relationship between topic models and word embeddings, I recommend reading their articles.</p>
 </blockquote>
 </section>
 </section>
@@ -1433,7 +1396,7 @@ Woman and Queen without man: 0.7745669</code></pre>
 </ul>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="refs" class="references csl-bib-body hanging-indent" role="list">
 <div id="ref-artetxe2016learning" class="csl-entry" role="listitem">
 Artetxe, Mikel, Gorka Labaka, and Eneko Agirre. 2016. <span>“Learning Principled Bilingual Mappings of Word Embeddings While Preserving Monolingual Invariance.”</span> In <em>Proceedings of the 2016 Conference on Empirical Methods in Natural Language Processing</em>, 2289–94.
 </div>
@@ -1632,7 +1595,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const onCopySuccess = function(e) {
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -1664,50 +1638,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
-  }
-  const getTextToCopy = function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-  }
-  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-    text: getTextToCopy
   });
-  clipboard.on('success', onCopySuccess);
-  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
-    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-      text: getTextToCopy,
-      container: window.document.getElementById('quarto-embedded-source-code-modal')
-    });
-    clipboardModal.on('success', onCopySuccess);
-  }
-    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-    var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp('/' + window.location.host + '/');
-    var isInternal = (href) => {
-        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
-    }
-    // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
-    for (var i=0; i<links.length; i++) {
-      const link = links[i];
-      if (!isInternal(link.href)) {
-        // undo the damage that might have been done by quarto-nav.js in the case of
-        // links that we want to consider external
-        if (link.dataset.originalHref !== undefined) {
-          link.href = link.dataset.originalHref;
-        }
-      }
-    }
-  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+  function tippyHover(el, contentFn) {
     const config = {
       allowHTML: true,
+      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -1717,17 +1652,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start',
+      placement: 'bottom-start'
     };
-    if (contentFn) {
-      config.content = contentFn;
-    }
-    if (onTriggerFn) {
-      config.onTrigger = onTriggerFn;
-    }
-    if (onUntriggerFn) {
-      config.onUntrigger = onUntriggerFn;
-    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -1739,130 +1665,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      if (note) {
-        return note.innerHTML;
-      } else {
-        return "";
-      }
-    });
-  }
-  const xrefs = window.document.querySelectorAll('a.quarto-xref');
-  const processXRef = (id, note) => {
-    // Strip column container classes
-    const stripColumnClz = (el) => {
-      el.classList.remove("page-full", "page-columns");
-      if (el.children) {
-        for (const child of el.children) {
-          stripColumnClz(child);
-        }
-      }
-    }
-    stripColumnClz(note)
-    if (id === null || id.startsWith('sec-')) {
-      // Special case sections, only their first couple elements
-      const container = document.createElement("div");
-      if (note.children && note.children.length > 2) {
-        container.appendChild(note.children[0].cloneNode(true));
-        for (let i = 1; i < note.children.length; i++) {
-          const child = note.children[i];
-          if (child.tagName === "P" && child.innerText === "") {
-            continue;
-          } else {
-            container.appendChild(child.cloneNode(true));
-            break;
-          }
-        }
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(container);
-        }
-        return container.innerHTML
-      } else {
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(note);
-        }
-        return note.innerHTML;
-      }
-    } else {
-      // Remove any anchor links if they are present
-      const anchorLink = note.querySelector('a.anchorjs-link');
-      if (anchorLink) {
-        anchorLink.remove();
-      }
-      if (window.Quarto?.typesetMath) {
-        window.Quarto.typesetMath(note);
-      }
-      // TODO in 1.5, we should make sure this works without a callout special case
-      if (note.classList.contains("callout")) {
-        return note.outerHTML;
-      } else {
-        return note.innerHTML;
-      }
-    }
-  }
-  for (var i=0; i<xrefs.length; i++) {
-    const xref = xrefs[i];
-    tippyHover(xref, undefined, function(instance) {
-      instance.disable();
-      let url = xref.getAttribute('href');
-      let hash = undefined; 
-      if (url.startsWith('#')) {
-        hash = url;
-      } else {
-        try { hash = new URL(url).hash; } catch {}
-      }
-      if (hash) {
-        const id = hash.replace(/^#\/?/, "");
-        const note = window.document.getElementById(id);
-        if (note !== null) {
-          try {
-            const html = processXRef(id, note.cloneNode(true));
-            instance.setContent(html);
-          } finally {
-            instance.enable();
-            instance.show();
-          }
-        } else {
-          // See if we can fetch this
-          fetch(url.split('#')[0])
-          .then(res => res.text())
-          .then(html => {
-            const parser = new DOMParser();
-            const htmlDoc = parser.parseFromString(html, "text/html");
-            const note = htmlDoc.getElementById(id);
-            if (note !== null) {
-              const html = processXRef(id, note);
-              instance.setContent(html);
-            } 
-          }).finally(() => {
-            instance.enable();
-            instance.show();
-          });
-        }
-      } else {
-        // See if we can fetch a full url (with no hash to target)
-        // This is a special case and we should probably do some content thinning / targeting
-        fetch(url)
-        .then(res => res.text())
-        .then(html => {
-          const parser = new DOMParser();
-          const htmlDoc = parser.parseFromString(html, "text/html");
-          const note = htmlDoc.querySelector('main.content');
-          if (note !== null) {
-            // This should only happen for chapter cross references
-            // (since there is no id in the URL)
-            // remove the first header
-            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
-              note.children[0].remove();
-            }
-            const html = processXRef(null, note);
-            instance.setContent(html);
-          } 
-        }).finally(() => {
-          instance.enable();
-          instance.show();
-        });
-      }
-    }, function(instance) {
+      return note.innerHTML;
     });
   }
       let selectedAnnoteEl;
@@ -1906,7 +1709,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
-            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -1932,32 +1734,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
-        // Handle positioning of the toggle
-    window.addEventListener(
-      "resize",
-      throttle(() => {
-        elRect = undefined;
-        if (selectedAnnoteEl) {
-          selectCodeLines(selectedAnnoteEl);
-        }
-      }, 10)
-    );
-    function throttle(fn, ms) {
-    let throttle = false;
-    let timer;
-      return (...args) => {
-        if(!throttle) { // first call gets through
-            fn.apply(this, args);
-            throttle = true;
-        } else { // all the others get throttled
-            if(timer) clearTimeout(timer); // cancel #2
-            timer = setTimeout(() => {
-              fn.apply(this, args);
-              timer = throttle = false;
-            }, ms);
-        }
-      };
-    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -2019,12 +1795,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./artificial-neural-networks-fnn-rnn-cnn.html" class="pagination-link" aria-label="Artificial neural networks">
+      <a href="./artificial-neural-networks-fnn-rnn-cnn.html" class="pagination-link">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Artificial neural networks</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./transformer-revolution.html" class="pagination-link" aria-label="The transformer revolution">
+      <a href="./transformer-revolution.html" class="pagination-link">
         <span class="nav-page-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">The transformer revolution</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
@@ -2033,5 +1809,4 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
-
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/UWNETLAB/dcss_supplementary/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
+</body></html>

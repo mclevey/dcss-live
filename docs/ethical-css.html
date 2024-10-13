@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.56">
+<meta name="generator" content="quarto-1.3.450">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>35&nbsp; Ethical CSS – Doing Computational Social Science&lt;br&gt;[The **Continuous Development** Edition]{.small}</title>
+<title>Doing Computational Social ScienceThe Continuous Development Edition - 36&nbsp; Ethical CSS</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -24,7 +24,6 @@ ul.task-list li input[type="checkbox"] {
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
-  margin-bottom: 0em;
 }
 .hanging-indent div.csl-entry {
   margin-left:2em;
@@ -68,13 +67,7 @@ div.csl-indent {
   "collapse-after": 3,
   "panel-placement": "start",
   "type": "textbox",
-  "limit": 50,
-  "keyboard-shortcut": [
-    "f",
-    "/",
-    "s"
-  ],
-  "show-item-context": false,
+  "limit": 20,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -83,42 +76,14 @@ div.csl-indent {
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
-    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
 }</script>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="custom.css">
 </head>
@@ -129,13 +94,13 @@ window.Quarto = {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ethical-css.html"><strong>PROFESSIONAL RESPONSIBILITIES</strong></a></li><li class="breadcrumb-item"><a href="./ethical-css.html"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Ethical CSS</span></a></li></ol></nav>
-        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-        </a>
-      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ethical-css.html"><strong>RESPONSIBILITIES</strong></a></li><li class="breadcrumb-item"><a href="./ethical-css.html"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">Ethical CSS</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -144,7 +109,7 @@ window.Quarto = {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
       <a href="./index.html" class="sidebar-logo-link">
       <img src="./figures/logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
@@ -152,25 +117,25 @@ window.Quarto = {
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Doing Computational Social Science<br><span class="small">The <strong>Continuous Development</strong> Edition</span></a> 
         <div class="sidebar-tools-main">
-    <a href="https://github.com/UWNETLAB/dcss_supplementary/tree/master/book/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="https://github.com/UWNETLAB/dcss_supplementary/tree/master/book/" rel="" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
     <div class="dropdown">
-      <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
+      <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Share"><i class="bi bi-share"></i></a>
       <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
           <li>
             <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=|url|">
-              <i class="bi bi-twitter pe-1"></i>
+              <i class="bi bi-bi-twitter pe-1"></i>
             Twitter
             </a>
           </li>
           <li>
             <a class="dropdown-item sidebar-tools-main-item" href="https://www.facebook.com/sharer/sharer.php?u=|url|">
-              <i class="bi bi-facebook pe-1"></i>
+              <i class="bi bi-bi-facebook pe-1"></i>
             Facebook
             </a>
           </li>
           <li>
             <a class="dropdown-item sidebar-tools-main-item" href="https://www.linkedin.com/sharing/share-offsite/?url=|url|">
-              <i class="bi bi-linkedin pe-1"></i>
+              <i class="bi bi-bi-linkedin pe-1"></i>
             LinkedIn
             </a>
           </li>
@@ -192,19 +157,25 @@ window.Quarto = {
  <span class="menu-text">🏠</span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction</span></a>
+  </div>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
- <span class="menu-text"><strong>RESEARCH COMPUTING</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text"><strong>COMPUTING</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./getting-started.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Getting Started</span></span></a>
+  <a href="./setting-up.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Setting up</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -219,71 +190,89 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Python 102</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./processing-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Processing Data</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
- <span class="menu-text"><strong>MINDFUL MODELING</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text"><strong>WORKFLOW</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./metaphor-map-reduction.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Modeling as metaphor, map, and reduction</span></span></a>
+  <a href="./mindful-modelling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Mindful modelling</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./iterative-workflow.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Iterative workflows</span></span></a>
+  <a href="./iteration.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title"><del>Sequential</del> iterative modelling</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
- <span class="menu-text"><strong>OBTAINING DATA</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+ <span class="menu-text"><strong>DATA</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./sampling-and-survey-data.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title"><del>Processing Structured Data</del> Sampling and Survey Data</span></span></a>
+  <a href="./survey-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Survey Data</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./web-data-apis.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Web data (APIs)</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Web data (APIs)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./web-data-scraping.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Web data (Scraping)</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Web data (Scraping)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./audio-files-and-documents.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Audio files and documents</span></span></a>
+  <a href="./audio-and-document-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Audio and document data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./text-as-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Text as Data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./relational-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Relational data</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
- <span class="menu-text"><strong>EXPLORING</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+ <span class="menu-text"><strong>DISCOVERY</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -291,52 +280,40 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./exploratory-data-analysis.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Exploratory data analysis (EDA) <!-- Exploring with purpose --></span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Exploring with purpose</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./association-and-latent-variables.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Association and latent variables</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./text-as-data.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Text as Data</span></span></a>
+  <a href="./reduction-and-latent-dimensions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Reduction and latent dimensions</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./mapping-text.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Text similarity and latent semantic space</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./networks-as-not-data.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Networks and relational thinking</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Text similarity and latent semantic space</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./centrality.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Centrality</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Centrality</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./mapping-network-structure.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Mapping network structure</span></span></a>
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Mapping network structure</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
  <span class="menu-text"><strong>PREDICTION &amp; INFERENCE</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -344,46 +321,46 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./supervised-learning.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Supervised Machine Learning</span></span></a>
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Supervised Machine Learning</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./prediction-and-classification.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Prediction and classification</span></span></a>
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Prediction and classification</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./causality.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Causality</span></span></a>
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Causality</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./probability.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Probability 101</span></span></a>
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Probability 101</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./credibility.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Credibility</span></span></a>
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Credibility</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./measurement-and-missingness.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Measurement and missingness</span></span></a>
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Measurement and missingness</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true">
  <span class="menu-text"><strong>MODELING</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -391,58 +368,58 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./linear-regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Bayesian Regression Models with Probabilistic Programming</span></span></a>
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Bayesian Regression Models with Probabilistic Programming</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./multilevel-regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Multilevel regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Multilevel regression</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./generalized-linear-models.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Generalized Linear Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Generalized Linear Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./structural-causal-models.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Structural causal models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Structural causal models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./modeling-texts-lda.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Modeling text with LDA topic models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Modeling text with LDA topic models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./modeling-networks.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Latent structure in networks</span></span></a>
+ <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Latent structure in networks</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./agent-based-models.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Agent-based models (ABMs)</span></span></a>
+ <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Agent-based models (ABMs)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./diffusion-opinion-cultural-cognition.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Diffusion, opinion dynamics, and cultural cognition</span></span></a>
+ <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Diffusion, opinion dynamics, and cultural cognition</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true">
  <span class="menu-text"><strong>DEEP LEARNING</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -450,34 +427,34 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./artificial-neural-networks-fnn-rnn-cnn.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Artificial neural networks 101</span></span></a>
+ <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Artificial neural networks</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./language-models-and-embeddings.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Processing Natural Language Data</span></span></a>
+ <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Language models and word embeddings</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./transformer-revolution.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">The transformer revolution</span></span></a>
+ <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">The transformer revolution</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./modeling-text-transformer-topic-models.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Modeling text: transformer topic models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Modeling text: transformer topic models</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
- <span class="menu-text"><strong>PROFESSIONAL RESPONSIBILITIES</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" aria-expanded="true">
+ <span class="menu-text"><strong>RESPONSIBILITIES</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -485,19 +462,19 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ethical-css.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Ethical CSS</span></span></a>
+ <span class="menu-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">Ethical CSS</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./open-css.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">Open CSS</span></span></a>
+ <span class="menu-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">Open CSS</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./future-css.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">Future computational social science</span></span></a>
+ <span class="menu-text"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">Future CSS</span></span></a>
   </div>
 </li>
       </ul>
@@ -517,42 +494,42 @@ window.Quarto = {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./courses.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">Courses and Workshops</span></span></a>
+ <span class="menu-text"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title">Courses and Workshops</span></span></a>
   </div>
 </li>
     </ul>
     </div>
 </nav>
-<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link active" data-scroll-target="#learning-objectives"><span class="header-section-number">35.1</span> LEARNING OBJECTIVES</a></li>
-  <li><a href="#learning-materials" id="toc-learning-materials" class="nav-link" data-scroll-target="#learning-materials"><span class="header-section-number">35.2</span> LEARNING MATERIALS</a></li>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction"><span class="header-section-number">35.3</span> INTRODUCTION</a></li>
-  <li><a href="#research-ethics-and-social-network-analysis" id="toc-research-ethics-and-social-network-analysis" class="nav-link" data-scroll-target="#research-ethics-and-social-network-analysis"><span class="header-section-number">35.4</span> RESEARCH ETHICS AND SOCIAL NETWORK ANALYSIS</a></li>
-  <li><a href="#informed-consent-privacy-and-transparency" id="toc-informed-consent-privacy-and-transparency" class="nav-link" data-scroll-target="#informed-consent-privacy-and-transparency"><span class="header-section-number">35.5</span> INFORMED CONSENT, PRIVACY, AND TRANSPARENCY</a></li>
-  <li><a href="#bias-and-algorithmic-decision-making" id="toc-bias-and-algorithmic-decision-making" class="nav-link" data-scroll-target="#bias-and-algorithmic-decision-making"><span class="header-section-number">35.6</span> BIAS AND ALGORITHMIC DECISION-MAKING</a></li>
-  <li><a href="#ditching-the-value-free-ideal-for-ethics-politics-and-science" id="toc-ditching-the-value-free-ideal-for-ethics-politics-and-science" class="nav-link" data-scroll-target="#ditching-the-value-free-ideal-for-ethics-politics-and-science"><span class="header-section-number">35.7</span> DITCHING THE VALUE-FREE IDEAL FOR ETHICS, POLITICS, AND SCIENCE</a>
+  <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link active" data-scroll-target="#learning-objectives"><span class="header-section-number">36.1</span> LEARNING OBJECTIVES</a></li>
+  <li><a href="#learning-materials" id="toc-learning-materials" class="nav-link" data-scroll-target="#learning-materials"><span class="header-section-number">36.2</span> LEARNING MATERIALS</a></li>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction"><span class="header-section-number">36.3</span> INTRODUCTION</a></li>
+  <li><a href="#research-ethics-and-social-network-analysis" id="toc-research-ethics-and-social-network-analysis" class="nav-link" data-scroll-target="#research-ethics-and-social-network-analysis"><span class="header-section-number">36.4</span> RESEARCH ETHICS AND SOCIAL NETWORK ANALYSIS</a></li>
+  <li><a href="#informed-consent-privacy-and-transparency" id="toc-informed-consent-privacy-and-transparency" class="nav-link" data-scroll-target="#informed-consent-privacy-and-transparency"><span class="header-section-number">36.5</span> INFORMED CONSENT, PRIVACY, AND TRANSPARENCY</a></li>
+  <li><a href="#bias-and-algorithmic-decision-making" id="toc-bias-and-algorithmic-decision-making" class="nav-link" data-scroll-target="#bias-and-algorithmic-decision-making"><span class="header-section-number">36.6</span> BIAS AND ALGORITHMIC DECISION-MAKING</a></li>
+  <li><a href="#ditching-the-value-free-ideal-for-ethics-politics-and-science" id="toc-ditching-the-value-free-ideal-for-ethics-politics-and-science" class="nav-link" data-scroll-target="#ditching-the-value-free-ideal-for-ethics-politics-and-science"><span class="header-section-number">36.7</span> DITCHING THE VALUE-FREE IDEAL FOR ETHICS, POLITICS, AND SCIENCE</a>
   <ul class="collapse">
-  <li><a href="#critical-questions-to-ask-yourself" id="toc-critical-questions-to-ask-yourself" class="nav-link" data-scroll-target="#critical-questions-to-ask-yourself"><span class="header-section-number">35.7.1</span> Critical Questions to Ask Yourself</a></li>
+  <li><a href="#critical-questions-to-ask-yourself" id="toc-critical-questions-to-ask-yourself" class="nav-link" data-scroll-target="#critical-questions-to-ask-yourself"><span class="header-section-number">36.7.1</span> Critical Questions to Ask Yourself</a></li>
   </ul></li>
-  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">35.8</span> CONCLUSION</a>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">36.8</span> CONCLUSION</a>
   <ul class="collapse">
-  <li><a href="#key-points" id="toc-key-points" class="nav-link" data-scroll-target="#key-points"><span class="header-section-number">35.8.1</span> Key Points</a></li>
+  <li><a href="#key-points" id="toc-key-points" class="nav-link" data-scroll-target="#key-points"><span class="header-section-number">36.8.1</span> Key Points</a></li>
   </ul></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/UWNETLAB/dcss_supplementary/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/UWNETLAB/dcss_supplementary/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ethical-css.html"><strong>PROFESSIONAL RESPONSIBILITIES</strong></a></li><li class="breadcrumb-item"><a href="./ethical-css.html"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Ethical CSS</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Ethical CSS</span></h1>
+<h1 class="title"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">Ethical CSS</span></h1>
 </div>
 
 
@@ -565,12 +542,10 @@ window.Quarto = {
   </div>
   
 
-
 </header>
 
-
-<section id="learning-objectives" class="level2" data-number="35.1">
-<h2 data-number="35.1" class="anchored" data-anchor-id="learning-objectives"><span class="header-section-number">35.1</span> LEARNING OBJECTIVES</h2>
+<section id="learning-objectives" class="level2" data-number="36.1">
+<h2 data-number="36.1" class="anchored" data-anchor-id="learning-objectives"><span class="header-section-number">36.1</span> LEARNING OBJECTIVES</h2>
 <ul>
 <li>Explain the challenges with informed consent in computational social science</li>
 <li>Describe the tensions between the competing ethical principles of privacy and transparency</li>
@@ -579,94 +554,94 @@ window.Quarto = {
 <li>Identify the types of computational social science that you will and <em>will not</em> do</li>
 </ul>
 </section>
-<section id="learning-materials" class="level2" data-number="35.2">
-<h2 data-number="35.2" class="anchored" data-anchor-id="learning-materials"><span class="header-section-number">35.2</span> LEARNING MATERIALS</h2>
+<section id="learning-materials" class="level2" data-number="36.2">
+<h2 data-number="36.2" class="anchored" data-anchor-id="learning-materials"><span class="header-section-number">36.2</span> LEARNING MATERIALS</h2>
 <p>You can find the online learning materials for this chapter in <code>doing_computational_social_science/Chapter_19</code>. <code>cd</code> into the directory and launch your Jupyter Server.</p>
 </section>
-<section id="introduction" class="level2" data-number="35.3">
-<h2 data-number="35.3" class="anchored" data-anchor-id="introduction"><span class="header-section-number">35.3</span> INTRODUCTION</h2>
+<section id="introduction" class="level2" data-number="36.3">
+<h2 data-number="36.3" class="anchored" data-anchor-id="introduction"><span class="header-section-number">36.3</span> INTRODUCTION</h2>
 <p>The chapters following this one will introduce a variety of machine learning models. Before we get there, we’re going to consider some of the ethical and political challenges that arise in the context of computational social science. One of the many themes in this chapter is that we are working in unsettled times when it comes to research ethics in computational social science and data science. Many of the methods and models in this book provide access to power that we are not accustomed to dealing with, and for which there are few guidelines and standards. The recent advances in computational methods have far outstripped what we, as social scientists, have been historically capable of, and our ethical standards and practices have not yet caught up. As professional researchers, we need to make ethical decisions in our work. That means doing <em>more</em> than making sure we don’t violate <em>currently established</em> ethical principles. Throughout this chapter, I will emphasize that current ethical standards are not adequate for much of what is introduced in this book (e.g., machine learning).</p>
 <p>Rather than being <em>reactive</em> (e.g., changing practices and establishing standards after people have already been harmed), we should be <em>proactive</em> (e.g., anticipating and mitigating potential harms). We must adopt practices that help ensure we are doing our work in ways that <em>enable</em> us to be transparent and accountable to the right people at the right times. It means asking ourselves hard questions about the types of things we will and won’t do and making a serious effort to anticipate the potential unintended negative consequences of the work we do. There is no avoiding constant reflexive practice. Nor can we avoid the politics of research. We must confront difficult political issues head on and make our normative values explicit and visible in our work. We do this not only to protect ourselves, our participants, and anyone who might be affected by our work once it leaves our hands, but because it also produces better science: science that is transparent, accountable, and reproducible.</p>
 <p>We’ll start by considering the context of social network analysis, which we covered in the preceding chapters, followed by matching issues we have to negotiate as we work with machine learning in following chapters.</p>
 </section>
-<section id="research-ethics-and-social-network-analysis" class="level2" data-number="35.4">
-<h2 data-number="35.4" class="anchored" data-anchor-id="research-ethics-and-social-network-analysis"><span class="header-section-number">35.4</span> RESEARCH ETHICS AND SOCIAL NETWORK ANALYSIS</h2>
+<section id="research-ethics-and-social-network-analysis" class="level2" data-number="36.4">
+<h2 data-number="36.4" class="anchored" data-anchor-id="research-ethics-and-social-network-analysis"><span class="header-section-number">36.4</span> RESEARCH ETHICS AND SOCIAL NETWORK ANALYSIS</h2>
 <p>As researchers, we are not detached from the social and political world we study, and we need to remember that our position as researchers puts us in unique positions of power. In network analysis, knowledge of a network imparts power over it in concrete and tangible ways. Most of us have limited understanding of the structure of the networks we live our daily lives in, and whatever understanding we do have diminishes rapidly as we move beyond our immediate connections. As researchers, we have privileged access to intimate details of the lives of real people and the unique relational contexts that shape their lives, for better and for worse. This information is often sensitive and has the potential to cause harm if not handled properly.</p>
 <p>At some point in your research career you will gain information that is very important, valuable, or compromising to the people participating in your study, and in network analysis that can happen <em>without any one individual realizing it</em>. Part of the value of studying networks comes from the ways that micro-level interactions (e.g.&nbsp;friendships, advice, communication) combine to produce highly consequential network structures that are not immediately obvious. When we collect relational data, we gain access to information about an emergent network structure that, though lacking in details, can reveal a picture that’s very difficult to see from the inside.</p>
-<p>The decisions we make when we collect relational data, construct and analyze networks, and present our findings <em>all</em> have important ethical dimensions. For example, in a commentary from a 2021 special issue of <em>Social Networks</em> on ethical challenges in network analysis, Bernie <span class="citation" data-cites="hogan2021networks">Hogan (<a href="references.html#ref-hogan2021networks" role="doc-biblioref">2021</a>)</span> recounts several experiences where presentations of simple network visualizations caused unintentional harm. In one case, a student gave a presentation that included a visualization of a network of their classmates, revealing that everyone was connected in one large group except a single isolated student. Similarly, after presenting visualizations of an academic network, Hogan describes being contacted by disconcerted academics who were located on the periphery of the network (implying they were marginal), but who felt this unfairly painted them in a poor light as they were primarily active in <em>other</em> networks that didn’t fall within the presented network’s boundaries. These were not necessarily “marginal” academics, but the definition of network boundaries <em>portrayed</em> them as marginal. We don’t just <em>reveal</em> networks as they really exist, we <em>construct</em> them, and in ways that feed back into the world.</p>
+<p>The decisions we make when we collect relational data, construct and analyze networks, and present our findings <em>all</em> have important ethical dimensions. For example, in a commentary from a 2021 special issue of <em>Social Networks</em> on ethical challenges in network analysis, Bernie <span class="citation" data-cites="hogan2021networks">Hogan (<a href="#ref-hogan2021networks" role="doc-biblioref">2021</a>)</span> recounts several experiences where presentations of simple network visualizations caused unintentional harm. In one case, a student gave a presentation that included a visualization of a network of their classmates, revealing that everyone was connected in one large group except a single isolated student. Similarly, after presenting visualizations of an academic network, Hogan describes being contacted by disconcerted academics who were located on the periphery of the network (implying they were marginal), but who felt this unfairly painted them in a poor light as they were primarily active in <em>other</em> networks that didn’t fall within the presented network’s boundaries. These were not necessarily “marginal” academics, but the definition of network boundaries <em>portrayed</em> them as marginal. We don’t just <em>reveal</em> networks as they really exist, we <em>construct</em> them, and in ways that feed back into the world.</p>
 <blockquote class="blockquote">
 <p><strong>Further Reading</strong></p>
-<p>To learn more about some salient ethical issues in comtemporary network analysis, I recommend readind the 2021 special issue of <em>Social Networks</em> edited by <span class="citation" data-cites="tubaro2020social">Tubaro et al. (<a href="references.html#ref-tubaro2020social" role="doc-biblioref">2020</a>)</span>.</p>
+<p>To learn more about some salient ethical issues in comtemporary network analysis, I recommend readind the 2021 special issue of <em>Social Networks</em> edited by <span class="citation" data-cites="tubaro2020social">Tubaro et al. (<a href="#ref-tubaro2020social" role="doc-biblioref">2020</a>)</span>.</p>
 </blockquote>
 <p>Cases such as these are a reminder that unavoidable and seemingly benign measurement decisions play a significant role in determining who is portrayed as central or marginal within the boundaries of a network <em>as we define it</em>; we have a certain amount of control over influential representations of the world that cast some people as more central (and therefore more powerful, influential, and high-status) than others. This is what I meant when I said we <em>construct</em> networks, we don’t just reveal them. Since it is possible to cause harm with our constructions, we should consider the important ethical dimensions of the decisions involved, such as which ties we measure among which people. And since many harms can come from portraying <em>specific</em> people as central or marginal, we should also consider the ethical implications of how we share information about networks, whether we are sharing data or presenting results in some other form. All of this is especially problematic for people who are already marginalized. Cases like these are likely more common than we realize.</p>
 <p>There are concrete things we can do to help mitigate the negative effects of situations such as those described above, but many problems persist. For example, properly anonymizing network data <em>can</em> go a pretty long way. However, this is not a just a matter of “give everyone numeric IDs” because people are often able to make pretty good inferences about who’s who in a network they are involved in even if they don’t have all the information needed to construct the network in the first place. If someone showed you a visualization of a friendship network that you’re part of, I’d wager that with some time and thought you could make very good guesses as to who was where in the network. The ability to use extremely surface-level data to know, with relative certainty, information about individuals is <em>powerful</em>.</p>
-<p>So how can we present data while protecting anonymity? There are a variety of options. Consider the Faux Magnolia High network data available in the statnet R library <span class="citation" data-cites="handcock2003statnet">(<a href="references.html#ref-handcock2003statnet" role="doc-biblioref">Handcock et al. 2003</a>)</span>, for example. It describes a fake high school with 1461 students with attribute data for grade, sex, and race. While it was based on real data, and those variables could potentially have been used to identify individual students, an exponential random graph model was used to infer the broad patterns between these variables and the network structure. Those patterns were then used to create a <em>randomly generated network</em> that became the dataset provided to the public. (Unfortunately, I couldn’t make space for exponential random graph models (ERGMs) in the networks chapters, but <span class="citation" data-cites="lusher2013exponential">Lusher, Koskinen, and Robins (<a href="references.html#ref-lusher2013exponential" role="doc-biblioref">2013</a>)</span> provide a good starting point if you are interested in delving further into ERGMs.) Unfortunately, this won’t work for all network data, nor for all data in general; the Faux Magnolia High data is primarily used for learning and testing network models. It poses little value for further network research because it is so far divorced from the original data. It makes no claims to represent any relationship between the original data and network structure beyond that captured in the model used to generate it.</p>
+<p>So how can we present data while protecting anonymity? There are a variety of options. Consider the Faux Magnolia High network data available in the statnet R library <span class="citation" data-cites="handcock2003statnet">(<a href="#ref-handcock2003statnet" role="doc-biblioref">Handcock et al. 2003</a>)</span>, for example. It describes a fake high school with 1461 students with attribute data for grade, sex, and race. While it was based on real data, and those variables could potentially have been used to identify individual students, an exponential random graph model was used to infer the broad patterns between these variables and the network structure. Those patterns were then used to create a <em>randomly generated network</em> that became the dataset provided to the public. (Unfortunately, I couldn’t make space for exponential random graph models (ERGMs) in the networks chapters, but <span class="citation" data-cites="lusher2013exponential">Lusher, Koskinen, and Robins (<a href="#ref-lusher2013exponential" role="doc-biblioref">2013</a>)</span> provide a good starting point if you are interested in delving further into ERGMs.) Unfortunately, this won’t work for all network data, nor for all data in general; the Faux Magnolia High data is primarily used for learning and testing network models. It poses little value for further network research because it is so far divorced from the original data. It makes no claims to represent any relationship between the original data and network structure beyond that captured in the model used to generate it.</p>
 <p>This raises difficult questions about the tension between privacy and transparency. We’ll turn to these issues directly in a moment, but for now, I want to emphasize that network data collection can sometimes result in information about people who have not provided consent, or specifically <em>informed consent</em>. For example, if you collect data on an organization’s management team and ask employees to name the people they give advice to and receive advice from, you will likely end up with information about someone who simply wasn’t in the office that day, and all the little bits of relational information from many different people add up to paint a picture of that person’s position in the advice-sharing network.</p>
 <p>As with other ethical challenges we will discuss below, do not assume that you are in the clear because your research passes an ethics review. As I’ve mentioned, current ethical standards are lagging behind advancing methods, and they are not well suited to judging how cutting-edge work might be used by others. One of the driving forces for the recent explosion of network analysis derives from the generalizability of methods, measures, and models. At their heart, networks are mathematical constructs. Anything that can be reasonably conceptualized as a collection of things connected to other things is within its purview. A measure that can be used to describe “popularity” or “influence” in sociology can be used for “risk of exposure” in an epidemiological model or “importance” in a criminal or terrorist network. Knowledge about networks <em>in general</em> is powerful because network analysis itself is so generalizable. You shouldn’t assume that your work will only be used in the way you intended it to be used.</p>
-<p>While I have focused on how researchers need to consider the ethics of working with networks, we aren’t the only ones working on them. Google built one of the most valuable tech companies in the world on the foundation of PageRank (a centrality-like algorithm drawing on network analysis to estimate the relative “quality” of a website based on the links leading to and from it). Similarly police forces and intelligence agencies profit from information about the structure and dynamics of our social networks, and it doesn’t especially matter if they have any information about the explicit <em>content</em> of those ties. You can make powerful inferences using only your knowledge of the structure of the network as Kieran <span class="citation" data-cites="khfpr">Healy (<a href="references.html#ref-khfpr" role="doc-biblioref">2013</a>)</span> cleverly showed in a blog post following revelations in 2012 about the extent of NSA metadata-based surveillance <span class="citation" data-cites="metadata">(e.g., <a href="references.html#ref-metadata" role="doc-biblioref">Upsahl 2013</a>)</span>. These non-academic groups do not have the same standards we hold ourselves to, but they have access to everything we publish, more data, and far more money and computing power. When we develop new network tools or data, we need to consider what others with more resources might be able to do with it.</p>
+<p>While I have focused on how researchers need to consider the ethics of working with networks, we aren’t the only ones working on them. Google built one of the most valuable tech companies in the world on the foundation of PageRank (a centrality-like algorithm drawing on network analysis to estimate the relative “quality” of a website based on the links leading to and from it). Similarly police forces and intelligence agencies profit from information about the structure and dynamics of our social networks, and it doesn’t especially matter if they have any information about the explicit <em>content</em> of those ties. You can make powerful inferences using only your knowledge of the structure of the network as Kieran <span class="citation" data-cites="khfpr">Healy (<a href="#ref-khfpr" role="doc-biblioref">2013</a>)</span> cleverly showed in a blog post following revelations in 2012 about the extent of NSA metadata-based surveillance <span class="citation" data-cites="metadata">(e.g., <a href="#ref-metadata" role="doc-biblioref">Upsahl 2013</a>)</span>. These non-academic groups do not have the same standards we hold ourselves to, but they have access to everything we publish, more data, and far more money and computing power. When we develop new network tools or data, we need to consider what others with more resources might be able to do with it.</p>
 <p>In the following section, I move from network data to discussing data more generally, and I will focus more closely on issues of informed consent and balancing the principles of privacy and transparency.</p>
 </section>
-<section id="informed-consent-privacy-and-transparency" class="level2" data-number="35.5">
-<h2 data-number="35.5" class="anchored" data-anchor-id="informed-consent-privacy-and-transparency"><span class="header-section-number">35.5</span> INFORMED CONSENT, PRIVACY, AND TRANSPARENCY</h2>
-<p>Digital data collection (including the collection methods we discussed in Chapters 5 and 6) poses greater ethical challenges than more traditional data collection methods, and issues with <strong>voluntary informed consent</strong> are especially salient. This is largely because we can observe (and interfere) from a great distance, and without the knowledge of the people and groups we are observing (and potentially interfering with, for example in online experiments). The massive availability of data online also poses new challenges for <strong>privacy</strong>, as information that is anonymous in one dataset can quickly become uniquely identifiable when combined with other data. This necessitates a considerable amount of careful ethical thinking and decision-making for individual researchers and teams <span class="citation" data-cites="salganik2019bit beninger2017social">(<a href="references.html#ref-salganik2019bit" role="doc-biblioref">Salganik 2019</a>; <a href="references.html#ref-beninger2017social" role="doc-biblioref">Beninger 2017</a>)</span>, as there are no pre-established rules or ethical checklists to rely on in these and many other situations we might find ourselves in when collecting digital data. In research with social media data, where issues around informed consent are ubiquitous <span class="citation" data-cites="sloan2017retrospective">(<a href="references.html#ref-sloan2017retrospective" role="doc-biblioref">Sloan and Quan-Haase 2017</a>)</span>, some have argued for increased ethical standards <span class="citation" data-cites="goel2014data">(<a href="references.html#ref-goel2014data" role="doc-biblioref">Goel 2014</a>)</span> while others have argued that this is unnecessary for minimal risk research on data in the public domain <span class="citation" data-cites="grimmelmann2015law">(e.g., <a href="references.html#ref-grimmelmann2015law" role="doc-biblioref">Grimmelmann 2015</a>)</span>.</p>
-<p>One of the reasons why these debates rage on is because the boundaries between public and private are much more porous with data collected from social media platforms and the open web <span class="citation" data-cites="sloan2017retrospective">(see <a href="references.html#ref-sloan2017retrospective" role="doc-biblioref">Sloan and Quan-Haase 2017</a>)</span>. And while people may realize that much of what they do and say online can be read by anyone, they are not necessarily thinking about the fact their words and actions are being recorded, stored, and used for something other than their own intended purpose. And even if they are thinking about that, people may not anticipate how the data collected about them from social media platforms and the open web may be linked up with other data, just like they may not anticipate the richness of the network knowledge that can be gleaned from lots of seemingly trivial details, like the name of the person you call when you need to vent about your insufferable coworker.</p>
-<p>For example, from 2006 to 2009, <span class="citation" data-cites="lewis2008tastes">Lewis et al. (<a href="references.html#ref-lewis2008tastes" role="doc-biblioref">2008</a>)</span> collected a huge volume of Facebook data from a cohort of students over four years. With this, they created network datasets with information about the students’ home states, cultural tastes such as preferred books and musical genres, political affiliations, the structure of their friendship networks, photos, and so on. All of the Facebook data they collected was from public profiles, but it was <em>not</em> collected with informed consent. The researchers linked the Facebook data with data from the college (e.g., on academic major). That’s quite the collection of intimate portraits of some 1,700 unaware people.</p>
-<p>As part of the terms of funds they received from the National Science Foundation, <span class="citation" data-cites="lewis2008tastes">Lewis et al. (<a href="references.html#ref-lewis2008tastes" role="doc-biblioref">2008</a>)</span> made an anonymized version of their data publicly available via Dataverse; they did not identify the institution by name, used identification numbers instead of names, and they delayed releasing personal information like interests in movies, books, and so on. Within days of the first wave of release, <span class="citation" data-cites="zimmer2010but">Zimmer (<a href="references.html#ref-zimmer2010but" role="doc-biblioref">2010</a>)</span> and others were able to identify Harvard as the source of the data and show that enough unique information was available to identify individual students.</p>
+<section id="informed-consent-privacy-and-transparency" class="level2" data-number="36.5">
+<h2 data-number="36.5" class="anchored" data-anchor-id="informed-consent-privacy-and-transparency"><span class="header-section-number">36.5</span> INFORMED CONSENT, PRIVACY, AND TRANSPARENCY</h2>
+<p>Digital data collection (including the collection methods we discussed in Chapters 5 and 6) poses greater ethical challenges than more traditional data collection methods, and issues with <strong>voluntary informed consent</strong> are especially salient. This is largely because we can observe (and interfere) from a great distance, and without the knowledge of the people and groups we are observing (and potentially interfering with, for example in online experiments). The massive availability of data online also poses new challenges for <strong>privacy</strong>, as information that is anonymous in one dataset can quickly become uniquely identifiable when combined with other data. This necessitates a considerable amount of careful ethical thinking and decision-making for individual researchers and teams <span class="citation" data-cites="salganik2019bit beninger2017social">(<a href="#ref-salganik2019bit" role="doc-biblioref">Salganik 2019</a>; <a href="#ref-beninger2017social" role="doc-biblioref">Beninger 2017</a>)</span>, as there are no pre-established rules or ethical checklists to rely on in these and many other situations we might find ourselves in when collecting digital data. In research with social media data, where issues around informed consent are ubiquitous <span class="citation" data-cites="sloan2017retrospective">(<a href="#ref-sloan2017retrospective" role="doc-biblioref">Sloan and Quan-Haase 2017</a>)</span>, some have argued for increased ethical standards <span class="citation" data-cites="goel2014data">(<a href="#ref-goel2014data" role="doc-biblioref">Goel 2014</a>)</span> while others have argued that this is unnecessary for minimal risk research on data in the public domain <span class="citation" data-cites="grimmelmann2015law">(e.g., <a href="#ref-grimmelmann2015law" role="doc-biblioref">Grimmelmann 2015</a>)</span>.</p>
+<p>One of the reasons why these debates rage on is because the boundaries between public and private are much more porous with data collected from social media platforms and the open web <span class="citation" data-cites="sloan2017retrospective">(see <a href="#ref-sloan2017retrospective" role="doc-biblioref">Sloan and Quan-Haase 2017</a>)</span>. And while people may realize that much of what they do and say online can be read by anyone, they are not necessarily thinking about the fact their words and actions are being recorded, stored, and used for something other than their own intended purpose. And even if they are thinking about that, people may not anticipate how the data collected about them from social media platforms and the open web may be linked up with other data, just like they may not anticipate the richness of the network knowledge that can be gleaned from lots of seemingly trivial details, like the name of the person you call when you need to vent about your insufferable coworker.</p>
+<p>For example, from 2006 to 2009, <span class="citation" data-cites="lewis2008tastes">Lewis et al. (<a href="#ref-lewis2008tastes" role="doc-biblioref">2008</a>)</span> collected a huge volume of Facebook data from a cohort of students over four years. With this, they created network datasets with information about the students’ home states, cultural tastes such as preferred books and musical genres, political affiliations, the structure of their friendship networks, photos, and so on. All of the Facebook data they collected was from public profiles, but it was <em>not</em> collected with informed consent. The researchers linked the Facebook data with data from the college (e.g., on academic major). That’s quite the collection of intimate portraits of some 1,700 unaware people.</p>
+<p>As part of the terms of funds they received from the National Science Foundation, <span class="citation" data-cites="lewis2008tastes">Lewis et al. (<a href="#ref-lewis2008tastes" role="doc-biblioref">2008</a>)</span> made an anonymized version of their data publicly available via Dataverse; they did not identify the institution by name, used identification numbers instead of names, and they delayed releasing personal information like interests in movies, books, and so on. Within days of the first wave of release, <span class="citation" data-cites="zimmer2010but">Zimmer (<a href="#ref-zimmer2010but" role="doc-biblioref">2010</a>)</span> and others were able to identify Harvard as the source of the data and show that enough unique information was available to identify individual students.</p>
 <p>There is nothing inherently wrong with linking datasets. Researchers do it all the time, and for good reason. But where there is a lack of consent, the data is <em>extensive and sensitive</em>, and there is a lack of agreed-upon ethical standards, the risks should be readily apparent. While people know their actions are public, they can’t reasonably be expected to anticipate all the things that researchers (or government or industry) will do with that data, what they will link it to, and what the resulting picture of them will look like. So, while they may have consented to publicly releasing certain data on certain platforms, they have not consented to the various ways that we might recombine those data in ways they never considered, and which they may not fully realize is even possible. Common privacy protection methods are little defense against dedicated research methods, and we may easily de-anonymize individuals without realizing it in our pursuit of more robust data.</p>
-<p>As with network data, anonymized names are not enough to protect people. In the 1990s, a government agency called the Group Insurance Commission collected state employees’ health records for the purposes of purchasing health insurance, and released an anonymized dataset to researchers <span class="citation" data-cites="salganik2019bit">(<a href="references.html#ref-salganik2019bit" role="doc-biblioref">Salganik 2019</a>)</span>. This data included things like medical records, but also information like zip code, birth date, and sex. By combining this data with voting records (that also had zip code, birthdate, and sex) purchased for $20, Latanya Sweeney, a grad student, was able to attach the name of the governor of Massachusetts to specific medical records, and then mailed him a copy. By linking records, data that is <em>internally</em> anonymous can be used to identify personal information that no one source intended to allow. Whenever you release anonymized data, you need to think very carefully about not just your own data, but what other kinds of data might exist that could be used in harmful ways.</p>
-<p>Medical records are an obvious example of <strong>informational risk</strong>: the potential for harm from the disclosure of information, but this is far from the only example. Latanya <span class="citation" data-cites="sweeney2002k">Sweeney (<a href="references.html#ref-sweeney2002k" role="doc-biblioref">2002</a>)</span> has shown, for example, that 87% of the US population could be reasonably identified with just their 5-digit ZIP, gender, and date of birth. The risk posed by record linkage means that even seemingly innocuous data can be used to unlock much riskier data elsewhere. Even attempts to perturb the data, by switching some values around, may not be enough if enough unchanged data is still available. Given the power of machine learning to make inferences about unseen data, which we will cover later in this book, I will echo <span class="citation" data-cites="salganik2019bit">Salganik (<a href="references.html#ref-salganik2019bit" role="doc-biblioref">2019</a>)</span> and stress that you should <em>start</em> with the assumption that any data you make available is potentially identifiable, and potentially serious.</p>
+<p>As with network data, anonymized names are not enough to protect people. In the 1990s, a government agency called the Group Insurance Commission collected state employees’ health records for the purposes of purchasing health insurance, and released an anonymized dataset to researchers <span class="citation" data-cites="salganik2019bit">(<a href="#ref-salganik2019bit" role="doc-biblioref">Salganik 2019</a>)</span>. This data included things like medical records, but also information like zip code, birth date, and sex. By combining this data with voting records (that also had zip code, birthdate, and sex) purchased for $20, Latanya Sweeney, a grad student, was able to attach the name of the governor of Massachusetts to specific medical records, and then mailed him a copy. By linking records, data that is <em>internally</em> anonymous can be used to identify personal information that no one source intended to allow. Whenever you release anonymized data, you need to think very carefully about not just your own data, but what other kinds of data might exist that could be used in harmful ways.</p>
+<p>Medical records are an obvious example of <strong>informational risk</strong>: the potential for harm from the disclosure of information, but this is far from the only example. Latanya <span class="citation" data-cites="sweeney2002k">Sweeney (<a href="#ref-sweeney2002k" role="doc-biblioref">2002</a>)</span> has shown, for example, that 87% of the US population could be reasonably identified with just their 5-digit ZIP, gender, and date of birth. The risk posed by record linkage means that even seemingly innocuous data can be used to unlock much riskier data elsewhere. Even attempts to perturb the data, by switching some values around, may not be enough if enough unchanged data is still available. Given the power of machine learning to make inferences about unseen data, which we will cover later in this book, I will echo <span class="citation" data-cites="salganik2019bit">Salganik (<a href="#ref-salganik2019bit" role="doc-biblioref">2019</a>)</span> and stress that you should <em>start</em> with the assumption that any data you make available is potentially identifiable, and potentially serious.</p>
 <p>As researchers, we tend to hyper-focus on the aspects of our data that pertain to our specific research projects, as if we were only responsible for what we ourselves do with the data we collect. After all, we collected the data for a particular purpose, and that purpose can define how we perceive its uses. We should also consider what <em>other</em> questions might be answerable with our data, both as a matter of good research and as a matter of protecting the data we have direct responsibility over, and the indirect data that it might unlock.</p>
 <p>One response to this type of problem is to simply share nothing; <em>lock down all the data</em>. But this collides with another very important ethical principle and scientific norm: <strong>transparency</strong>, which is a necessary but insufficient condition for <strong>accountability</strong>. We don’t want black box science that nobody can question, challenge, or critique. We will later discuss how datasets can contain racist and sexist data that are learned by models, put into production, and further propagated, for example. Privacy and transparency are in direct contradiction with one another. So where on the scale should the needle to be? There is no perfect solution for completely transparent research and completely protected privacy, so we consider the importance of both according to the situation. There is no avoiding difficult decision-making and constant ethical reflection and reflexive practice.</p>
-<p>“According to the situation” is key here. As <span class="citation" data-cites="diakopoulos2020transparency">Diakopoulos (<a href="references.html#ref-diakopoulos2020transparency" role="doc-biblioref">2020</a>)</span> sums up the key idea about the ethical importance of transparency:</p>
+<p>“According to the situation” is key here. As <span class="citation" data-cites="diakopoulos2020transparency">Diakopoulos (<a href="#ref-diakopoulos2020transparency" role="doc-biblioref">2020</a>)</span> sums up the key idea about the ethical importance of transparency:</p>
 <blockquote class="blockquote">
 <p>“Transparency can be defined as ‘the availability of information about an actor allowing other actors to monitor the workings of performance of this actor.’ In other words, transparency is about <em>information</em>, related both to outcomes and procedures used by an actor, and it is <em>relational</em>, involving the exchange of information between actors. Transparency therefore provides the informational substrate for ethical deliberation of a system’s behavior by external actors. It is hard to imagine a robust debate around an algorithmic system without providing the relevant stakeholders the information detailing what that system does and how it operates. Yet it’s important to emphasize that transparency is not sufficient to ensure algorithmic accountability.” (Page 198)</p>
 </blockquote>
-<p>But as <span class="citation" data-cites="diakopoulos2020transparency">Diakopoulos (<a href="references.html#ref-diakopoulos2020transparency" role="doc-biblioref">2020</a>)</span> points out, we can’t understand algorithmic transparency in a binary – transparent or not – as there are many different <em>types</em> of transparency, including what types of information and how much is provided, to whom, and for what purposes. The nature of disclosure can also matter, as self-disclosures are self-interested and present things in a certain light. Not all transparency is good transparency, and not all types of transparency lend themselves to accountability. He identifies a number of things we need to consider when trying to strike this delicate balance between privacy and transparency:</p>
+<p>But as <span class="citation" data-cites="diakopoulos2020transparency">Diakopoulos (<a href="#ref-diakopoulos2020transparency" role="doc-biblioref">2020</a>)</span> points out, we can’t understand algorithmic transparency in a binary – transparent or not – as there are many different <em>types</em> of transparency, including what types of information and how much is provided, to whom, and for what purposes. The nature of disclosure can also matter, as self-disclosures are self-interested and present things in a certain light. Not all transparency is good transparency, and not all types of transparency lend themselves to accountability. He identifies a number of things we need to consider when trying to strike this delicate balance between privacy and transparency:</p>
 <ul>
 <li><em>Human Involvement</em>: Some machine learning algorithms require human input. Supervised machine learning may require data that have been annotated by humans, while others require humans to provide feedback on results, or during operation. Wherever humans have non-trivial input into the process, their decisions should be made open and available.</li>
 <li><em>The Data</em>: Machine learning often involves “training” an algorithm on some set of data. This data, and how it was produced, can have significant impacts how the algorithm functions. If photo data has been used to train a facial recognition algorithm, biases in the original data, like a disproportionate number of white men on some social media sites, can taint any subsequent work that doesn’t match the training data. If we don’t know the training data, we can’t examine it for biases.</li>
 <li><em>The Model and Code</em>: While algorithms are executed by computers, humans wrote them. They were written to solve specific problems, sometimes with specific data and goals in mind. Decisions were made about what variables to optimize, and much more. Researchers decide the values of parameters, or decide not to decide and use default values. These decisions should be open and available for review.</li>
 </ul>
 <p>In an ideal world, no important <em>decisions</em> about our data or models would need to be hidden to protect privacy or confidentiality. In practice, that is often not the case, and we must navigate as best we can our obligations to safeguard our data while making our work as open and transparent as possible. Both are essential; we cannot completely abandon one for the other while still meeting a high standard for ethical research. The answer is not to make all information available; there are too many factors to balance, risks to assess, privacy to protect, and so on. Nor is the answer full transparency, which is not good for anyone. It’s <em>contextually-appropriate transparency</em>, where decisions are made close to the specific cases with the relevant stakeholders. These are the kinds of transparency that are most important to ensuring algorithmic accountability.</p>
-<p>In addition to contextual ethical considerations, we can look for ways to build fairness into our practices more deeply <span class="citation" data-cites="pracFair">(<a href="references.html#ref-pracFair" role="doc-biblioref">Nielse 2021</a>)</span>, and adopt develop new privacy-oriented practices such as Sweeney’s <span class="citation" data-cites="sweeney2002k">(<a href="references.html#ref-sweeney2002k" role="doc-biblioref">2002</a>)</span> proposed <span class="math inline">\(k\)</span>-anonymity. This notation should be familiar based on our discussion of <span class="math inline">\(k\)</span>-cliques in the networks chapters. The idea behind <span class="math inline">\(k\)</span>-anonymity is that no one individual in a dataset can be distinguished from <em>at least</em> <span class="math inline">\(k\)</span> other individuals in the same data using a combination of unique “quasi-identifiers” (e.g.&nbsp;5-digit ZIP, gender, and date of birth). The goal here, like in Faux Magnolia High, is to protect privacy by hiding needles in identical needle stacks, but we manage how transparent/anonymous our data is with the value of <span class="math inline">\(k\)</span>. With especially sensitive data, we may choose higher values, while lower values may be more appropriate for low-risk stakes. This may mean generalizing some data to make it less specific: if only one person is from Glasgow in your dataset, that might mean replacing their location data with Scotland, or you could remove their location data, or remove them from the data altogether. In every case, we make our data <em>less transparent</em>, but we try to preserve the contextually appropriate transparency of the data <em>while also protecting individual privacy and anonymity</em>.</p>
+<p>In addition to contextual ethical considerations, we can look for ways to build fairness into our practices more deeply <span class="citation" data-cites="pracFair">(<a href="#ref-pracFair" role="doc-biblioref">Nielse 2021</a>)</span>, and adopt develop new privacy-oriented practices such as Sweeney’s <span class="citation" data-cites="sweeney2002k">(<a href="#ref-sweeney2002k" role="doc-biblioref">2002</a>)</span> proposed <span class="math inline">\(k\)</span>-anonymity. This notation should be familiar based on our discussion of <span class="math inline">\(k\)</span>-cliques in the networks chapters. The idea behind <span class="math inline">\(k\)</span>-anonymity is that no one individual in a dataset can be distinguished from <em>at least</em> <span class="math inline">\(k\)</span> other individuals in the same data using a combination of unique “quasi-identifiers” (e.g.&nbsp;5-digit ZIP, gender, and date of birth). The goal here, like in Faux Magnolia High, is to protect privacy by hiding needles in identical needle stacks, but we manage how transparent/anonymous our data is with the value of <span class="math inline">\(k\)</span>. With especially sensitive data, we may choose higher values, while lower values may be more appropriate for low-risk stakes. This may mean generalizing some data to make it less specific: if only one person is from Glasgow in your dataset, that might mean replacing their location data with Scotland, or you could remove their location data, or remove them from the data altogether. In every case, we make our data <em>less transparent</em>, but we try to preserve the contextually appropriate transparency of the data <em>while also protecting individual privacy and anonymity</em>.</p>
 <p>As computational scientists, we <em>must</em> wield our power responsibly. That means doing our work in ways that are transparent and facilitate accountability while also ensuring privacy and respecting the people represented in our datasets. It also means doing our work in ways that are auditable and which which enable us to be accountable for the work we do and the impacts it has. That may manifest in any number of ways, the most obvious of which are to use tools that record every decision, every step that takes and input and produces an output, are recorded and can be understood. There are systems that enable this, and using them is the cost of entry.</p>
 <p>However, being aware of the political power we wield and adopting tools and workflows that attempt to make our work as transparent and accountable as possible are, as I mentioned earlier, necessary <em>but insufficient</em>. To wield power responsibly, it is necessary to go beyond abstract ethical principles to think more deeply about how and why we do science, and what kinds of science we want to contribute to and advance, and which we want no part of. In the next section, we’ll discuss bias and algorithmic decision-making as examples of why it is so important to ask ourselves these kinds of questions.</p>
 <blockquote class="blockquote">
-<p>In addition to <span class="citation" data-cites="diakopoulos2020transparency">Diakopoulos (<a href="references.html#ref-diakopoulos2020transparency" role="doc-biblioref">2020</a>)</span>, I suggest looking into other articles on transparency and accountability by Diakopoulos and others, such as <span class="citation" data-cites="diakopoulos2017enabling">Diakopoulos (<a href="references.html#ref-diakopoulos2017enabling" role="doc-biblioref">2017</a>)</span> and <span class="citation" data-cites="ananny2018seeing">Ananny and Crawford (<a href="references.html#ref-ananny2018seeing" role="doc-biblioref">2018</a>)</span>.</p>
+<p>In addition to <span class="citation" data-cites="diakopoulos2020transparency">Diakopoulos (<a href="#ref-diakopoulos2020transparency" role="doc-biblioref">2020</a>)</span>, I suggest looking into other articles on transparency and accountability by Diakopoulos and others, such as <span class="citation" data-cites="diakopoulos2017enabling">Diakopoulos (<a href="#ref-diakopoulos2017enabling" role="doc-biblioref">2017</a>)</span> and <span class="citation" data-cites="ananny2018seeing">Ananny and Crawford (<a href="#ref-ananny2018seeing" role="doc-biblioref">2018</a>)</span>.</p>
 </blockquote>
 </section>
-<section id="bias-and-algorithmic-decision-making" class="level2" data-number="35.6">
-<h2 data-number="35.6" class="anchored" data-anchor-id="bias-and-algorithmic-decision-making"><span class="header-section-number">35.6</span> BIAS AND ALGORITHMIC DECISION-MAKING</h2>
-<p>In a widely-viewed talk “How To Stop Artificial Intelligence From Marginalizing Communities,” Timnit <span class="citation" data-cites="timnetTedTalk">Gebru (<a href="references.html#ref-timnetTedTalk" role="doc-biblioref">2018</a>)</span> raises two very important questions about the many machine learning algorithms that are invisibly woven into virtually every aspect of our lives. For any given algorithm:</p>
+<section id="bias-and-algorithmic-decision-making" class="level2" data-number="36.6">
+<h2 data-number="36.6" class="anchored" data-anchor-id="bias-and-algorithmic-decision-making"><span class="header-section-number">36.6</span> BIAS AND ALGORITHMIC DECISION-MAKING</h2>
+<p>In a widely-viewed talk “How To Stop Artificial Intelligence From Marginalizing Communities,” Timnit <span class="citation" data-cites="timnetTedTalk">Gebru (<a href="#ref-timnetTedTalk" role="doc-biblioref">2018</a>)</span> raises two very important questions about the many machine learning algorithms that are invisibly woven into virtually every aspect of our lives. For any given algorithm:</p>
 <ol type="1">
 <li>Should it exist at all?</li>
 <li>If it is to exist, is it robust enough to use in high-stakes contexts (e.g., in the criminal justice system, healthcare, education, etc.)?</li>
 </ol>
 <p>Gebru’s questions take aim directly at high-stakes algorithmic decision-making (ADM); rightfully so, as ADM is one of the most insidious mechanisms through which systemic inequality is perpetuated. But more importantly, these questions are especially relevant to us as researchers; you will likely have opportunities to contribute to technologies such as these, or others that are similar in one way or another. Given that you could easily find yourself in a situation where that’s a possible outcome, it’s important for us to ask ourselves these questions early and often so we can better understand what kinds of technologies we are uncomfortable contributing to, whether because we think they are inherently dangerous or simply too prone to abuse to be worth the risk.</p>
 <p>If you don’t spend a lot of time thinking about, critiquing, or developing algorithms, it might <em>seem</em> like incorporating algorithms into decision-making is reasonable and perhaps even more impartial than the alternative. After all, algorithms are just a series of steps consistently carried out by computers, following mathematical rules and precision. And a computer is incapable of thought, let alone bigotry.</p>
-<p>This is a complete fantasy; algorithms don’t spring into existence fully formed out of nowhere. They’re written by humans to enforce human rules, and I doubt anyone would say that the rules we make are always fair. When our biases are encoded into algorithms, those biases are perpetuated and amplified, often with very serious consequences. These biases disproportionately affect people who are already marginalized. There is a rapidly growing literature <span class="citation" data-cites="west2019discriminating gebru2020race propub o2016weapons eubanks2018automating benjamin2019race nelson2021leveraging noble2018algorithms de2019does buolamwini2018gender hamidi2018gender">(e.g., <a href="references.html#ref-west2019discriminating" role="doc-biblioref">West, Whittaker, and Crawford 2019</a>; <a href="references.html#ref-gebru2020race" role="doc-biblioref">Gebru 2020</a>; <a href="references.html#ref-propub" role="doc-biblioref">Angwin et al. 2016</a>; <a href="references.html#ref-o2016weapons" role="doc-biblioref">O’Neil 2016</a>; <a href="references.html#ref-eubanks2018automating" role="doc-biblioref">Eubanks 2018</a>; <a href="references.html#ref-benjamin2019race" role="doc-biblioref">Benjamin 2019</a>; <a href="references.html#ref-nelson2021leveraging" role="doc-biblioref">Nelson 2021</a>; <a href="references.html#ref-noble2018algorithms" role="doc-biblioref">Noble 2018</a>; <a href="references.html#ref-de2019does" role="doc-biblioref">Vries et al. 2019</a>; <a href="references.html#ref-buolamwini2018gender" role="doc-biblioref">Buolamwini and Gebru 2018</a>; <a href="references.html#ref-hamidi2018gender" role="doc-biblioref">Hamidi, Scheuerman, and Branham 2018</a>)</span> and there is no excuse for ignorance.</p>
+<p>This is a complete fantasy; algorithms don’t spring into existence fully formed out of nowhere. They’re written by humans to enforce human rules, and I doubt anyone would say that the rules we make are always fair. When our biases are encoded into algorithms, those biases are perpetuated and amplified, often with very serious consequences. These biases disproportionately affect people who are already marginalized. There is a rapidly growing literature <span class="citation" data-cites="west2019discriminating gebru2020race propub o2016weapons eubanks2018automating benjamin2019race nelson2021leveraging noble2018algorithms de2019does buolamwini2018gender hamidi2018gender">(e.g., <a href="#ref-west2019discriminating" role="doc-biblioref">West, Whittaker, and Crawford 2019</a>; <a href="#ref-gebru2020race" role="doc-biblioref">Gebru 2020</a>; <a href="#ref-propub" role="doc-biblioref">Angwin et al. 2016</a>; <a href="#ref-o2016weapons" role="doc-biblioref">O’Neil 2016</a>; <a href="#ref-eubanks2018automating" role="doc-biblioref">Eubanks 2018</a>; <a href="#ref-benjamin2019race" role="doc-biblioref">Benjamin 2019</a>; <a href="#ref-nelson2021leveraging" role="doc-biblioref">Nelson 2021</a>; <a href="#ref-noble2018algorithms" role="doc-biblioref">Noble 2018</a>; <a href="#ref-de2019does" role="doc-biblioref">Vries et al. 2019</a>; <a href="#ref-buolamwini2018gender" role="doc-biblioref">Buolamwini and Gebru 2018</a>; <a href="#ref-hamidi2018gender" role="doc-biblioref">Hamidi, Scheuerman, and Branham 2018</a>)</span> and there is no excuse for ignorance.</p>
 <p>Who can we turn to when an algorithm discriminates? Rarely ever one person. ADM technologies are thought up, planned, developed, and implemented by <em>many</em> people, diffusing any direct responsibility and allowing any one person or group to somewhat reasonably claim that they cannot be held personally responsible for specific negative outcomes. If you think something is wrong, you can always try to get the organization to change the rules, right?</p>
-<p>This is one small part of Virginia Eubanks’ <span class="citation" data-cites="eubanks2018automating">(<a href="references.html#ref-eubanks2018automating" role="doc-biblioref">2018</a>)</span> description of the evolution of what she calls the “Digital Poorhouse:” technological systems born from conservative hysteria over welfare costs, fraud, and inefficiency as the 1973 recession hit. With recent legal protections put in place to protect people needing welfare from discriminatory eligibility rules, politicians and state bureaucrats were caught between a desire to cut public assistance spending and the law. So, they found a way to cut spending, and gave it a spin that was hard to dispute at face value. They commissioned new technologies to save money by “distributing aid more efficiently.” After all, computers could ensure that every rule was being followed, welfare fraudsters couldn’t sneak through the cracks in the algorithms, and everyone would be getting equal treatment. Welfare assistance had rules, and computers would simply enforce the rules that were already there. By the 1980s, computers were collecting, analyzing, and storing incredibly detailed data on families receiving public assistance. And they were sharing this data with agencies across the US government, including the Department of Defence, state governments, federal employers, civil and criminal courts, local welfare agencies, and the Department of Justice.</p>
-<p>Algorithms trawled these data for indications of fraud, criminal activity, or other inconsistencies. Through a combination of new rules and technologies, Republican legislators in New York state set about solving the problem of “cheats, frauds, and abusers” of the welfare system <span class="citation" data-cites="eubanks2018automating">(<a href="references.html#ref-eubanks2018automating" role="doc-biblioref">Eubanks 2018</a>)</span>. In 1972, almost 50% of citizens living under the poverty line were on public assistance; as of 2018, it was less than 10%. Every new set of rules could be justified if they found a few examples of misuse, which could then be amplified and used to justify the next round of rules. When failure to be on time for an appointment or otherwise missing any caseworker-prescribed therapeutic or job-training activity can be met with sanctions that result in temporary or permanent loss of benefits, this feeds into a cycle of poverty. People in need of assistance are then punished for illness, taking care of dependents, or occupational obligations, which in turn produces greater pressures on health, family, and finances. In protecting against people becoming “dependent” on the government, algorithms become the walls of the Digital Poorhouse, actively hindering people from escaping privation and perpetuating the cycle of poverty.</p>
+<p>This is one small part of Virginia Eubanks’ <span class="citation" data-cites="eubanks2018automating">(<a href="#ref-eubanks2018automating" role="doc-biblioref">2018</a>)</span> description of the evolution of what she calls the “Digital Poorhouse:” technological systems born from conservative hysteria over welfare costs, fraud, and inefficiency as the 1973 recession hit. With recent legal protections put in place to protect people needing welfare from discriminatory eligibility rules, politicians and state bureaucrats were caught between a desire to cut public assistance spending and the law. So, they found a way to cut spending, and gave it a spin that was hard to dispute at face value. They commissioned new technologies to save money by “distributing aid more efficiently.” After all, computers could ensure that every rule was being followed, welfare fraudsters couldn’t sneak through the cracks in the algorithms, and everyone would be getting equal treatment. Welfare assistance had rules, and computers would simply enforce the rules that were already there. By the 1980s, computers were collecting, analyzing, and storing incredibly detailed data on families receiving public assistance. And they were sharing this data with agencies across the US government, including the Department of Defence, state governments, federal employers, civil and criminal courts, local welfare agencies, and the Department of Justice.</p>
+<p>Algorithms trawled these data for indications of fraud, criminal activity, or other inconsistencies. Through a combination of new rules and technologies, Republican legislators in New York state set about solving the problem of “cheats, frauds, and abusers” of the welfare system <span class="citation" data-cites="eubanks2018automating">(<a href="#ref-eubanks2018automating" role="doc-biblioref">Eubanks 2018</a>)</span>. In 1972, almost 50% of citizens living under the poverty line were on public assistance; as of 2018, it was less than 10%. Every new set of rules could be justified if they found a few examples of misuse, which could then be amplified and used to justify the next round of rules. When failure to be on time for an appointment or otherwise missing any caseworker-prescribed therapeutic or job-training activity can be met with sanctions that result in temporary or permanent loss of benefits, this feeds into a cycle of poverty. People in need of assistance are then punished for illness, taking care of dependents, or occupational obligations, which in turn produces greater pressures on health, family, and finances. In protecting against people becoming “dependent” on the government, algorithms become the walls of the Digital Poorhouse, actively hindering people from escaping privation and perpetuating the cycle of poverty.</p>
 <p>Think back to Gebru’s questions. Should these algorithms exist? Are they robust enough to handle high-stakes contexts? The first question is always difficult, in part because the same algorithms can be used in so many different contexts and to so many different ends. The second question is easier to answer: no, they are not good enough to rely on in these high-stakes contexts. These are questions that we should <em>always</em> be thinking about when we produce algorithms that make decisions where humans would otherwise. We need to ask these questions because we are working in areas with important unsettled ethical dimensions where the decisions we make have material consequences on people lives. These questions should help us determine what kinds of work we will do, and what kinds we will <em>not</em>.</p>
-<p>In addition to consent, informational risk, the tensions between competing principles such as privacy and transparency, and the highly consequential risks of algorithmic bias and decision paired with algorithmic decisions making, we have to be deeply concerned with the <em>data</em> we train our models with, and whether those data contain biases that would be perpetuated if used in an applied context. We’ll discuss the details in the next chapter and many that follow, but for now what you need to know is that machines only “learn” what we teach them via <em>many</em> examples. Certain kinds of machine learning make it very hard to understand what exactly the machine has learned, which contributes to a lack of accountability in a context where what the model learned has <em>very</em> significant consequences for the lives of real people. Here’s the problem, having been collected from the real world, they reflect the biases that exist wherever they were first collected. And of course any biases of the people who collected them, which is a problem given the extent to which marginalized people are underrepresented in fields like machine learning and artificial intelligence research <span class="citation" data-cites="west2019discriminating gebru2020race">(e.g., <a href="references.html#ref-west2019discriminating" role="doc-biblioref">West, Whittaker, and Crawford 2019</a>; <a href="references.html#ref-gebru2020race" role="doc-biblioref">Gebru 2020</a>)</span>. Many of these models learn, <em>or are explicitly trained to learn</em> [e.g., classification models for social categories such as race, gender, and sexuality], those biases, which are then amplified and further propogated. Sometimes these biases are blatently obvious once you know to look for them <span class="citation" data-cites="buolamwini2018gender">(<a href="references.html#ref-buolamwini2018gender" role="doc-biblioref">Buolamwini and Gebru 2018</a>)</span>. Othertimes they can be much more illusive, even though there are plenty of good reasons to suspect they are there in some form <span class="citation" data-cites="bolukbasi2016man gonen2019lipstick nissim2020fair">(<a href="references.html#ref-bolukbasi2016man" role="doc-biblioref">Bolukbasi et al. 2016</a>; <a href="references.html#ref-gonen2019lipstick" role="doc-biblioref">Gonen and Goldberg 2019</a>; <a href="references.html#ref-nissim2020fair" role="doc-biblioref">Nissim, Noord, and Goot 2020</a>)</span>.</p>
+<p>In addition to consent, informational risk, the tensions between competing principles such as privacy and transparency, and the highly consequential risks of algorithmic bias and decision paired with algorithmic decisions making, we have to be deeply concerned with the <em>data</em> we train our models with, and whether those data contain biases that would be perpetuated if used in an applied context. We’ll discuss the details in the next chapter and many that follow, but for now what you need to know is that machines only “learn” what we teach them via <em>many</em> examples. Certain kinds of machine learning make it very hard to understand what exactly the machine has learned, which contributes to a lack of accountability in a context where what the model learned has <em>very</em> significant consequences for the lives of real people. Here’s the problem, having been collected from the real world, they reflect the biases that exist wherever they were first collected. And of course any biases of the people who collected them, which is a problem given the extent to which marginalized people are underrepresented in fields like machine learning and artificial intelligence research <span class="citation" data-cites="west2019discriminating gebru2020race">(e.g., <a href="#ref-west2019discriminating" role="doc-biblioref">West, Whittaker, and Crawford 2019</a>; <a href="#ref-gebru2020race" role="doc-biblioref">Gebru 2020</a>)</span>. Many of these models learn, <em>or are explicitly trained to learn</em> [e.g., classification models for social categories such as race, gender, and sexuality], those biases, which are then amplified and further propogated. Sometimes these biases are blatently obvious once you know to look for them <span class="citation" data-cites="buolamwini2018gender">(<a href="#ref-buolamwini2018gender" role="doc-biblioref">Buolamwini and Gebru 2018</a>)</span>. Othertimes they can be much more illusive, even though there are plenty of good reasons to suspect they are there in some form <span class="citation" data-cites="bolukbasi2016man gonen2019lipstick nissim2020fair">(<a href="#ref-bolukbasi2016man" role="doc-biblioref">Bolukbasi et al. 2016</a>; <a href="#ref-gonen2019lipstick" role="doc-biblioref">Gonen and Goldberg 2019</a>; <a href="#ref-nissim2020fair" role="doc-biblioref">Nissim, Noord, and Goot 2020</a>)</span>.</p>
 <blockquote class="blockquote">
 <p><strong>Further Reading</strong></p>
-<p>There is a lot of excellent work on ethics and politics of machine learning and artificial intelligence that is important to know. I strongly recommend <span class="citation" data-cites="o2016weapons">O’Neil (<a href="references.html#ref-o2016weapons" role="doc-biblioref">2016</a>)</span>, <span class="citation" data-cites="eubanks2018automating">Eubanks (<a href="references.html#ref-eubanks2018automating" role="doc-biblioref">2018</a>)</span>, and <span class="citation" data-cites="propub">Angwin et al. (<a href="references.html#ref-propub" role="doc-biblioref">2016</a>)</span> for general introductions to issues related to systemic social inequality and algorithmic decision making. Timnit <span class="citation" data-cites="gebru2020race">Gebru (<a href="references.html#ref-gebru2020race" role="doc-biblioref">2020</a>)</span> provides a good overview of questions related to race and gender in machine learning and ethics. <span class="citation" data-cites="west2019discriminating">West, Whittaker, and Crawford (<a href="references.html#ref-west2019discriminating" role="doc-biblioref">2019</a>)</span> provide a close look at issues related to diversity and representation issues in machine learning and artificial intelligence that includes a critique of “pipeline” research on diversity in STEM fields.</p>
-<p>Abeba Birhane and Fred Cummins <span class="citation" data-cites="birhane2019algorithmic">(<a href="references.html#ref-birhane2019algorithmic" role="doc-biblioref">2019</a>)</span> “Algorithmic injustices” offers a perspective grounded in philosophical work on relational ethics, and <span class="citation" data-cites="hanna2020towards">Hanna et al. (<a href="references.html#ref-hanna2020towards" role="doc-biblioref">2020</a>)</span> offers a guidelines for work on algorithmic fairness that is grounded in critical race theory and sociological and historical work on the social construction of race and systemic social inequality. <span class="citation" data-cites="denton2020bringing">Denton et al. (<a href="references.html#ref-denton2020bringing" role="doc-biblioref">2020</a>)</span> tackle of issues of algorithmic unfairness in benchmark machine learning datasets, which are biased towards white, cisgender, male, and Western people.</p>
+<p>There is a lot of excellent work on ethics and politics of machine learning and artificial intelligence that is important to know. I strongly recommend <span class="citation" data-cites="o2016weapons">O’Neil (<a href="#ref-o2016weapons" role="doc-biblioref">2016</a>)</span>, <span class="citation" data-cites="eubanks2018automating">Eubanks (<a href="#ref-eubanks2018automating" role="doc-biblioref">2018</a>)</span>, and <span class="citation" data-cites="propub">Angwin et al. (<a href="#ref-propub" role="doc-biblioref">2016</a>)</span> for general introductions to issues related to systemic social inequality and algorithmic decision making. Timnit <span class="citation" data-cites="gebru2020race">Gebru (<a href="#ref-gebru2020race" role="doc-biblioref">2020</a>)</span> provides a good overview of questions related to race and gender in machine learning and ethics. <span class="citation" data-cites="west2019discriminating">West, Whittaker, and Crawford (<a href="#ref-west2019discriminating" role="doc-biblioref">2019</a>)</span> provide a close look at issues related to diversity and representation issues in machine learning and artificial intelligence that includes a critique of “pipeline” research on diversity in STEM fields.</p>
+<p>Abeba Birhane and Fred Cummins <span class="citation" data-cites="birhane2019algorithmic">(<a href="#ref-birhane2019algorithmic" role="doc-biblioref">2019</a>)</span> “Algorithmic injustices” offers a perspective grounded in philosophical work on relational ethics, and <span class="citation" data-cites="hanna2020towards">Hanna et al. (<a href="#ref-hanna2020towards" role="doc-biblioref">2020</a>)</span> offers a guidelines for work on algorithmic fairness that is grounded in critical race theory and sociological and historical work on the social construction of race and systemic social inequality. <span class="citation" data-cites="denton2020bringing">Denton et al. (<a href="#ref-denton2020bringing" role="doc-biblioref">2020</a>)</span> tackle of issues of algorithmic unfairness in benchmark machine learning datasets, which are biased towards white, cisgender, male, and Western people.</p>
 </blockquote>
 </section>
-<section id="ditching-the-value-free-ideal-for-ethics-politics-and-science" class="level2" data-number="35.7">
-<h2 data-number="35.7" class="anchored" data-anchor-id="ditching-the-value-free-ideal-for-ethics-politics-and-science"><span class="header-section-number">35.7</span> DITCHING THE VALUE-FREE IDEAL FOR ETHICS, POLITICS, AND SCIENCE</h2>
+<section id="ditching-the-value-free-ideal-for-ethics-politics-and-science" class="level2" data-number="36.7">
+<h2 data-number="36.7" class="anchored" data-anchor-id="ditching-the-value-free-ideal-for-ethics-politics-and-science"><span class="header-section-number">36.7</span> DITCHING THE VALUE-FREE IDEAL FOR ETHICS, POLITICS, AND SCIENCE</h2>
 <p>We’ve discussed a lot of major challenges in this chapter so far, but we’ve barely scratched the surface. One thing I hope has been clear so far is that data are not inherently objective descriptions of reality that <em>reveal</em> the truth to us, like some sort of mythical view from nowhere; they are things that we <em>construct</em>. It’s not a matter of collecting and drawing insights from “raw data;” <em>it’s models all the way down.</em> Deciding to collect data in <em>any</em> way, is in effect a modelling decision that is propagated forward into other models (like univariate distributions), which in turn is propagated forward into more complex models (like machine learning models). At the end of all this, we design digital infrastructure that further entrenches our models in the world, whether it’s in the algorithms that recommend friends and news articles, or predictive models that we come to understand and game over time, further re-structuring and re-imagining our societies.</p>
 <p>While we should reflect on whether the data we collect and encode represents the world in some statistical sense, this is only the most obvious dimension of the problem of fair representation. It is also crucial to think about how the data we collect, and how we encode it, works <em>back</em> on the world. In other words, we need to think about how the ways we collect and encode data represent people, and whether the potential impacts from our work are <em>fair</em> and <em>just</em>. If the idea of doing computational social science with justice in mind is a bit too much for you, then I recommend, at the very least, starting with a commitment not to do computational social science in ways that contribute to <em>injustices</em>, which, as the algorithmic injustice literature makes patently clear, is <em>very easy to do.</em> In the end, the decision about what kind of work you will or will not do is up to you and any ethics board/stakeholders you must answer to, but this decision should be <em>intentional</em>. Refusing to make a decision <em>is a decision</em>, so it’s better to know what you’re comfortable contributing to so you don’t get a nasty surprise later on.</p>
-<p>I hope this resonates, but even if it does, it may not sit very well with everyone’s understanding of how science is supposed to be done. Shouldn’t we strive for impartiality? Shouldn’t we be pursuing the “value-free ideal?” This debate has raged on in some form or another in the sciences and humanities for centuries, and a full discussion is beyond the scope of this chapter. But the point I want to emphasize here is an obvious one whose full implications are rarely appreciated: science is fundamentally a human and cultural activity. For better or for worse, <em>there is no getting rid of values in science</em> <span class="citation" data-cites="douglas2009science">(<a href="references.html#ref-douglas2009science" role="doc-biblioref">Douglas 2009</a>)</span>.</p>
+<p>I hope this resonates, but even if it does, it may not sit very well with everyone’s understanding of how science is supposed to be done. Shouldn’t we strive for impartiality? Shouldn’t we be pursuing the “value-free ideal?” This debate has raged on in some form or another in the sciences and humanities for centuries, and a full discussion is beyond the scope of this chapter. But the point I want to emphasize here is an obvious one whose full implications are rarely appreciated: science is fundamentally a human and cultural activity. For better or for worse, <em>there is no getting rid of values in science</em> <span class="citation" data-cites="douglas2009science">(<a href="#ref-douglas2009science" role="doc-biblioref">Douglas 2009</a>)</span>.</p>
 <blockquote class="blockquote">
 <p><strong>Further Reading</strong></p>
-<p>There is plenty of work in science and technology studies as well as the sociology, history, and philosophy of science that is relevant to this discussion. I recommend reading Heather Douglas’ <span class="citation" data-cites="douglas2009science">(<a href="references.html#ref-douglas2009science" role="doc-biblioref">2009</a>)</span> <em>Science, policy, and the value-free ideal</em> and <span class="citation" data-cites="collins2020experts">Collins et al. (<a href="references.html#ref-collins2020experts" role="doc-biblioref">2020</a>)</span> <em>Experts and the Will of the People</em>. Both books articulate realistic normative models for science in social and political context. Finally, <span class="citation" data-cites="green2021data">Green (<a href="references.html#ref-green2021data" role="doc-biblioref">2021</a>)</span> (discussed below) is worth reading for a more expliticly political take on the practice of data science.</p>
+<p>There is plenty of work in science and technology studies as well as the sociology, history, and philosophy of science that is relevant to this discussion. I recommend reading Heather Douglas’ <span class="citation" data-cites="douglas2009science">(<a href="#ref-douglas2009science" role="doc-biblioref">2009</a>)</span> <em>Science, policy, and the value-free ideal</em> and <span class="citation" data-cites="collins2020experts">Collins et al. (<a href="#ref-collins2020experts" role="doc-biblioref">2020</a>)</span> <em>Experts and the Will of the People</em>. Both books articulate realistic normative models for science in social and political context. Finally, <span class="citation" data-cites="green2021data">Green (<a href="#ref-green2021data" role="doc-biblioref">2021</a>)</span> (discussed below) is worth reading for a more expliticly political take on the practice of data science.</p>
 </blockquote>
-<p>Not only is it impossible and pointless to try to get rid of values in science, <em>neutrality itself is an illusion</em>. Every decision that we make in the context of collecting data, applying models, interpreting outputs, and making decisions is part of imagining and structuring the world in particular ways, and to the extent that those decisions impact who gets what, <em>these decisions are political</em>. Neutrality is not an answer here. As <span class="citation" data-cites="green2021data">Green (<a href="references.html#ref-green2021data" role="doc-biblioref">2021</a>)</span> points out, efforts to <em>resist</em> reform are just as political as any effort <em>for</em> reform, and the only people who get to claim “neutrality” are the ones whose perspective and interests are already widely entrenched. Everyone else is denied that stance. There really is no getting out of politics, whether we want out or not.</p>
-<p><span class="citation" data-cites="green2021data">Green (<a href="references.html#ref-green2021data" role="doc-biblioref">2021</a>)</span> uses the case of predictive policing and systemic racism to make an argument we will return to when considering what and how we will and will not do computational social science.</p>
+<p>Not only is it impossible and pointless to try to get rid of values in science, <em>neutrality itself is an illusion</em>. Every decision that we make in the context of collecting data, applying models, interpreting outputs, and making decisions is part of imagining and structuring the world in particular ways, and to the extent that those decisions impact who gets what, <em>these decisions are political</em>. Neutrality is not an answer here. As <span class="citation" data-cites="green2021data">Green (<a href="#ref-green2021data" role="doc-biblioref">2021</a>)</span> points out, efforts to <em>resist</em> reform are just as political as any effort <em>for</em> reform, and the only people who get to claim “neutrality” are the ones whose perspective and interests are already widely entrenched. Everyone else is denied that stance. There really is no getting out of politics, whether we want out or not.</p>
+<p><span class="citation" data-cites="green2021data">Green (<a href="#ref-green2021data" role="doc-biblioref">2021</a>)</span> uses the case of predictive policing and systemic racism to make an argument we will return to when considering what and how we will and will not do computational social science.</p>
 <blockquote class="blockquote">
 <p>“… the very act of choosing to develop predictive policing algorithms is not at all neutral. Accepting common definitions of crime and how to address it does not allow data scientists to remove themselves from politics – it merely allows them to <em>seem</em> removed from politics, when in fact they are upholding the politics that have led to our current social conditions.” (Page 16)</p>
 </blockquote>
@@ -675,9 +650,9 @@ window.Quarto = {
 <p>“Whether or not the data scientists … recognize it, their decisions about what problems to work on, what data to use, and what solutions to propose involve normative stances that affect the distribution of power, status, and rights across society. They are, in other words, engaging in political activity.” (Page 20)</p>
 </blockquote>
 <p>There are three core related insights here: (1) it is not possible to be “neutral;” (2) striving for neutrality is fundamentally conservative in that it maintains the status quo, whatever that may be; and (3) while you are entitled to conservatism if that’s what you want, you should be honest and call it what it is: conservativism, not neutrality. You don’t need to adopt a specific political stance to do good science, but doing good science, doing <em>ethical</em> and professionally <em>responsible</em> science, means articulating those values and making them explicit. You can see this as an extension of transparency if you like: you have values that shape your science, whether you know it or not. It is incumbent upon you to identify those values, understand their role, to make them explicit, and use that reflexive knowledge to do better science in service of your articulated and carefully considered values.</p>
-<p>Green <span class="citation" data-cites="green2021data">(<a href="references.html#ref-green2021data" role="doc-biblioref">2021</a>)</span> argues that abstract ethical principles are not enough, we also need explicit normative values. <em>But doesn’t that run against the value-free ideal?</em> Yes? Doesn’t that make for bad science? <em>No.&nbsp;Quite the opposite, actually.</em> Nothing good can come from pretending that science is not fundamentally a human and cultural endeavor <span class="citation" data-cites="collins2020experts douglas2009science">(<a href="references.html#ref-collins2020experts" role="doc-biblioref">Collins et al. 2020</a>; <a href="references.html#ref-douglas2009science" role="doc-biblioref">Douglas 2009</a>)</span>. There is no being free from social standpoints or political and cultural contexts. And that does <em>not</em> devalue or diminish science in any way. The problem is <em>not</em> that we find values in places (i.e., sciences) where they don’t belong, it’s that those values are usually hidden, intentionally or unintentionally; they are not <em>recognized</em> as values, they are implicit, smuggled in. And they affect people’s lives.</p>
-<section id="critical-questions-to-ask-yourself" class="level3" data-number="35.7.1">
-<h3 data-number="35.7.1" class="anchored" data-anchor-id="critical-questions-to-ask-yourself"><span class="header-section-number">35.7.1</span> Critical Questions to Ask Yourself</h3>
+<p>Green <span class="citation" data-cites="green2021data">(<a href="#ref-green2021data" role="doc-biblioref">2021</a>)</span> argues that abstract ethical principles are not enough, we also need explicit normative values. <em>But doesn’t that run against the value-free ideal?</em> Yes? Doesn’t that make for bad science? <em>No.&nbsp;Quite the opposite, actually.</em> Nothing good can come from pretending that science is not fundamentally a human and cultural endeavor <span class="citation" data-cites="collins2020experts douglas2009science">(<a href="#ref-collins2020experts" role="doc-biblioref">Collins et al. 2020</a>; <a href="#ref-douglas2009science" role="doc-biblioref">Douglas 2009</a>)</span>. There is no being free from social standpoints or political and cultural contexts. And that does <em>not</em> devalue or diminish science in any way. The problem is <em>not</em> that we find values in places (i.e., sciences) where they don’t belong, it’s that those values are usually hidden, intentionally or unintentionally; they are not <em>recognized</em> as values, they are implicit, smuggled in. And they affect people’s lives.</p>
+<section id="critical-questions-to-ask-yourself" class="level3" data-number="36.7.1">
+<h3 data-number="36.7.1" class="anchored" data-anchor-id="critical-questions-to-ask-yourself"><span class="header-section-number">36.7.1</span> Critical Questions to Ask Yourself</h3>
 <p>We do not just make neutral tools that reveal some value-free Truth about the world. How will your tools be used? Are you developing or improving tools that could be used to violate people’s rights? That could infringe on their privacy or manipulate their informational environments and emotional/affective states? Could it undermine their autonomy, identify, or self-presentation? Could it out their secrets, or expose intimate details of their lives? Does it assign them membership in groups they don’t identify themselves with, such as methods that automatically estimate membership in some sort of social category?</p>
 <p>If you consider these questions, you will quite possibly find yourself with the start of your very own “what I won’t build” list, articulated so clearly by <a href="http://www.rctatman.com/files/Tatman_2020_WiNLP_Keynote.pdf">Rachael <span class="citation" data-cites="tatmam">Tatmam (<span>2020</span>)</span></a> in her Widening NLP keynote. What will <em>you</em> not build? How will you <em>not do</em> computational social science or data science?</p>
 <p>I am framing this as a question of professional <em>responsibility</em> in part because much of the mess that data scientists and computational social scientists can find themselves in, wittingly or unwittingly, stems directly from defining our scientific work and roles in society as <em>lacking</em> agency, power, and responsibility for the way our work is used, and how it acts back on the world, and for avoiding politics as if it tainted our science rather than making it better. By framing it as a <em>professional</em> responsibility, I’m casting it as the cost of entry: ignoring these issues or defining them as not our/your responsibility is professionally irresponsible at best.</p>
@@ -685,10 +660,10 @@ window.Quarto = {
 <p>In addition to decisions about what you will and won’t do in data science and computational social science, you will need to make specific decisions about <em>how</em> to do the things you’ve decided you will do. At a minimum, the cost of entry here should be to do your work in ways that are as transparent, accountable, and reproducible as possible.</p>
 <blockquote class="blockquote">
 <p><strong>Further Reading</strong></p>
-<p>There is a growing movement in the machine learning community, and more recently computational research in general, towards embedding fairness, transparency, and accountability (see, for example, the FAccT conference) into concrete research practices. It has also motivated discussions of prioritizing interpretable and causal models <span class="citation" data-cites="rudin2019stop kusner2020long">(e.g., <a href="references.html#ref-rudin2019stop" role="doc-biblioref">Rudin 2019</a>; <a href="references.html#ref-kusner2020long" role="doc-biblioref">Kusner and Loftus 2020</a>)</span> and better standards and documentation for data and models <span class="citation" data-cites="gebru2018datasheets mitchell2019model pracFair pdpp holland2020dataset">(e.g., <a href="references.html#ref-gebru2018datasheets" role="doc-biblioref">Gebru et al. 2018</a>; <a href="references.html#ref-mitchell2019model" role="doc-biblioref">Mitchell et al. 2019</a>; <a href="references.html#ref-pracFair" role="doc-biblioref">Nielse 2021</a>; <a href="references.html#ref-pdpp" role="doc-biblioref">McLevey, Browne, and Crick 2021</a>; <a href="references.html#ref-holland2020dataset" role="doc-biblioref">Holland, Hosny, and Newman 2020</a>)</span>, and research with secondary data <span class="citation" data-cites="weston2019recommendations">(e.g., <a href="references.html#ref-weston2019recommendations" role="doc-biblioref">Weston et al. 2019</a>)</span>.</p>
+<p>There is a growing movement in the machine learning community, and more recently computational research in general, towards embedding fairness, transparency, and accountability (see, for example, the FAccT conference) into concrete research practices. It has also motivated discussions of prioritizing interpretable and causal models <span class="citation" data-cites="rudin2019stop kusner2020long">(e.g., <a href="#ref-rudin2019stop" role="doc-biblioref">Rudin 2019</a>; <a href="#ref-kusner2020long" role="doc-biblioref">Kusner and Loftus 2020</a>)</span> and better standards and documentation for data and models <span class="citation" data-cites="gebru2018datasheets mitchell2019model pracFair pdpp holland2020dataset">(e.g., <a href="#ref-gebru2018datasheets" role="doc-biblioref">Gebru et al. 2018</a>; <a href="#ref-mitchell2019model" role="doc-biblioref">Mitchell et al. 2019</a>; <a href="#ref-pracFair" role="doc-biblioref">Nielse 2021</a>; <a href="#ref-pdpp" role="doc-biblioref">McLevey, Browne, and Crick 2021</a>; <a href="#ref-holland2020dataset" role="doc-biblioref">Holland, Hosny, and Newman 2020</a>)</span>, and research with secondary data <span class="citation" data-cites="weston2019recommendations">(e.g., <a href="#ref-weston2019recommendations" role="doc-biblioref">Weston et al. 2019</a>)</span>.</p>
 </blockquote>
-<p>In the kinds of cases that Cathy <span class="citation" data-cites="o2016weapons">O’Neil (<a href="references.html#ref-o2016weapons" role="doc-biblioref">2016</a>)</span> and others discuss, the central idea is that to be <em>accountable</em> one has to be able to explain to those whose lives we affect how decisions where made not just in general, but <em>in their case</em>. If a bank uses a model that denies you a loan, you have a right to know why. Yet many widely-used cutting edge models used in the field, like most contemporary neural network models, can include thousands or millions of parameters that are learned from data and extraordinarily difficult to understand. Some of the really large-scale language models that make the news headlines have billions. And the variables these models use – generally known as features – are often low-level, like individual words or pixels. This has prompted two movements: (1) towards using less complex models that produce directly interpretable results, from humble logistic regressions to hierarchical Bayesian models instead of more complex models; and (2) developing new “explainability” models that attempt to inject a bit of interpretability into more complex models.</p>
-<p>Part of doing ethical, fair, and just computational and data science is about using models in ways that are appropriate for the problem at hand. Often this will mean putting down your neural network and picking up your logistic regression. But that doesn’t mean that the more complex models don’t have a place, they do! In fact, as <span class="citation" data-cites="nelson2021leveraging">Nelson (<a href="references.html#ref-nelson2021leveraging" role="doc-biblioref">2021</a>)</span> and others have argued, they can even enable approaches to computational research that are informed by intersectionality theory.</p>
+<p>In the kinds of cases that Cathy <span class="citation" data-cites="o2016weapons">O’Neil (<a href="#ref-o2016weapons" role="doc-biblioref">2016</a>)</span> and others discuss, the central idea is that to be <em>accountable</em> one has to be able to explain to those whose lives we affect how decisions where made not just in general, but <em>in their case</em>. If a bank uses a model that denies you a loan, you have a right to know why. Yet many widely-used cutting edge models used in the field, like most contemporary neural network models, can include thousands or millions of parameters that are learned from data and extraordinarily difficult to understand. Some of the really large-scale language models that make the news headlines have billions. And the variables these models use – generally known as features – are often low-level, like individual words or pixels. This has prompted two movements: (1) towards using less complex models that produce directly interpretable results, from humble logistic regressions to hierarchical Bayesian models instead of more complex models; and (2) developing new “explainability” models that attempt to inject a bit of interpretability into more complex models.</p>
+<p>Part of doing ethical, fair, and just computational and data science is about using models in ways that are appropriate for the problem at hand. Often this will mean putting down your neural network and picking up your logistic regression. But that doesn’t mean that the more complex models don’t have a place, they do! In fact, as <span class="citation" data-cites="nelson2021leveraging">Nelson (<a href="#ref-nelson2021leveraging" role="doc-biblioref">2021</a>)</span> and others have argued, they can even enable approaches to computational research that are informed by intersectionality theory.</p>
 <p>As always, part of what makes this a challenge is that there is no checklist here. That said, here’s a non-exhaustive checklist to get you <em>started</em> thinking thorough some of these ethical and political considerations in computational social science and data science.</p>
 <ul>
 <li>Have the people represented by my data provided informed consent? If not, have I fully justified its use?</li>
@@ -703,10 +678,10 @@ window.Quarto = {
 <p>If you can provide answers to these questions (and any more that apply) that would satisfy you coming from others, as well as yourself, you will be taking a much more proactive approach to conducting ethical and principled computational social science.</p>
 </section>
 </section>
-<section id="conclusion" class="level2" data-number="35.8">
-<h2 data-number="35.8" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">35.8</span> CONCLUSION</h2>
-<section id="key-points" class="level3" data-number="35.8.1">
-<h3 data-number="35.8.1" class="anchored" data-anchor-id="key-points"><span class="header-section-number">35.8.1</span> Key Points</h3>
+<section id="conclusion" class="level2" data-number="36.8">
+<h2 data-number="36.8" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">36.8</span> CONCLUSION</h2>
+<section id="key-points" class="level3" data-number="36.8.1">
+<h3 data-number="36.8.1" class="anchored" data-anchor-id="key-points"><span class="header-section-number">36.8.1</span> Key Points</h3>
 <ul>
 <li>Knowledge of network structure can provide information that can be used to influence, for good or ill, that network.</li>
 <li>Anonymizing data is not a matter of removing names. The vast wealth of data in the digital age provides many ways to de-anonymize data, so more advanced techniques are needed to protect privacy.</li>
@@ -718,7 +693,7 @@ window.Quarto = {
 </ul>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="refs" class="references csl-bib-body hanging-indent" role="list">
 <div id="ref-ananny2018seeing" class="csl-entry" role="listitem">
 Ananny, Mike, and Kate Crawford. 2018. <span>“Seeing Without Knowing: Limitations of the Transparency Ideal and Its Application to Algorithmic Accountability.”</span> <em>New Media &amp; Society</em> 20 (3): 973–89.
 </div>
@@ -900,7 +875,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const onCopySuccess = function(e) {
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -932,50 +918,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
-  }
-  const getTextToCopy = function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-  }
-  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-    text: getTextToCopy
   });
-  clipboard.on('success', onCopySuccess);
-  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
-    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-      text: getTextToCopy,
-      container: window.document.getElementById('quarto-embedded-source-code-modal')
-    });
-    clipboardModal.on('success', onCopySuccess);
-  }
-    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-    var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp('/' + window.location.host + '/');
-    var isInternal = (href) => {
-        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
-    }
-    // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
-    for (var i=0; i<links.length; i++) {
-      const link = links[i];
-      if (!isInternal(link.href)) {
-        // undo the damage that might have been done by quarto-nav.js in the case of
-        // links that we want to consider external
-        if (link.dataset.originalHref !== undefined) {
-          link.href = link.dataset.originalHref;
-        }
-      }
-    }
-  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+  function tippyHover(el, contentFn) {
     const config = {
       allowHTML: true,
+      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -985,17 +932,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start',
+      placement: 'bottom-start'
     };
-    if (contentFn) {
-      config.content = contentFn;
-    }
-    if (onTriggerFn) {
-      config.onTrigger = onTriggerFn;
-    }
-    if (onUntriggerFn) {
-      config.onUntrigger = onUntriggerFn;
-    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -1007,130 +945,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      if (note) {
-        return note.innerHTML;
-      } else {
-        return "";
-      }
-    });
-  }
-  const xrefs = window.document.querySelectorAll('a.quarto-xref');
-  const processXRef = (id, note) => {
-    // Strip column container classes
-    const stripColumnClz = (el) => {
-      el.classList.remove("page-full", "page-columns");
-      if (el.children) {
-        for (const child of el.children) {
-          stripColumnClz(child);
-        }
-      }
-    }
-    stripColumnClz(note)
-    if (id === null || id.startsWith('sec-')) {
-      // Special case sections, only their first couple elements
-      const container = document.createElement("div");
-      if (note.children && note.children.length > 2) {
-        container.appendChild(note.children[0].cloneNode(true));
-        for (let i = 1; i < note.children.length; i++) {
-          const child = note.children[i];
-          if (child.tagName === "P" && child.innerText === "") {
-            continue;
-          } else {
-            container.appendChild(child.cloneNode(true));
-            break;
-          }
-        }
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(container);
-        }
-        return container.innerHTML
-      } else {
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(note);
-        }
-        return note.innerHTML;
-      }
-    } else {
-      // Remove any anchor links if they are present
-      const anchorLink = note.querySelector('a.anchorjs-link');
-      if (anchorLink) {
-        anchorLink.remove();
-      }
-      if (window.Quarto?.typesetMath) {
-        window.Quarto.typesetMath(note);
-      }
-      // TODO in 1.5, we should make sure this works without a callout special case
-      if (note.classList.contains("callout")) {
-        return note.outerHTML;
-      } else {
-        return note.innerHTML;
-      }
-    }
-  }
-  for (var i=0; i<xrefs.length; i++) {
-    const xref = xrefs[i];
-    tippyHover(xref, undefined, function(instance) {
-      instance.disable();
-      let url = xref.getAttribute('href');
-      let hash = undefined; 
-      if (url.startsWith('#')) {
-        hash = url;
-      } else {
-        try { hash = new URL(url).hash; } catch {}
-      }
-      if (hash) {
-        const id = hash.replace(/^#\/?/, "");
-        const note = window.document.getElementById(id);
-        if (note !== null) {
-          try {
-            const html = processXRef(id, note.cloneNode(true));
-            instance.setContent(html);
-          } finally {
-            instance.enable();
-            instance.show();
-          }
-        } else {
-          // See if we can fetch this
-          fetch(url.split('#')[0])
-          .then(res => res.text())
-          .then(html => {
-            const parser = new DOMParser();
-            const htmlDoc = parser.parseFromString(html, "text/html");
-            const note = htmlDoc.getElementById(id);
-            if (note !== null) {
-              const html = processXRef(id, note);
-              instance.setContent(html);
-            } 
-          }).finally(() => {
-            instance.enable();
-            instance.show();
-          });
-        }
-      } else {
-        // See if we can fetch a full url (with no hash to target)
-        // This is a special case and we should probably do some content thinning / targeting
-        fetch(url)
-        .then(res => res.text())
-        .then(html => {
-          const parser = new DOMParser();
-          const htmlDoc = parser.parseFromString(html, "text/html");
-          const note = htmlDoc.querySelector('main.content');
-          if (note !== null) {
-            // This should only happen for chapter cross references
-            // (since there is no id in the URL)
-            // remove the first header
-            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
-              note.children[0].remove();
-            }
-            const html = processXRef(null, note);
-            instance.setContent(html);
-          } 
-        }).finally(() => {
-          instance.enable();
-          instance.show();
-        });
-      }
-    }, function(instance) {
+      return note.innerHTML;
     });
   }
       let selectedAnnoteEl;
@@ -1174,7 +989,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
-            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -1200,32 +1014,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
-        // Handle positioning of the toggle
-    window.addEventListener(
-      "resize",
-      throttle(() => {
-        elRect = undefined;
-        if (selectedAnnoteEl) {
-          selectCodeLines(selectedAnnoteEl);
-        }
-      }, 10)
-    );
-    function throttle(fn, ms) {
-    let throttle = false;
-    let timer;
-      return (...args) => {
-        if(!throttle) { // first call gets through
-            fn.apply(this, args);
-            throttle = true;
-        } else { // all the others get throttled
-            if(timer) clearTimeout(timer); // cancel #2
-            timer = setTimeout(() => {
-              fn.apply(this, args);
-              timer = throttle = false;
-            }, ms);
-        }
-      };
-    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -1287,13 +1075,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./modeling-text-transformer-topic-models.html" class="pagination-link" aria-label="Modeling text: transformer topic models">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Modeling text: transformer topic models</span></span>
+      <a href="./modeling-text-transformer-topic-models.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Modeling text: transformer topic models</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./open-css.html" class="pagination-link" aria-label="Open CSS">
-        <span class="nav-page-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">Open CSS</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./open-css.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">Open CSS</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -1301,5 +1089,4 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
-
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/UWNETLAB/dcss_supplementary/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
+</body></html>

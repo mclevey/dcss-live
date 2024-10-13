@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.56">
+<meta name="generator" content="quarto-1.3.450">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>12&nbsp; Text as Data – Doing Computational Social Science&lt;br&gt;[The **Continuous Development** Edition]{.small}</title>
+<title>Doing Computational Social ScienceThe Continuous Development Edition - 11&nbsp; Text as Data</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -22,7 +22,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -33,7 +33,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -58,7 +58,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
-  margin-bottom: 0em;
 }
 .hanging-indent div.csl-entry {
   margin-left:2em;
@@ -84,8 +83,8 @@ div.csl-indent {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./mapping-text.html" rel="next">
-<link href="./association-and-latent-variables.html" rel="prev">
+<link href="./relational-data.html" rel="next">
+<link href="./audio-and-document-data.html" rel="prev">
 <link href="./figures/logo.png" rel="icon" type="image/png">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -102,13 +101,7 @@ div.csl-indent {
   "collapse-after": 3,
   "panel-placement": "start",
   "type": "textbox",
-  "limit": 50,
-  "keyboard-shortcut": [
-    "f",
-    "/",
-    "s"
-  ],
-  "show-item-context": false,
+  "limit": 20,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -117,42 +110,14 @@ div.csl-indent {
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
-    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
 }</script>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="custom.css">
 </head>
@@ -163,13 +128,13 @@ window.Quarto = {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./exploratory-data-analysis.html"><strong>EXPLORING</strong></a></li><li class="breadcrumb-item"><a href="./text-as-data.html"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Text as Data</span></a></li></ol></nav>
-        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-        </a>
-      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./survey-data.html"><strong>DATA</strong></a></li><li class="breadcrumb-item"><a href="./text-as-data.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Text as Data</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -178,7 +143,7 @@ window.Quarto = {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
       <a href="./index.html" class="sidebar-logo-link">
       <img src="./figures/logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
@@ -186,25 +151,25 @@ window.Quarto = {
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Doing Computational Social Science<br><span class="small">The <strong>Continuous Development</strong> Edition</span></a> 
         <div class="sidebar-tools-main">
-    <a href="https://github.com/UWNETLAB/dcss_supplementary/tree/master/book/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="https://github.com/UWNETLAB/dcss_supplementary/tree/master/book/" rel="" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
     <div class="dropdown">
-      <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
+      <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Share"><i class="bi bi-share"></i></a>
       <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
           <li>
             <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=|url|">
-              <i class="bi bi-twitter pe-1"></i>
+              <i class="bi bi-bi-twitter pe-1"></i>
             Twitter
             </a>
           </li>
           <li>
             <a class="dropdown-item sidebar-tools-main-item" href="https://www.facebook.com/sharer/sharer.php?u=|url|">
-              <i class="bi bi-facebook pe-1"></i>
+              <i class="bi bi-bi-facebook pe-1"></i>
             Facebook
             </a>
           </li>
           <li>
             <a class="dropdown-item sidebar-tools-main-item" href="https://www.linkedin.com/sharing/share-offsite/?url=|url|">
-              <i class="bi bi-linkedin pe-1"></i>
+              <i class="bi bi-bi-linkedin pe-1"></i>
             LinkedIn
             </a>
           </li>
@@ -226,19 +191,25 @@ window.Quarto = {
  <span class="menu-text">🏠</span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction</span></a>
+  </div>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
- <span class="menu-text"><strong>RESEARCH COMPUTING</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text"><strong>COMPUTING</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./getting-started.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Getting Started</span></span></a>
+  <a href="./setting-up.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Setting up</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -253,71 +224,89 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Python 102</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./processing-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Processing Data</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
- <span class="menu-text"><strong>MINDFUL MODELING</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text"><strong>WORKFLOW</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./metaphor-map-reduction.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Modeling as metaphor, map, and reduction</span></span></a>
+  <a href="./mindful-modelling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Mindful modelling</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./iterative-workflow.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Iterative workflows</span></span></a>
+  <a href="./iteration.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title"><del>Sequential</del> iterative modelling</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
- <span class="menu-text"><strong>OBTAINING DATA</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+ <span class="menu-text"><strong>DATA</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./sampling-and-survey-data.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title"><del>Processing Structured Data</del> Sampling and Survey Data</span></span></a>
+  <a href="./survey-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Survey Data</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./web-data-apis.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Web data (APIs)</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Web data (APIs)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./web-data-scraping.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Web data (Scraping)</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Web data (Scraping)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./audio-files-and-documents.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Audio files and documents</span></span></a>
+  <a href="./audio-and-document-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Audio and document data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./text-as-data.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Text as Data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./relational-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Relational data</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
- <span class="menu-text"><strong>EXPLORING</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+ <span class="menu-text"><strong>DISCOVERY</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -325,52 +314,40 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./exploratory-data-analysis.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Exploratory data analysis (EDA) <!-- Exploring with purpose --></span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Exploring with purpose</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./association-and-latent-variables.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Association and latent variables</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./text-as-data.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Text as Data</span></span></a>
+  <a href="./reduction-and-latent-dimensions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Reduction and latent dimensions</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./mapping-text.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Text similarity and latent semantic space</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./networks-as-not-data.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Networks and relational thinking</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Text similarity and latent semantic space</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./centrality.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Centrality</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Centrality</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./mapping-network-structure.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Mapping network structure</span></span></a>
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Mapping network structure</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
  <span class="menu-text"><strong>PREDICTION &amp; INFERENCE</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -378,46 +355,46 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./supervised-learning.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Supervised Machine Learning</span></span></a>
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Supervised Machine Learning</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./prediction-and-classification.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Prediction and classification</span></span></a>
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Prediction and classification</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./causality.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Causality</span></span></a>
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Causality</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./probability.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Probability 101</span></span></a>
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Probability 101</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./credibility.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Credibility</span></span></a>
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Credibility</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./measurement-and-missingness.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Measurement and missingness</span></span></a>
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Measurement and missingness</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true">
  <span class="menu-text"><strong>MODELING</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -425,58 +402,58 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./linear-regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Bayesian Regression Models with Probabilistic Programming</span></span></a>
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Bayesian Regression Models with Probabilistic Programming</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./multilevel-regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Multilevel regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Multilevel regression</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./generalized-linear-models.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Generalized Linear Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Generalized Linear Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./structural-causal-models.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Structural causal models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Structural causal models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./modeling-texts-lda.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Modeling text with LDA topic models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Modeling text with LDA topic models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./modeling-networks.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Latent structure in networks</span></span></a>
+ <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Latent structure in networks</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./agent-based-models.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Agent-based models (ABMs)</span></span></a>
+ <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Agent-based models (ABMs)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./diffusion-opinion-cultural-cognition.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Diffusion, opinion dynamics, and cultural cognition</span></span></a>
+ <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Diffusion, opinion dynamics, and cultural cognition</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true">
  <span class="menu-text"><strong>DEEP LEARNING</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -484,34 +461,34 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./artificial-neural-networks-fnn-rnn-cnn.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Artificial neural networks 101</span></span></a>
+ <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Artificial neural networks</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./language-models-and-embeddings.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Processing Natural Language Data</span></span></a>
+ <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Language models and word embeddings</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./transformer-revolution.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">The transformer revolution</span></span></a>
+ <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">The transformer revolution</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./modeling-text-transformer-topic-models.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Modeling text: transformer topic models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Modeling text: transformer topic models</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
- <span class="menu-text"><strong>PROFESSIONAL RESPONSIBILITIES</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" aria-expanded="true">
+ <span class="menu-text"><strong>RESPONSIBILITIES</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -519,19 +496,19 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ethical-css.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Research Ethics, Politics, and Practices</span></span></a>
+ <span class="menu-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">Ethical CSS</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./open-css.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">Open computational social science</span></span></a>
+ <span class="menu-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">Open CSS</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./future-css.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">Future computational social science</span></span></a>
+ <span class="menu-text"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">Future CSS</span></span></a>
   </div>
 </li>
       </ul>
@@ -551,64 +528,64 @@ window.Quarto = {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./courses.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">Courses and Workshops</span></span></a>
+ <span class="menu-text"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title">Courses and Workshops</span></span></a>
   </div>
 </li>
     </ul>
     </div>
 </nav>
-<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#iterative-text-analysis" id="toc-iterative-text-analysis" class="nav-link active" data-scroll-target="#iterative-text-analysis"><span class="header-section-number">13</span> Iterative text analysis</a>
+  <li><a href="#iterative-text-analysis" id="toc-iterative-text-analysis" class="nav-link active" data-scroll-target="#iterative-text-analysis"><span class="header-section-number">12</span> Iterative text analysis</a>
   <ul class="collapse">
-  <li><a href="#exploration-in-context-text-analysis-pipelines" id="toc-exploration-in-context-text-analysis-pipelines" class="nav-link" data-scroll-target="#exploration-in-context-text-analysis-pipelines"><span class="header-section-number">13.1</span> EXPLORATION IN CONTEXT: TEXT ANALYSIS PIPELINES</a>
+  <li><a href="#exploration-in-context-text-analysis-pipelines" id="toc-exploration-in-context-text-analysis-pipelines" class="nav-link" data-scroll-target="#exploration-in-context-text-analysis-pipelines"><span class="header-section-number">12.1</span> EXPLORATION IN CONTEXT: TEXT ANALYSIS PIPELINES</a>
   <ul class="collapse">
-  <li><a href="#counting-coding-reading" id="toc-counting-coding-reading" class="nav-link" data-scroll-target="#counting-coding-reading"><span class="header-section-number">13.1.1</span> Counting, Coding, Reading</a></li>
+  <li><a href="#counting-coding-reading" id="toc-counting-coding-reading" class="nav-link" data-scroll-target="#counting-coding-reading"><span class="header-section-number">12.1.1</span> Counting, Coding, Reading</a></li>
   </ul></li>
-  <li><a href="#count-based-feature-extraction-from-strings-to-a-bag-of-words" id="toc-count-based-feature-extraction-from-strings-to-a-bag-of-words" class="nav-link" data-scroll-target="#count-based-feature-extraction-from-strings-to-a-bag-of-words"><span class="header-section-number">13.2</span> COUNT-BASED FEATURE EXTRACTION: FROM STRINGS TO A BAG OF WORDS</a>
+  <li><a href="#count-based-feature-extraction-from-strings-to-a-bag-of-words" id="toc-count-based-feature-extraction-from-strings-to-a-bag-of-words" class="nav-link" data-scroll-target="#count-based-feature-extraction-from-strings-to-a-bag-of-words"><span class="header-section-number">12.2</span> COUNT-BASED FEATURE EXTRACTION: FROM STRINGS TO A BAG OF WORDS</a>
   <ul class="collapse">
-  <li><a href="#long-and-sparse-representations-with-document-term-matrices-dtms" id="toc-long-and-sparse-representations-with-document-term-matrices-dtms" class="nav-link" data-scroll-target="#long-and-sparse-representations-with-document-term-matrices-dtms"><span class="header-section-number">13.2.1</span> Long and Sparse Representations with Document-Term Matrices (DTMs)</a></li>
-  <li><a href="#weighting-words-with-term-frequency-inverse-document-frequency-tf-idf" id="toc-weighting-words-with-term-frequency-inverse-document-frequency-tf-idf" class="nav-link" data-scroll-target="#weighting-words-with-term-frequency-inverse-document-frequency-tf-idf"><span class="header-section-number">13.2.2</span> Weighting Words with Term Frequency Inverse Document Frequency (TF-IDF)</a></li>
+  <li><a href="#long-and-sparse-representations-with-document-term-matrices-dtms" id="toc-long-and-sparse-representations-with-document-term-matrices-dtms" class="nav-link" data-scroll-target="#long-and-sparse-representations-with-document-term-matrices-dtms"><span class="header-section-number">12.2.1</span> Long and Sparse Representations with Document-Term Matrices (DTMs)</a></li>
+  <li><a href="#weighting-words-with-term-frequency-inverse-document-frequency-tf-idf" id="toc-weighting-words-with-term-frequency-inverse-document-frequency-tf-idf" class="nav-link" data-scroll-target="#weighting-words-with-term-frequency-inverse-document-frequency-tf-idf"><span class="header-section-number">12.2.2</span> Weighting Words with Term Frequency Inverse Document Frequency (TF-IDF)</a></li>
   </ul></li>
-  <li><a href="#close-reading" id="toc-close-reading" class="nav-link" data-scroll-target="#close-reading"><span class="header-section-number">13.3</span> CLOSE READING?</a>
+  <li><a href="#close-reading" id="toc-close-reading" class="nav-link" data-scroll-target="#close-reading"><span class="header-section-number">12.3</span> CLOSE READING?</a>
   <ul class="collapse">
-  <li><a href="#computational-grounded-theory" id="toc-computational-grounded-theory" class="nav-link" data-scroll-target="#computational-grounded-theory"><span class="header-section-number">13.3.1</span> “Computational Grounded Theory”</a></li>
+  <li><a href="#computational-grounded-theory" id="toc-computational-grounded-theory" class="nav-link" data-scroll-target="#computational-grounded-theory"><span class="header-section-number">12.3.1</span> “Computational Grounded Theory”</a></li>
   </ul></li>
-  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">13.4</span> CONCLUSION</a>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">12.4</span> CONCLUSION</a>
   <ul class="collapse">
-  <li><a href="#key-points" id="toc-key-points" class="nav-link" data-scroll-target="#key-points"><span class="header-section-number">13.4.1</span> Key Points</a></li>
+  <li><a href="#key-points" id="toc-key-points" class="nav-link" data-scroll-target="#key-points"><span class="header-section-number">12.4.1</span> Key Points</a></li>
   </ul></li>
   </ul></li>
-  <li><a href="#exploratory-text-analysis" id="toc-exploratory-text-analysis" class="nav-link" data-scroll-target="#exploratory-text-analysis"><span class="header-section-number">14</span> Exploratory Text Analysis</a>
+  <li><a href="#exploratory-text-analysis" id="toc-exploratory-text-analysis" class="nav-link" data-scroll-target="#exploratory-text-analysis"><span class="header-section-number">13</span> Exploratory Text Analysis</a>
   <ul class="collapse">
-  <li><a href="#package-imports" id="toc-package-imports" class="nav-link" data-scroll-target="#package-imports"><span class="header-section-number">14.1</span> Package Imports</a></li>
-  <li><a href="#scaling-up-processing-political-speeches" id="toc-scaling-up-processing-political-speeches" class="nav-link" data-scroll-target="#scaling-up-processing-political-speeches"><span class="header-section-number">14.2</span> SCALING UP: PROCESSING POLITICAL SPEECHES</a>
+  <li><a href="#package-imports" id="toc-package-imports" class="nav-link" data-scroll-target="#package-imports"><span class="header-section-number">13.1</span> Package Imports</a></li>
+  <li><a href="#scaling-up-processing-political-speeches" id="toc-scaling-up-processing-political-speeches" class="nav-link" data-scroll-target="#scaling-up-processing-political-speeches"><span class="header-section-number">13.2</span> SCALING UP: PROCESSING POLITICAL SPEECHES</a>
   <ul class="collapse">
-  <li><a href="#from-rule-based-chunks-and-triplets-to-statistically-dependant-n-grams" id="toc-from-rule-based-chunks-and-triplets-to-statistically-dependant-n-grams" class="nav-link" data-scroll-target="#from-rule-based-chunks-and-triplets-to-statistically-dependant-n-grams"><span class="header-section-number">14.2.1</span> From Rule-Based Chunks and Triplets to Statistically Dependant n-grams</a></li>
+  <li><a href="#from-rule-based-chunks-and-triplets-to-statistically-dependant-n-grams" id="toc-from-rule-based-chunks-and-triplets-to-statistically-dependant-n-grams" class="nav-link" data-scroll-target="#from-rule-based-chunks-and-triplets-to-statistically-dependant-n-grams"><span class="header-section-number">13.2.1</span> From Rule-Based Chunks and Triplets to Statistically Dependant n-grams</a></li>
   </ul></li>
-  <li><a href="#creating-dtms-with-sklearn" id="toc-creating-dtms-with-sklearn" class="nav-link" data-scroll-target="#creating-dtms-with-sklearn"><span class="header-section-number">14.3</span> CREATING DTMS WITH SKLEARN</a>
+  <li><a href="#creating-dtms-with-sklearn" id="toc-creating-dtms-with-sklearn" class="nav-link" data-scroll-target="#creating-dtms-with-sklearn"><span class="header-section-number">13.3</span> CREATING DTMS WITH SKLEARN</a>
   <ul class="collapse">
-  <li><a href="#count-vectorization" id="toc-count-vectorization" class="nav-link" data-scroll-target="#count-vectorization"><span class="header-section-number">14.3.1</span> Count Vectorization</a></li>
+  <li><a href="#count-vectorization" id="toc-count-vectorization" class="nav-link" data-scroll-target="#count-vectorization"><span class="header-section-number">13.3.1</span> Count Vectorization</a></li>
   </ul></li>
-  <li><a href="#conclusion-1" id="toc-conclusion-1" class="nav-link" data-scroll-target="#conclusion-1"><span class="header-section-number">14.4</span> CONCLUSION</a>
+  <li><a href="#conclusion-1" id="toc-conclusion-1" class="nav-link" data-scroll-target="#conclusion-1"><span class="header-section-number">13.4</span> CONCLUSION</a>
   <ul class="collapse">
-  <li><a href="#key-points-1" id="toc-key-points-1" class="nav-link" data-scroll-target="#key-points-1"><span class="header-section-number">14.4.1</span> Key Points</a></li>
+  <li><a href="#key-points-1" id="toc-key-points-1" class="nav-link" data-scroll-target="#key-points-1"><span class="header-section-number">13.4.1</span> Key Points</a></li>
   </ul></li>
   </ul></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/UWNETLAB/dcss_supplementary/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/UWNETLAB/dcss_supplementary/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./exploratory-data-analysis.html"><strong>EXPLORING</strong></a></li><li class="breadcrumb-item"><a href="./text-as-data.html"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Text as Data</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Text as Data</span></h1>
+<h1 class="title"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Text as Data</span></h1>
 </div>
 
 
@@ -621,9 +598,7 @@ window.Quarto = {
   </div>
   
 
-
 </header>
-
 
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -635,8 +610,8 @@ Learning Objectives
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<section id="chapter-iterative-text-analysis" class="level3" data-number="12.0.1">
-<h3 data-number="12.0.1" class="anchored" data-anchor-id="chapter-iterative-text-analysis"><span class="header-section-number">12.0.1</span> Chapter: <a href="#iterative-text-analysis">Iterative text analysis</a></h3>
+<section id="chapter-iterative-text-analysis" class="level3" data-number="11.0.1">
+<h3 data-number="11.0.1" class="anchored" data-anchor-id="chapter-iterative-text-analysis"><span class="header-section-number">11.0.1</span> Chapter: <a href="#iterative-text-analysis">Iterative text analysis</a></h3>
 <p>By the end of this chapter, you should be able to:</p>
 <ul>
 <li>Describe how text preprocessing, exploratory text analysis, close reading, and computational modelling all connect in larger text processing pipelines and workflows</li>
@@ -649,8 +624,8 @@ Learning Objectives
 <li>Describe the computational grounded theory framework</li>
 </ul>
 </section>
-<section id="chapter-exploratory-text-analysis" class="level3" data-number="12.0.2">
-<h3 data-number="12.0.2" class="anchored" data-anchor-id="chapter-exploratory-text-analysis"><span class="header-section-number">12.0.2</span> Chapter: <a href="#exploratory-text-analysis">Exploratory text analysis</a></h3>
+<section id="chapter-exploratory-text-analysis" class="level3" data-number="11.0.2">
+<h3 data-number="11.0.2" class="anchored" data-anchor-id="chapter-exploratory-text-analysis"><span class="header-section-number">11.0.2</span> Chapter: <a href="#exploratory-text-analysis">Exploratory text analysis</a></h3>
 <p>By the end of this chapter, you should be able to:</p>
 <ul>
 <li>Build a ‘bag-of-words’ representation of unstructured text</li>
@@ -677,36 +652,36 @@ Planned Revision
 </div>
 </div>
 <p><br></p>
-<section id="iterative-text-analysis" class="level1" data-number="13">
-<h1 data-number="13"><span class="header-section-number">13</span> Iterative text analysis</h1>
+<section id="iterative-text-analysis" class="level1" data-number="12">
+<h1 data-number="12"><span class="header-section-number">12</span> Iterative text analysis</h1>
 <ul>
 <li><strong>TODO</strong>: Spacy chapter has been moved to later in the book. Update these references.</li>
 </ul>
 <p>The previous chapter introduced some basic methods for processing natural language data stored as unstructured text. Typically, these methods are part of a much larger project; we are preparing text data for some other downstream analysis. Before we get there, this chapter offers a bigger picture view of generic text processing pipelines and workflows. The goal is to understand how the various text analytic methods that are introduced in this book fit together, and to highlight a few core challenges in text analysis.</p>
 <p>Before we get started, I want to clarify exactly what I mean by “pipelines” in this chapter. As a reminder, we briefly discussed SpaCy’s text processing pipeline in the previous chapter. In this chapter, I am using “pipelines” to refer to the same general idea; it’s the sequence of operations that we are pushing our data through a series of steps, transforming the data and fitting various kinds of models along the way. However, we are focusing on an idealized text analysis pipeline for an entire project.</p>
-<section id="exploration-in-context-text-analysis-pipelines" class="level2" data-number="13.1">
-<h2 data-number="13.1" class="anchored" data-anchor-id="exploration-in-context-text-analysis-pipelines"><span class="header-section-number">13.1</span> EXPLORATION IN CONTEXT: TEXT ANALYSIS PIPELINES</h2>
+<section id="exploration-in-context-text-analysis-pipelines" class="level2" data-number="12.1">
+<h2 data-number="12.1" class="anchored" data-anchor-id="exploration-in-context-text-analysis-pipelines"><span class="header-section-number">12.1</span> EXPLORATION IN CONTEXT: TEXT ANALYSIS PIPELINES</h2>
 <p>The methods introduced in the previous chapter are rarely used on their own. Instead, they are paired with other methods and models in larger text analysis pipelines. Let’s start by discussing these larger pipelines to provide context for what you’ve already learned and what is still to come. This chapter will focus on summarizing and describing the <em>content</em> of many different documents. We will consider other possible goals later in the book.</p>
-<p><a href="#fig-11_01" class="quarto-xref">Figure&nbsp;<span>14.1</span></a> is a high-level overview of a typical computational text analysis pipeline focused on describing the content of many documents in a corpus. Keep in mind that this is a <em>typical</em> project pipeline and the details may differ in any specific project. At the top left of the figure is the “original data;” let’s use a data set consisting of 236,074 speeches made by UK MPs between 2016 and 2019 as an example to make this more concrete. Working with this full dataset is going to be fairly slow on most machines, and at this stage, we don’t want to be sitting around waiting for our code to execute. Instead, we want to enable quick, iterative, and multi-method analyses, so we draw a sample to work with instead.</p>
+<p><a href="#fig-11_01">Figure&nbsp;<span class="quarto-unresolved-ref">fig-11_01</span></a> is a high-level overview of a typical computational text analysis pipeline focused on describing the content of many documents in a corpus. Keep in mind that this is a <em>typical</em> project pipeline and the details may differ in any specific project. At the top left of the figure is the “original data;” let’s use a data set consisting of 236,074 speeches made by UK MPs between 2016 and 2019 as an example to make this more concrete. Working with this full dataset is going to be fairly slow on most machines, and at this stage, we don’t want to be sitting around waiting for our code to execute. Instead, we want to enable quick, iterative, and multi-method analyses, so we draw a sample to work with instead.</p>
 <p>Once we have our sample, we perform some initial processing, or <strong>preprocessing</strong>, which usually involves a combination of cleaning and pre-screening text that we want to analyze. The cleaning tasks vary by project, but may include converting characters to lowercase, removing punctuation, and normalization via lemmatization. I think of pre-screening as the selection of relevant text, rather than filtering of unwanted text, because we are not modifying the original data; our research workflows are always non-destructive.</p>
 <p>The methods introduced conceptually in this chapter and concretely in the next are represented in the next stage of the pipeline, which is the construction of a <strong>feature matrix</strong>. There are two main ways to do this: by extracting features from the text itself, or by “coding” the data (also known as labelling and annotation). This is a somewhat controversial stage in the process, as researchers and methodologists disagree about the “best” way to accomplish this task. Both approaches have their merits and demerits, and you should select the approach that will best enable you to answer your research questions.</p>
 <p>The next step in the pipeline is exploratory analysis, the focus of the next chapter. The main purpose of these exploratory methods is to develop a deeper understanding of both the manifest and latent content in a corpus. <strong>Manifest content</strong> is plainly communicated, whereas <strong>latent content</strong> is “below the surface” of the text and therefore requires more intrepretation from the researcher. I want to emphasize that this interpretive work is done iteratively, by going back and forth between data-driven exploration of the kind introduced here, formal modelling (discussed in later chapters), and careful close readings of individual documents. Recall the discussion of Box’s loop from Chapter 8. Exploratory text analysis serves the same purpose as the techniques from Chapter 8: better understanding our data and analysis so we can iteratively critique, revise, and improve our models.</p>
 <p><embed src="figures/text_eda.pdf" class="img-fluid"></p>
-<section id="counting-coding-reading" class="level3" data-number="13.1.1">
-<h3 data-number="13.1.1" class="anchored" data-anchor-id="counting-coding-reading"><span class="header-section-number">13.1.1</span> Counting, Coding, Reading</h3>
-<p>Social scientists have been answering questions about our social, political, psychological, and economic lives by systematically collecting, interpreting, and drawing inferences from text data for over a hundred years, long before anyone had the kind of computational powerful at their fingertips that we do now. (Humanists have been doing it even longer, of course.) Formal content analysis techniques have been a core part of the social sciences’ methodological toolkits since shortly after the First World War, when researchers such as <span class="citation" data-cites="lasswell1927propaganda">Lasswell (<a href="references.html#ref-lasswell1927propaganda" role="doc-biblioref">1927</a>)</span> started developing methods for analyzing propaganda and political discourse in newspapers <span class="citation" data-cites="krip">(<a href="references.html#ref-krip" role="doc-biblioref">Krippendorff 2019</a>)</span>. It should hardly come as a surprise that the explosion of possibilities afforded by <em>computation</em> and large-scale textual data is viewed in part through the lens of this long history, much of which has revolved around competing ideas about the best way to analyze latent content.</p>
+<section id="counting-coding-reading" class="level3" data-number="12.1.1">
+<h3 data-number="12.1.1" class="anchored" data-anchor-id="counting-coding-reading"><span class="header-section-number">12.1.1</span> Counting, Coding, Reading</h3>
+<p>Social scientists have been answering questions about our social, political, psychological, and economic lives by systematically collecting, interpreting, and drawing inferences from text data for over a hundred years, long before anyone had the kind of computational powerful at their fingertips that we do now. (Humanists have been doing it even longer, of course.) Formal content analysis techniques have been a core part of the social sciences’ methodological toolkits since shortly after the First World War, when researchers such as <span class="citation" data-cites="lasswell1927propaganda">Lasswell (<a href="#ref-lasswell1927propaganda" role="doc-biblioref">1927</a>)</span> started developing methods for analyzing propaganda and political discourse in newspapers <span class="citation" data-cites="krip">(<a href="#ref-krip" role="doc-biblioref">Krippendorff 2019</a>)</span>. It should hardly come as a surprise that the explosion of possibilities afforded by <em>computation</em> and large-scale textual data is viewed in part through the lens of this long history, much of which has revolved around competing ideas about the best way to analyze latent content.</p>
 <p>For many years these differences divided text analysts, with some being more oriented toward scientific approaches and others toward the humanities. These divisions are not so clear-cut in practice, and they involve far more rigor and depth than their oversimplified names suggest. The methods used by these groups are sometimes summarized as counting (identifying patterns in the manifest content of text), coding (identifying latent content through careful specification of concepts), and reading (of the painstaking variety practiced by our friends in humanities departments).</p>
-<p>Rather than rehashing comparisons of specific approaches <span class="citation" data-cites="ignatow2016text">(see <a href="references.html#ref-ignatow2016text" role="doc-biblioref">Ignatow and Mihalcea 2016</a>)</span>, we will focus on understanding why manual coding and the role of interpretation has been so divisive, and how these debates have informed multiple scientific approaches to content analysis, be they quantitative, qualitative, computational, or hybrid <span class="citation" data-cites="krip neuendorf2016content">(<a href="references.html#ref-krip" role="doc-biblioref">Krippendorff 2019</a>; see also <a href="references.html#ref-neuendorf2016content" role="doc-biblioref">Neuendorf 2016</a>)</span>.</p>
-<p>The distinction between manifest and latent content played an important role in the early development of mainstream quantitative approaches to content analysis <span class="citation" data-cites="krip neuendorf2016content berelson1952content">(<a href="references.html#ref-krip" role="doc-biblioref">Krippendorff 2019</a>; <a href="references.html#ref-neuendorf2016content" role="doc-biblioref">Neuendorf 2016</a>; <a href="references.html#ref-berelson1952content" role="doc-biblioref">Berelson 1952</a>)</span>. Focusing on manifest content is often considered more <em>objective</em> because it’s measures are “closer” to its observations (eg. there is little theory and interpretation distance between observing words on the page and <strong>counting</strong> the number of times two words co-occur). With manifest content, meanings are unambiguous and sit at the surface level of text. Analyzing latent content, however, is a little too close to <em>subjective</em> judgement for some. The distance from words on the page to the latent meanings and messages behind them requires a greater leap of interpretation. Any analysis of latent content necessarily requires us to use our human brains – wired as they are with preconceived notions, theories, cultural schemas, and prone to cognitive biases like conformation bias and motivated reasoning – to interpret ambiguous meanings. This is unfortunate, as latent content tends to be much more interesting than manifest content. To be clear, counting techniques are in no way free of subjectivity; the main goal of the “counting” is feature extraction under different constraints (eg. count occurrences, count co-occurrences), <em>which can then be modeled</em>. No serious social scientist should be satisfied with a table of word co-occurrences and no further interpretation. The major difference is where the interpretations take place, and how accessible and transparent they are.</p>
+<p>Rather than rehashing comparisons of specific approaches <span class="citation" data-cites="ignatow2016text">(see <a href="#ref-ignatow2016text" role="doc-biblioref">Ignatow and Mihalcea 2016</a>)</span>, we will focus on understanding why manual coding and the role of interpretation has been so divisive, and how these debates have informed multiple scientific approaches to content analysis, be they quantitative, qualitative, computational, or hybrid <span class="citation" data-cites="krip neuendorf2016content">(<a href="#ref-krip" role="doc-biblioref">Krippendorff 2019</a>; see also <a href="#ref-neuendorf2016content" role="doc-biblioref">Neuendorf 2016</a>)</span>.</p>
+<p>The distinction between manifest and latent content played an important role in the early development of mainstream quantitative approaches to content analysis <span class="citation" data-cites="krip neuendorf2016content berelson1952content">(<a href="#ref-krip" role="doc-biblioref">Krippendorff 2019</a>; <a href="#ref-neuendorf2016content" role="doc-biblioref">Neuendorf 2016</a>; <a href="#ref-berelson1952content" role="doc-biblioref">Berelson 1952</a>)</span>. Focusing on manifest content is often considered more <em>objective</em> because it’s measures are “closer” to its observations (eg. there is little theory and interpretation distance between observing words on the page and <strong>counting</strong> the number of times two words co-occur). With manifest content, meanings are unambiguous and sit at the surface level of text. Analyzing latent content, however, is a little too close to <em>subjective</em> judgement for some. The distance from words on the page to the latent meanings and messages behind them requires a greater leap of interpretation. Any analysis of latent content necessarily requires us to use our human brains – wired as they are with preconceived notions, theories, cultural schemas, and prone to cognitive biases like conformation bias and motivated reasoning – to interpret ambiguous meanings. This is unfortunate, as latent content tends to be much more interesting than manifest content. To be clear, counting techniques are in no way free of subjectivity; the main goal of the “counting” is feature extraction under different constraints (eg. count occurrences, count co-occurrences), <em>which can then be modeled</em>. No serious social scientist should be satisfied with a table of word co-occurrences and no further interpretation. The major difference is where the interpretations take place, and how accessible and transparent they are.</p>
 <blockquote class="blockquote">
 <p><strong>Further Reading</strong></p>
-<p><span class="citation" data-cites="evans2016machine">Evans and Aceves (<a href="references.html#ref-evans2016machine" role="doc-biblioref">2016</a>)</span> provide a great review of the intersection of natural language processing and social scientific content analysis. If you want to learn more about the general methodological foundations of quantitative content analysis in the social sciences, <span class="citation" data-cites="krip">Krippendorff (<a href="references.html#ref-krip" role="doc-biblioref">2019</a>)</span> and <span class="citation" data-cites="neuendorf2016content">Neuendorf (<a href="references.html#ref-neuendorf2016content" role="doc-biblioref">2016</a>)</span> are widely-used sources. <span class="citation" data-cites="ignatow2016text">Ignatow and Mihalcea (<a href="references.html#ref-ignatow2016text" role="doc-biblioref">2016</a>)</span> provide a broader methodological discussion that includes high-level discussions of text analysis methods from the social sciences and humanities as well as computer science.</p>
+<p><span class="citation" data-cites="evans2016machine">Evans and Aceves (<a href="#ref-evans2016machine" role="doc-biblioref">2016</a>)</span> provide a great review of the intersection of natural language processing and social scientific content analysis. If you want to learn more about the general methodological foundations of quantitative content analysis in the social sciences, <span class="citation" data-cites="krip">Krippendorff (<a href="#ref-krip" role="doc-biblioref">2019</a>)</span> and <span class="citation" data-cites="neuendorf2016content">Neuendorf (<a href="#ref-neuendorf2016content" role="doc-biblioref">2016</a>)</span> are widely-used sources. <span class="citation" data-cites="ignatow2016text">Ignatow and Mihalcea (<a href="#ref-ignatow2016text" role="doc-biblioref">2016</a>)</span> provide a broader methodological discussion that includes high-level discussions of text analysis methods from the social sciences and humanities as well as computer science.</p>
 </blockquote>
 <p>Differences in interpretations of latent content are bound to arise. For a very long time, the mainstream solution for dealing with this problem has been <strong>specification</strong>, which we’ve already discussed in the context of working with latent factors (Chapter 30), and manual <strong>coding</strong>. Researchers specify precise operational definitions that indicate what concepts mean, and what types of things would constitute an observation of that concept in a document. Once defined, researchers <em>manually</em> construct the quantitative representation of their text data by coding each document.</p>
-<p>In this context, “coding” is the process of transforming unstructured documents into structured datasets by manually labeling data according to some set of variables that are coupled to theoretical concepts via the specification process. While there are different coding styles, they tend to generally follow a similar pattern. First, you have a research question you want to answer. Usually you also have some idea of what you expect, grounded in some larger theory (i.e., a hypothesis). If you want to compare the tone and argumentative style of letters to the editor addressing local or non-local issues <span class="citation" data-cites="perrin2008parallel">(e.g. <a href="references.html#ref-perrin2008parallel" role="doc-biblioref">Perrin and Vaisey 2008</a>)</span>, you would first decide what types of tones and argumentative styles are relevant, and then you would carefully operationalize those tones and styles based, at least in part, on theory. Then you would read each text and assign codes based on the presence or absence of specific tones and argumentative styles. If resources allow, you would have multiple trained researchers (including yourself) code the documents. This makes it possible to compare the codes assigned to documents by different researchers and compute an inter-coder reliability rate <span class="citation" data-cites="krip">(<a href="references.html#ref-krip" role="doc-biblioref">Krippendorff 2019</a>)</span>. Codes with a reliability rate above a given threshold (e.g.&nbsp;90% agreement between coders) are retained, shifting the coding process from one based on <em>subjective</em> interpretation to <em>inter-subjective</em> agreement. In short, the coding approach is one that hinges on good specification.</p>
-<p>Though widely practiced, and despite plenty to love, there are some valid concerns about manual coding that go beyond the time (and money) it requires. The difference between approaches that “code” and those that count and map was the subject of an animated debate in the <em>American Journal of Cultural Sociology</em> following the publication of Monica Lee and John Levi Martin’s <span class="citation" data-cites="lee2015coding">(<a href="references.html#ref-lee2015coding" role="doc-biblioref">2015a</a>)</span> “Coding, Counting, and Cultural Cartography.” (I’ve provided the references for this debate in the “Where to Go Next” section at the end of the chapter.) Lee and Martin start by engaging with an argument made by Richard Biernacki <span class="citation" data-cites="biernacki2012reinventing biernacki2015after">(<a href="references.html#ref-biernacki2012reinventing" role="doc-biblioref">2012</a>, <a href="references.html#ref-biernacki2015after" role="doc-biblioref">2009</a>)</span> that manual coding just makes things worse. Biernacki thinks that any content analysis requires the kind of careful interpretation that our colleagues in the humanities practice. From his perspective, manual coding both lowers the quality of the interpretation (by virtue of being coupled to theoretical concepts and hypotheses) and obscures it.</p>
+<p>In this context, “coding” is the process of transforming unstructured documents into structured datasets by manually labeling data according to some set of variables that are coupled to theoretical concepts via the specification process. While there are different coding styles, they tend to generally follow a similar pattern. First, you have a research question you want to answer. Usually you also have some idea of what you expect, grounded in some larger theory (i.e., a hypothesis). If you want to compare the tone and argumentative style of letters to the editor addressing local or non-local issues <span class="citation" data-cites="perrin2008parallel">(e.g. <a href="#ref-perrin2008parallel" role="doc-biblioref">Perrin and Vaisey 2008</a>)</span>, you would first decide what types of tones and argumentative styles are relevant, and then you would carefully operationalize those tones and styles based, at least in part, on theory. Then you would read each text and assign codes based on the presence or absence of specific tones and argumentative styles. If resources allow, you would have multiple trained researchers (including yourself) code the documents. This makes it possible to compare the codes assigned to documents by different researchers and compute an inter-coder reliability rate <span class="citation" data-cites="krip">(<a href="#ref-krip" role="doc-biblioref">Krippendorff 2019</a>)</span>. Codes with a reliability rate above a given threshold (e.g.&nbsp;90% agreement between coders) are retained, shifting the coding process from one based on <em>subjective</em> interpretation to <em>inter-subjective</em> agreement. In short, the coding approach is one that hinges on good specification.</p>
+<p>Though widely practiced, and despite plenty to love, there are some valid concerns about manual coding that go beyond the time (and money) it requires. The difference between approaches that “code” and those that count and map was the subject of an animated debate in the <em>American Journal of Cultural Sociology</em> following the publication of Monica Lee and John Levi Martin’s <span class="citation" data-cites="lee2015coding">(<a href="#ref-lee2015coding" role="doc-biblioref">2015a</a>)</span> “Coding, Counting, and Cultural Cartography.” (I’ve provided the references for this debate in the “Where to Go Next” section at the end of the chapter.) Lee and Martin start by engaging with an argument made by Richard Biernacki <span class="citation" data-cites="biernacki2012reinventing biernacki2015after">(<a href="#ref-biernacki2012reinventing" role="doc-biblioref">2012</a>, <a href="#ref-biernacki2015after" role="doc-biblioref">2009</a>)</span> that manual coding just makes things worse. Biernacki thinks that any content analysis requires the kind of careful interpretation that our colleagues in the humanities practice. From his perspective, manual coding both lowers the quality of the interpretation (by virtue of being coupled to theoretical concepts and hypotheses) and obscures it.</p>
 <p>Consider an example. If I were to code the presence or absence of different types of political arguments in a collection of news stories about immigration reform, I would start specifying the types of political arguments I think are relevant and likely to be found. I would have to be explicit about what constitutes an observation of one type of political argument versus another (i.e., operationalization). Researchers who question the validity of the coding approach would likely point out that my (or any) choice of coding scheme would invariably misrepresent the texts themselves. As a result, my codes could be contested by researchers who see the same text differently, and any results I obtained from analyzing the final dataset would likely not be replicated by another researcher. Their second objection would be that this potential interpretive chaos is hidden away behind the codes, where other researchers and readers can’t see it.</p>
-<p>Biernacki’s <span class="citation" data-cites="biernacki2015erratum">(<a href="references.html#ref-biernacki2015erratum" role="doc-biblioref">2015</a>)</span> solution is to reject coding altogether, and to replace it with humanistic approaches to interpretation. Somewhat surprisingly, he argues that this approach is actually <em>more</em> scientific because it “better engages standards for validity, transparency, producing competing hypotheses, generalizing and hypothesis-testing by recalcitrant detail” (page 313). Lee and Martin <span class="citation" data-cites="lee2015coding lee2015response">(<a href="references.html#ref-lee2015coding" role="doc-biblioref">2015a</a>, <a href="references.html#ref-lee2015response" role="doc-biblioref">2015b</a>)</span> accept Bernacki’s critique that manual coding <em>hides</em> the essential, but messy, work of interpretation rather than eliminates it, but they disagree that turning to humanistic approaches is the only, or the best, response to the problem. Instead, they propose a refinement of the “counting” methods that begins by representing original texts in a simplified form, like a map represents terrain in simplified form. To be a good “map,” these simplified representations need to remove a lot of information from the texts while still faithfully representing the core features of the original texts. Lee and Martin offer semantic networks (discussed in later chapters) as an approach, which work by exploiting the low-level relationships between words within semantic units like sentences and paragraphs.</p>
+<p>Biernacki’s <span class="citation" data-cites="biernacki2015erratum">(<a href="#ref-biernacki2015erratum" role="doc-biblioref">2015</a>)</span> solution is to reject coding altogether, and to replace it with humanistic approaches to interpretation. Somewhat surprisingly, he argues that this approach is actually <em>more</em> scientific because it “better engages standards for validity, transparency, producing competing hypotheses, generalizing and hypothesis-testing by recalcitrant detail” (page 313). Lee and Martin <span class="citation" data-cites="lee2015coding lee2015response">(<a href="#ref-lee2015coding" role="doc-biblioref">2015a</a>, <a href="#ref-lee2015response" role="doc-biblioref">2015b</a>)</span> accept Bernacki’s critique that manual coding <em>hides</em> the essential, but messy, work of interpretation rather than eliminates it, but they disagree that turning to humanistic approaches is the only, or the best, response to the problem. Instead, they propose a refinement of the “counting” methods that begins by representing original texts in a simplified form, like a map represents terrain in simplified form. To be a good “map,” these simplified representations need to remove a lot of information from the texts while still faithfully representing the core features of the original texts. Lee and Martin offer semantic networks (discussed in later chapters) as an approach, which work by exploiting the low-level relationships between words within semantic units like sentences and paragraphs.</p>
 <p>Lee and Martin’s goal is not to eliminate interpretation, but rather to move it out into the open where it can be seen, evaluated, and potentially contested. The idea is that this becomes possible if we have formal procedures for producing map representations from text. This leaves the researcher to openly and transparently interpret the map rather than hiding interpretive judgements behind codes, and then analyzing relationships among the codes as if no really challenging interpretation had taken place at all.</p>
 <p>This debate boils down to whether, and how, to make complex interpretive research, which is absolutely unavoidable, more open and transparent. The debate between coding and count-based approaches is largely a debate about where the inevitable interpretation should happen, and who should be able to see and assess it. Those who code and those who count both break with Bernacki, and personally I think that’s a good thing because the approach he recommends – close reading – is <em>not an alternative</em> to counting or coding. Coding and counting both have many strengths, but should <em>always</em> be paired with close reading of a subset of documents. In other words, Bernacki is right that close reading and interpretation are essential, but it doesn’t follow that manual coding has no place in text analysis, or in social science more broadly. For the same reason, Lee and Martin are right to shift interpretation out into the open, but their critique of manual coding is also overly dismissive and “maps” don’t just magically reveal their unambiguous meanings to us. We should not abandon manual coding in favour of an exclusive commitment to humanistic interpretation or formalism; we should combine close reading, manual coding, formal approaches, and other methods.</p>
 <p>In the rest of this chapter, and in subsequent chapters focused on text data, I will assume the following:</p>
@@ -718,8 +693,8 @@ Planned Revision
 <p>In the rest of this chapter, we will introduce some important count-based feature extraction methods for constructing quantitative representations of text, and we will see how to use these representations to compare high-level differences in manifest language use and to explore the <em>latent</em> dimensions of text data. Like the methods you learned in the previous chapter, the methods you learn here are useful regardless of whether you want to interpret a “map” or model your data a bit further downstream. In later chapters, we will discuss several ways of doing this using different types of machine learning. We will also return to the idea of close reading, and how to integrate it into larger text analysis workflows.</p>
 </section>
 </section>
-<section id="count-based-feature-extraction-from-strings-to-a-bag-of-words" class="level2" data-number="13.2">
-<h2 data-number="13.2" class="anchored" data-anchor-id="count-based-feature-extraction-from-strings-to-a-bag-of-words"><span class="header-section-number">13.2</span> COUNT-BASED FEATURE EXTRACTION: FROM STRINGS TO A BAG OF WORDS</h2>
+<section id="count-based-feature-extraction-from-strings-to-a-bag-of-words" class="level2" data-number="12.2">
+<h2 data-number="12.2" class="anchored" data-anchor-id="count-based-feature-extraction-from-strings-to-a-bag-of-words"><span class="header-section-number">12.2</span> COUNT-BASED FEATURE EXTRACTION: FROM STRINGS TO A BAG OF WORDS</h2>
 <p>Any quantitative or computational text analysis requires some sort of quantitative representation of the text to operate on. Once you’ve constructed that representation, the analysis typically involves going back-and-forth between algorithmic manipulations and modelling of the quantitative representation on the one hand and careful interpretation of the textual representation on the other hand. For that reason, it is very useful to have the following four things accessible to you at any point in the analysis process:</p>
 <ol type="1">
 <li>the original texts</li>
@@ -728,8 +703,8 @@ Planned Revision
 <li>a quantitative representation of the texts</li>
 </ol>
 <p>There are two main types of quantitative representations of text that you will learn in this book: (<em>i</em>) long sparse vectors and (<em>ii</em>) short dense vectors. The long and sparse vector representation is usually referred to as a <strong>bag-of-words</strong>, and the most widely-used data structure is the <strong>Document-Term Matrix (DTM)</strong>. The short dense vector representations have come to be know as <strong>embeddings</strong>. Alternative ways of representing texts quantitatively, such as networks, can easily be interpreted as variations on these two types of representation. We will set embeddings aside for now and focus on Document-Term Matrices.</p>
-<section id="long-and-sparse-representations-with-document-term-matrices-dtms" class="level3" data-number="13.2.1">
-<h3 data-number="13.2.1" class="anchored" data-anchor-id="long-and-sparse-representations-with-document-term-matrices-dtms"><span class="header-section-number">13.2.1</span> Long and Sparse Representations with Document-Term Matrices (DTMs)</h3>
+<section id="long-and-sparse-representations-with-document-term-matrices-dtms" class="level3" data-number="12.2.1">
+<h3 data-number="12.2.1" class="anchored" data-anchor-id="long-and-sparse-representations-with-document-term-matrices-dtms"><span class="header-section-number">12.2.1</span> Long and Sparse Representations with Document-Term Matrices (DTMs)</h3>
 <p>The first step in constructing a quantitative representation of text is to learn the “<strong>vocabulary</strong>,” which is the set of unique terms (i.e., words and short phrases) that are used across the entire corpus. In our example of political speeches by UK MPs between 2016 and 2019, for example, the <strong>corpus</strong> would consists of the full text across all speeches by all political parties in our <em>sampled</em> dataset.</p>
 <p>Note that the vocabulary depends on how we define the corpus. If we define it as the original speech data, then the vocabulary will consist of every unique token used across all speeches. If we define it as our <em>pre-processed</em> speech data, then the vocabulary will consist of all the unique words that make it through our pre-processing step in the text analysis pipeline. This process of defining the corpus, learning the vocabulary, and constructing the DTM is an example of automated <strong>count-based feature extraction</strong>.</p>
 <p>When we create a DTM representation of our text data, each unique term in the corpus vocabulary will become an individual feature (i.e., column) unless we specifically set some sort of condition that filters terms out (e.g., must appear in a minimum of 5 documents).</p>
@@ -739,14 +714,10 @@ Planned Revision
 <li>a count of the number of times a token appears in the relevant document (integers), or</li>
 <li>some measure of word importance or relevance, such as TF-IDF (floats), which we will discuss below.</li>
 </ul>
-<p>The DTM shape will always be equal to the number of unique tokens in the vocabulary (minus any that we screen out in the process of constructing the DTM) and the number of documents (i.e., rows). <a href="#tbl-dtm" class="quarto-xref">Table&nbsp;<span>13.1</span></a> is a hypothetical example of a DTM with term counts in each cell.</p>
-<div id="tbl-dtm" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-tbl figure">
-<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-dtm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;13.1: Table: A hypothetical Document-Term Matrix
-</figcaption>
-<div aria-describedby="tbl-dtm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<table class="caption-top table">
+<p>The DTM shape will always be equal to the number of unique tokens in the vocabulary (minus any that we screen out in the process of constructing the DTM) and the number of documents (i.e., rows). <a href="#tbl-dtm">Table&nbsp;<span class="quarto-unresolved-ref">tbl-dtm</span></a> is a hypothetical example of a DTM with term counts in each cell.</p>
+<div id="tbl-dtm" class="anchored">
+<table class="table">
+<caption>Table&nbsp;12.1: Table: A hypothetical Document-Term Matrix</caption>
 <colgroup>
 <col style="width: 19%">
 <col style="width: 12%">
@@ -825,13 +796,11 @@ Table&nbsp;13.1: Table: A hypothetical Document-Term Matrix
 </tbody>
 </table>
 </div>
-</figure>
-</div>
 <p>In this case, each row of the matrix is a vector representation for a document and each column is a vector representation for a token in the vocabulary. The long sparse vector representation for Document 1, then, would be all of the numbers in the first row of the table (<code>Document 1</code>: <code>[0,0,3,0,2,8]</code>) and the long sparse vector representation for Token 1 would be all of the numbers in the column <code>Token 1</code> (<code>[0,2,1,0,0,1]</code>).</p>
 <p>When we describe vectors as “long and sparse” we are typically referring to the document vectors, which are long because each element in the vector (i.e., feature in the matrix) represents a unique term in the vocabulary. Vocabularies are always large, and most words in the vocabulary do not appear in most documents. As a result, these vector representations are mostly full of 0s; hence sparse.</p>
 </section>
-<section id="weighting-words-with-term-frequency-inverse-document-frequency-tf-idf" class="level3" data-number="13.2.2">
-<h3 data-number="13.2.2" class="anchored" data-anchor-id="weighting-words-with-term-frequency-inverse-document-frequency-tf-idf"><span class="header-section-number">13.2.2</span> Weighting Words with Term Frequency Inverse Document Frequency (TF-IDF)</h3>
+<section id="weighting-words-with-term-frequency-inverse-document-frequency-tf-idf" class="level3" data-number="12.2.2">
+<h3 data-number="12.2.2" class="anchored" data-anchor-id="weighting-words-with-term-frequency-inverse-document-frequency-tf-idf"><span class="header-section-number">12.2.2</span> Weighting Words with Term Frequency Inverse Document Frequency (TF-IDF)</h3>
 <p>In many approaches to computational text analysis, working with simple count data is rarely ideal because the words that occur the most frequently are <strong>function words</strong> (e.g., ‘the’, ‘and’, ‘of’) that carry very little information about the actual <em>content</em> of a document. Extremely rare words are also generally uninformative. What we really want are the words that are somewhere in between those two extreme ends of the frequency distribution. This is generally done by computing some sort of word weight, and the most common by far is a measure called TF-IDF.</p>
 <p><strong>TF-IDF</strong> stands for “Term-Frequency Inverse Document Frequency,” and it is intended to measure the usefulness of any given token for helping reveal what a document is about relative to other documents in a corpus. It <em>weights</em> words rather than counts them, and the weights are lower for words that are either too common or too rare. To understand how it works, let’s break it down and look at term frequency and inverse document frequency separately, and then the full measure. To do so, we will use a hypothetical example of a dataset of 150 journal article abstracts.</p>
 <p>As you might expect, <strong>Term Frequency</strong> is a measure of how common a word is in some document. Rather than using a straight count (which would be biased towards longer documents), we multiply the number of times the word appears in a document by the inverse ratio of the number of documents that have the term compared to the total number of documents in the corpus. Let’s say, for example, that the word “environment” appears four times in a 200 word abstract for a journal article about environmental activism. The term frequency <span class="math inline">\(TF_{i,j}\)</span> for “environment” <em>in this specific document</em> would be 0.02.</p>
@@ -853,48 +822,39 @@ W_{i,j} = TF_{i,j} \times \log\Big(\frac{N}{DF_i}\Big)
 <p>Putting it all together, TF-IDF is as its name suggests: Term Frequency times Inverse Document Frequency. The TF-IDF weight of a word in a document increases the more frequently it appears in that document but decreases if it also appears across many other documents. Rare, but not <em>too</em> rare, words are weighted more than words that show up across many documents. The result is a set of words that, while not the most common, tell us a lot about the content of any one document relative to other documents in the collection. This measure is far more useful than raw counts when we are attempting to find meaningful words. In the next chapter, we will further clarify TF-IDF by comparing word weights with their frequencies in our political speech dataset.</p>
 </section>
 </section>
-<section id="close-reading" class="level2" data-number="13.3">
-<h2 data-number="13.3" class="anchored" data-anchor-id="close-reading"><span class="header-section-number">13.3</span> CLOSE READING?</h2>
+<section id="close-reading" class="level2" data-number="12.3">
+<h2 data-number="12.3" class="anchored" data-anchor-id="close-reading"><span class="header-section-number">12.3</span> CLOSE READING?</h2>
 <p>So far, I’ve sketched out a pretty high-level and idealized pipeline that explains how different types of text processing, analysis, and modelling fit together. I’ve also explained the challenges involved in one crucial step: the approach used to represent text <em>quantitatively</em>. This has led to some disagreements over the various approaches to this problem, with some arguing in favour of coding over counting, others counting over coding, and others for throwing the baby out with the bathwater. Now let’s turn our attention to another issue, which is the role of close reading in a computational text analysis. The idea, illustrated in the pipeline, is that you engage in deep reading <em>as you iteratively explore your data and develop models.</em></p>
 <p>In computational text analysis, methodologists are beginning to think through ways of <em>systematically</em> combining various inductive and deductive approaches to computational text analysis with good old fashioned reading. Why? Because:</p>
 <ol type="1">
-<li>mixed-methods research <span class="citation" data-cites="small2011conduct">(<a href="references.html#ref-small2011conduct" role="doc-biblioref">Small 2011</a>)</span> is especially valuable when one of the methodologies is less familiar to the scientific community (as computational text analysis often is), and / or when it pulls the researcher further away from the original data than more familiar methods (validation and triangulation);</li>
+<li>mixed-methods research <span class="citation" data-cites="small2011conduct">(<a href="#ref-small2011conduct" role="doc-biblioref">Small 2011</a>)</span> is especially valuable when one of the methodologies is less familiar to the scientific community (as computational text analysis often is), and / or when it pulls the researcher further away from the original data than more familiar methods (validation and triangulation);</li>
 <li>there is a lot to be gained by thoughtfully combining induction and deduction; and</li>
 <li>machines and humans are good at different types of things, and we want to use both our brains and our computers for the things they are best at.</li>
 </ol>
-<p>Most computational text analyses involve machine learning of one kind or another, and the impressive results that these models produce, combined with the use of metaphors like “reading” and “learning,” can make it easy to forget, at least temporarily, that computers are not <em>actually</em> reading; they don’t understand words, sentences, or meaning (manifest or latent) in the same way that humans do. When computers “read,” they are applying mathematical operations to internal representations of data. More inductive computational models, such as probabilistic topic models (introduced in Chapter 30) identify patterns in documents that, hopefully, correspond to what we humans recognize as reasonably coherent themes and “topics.” Despite finding the pattern, the computer doesn’t know what a topic is, or what a word is for that matter. Behind the scenes, it’s all probability distributions. To really know, understand, and assess the validity of the computational analysis, we humans need to read things carefully. Systematic comparisons of manual and computational text analysis support this combination <span class="citation" data-cites="nelson2018future">(<a href="references.html#ref-nelson2018future" role="doc-biblioref">L. Nelson et al. 2018</a>)</span>. There is no way around it; whatever our specific interests or text analysis methodology, we have to read carefully. That’s a good thing.</p>
+<p>Most computational text analyses involve machine learning of one kind or another, and the impressive results that these models produce, combined with the use of metaphors like “reading” and “learning,” can make it easy to forget, at least temporarily, that computers are not <em>actually</em> reading; they don’t understand words, sentences, or meaning (manifest or latent) in the same way that humans do. When computers “read,” they are applying mathematical operations to internal representations of data. More inductive computational models, such as probabilistic topic models (introduced in Chapter 30) identify patterns in documents that, hopefully, correspond to what we humans recognize as reasonably coherent themes and “topics.” Despite finding the pattern, the computer doesn’t know what a topic is, or what a word is for that matter. Behind the scenes, it’s all probability distributions. To really know, understand, and assess the validity of the computational analysis, we humans need to read things carefully. Systematic comparisons of manual and computational text analysis support this combination <span class="citation" data-cites="nelson2018future">(<a href="#ref-nelson2018future" role="doc-biblioref">L. Nelson et al. 2018</a>)</span>. There is no way around it; whatever our specific interests or text analysis methodology, we have to read carefully. That’s a good thing.</p>
 <p>Humans with domain knowledge should do the things that humans are good at and computers are bad at (e.g.&nbsp;interpretation, critical thinking), and that computers should do the things that computers are good at but humans are comparably bad at (e.g.&nbsp;computing the similarity of two massive vectors of numbers); In the next section, we explore one practical implementation of human-computer division of labour: computational grounded theory.</p>
-<section id="computational-grounded-theory" class="level3" data-number="13.3.1">
-<h3 data-number="13.3.1" class="anchored" data-anchor-id="computational-grounded-theory"><span class="header-section-number">13.3.1</span> “Computational Grounded Theory”</h3>
-<p>One of the most exciting and promising examples of a mixed-approach framework is Laura Nelson’s <span class="citation" data-cites="nelson2017computational">(<a href="references.html#ref-nelson2017computational" role="doc-biblioref">2017</a>)</span> “computational grounded theory.” It is, to date, the most systematic and sophisticated approach to combining machine learning and computation more generally with deep reading and interpretation by humans. As the name of the framework suggests, Nelson’s approach builds on the qualitative foundations of grounded theory <span class="citation" data-cites="grounded charmaz2006constructing">(<a href="references.html#ref-grounded" role="doc-biblioref">Glaser and Strauss 1999</a>; <a href="references.html#ref-charmaz2006constructing" role="doc-biblioref">Charmaz 2006</a>)</span>, which is (somewhat confusingly) both a process and a product. To risk oversimplifying things, the process involves <em>inductively</em> identifying, integrating, and refining categories of meaning in text. This is accomplished through a variety of specific procedures, the most common of which is the method of “constant comparison” of cases. The product is a set of relatively abstract concepts and statements (i.e.&nbsp;theory) that are “grounded” in the data.</p>
+<section id="computational-grounded-theory" class="level3" data-number="12.3.1">
+<h3 data-number="12.3.1" class="anchored" data-anchor-id="computational-grounded-theory"><span class="header-section-number">12.3.1</span> “Computational Grounded Theory”</h3>
+<p>One of the most exciting and promising examples of a mixed-approach framework is Laura Nelson’s <span class="citation" data-cites="nelson2017computational">(<a href="#ref-nelson2017computational" role="doc-biblioref">2017</a>)</span> “computational grounded theory.” It is, to date, the most systematic and sophisticated approach to combining machine learning and computation more generally with deep reading and interpretation by humans. As the name of the framework suggests, Nelson’s approach builds on the qualitative foundations of grounded theory <span class="citation" data-cites="grounded charmaz2006constructing">(<a href="#ref-grounded" role="doc-biblioref">Glaser and Strauss 1999</a>; <a href="#ref-charmaz2006constructing" role="doc-biblioref">Charmaz 2006</a>)</span>, which is (somewhat confusingly) both a process and a product. To risk oversimplifying things, the process involves <em>inductively</em> identifying, integrating, and refining categories of meaning in text. This is accomplished through a variety of specific procedures, the most common of which is the method of “constant comparison” of cases. The product is a set of relatively abstract concepts and statements (i.e.&nbsp;theory) that are “grounded” in the data.</p>
 <p>Nelson builds on this methodological foundation because it is well-established, unapologetically inductive, and emphasizes the interpretive work that is unavoidable in text analysis. But, as she points out, grounded theory does not scale well to large datasets, and the results can be difficult to validate and replicate. Her computational framework is designed to address these problems while retaining the good parts of the original approach.</p>
 <p>Computational grounded theory involves three basic steps. The first is pattern detection using exploratory and computationally inductive methods – such as those introduced in the next chapter, as well as Chapters 30 and 33 – to discover latent themes and topics in a corpus. This is a shift in the logic of the grounded theory method. In classic grounded theory, the researcher is doing interpretive work to develop and refine categories of meaning. In computational grounded theory, the computer identifies potential categories of meaning (i.e.&nbsp;topics) using unsupervised methods that can be replicated; the researcher interprets and evaluates those categories.</p>
 <p>This is the starting point for the second step – “guided deep reading” – in which the researcher makes informed decisions about specific texts to read and interpret. The <em>guided</em> part is key here, because it allows the researcher to select texts that are representative of some larger theme or topic, not an unusual outlier. This helps mitigate the effects of confirmation bias and other cognitive biases that can affect the judgements of even the most well-intentioned researcher. It also makes the interpretive part of the analysis easier to validate and replicate. Think of it as the difference between exploring an unfamiliar city with and without a map. Without a map, you may end up seeing the same amount of the city, but if you have a map you can make more informed decisions about where to go and you will have a better sense of what you did and did not see. You can also trace your route on the map, making it easier for someone else to understand where you went and potentially to go there themselves.</p>
 <p>To summarize: we use computationally inductive methods to discover some potential themes and estimate how they are distributed within and across texts in our corpus. We then use the results of that analysis to select a sample of texts that are representative of specific themes and, through a process of “deep reading,” use our human brains to develop a better and more sophisticated understanding of what those themes are. This enables us to come to an understanding of the text that is better than any one method could have produced on its own.</p>
 <p>The third and final step of the computational grounded theory framework is pattern confirmation. For Nelson, this step forces the researcher to operationalize concepts and ideas discovered in the first two steps, and then check to see how common they are across the corpus. One way to do this is to go through the supervised learning process covered in Chapters 21 and 22, but we will set further discussion of supervised learning methods aside for now.</p>
-<p>The full process is summarized in <a href="#fig-11_02" class="quarto-xref">Figure&nbsp;<span>14.2</span></a>, which is based on a figure from Nelson’s <span class="citation" data-cites="nelson2017computational">(<a href="references.html#ref-nelson2017computational" role="doc-biblioref">2017</a>)</span> article. I encourage you to read her article carefully, in part because she thoroughly illustrates each step with examples from her work on the political logics underlying the women’s movement in New York and Chicago from 1865 to 1975 <span class="citation" data-cites="nelson2015political">(<a href="references.html#ref-nelson2015political" role="doc-biblioref">L. Nelson 2015</a>)</span>. It’s an excellent article with fascinating examples.</p>
-<div id="fig-11_02" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-11_02-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/cgt.png" id="fig-11_02" class="img-fluid figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-11_02-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;13.1
-</figcaption>
-</figure>
-</div>
+<p>The full process is summarized in <a href="#fig-11_02">Figure&nbsp;<span class="quarto-unresolved-ref">fig-11_02</span></a>, which is based on a figure from Nelson’s <span class="citation" data-cites="nelson2017computational">(<a href="#ref-nelson2017computational" role="doc-biblioref">2017</a>)</span> article. I encourage you to read her article carefully, in part because she thoroughly illustrates each step with examples from her work on the political logics underlying the women’s movement in New York and Chicago from 1865 to 1975 <span class="citation" data-cites="nelson2015political">(<a href="#ref-nelson2015political" role="doc-biblioref">L. Nelson 2015</a>)</span>. It’s an excellent article with fascinating examples.</p>
+<p><img src="figures/cgt.png" id="fig-11_02" class="img-fluid"></p>
 <blockquote class="blockquote">
 <p><strong>Further Reading</strong></p>
-<p>If you are interested in the debate over coding and counting that was discussed in this chapter, I would recommend reading the original articles by <span class="citation" data-cites="lee2015coding">Lee and Martin (<a href="references.html#ref-lee2015coding" role="doc-biblioref">2015a</a>)</span>, <span class="citation" data-cites="biernacki2015erratum">Biernacki (<a href="references.html#ref-biernacki2015erratum" role="doc-biblioref">2015</a>)</span>, <span class="citation" data-cites="reed2015counting">Reed (<a href="references.html#ref-reed2015counting" role="doc-biblioref">2015</a>)</span>, <span class="citation" data-cites="spillman2015ghosts">Spillman (<a href="references.html#ref-spillman2015ghosts" role="doc-biblioref">2015</a>)</span>, and <span class="citation" data-cites="lee2015response">Lee and Martin (<a href="references.html#ref-lee2015response" role="doc-biblioref">2015b</a>)</span>.</p>
-<p>In addition, I recommend reading Laura Nelson’s <span class="citation" data-cites="nelson2017computational">(<a href="references.html#ref-nelson2017computational" role="doc-biblioref">2017</a>)</span> original article on computational grounded theory. You can also learn more about the original grounded theory method by consulting and <span class="citation" data-cites="grounded">Glaser and Strauss (<a href="references.html#ref-grounded" role="doc-biblioref">1999</a>)</span> or <span class="citation" data-cites="charmaz2006constructing">Charmaz (<a href="references.html#ref-charmaz2006constructing" role="doc-biblioref">2006</a>)</span>. Finally, <span class="citation" data-cites="small2011conduct">Small (<a href="references.html#ref-small2011conduct" role="doc-biblioref">2011</a>)</span> offers a great overview of various different ways of doing mixed methods research.</p>
+<p>If you are interested in the debate over coding and counting that was discussed in this chapter, I would recommend reading the original articles by <span class="citation" data-cites="lee2015coding">Lee and Martin (<a href="#ref-lee2015coding" role="doc-biblioref">2015a</a>)</span>, <span class="citation" data-cites="biernacki2015erratum">Biernacki (<a href="#ref-biernacki2015erratum" role="doc-biblioref">2015</a>)</span>, <span class="citation" data-cites="reed2015counting">Reed (<a href="#ref-reed2015counting" role="doc-biblioref">2015</a>)</span>, <span class="citation" data-cites="spillman2015ghosts">Spillman (<a href="#ref-spillman2015ghosts" role="doc-biblioref">2015</a>)</span>, and <span class="citation" data-cites="lee2015response">Lee and Martin (<a href="#ref-lee2015response" role="doc-biblioref">2015b</a>)</span>.</p>
+<p>In addition, I recommend reading Laura Nelson’s <span class="citation" data-cites="nelson2017computational">(<a href="#ref-nelson2017computational" role="doc-biblioref">2017</a>)</span> original article on computational grounded theory. You can also learn more about the original grounded theory method by consulting and <span class="citation" data-cites="grounded">Glaser and Strauss (<a href="#ref-grounded" role="doc-biblioref">1999</a>)</span> or <span class="citation" data-cites="charmaz2006constructing">Charmaz (<a href="#ref-charmaz2006constructing" role="doc-biblioref">2006</a>)</span>. Finally, <span class="citation" data-cites="small2011conduct">Small (<a href="#ref-small2011conduct" role="doc-biblioref">2011</a>)</span> offers a great overview of various different ways of doing mixed methods research.</p>
 </blockquote>
 </section>
 </section>
-<section id="conclusion" class="level2" data-number="13.4">
-<h2 data-number="13.4" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">13.4</span> CONCLUSION</h2>
+<section id="conclusion" class="level2" data-number="12.4">
+<h2 data-number="12.4" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">12.4</span> CONCLUSION</h2>
 <hr>
-<section id="key-points" class="level3" data-number="13.4.1">
-<h3 data-number="13.4.1" class="anchored" data-anchor-id="key-points"><span class="header-section-number">13.4.1</span> Key Points</h3>
+<section id="key-points" class="level3" data-number="12.4.1">
+<h3 data-number="12.4.1" class="anchored" data-anchor-id="key-points"><span class="header-section-number">12.4.1</span> Key Points</h3>
 <ul>
 <li>Outlined a generic text analysis pipeline that starts with sampling and preprocessing text, constructing quantitative representations using manual coding and/or automated count-based feature extraction</li>
 <li>Demonstrated how to perform exploratory analysis of the manifest and latent content of those texts, combined with guided close reading and model development</li>
@@ -905,11 +865,11 @@ Figure&nbsp;13.1
 </section>
 </section>
 </section>
-<section id="exploratory-text-analysis" class="level1" data-number="14">
-<h1 data-number="14"><span class="header-section-number">14</span> Exploratory Text Analysis</h1>
+<section id="exploratory-text-analysis" class="level1" data-number="13">
+<h1 data-number="13"><span class="header-section-number">13</span> Exploratory Text Analysis</h1>
 <p>The generic text analysis pipeline introduced in the previous chapter stresses the interconnectedness of data exploration and iterative model development, in Chapter 8, I stressed the importance of exploratory data analysis to this kind of iterative development. However, exploratory text analysis requires some extra tools in addition to the ones we introduced earlier. I’ll start by showing you how to scale up preprocessing methods to a large text dataset, and discuss using gensim’s <code>Phraser</code> module alongside spaCy in order to detect n-grams. We will then consider how to use Sklearn to construct feature matrices with term counts or frequencies. This enables a broad range of exploratory analyses and sets the stage for starting to explore the latent thematic dimensions of text datasets, which we will turn to in the next chapter.</p>
-<section id="package-imports" class="level2" data-number="14.1">
-<h2 data-number="14.1" class="anchored" data-anchor-id="package-imports"><span class="header-section-number">14.1</span> Package Imports</h2>
+<section id="package-imports" class="level2" data-number="13.1">
+<h2 data-number="13.1" class="anchored" data-anchor-id="package-imports"><span class="header-section-number">13.1</span> Package Imports</h2>
 <div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pickle</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pprint <span class="im">import</span> pprint</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -931,8 +891,8 @@ Figure&nbsp;13.1
 <span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>nlp <span class="op">=</span> spacy.load(<span class="st">'en_core_web_sm'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="scaling-up-processing-political-speeches" class="level2" data-number="14.2">
-<h2 data-number="14.2" class="anchored" data-anchor-id="scaling-up-processing-political-speeches"><span class="header-section-number">14.2</span> SCALING UP: PROCESSING POLITICAL SPEECHES</h2>
+<section id="scaling-up-processing-political-speeches" class="level2" data-number="13.2">
+<h2 data-number="13.2" class="anchored" data-anchor-id="scaling-up-processing-political-speeches"><span class="header-section-number">13.2</span> SCALING UP: PROCESSING POLITICAL SPEECHES</h2>
 <p>In this chapter, we’re going to work with text data from speeches made by British Members of Parliament (MPs) between 2016 and 2020, available in full from the <a href="https://hansard.parliament.uk/">British Hansards</a> dataset. We will drop any observations that are missing values from the <code>party</code>, <code>speakername</code>, or <code>speech</code> columns.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>years <span class="op">=</span> [<span class="dv">2016</span>, <span class="dv">2017</span>, <span class="dv">2018</span>, <span class="dv">2019</span>, <span class="dv">2020</span>]</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>columns <span class="op">=</span> [</span>
@@ -1010,7 +970,7 @@ Figure&nbsp;13.1
 <p>Let’s start by quickly taking a look at the length of speeches by politicians from each party. We will do so by computing the length of each string (i.e., the number of tokens in each speech).</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>sampled_speeches[<span class="st">'speech_len'</span>] <span class="op">=</span> sampled_speeches[<span class="st">'speech'</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> x: <span class="bu">len</span>(x.split(<span class="st">" "</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Now we can group by political party, extract each group from the grouped object, and plot the kernel density estimate for our new speech length variable. We will put each plot side by side, as small multiples, to facilitate comparisons. Note that in the graph below, the kernel density estimates shows the density for speeches <em>within each party</em>, not across parties.</p>
-<p>We will define a function called <code>party_subplot()</code> to avoid needlessly repeating code. The result is shown in <a href="#fig-11_01" class="quarto-xref">Figure&nbsp;<span>14.1</span></a>.</p>
+<p>We will define a function called <code>party_subplot()</code> to avoid needlessly repeating code. The result is shown in <a href="#fig-11_01">Figure&nbsp;<span class="quarto-unresolved-ref">fig-11_01</span></a>.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> party_subplot(subgroup, title, position):</span>
@@ -1089,20 +1049,16 @@ Figure&nbsp;13.1
 <span id="cb9-76"><a href="#cb9-76" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-77"><a href="#cb9-77" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
 <span id="cb9-78"><a href="#cb9-78" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'figures/speech_length_by_party.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div id="fig-11_01" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-11_01-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/speech_length_by_party.png" class="img-fluid figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-11_01-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;14.1: png
-</figcaption>
+<div id="fig-11_01" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="figures/speech_length_by_party.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.1: png</figcaption>
 </figure>
 </div>
 <div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>parties[<span class="st">'speech_len'</span>].median()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>We can see that the distributions for each party follow roughly the same pattern of proportions. The distribution of speech lengths is strongly skewed, with the median length generally being in the ballpark of 70-90 terms for all parties.</p>
-<section id="from-rule-based-chunks-and-triplets-to-statistically-dependant-n-grams" class="level3" data-number="14.2.1">
-<h3 data-number="14.2.1" class="anchored" data-anchor-id="from-rule-based-chunks-and-triplets-to-statistically-dependant-n-grams"><span class="header-section-number">14.2.1</span> From Rule-Based Chunks and Triplets to Statistically Dependant n-grams</h3>
+<section id="from-rule-based-chunks-and-triplets-to-statistically-dependant-n-grams" class="level3" data-number="13.2.1">
+<h3 data-number="13.2.1" class="anchored" data-anchor-id="from-rule-based-chunks-and-triplets-to-statistically-dependant-n-grams"><span class="header-section-number">13.2.1</span> From Rule-Based Chunks and Triplets to Statistically Dependant n-grams</h3>
 <p>Previously, you learned how to extract phrases contained in spaCy docs by accessing the noun chunks attribute (<code>.noun_chunks</code>), and you saw how to leverage the syntactic dependency labels assigned to each token to extract information such as verb-object pairs. You also saw how to generalize that knowledge to semantic triplets, also known as SVOs or subject-verb-object triplets. Although the results of an automated SVO extraction often involve a lot of noise, there is a fair amount we can do to improve the results by customizing them to our research contexts (e.g., changing how we walk through the dependency trees when working with social media data).</p>
 <p>Each of those methods are especially helpful when we are exploring text data or trying to extract specific pieces of information. Often, however, we want to identify <strong>n-grams</strong>, which are phrases that denote some sort of concept that we want to treat <em>as if they were a single token</em>. The n in n-gram refers to the number of tokens in the phrase. For example, <strong>bigrams</strong> are two tokens that make up a phrase that ostensibly has a different meaning than the two constituent tokens. For example, <code>climate</code> and <code>change</code> tokens could be transformed into a single <code>climate_change</code> token. Don’t forget, your computer has <em>no idea</em> what the tokens “climate,” “change,” or “climate change” mean, so it can only estimate when two tokens co-occur frequently enough to be considered a phrase, rather then simply being adjacent tokens from time to time. It’s important to keep this in mind at all times when working with advanced computational techniques.</p>
 <p>The <code>Phrases</code> model class in gensim is widely-used for this task and is the recommended go-to complimentary n-gram package for spaCy. It’s a well-optimized way to detect bigrams in a corpus without a lot of effort or processing time. Ultimately though, it’s a statistical model that calculates maximum likelihood estimates for token co-occurrences (pairs of tokens that co-occur too frequently to be random). In other words, it scores tokens that appear next to each other based on their <em>statistical</em> dependencies rather than their <em>syntactic</em> dependencies (i.e., not based on linguistic rules and domain expertise).</p>
@@ -1156,13 +1112,13 @@ Figure&nbsp;14.1: png
 <p>Now that our data is ready, let’s move to the next step in our pipeline. If you recall from the previous chapter, our next task is to construct a quantitative representation of our text data. We’re going to use feature extraction methods in Sklearn. We’ll start with simple term counts.</p>
 </section>
 </section>
-<section id="creating-dtms-with-sklearn" class="level2" data-number="14.3">
-<h2 data-number="14.3" class="anchored" data-anchor-id="creating-dtms-with-sklearn"><span class="header-section-number">14.3</span> CREATING DTMS WITH SKLEARN</h2>
+<section id="creating-dtms-with-sklearn" class="level2" data-number="13.3">
+<h2 data-number="13.3" class="anchored" data-anchor-id="creating-dtms-with-sklearn"><span class="header-section-number">13.3</span> CREATING DTMS WITH SKLEARN</h2>
 <p>In Sklearn, we can construct DTMs with Boolean or count data using <code>CountVectorizer()</code> and with TF-IDF weights using <code>TfidfVectorizer()</code>. The process of learning the vocabulary is a method of the vectorizer itself, so the first thing we will do is make a decision about which vectorizer to use and how to tune it. Let’s start with the <code>CountVectorizer</code>.</p>
 <p>Once we initialize a vectorizer object, Sklearn learns the vocabulary in our corpus using the <code>fit()</code> method. It can then transform our raw unstructured text data into a DTM using the <code>transform()</code> method. In the resulting DTM, each document is a row and each token (i.e.&nbsp;word) in our corpus vocabulary is a column.</p>
 <p>As always, the quality of any machine learning analyses depends in large part on the quality of the data we provide. In the context of feature extraction methods such as the construction of a DTM from text data, we can control this by (a) pre-processing our data and / or (b) customizing the feature extraction process itself by changing specific parameters in our vectorizer. You’ve already learned how to do the first part. We can use our <code>preprocessed</code> list from earlier in the vectorization process below.</p>
-<section id="count-vectorization" class="level3" data-number="14.3.1">
-<h3 data-number="14.3.1" class="anchored" data-anchor-id="count-vectorization"><span class="header-section-number">14.3.1</span> Count Vectorization</h3>
+<section id="count-vectorization" class="level3" data-number="13.3.1">
+<h3 data-number="13.3.1" class="anchored" data-anchor-id="count-vectorization"><span class="header-section-number">13.3.1</span> Count Vectorization</h3>
 <p>Sklearn’s <code>CountVectorizer</code> has a number of parameters that we can tune. For a simple example: we often want to avoid words that are too generic to the corpus, so we can use the <code>max_df</code> parameter to specify that we don’t want to keep tokens that appear more than <span class="math inline">\(n\)</span> times, or in more than <span class="math inline">\(n\)</span>% of the documents in our collection. This can be especially helpful when working with text datasets that include a lot of specialist language. Similarly, we can use the <code>min_df</code> parameter to specify that we do not want to keep tokens that appear in fewer than 3 documents in our collection. While some parameters might be useful, others will be irrelevant to your task. I encourage you to read the documentation to get an better idea of what you can do with Sklearn.</p>
 <p>Which parameters should you use? These decisions are part of a large and complex literature on “feature selection,” and there is no one rule you can follow that will get the best results every time. The best advice I can give you is to keep things as simple as you can and align your decisions with your research needs. If it makes sense to do something given the question you are trying to answer, then do it and report the decision when you report on the rest of your methodological decisions. If it doesn’t, don’t do it just because you can. In this case, our spaCy pre-processing and bigram detection with gensim took care of most of what we would want to do. However, given the volume of data we are working with, we will also:</p>
 <ul>
@@ -1187,8 +1143,8 @@ Figure&nbsp;14.1: png
 <span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">'data/british_hansard_sample_vocabulary.pkl'</span>, <span class="st">'wb'</span>) <span class="im">as</span> fp:</span>
 <span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>    pickle.dump(vocabulary, fp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Our vectorizer has produced a DTM with 16,428 unique tokens (all of which met the criteria specified in the arguments passed to <code>CountVectorizer()</code>) from 67,204 documents (i.e., speeches). We can also use the <code>ngram_range</code> argument to return ngrams up to three tokens long if we’re using the default word analyzer, or a chosen number of letters if we’re using the character analyze. Our “vocabulary” would then include these ngrams. Again, we’ve already done this using the statistical model in gensim but there are times when you just want to stick to one library for easier interopability between its functions and object types, so it is convenient to have so many options available. There are two versions of the character n-gram analyzer: <code>char_wb</code> will respect token boundaries while <code>char</code> could result in a trigram whith the last letter of one token, a space, and the first letter of the next token.</p>
-<section id="comparing-token-frequencies-and-proportions" class="level4" data-number="14.3.1.1">
-<h4 data-number="14.3.1.1" class="anchored" data-anchor-id="comparing-token-frequencies-and-proportions"><span class="header-section-number">14.3.1.1</span> Comparing Token Frequencies and Proportions</h4>
+<section id="comparing-token-frequencies-and-proportions" class="level4" data-number="13.3.1.1">
+<h4 data-number="13.3.1.1" class="anchored" data-anchor-id="comparing-token-frequencies-and-proportions"><span class="header-section-number">13.3.1.1</span> Comparing Token Frequencies and Proportions</h4>
 <p>We can start discovering some very high-level patterns in our text data just by working with these simple frequencies, akin to doing exploratory data analysis prior to modelling. For example, we can convert the <code>count_matrix</code> to a dataframe and add a column indicating the party of the speaker, group the dataframe by party, and then compare some simple aggregate patterns in word usage across each political party. We’ll start by creating the dataframe, which with data this size will require staying within the sparse matrix framework unless you’re working with a system that has a great deal of memory resources. This is made quite clear below, where 67K speeches is not a particularly huge text dataset by modern standards, but keeping track of 26K features for <em>each</em> of those speeches becomes a huge memory burden when most of the values for those features are zeroes.</p>
 <div class="sourceCode" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>count_data <span class="op">=</span> pd.DataFrame.sparse.from_spmatrix(count_matrix)</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>count_data.columns <span class="op">=</span> vocabulary</span>
@@ -1348,7 +1304,7 @@ Figure&nbsp;14.1: png
     scottish         -0.009727
     scotland         -0.012228
     dtype: Sparse[float64, nan] -->
-<p>We can concatenate these two series to more easily visualize their differences. The results are show in <a href="#fig-11_02" class="quarto-xref">Figure&nbsp;<span>14.2</span></a>.</p>
+<p>We can concatenate these two series to more easily visualize their differences. The results are show in <a href="#fig-11_02">Figure&nbsp;<span class="quarto-unresolved-ref">fig-11_02</span></a>.</p>
 <div class="sourceCode" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>dop <span class="op">=</span> pd.concat([con_not_snp, lab_not_snp])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="sourceCode" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">6</span>))</span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>sns.swarmplot(x<span class="op">=</span>dop, y<span class="op">=</span>dop.index, color<span class="op">=</span><span class="st">'black'</span>, size<span class="op">=</span><span class="dv">4</span>)</span>
@@ -1361,29 +1317,25 @@ Figure&nbsp;14.1: png
 <span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
 <span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>plt.show(<span class="st">'figures/british_hansard_difference-of-proportions.png'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div id="fig-11_02" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-11_02-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/british_hansard_difference-of-proportions.png" class="img-fluid figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-11_02-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;14.2: png
-</figcaption>
+<div id="fig-11_02" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="figures/british_hansard_difference-of-proportions.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;13.2: png</figcaption>
 </figure>
 </div>
 <p>As you can see, simple token frequencies and proportions can be very useful when we are starting to explore our text data. Before moving on to the larger problem of modelling latent topics, let’s discuss an alternative way of scoring tokens in a DTM. In the next chapter we will take a look at Term Frequency-Inverse Document Frequency (TF-IDF) weights.</p>
 <blockquote class="blockquote">
 <p><strong>Further Reading</strong></p>
-<p>The count-based methods we discussed in this chapter are the foundation of “Dictionary-based” approaches that are widely-used in the literature. For example, <span class="citation" data-cites="bonikowski2016populist">Bonikowski and Gidron (<a href="references.html#ref-bonikowski2016populist" role="doc-biblioref">2016</a>)</span> uses count-based dictionary methods to study populist claimsmaking in the 2016 American general election. <span class="citation" data-cites="nelson2021future">L. K. Nelson et al. (<a href="references.html#ref-nelson2021future" role="doc-biblioref">2021</a>)</span> discusses dictionary-based methods alongside machine learning methods that we will cover later in the book.</p>
+<p>The count-based methods we discussed in this chapter are the foundation of “Dictionary-based” approaches that are widely-used in the literature. For example, <span class="citation" data-cites="bonikowski2016populist">Bonikowski and Gidron (<a href="#ref-bonikowski2016populist" role="doc-biblioref">2016</a>)</span> uses count-based dictionary methods to study populist claimsmaking in the 2016 American general election. <span class="citation" data-cites="nelson2021future">L. K. Nelson et al. (<a href="#ref-nelson2021future" role="doc-biblioref">2021</a>)</span> discusses dictionary-based methods alongside machine learning methods that we will cover later in the book.</p>
 </blockquote>
 </section>
 </section>
 </section>
-<section id="conclusion-1" class="level2" data-number="14.4">
-<h2 data-number="14.4" class="anchored" data-anchor-id="conclusion-1"><span class="header-section-number">14.4</span> CONCLUSION</h2>
+<section id="conclusion-1" class="level2" data-number="13.4">
+<h2 data-number="13.4" class="anchored" data-anchor-id="conclusion-1"><span class="header-section-number">13.4</span> CONCLUSION</h2>
 <p>–</p>
-<section id="key-points-1" class="level3" data-number="14.4.1">
-<h3 data-number="14.4.1" class="anchored" data-anchor-id="key-points-1"><span class="header-section-number">14.4.1</span> Key Points</h3>
+<section id="key-points-1" class="level3" data-number="13.4.1">
+<h3 data-number="13.4.1" class="anchored" data-anchor-id="key-points-1"><span class="header-section-number">13.4.1</span> Key Points</h3>
 <ul>
 <li>Learned about chunks, triplets, bi-grams, and n-grams</li>
 <li>Used Gensim’s Phraser with SpaCy to detect n-grams</li>
@@ -1393,7 +1345,7 @@ Figure&nbsp;14.2: png
 <p>–</p>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="refs" class="references csl-bib-body hanging-indent" role="list">
 <div id="ref-berelson1952content" class="csl-entry" role="listitem">
 Berelson, Bernard. 1952. <span>“Content Analysis in Communication Research.”</span>
 </div>
@@ -1501,7 +1453,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const onCopySuccess = function(e) {
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -1533,50 +1496,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
-  }
-  const getTextToCopy = function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-  }
-  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-    text: getTextToCopy
   });
-  clipboard.on('success', onCopySuccess);
-  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
-    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-      text: getTextToCopy,
-      container: window.document.getElementById('quarto-embedded-source-code-modal')
-    });
-    clipboardModal.on('success', onCopySuccess);
-  }
-    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-    var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp('/' + window.location.host + '/');
-    var isInternal = (href) => {
-        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
-    }
-    // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
-    for (var i=0; i<links.length; i++) {
-      const link = links[i];
-      if (!isInternal(link.href)) {
-        // undo the damage that might have been done by quarto-nav.js in the case of
-        // links that we want to consider external
-        if (link.dataset.originalHref !== undefined) {
-          link.href = link.dataset.originalHref;
-        }
-      }
-    }
-  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+  function tippyHover(el, contentFn) {
     const config = {
       allowHTML: true,
+      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -1586,17 +1510,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start',
+      placement: 'bottom-start'
     };
-    if (contentFn) {
-      config.content = contentFn;
-    }
-    if (onTriggerFn) {
-      config.onTrigger = onTriggerFn;
-    }
-    if (onUntriggerFn) {
-      config.onUntrigger = onUntriggerFn;
-    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -1608,130 +1523,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      if (note) {
-        return note.innerHTML;
-      } else {
-        return "";
-      }
-    });
-  }
-  const xrefs = window.document.querySelectorAll('a.quarto-xref');
-  const processXRef = (id, note) => {
-    // Strip column container classes
-    const stripColumnClz = (el) => {
-      el.classList.remove("page-full", "page-columns");
-      if (el.children) {
-        for (const child of el.children) {
-          stripColumnClz(child);
-        }
-      }
-    }
-    stripColumnClz(note)
-    if (id === null || id.startsWith('sec-')) {
-      // Special case sections, only their first couple elements
-      const container = document.createElement("div");
-      if (note.children && note.children.length > 2) {
-        container.appendChild(note.children[0].cloneNode(true));
-        for (let i = 1; i < note.children.length; i++) {
-          const child = note.children[i];
-          if (child.tagName === "P" && child.innerText === "") {
-            continue;
-          } else {
-            container.appendChild(child.cloneNode(true));
-            break;
-          }
-        }
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(container);
-        }
-        return container.innerHTML
-      } else {
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(note);
-        }
-        return note.innerHTML;
-      }
-    } else {
-      // Remove any anchor links if they are present
-      const anchorLink = note.querySelector('a.anchorjs-link');
-      if (anchorLink) {
-        anchorLink.remove();
-      }
-      if (window.Quarto?.typesetMath) {
-        window.Quarto.typesetMath(note);
-      }
-      // TODO in 1.5, we should make sure this works without a callout special case
-      if (note.classList.contains("callout")) {
-        return note.outerHTML;
-      } else {
-        return note.innerHTML;
-      }
-    }
-  }
-  for (var i=0; i<xrefs.length; i++) {
-    const xref = xrefs[i];
-    tippyHover(xref, undefined, function(instance) {
-      instance.disable();
-      let url = xref.getAttribute('href');
-      let hash = undefined; 
-      if (url.startsWith('#')) {
-        hash = url;
-      } else {
-        try { hash = new URL(url).hash; } catch {}
-      }
-      if (hash) {
-        const id = hash.replace(/^#\/?/, "");
-        const note = window.document.getElementById(id);
-        if (note !== null) {
-          try {
-            const html = processXRef(id, note.cloneNode(true));
-            instance.setContent(html);
-          } finally {
-            instance.enable();
-            instance.show();
-          }
-        } else {
-          // See if we can fetch this
-          fetch(url.split('#')[0])
-          .then(res => res.text())
-          .then(html => {
-            const parser = new DOMParser();
-            const htmlDoc = parser.parseFromString(html, "text/html");
-            const note = htmlDoc.getElementById(id);
-            if (note !== null) {
-              const html = processXRef(id, note);
-              instance.setContent(html);
-            } 
-          }).finally(() => {
-            instance.enable();
-            instance.show();
-          });
-        }
-      } else {
-        // See if we can fetch a full url (with no hash to target)
-        // This is a special case and we should probably do some content thinning / targeting
-        fetch(url)
-        .then(res => res.text())
-        .then(html => {
-          const parser = new DOMParser();
-          const htmlDoc = parser.parseFromString(html, "text/html");
-          const note = htmlDoc.querySelector('main.content');
-          if (note !== null) {
-            // This should only happen for chapter cross references
-            // (since there is no id in the URL)
-            // remove the first header
-            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
-              note.children[0].remove();
-            }
-            const html = processXRef(null, note);
-            instance.setContent(html);
-          } 
-        }).finally(() => {
-          instance.enable();
-          instance.show();
-        });
-      }
-    }, function(instance) {
+      return note.innerHTML;
     });
   }
       let selectedAnnoteEl;
@@ -1775,7 +1567,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
-            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -1801,32 +1592,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
-        // Handle positioning of the toggle
-    window.addEventListener(
-      "resize",
-      throttle(() => {
-        elRect = undefined;
-        if (selectedAnnoteEl) {
-          selectCodeLines(selectedAnnoteEl);
-        }
-      }, 10)
-    );
-    function throttle(fn, ms) {
-    let throttle = false;
-    let timer;
-      return (...args) => {
-        if(!throttle) { // first call gets through
-            fn.apply(this, args);
-            throttle = true;
-        } else { // all the others get throttled
-            if(timer) clearTimeout(timer); // cancel #2
-            timer = setTimeout(() => {
-              fn.apply(this, args);
-              timer = throttle = false;
-            }, ms);
-        }
-      };
-    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -1888,13 +1653,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./association-and-latent-variables.html" class="pagination-link" aria-label="Association and latent variables">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Association and latent variables</span></span>
+      <a href="./audio-and-document-data.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Audio and document data</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./mapping-text.html" class="pagination-link" aria-label="Text similarity and latent semantic space">
-        <span class="nav-page-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Text similarity and latent semantic space</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./relational-data.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Relational data</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -1902,5 +1667,4 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
-
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/UWNETLAB/dcss_supplementary/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
+</body></html>

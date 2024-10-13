@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.56">
+<meta name="generator" content="quarto-1.3.450">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>4&nbsp; Processing Data – Doing Computational Social Science&lt;br&gt;[The **Continuous Development** Edition]{.small}</title>
+<title>Doing Computational Social ScienceThe Continuous Development Edition - 4&nbsp; Processing Data</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -22,7 +22,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -33,7 +33,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -58,7 +58,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
-  margin-bottom: 0em;
 }
 .hanging-indent div.csl-entry {
   margin-left:2em;
@@ -102,13 +101,7 @@ div.csl-indent {
   "collapse-after": 3,
   "panel-placement": "start",
   "type": "textbox",
-  "limit": 50,
-  "keyboard-shortcut": [
-    "f",
-    "/",
-    "s"
-  ],
-  "show-item-context": false,
+  "limit": 20,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -117,42 +110,17 @@ div.csl-indent {
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
-    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
 }</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="custom.css">
 </head>
@@ -163,13 +131,13 @@ window.Quarto = {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./setting-up.html"><strong>COMPUTING</strong></a></li><li class="breadcrumb-item"><a href="./processing-data.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Processing Data</span></a></li></ol></nav>
-        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-        </a>
-      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./setting-up.html"><strong>COMPUTING</strong></a></li><li class="breadcrumb-item"><a href="./processing-data.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Processing Data</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -178,7 +146,7 @@ window.Quarto = {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
       <a href="./index.html" class="sidebar-logo-link">
       <img src="./figures/logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
@@ -186,25 +154,25 @@ window.Quarto = {
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Doing Computational Social Science<br><span class="small">The <strong>Continuous Development</strong> Edition</span></a> 
         <div class="sidebar-tools-main">
-    <a href="https://github.com/UWNETLAB/dcss_supplementary/tree/master/book/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="https://github.com/UWNETLAB/dcss_supplementary/tree/master/book/" rel="" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
     <div class="dropdown">
-      <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
+      <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Share"><i class="bi bi-share"></i></a>
       <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
           <li>
             <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=|url|">
-              <i class="bi bi-twitter pe-1"></i>
+              <i class="bi bi-bi-twitter pe-1"></i>
             Twitter
             </a>
           </li>
           <li>
             <a class="dropdown-item sidebar-tools-main-item" href="https://www.facebook.com/sharer/sharer.php?u=|url|">
-              <i class="bi bi-facebook pe-1"></i>
+              <i class="bi bi-bi-facebook pe-1"></i>
             Facebook
             </a>
           </li>
           <li>
             <a class="dropdown-item sidebar-tools-main-item" href="https://www.linkedin.com/sharing/share-offsite/?url=|url|">
-              <i class="bi bi-linkedin pe-1"></i>
+              <i class="bi bi-bi-linkedin pe-1"></i>
             LinkedIn
             </a>
           </li>
@@ -234,9 +202,9 @@ window.Quarto = {
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
  <span class="menu-text"><strong>COMPUTING</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -269,9 +237,9 @@ window.Quarto = {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
  <span class="menu-text"><strong>WORKFLOW</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -292,9 +260,9 @@ window.Quarto = {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
  <span class="menu-text"><strong>DATA</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -339,9 +307,9 @@ window.Quarto = {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
  <span class="menu-text"><strong>DISCOVERY</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -380,9 +348,9 @@ window.Quarto = {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
  <span class="menu-text"><strong>PREDICTION &amp; INFERENCE</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -427,9 +395,9 @@ window.Quarto = {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true">
  <span class="menu-text"><strong>MODELING</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -486,9 +454,9 @@ window.Quarto = {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true">
  <span class="menu-text"><strong>DEEP LEARNING</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -521,9 +489,9 @@ window.Quarto = {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" aria-expanded="true">
  <span class="menu-text"><strong>RESPONSIBILITIES</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -562,14 +530,14 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./courses.html" class="sidebar-item-text sidebar-link">
+  <a href="./_courses.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title">Courses and Workshops</span></span></a>
   </div>
 </li>
     </ul>
     </div>
 </nav>
-<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
@@ -601,12 +569,12 @@ window.Quarto = {
   <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">4.7</span> CONCLUSION</a></li>
   <li><a href="#key-points" id="toc-key-points" class="nav-link" data-scroll-target="#key-points"><span class="header-section-number">4.8</span> Key Points</a></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/UWNETLAB/dcss_supplementary/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/UWNETLAB/dcss_supplementary/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
 <!-- main -->
 <main class="content page-columns page-full" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./setting-up.html"><strong>COMPUTING</strong></a></li><li class="breadcrumb-item"><a href="./processing-data.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Processing Data</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Processing Data</span></h1>
 </div>
@@ -621,9 +589,7 @@ window.Quarto = {
   </div>
   
 
-
 </header>
-
 
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -648,13 +614,14 @@ Learning Objectives
 </div>
 </div>
 <p><br></p>
-<p>It’s time to shift from using Python as a general programming language to using it to process data using specialized data management and analysis packages. We’re going to rely primarily on two important packages from Python’s “scientific stack.” The first is Pandas, which was created by Wes McKinney for analyzing <strong>pan</strong>el <strong>da</strong>ta (hence the name). It comes with special data structures, functions, and methods that you can use to take care of the vast majority of data processing operations for structured quantitative data. The second is Numpy, which is a lower-level package for efficient computation and maths. Numpy is the foundation that many other packages, including Pandas, are built on. We’re not going to cover Numpy in any significant detail here, but it’s worth knowing that Numpy provides arrays of arbitrary size and dimensionality, and is one of the pillars upon which Pandas is built.</p>
+<div class="page-columns page-full"><p>It’s time to shift from using Python as a general programming language to using it to process data using specialized data management and analysis packages. We’re going to rely primarily on two important packages from Python’s “scientific stack.” The first is Pandas, which was created by Wes McKinney for analyzing <strong>pan</strong>el <strong>da</strong>ta (hence the name). It comes with special data structures, functions, and methods that you can use to take care of the vast majority of data processing operations for structured quantitative data. The second is Numpy, which is a lower-level package for efficient computation and maths. Numpy is the foundation that many other packages, including Pandas, are built on. We’re not going to cover Numpy in any significant detail here, but it’s worth knowing that Numpy provides arrays of arbitrary size and dimensionality, and is one of the pillars upon which Pandas is built.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p><div class="no-row-height column-margin column-container"><li id="fn1"><p><sup>1</sup>&nbsp;Testing footnote location…</p></li></div></div>
 <p>In this chapter, I will start with the basics of getting data in and out of Pandas dataframes, and previewing subsets of data. Next, I will dig deeper into Pandas core data structures (<code>Series</code> and <code>dataframes</code>), as well as <code>index</code> and <code>datetime</code> objects. I then discuss more advanced operations, such as grouping data for systematic comparisons, working with <code>datetime</code> objects for time series analysis, and combining dataframes.</p>
 <p>Pandas is a very large and complex package with an enormous amount of power, but you don’t have to learn it all at once. In fact, you shouldn’t even try! Like most other packages you will encounter in this book, you will use a small number of features very heavily, and a large number of features very rarely.</p>
 <p>Finally, I want to acknowledge that this is the first of several chapters that focus on data processing skills. The focus in this chapter is on understanding how to work with <code>dataframes</code> and <code>Series</code> in Pandas, not on workflows for processing, cleaning, and exploring data. Much of that content is introduced in the chapters on <a href="./survey-data.html">Survey data</a> and <a href="./exploratory-data-analysis.html">Exploratory data analysis</a>.</p>
 <section id="imports" class="level2" data-number="4.1">
 <h2 data-number="4.1" class="anchored" data-anchor-id="imports"><span class="header-section-number">4.1</span> Imports</h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<div class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -662,19 +629,16 @@ Learning Objectives
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dcss <span class="im">import</span> download_dataset</span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dcss <span class="im">import</span> set_style</span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>set_style()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </section>
 <section id="practical-pandas-first-steps" class="level2 page-columns page-full" data-number="4.2">
 <h2 data-number="4.2" class="anchored" data-anchor-id="practical-pandas-first-steps"><span class="header-section-number">4.2</span> PRACTICAL PANDAS: FIRST STEPS</h2>
 <section id="getting-data-into-pandas" class="level3" data-number="4.2.1">
 <h3 data-number="4.2.1" class="anchored" data-anchor-id="getting-data-into-pandas"><span class="header-section-number">4.2.1</span> Getting Data into Pandas</h3>
-<p>The Pandas package makes it easy to load data from an external file directly into a <code>dataframe</code> object. It uses one of many reader functions that are part of a suite of <strong>I/O (input / output, read / write) tools</strong>. I’ve listed some common examples in <a href="#tbl-pandas-io" class="quarto-xref">Table&nbsp;<span>4.1</span></a>. Information on these and other reader functions can be found in the Pandas <a href="https://pandas.pydata.org/pandas-docs/stable/user_guide/io.html">documentation</a>, which also provides useful information about the parameters for each method (e.g.&nbsp;how to specify what sheet you want from an Excel spreadsheet, or whether to write the index to a new CSV file).</p>
-<div id="tbl-pandas-io" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-tbl figure">
-<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-pandas-io-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;4.1: I/0 Methods for Pandas
-</figcaption>
-<div aria-describedby="tbl-pandas-io-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<table class="caption-top table">
+<p>The Pandas package makes it easy to load data from an external file directly into a <code>dataframe</code> object. It uses one of many reader functions that are part of a suite of <strong>I/O (input / output, read / write) tools</strong>. I’ve listed some common examples in <a href="#tbl-pandas-io">Table&nbsp;<span>4.1</span></a>. Information on these and other reader functions can be found in the Pandas <a href="https://pandas.pydata.org/pandas-docs/stable/user_guide/io.html">documentation</a>, which also provides useful information about the parameters for each method (e.g.&nbsp;how to specify what sheet you want from an Excel spreadsheet, or whether to write the index to a new CSV file).</p>
+<div id="tbl-pandas-io" class="anchored">
+<table class="table">
+<caption>Table&nbsp;4.1: I/0 Methods for Pandas</caption>
 <thead>
 <tr class="header">
 <th style="text-align: left;">Data Description</th>
@@ -716,23 +680,33 @@ Table&nbsp;4.1: I/0 Methods for Pandas
 </tbody>
 </table>
 </div>
-</figure>
-</div>
 <p>I will focus on the <code>read_csv()</code> function to demonstrate the general process. The only <em>required</em> argument is that we provide the path to the file location, but there are many useful arguments that you can pass, such as the file encoding. By default, Pandas assumes your data is encoded with UTF-8. If you see an encoding error or some strange characters in your data, you can try a different encoding, such as latin1.</p>
 <p>This chapter will use data from the Varities of Democracy (VDEM) dataset. VDEM is an ongoing research project to measure the level of democracy in governments around the world and updated versions of the dataset are released on an ongoing basis. The research is led by a team of over 50 social scientists who coordinate the collection and analysis of expert assessments from over 3,200 historians and Country Experts (CEs). From these assessments, the VDEM project has created a remarkably complex array of indicators designed to align with five high-level facets of democracy: electoral, liberal, participatory, deliberative, and egalitarian. The dataset extends back to 1789 and is considered the gold standard of quantitative data about global democratic developments. You can find the full codebook online, and I strongly recommend that you download it and consult it as you work with this data. You can find the full dataset at (https://www.v-dem.net/en/data/data/v-dem-dataset-v11/) and the codebook here (https://www.v-dem.net/figures/filer_public/e0/7f/e07f672b-b91e-4e98-b9a3-78f8cd4de696/v-dem_codebook_v8.pdf). The filtered and subsetted version we will use in this book can be downloaded using the <code>download_dataset()</code> function. Note that this will also download additional VDEM materials, including the codebook.</p>
 <p>Let’s load the CSV file into a Pandas <code>dataframe</code>.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>vdem_data_url <span class="op">=</span> <span class="st">"https://www.dropbox.com/scl/fo/6ay4x2qo4svyo92wbvlxt/ACtUxCDoLYxLujkekHdXiJ4?rlkey=lhmhiasjkv3ndvyxjxapi24sk&amp;st=2p76a0dw&amp;dl=0"</span></span>
+<div class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>vdem_data_url <span class="op">=</span> <span class="st">"https://www.dropbox.com/scl/fo/6ay4x2qo4svyo92wbvlxt/ACtUxCDoLYxLujkekHdXiJ4?rlkey=lhmhiasjkv3ndvyxjxapi24sk&amp;st=2p76a0dw&amp;dl=0"</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>download_dataset(</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    vdem_data_url,</span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    save_path<span class="op">=</span><span class="st">'data/vdem'</span></span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'data/vdem/V-Dem-CY-Full+Others-v10.csv'</span>,</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    low_memory<span class="op">=</span><span class="va">False</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>File already exists at 'data/vdem'. Skipping download.</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'data/vdem/V-Dem-CY-Full+Others-v10.csv'</span>,</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    low_memory<span class="op">=</span><span class="va">False</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <p>Once you have your data loaded, one of the first things you will want to know is how many rows and columns there are. You can do this using the <code>.shape</code> attribute of the dataframe.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>df.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>df.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<pre><code>(27013, 4108)</code></pre>
+</div>
+</div>
 <p>This is a fairly large dataset. It has 27,013 observations and 4,108 variables! First, I will construct a new dataframe <em>from this one</em> that contains only the columns I want.</p>
 </section>
 <section id="what-do-you-need-selecting-columns" class="level3" data-number="4.2.2">
@@ -754,47 +728,427 @@ Table&nbsp;4.1: I/0 Methods for Pandas
 <li>whether or not the country is a democracy<!-- e_boix_regime --></li>
 </ol>
 <p>I will call the new dataframe <code>sdf</code>, for ‘subsetted dataframe.’ Of course, you can call it anything you like. If you are going to be working with multiple dataframes in the same script or notebook, then it’s a good idea to give them much more descriptive names. For now, I am only working with two, so I will use <code>df</code> for the full dataframe and <code>sdf</code> for the dataframe with a subset of the original variables. I will make careful note of any dataframes I add.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>subset_vars <span class="op">=</span> [<span class="st">'country_name'</span>, <span class="st">'country_text_id'</span>, <span class="st">'e_regiongeo'</span>, <span class="st">'year'</span>, <span class="st">'v2x_polyarchy'</span>, <span class="st">'v2x_libdem'</span>, <span class="st">'v2x_partipdem'</span>, <span class="st">'v2x_delibdem'</span>, <span class="st">'v2x_egaldem'</span>, <span class="st">'v2smprivex'</span>, <span class="st">'v2smpolsoc'</span>, <span class="st">'v2caviol'</span>, <span class="st">'e_boix_regime'</span>]</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>sdf <span class="op">=</span> df[subset_vars]</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>sdf.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>subset_vars <span class="op">=</span> [</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'country_name'</span>, </span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'country_text_id'</span>, </span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'e_regiongeo'</span>, </span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'year'</span>, </span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">'v2x_polyarchy'</span>, </span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">'v2x_libdem'</span>, </span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">'v2x_partipdem'</span>, </span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">'v2x_delibdem'</span>, </span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">'v2x_egaldem'</span>, </span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">'v2smprivex'</span>, </span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">'v2smpolsoc'</span>, </span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">'v2caviol'</span>, </span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">'e_boix_regime'</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>sdf <span class="op">=</span> df[subset_vars]</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>sdf.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<pre><code>(27013, 13)</code></pre>
+</div>
+</div>
 <p>We’ve created a new dataframe called <code>sdf</code>. It still has 27,013 rows, but only 13 variables. We can print their names using the <code>.columns</code> attribute for the dataframe.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="bu">list</span>(sdf.columns)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="bu">list</span>(sdf.columns)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="6">
+<pre><code>['country_name',
+ 'country_text_id',
+ 'e_regiongeo',
+ 'year',
+ 'v2x_polyarchy',
+ 'v2x_libdem',
+ 'v2x_partipdem',
+ 'v2x_delibdem',
+ 'v2x_egaldem',
+ 'v2smprivex',
+ 'v2smpolsoc',
+ 'v2caviol',
+ 'e_boix_regime']</code></pre>
+</div>
+</div>
 <section id="whats-in-your-dataframe" class="level4" data-number="4.2.2.1">
 <h4 data-number="4.2.2.1" class="anchored" data-anchor-id="whats-in-your-dataframe"><span class="header-section-number">4.2.2.1</span> What’s in Your dataframe?</h4>
 <p>We can use the <code>.info()</code> method to see: the total number of observations, the total number of columns, the names of the columns, the number of non-missing observations for each, the datatype for each variable, the number of variables that contain data of each type (e.g.&nbsp;integers and floats), and the total amount of memory used by the dataframe.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>sdf.info()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>sdf.info()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
+RangeIndex: 27013 entries, 0 to 27012
+Data columns (total 13 columns):
+ #   Column           Non-Null Count  Dtype  
+---  ------           --------------  -----  
+ 0   country_name     27013 non-null  object 
+ 1   country_text_id  27013 non-null  object 
+ 2   e_regiongeo      27013 non-null  int64  
+ 3   year             27013 non-null  int64  
+ 4   v2x_polyarchy    25342 non-null  float64
+ 5   v2x_libdem       24350 non-null  float64
+ 6   v2x_partipdem    24923 non-null  float64
+ 7   v2x_delibdem     18557 non-null  float64
+ 8   v2x_egaldem      18557 non-null  float64
+ 9   v2smprivex       3562 non-null   float64
+ 10  v2smpolsoc       3562 non-null   float64
+ 11  v2caviol         12745 non-null  float64
+ 12  e_boix_regime    16270 non-null  float64
+dtypes: float64(9), int64(2), object(2)
+memory usage: 2.7+ MB</code></pre>
+</div>
+</div>
 <p>The datatypes in this dataframe are <strong><code>float64</code></strong> (numbers with decimals), <strong><code>int64</code></strong> (integers), and <strong><code>object</code></strong>. In Pandas, <code>object</code> refers to columns that contain <code>strings</code>, or mixed types, such as <code>strings</code> and <code>integers</code> (<code>object</code> encompasses many more things, too: it’s a catchall category). Pandas can also work with booleans (True or False), categorical variables, and some specialized <code>datetime</code> objects. Recall how we selected columns to make our dataset. In the code below, I use the same idea to show only a few variables, rather than all 35, to save space. We will explain this a little more later in the chapter.</p>
 <p>We can also use the <code>.describe()</code> method to get summary information about the quantitative variables in our dataset, including the number of non-missing information, the mean and standard deviation, and a five number summary:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>sdf[[<span class="st">'e_regiongeo'</span>, <span class="st">'year'</span>, <span class="st">'v2x_polyarchy'</span>]].describe()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>sdf[[<span class="st">'e_regiongeo'</span>, <span class="st">'year'</span>, <span class="st">'v2x_polyarchy'</span>]].describe()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="8">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">e_regiongeo</th>
+<th data-quarto-table-cell-role="th">year</th>
+<th data-quarto-table-cell-role="th">v2x_polyarchy</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">count</td>
+<td>27013.000000</td>
+<td>27013.000000</td>
+<td>25342.000000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">mean</td>
+<td>9.266575</td>
+<td>1926.556177</td>
+<td>0.262821</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">std</td>
+<td>5.733007</td>
+<td>63.754335</td>
+<td>0.260966</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">min</td>
+<td>1.000000</td>
+<td>1789.000000</td>
+<td>0.007000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">25%</td>
+<td>4.000000</td>
+<td>1878.000000</td>
+<td>0.057000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">50%</td>
+<td>8.000000</td>
+<td>1937.000000</td>
+<td>0.171500</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">75%</td>
+<td>14.000000</td>
+<td>1980.000000</td>
+<td>0.367000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">max</td>
+<td>19.000000</td>
+<td>2019.000000</td>
+<td>0.924000</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
 </section>
 </section>
 <section id="heads-tails-and-samples" class="level3 page-columns page-full" data-number="4.2.3">
 <h3 data-number="4.2.3" class="anchored" data-anchor-id="heads-tails-and-samples"><span class="header-section-number">4.2.3</span> Heads, Tails, and Samples</h3>
 <p>We can also inspect the “head” or the “tail” of our dataframe using the <code>.head()</code> and <code>.tail()</code> methods, which default to the first or last 5 rows in a dataframe unless you provide a different number as an argument, such as <code>.head(10)</code>.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>sdf[[<span class="st">'country_name'</span>, <span class="st">'year'</span>, <span class="st">'v2x_libdem'</span>]].head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>sdf[[<span class="st">'country_name'</span>, <span class="st">'year'</span>, <span class="st">'v2x_libdem'</span>]].head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="9">
+<div>
 
-<div class="no-row-height column-margin column-container"><div class="margin-aside">
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">country_name</th>
+<th data-quarto-table-cell-role="th">year</th>
+<th data-quarto-table-cell-role="th">v2x_libdem</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>Mexico</td>
+<td>1789</td>
+<td>0.043</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>Mexico</td>
+<td>1790</td>
+<td>0.040</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>Mexico</td>
+<td>1791</td>
+<td>0.040</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>Mexico</td>
+<td>1792</td>
+<td>0.040</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>Mexico</td>
+<td>1793</td>
+<td>0.040</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+
+<div class="no-row-height column-margin column-container"><div class="">
 <p>Testing tufte-style margin notes…</p>
-</div></div><div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>sdf[[<span class="st">'country_name'</span>, <span class="st">'year'</span>, <span class="st">'v2x_libdem'</span>]].tail(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div></div><div class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>sdf[[<span class="st">'country_name'</span>, <span class="st">'year'</span>, <span class="st">'v2x_libdem'</span>]].tail(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="10">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">country_name</th>
+<th data-quarto-table-cell-role="th">year</th>
+<th data-quarto-table-cell-role="th">v2x_libdem</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">27010</td>
+<td>Piedmont-Sardinia</td>
+<td>1859</td>
+<td>0.150</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">27011</td>
+<td>Piedmont-Sardinia</td>
+<td>1860</td>
+<td>0.148</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">27012</td>
+<td>Piedmont-Sardinia</td>
+<td>1861</td>
+<td>0.149</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
 <p>If you would prefer a random sample of rows, you can use the <code>.sample()</code> method, which requires you to specify the number of rows you want to sample.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>sdf[[<span class="st">'country_name'</span>, <span class="st">'year'</span>, <span class="st">'v2x_libdem'</span>]].sample(<span class="dv">15</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>sdf[[<span class="st">'country_name'</span>, <span class="st">'year'</span>, <span class="st">'v2x_libdem'</span>]].sample(<span class="dv">15</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="11">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">country_name</th>
+<th data-quarto-table-cell-role="th">year</th>
+<th data-quarto-table-cell-role="th">v2x_libdem</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">10718</td>
+<td>Costa Rica</td>
+<td>1917</td>
+<td>0.127</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">7242</td>
+<td>Thailand</td>
+<td>1931</td>
+<td>0.068</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">8535</td>
+<td>Nepal</td>
+<td>1866</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">24113</td>
+<td>Sao Tome and Principe</td>
+<td>2002</td>
+<td>0.567</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">18811</td>
+<td>German Democratic Republic</td>
+<td>1954</td>
+<td>0.067</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">14760</td>
+<td>Turkey</td>
+<td>1823</td>
+<td>0.030</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">25047</td>
+<td>Vanuatu</td>
+<td>1919</td>
+<td>0.149</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">23484</td>
+<td>Oman</td>
+<td>1933</td>
+<td>0.020</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">21673</td>
+<td>Hong Kong</td>
+<td>1984</td>
+<td>0.211</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">14552</td>
+<td>Tunisia</td>
+<td>1846</td>
+<td>0.025</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">10362</td>
+<td>Central African Republic</td>
+<td>1974</td>
+<td>0.036</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2563</td>
+<td>Poland</td>
+<td>1949</td>
+<td>0.104</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">20899</td>
+<td>Estonia</td>
+<td>1929</td>
+<td>0.597</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">21142</td>
+<td>Finland</td>
+<td>1891</td>
+<td>0.170</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">547</td>
+<td>Sweden</td>
+<td>1985</td>
+<td>0.868</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
 </section>
 <section id="what-do-you-need-filtering-rows" class="level3" data-number="4.2.4">
 <h3 data-number="4.2.4" class="anchored" data-anchor-id="what-do-you-need-filtering-rows"><span class="header-section-number">4.2.4</span> What Do You Need? Filtering Rows</h3>
 <p>When we executed the <code>.describe()</code> method earlier, you may have noticed that the range for the <code>year</code> variable is 1789-2019. Let’s say we have a good reason to focus on the years from 1900-2019. We will have to filter the data to have only the rows that meet my needs.</p>
 <p>There are several ways to filter rows, including slices (e.g.&nbsp;all observations between index <span class="math inline">\(i\)</span> and index <span class="math inline">\(j\)</span>), or according to some sort of explicit condition, such as “rows where the year &gt;= 1900.” Note that when we filter or slice a dataframe, the new object is just a <em>view</em> of the original and still refers to the same data. Pandas will warn us if we try to modify the filtered object, so a lot of the time, things are smoother if we make a new copy.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>rowfilter <span class="op">=</span> sdf[<span class="st">'year'</span>] <span class="op">&gt;=</span> <span class="dv">1900</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>fsdf <span class="op">=</span> sdf[rowfilter].copy()</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>fsdf.info()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>rowfilter <span class="op">=</span> sdf[<span class="st">'year'</span>] <span class="op">&gt;=</span> <span class="dv">1900</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>fsdf <span class="op">=</span> sdf[rowfilter].copy()</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>fsdf.info()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
+Index: 18787 entries, 111 to 25622
+Data columns (total 13 columns):
+ #   Column           Non-Null Count  Dtype  
+---  ------           --------------  -----  
+ 0   country_name     18787 non-null  object 
+ 1   country_text_id  18787 non-null  object 
+ 2   e_regiongeo      18787 non-null  int64  
+ 3   year             18787 non-null  int64  
+ 4   v2x_polyarchy    18663 non-null  float64
+ 5   v2x_libdem       18424 non-null  float64
+ 6   v2x_partipdem    18587 non-null  float64
+ 7   v2x_delibdem     18557 non-null  float64
+ 8   v2x_egaldem      18557 non-null  float64
+ 9   v2smprivex       3562 non-null   float64
+ 10  v2smpolsoc       3562 non-null   float64
+ 11  v2caviol         12745 non-null  float64
+ 12  e_boix_regime    11841 non-null  float64
+dtypes: float64(9), int64(2), object(2)
+memory usage: 2.0+ MB</code></pre>
+</div>
+</div>
 <p>We could also do this using the <code>.query()</code> method, which accepts a boolean expression as a string.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>alternate_fsdf <span class="op">=</span> sdf.query(<span class="st">'year &gt;= 1900'</span>).copy()</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>alternate_fsdf.info()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>alternate_fsdf <span class="op">=</span> sdf.query(<span class="st">'year &gt;= 1900'</span>).copy()</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>alternate_fsdf.info()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
+Index: 18787 entries, 111 to 25622
+Data columns (total 13 columns):
+ #   Column           Non-Null Count  Dtype  
+---  ------           --------------  -----  
+ 0   country_name     18787 non-null  object 
+ 1   country_text_id  18787 non-null  object 
+ 2   e_regiongeo      18787 non-null  int64  
+ 3   year             18787 non-null  int64  
+ 4   v2x_polyarchy    18663 non-null  float64
+ 5   v2x_libdem       18424 non-null  float64
+ 6   v2x_partipdem    18587 non-null  float64
+ 7   v2x_delibdem     18557 non-null  float64
+ 8   v2x_egaldem      18557 non-null  float64
+ 9   v2smprivex       3562 non-null   float64
+ 10  v2smpolsoc       3562 non-null   float64
+ 11  v2caviol         12745 non-null  float64
+ 12  e_boix_regime    11841 non-null  float64
+dtypes: float64(9), int64(2), object(2)
+memory usage: 2.0+ MB</code></pre>
+</div>
+</div>
 <p>Our final dataframe – which I have called <code>fsdf</code> for <strong>f</strong>iltered and <strong>s</strong>ubsetted <strong>d</strong>ata<strong>f</strong>rame – now has 13 columns (from 4,108) and 18,787 observations (from 27,013).</p>
 </section>
 <section id="writing-data-to-disk" class="level3" data-number="4.2.5">
 <h3 data-number="4.2.5" class="anchored" data-anchor-id="writing-data-to-disk"><span class="header-section-number">4.2.5</span> Writing Data to Disk</h3>
 <p>Just as I read our initial CSV file into Pandas using the <code>read_csv()</code> function, I can write this new dataframe to disk using the <code>write_csv()</code> function.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>fsdf.to_csv(<span class="st">'data/vdem_filtered_subset.csv'</span>, index<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>fsdf.to_csv(<span class="st">'data/vdem_filtered_subset.csv'</span>, index<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </section>
 </section>
 <section id="understanding-pandas-data-structures" class="level2" data-number="4.3">
@@ -804,22 +1158,114 @@ Table&nbsp;4.1: I/0 Methods for Pandas
 <h3 data-number="4.3.1" class="anchored" data-anchor-id="the-series"><span class="header-section-number">4.3.1</span> The <code>Series</code></h3>
 <p>Each column in a dataframe is an object called <strong>a Series</strong>. A Series is a one-dimensional object (e.g.&nbsp;a vector of numbers) with an index, which is itself a vector, or array, of labels.</p>
 <p>For example, the column <code>v2x_delibdem</code> in <code>fsdf</code> is a Series containing floats and the index label for each observation. Printing a sample of 15 observations gives me a numerical index for each observation on the left and the actual value on the right. The index values are ordered in the Series itself, but they are out of sequence here because we pulled a random sample. As this is for demonstration purposes, I’ve included a random_state value to ensure you get the same sample that I do if you re-run this block.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>fsdf[<span class="st">'v2x_delibdem'</span>].sample(<span class="dv">15</span>, random_state <span class="op">=</span> <span class="dv">42</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>fsdf[<span class="st">'v2x_delibdem'</span>].sample(<span class="dv">15</span>, random_state <span class="op">=</span> <span class="dv">42</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="15">
+<pre><code>8437     0.305
+25197    0.059
+6661     0.079
+19266    0.390
+7633     0.632
+1230     0.727
+8829     0.020
+10118    0.008
+8996     0.047
+2360     0.048
+18407    0.018
+153      0.132
+10794    0.805
+14375    0.800
+24240      NaN
+Name: v2x_delibdem, dtype: float64</code></pre>
+</div>
+</div>
 <p>In most cases, the default <code>index</code> for a Series or dataframe is an immutable vector of integers:</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>fsdf.index</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>fsdf.index</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="16">
+<pre><code>Index([  111,   112,   113,   114,   115,   116,   117,   118,   119,   120,
+       ...
+       25613, 25614, 25615, 25616, 25617, 25618, 25619, 25620, 25621, 25622],
+      dtype='int64', length=18787)</code></pre>
+</div>
+</div>
 <p>We can easily modify an index so that it is made of up some other type of vector instead, including a <code>string</code>. Surprisingly, index values do not need to be unique. This enables some powerful techniques, but most of the time, you should avoid manually changing indexes.</p>
 <section id="accessing-a-specific-row-by-its-index" class="level4" data-number="4.3.1.1">
 <h4 data-number="4.3.1.1" class="anchored" data-anchor-id="accessing-a-specific-row-by-its-index"><span class="header-section-number">4.3.1.1</span> Accessing a Specific Row by its Index</h4>
 <p>We can use the index to retrieve specific rows from a dataframe or specific values from a Series, much as we would if we were selecting an element from a <code>list</code>, <code>tuple</code>, or <code>array</code>. The easiest way to do this is to pass the index value (e.g.&nbsp;202) to <code>.loc[]</code>. As you can see below, the result is the observation-specific value for each variable in the dataframe.</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>fsdf.loc[<span class="dv">202</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>fsdf[<span class="st">'v2x_delibdem'</span>].loc[<span class="dv">202</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>fsdf[<span class="st">'v2x_delibdem'</span>].loc[<span class="dv">20000</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>fsdf.loc[<span class="dv">202</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="17">
+<pre><code>country_name       Mexico
+country_text_id       MEX
+e_regiongeo            17
+year                 1991
+v2x_polyarchy       0.435
+v2x_libdem          0.221
+v2x_partipdem       0.246
+v2x_delibdem         0.31
+v2x_egaldem         0.214
+v2smprivex            NaN
+v2smpolsoc            NaN
+v2caviol            -0.71
+e_boix_regime         0.0
+Name: 202, dtype: object</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="18">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>fsdf[<span class="st">'v2x_delibdem'</span>].loc[<span class="dv">202</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="18">
+<pre><code>0.31</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="19">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>fsdf[<span class="st">'v2x_delibdem'</span>].loc[<span class="dv">20000</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="19">
+<pre><code>0.081</code></pre>
+</div>
+</div>
 <p>Note that <code>.loc</code> does <em>not</em> refer to the 202nd row of the dataframe. If you were looking closely at the <code>.index</code> command above, you might have noticed the dataframe only contains 18,787 rows but <code>.loc</code> can still return row 20,000 - the index didn’t change when you removed a bunch of rows from the dataframe. Think of <code>.loc</code> as accessing a dictionary of the index values - it will even give a <code>KeyError</code> if you ask for an element that doesn’t exist.</p>
 <p>Instead, if we want the access the n-th row of a dataframe, we can use <code>.iloc[n]</code>. Think of the index as a list and you’re referring to an element of that list by its list index. Let’s use <code>.iloc</code> to select the last element in the dataframe. Note that the index position for the last element will be 18,786 even though the dataframe length is 18,787, because Python data structures are almost always 0-indexed. Here you see the index of the row, which was formerly the row number, as the <code>Name</code> at the bottom.</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>fsdf.iloc[<span class="dv">18786</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="20">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>fsdf.iloc[<span class="dv">18786</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="20">
+<pre><code>country_name       Zanzibar
+country_text_id         ZZB
+e_regiongeo               8
+year                   2019
+v2x_polyarchy         0.245
+v2x_libdem             0.18
+v2x_partipdem         0.083
+v2x_delibdem          0.183
+v2x_egaldem           0.187
+v2smprivex           -1.843
+v2smpolsoc           -0.848
+v2caviol             -0.181
+e_boix_regime           NaN
+Name: 25622, dtype: object</code></pre>
+</div>
+</div>
 <p>If there isn’t a reason to retain the original indexing of the unfiltered dataframe, it’s usually a good idea to reset the index.</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>fsdf.reset_index(inplace <span class="op">=</span> <span class="va">True</span>, drop <span class="op">=</span> <span class="va">True</span>)</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>fsdf.loc[<span class="dv">18786</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="21">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>fsdf.reset_index(inplace <span class="op">=</span> <span class="va">True</span>, drop <span class="op">=</span> <span class="va">True</span>)</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>fsdf.loc[<span class="dv">18786</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="21">
+<pre><code>country_name       Zanzibar
+country_text_id         ZZB
+e_regiongeo               8
+year                   2019
+v2x_polyarchy         0.245
+v2x_libdem             0.18
+v2x_partipdem         0.083
+v2x_delibdem          0.183
+v2x_egaldem           0.187
+v2smprivex           -1.843
+v2smpolsoc           -0.848
+v2caviol             -0.181
+e_boix_regime           NaN
+Name: 18786, dtype: object</code></pre>
+</div>
+</div>
 <p>Afterwards, <code>.loc</code> and <code>.iloc</code> become fairly interchangeable, with a few exceptions: <code>.loc</code> has dictionary-like capabilities whereas <code>.iloc</code> is more list-like. Now, let’s take a closer look at the dataframe.</p>
 </section>
 </section>
@@ -827,138 +1273,647 @@ Table&nbsp;4.1: I/0 Methods for Pandas
 <h3 data-number="4.3.2" class="anchored" data-anchor-id="dataframes"><span class="header-section-number">4.3.2</span> Dataframes</h3>
 <p><strong>Dataframes</strong> in Pandas are really just collections of Series that are aligned on the same index values. In other words, the Series we worked with previously have their own indices when we work with them as standalone Series, but in the <code>fsdf</code> dataframe, they share an index.</p>
 <p>As you’ve already seen, dataframes are organized with variables in the columns and observations in the rows, and you can grab a single Series from a dataframe using square brakets – let’s do that now, using the <code>fsdf</code> dataframe:</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>deliberative <span class="op">=</span> fsdf[<span class="st">'v2x_delibdem'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="22">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>deliberative <span class="op">=</span> fsdf[<span class="st">'v2x_delibdem'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <p>Note that we can also use dot notation to select columns. <code>fsdf.v2x_delibdem</code> is functionally equivalent to <code>fsdf['v2x_delibdem']</code>, and may be used interchangeably.</p>
 <p>We are not limited to selecting columns that already exist in our dataset. You can also create and add new ones. For example, you can create a new column called “21 Century” and assign Boolean value based on whether the observation is in the 2000s.</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>fsdf[<span class="st">'21 Century'</span>] <span class="op">=</span> fsdf[<span class="st">'year'</span>] <span class="op">&gt;=</span> <span class="dv">2000</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>fsdf[[<span class="st">'21 Century'</span>]].value_counts().reset_index()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="23">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>fsdf[<span class="st">'21 Century'</span>] <span class="op">=</span> fsdf[<span class="st">'year'</span>] <span class="op">&gt;=</span> <span class="dv">2000</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>fsdf[[<span class="st">'21 Century'</span>]].value_counts().reset_index()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="23">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">21 Century</th>
+<th data-quarto-table-cell-role="th">count</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>False</td>
+<td>15225</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>True</td>
+<td>3562</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
 <p>Sometimes, the new columns created are transformations of a Series that already exists in the dataframe. For example, you can create a new <code>missing_political_violence_data</code> column which will be <code>True</code> when the <code>v2caviol</code> Series (levels of political violence) is empty and <code>False</code> otherwise.</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>fsdf[<span class="st">'missing_political_violence_data'</span>] <span class="op">=</span> fsdf[<span class="st">'v2caviol'</span>].isna()</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>fsdf[<span class="st">'missing_political_violence_data'</span>].value_counts().reset_index()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="24">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>fsdf[<span class="st">'missing_political_violence_data'</span>] <span class="op">=</span> fsdf[<span class="st">'v2caviol'</span>].isna()</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>fsdf[<span class="st">'missing_political_violence_data'</span>].value_counts().reset_index()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="24">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">missing_political_violence_data</th>
+<th data-quarto-table-cell-role="th">count</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>False</td>
+<td>12745</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>True</td>
+<td>6042</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
 <p>As you can see from executing <code>value_counts()</code>, there is missing data on levels of political violence for 6042 observations.</p>
 </section>
 <section id="missing-data" class="level3" data-number="4.3.3">
 <h3 data-number="4.3.3" class="anchored" data-anchor-id="missing-data"><span class="header-section-number">4.3.3</span> Missing Data</h3>
 <p>It’s important to understand how missing data is handled. Missing data is common in real-world datasets, and it can be missing for multiple reasons! Generally, Pandas uses the <code>np.nan</code> value to represent missing data. NumPy’s <code>np.nan</code> value is a special case of a floating point number representing an unrepresentable value. These kinds of values are called <strong><code>NaNs</code></strong> (Not a Number).</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="bu">type</span>(np.nan)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="25">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="bu">type</span>(np.nan)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="25">
+<pre><code>float</code></pre>
+</div>
+</div>
 <p><code>np.nan</code> cannot be used in equality tests, since any comparison to a <code>np.nan</code> value will evaluate as False. This includes comparing <code>np.nan</code> to itself.</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> np.nan</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>n <span class="op">==</span> n</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="26">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> np.nan</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>n <span class="op">==</span> n</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="26">
+<pre><code>False</code></pre>
+</div>
+</div>
 <p><code>np.nan</code> values do not evaluate to <code>False</code> or <code>None</code>. This can make it difficult to distinguish missing values. You can use the <code>np.isnan()</code> function for this purpose, and it is especially useful in control flow.</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> np.nan <span class="kw">is</span> <span class="va">None</span>:</span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'NaN is None'</span>)</span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> np.nan:</span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'NaN evaluates to True in control flow'</span>)</span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> np.isnan(np.nan):</span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'NaN is considered a NaN value in NumPy'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="27">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> np.nan <span class="kw">is</span> <span class="va">None</span>:</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'NaN is None'</span>)</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> np.nan:</span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'NaN evaluates to True in control flow'</span>)</span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> np.isnan(np.nan):</span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'NaN is considered a NaN value in NumPy'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>NaN evaluates to True in control flow
+NaN is considered a NaN value in NumPy</code></pre>
+</div>
+</div>
 <p>Additionally, <code>np.nan</code> values are generally excluded from Pandas functions that perform calculations over dataframes, rows, or columns. For example, documentation often stipulates that a calculation is done over all values, excluding <code>NaN</code> or <code>NULL</code> values.</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>total <span class="op">=</span> <span class="bu">len</span>(fsdf[<span class="st">'v2caviol'</span>])</span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>count <span class="op">=</span> fsdf[<span class="st">'v2caviol'</span>].count()</span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Total: </span><span class="sc">{</span>total<span class="sc">}</span><span class="ss">'</span>)</span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Count: </span><span class="sc">{</span>count<span class="sc">}</span><span class="ss">'</span>)</span>
-<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Diff: </span><span class="sc">{</span>total<span class="op">-</span>count<span class="sc">}</span><span class="ss">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="28">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>total <span class="op">=</span> <span class="bu">len</span>(fsdf[<span class="st">'v2caviol'</span>])</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>count <span class="op">=</span> fsdf[<span class="st">'v2caviol'</span>].count()</span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Total: </span><span class="sc">{</span>total<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Count: </span><span class="sc">{</span>count<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Diff: </span><span class="sc">{</span>total<span class="op">-</span>count<span class="sc">}</span><span class="ss">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Total: 18787
+Count: 12745
+Diff: 6042</code></pre>
+</div>
+</div>
 <p>The total number of items in the <code>v2caviol</code> column (political violence) is much higher than the counts received from the count() function. If what we learned above is correct, this difference should be accounted for when we discover how many items in this column are <code>NaNs</code>.</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>nans <span class="op">=</span> fsdf[<span class="st">'v2caviol'</span>].isna().<span class="bu">sum</span>()</span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">' NaNs: </span><span class="sc">{}</span><span class="st">'</span>.<span class="bu">format</span>(nans))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="29">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>nans <span class="op">=</span> fsdf[<span class="st">'v2caviol'</span>].isna().<span class="bu">sum</span>()</span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">' NaNs: </span><span class="sc">{}</span><span class="st">'</span>.<span class="bu">format</span>(nans))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> NaNs: 6042</code></pre>
+</div>
+</div>
 <p>As you can probably tell, the <code>.isna()</code> method, which is similar to <code>np.isnan()</code> but covers additional cases, can be very useful in transforming and filtering data.</p>
 </section>
 </section>
 <section id="aggregation-grouped-operations" class="level2" data-number="4.4">
 <h2 data-number="4.4" class="anchored" data-anchor-id="aggregation-grouped-operations"><span class="header-section-number">4.4</span> AGGREGATION &amp; GROUPED OPERATIONS</h2>
 <p>Data analysis projects often involve aggregation or grouped operations. For example, we might want to compute and compare summary statistics for observations that take different values on a categorical variable. It can be helpful to be able to carve up the dataset itself, performing operations on different subsets of data. We’re going to do that using the <code>.groupby()</code> method, which partitions the dataframe into groups based on the values of a given variable. We can then perform operations on the resulting groups. Let’s group our countries into geographic regions using the <code>e_regiongeo</code> variable.</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>grouped <span class="op">=</span> fsdf.groupby(<span class="st">'e_regiongeo'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="30">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>grouped <span class="op">=</span> fsdf.groupby(<span class="st">'e_regiongeo'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <p>The above code returns a grouped object that we can work with. Let’s say we want to pull out a specific group, like South East Asia, which is represented in the data using the numerical ID <code>13</code>. I know this because the relevant information is provided in the VDEM codebook, which I suggest you keep open whenever you are working with the VDEM data.</p>
 <p>We can use the <code>get_group()</code> method to pull a group from the grouped object. (Note that the <code>.get_group()</code> code below is equivalent to <code>fsdf[fsdf['e_regiongeo'] == 13]</code>.)</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>south_east_asia <span class="op">=</span> grouped.get_group(<span class="dv">13</span>)</span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>south_east_asia[[<span class="st">'country_name'</span>, <span class="st">'year'</span>, <span class="st">'e_boix_regime'</span>]].head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="31">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>south_east_asia <span class="op">=</span> grouped.get_group(<span class="dv">13</span>)</span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>south_east_asia[[<span class="st">'country_name'</span>, <span class="st">'year'</span>, <span class="st">'e_boix_regime'</span>]].head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="31">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">country_name</th>
+<th data-quarto-table-cell-role="th">year</th>
+<th data-quarto-table-cell-role="th">e_boix_regime</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">838</td>
+<td>Burma/Myanmar</td>
+<td>1900</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">839</td>
+<td>Burma/Myanmar</td>
+<td>1901</td>
+<td>NaN</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">840</td>
+<td>Burma/Myanmar</td>
+<td>1902</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">841</td>
+<td>Burma/Myanmar</td>
+<td>1903</td>
+<td>NaN</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">842</td>
+<td>Burma/Myanmar</td>
+<td>1904</td>
+<td>NaN</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
 <p>The data stored in <code>south_east_asia</code> are all of the observations of South East Asian countries in the VDEM data, stored now in their own dataframe. <code>.get_group()</code> is yet another way to extract a subset of a dataframe (by way of a <code>groupby</code> object), and is especially useful when the subset of data you want to work with is only observations with a particular value for a categorical variable in your data.</p>
 <p>Generally speaking, when we group a dataset like this it’s because we want to compute something for a group within the dataset, or for multiple groups that we want to compare. We can do this by specifying the grouped object, the <code>Series</code> we want to perform an operation on, and finally the operation we want to perform. For example, let’s compute the median polyarchy score for countries in each of the regions in the dataset.</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>poly <span class="op">=</span> grouped[<span class="st">'v2x_polyarchy'</span>].median()</span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>poly.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="32">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>poly <span class="op">=</span> grouped[<span class="st">'v2x_polyarchy'</span>].median()</span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>poly.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="32">
+<pre><code>e_regiongeo
+1    0.7940
+2    0.8170
+3    0.3890
+4    0.2385
+5    0.0955
+Name: v2x_polyarchy, dtype: float64</code></pre>
+</div>
+</div>
 <p>It would be more useful to see the name of the region rather than its numeric label. We can do this by creating a dictionary that maps the numeric IDs to the region name, and then use the <code>.map()</code> method to tell Pandas were to lookup the values it needs to create a new column with the country names. First, the dictionary:</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>regions <span class="op">=</span> {</span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>    <span class="dv">1</span>:<span class="st">'Western Europe'</span>,</span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>    <span class="dv">2</span>:<span class="st">'Northern Europe'</span>,</span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>    <span class="dv">3</span>:<span class="st">'Southern Europe'</span>,</span>
-<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>    <span class="dv">4</span>:<span class="st">'Eastern Europe'</span>,</span>
-<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>    <span class="dv">5</span>:<span class="st">'Northern Africa'</span>,</span>
-<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>    <span class="dv">6</span>:<span class="st">'Western Africa'</span>,</span>
-<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>    <span class="dv">7</span>:<span class="st">'Middle Africa'</span>,</span>
-<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>    <span class="dv">8</span>:<span class="st">'Eastern Africa'</span>,</span>
-<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>    <span class="dv">9</span>:<span class="st">'Southern Africa'</span>,</span>
-<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>    <span class="dv">10</span>:<span class="st">'Western Asia'</span>,</span>
-<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>    <span class="dv">11</span>:<span class="st">'Central Asia'</span>,</span>
-<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a>    <span class="dv">12</span>:<span class="st">'East Asia'</span>,</span>
-<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a>    <span class="dv">13</span>:<span class="st">'South-East Asia'</span>,</span>
-<span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a>    <span class="dv">14</span>:<span class="st">'South Asia'</span>,</span>
-<span id="cb33-16"><a href="#cb33-16" aria-hidden="true" tabindex="-1"></a>    <span class="dv">15</span>:<span class="st">'Oceania'</span>, <span class="co"># (including Australia and the Pacific)</span></span>
-<span id="cb33-17"><a href="#cb33-17" aria-hidden="true" tabindex="-1"></a>    <span class="dv">16</span>:<span class="st">'North America'</span>,</span>
-<span id="cb33-18"><a href="#cb33-18" aria-hidden="true" tabindex="-1"></a>    <span class="dv">17</span>:<span class="st">'Central America'</span>,</span>
-<span id="cb33-19"><a href="#cb33-19" aria-hidden="true" tabindex="-1"></a>    <span class="dv">18</span>:<span class="st">'South America'</span>,</span>
-<span id="cb33-20"><a href="#cb33-20" aria-hidden="true" tabindex="-1"></a>    <span class="dv">19</span>:<span class="st">'Caribbean'</span> <span class="co"># (including Belize Cuba Haiti Dominican Republic)</span></span>
-<span id="cb33-21"><a href="#cb33-21" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="33">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>regions <span class="op">=</span> {</span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>    <span class="dv">1</span>:<span class="st">'Western Europe'</span>,</span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>    <span class="dv">2</span>:<span class="st">'Northern Europe'</span>,</span>
+<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a>    <span class="dv">3</span>:<span class="st">'Southern Europe'</span>,</span>
+<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a>    <span class="dv">4</span>:<span class="st">'Eastern Europe'</span>,</span>
+<span id="cb53-6"><a href="#cb53-6" aria-hidden="true" tabindex="-1"></a>    <span class="dv">5</span>:<span class="st">'Northern Africa'</span>,</span>
+<span id="cb53-7"><a href="#cb53-7" aria-hidden="true" tabindex="-1"></a>    <span class="dv">6</span>:<span class="st">'Western Africa'</span>,</span>
+<span id="cb53-8"><a href="#cb53-8" aria-hidden="true" tabindex="-1"></a>    <span class="dv">7</span>:<span class="st">'Middle Africa'</span>,</span>
+<span id="cb53-9"><a href="#cb53-9" aria-hidden="true" tabindex="-1"></a>    <span class="dv">8</span>:<span class="st">'Eastern Africa'</span>,</span>
+<span id="cb53-10"><a href="#cb53-10" aria-hidden="true" tabindex="-1"></a>    <span class="dv">9</span>:<span class="st">'Southern Africa'</span>,</span>
+<span id="cb53-11"><a href="#cb53-11" aria-hidden="true" tabindex="-1"></a>    <span class="dv">10</span>:<span class="st">'Western Asia'</span>,</span>
+<span id="cb53-12"><a href="#cb53-12" aria-hidden="true" tabindex="-1"></a>    <span class="dv">11</span>:<span class="st">'Central Asia'</span>,</span>
+<span id="cb53-13"><a href="#cb53-13" aria-hidden="true" tabindex="-1"></a>    <span class="dv">12</span>:<span class="st">'East Asia'</span>,</span>
+<span id="cb53-14"><a href="#cb53-14" aria-hidden="true" tabindex="-1"></a>    <span class="dv">13</span>:<span class="st">'South-East Asia'</span>,</span>
+<span id="cb53-15"><a href="#cb53-15" aria-hidden="true" tabindex="-1"></a>    <span class="dv">14</span>:<span class="st">'South Asia'</span>,</span>
+<span id="cb53-16"><a href="#cb53-16" aria-hidden="true" tabindex="-1"></a>    <span class="dv">15</span>:<span class="st">'Oceania'</span>, <span class="co"># (including Australia and the Pacific)</span></span>
+<span id="cb53-17"><a href="#cb53-17" aria-hidden="true" tabindex="-1"></a>    <span class="dv">16</span>:<span class="st">'North America'</span>,</span>
+<span id="cb53-18"><a href="#cb53-18" aria-hidden="true" tabindex="-1"></a>    <span class="dv">17</span>:<span class="st">'Central America'</span>,</span>
+<span id="cb53-19"><a href="#cb53-19" aria-hidden="true" tabindex="-1"></a>    <span class="dv">18</span>:<span class="st">'South America'</span>,</span>
+<span id="cb53-20"><a href="#cb53-20" aria-hidden="true" tabindex="-1"></a>    <span class="dv">19</span>:<span class="st">'Caribbean'</span> <span class="co"># (including Belize Cuba Haiti Dominican Republic)</span></span>
+<span id="cb53-21"><a href="#cb53-21" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <p>And now we can pass this dictionary into the <code>.map()</code> method applied to the <code>fsdf['e_regiongeo']</code> Series, creating a new Series called <code>fsdf['Region']</code></p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>fsdf[<span class="st">'Region'</span>] <span class="op">=</span> fsdf[<span class="st">'e_regiongeo'</span>].<span class="bu">map</span>(regions)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="34">
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>fsdf[<span class="st">'Region'</span>] <span class="op">=</span> fsdf[<span class="st">'e_regiongeo'</span>].<span class="bu">map</span>(regions)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <p>It is also possible to group by multiple variables, such as geographic region and year, and then perform an operation on <em>those</em> slightly more fine-grained groups. This will result in 2,211 groups, so we will preview a random sample of 10.</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>grouped <span class="op">=</span> fsdf.groupby([<span class="st">'Region'</span>, <span class="st">'year'</span>])</span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>poly <span class="op">=</span> grouped[<span class="st">'v2x_polyarchy'</span>].median()</span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>poly.reset_index()</span>
-<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>pd.DataFrame(poly).reset_index().sample(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="35">
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>grouped <span class="op">=</span> fsdf.groupby([<span class="st">'Region'</span>, <span class="st">'year'</span>])</span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>poly <span class="op">=</span> grouped[<span class="st">'v2x_polyarchy'</span>].median()</span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>poly.reset_index()</span>
+<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a>pd.DataFrame(poly).reset_index().sample(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="35">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Region</th>
+<th data-quarto-table-cell-role="th">year</th>
+<th data-quarto-table-cell-role="th">v2x_polyarchy</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">142</td>
+<td>Central America</td>
+<td>1922</td>
+<td>0.1835</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1870</td>
+<td>Western Africa</td>
+<td>1919</td>
+<td>0.0390</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">1104</td>
+<td>Northern Europe</td>
+<td>1993</td>
+<td>0.8705</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1384</td>
+<td>South Asia</td>
+<td>1913</td>
+<td>0.0350</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2049</td>
+<td>Western Asia</td>
+<td>1978</td>
+<td>0.0855</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1369</td>
+<td>South America</td>
+<td>2018</td>
+<td>0.7115</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">1286</td>
+<td>South America</td>
+<td>1935</td>
+<td>0.2010</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1710</td>
+<td>Southern Africa</td>
+<td>1999</td>
+<td>0.6650</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">1725</td>
+<td>Southern Africa</td>
+<td>2014</td>
+<td>0.6730</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">345</td>
+<td>East Asia</td>
+<td>1954</td>
+<td>0.1560</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
 <p>We can perform other types of operations on the grouped object itself, such as computing the number of observations in each group (equivalent to <code>value_counts()</code>).</p>
-<div class="sourceCode" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>grouped.size().sort_values(ascending<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="36">
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>grouped.size().sort_values(ascending<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="36">
+<pre><code>Region          year
+Eastern Africa  2015    20
+                2012    20
+                2019    20
+                2018    20
+                2017    20
+                        ..
+Central Asia    1904     1
+                1903     1
+                1902     1
+                1901     1
+                1914     1
+Length: 2211, dtype: int64</code></pre>
+</div>
+</div>
 <p>Finally, we can perform <em>multiple</em> operations on a grouped object by using the <code>agg()</code> method. The <code>agg()</code> method will apply one or more aggregate functions <em>to a grouped object</em>, returning the results of each.</p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>with_agg <span class="op">=</span> grouped[<span class="st">'v2x_polyarchy'</span>].agg([<span class="bu">min</span>, np.median, <span class="st">'max'</span>, <span class="st">'count'</span>])</span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>with_agg.reset_index().sample(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="37">
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>with_agg <span class="op">=</span> grouped[<span class="st">'v2x_polyarchy'</span>].agg([<span class="bu">min</span>, np.median, <span class="st">'max'</span>, <span class="st">'count'</span>])</span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>with_agg.reset_index().sample(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="37">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Region</th>
+<th data-quarto-table-cell-role="th">year</th>
+<th data-quarto-table-cell-role="th">min</th>
+<th data-quarto-table-cell-role="th">median</th>
+<th data-quarto-table-cell-role="th">max</th>
+<th data-quarto-table-cell-role="th">count</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">879</td>
+<td>North America</td>
+<td>2008</td>
+<td>0.849</td>
+<td>0.8790</td>
+<td>0.909</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1923</td>
+<td>Western Africa</td>
+<td>1972</td>
+<td>0.014</td>
+<td>0.1785</td>
+<td>0.494</td>
+<td>16</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">929</td>
+<td>Northern Africa</td>
+<td>1938</td>
+<td>0.015</td>
+<td>0.0460</td>
+<td>0.130</td>
+<td>6</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1376</td>
+<td>South Asia</td>
+<td>1905</td>
+<td>0.010</td>
+<td>0.0330</td>
+<td>0.146</td>
+<td>7</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2077</td>
+<td>Western Asia</td>
+<td>2006</td>
+<td>0.020</td>
+<td>0.3250</td>
+<td>0.844</td>
+<td>18</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">109</td>
+<td>Caribbean</td>
+<td>2009</td>
+<td>0.177</td>
+<td>0.7070</td>
+<td>0.804</td>
+<td>6</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">1281</td>
+<td>South America</td>
+<td>1930</td>
+<td>0.030</td>
+<td>0.2010</td>
+<td>0.588</td>
+<td>12</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1279</td>
+<td>South America</td>
+<td>1928</td>
+<td>0.029</td>
+<td>0.2015</td>
+<td>0.592</td>
+<td>12</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">1713</td>
+<td>Southern Africa</td>
+<td>2002</td>
+<td>0.137</td>
+<td>0.6510</td>
+<td>0.764</td>
+<td>5</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1765</td>
+<td>Southern Europe</td>
+<td>1934</td>
+<td>0.060</td>
+<td>0.1740</td>
+<td>0.562</td>
+<td>7</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
 <p>We can even define our own function for <code>agg()</code> to use! If we’re willing to pass a dictionary, <code>.agg()</code> also lets us apply different functions to multiple variables at the same time! Instead of passing one list per function, you can use a dictionary where the column names are the keys and the functions are the values (you can also pass a list of functions) to perform some truly involved aggregration all in one line of code.</p>
 </section>
 <section id="working-with-time-series-data" class="level2" data-number="4.5">
 <h2 data-number="4.5" class="anchored" data-anchor-id="working-with-time-series-data"><span class="header-section-number">4.5</span> WORKING WITH TIME SERIES DATA</h2>
 <p>Many real world datasets include a temporal component. This is especially true if you are working with data that comes from the web, which may have precise timestamps for things like the time an email was sent, or a news story was published. Strings are often used to store dates and times, but this is not ideal because strings don’t take advantage of the unique properties of time. It is difficult to sort dates if they are stored in strings with strange formats, for example.</p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co">"Monday Mar 2, 1999"</span> <span class="op">&gt;</span> <span class="st">"Friday Feb 21, 2020"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="38">
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="co">"Monday Mar 2, 1999"</span> <span class="op">&gt;</span> <span class="st">"Friday Feb 21, 2020"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="38">
+<pre><code>True</code></pre>
+</div>
+</div>
 <p>Extracting features like day, month, or timezone from strings can be time-consuming an error-prone. This is why Pandas and Python have implemented special types for date/time objects, called <strong>[<code>Timestamp</code>]</strong>(https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Timestamp.html) and <strong>[<code>Datetime</code>]</strong>(https://docs.python.org/2/library/datetime.html), respectively. These are essentially equivalent to one another.</p>
 <p>The VDEM data contains an enormous amount of temporal data, but all at the level of the year. Let’s switch over to a different dataset that has more fine-grained temporal data, and more closely resembles data that you would obtain from the web. In this case, we are going to use some data on Russian information operations targeting the 2016 American Presidential Election. You can read a bit about this data on the FiveThirtyEight blogpost <a href="https://fivethirtyeight.com/features/why-were-sharing-3-million-russian-troll-tweets/">Why We’re Sharing 3 Million Russian Troll Tweets</a>.</p>
 <p>Unlike the VDEM data, the Russian Troll Tweets come as a collection of <code>csv</code> files. We will use a clever little trick to load up all the data in a single dataframe. The code block below iterates over each file in the <code>russian-troll-tweets/</code> subdirectory in the data directory. If the file extension is <code>csv</code>, is reads the <code>csv</code> into memory as a dataframe. All of the dataframes are then concatenated into a single dataframe containing data on ~ 3M tweets.</p>
-<div class="sourceCode" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>russian_troll_data_url <span class="op">=</span> <span class="st">"https://www.dropbox.com/scl/fo/a3uxioa2wd7k8x8nas0iy/AH5qjXAZvtFpZeIID0sZ1xA?rlkey=p1471igxmzgyu3lg2x93b3r1y&amp;st=xvhtn8gi&amp;dl=0"</span></span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>download_dataset(</span>
-<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>    russian_troll_data_url,</span>
-<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>    save_path<span class="op">=</span><span class="st">'data/russian_troll_tweets'</span></span>
-<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>data_dir <span class="op">=</span> os.listdir(<span class="st">"data/russian_troll_tweets/"</span>)</span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>files <span class="op">=</span> [f <span class="cf">for</span> f <span class="kw">in</span> data_dir <span class="cf">if</span> <span class="st">'csv'</span> <span class="kw">in</span> f]</span>
-<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>tweets_df <span class="op">=</span> pd.concat((pd.read_csv(</span>
-<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>    <span class="ss">f'</span><span class="sc">{</span><span class="st">"data/russian_troll_tweets/"</span><span class="sc">}</span><span class="ss">/</span><span class="sc">{</span>f<span class="sc">}</span><span class="ss">'</span>,</span>
-<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>    encoding<span class="op">=</span><span class="st">'utf-8'</span>, low_memory<span class="op">=</span><span class="va">False</span>) <span class="cf">for</span> f <span class="kw">in</span> files), ignore_index<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a>tweets_df.info()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="39">
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>russian_troll_data_url <span class="op">=</span> <span class="st">"https://www.dropbox.com/scl/fo/a3uxioa2wd7k8x8nas0iy/AH5qjXAZvtFpZeIID0sZ1xA?rlkey=p1471igxmzgyu3lg2x93b3r1y&amp;st=xvhtn8gi&amp;dl=0"</span></span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a>download_dataset(</span>
+<span id="cb61-4"><a href="#cb61-4" aria-hidden="true" tabindex="-1"></a>    russian_troll_data_url,</span>
+<span id="cb61-5"><a href="#cb61-5" aria-hidden="true" tabindex="-1"></a>    save_path<span class="op">=</span><span class="st">'data/russian_troll_tweets'</span></span>
+<span id="cb61-6"><a href="#cb61-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>File already exists at 'data/russian_troll_tweets'. Skipping download.</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="40">
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a>data_dir <span class="op">=</span> os.listdir(<span class="st">"data/russian_troll_tweets/"</span>)</span>
+<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb63-3"><a href="#cb63-3" aria-hidden="true" tabindex="-1"></a>files <span class="op">=</span> [f <span class="cf">for</span> f <span class="kw">in</span> data_dir <span class="cf">if</span> <span class="st">'csv'</span> <span class="kw">in</span> f]</span>
+<span id="cb63-4"><a href="#cb63-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb63-5"><a href="#cb63-5" aria-hidden="true" tabindex="-1"></a>tweets_df <span class="op">=</span> pd.concat((pd.read_csv(</span>
+<span id="cb63-6"><a href="#cb63-6" aria-hidden="true" tabindex="-1"></a>    <span class="ss">f'</span><span class="sc">{</span><span class="st">"data/russian_troll_tweets/"</span><span class="sc">}</span><span class="ss">/</span><span class="sc">{</span>f<span class="sc">}</span><span class="ss">'</span>,</span>
+<span id="cb63-7"><a href="#cb63-7" aria-hidden="true" tabindex="-1"></a>    encoding<span class="op">=</span><span class="st">'utf-8'</span>, low_memory<span class="op">=</span><span class="va">False</span>) <span class="cf">for</span> f <span class="kw">in</span> files), ignore_index<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb63-8"><a href="#cb63-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb63-9"><a href="#cb63-9" aria-hidden="true" tabindex="-1"></a>tweets_df.info()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
+RangeIndex: 2946207 entries, 0 to 2946206
+Data columns (total 21 columns):
+ #   Column              Dtype 
+---  ------              ----- 
+ 0   external_author_id  object
+ 1   author              object
+ 2   content             object
+ 3   region              object
+ 4   language            object
+ 5   publish_date        object
+ 6   harvested_date      object
+ 7   following           int64 
+ 8   followers           int64 
+ 9   updates             int64 
+ 10  post_type           object
+ 11  account_type        object
+ 12  retweet             int64 
+ 13  account_category    object
+ 14  new_june_2018       int64 
+ 15  alt_external_id     object
+ 16  tweet_id            int64 
+ 17  article_url         object
+ 18  tco1_step1          object
+ 19  tco2_step1          object
+ 20  tco3_step1          object
+dtypes: int64(6), object(15)
+memory usage: 472.0+ MB</code></pre>
+</div>
+</div>
 <p>As you can see, we have two datatypes in our dataframe: <code>object</code> and <code>int64</code>. Remember that Pandas uses <code>object</code> to refer to columns that contain strings, or which contain mixed types, such as strings and integers. In this case, they refer to strings.</p>
 <p>One further thing to note about this dataset: each row is a tweet from a specific account, but some of the variables describe attributes of the tweeting accounts, not of the tweet itself. For example, followers describes the number of followers that the account had at the time it sent the tweet. This makes sense, because tweets don’t have followers, but accounts do. We need to keep this in mind when working with this dataset.</p>
 <p>We can convert date strings from a column or <code>Series</code> into Timestamps using the <code>to_datetime</code> function. We will do that here, assigning the new <code>datetime</code> objects to new variables. Note that this code will take a bit of time to run when executed on all 3 million tweets (if your computer isn’t the strongest, you might want to consider first using <code>tweets_df.sample()</code> to reduce the size of the dataframe).</p>
-<div class="sourceCode" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>tweets_df[<span class="st">'dt_publish_date'</span>] <span class="op">=</span> pd.to_datetime(tweets_df[<span class="st">'publish_date'</span>])</span>
-<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>tweets_df[<span class="st">'dt_harvested_date'</span>] <span class="op">=</span> pd.to_datetime(tweets_df[<span class="st">'harvested_date'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>tweets_df[[<span class="st">'author'</span>, <span class="st">'content'</span>, <span class="st">'publish_date'</span>]].sample(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="41">
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a>tweets_df[<span class="st">'dt_publish_date'</span>] <span class="op">=</span> pd.to_datetime(</span>
+<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a>    tweets_df[<span class="st">'publish_date'</span>]</span>
+<span id="cb65-3"><a href="#cb65-3" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb65-4"><a href="#cb65-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb65-5"><a href="#cb65-5" aria-hidden="true" tabindex="-1"></a>tweets_df[<span class="st">'dt_harvested_date'</span>] <span class="op">=</span> pd.to_datetime(</span>
+<span id="cb65-6"><a href="#cb65-6" aria-hidden="true" tabindex="-1"></a>    tweets_df[<span class="st">'harvested_date'</span>]</span>
+<span id="cb65-7"><a href="#cb65-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="42">
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>tweets_df[[<span class="st">'author'</span>, <span class="st">'content'</span>, <span class="st">'publish_date'</span>]].sample(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="42">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">author</th>
+<th data-quarto-table-cell-role="th">content</th>
+<th data-quarto-table-cell-role="th">publish_date</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">27791</td>
+<td>ADDIE_HOL</td>
+<td>do u ever just wish you could delete certain m...</td>
+<td>7/4/2015 9:40</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2131074</td>
+<td>JAYDAASTONISHIN</td>
+<td>▶@EurWeb: The Inaugural Black Men XCEL Summit ...</td>
+<td>7/27/2017 7:52</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">872636</td>
+<td>PAMELAKEALER13</td>
+<td>Clinton Privilege?� https://t.co/k1E4eEAYDT</td>
+<td>6/16/2016 1:45</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1300460</td>
+<td>STLOUISONLINE</td>
+<td>After six innings, Cubs still up 2-1 over Card...</td>
+<td>4/20/2016 2:55</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2496695</td>
+<td>BEEATRWL</td>
+<td>RT 2_tts: the smart ones are moving to other s...</td>
+<td>8/2/2017 0:31</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
 <p>In order, the datetime object fields are as follows: <code>year-month-day hour:minute:second:microsecond</code>. To retrieve an integer corresponding to the month when the tweet was published:</p>
-<div class="sourceCode" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>tweets_df[<span class="st">'dt_publish_date'</span>].dt.month</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="43">
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a>tweets_df[<span class="st">'dt_publish_date'</span>].dt.month</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="43">
+<pre><code>0          10
+1          10
+2          10
+3          10
+4          10
+           ..
+2946202     2
+2946203     2
+2946204     2
+2946205     2
+2946206     2
+Name: dt_publish_date, Length: 2946207, dtype: int32</code></pre>
+</div>
+</div>
 <p>When our date and time variables are stored as <code>datetime</code> objects, we can access many time-specific attributes using dot notation. The Pandas documentation includes many examples of the kinds of temporal units and other functionality.</p>
 <p>We can also sort our dataframe based on <code>publish_date</code> because Pandas knows that it is working with <code>datetime</code> objects.</p>
-<div class="sourceCode" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>sorted_df <span class="op">=</span> tweets_df.sort_values([<span class="st">'dt_publish_date'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="44">
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a>sorted_df <span class="op">=</span> tweets_df.sort_values([<span class="st">'dt_publish_date'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <p>We can also add and subtract datetime columns to create new columns.</p>
-<div class="sourceCode" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>tweets_df[<span class="st">'days_until_harvest'</span>] <span class="op">=</span> tweets_df[<span class="st">'dt_harvested_date'</span>] <span class="op">-</span> tweets_df[<span class="st">'dt_publish_date'</span>]</span>
-<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>tweets_df[<span class="st">'days_until_harvest'</span>].sample(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="45">
+<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a>tweets_df[<span class="st">'days_until_harvest'</span>] <span class="op">=</span> tweets_df[<span class="st">'dt_harvested_date'</span>] <span class="op">-</span> tweets_df[<span class="st">'dt_publish_date'</span>]</span>
+<span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb70-3"><a href="#cb70-3" aria-hidden="true" tabindex="-1"></a>tweets_df[<span class="st">'days_until_harvest'</span>].sample(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="45">
+<pre><code>2760041   0 days 00:01:00
+194888    0 days 00:00:00
+2124379   0 days 00:00:00
+663131    0 days 00:00:00
+1263490   0 days 00:00:00
+2435599   0 days 00:00:00
+2865883   0 days 00:00:00
+2207952   0 days 00:00:00
+2262092   0 days 00:01:00
+1231374   0 days 00:02:00
+Name: days_until_harvest, dtype: timedelta64[ns]</code></pre>
+</div>
+</div>
 <p>Let’s create new variables for the Year, Month, and Day each tweet was created on. We can do this by using the year, month, and day attributes on the <code>datetime</code> object.</p>
-<div class="sourceCode" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>tweets_df[<span class="st">'Year'</span>] <span class="op">=</span> tweets_df[<span class="st">'dt_publish_date'</span>].dt.year</span>
-<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>tweets_df[<span class="st">'Month'</span>] <span class="op">=</span> tweets_df[<span class="st">'dt_publish_date'</span>].dt.month</span>
-<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>tweets_df[<span class="st">'Day'</span>] <span class="op">=</span> tweets_df[<span class="st">'dt_publish_date'</span>].dt.day</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="46">
+<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a>tweets_df[<span class="st">'Year'</span>] <span class="op">=</span> tweets_df[<span class="st">'dt_publish_date'</span>].dt.year</span>
+<span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a>tweets_df[<span class="st">'Month'</span>] <span class="op">=</span> tweets_df[<span class="st">'dt_publish_date'</span>].dt.month</span>
+<span id="cb72-3"><a href="#cb72-3" aria-hidden="true" tabindex="-1"></a>tweets_df[<span class="st">'Day'</span>] <span class="op">=</span> tweets_df[<span class="st">'dt_publish_date'</span>].dt.day</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <p>Pandas offers specialized tools for grouping data into various segments of time. This involves converting a time series at one level into another (e.g.&nbsp;from days to weeks), and is known as <strong>resampling</strong>. Within resampling broadly, <strong>upsampling</strong> aggregates dates / times and <strong>downsampling</strong> disaggregates dates / times. Let’s upsample our data to plot the number of Tweets per day.</p>
 <p>The first thing we will do is use the <code>datetime</code> object <code>dt_publish_date</code> as an index. This will let us easily group observations by resampling dates.</p>
-<div class="sourceCode" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>tweets_df <span class="op">=</span> tweets_df.set_index(<span class="st">'dt_publish_date'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="47">
+<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a>tweets_df <span class="op">=</span> tweets_df.set_index(<span class="st">'dt_publish_date'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <p>We can now use the <code>.resample()</code> method with the argument <code>D</code> to specify that we want to group by day. The table below provides some other options you can use when resampling dates.</p>
-<table class="caption-top table">
+<table class="table">
 <caption>Units of time in Pandas. You can use any of these units to upsample or downsample temporal data.</caption>
 <thead>
 <tr class="header">
@@ -1070,104 +2025,255 @@ Table&nbsp;4.1: I/0 Methods for Pandas
 </tbody>
 </table>
 <p>We will also use the <code>.size()</code> method to determine the number of tweets that were produced each day.</p>
-<div class="sourceCode" id="cb48"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>grouped_cal_day <span class="op">=</span> tweets_df.resample(<span class="st">'D'</span>).size()</span>
-<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>grouped_cal_day</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>At this point, we are going to visualize the results of our work with a line plot. We are going to do this with the Seaborn and matplotlib packages, which we will discuss in the next chapter. For now, focus on the visualization and ignore the code. The code blocks below produces Figures <a href="web-data-scraping.html#fig-06_01" class="quarto-xref">Figure&nbsp;<span>8.1</span></a> and <a href="web-data-scraping.html#fig-06_02" class="quarto-xref">Figure&nbsp;<span>8.2</span></a>.</p>
-<div class="sourceCode" id="cb49"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
-<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>sns.lineplot(data<span class="op">=</span>grouped_cal_day, color<span class="op">=</span><span class="st">'#32363A'</span>)</span>
-<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
-<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'figures/06_01.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div id="fig-06_01" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-06_01-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/06_01.png" class="img-fluid figure-img">
+<div class="cell" data-execution_count="48">
+<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a>grouped_cal_day <span class="op">=</span> tweets_df.resample(<span class="st">'D'</span>).size()</span>
+<span id="cb74-2"><a href="#cb74-2" aria-hidden="true" tabindex="-1"></a>grouped_cal_day</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="48">
+<pre><code>dt_publish_date
+2012-02-02     4
+2012-02-03     0
+2012-02-04     1
+2012-02-05     1
+2012-02-06     3
+              ..
+2018-05-26    44
+2018-05-27    49
+2018-05-28    43
+2018-05-29    49
+2018-05-30    32
+Freq: D, Length: 2310, dtype: int64</code></pre>
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-06_01-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4.1: caption…
-</figcaption>
+</div>
+<p>At this point, we are going to visualize the results of our work with a line plot. We are going to do this with the Seaborn and matplotlib packages, which we will discuss in the next chapter. For now, focus on the visualization and ignore the code. The code blocks below produces Figures <a href="web-data-scraping.html#fig-06_01">Figure&nbsp;<span>9.1</span></a> and <a href="web-data-scraping.html#fig-06_02">Figure&nbsp;<span>9.2</span></a>.</p>
+<div class="cell" data-execution_count="49">
+<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a>sns.lineplot(data<span class="op">=</span>grouped_cal_day, color<span class="op">=</span><span class="st">'#32363A'</span>)</span>
+<span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
+<span id="cb76-3"><a href="#cb76-3" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'figures/06_01.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="fig-06_01" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="figures/06_01.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;4.1: caption…</figcaption>
 </figure>
 </div>
 <p>Days may not be the best unit of time to work with in this case. We can, of course, upsample from days to weeks instead, and produce the same plot.</p>
-<div class="sourceCode" id="cb50"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>weekly <span class="op">=</span> tweets_df.resample(<span class="st">'W'</span>).size()</span>
-<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>weekly.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb51"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| output: false</span></span>
-<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> sns.lineplot(data<span class="op">=</span>weekly, color<span class="op">=</span><span class="st">'#32363A'</span>)</span>
-<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">'</span><span class="ch">\n</span><span class="st">Weekly observations'</span>)</span>
-<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">'Number of Tweets</span><span class="ch">\n</span><span class="st">'</span>)</span>
-<span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
-<span id="cb51-6"><a href="#cb51-6" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'figures/06_02.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div id="fig-06_02" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-06_02-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/06_02.png" class="img-fluid figure-img">
+<div class="cell" data-execution_count="50">
+<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a>weekly <span class="op">=</span> tweets_df.resample(<span class="st">'W'</span>).size()</span>
+<span id="cb77-2"><a href="#cb77-2" aria-hidden="true" tabindex="-1"></a>weekly.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="50">
+<pre><code>dt_publish_date
+2012-02-05     6
+2012-02-12    14
+2012-02-19     5
+2012-02-26    11
+2012-03-04     1
+Freq: W-SUN, dtype: int64</code></pre>
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-06_02-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4.2: caption…
-</figcaption>
+</div>
+<div class="cell" data-execution_count="51">
+<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> sns.lineplot(data<span class="op">=</span>weekly, color<span class="op">=</span><span class="st">'#32363A'</span>)</span>
+<span id="cb79-2"><a href="#cb79-2" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">'</span><span class="ch">\n</span><span class="st">Weekly observations'</span>)</span>
+<span id="cb79-3"><a href="#cb79-3" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">'Number of Tweets</span><span class="ch">\n</span><span class="st">'</span>)</span>
+<span id="cb79-4"><a href="#cb79-4" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
+<span id="cb79-5"><a href="#cb79-5" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'figures/06_02.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="fig-06_02" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="figures/06_02.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;4.2: caption…</figcaption>
 </figure>
 </div>
 <p>The plot is much cleaner when we count at the level of weeks rather than days.</p>
 </section>
-<section id="combining-dataframes" class="level2" data-number="4.6">
+<section id="combining-dataframes" class="level2 page-columns page-full" data-number="4.6">
 <h2 data-number="4.6" class="anchored" data-anchor-id="combining-dataframes"><span class="header-section-number">4.6</span> COMBINING DATAFRAMES</h2>
 <p>Combining dataframes is a <em>very</em> common task. In fact, though it might not seem obvious, combining datasets is one of the most valuable skills you can have when doing computational social science. Here, we will consider some of the most common approaches: <strong>concatenating</strong> and <strong>merging</strong>, and we will briefly describe a more advanced set of methods commonly referred to as <strong>record linkage</strong>.</p>
 <p>Concatenating a dataframe is conceptually pretty simple - think of it like attaching the rows or columns of one dataframe below/to the right of the last row/column of another dataframe. For this to be useful, the two dataframes should have at least one row or column in common, but usually you would only concatenate if there were many such overlapping entries.</p>
-<div class="sourceCode" id="cb52"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>full_df <span class="op">=</span>  pd.read_csv(<span class="st">"data/vdem/filtered_subset.csv"</span>)</span>
-<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>df_australia <span class="op">=</span> full_df.query(<span class="st">"country_name == 'Australia'"</span>)</span>
-<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a><span class="bu">len</span>(df_australia)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb53"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>df_sa <span class="op">=</span> full_df.query(<span class="st">"country_name == 'South Africa'"</span>)</span>
-<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="bu">len</span>(df_sa)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="52">
+<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a>full_df <span class="op">=</span>  pd.read_csv(<span class="st">"data/vdem/filtered_subset.csv"</span>)</span>
+<span id="cb80-2"><a href="#cb80-2" aria-hidden="true" tabindex="-1"></a>df_australia <span class="op">=</span> full_df.query(<span class="st">"country_name == 'Australia'"</span>)</span>
+<span id="cb80-3"><a href="#cb80-3" aria-hidden="true" tabindex="-1"></a><span class="bu">len</span>(df_australia)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="52">
+<pre><code>120</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="53">
+<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a>df_sa <span class="op">=</span> full_df.query(<span class="st">"country_name == 'South Africa'"</span>)</span>
+<span id="cb82-2"><a href="#cb82-2" aria-hidden="true" tabindex="-1"></a><span class="bu">len</span>(df_sa)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="53">
+<pre><code>120</code></pre>
+</div>
+</div>
 <p>The default behaviour for <code>pd.concat()</code> is to perform a row-wise join, which it refers to as <code>axis=0</code>. We can override this default by specifying <code>axis=1</code>, which will produce a column-wise join:</p>
-<div class="sourceCode" id="cb54"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>concatenated <span class="op">=</span> pd.concat([df_australia, df_sa], axis<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="bu">len</span>(concatenated)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="54">
+<div class="sourceCode cell-code" id="cb84"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a>concatenated <span class="op">=</span> pd.concat([df_australia, df_sa], axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb84-2"><a href="#cb84-2" aria-hidden="true" tabindex="-1"></a><span class="bu">len</span>(concatenated)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="54">
+<pre><code>240</code></pre>
+</div>
+</div>
 <p>When we concatenate the two dataframes the number of columns stays the same but the number of rows increases, accounting for the rows in both the original dataframes. Normally, this kind of concatenation would result in a different number of columns, but in this case, the two dataframes we joined had the <em>exact</em> same columns (which makes sense, given that they were both extracted from the same parent dataframe).</p>
 <section id="merging" class="level3" data-number="4.6.1">
 <h3 data-number="4.6.1" class="anchored" data-anchor-id="merging"><span class="header-section-number">4.6.1</span> Merging</h3>
 <p>An alternative way to combine datasets is to <strong>merge</strong> them. If you want to create a dataframe that contains columns from multiple datasets but is aligned on rows according to some column (or set of columns), you probably want to use the <code>merge()</code> function. To illustrate this, we will work with data from two different sources. The first is the VDEM data we used in first part of this chapter (<code>fsdf</code>). The second is a dataset from Freedom House on levels of internet freedom in 65 countries. More information is available at https://freedomhouse.org/countries/freedom-net/scores.</p>
-<div class="sourceCode" id="cb55"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>download_dataset(</span>
-<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'https://www.dropbox.com/scl/fo/fnw5yrslxza9plhqnqhxr/AA7997oGIdd3k3EjluHyLBc?rlkey=hr93qtcdp6uh7d3lsfzbc6nr6&amp;st=bz0xzw41&amp;dl=0'</span>,</span>
-<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'data/freedom_house/'</span></span>
-<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-6"><a href="#cb55-6" aria-hidden="true" tabindex="-1"></a>freedom_df <span class="op">=</span> pd.read_csv( <span class="st">"data/freedom_house/internet_freedoms_2020.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="55">
+<div class="sourceCode cell-code" id="cb86"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a>download_dataset(</span>
+<span id="cb86-2"><a href="#cb86-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'https://www.dropbox.com/scl/fo/fnw5yrslxza9plhqnqhxr/AA7997oGIdd3k3EjluHyLBc?rlkey=hr93qtcdp6uh7d3lsfzbc6nr6&amp;st=bz0xzw41&amp;dl=0'</span>,</span>
+<span id="cb86-3"><a href="#cb86-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'data/freedom_house/'</span></span>
+<span id="cb86-4"><a href="#cb86-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb86-5"><a href="#cb86-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-6"><a href="#cb86-6" aria-hidden="true" tabindex="-1"></a>freedom_df <span class="op">=</span> pd.read_csv( <span class="st">"data/freedom_house/internet_freedoms_2020.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>File already exists at 'data/freedom_house/'. Skipping download.</code></pre>
+</div>
+</div>
 <p>To merge these dataframes we need to find a column which can be used to match rows from one dataframe to the rows in the other. The columns don’t need to have the same name, just values that can be matched with one another. Whatever columns we choose will be called “keys” in our merge. In our case this will be the country name columns from each dataset.</p>
-<div class="sourceCode" id="cb56"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>fsdf.columns</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb57"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>freedom_df.columns</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="56">
+<div class="sourceCode cell-code" id="cb88"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a>fsdf.columns</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="56">
+<pre><code>Index(['country_name', 'country_text_id', 'e_regiongeo', 'year',
+       'v2x_polyarchy', 'v2x_libdem', 'v2x_partipdem', 'v2x_delibdem',
+       'v2x_egaldem', 'v2smprivex', 'v2smpolsoc', 'v2caviol', 'e_boix_regime',
+       '21 Century', 'missing_political_violence_data', 'Region'],
+      dtype='object')</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="57">
+<div class="sourceCode cell-code" id="cb90"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a>freedom_df.columns</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="57">
+<pre><code>Index(['Country', 'Total Score', 'Status', 'Obstacles to Access',
+       'Limits on Content', 'Violations of User Rights'],
+      dtype='object')</code></pre>
+</div>
+</div>
 <p>We will use the <code>merge</code> function to combine these two dataframes using ‘country_name’ and ‘Country’. We’re going to do an <code>inner</code> merge, which is the default if the option isn’t set, and will keep only the keys (ie. countries) that appear in both dataframes.</p>
-<div class="sourceCode" id="cb58"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>merged <span class="op">=</span> pd.merge(fsdf, freedom_df, how<span class="op">=</span><span class="st">'inner'</span>, left_on<span class="op">=</span><span class="st">'country_name'</span>, right_on<span class="op">=</span><span class="st">'Country'</span>)</span>
-<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'merged has </span><span class="sc">{}</span><span class="st"> rows and </span><span class="sc">{}</span><span class="st"> columns'</span>.<span class="bu">format</span>(<span class="bu">len</span>(merged), <span class="bu">len</span>(merged.columns)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb59"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="bu">len</span>(fsdf) <span class="op">+</span> <span class="bu">len</span>(freedom_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="58">
+<div class="sourceCode cell-code" id="cb92"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb92-1"><a href="#cb92-1" aria-hidden="true" tabindex="-1"></a>merged <span class="op">=</span> pd.merge(fsdf, freedom_df, how<span class="op">=</span><span class="st">'inner'</span>, left_on<span class="op">=</span><span class="st">'country_name'</span>, right_on<span class="op">=</span><span class="st">'Country'</span>)</span>
+<span id="cb92-2"><a href="#cb92-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'merged has </span><span class="sc">{}</span><span class="st"> rows and </span><span class="sc">{}</span><span class="st"> columns'</span>.<span class="bu">format</span>(<span class="bu">len</span>(merged), <span class="bu">len</span>(merged.columns)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>merged has 6434 rows and 22 columns</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="59">
+<div class="sourceCode cell-code" id="cb94"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb94-1"><a href="#cb94-1" aria-hidden="true" tabindex="-1"></a><span class="bu">len</span>(fsdf) <span class="op">+</span> <span class="bu">len</span>(freedom_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="59">
+<pre><code>18852</code></pre>
+</div>
+</div>
 <p>You should see 5 new columns in the <code>merged</code> dataframe compared to the <code>fsdf</code> one. Notice how many rows each of the dataframes have: many fewer rows than the original VDEM dataframe but many more than the Freedom House dataframe. So in our case, if a row’s country doesn’t appear in the other dataset, that row will not be included in the merged dataframe.</p>
 <p>This can be adjusted using the <code>how</code> parameter. There are five ways of merging dataframes in Pandas: left, right, outer, inner, and cross. Check out the <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.dataframe.merge.html">documentation</a> to see how the other four methods work.</p>
 <p>There are ways to improve the matching, either manual methods or semi-automated methods such as record linkage, described below. Let’s see which countries aren’t common between the dataframes, using a set operation <strong><code>^</code> (XOR)</strong>, which returns a set of elements from the combination of set1 and set2 that are either not in set1 or not in set2.</p>
-<div class="sourceCode" id="cb60"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>fsdf_set <span class="op">=</span> <span class="bu">set</span>(fsdf[<span class="st">'country_name'</span>].tolist())</span>
-<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>freedom_set <span class="op">=</span> <span class="bu">set</span>(freedom_df[<span class="st">'Country'</span>].tolist())</span>
-<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a>unmatched <span class="op">=</span> fsdf_set <span class="op">^</span> freedom_set</span>
-<span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb60-6"><a href="#cb60-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Total countries: '</span> <span class="op">+</span> <span class="bu">str</span>(<span class="bu">len</span>(fsdf_set) <span class="op">+</span> <span class="bu">len</span>(freedom_set)))</span>
-<span id="cb60-7"><a href="#cb60-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Unmatched countries: '</span> <span class="op">+</span> <span class="bu">str</span>(<span class="bu">len</span>(unmatched)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="60">
+<div class="sourceCode cell-code" id="cb96"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb96-1"><a href="#cb96-1" aria-hidden="true" tabindex="-1"></a>fsdf_set <span class="op">=</span> <span class="bu">set</span>(fsdf[<span class="st">'country_name'</span>].tolist())</span>
+<span id="cb96-2"><a href="#cb96-2" aria-hidden="true" tabindex="-1"></a>freedom_set <span class="op">=</span> <span class="bu">set</span>(freedom_df[<span class="st">'Country'</span>].tolist())</span>
+<span id="cb96-3"><a href="#cb96-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb96-4"><a href="#cb96-4" aria-hidden="true" tabindex="-1"></a>unmatched <span class="op">=</span> fsdf_set <span class="op">^</span> freedom_set</span>
+<span id="cb96-5"><a href="#cb96-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb96-6"><a href="#cb96-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Total countries: '</span> <span class="op">+</span> <span class="bu">str</span>(<span class="bu">len</span>(fsdf_set) <span class="op">+</span> <span class="bu">len</span>(freedom_set)))</span>
+<span id="cb96-7"><a href="#cb96-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Unmatched countries: '</span> <span class="op">+</span> <span class="bu">str</span>(<span class="bu">len</span>(unmatched)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Total countries: 248
+Unmatched countries: 122</code></pre>
+</div>
+</div>
 <p>We can then use the <code>&amp;</code> set operator to see which of the missing countries are present in each of the country sets. If the data is small enough, we can print the two sets as sorted lists in a dataframe. The most obvious manual change we could do here is make “United States” and “United States of America” consistent but we would also expect Myanmar to be in the VDEM data. We could also make this change manually by knowing that Myanmar was referred to as Burma until 1989. However, it just so happens that at the top of the <code>south_east_asia</code> aggregated group dataframe from earlier, “Burma/Myanmar” was the name used, rather than Burma alone. For a more complex but automated solution to disambiguating different versions of country names, we would have to use some form of record linkage, discussed briefly below.</p>
-<div class="sourceCode" id="cb61"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>fsdf_missing <span class="op">=</span> <span class="bu">list</span>(fsdf_set <span class="op">&amp;</span> unmatched)</span>
-<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>fsdf_missing.sort()</span>
-<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a>freedom_missing <span class="op">=</span> <span class="bu">list</span>(freedom_set <span class="op">&amp;</span> unmatched)</span>
-<span id="cb61-4"><a href="#cb61-4" aria-hidden="true" tabindex="-1"></a>freedom_missing.sort()</span>
-<span id="cb61-5"><a href="#cb61-5" aria-hidden="true" tabindex="-1"></a>pd.DataFrame({<span class="st">'VDEM'</span>: pd.Series(fsdf_missing), <span class="st">'Freedom'</span>: pd.Series(freedom_missing)})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="61">
+<div class="sourceCode cell-code" id="cb98"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb98-1"><a href="#cb98-1" aria-hidden="true" tabindex="-1"></a>fsdf_missing <span class="op">=</span> <span class="bu">list</span>(fsdf_set <span class="op">&amp;</span> unmatched)</span>
+<span id="cb98-2"><a href="#cb98-2" aria-hidden="true" tabindex="-1"></a>fsdf_missing.sort()</span>
+<span id="cb98-3"><a href="#cb98-3" aria-hidden="true" tabindex="-1"></a>freedom_missing <span class="op">=</span> <span class="bu">list</span>(freedom_set <span class="op">&amp;</span> unmatched)</span>
+<span id="cb98-4"><a href="#cb98-4" aria-hidden="true" tabindex="-1"></a>freedom_missing.sort()</span>
+<span id="cb98-5"><a href="#cb98-5" aria-hidden="true" tabindex="-1"></a>pd.DataFrame({<span class="st">'VDEM'</span>: pd.Series(fsdf_missing), <span class="st">'Freedom'</span>: pd.Series(freedom_missing)})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="61">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">VDEM</th>
+<th data-quarto-table-cell-role="th">Freedom</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>Afghanistan</td>
+<td>Myanmar</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>Albania</td>
+<td>United States</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>Algeria</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>Austria</td>
+<td>NaN</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>Barbados</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">115</td>
+<td>United States of America</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">116</td>
+<td>Uruguay</td>
+<td>NaN</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">117</td>
+<td>Vanuatu</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">118</td>
+<td>Yemen</td>
+<td>NaN</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">119</td>
+<td>Zanzibar</td>
+<td>NaN</td>
+</tr>
+</tbody>
+</table>
+
+<p>120 rows × 2 columns</p>
+</div>
+</div>
+</div>
 </section>
-<section id="record-linkage" class="level3" data-number="4.6.2">
+<section id="record-linkage" class="level3 page-columns page-full" data-number="4.6.2">
 <h3 data-number="4.6.2" class="anchored" data-anchor-id="record-linkage"><span class="header-section-number">4.6.2</span> Record Linkage</h3>
 <p>The <code>merge</code> function works great when you can make <em>exact</em> matches between columns. It also works really well because checking for exact matches has been optimized in Pandas. However, it’s often the case that we need to combine datasets which cannot be merged based on exact matches.</p>
 <p>Instead, we often have to use <strong>inexact matching</strong> (aka “fuzzy matching” or “approximate matching”) to combine datasets. Typically, this involves using some similarity metric to measure how close two keys are to one another. Then a match is made based on thresholds, rules, or a nearest-neighbour approach. However, naively calculating similarity between all possible key combinations results in incredibly lengthy compute times. Instead, there are ways to exclude some key pairs from the beginning. This allows you to drastically reduce the number of comparisons you need to make. Additionally, inexact matching can leverage machine learning techniques which uses human curated examples to learn to predict whether two rows should be matched with one another.</p>
 <p>If this “more advanced” approach to combining datasets is of interest, I highly suggest looking into the <a href="https://github.com/J535D165/recordlinkage"><code>recordlinkage</code></a> Python package.</p>
-<blockquote class="blockquote">
+<blockquote class="blockquote page-columns page-full">
 <p><strong>Further Reading</strong></p>
 <p>Much of what I introduce in this chapter is foundational; you’ll build on that foundation in later chapters. But if you are looking for a slower and more comprehensive introduction to Pandas and Numpy, then I would recommend VanderPlas’ <span class="citation" data-cites="vanderplas2016python">(<a href="references.html#ref-vanderplas2016python" role="doc-biblioref">2016</a>)</span> <em>Python Data Science Handbook</em>.</p>
-</blockquote>
+<div class="no-row-height column-margin column-container"><div id="ref-vanderplas2016python" class="csl-entry" role="listitem">
+VanderPlas, Jake. 2016. <em>Python Data Science Handbook: Essential Tools for Working with Data</em>. " O’Reilly Media, Inc.".
+</div></div></blockquote>
 </section>
 </section>
 <section id="conclusion" class="level2" data-number="4.7">
 <h2 data-number="4.7" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">4.7</span> CONCLUSION</h2>
-<hr>
 </section>
 <section id="key-points" class="level2" data-number="4.8">
 <h2 data-number="4.8" class="anchored" data-anchor-id="key-points"><span class="header-section-number">4.8</span> Key Points</h2>
@@ -1177,15 +2283,11 @@ Figure&nbsp;4.2: caption…
 <li>We discussed how to subset dataframes by selecting columns and filtering rows, followed by a discussion of how to do systematic comparisons by performing operations on grouped dataframes</li>
 <li>We then discussed how to combine multiple dataframes using <code>merge</code> and <code>concatenate</code> and introduced the general idea of record linkage.</li>
 </ul>
-<hr>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
-<div id="ref-vanderplas2016python" class="csl-entry" role="listitem">
-VanderPlas, Jake. 2016. <em>Python Data Science Handbook: Essential Tools for Working with Data</em>. " O’Reilly Media, Inc.".
-</div>
-</div>
+
 </section>
+
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -1223,7 +2325,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const onCopySuccess = function(e) {
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -1255,50 +2368,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
-  }
-  const getTextToCopy = function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-  }
-  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-    text: getTextToCopy
   });
-  clipboard.on('success', onCopySuccess);
-  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
-    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-      text: getTextToCopy,
-      container: window.document.getElementById('quarto-embedded-source-code-modal')
-    });
-    clipboardModal.on('success', onCopySuccess);
-  }
-    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-    var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp('/' + window.location.host + '/');
-    var isInternal = (href) => {
-        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
-    }
-    // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
-    for (var i=0; i<links.length; i++) {
-      const link = links[i];
-      if (!isInternal(link.href)) {
-        // undo the damage that might have been done by quarto-nav.js in the case of
-        // links that we want to consider external
-        if (link.dataset.originalHref !== undefined) {
-          link.href = link.dataset.originalHref;
-        }
-      }
-    }
-  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+  function tippyHover(el, contentFn) {
     const config = {
       allowHTML: true,
+      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -1308,17 +2382,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start',
+      placement: 'bottom-start'
     };
-    if (contentFn) {
-      config.content = contentFn;
-    }
-    if (onTriggerFn) {
-      config.onTrigger = onTriggerFn;
-    }
-    if (onUntriggerFn) {
-      config.onUntrigger = onUntriggerFn;
-    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -1330,130 +2395,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      if (note) {
-        return note.innerHTML;
-      } else {
-        return "";
-      }
-    });
-  }
-  const xrefs = window.document.querySelectorAll('a.quarto-xref');
-  const processXRef = (id, note) => {
-    // Strip column container classes
-    const stripColumnClz = (el) => {
-      el.classList.remove("page-full", "page-columns");
-      if (el.children) {
-        for (const child of el.children) {
-          stripColumnClz(child);
-        }
-      }
-    }
-    stripColumnClz(note)
-    if (id === null || id.startsWith('sec-')) {
-      // Special case sections, only their first couple elements
-      const container = document.createElement("div");
-      if (note.children && note.children.length > 2) {
-        container.appendChild(note.children[0].cloneNode(true));
-        for (let i = 1; i < note.children.length; i++) {
-          const child = note.children[i];
-          if (child.tagName === "P" && child.innerText === "") {
-            continue;
-          } else {
-            container.appendChild(child.cloneNode(true));
-            break;
-          }
-        }
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(container);
-        }
-        return container.innerHTML
-      } else {
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(note);
-        }
-        return note.innerHTML;
-      }
-    } else {
-      // Remove any anchor links if they are present
-      const anchorLink = note.querySelector('a.anchorjs-link');
-      if (anchorLink) {
-        anchorLink.remove();
-      }
-      if (window.Quarto?.typesetMath) {
-        window.Quarto.typesetMath(note);
-      }
-      // TODO in 1.5, we should make sure this works without a callout special case
-      if (note.classList.contains("callout")) {
-        return note.outerHTML;
-      } else {
-        return note.innerHTML;
-      }
-    }
-  }
-  for (var i=0; i<xrefs.length; i++) {
-    const xref = xrefs[i];
-    tippyHover(xref, undefined, function(instance) {
-      instance.disable();
-      let url = xref.getAttribute('href');
-      let hash = undefined; 
-      if (url.startsWith('#')) {
-        hash = url;
-      } else {
-        try { hash = new URL(url).hash; } catch {}
-      }
-      if (hash) {
-        const id = hash.replace(/^#\/?/, "");
-        const note = window.document.getElementById(id);
-        if (note !== null) {
-          try {
-            const html = processXRef(id, note.cloneNode(true));
-            instance.setContent(html);
-          } finally {
-            instance.enable();
-            instance.show();
-          }
-        } else {
-          // See if we can fetch this
-          fetch(url.split('#')[0])
-          .then(res => res.text())
-          .then(html => {
-            const parser = new DOMParser();
-            const htmlDoc = parser.parseFromString(html, "text/html");
-            const note = htmlDoc.getElementById(id);
-            if (note !== null) {
-              const html = processXRef(id, note);
-              instance.setContent(html);
-            } 
-          }).finally(() => {
-            instance.enable();
-            instance.show();
-          });
-        }
-      } else {
-        // See if we can fetch a full url (with no hash to target)
-        // This is a special case and we should probably do some content thinning / targeting
-        fetch(url)
-        .then(res => res.text())
-        .then(html => {
-          const parser = new DOMParser();
-          const htmlDoc = parser.parseFromString(html, "text/html");
-          const note = htmlDoc.querySelector('main.content');
-          if (note !== null) {
-            // This should only happen for chapter cross references
-            // (since there is no id in the URL)
-            // remove the first header
-            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
-              note.children[0].remove();
-            }
-            const html = processXRef(null, note);
-            instance.setContent(html);
-          } 
-        }).finally(() => {
-          instance.enable();
-          instance.show();
-        });
-      }
-    }, function(instance) {
+      return note.innerHTML;
     });
   }
       let selectedAnnoteEl;
@@ -1497,7 +2439,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
-            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -1523,32 +2464,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
-        // Handle positioning of the toggle
-    window.addEventListener(
-      "resize",
-      throttle(() => {
-        elRect = undefined;
-        if (selectedAnnoteEl) {
-          selectCodeLines(selectedAnnoteEl);
-        }
-      }, 10)
-    );
-    function throttle(fn, ms) {
-    let throttle = false;
-    let timer;
-      return (...args) => {
-        if(!throttle) { // first call gets through
-            fn.apply(this, args);
-            throttle = true;
-        } else { // all the others get throttled
-            if(timer) clearTimeout(timer); // cancel #2
-            timer = setTimeout(() => {
-              fn.apply(this, args);
-              timer = throttle = false;
-            }, ms);
-        }
-      };
-    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -1610,12 +2525,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./python-102.html" class="pagination-link" aria-label="Python 102">
+      <a href="./python-102.html" class="pagination-link">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Python 102</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./mindful-modelling.html" class="pagination-link" aria-label="Mindful modelling">
+      <a href="./mindful-modelling.html" class="pagination-link">
         <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Mindful modelling</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
@@ -1624,5 +2539,4 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
-
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/UWNETLAB/dcss_supplementary/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
+</body></html>

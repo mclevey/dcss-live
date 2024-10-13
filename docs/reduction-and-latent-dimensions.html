@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.56">
+<meta name="generator" content="quarto-1.3.450">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>13&nbsp; Reduction and latent dimensions – Doing Computational Social Science&lt;br&gt;[The **Continuous Development** Edition]{.small}</title>
+<title>Doing Computational Social ScienceThe Continuous Development Edition - 14&nbsp; Reduction and latent dimensions</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -22,7 +22,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -33,7 +33,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -58,7 +58,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
-  margin-bottom: 0em;
 }
 .hanging-indent div.csl-entry {
   margin-left:2em;
@@ -102,13 +101,7 @@ div.csl-indent {
   "collapse-after": 3,
   "panel-placement": "start",
   "type": "textbox",
-  "limit": 50,
-  "keyboard-shortcut": [
-    "f",
-    "/",
-    "s"
-  ],
-  "show-item-context": false,
+  "limit": 20,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -117,59 +110,31 @@ div.csl-indent {
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
-    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
 }</script>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="custom.css">
 </head>
 
-<body class="nav-sidebar floating">
+<body class="nav-sidebar floating slimcontent">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./exploratory-data-analysis.html"><strong>DISCOVERY</strong></a></li><li class="breadcrumb-item"><a href="./reduction-and-latent-dimensions.html"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Reduction and latent dimensions</span></a></li></ol></nav>
-        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-        </a>
-      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./exploratory-data-analysis.html"><strong>DISCOVERY</strong></a></li><li class="breadcrumb-item"><a href="./reduction-and-latent-dimensions.html"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Reduction and latent dimensions</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -178,7 +143,7 @@ window.Quarto = {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
       <a href="./index.html" class="sidebar-logo-link">
       <img src="./figures/logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
@@ -186,25 +151,25 @@ window.Quarto = {
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Doing Computational Social Science<br><span class="small">The <strong>Continuous Development</strong> Edition</span></a> 
         <div class="sidebar-tools-main">
-    <a href="https://github.com/UWNETLAB/dcss_supplementary/tree/master/book/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="https://github.com/UWNETLAB/dcss_supplementary/tree/master/book/" rel="" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
     <div class="dropdown">
-      <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
+      <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Share"><i class="bi bi-share"></i></a>
       <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
           <li>
             <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=|url|">
-              <i class="bi bi-twitter pe-1"></i>
+              <i class="bi bi-bi-twitter pe-1"></i>
             Twitter
             </a>
           </li>
           <li>
             <a class="dropdown-item sidebar-tools-main-item" href="https://www.facebook.com/sharer/sharer.php?u=|url|">
-              <i class="bi bi-facebook pe-1"></i>
+              <i class="bi bi-bi-facebook pe-1"></i>
             Facebook
             </a>
           </li>
           <li>
             <a class="dropdown-item sidebar-tools-main-item" href="https://www.linkedin.com/sharing/share-offsite/?url=|url|">
-              <i class="bi bi-linkedin pe-1"></i>
+              <i class="bi bi-bi-linkedin pe-1"></i>
             LinkedIn
             </a>
           </li>
@@ -226,19 +191,25 @@ window.Quarto = {
  <span class="menu-text">🏠</span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction</span></a>
+  </div>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
  <span class="menu-text"><strong>COMPUTING</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./getting-started.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Getting Started</span></span></a>
+  <a href="./setting-up.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Setting up</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -253,13 +224,19 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Python 102</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./processing-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Processing Data</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
  <span class="menu-text"><strong>WORKFLOW</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -267,22 +244,22 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./mindful-modelling.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Mindful modelling</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Mindful modelling</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./iteration.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Iteration</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title"><del>Sequential</del> iterative modelling</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
  <span class="menu-text"><strong>DATA</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -290,46 +267,46 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./survey-data.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title"><del>Processing Structured Data</del> Survey Data</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Survey Data</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./web-data-apis.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Web data (APIs)</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Web data (APIs)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./web-data-scraping.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Web data (Scraping)</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Web data (Scraping)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./audio-and-document-data.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Audio and document data</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Audio and document data</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./text-as-data.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Text as Data</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Text as Data</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./relational-data.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Relational data</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Relational data</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
  <span class="menu-text"><strong>DISCOVERY</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -337,40 +314,40 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./exploratory-data-analysis.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Exploring with purpose</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Exploring with purpose</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./reduction-and-latent-dimensions.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Reduction and latent dimensions</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Reduction and latent dimensions</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./mapping-text.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Text similarity and latent semantic space</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Text similarity and latent semantic space</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./centrality.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Centrality</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Centrality</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./mapping-network-structure.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Mapping network structure</span></span></a>
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Mapping network structure</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
  <span class="menu-text"><strong>PREDICTION &amp; INFERENCE</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -378,46 +355,46 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./supervised-learning.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Supervised Machine Learning</span></span></a>
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Supervised Machine Learning</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./prediction-and-classification.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Prediction and classification</span></span></a>
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Prediction and classification</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./causality.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Causality</span></span></a>
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Causality</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./probability.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Probability 101</span></span></a>
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Probability 101</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./credibility.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Credibility</span></span></a>
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Credibility</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./measurement-and-missingness.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Measurement and missingness</span></span></a>
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Measurement and missingness</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true">
  <span class="menu-text"><strong>MODELING</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -425,58 +402,58 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./linear-regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Bayesian Regression Models with Probabilistic Programming</span></span></a>
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Bayesian Regression Models with Probabilistic Programming</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./multilevel-regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Multilevel regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Multilevel regression</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./generalized-linear-models.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Generalized Linear Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Generalized Linear Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./structural-causal-models.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Structural causal models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Structural causal models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./modeling-texts-lda.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Modeling text with LDA topic models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Modeling text with LDA topic models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./modeling-networks.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Latent structure in networks</span></span></a>
+ <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Latent structure in networks</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./agent-based-models.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Agent-based models (ABMs)</span></span></a>
+ <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Agent-based models (ABMs)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./diffusion-opinion-cultural-cognition.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Diffusion, opinion dynamics, and cultural cognition</span></span></a>
+ <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Diffusion, opinion dynamics, and cultural cognition</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true">
  <span class="menu-text"><strong>DEEP LEARNING</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -484,34 +461,34 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./artificial-neural-networks-fnn-rnn-cnn.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Artificial neural networks 101</span></span></a>
+ <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Artificial neural networks</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./language-models-and-embeddings.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Processing Natural Language Data</span></span></a>
+ <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Language models and word embeddings</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./transformer-revolution.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">The transformer revolution</span></span></a>
+ <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">The transformer revolution</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./modeling-text-transformer-topic-models.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Modeling text: transformer topic models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Modeling text: transformer topic models</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" aria-expanded="true">
  <span class="menu-text"><strong>RESPONSIBILITIES</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -519,19 +496,19 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ethical-css.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Ethical CSS</span></span></a>
+ <span class="menu-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">Ethical CSS</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./open-css.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">Open CSS</span></span></a>
+ <span class="menu-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">Open CSS</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./future-css.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">Future CSS</span></span></a>
+ <span class="menu-text"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">Future CSS</span></span></a>
   </div>
 </li>
       </ul>
@@ -550,42 +527,42 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./courses.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">Courses and Workshops</span></span></a>
+  <a href="./_courses.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title">Courses and Workshops</span></span></a>
   </div>
 </li>
     </ul>
     </div>
 </nav>
-<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#imports-and-data-preparation" id="toc-imports-and-data-preparation" class="nav-link active" data-scroll-target="#imports-and-data-preparation"><span class="header-section-number">13.1</span> Imports and Data Preparation</a></li>
-  <li><a href="#latent-variables-and-the-curse-of-dimensionality" id="toc-latent-variables-and-the-curse-of-dimensionality" class="nav-link" data-scroll-target="#latent-variables-and-the-curse-of-dimensionality"><span class="header-section-number">13.2</span> LATENT VARIABLES AND THE CURSE OF DIMENSIONALITY</a>
+  <li><a href="#imports-and-data-preparation" id="toc-imports-and-data-preparation" class="nav-link active" data-scroll-target="#imports-and-data-preparation"><span class="header-section-number">14.1</span> Imports and Data Preparation</a></li>
+  <li><a href="#latent-variables-and-the-curse-of-dimensionality" id="toc-latent-variables-and-the-curse-of-dimensionality" class="nav-link" data-scroll-target="#latent-variables-and-the-curse-of-dimensionality"><span class="header-section-number">14.2</span> LATENT VARIABLES AND THE CURSE OF DIMENSIONALITY</a>
   <ul class="collapse">
-  <li><a href="#theory-first-measuring-latent-variables-with-exploratory-factor-analysis" id="toc-theory-first-measuring-latent-variables-with-exploratory-factor-analysis" class="nav-link" data-scroll-target="#theory-first-measuring-latent-variables-with-exploratory-factor-analysis"><span class="header-section-number">13.2.1</span> Theory First: Measuring Latent Variables with Exploratory Factor Analysis</a></li>
+  <li><a href="#theory-first-measuring-latent-variables-with-exploratory-factor-analysis" id="toc-theory-first-measuring-latent-variables-with-exploratory-factor-analysis" class="nav-link" data-scroll-target="#theory-first-measuring-latent-variables-with-exploratory-factor-analysis"><span class="header-section-number">14.2.1</span> Theory First: Measuring Latent Variables with Exploratory Factor Analysis</a></li>
   </ul></li>
-  <li><a href="#conducting-a-principal-component-analysis-in-sklearn" id="toc-conducting-a-principal-component-analysis-in-sklearn" class="nav-link" data-scroll-target="#conducting-a-principal-component-analysis-in-sklearn"><span class="header-section-number">13.3</span> CONDUCTING A PRINCIPAL COMPONENT ANALYSIS IN SKLEARN</a>
+  <li><a href="#conducting-a-principal-component-analysis-in-sklearn" id="toc-conducting-a-principal-component-analysis-in-sklearn" class="nav-link" data-scroll-target="#conducting-a-principal-component-analysis-in-sklearn"><span class="header-section-number">14.3</span> CONDUCTING A PRINCIPAL COMPONENT ANALYSIS IN SKLEARN</a>
   <ul class="collapse">
-  <li><a href="#standardization" id="toc-standardization" class="nav-link" data-scroll-target="#standardization"><span class="header-section-number">13.3.1</span> Standardization</a></li>
-  <li><a href="#back-to-pca" id="toc-back-to-pca" class="nav-link" data-scroll-target="#back-to-pca"><span class="header-section-number">13.3.2</span> Back to PCA!</a></li>
-  <li><a href="#matrix-decomposition-eigenvalues-eigenvectors-and-extracting-components" id="toc-matrix-decomposition-eigenvalues-eigenvectors-and-extracting-components" class="nav-link" data-scroll-target="#matrix-decomposition-eigenvalues-eigenvectors-and-extracting-components"><span class="header-section-number">13.3.3</span> Matrix Decomposition: Eigenvalues, Eigenvectors, and Extracting Components</a></li>
+  <li><a href="#standardization" id="toc-standardization" class="nav-link" data-scroll-target="#standardization"><span class="header-section-number">14.3.1</span> Standardization</a></li>
+  <li><a href="#back-to-pca" id="toc-back-to-pca" class="nav-link" data-scroll-target="#back-to-pca"><span class="header-section-number">14.3.2</span> Back to PCA!</a></li>
+  <li><a href="#matrix-decomposition-eigenvalues-eigenvectors-and-extracting-components" id="toc-matrix-decomposition-eigenvalues-eigenvectors-and-extracting-components" class="nav-link" data-scroll-target="#matrix-decomposition-eigenvalues-eigenvectors-and-extracting-components"><span class="header-section-number">14.3.3</span> Matrix Decomposition: Eigenvalues, Eigenvectors, and Extracting Components</a></li>
   </ul></li>
-  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">13.4</span> CONCLUSION</a></li>
-  <li><a href="#key-points" id="toc-key-points" class="nav-link" data-scroll-target="#key-points"><span class="header-section-number">13.5</span> Key Points</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">14.4</span> CONCLUSION</a></li>
+  <li><a href="#key-points" id="toc-key-points" class="nav-link" data-scroll-target="#key-points"><span class="header-section-number">14.5</span> Key Points</a></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/UWNETLAB/dcss_supplementary/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/UWNETLAB/dcss_supplementary/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content page-columns page-full" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./exploratory-data-analysis.html"><strong>DISCOVERY</strong></a></li><li class="breadcrumb-item"><a href="./reduction-and-latent-dimensions.html"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Reduction and latent dimensions</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Reduction and latent dimensions</span></h1>
+<h1 class="title"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Reduction and latent dimensions</span></h1>
 </div>
 
 
@@ -598,9 +575,7 @@ window.Quarto = {
   </div>
   
 
-
 </header>
-
 
 <!-- Measurement and latent constructs -->
 <!-- Association and dependency structures -->
@@ -639,8 +614,8 @@ Learning Objectives
 <p><br></p>
 <p>This chapter introduces additional methods for conducting exploratory data analysis and inductive discovery. You may have encountered them previously when learning multivariate statistics. In machine learning, these methods are typically referred to as “unsupervised” because we discover and interpret latent patterns in the data <em>inductively</em>, but for now, you can think of them as a form of multivariate exploratory data analysis.</p>
 <p>We will begin with an introduction to the idea of latent variables: abstract constructs that we cannot observe, but which we hypothesize to have effects in the data. We will distinguish between two main ways of dealing with this problem: Exploratory Factor Analysis (EFA) for theory-driven efforts to measure latent variables, and Principal Component Analysis (PCA) for data-driven efforts to mitigate the “curse of dimensionality,” facilitate more inductive and interpretive work, and improve the quality of downstream analyses.</p>
-<section id="imports-and-data-preparation" class="level2" data-number="13.1">
-<h2 data-number="13.1" class="anchored" data-anchor-id="imports-and-data-preparation"><span class="header-section-number">13.1</span> Imports and Data Preparation</h2>
+<section id="imports-and-data-preparation" class="level2" data-number="14.1">
+<h2 data-number="14.1" class="anchored" data-anchor-id="imports-and-data-preparation"><span class="header-section-number">14.1</span> Imports and Data Preparation</h2>
 <p>We will make extensive use of the Sklearn package in this chapter. Sklearn is very important and widely-used in machine learning, and it features heavily in the rest of this book. Some of the methods we introduce here are also implemented in other Python packages, including statsmodels, which implements a wide-variety of statistical models. If it suits your needs better, you should feel free to use statsmodels instead.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -666,14 +641,10 @@ Learning Objectives
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df.query(<span class="st">'year == 2019'</span>).reset_index()</span>
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>df.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Now that we have the VDEM data from 2019 loaded up, we can select the columns we will use in our analyses. In this case, we want the country name as well as a series of variables related to political deliberation, civil society, media and internet, private and political liberties, and the executive. The specific variables we will use in each of these categories are given in <a href="#tbl-vdemvars" class="quarto-xref">Table&nbsp;<span>13.1</span></a>. Given that I don’t have space to discuss each variable (there are 35 of them in total), I recommend that you consult the VDEM codebook to ensure you know what each represents.</p>
-<div id="tbl-vdemvars" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-tbl figure">
-<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-vdemvars-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;13.1: Table: VDEM variables used in this chapter.
-</figcaption>
-<div aria-describedby="tbl-vdemvars-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<table class="caption-top table">
+<p>Now that we have the VDEM data from 2019 loaded up, we can select the columns we will use in our analyses. In this case, we want the country name as well as a series of variables related to political deliberation, civil society, media and internet, private and political liberties, and the executive. The specific variables we will use in each of these categories are given in <a href="#tbl-vdemvars">Table&nbsp;<span>14.1</span></a>. Given that I don’t have space to discuss each variable (there are 35 of them in total), I recommend that you consult the VDEM codebook to ensure you know what each represents.</p>
+<div id="tbl-vdemvars" class="anchored">
+<table class="table">
+<caption>Table&nbsp;14.1: Table: VDEM variables used in this chapter.</caption>
 <colgroup>
 <col style="width: 15%">
 <col style="width: 16%">
@@ -764,8 +735,6 @@ Table&nbsp;13.1: Table: VDEM variables used in this chapter.
 </tbody>
 </table>
 </div>
-</figure>
-</div>
 <p>We will create a list of these indicator variables names that we can use to subset the larger dataframe.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>indicators <span class="op">=</span> [</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'v2dlreason'</span>, </span>
@@ -813,12 +782,12 @@ Table&nbsp;13.1: Table: VDEM variables used in this chapter.
 <p>All we need to finish preparing our data is to get our indicator variables into a Numpy array. We will do some additional cleaning a bit later in the chapter.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> df.to_numpy() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="latent-variables-and-the-curse-of-dimensionality" class="level2" data-number="13.2">
-<h2 data-number="13.2" class="anchored" data-anchor-id="latent-variables-and-the-curse-of-dimensionality"><span class="header-section-number">13.2</span> LATENT VARIABLES AND THE CURSE OF DIMENSIONALITY</h2>
+<section id="latent-variables-and-the-curse-of-dimensionality" class="level2 page-columns page-full" data-number="14.2">
+<h2 data-number="14.2" class="anchored" data-anchor-id="latent-variables-and-the-curse-of-dimensionality"><span class="header-section-number">14.2</span> LATENT VARIABLES AND THE CURSE OF DIMENSIONALITY</h2>
 <p>Before getting into “latent variables,” let’s clear up a bit of terminology. In this chapter, and many that follow, we’ll talk about the “dimensions” and “dimensionality” of dataframes and matrices. All of this talk of “dimensions” is really just about the number of variables we are using. If we have 10 variables, we have 10 dimensions; 147,002 variables, 147,002 dimensions. When we have a <em>lot</em> of variables, we often describe our dataset as “high-dimensional.”</p>
 <p>High-dimensional datasets pose all sorts of problems for statistical and machine learning models that low-dimensional datasets do not. That’s why we refer to this situation as the <strong>curse of dimensionality</strong> even if it might seem like an embarrassment of riches. Typically, we reduce the number of variables we are working with by manually selecting the variables of interest, or by performing some sort of <strong>dimensionality reduction</strong> on the dataset that mitigates problems associated with the curse of dimensionality. Below, you will learn about two different but related approaches to dimensionality reduction, one driven by theory and measurement, the other by data-driven induction.</p>
-<section id="theory-first-measuring-latent-variables-with-exploratory-factor-analysis" class="level3" data-number="13.2.1">
-<h3 data-number="13.2.1" class="anchored" data-anchor-id="theory-first-measuring-latent-variables-with-exploratory-factor-analysis"><span class="header-section-number">13.2.1</span> Theory First: Measuring Latent Variables with Exploratory Factor Analysis</h3>
+<section id="theory-first-measuring-latent-variables-with-exploratory-factor-analysis" class="level3 page-columns page-full" data-number="14.2.1">
+<h3 data-number="14.2.1" class="anchored" data-anchor-id="theory-first-measuring-latent-variables-with-exploratory-factor-analysis"><span class="header-section-number">14.2.1</span> Theory First: Measuring Latent Variables with Exploratory Factor Analysis</h3>
 <p>We social scientists spend a huge amount of time trying to measure things that we can’t directly observe. If you take a moment, you can probably list dozens of such things: political ideology, religiosity, well-being, job satisfaction, social capital, opportunity costs, social anxiety, confirmation bias, populism, introversion, personality types, emotional labour, resource mobilization, and so on. In earlier chapters of this book we spent a fair amount of time working with five variables that measure things we can’t directly observe:</p>
 <ul>
 <li>a country-level measure of the principle of electoral democracy (polyarchy),</li>
@@ -831,9 +800,13 @@ Table&nbsp;13.1: Table: VDEM variables used in this chapter.
 <p>When we develop theoretical concepts, we can’t assume other researchers share our meanings, or that our meaning is somehow self-evident. Instead, we put in quite a lot of work to ensure conceptual clarity, as that is the only way to advance the state of our collective knowledge. These abstract concepts are <em>essential</em> in the quest to advance collective knowledge, but to treat them as if they were “real” material things, and not theoretical constructs, is a mistake called <strong>reification</strong>.</p>
 <p>Abstract concepts, like the principles of democracy above, are meaningful both in our everyday lives and in relation to broader theories and paradigms, but because they can’t be directly observed, they are difficult to measure empirically. This requires us to adopt measurement strategies that combine careful reasoning and logic with measurement models that we carefully and transparently validate. The first step in this process is <strong>specification</strong>, which involves developing conceptual and operational definitions of concepts. Specification is essential because it helps ensure we are talking about the same thing; in social science, as in everyday life, you can’t get very far just making up your own definitions of things, however good those definitions might be.</p>
 <p>A <strong>conceptual definition</strong> involves defining an abstract concept in relation to other concepts whose meaning is more widely shared, usually by breaking it down into more concrete aspects or dimensions. For example, my friend and colleague Igor Grossmann conducts fascinating psychological research on wisdom. What exactly, is “wisdom,” and how does one study it scientifically? Even something as grand and abstract as “wisdom” can be specified in terms of concrete dimensions that, together, speak to the more general concept. For example, as <span class="citation" data-cites="brienza2018wisdom">Brienza et al. (<a href="references.html#ref-brienza2018wisdom" role="doc-biblioref">2018</a>)</span> propose, wisdom can be represented by the extent to which people demonstrate intellectual humility, recognition of uncertainty and change, consideration of the broader context at hand and perspectives of others, and the integration of these perspectives/compromise in specific situations.</p>
-<p>The various dimensions that are specified in the conceptual definition of wisdom are, of course, <em>other concepts</em>. The difference between an operational definition and a conceptual one is that an <strong>operational definition</strong> describes the specific operations that one would have to perform to generate empirical observations (i.e., data) for each of the various dimensions. The variables that contain data on these specific dimensions are typically called <strong>indicator variables</strong>. Operational definitions involve specifying things like the level at which to measure something, the type of variables to use (e.g.&nbsp;ordinal, interval, ratio, categorical), the range of variation those variables should have, and so on. A good operational definition of a concept enables one to measure the concept by measuring the concept’s dimensions with a high degree of reliability and validity, and then aggregating the measures of specific dimensions into a measure of the abstract concept that <em>also</em> has high reliability and validity. In the case of measuring wisdom, for example, <span class="citation" data-cites="brienza2018wisdom">Brienza et al. (<a href="references.html#ref-brienza2018wisdom" role="doc-biblioref">2018</a>)</span> outline an explicit measurement strategy that attempts to mitigate social desirability biases (which inevitably come into play when you ask people about the wisdom of their reasoning) by assessing how people respond to specific scenarios. They provide an online supplement that includes the specific survey instruments used to collect the data according to the operational definitions laid out in their paper.</p>
+<div class="no-row-height column-margin column-container"><div id="ref-brienza2018wisdom" class="csl-entry" role="listitem">
+Brienza, Justin, Franki Kung, Henri Santos, Ramona Bobocel, and Igor Grossmann. 2018. <span>“Wisdom, Bias, and Balance: Toward a Process-Sensitive Measurement of Wisdom-Related Cognition.”</span> <em>Journal of Personality and Social Psychology</em> 115 (6): 1093.
+</div></div><p>The various dimensions that are specified in the conceptual definition of wisdom are, of course, <em>other concepts</em>. The difference between an operational definition and a conceptual one is that an <strong>operational definition</strong> describes the specific operations that one would have to perform to generate empirical observations (i.e., data) for each of the various dimensions. The variables that contain data on these specific dimensions are typically called <strong>indicator variables</strong>. Operational definitions involve specifying things like the level at which to measure something, the type of variables to use (e.g.&nbsp;ordinal, interval, ratio, categorical), the range of variation those variables should have, and so on. A good operational definition of a concept enables one to measure the concept by measuring the concept’s dimensions with a high degree of reliability and validity, and then aggregating the measures of specific dimensions into a measure of the abstract concept that <em>also</em> has high reliability and validity. In the case of measuring wisdom, for example, <span class="citation" data-cites="brienza2018wisdom">Brienza et al. (<a href="references.html#ref-brienza2018wisdom" role="doc-biblioref">2018</a>)</span> outline an explicit measurement strategy that attempts to mitigate social desirability biases (which inevitably come into play when you ask people about the wisdom of their reasoning) by assessing how people respond to specific scenarios. They provide an online supplement that includes the specific survey instruments used to collect the data according to the operational definitions laid out in their paper.</p>
 <p>Let’s return to our abstract “principles of democracy.” The principle of electoral democracy, for example, is represented by the five dimensions listed below. The set of accompanying questions come straight from the VDEM codebook <span class="citation" data-cites="coppedge2020v">(<a href="references.html#ref-coppedge2020v" role="doc-biblioref">Coppedge et al. 2020</a>)</span>.</p>
-<ul>
+<div class="no-row-height column-margin column-container"><div id="ref-coppedge2020v" class="csl-entry" role="listitem">
+Coppedge, Michael, John Gerring, Adam Glynn, Carl Henrik Knutsen, Staffan Lindberg, Daniel Pemstein, Brigitte Seim, Svend-Erik Skaaning, and Jan Teorell. 2020. <em>Varieties of Democracy: Measuring Two Centuries of Political Change</em>. Cambridge University Press.
+</div></div><ul>
 <li><strong>Freedom of expression</strong>: “To what extent does government respect press and media freedom, the freedom of ordinary people to discuss political matters at home and in the public sphere, as well as the freedom of academic and cultural expression?” (variable: <code>v2x_freexp_altinf</code>)</li>
 <li><strong>Freedom of association</strong>: “To what extent are parties, including opposition parties, allowed to form and to participate in elections, and to what extent are civil society organizations able to form and to operate freely?” (variable: <code>v2x_frassoc_thick</code>)</li>
 <li><strong>Share of adult citizens with suffrage</strong>: “What share of adult citizens (as defined by statute) has the legal right to vote in national elections?” (variable: <code>v2x_suffr</code>)</li>
@@ -844,15 +817,11 @@ Table&nbsp;13.1: Table: VDEM variables used in this chapter.
 <p>For example, the <em>freedom of expression</em> dimension represented by the index variable <code>v2x_freexp_altinf</code> is constructed from the values of the variables government censorship effort (<code>v2mecenefm</code>), harassment of journalists (<code>v2meharjrn</code>), media self-censorship (<code>v2meslfcen</code>), freedom of discussion (<code>v2xcl_disc</code>), freedom of academic and cultural expression (<code>v2clacfree</code>), levels of media bias (<code>v2mebias</code>), how critical the media is (<code>v2mecrit</code>), and the diversity of perspectives promoted by the media (<code>v2merange</code>). These lower-level indicators are easier to observe than the higher level index variables above them, or the even higher still indices representing types of democracies. If you want to learn more about the conceptual and operational definitions of these principles of democracy, as well as the specific measurement models used, you can consult Coppedge et al.&nbsp;(2020 <strong>CITE</strong>).</p>
 <p>The difference between these indices and indicator variables maps directly back to the process of specification; the variables we use to record observations about the specific dimensions of concepts are indicator variables because they <em>indicate</em> part of the concept, and the overall concept is measures by combining the values for those indicators into an index. Indices are <strong>composite measures</strong> because they are created by systematically and transparently combining multiple indicators.</p>
 <p>When we want (or need) to measure something really big and abstract like a concept that is part of a larger theory (e.g.&nbsp;the amount of deliberative democracy that we see in a given country at some point in time), we break the big abstract concept down into various different dimensions, and sometimes we break <em>those</em> dimensions down into even smaller ones. The measures for the higher-level concepts are indices constructed by combining the values of lower-level indicator variables.</p>
-<p>This general idea is sketched out in <a href="#fig-09_01" class="quarto-xref">Figure&nbsp;<span>13.1</span></a> below, with example indicator variables on the top feeding into mid-level index measures for latent concepts (in gray), which in turn feed in to the high-level index measures of the latent concept of the principle of electoral democracy, or “polyarchy” (also in gray). The <code>...</code>s are meant to emphasize that there are other indicators that feed into the mid-level indices in addition to those shown here.</p>
-<div id="fig-09_01" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-09_01-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/latent.png" class="img-fluid figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-09_01-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;13.1: cap
-</figcaption>
+<p>This general idea is sketched out in <a href="#fig-09_01">Figure&nbsp;<span>14.1</span></a> below, with example indicator variables on the top feeding into mid-level index measures for latent concepts (in gray), which in turn feed in to the high-level index measures of the latent concept of the principle of electoral democracy, or “polyarchy” (also in gray). The <code>...</code>s are meant to emphasize that there are other indicators that feed into the mid-level indices in addition to those shown here.</p>
+<div id="fig-09_01" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="figures/latent.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;14.1: cap</figcaption>
 </figure>
 </div>
 <p>When trying to measure latent variables, degree of electoral democracy or freedom of association, we typically perform some sort of <strong>factor analysis</strong> that tells us whether the indicators we observed and measured (e.g.&nbsp;the share of adult citizens with voting rights and the power of the Head of State relative to the Head of Government) are indeed likely to reflect some underlying “<strong>factor</strong>.”</p>
@@ -861,22 +830,30 @@ Figure&nbsp;13.1: cap
 <p>If we assume that the latent variables are not correlated with one another (rarely a reasonable assumption, but it has its place), then there is only one set of factor loadings (either the correlation coefficients or the regression coefficients, which in this scenario would be the same). These loading scores are often “<strong>rotated</strong>” to help make them more substantively interpretable. Though we won’t discuss them here, the type of rotation you perform depends on whether you think the factors are correlated with one another. If you suspect they are at least somewhat correlated with one another, then you would use an oblique rotation, and if you suspect they aren’t, you whould choose an orthogonal rotation.</p>
 <p>Factor loadings describe how specific <em>variables</em> (e.g., government intimidation of the opposition) contribute to a latent factor. <strong>Factor scores</strong>, on the other hand, tell us how specific <em>observations</em> (e.g., the United States of America in 2020) score on a given latent factor (e.g., electoral democracy). You can probably see where I’m going with this: if the latent factors represent meaningful variables that we want to measure but can’t observe, then the factor scores that describe how an observation is related to that latent factor <em>is</em> the measurement of that observation for that latent factor. For example, on the egalitarian democracy measurement variable in 2019, Namibia scored 0.453, Egypt scored 0.118, France scored 0.773, North Korea scored 0.096, Vanuatu scored 0.566, Senegal scored 0.517, Canada scored 0.776, and Ukraine scored 0.316. Where did these numbers come from? The egalitarian democracy variable is a latent index variable constructed from several other indices, which are in turn constructed from more concrete low-level indicators. The latent variables and the individual country scores are mathematically constructed using factor analysis.</p>
 <p>In the interest of space, we will not actually conduct a theory-oriented factor analysis in this chapter. Instead, we will focus on a different approach that is more inductive and data-driven: Principal Components Analysis (PCA).</p>
-<blockquote class="blockquote">
+<blockquote class="blockquote page-columns page-full">
 <p><strong>Further Reading</strong></p>
 <p>Chapter 13 from Barbara Tabachinick and Linda Fidell’s <span class="citation" data-cites="tabachnick2007using">(<a href="references.html#ref-tabachnick2007using" role="doc-biblioref">2007</a>)</span> <em>Using Multivariate Statistics</em> and Chapter 17 of <span class="citation" data-cites="field2012discovering">Field, Miles, and Field (<a href="references.html#ref-field2012discovering" role="doc-biblioref">2012</a>)</span> <em>Discovering Statistics Using R</em> both provide a good introduction to exploratory factor analysis and PCA as widely-practices in the social and cognitive sciences. Chapter 8 of G{'e}ron’s <span class="citation" data-cites="geron2019hands">(<a href="references.html#ref-geron2019hands" role="doc-biblioref">2019</a>)</span> <em>Hands-on Machine Learning</em> and Chapter 3 of M{"u}ller and Guido’s <span class="citation" data-cites="muller2016introduction">(<a href="references.html#ref-muller2016introduction" role="doc-biblioref">2016</a>)</span> <em>Introduction to Machine Learning with Python</em> provide a good introduction to “dimensionality reduction” in machine learning.</p>
-</blockquote>
+<div class="no-row-height column-margin column-container"><div id="ref-tabachnick2007using" class="csl-entry" role="listitem">
+Tabachnick, Barbara G, Linda S Fidell, and Jodie B Ullman. 2007. <em>Using Multivariate Statistics</em>. Vol. 5. Pearson Boston, MA.
+</div><div id="ref-field2012discovering" class="csl-entry" role="listitem">
+Field, Andy, Jeremy Miles, and Zoë Field. 2012. <em>Discovering Statistics Using r</em>. Sage publications.
+</div><div id="ref-geron2019hands" class="csl-entry" role="listitem">
+Géron, Aurélien. 2019. <em>Hands-on Machine Learning with Scikit-Learn, Keras, and TensorFlow: Concepts, Tools, and Techniques to Build Intelligent Systems</em>. O’Reilly Media.
+</div><div id="ref-muller2016introduction" class="csl-entry" role="listitem">
+Müller, Andreas, and Sarah Guido. 2016. <em>Introduction to Machine Learning with Python: A Guide for Data Scientists</em>. " O’Reilly Media, Inc.".
+</div></div></blockquote>
 </section>
 </section>
-<section id="conducting-a-principal-component-analysis-in-sklearn" class="level2" data-number="13.3">
-<h2 data-number="13.3" class="anchored" data-anchor-id="conducting-a-principal-component-analysis-in-sklearn"><span class="header-section-number">13.3</span> CONDUCTING A PRINCIPAL COMPONENT ANALYSIS IN SKLEARN</h2>
-<section id="standardization" class="level3" data-number="13.3.1">
-<h3 data-number="13.3.1" class="anchored" data-anchor-id="standardization"><span class="header-section-number">13.3.1</span> Standardization</h3>
+<section id="conducting-a-principal-component-analysis-in-sklearn" class="level2 page-columns page-full" data-number="14.3">
+<h2 data-number="14.3" class="anchored" data-anchor-id="conducting-a-principal-component-analysis-in-sklearn"><span class="header-section-number">14.3</span> CONDUCTING A PRINCIPAL COMPONENT ANALYSIS IN SKLEARN</h2>
+<section id="standardization" class="level3" data-number="14.3.1">
+<h3 data-number="14.3.1" class="anchored" data-anchor-id="standardization"><span class="header-section-number">14.3.1</span> Standardization</h3>
 <p>We did most of the necessary pre-processing at the start of the chapter when we imported our data, filtered the rows, selected the relevant columns, and then converted the data to a Numpy <code>ndarray</code>, which is a nice way of storing matrix data. There is, however, one very important piece of pre-processing that we need to do before we conduct a PCA: scaling our variables via z-score normalization, or “<strong>standardization</strong>.”</p>
 <p>Remember, PCA reduces the dimensionality of a dataset by constructing “principle components” from highly correlated features. If the variance contained in any one component differs from the variance contained in another <em>because of the scales for the features that contribute to it</em>, then PCA will make consequential mistakes. In short, PCA is <em>heavily</em> impacted by feature scaling. To prevent any such issues, we can use Sklearn’s <code>StandardScaler()</code>, which performs z-score normalization on each feature. The z-score normalization ensures we are comparing things on the same scales.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> StandardScaler().fit_transform(X) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Many statistical and machine learning models require standardization. If you need a refresher, you can consult the sub-section below. Otherwise you are free to skip over it. I recommend consulting the documentation whenever you use a model with which you are unfamiliar.</p>
-<section id="a-brief-refresher-on-variance-standard-deviation-and-z-score-normalization" class="level4" data-number="13.3.1.1">
-<h4 data-number="13.3.1.1" class="anchored" data-anchor-id="a-brief-refresher-on-variance-standard-deviation-and-z-score-normalization"><span class="header-section-number">13.3.1.1</span> A Brief Refresher on Variance, Standard Deviation, and Z-score Normalization</h4>
+<section id="a-brief-refresher-on-variance-standard-deviation-and-z-score-normalization" class="level4" data-number="14.3.1.1">
+<h4 data-number="14.3.1.1" class="anchored" data-anchor-id="a-brief-refresher-on-variance-standard-deviation-and-z-score-normalization"><span class="header-section-number">14.3.1.1</span> A Brief Refresher on Variance, Standard Deviation, and Z-score Normalization</h4>
 <p>First, let’s <em>very</em> briefly revisit the concepts of variance and standard deviation. <em>Variance</em> is a statistical measure of how spread out or clustered the values in a data set are. More specifically, it’s a measure of how far each value is from the mean. Variance is usually represented with the symbol <span class="math inline">\(\sigma^2\)</span>. A larger variance means that the values are more spread out, while a smaller variance means that they are more clustered around the mean. Let’s use some very simple examples to see how this works.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>ABCD <span class="op">=</span> {</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'A'</span>: [<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>], <span class="co"># no variance...</span></span>
@@ -899,8 +876,8 @@ z = \frac{x - \mu}{\sigma}
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f'The values in </span><span class="sc">{</span>k<span class="sc">}</span><span class="ss"> have the following Z-scores: </span><span class="sc">{</span>np<span class="sc">.</span><span class="bu">round</span>(zscore(v), <span class="dv">3</span>)<span class="sc">}</span><span class="ss">.'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 </section>
-<section id="back-to-pca" class="level3" data-number="13.3.2">
-<h3 data-number="13.3.2" class="anchored" data-anchor-id="back-to-pca"><span class="header-section-number">13.3.2</span> Back to PCA!</h3>
+<section id="back-to-pca" class="level3" data-number="14.3.2">
+<h3 data-number="14.3.2" class="anchored" data-anchor-id="back-to-pca"><span class="header-section-number">14.3.2</span> Back to PCA!</h3>
 <p>Now that our data has been standardized, we can conduct the PCA. When we initialize the model object with <code>PCA()</code>, we have the option of telling sklean to compute a specific number of components (e.g.&nbsp;pass the number 15 to get back the 15 principal components that account for the most variance) or a float specifying the amount of variance we want to be accounted for by the PCA (e.g.&nbsp;pass the number .9 to produce a solution that accounts for 90% of the variance). In this example, we will not specify either.</p>
 <p>Once we initialize the model object, we can use the <code>.fit_transform()</code> method on our standardized array <span class="math inline">\(X\)</span>.</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>pca <span class="op">=</span> PCA()</span>
@@ -923,7 +900,7 @@ z = \frac{x - \mu}{\sigma}
 <div class="sourceCode" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>cve <span class="op">=</span> pd.Series(np.cumsum(evr))</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>cve[:<span class="dv">12</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>In this case, a simple preview of the cumulative explained variance tells us that the first two components alone account for 68% of the variance in the dataset, which is a <em>very</em> substantial amount. Similarly, we can see that the first 12 components still account for 90% of the variance – pretty good considering we started with 35 indicator variables!</p>
-<p>This is only part of the picture, though. Let’s plot the proportion of cumulative explained variance for each successive principal component. Notice that, by default, PCA will construct a number of components equal to the number of original variables in the dataset. You should be able to see the diminishing returns, here, even if they set in rather smoothly. The code below produces <a href="#fig-08_01" class="quarto-xref">Figure&nbsp;<span>13.2</span></a>.</p>
+<p>This is only part of the picture, though. Let’s plot the proportion of cumulative explained variance for each successive principal component. Notice that, by default, PCA will construct a number of components equal to the number of original variables in the dataset. You should be able to see the diminishing returns, here, even if they set in rather smoothly. The code below produces <a href="#fig-08_01">Figure&nbsp;<span>14.2</span></a>.</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots()</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>sns.lineplot(x<span class="op">=</span>cve.index, y<span class="op">=</span>cve)</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>plt.scatter(x<span class="op">=</span>cve.index, y<span class="op">=</span>cve)</span>
@@ -932,23 +909,19 @@ z = \frac{x - \mu}{\sigma}
 <span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>ax.<span class="bu">set</span>(ylim<span class="op">=</span>(<span class="dv">0</span>, <span class="fl">1.1</span>))</span>
 <span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
 <span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'figures/08-01.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div id="fig-08_01" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-08_01-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/08-01.png" class="img-fluid figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-08_01-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;13.2: png
-</figcaption>
+<div id="fig-08_01" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="figures/08-01.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;14.2: png</figcaption>
 </figure>
 </div>
 </section>
-<section id="matrix-decomposition-eigenvalues-eigenvectors-and-extracting-components" class="level3" data-number="13.3.3">
-<h3 data-number="13.3.3" class="anchored" data-anchor-id="matrix-decomposition-eigenvalues-eigenvectors-and-extracting-components"><span class="header-section-number">13.3.3</span> Matrix Decomposition: Eigenvalues, Eigenvectors, and Extracting Components</h3>
+<section id="matrix-decomposition-eigenvalues-eigenvectors-and-extracting-components" class="level3 page-columns page-full" data-number="14.3.3">
+<h3 data-number="14.3.3" class="anchored" data-anchor-id="matrix-decomposition-eigenvalues-eigenvectors-and-extracting-components"><span class="header-section-number">14.3.3</span> Matrix Decomposition: Eigenvalues, Eigenvectors, and Extracting Components</h3>
 <p>When you conduct a principal component analysis, you only want to keep some components. You’re trying to <em>reduce dimensionality</em> while preserving as much information (in the form of variance) possible. So, which components do you extract?</p>
 <p>The above plot of cumulative variance accounted for can be helpful if you want to preserve a certain amount of variance in the data. An alternative approach is to construct a <strong>scree plot</strong> to determine which components are substantively important enough to use. To understand how to construct and interpret a scree plot, you need to know a little bit more about how PCA works, and more specifically what role eigenvalues and eigenvectors play in a PCA, and how those roles differ from loadings in factor analysis.</p>
 <p>As discussed earlier, PCA creates a covariance matrix of standardized variables (or sometimes a correlation matrix). We can understand the structure and other properties of these matrices mathematically using <strong>eigen-decomposition</strong>. We won’t get into the linear algebra here, but here’s the basic idea: We can decompose the matrix into two parts. The first are the principal components themselves, which are <em>directions</em> of axes where there is the most variance (<strong>eigenvectors</strong>). The second part is the <em>amount</em> of variance that is accounted for by the principal components (<strong>eigenvalues</strong>). Every eigenvector has an eigenvalue and there is an eigenvector (principal component) for every variable in the original data. A very important feature of PCA is that the first principal component accounts for the greatest possible variance in the data set. The second principal component is calculated in the same way as the first, except that it cannot be correlated with the first. This continues for each principal component until you have as many as you do variables. It is important to remember that all of the information about scale (the amount of variance explained) is contained in the eigenvalues. The eigenvectors in a PCA do not tell us anything about the magnitude of explained variance.</p>
-<p>Scree plots graph the eigenvalues for each component in the PCA, which you now know represents the amount of variance that each component accounts for. The higher the eigenvalue, <em>the more important the component</em>. Because eigenvalues represent the amount of explained variance, Sklearn helpfully stores them in the <code>explained_variance_</code> attribute of the PCA model object.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> This also makes it very straightforward to create a scree plot. The code below produces <a href="#fig-08_03" class="quarto-xref">Figure&nbsp;<span>13.3</span></a>.</p>
+<div class="page-columns page-full"><p>Scree plots graph the eigenvalues for each component in the PCA, which you now know represents the amount of variance that each component accounts for. The higher the eigenvalue, <em>the more important the component</em>. Because eigenvalues represent the amount of explained variance, Sklearn helpfully stores them in the <code>explained_variance_</code> attribute of the PCA model object.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> This also makes it very straightforward to create a scree plot. The code below produces <a href="#fig-08_03">Figure&nbsp;<span>14.3</span></a>.</p><div class="no-row-height column-margin column-container"><li id="fn1"><p><sup>1</sup>&nbsp;If you are looking for the eigenvectors, Sklearn stores them in the <code>.components_</code> attribute.</p></li></div></div>
 <div class="sourceCode" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>eigenvalues <span class="op">=</span> pd.Series(pca.explained_variance_)</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots()</span>
@@ -957,14 +930,10 @@ Figure&nbsp;13.2: png
 <span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">'Principal component ID'</span>, ylabel<span class="op">=</span><span class="st">'Eigenvalue'</span>)</span>
 <span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
 <span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'figures/08-03.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div id="fig-08_03" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-08_03-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/08-03.png" class="img-fluid figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-08_03-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;13.3: png
-</figcaption>
+<div id="fig-08_03" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="figures/08-03.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;14.3: png</figcaption>
 </figure>
 </div>
 <p>This figure should be straightforward to understand. The first few components are more important than the others. In a scree plot, you are usually looking for an <strong>inflection point</strong>, i.e., a point where the slope of the line changes rather abruptly. Usually, that point is clear, but we can also inspect the eigenvalues themselves if we want a bit more precision, just remember that the eigenvalues are 0-indexed, so 0 represents the first component, 1 represents the second component, and so on.</p>
@@ -996,26 +965,21 @@ Figure&nbsp;13.3: png
 <span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'figures/08-04.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div id="fig-08_04" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-08_04-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/08-04.png" class="img-fluid figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-08_04-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;13.4: png
-</figcaption>
+<div id="fig-08_04" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="figures/08-04.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;14.4: png</figcaption>
 </figure>
 </div>
-<p>While the text is dense in <a href="#fig-08_04" class="quarto-xref">Figure&nbsp;<span>13.4</span></a> (a high resolution version is available in the online supplement), careful inspection should lead to noticing several patterns. The first principal component is defined by the opposition between countries like Norway, Denmark, Switzerland, Luxembourg, and Germany on the one hand, and by Burundi, Tukmenistan, Syria, Eritrea, and North Korea on the other. The second principal component is defined by the opposition of countries like Haiti, Dominican Republic, Nigeria, Gabon, and Honduras on the one hand, and Laos, Eritrea, United Arab Emirates, China, and Singapore on the other. The eigenvalue is <em>much</em> higher for the first principal component, suggesting that the interpretation of the differences between countries on the left and the right of the graph is most important.</p>
+<p>While the text is dense in <a href="#fig-08_04">Figure&nbsp;<span>14.4</span></a> (a high resolution version is available in the online supplement), careful inspection should lead to noticing several patterns. The first principal component is defined by the opposition between countries like Norway, Denmark, Switzerland, Luxembourg, and Germany on the one hand, and by Burundi, Tukmenistan, Syria, Eritrea, and North Korea on the other. The second principal component is defined by the opposition of countries like Haiti, Dominican Republic, Nigeria, Gabon, and Honduras on the one hand, and Laos, Eritrea, United Arab Emirates, China, and Singapore on the other. The eigenvalue is <em>much</em> higher for the first principal component, suggesting that the interpretation of the differences between countries on the left and the right of the graph is most important.</p>
 <p>This is not a factor analysis. We have not guided the PCA towards this solution. Instead, we have obtained these two latent dimensions <em>mathematically</em>, through matrix decomposition, and projected the countries onto that latent space. These two dimensions only represent 68% of the variance in the dataset, but when you think about it, that’s a lot of information for just two variables. The challenge, given that this is computationally <em>inductive</em>, is to do the qualitative and historical work necessary to interpret this representation of the latent structure in the data. However, don’t forget that the only information the PCA has to work with comes from our original variables, so those variables are a great place to start.</p>
 </section>
 </section>
-<section id="conclusion" class="level2" data-number="13.4">
-<h2 data-number="13.4" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">13.4</span> CONCLUSION</h2>
-<hr>
+<section id="conclusion" class="level2" data-number="14.4">
+<h2 data-number="14.4" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">14.4</span> CONCLUSION</h2>
 </section>
-<section id="key-points" class="level2" data-number="13.5">
-<h2 data-number="13.5" class="anchored" data-anchor-id="key-points"><span class="header-section-number">13.5</span> Key Points</h2>
+<section id="key-points" class="level2" data-number="14.5">
+<h2 data-number="14.5" class="anchored" data-anchor-id="key-points"><span class="header-section-number">14.5</span> Key Points</h2>
 <ul>
 <li>We learned about latent variables and the differences between theory-driven and data-driven dimensionality reduction</li>
 <li>Discussed distinctions between Factor Analysis and Principal Component Analysis</li>
@@ -1024,33 +988,9 @@ Figure&nbsp;13.4: png
 <hr>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
-<div id="ref-brienza2018wisdom" class="csl-entry" role="listitem">
-Brienza, Justin, Franki Kung, Henri Santos, Ramona Bobocel, and Igor Grossmann. 2018. <span>“Wisdom, Bias, and Balance: Toward a Process-Sensitive Measurement of Wisdom-Related Cognition.”</span> <em>Journal of Personality and Social Psychology</em> 115 (6): 1093.
-</div>
-<div id="ref-coppedge2020v" class="csl-entry" role="listitem">
-Coppedge, Michael, John Gerring, Adam Glynn, Carl Henrik Knutsen, Staffan Lindberg, Daniel Pemstein, Brigitte Seim, Svend-Erik Skaaning, and Jan Teorell. 2020. <em>Varieties of Democracy: Measuring Two Centuries of Political Change</em>. Cambridge University Press.
-</div>
-<div id="ref-field2012discovering" class="csl-entry" role="listitem">
-Field, Andy, Jeremy Miles, and Zoë Field. 2012. <em>Discovering Statistics Using r</em>. Sage publications.
-</div>
-<div id="ref-geron2019hands" class="csl-entry" role="listitem">
-Géron, Aurélien. 2019. <em>Hands-on Machine Learning with Scikit-Learn, Keras, and TensorFlow: Concepts, Tools, and Techniques to Build Intelligent Systems</em>. O’Reilly Media.
-</div>
-<div id="ref-muller2016introduction" class="csl-entry" role="listitem">
-Müller, Andreas, and Sarah Guido. 2016. <em>Introduction to Machine Learning with Python: A Guide for Data Scientists</em>. " O’Reilly Media, Inc.".
-</div>
-<div id="ref-tabachnick2007using" class="csl-entry" role="listitem">
-Tabachnick, Barbara G, Linda S Fidell, and Jodie B Ullman. 2007. <em>Using Multivariate Statistics</em>. Vol. 5. Pearson Boston, MA.
-</div>
-</div>
+
 </section>
-<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
-<hr>
-<ol>
-<li id="fn1"><p>If you are looking for the eigenvectors, Sklearn stores them in the <code>.components_</code> attribute.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-</ol>
-</section>
+
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -1088,7 +1028,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const onCopySuccess = function(e) {
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -1120,50 +1071,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
-  }
-  const getTextToCopy = function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-  }
-  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-    text: getTextToCopy
   });
-  clipboard.on('success', onCopySuccess);
-  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
-    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-      text: getTextToCopy,
-      container: window.document.getElementById('quarto-embedded-source-code-modal')
-    });
-    clipboardModal.on('success', onCopySuccess);
-  }
-    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-    var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp('/' + window.location.host + '/');
-    var isInternal = (href) => {
-        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
-    }
-    // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
-    for (var i=0; i<links.length; i++) {
-      const link = links[i];
-      if (!isInternal(link.href)) {
-        // undo the damage that might have been done by quarto-nav.js in the case of
-        // links that we want to consider external
-        if (link.dataset.originalHref !== undefined) {
-          link.href = link.dataset.originalHref;
-        }
-      }
-    }
-  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+  function tippyHover(el, contentFn) {
     const config = {
       allowHTML: true,
+      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -1173,17 +1085,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start',
+      placement: 'bottom-start'
     };
-    if (contentFn) {
-      config.content = contentFn;
-    }
-    if (onTriggerFn) {
-      config.onTrigger = onTriggerFn;
-    }
-    if (onUntriggerFn) {
-      config.onUntrigger = onUntriggerFn;
-    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -1195,130 +1098,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      if (note) {
-        return note.innerHTML;
-      } else {
-        return "";
-      }
-    });
-  }
-  const xrefs = window.document.querySelectorAll('a.quarto-xref');
-  const processXRef = (id, note) => {
-    // Strip column container classes
-    const stripColumnClz = (el) => {
-      el.classList.remove("page-full", "page-columns");
-      if (el.children) {
-        for (const child of el.children) {
-          stripColumnClz(child);
-        }
-      }
-    }
-    stripColumnClz(note)
-    if (id === null || id.startsWith('sec-')) {
-      // Special case sections, only their first couple elements
-      const container = document.createElement("div");
-      if (note.children && note.children.length > 2) {
-        container.appendChild(note.children[0].cloneNode(true));
-        for (let i = 1; i < note.children.length; i++) {
-          const child = note.children[i];
-          if (child.tagName === "P" && child.innerText === "") {
-            continue;
-          } else {
-            container.appendChild(child.cloneNode(true));
-            break;
-          }
-        }
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(container);
-        }
-        return container.innerHTML
-      } else {
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(note);
-        }
-        return note.innerHTML;
-      }
-    } else {
-      // Remove any anchor links if they are present
-      const anchorLink = note.querySelector('a.anchorjs-link');
-      if (anchorLink) {
-        anchorLink.remove();
-      }
-      if (window.Quarto?.typesetMath) {
-        window.Quarto.typesetMath(note);
-      }
-      // TODO in 1.5, we should make sure this works without a callout special case
-      if (note.classList.contains("callout")) {
-        return note.outerHTML;
-      } else {
-        return note.innerHTML;
-      }
-    }
-  }
-  for (var i=0; i<xrefs.length; i++) {
-    const xref = xrefs[i];
-    tippyHover(xref, undefined, function(instance) {
-      instance.disable();
-      let url = xref.getAttribute('href');
-      let hash = undefined; 
-      if (url.startsWith('#')) {
-        hash = url;
-      } else {
-        try { hash = new URL(url).hash; } catch {}
-      }
-      if (hash) {
-        const id = hash.replace(/^#\/?/, "");
-        const note = window.document.getElementById(id);
-        if (note !== null) {
-          try {
-            const html = processXRef(id, note.cloneNode(true));
-            instance.setContent(html);
-          } finally {
-            instance.enable();
-            instance.show();
-          }
-        } else {
-          // See if we can fetch this
-          fetch(url.split('#')[0])
-          .then(res => res.text())
-          .then(html => {
-            const parser = new DOMParser();
-            const htmlDoc = parser.parseFromString(html, "text/html");
-            const note = htmlDoc.getElementById(id);
-            if (note !== null) {
-              const html = processXRef(id, note);
-              instance.setContent(html);
-            } 
-          }).finally(() => {
-            instance.enable();
-            instance.show();
-          });
-        }
-      } else {
-        // See if we can fetch a full url (with no hash to target)
-        // This is a special case and we should probably do some content thinning / targeting
-        fetch(url)
-        .then(res => res.text())
-        .then(html => {
-          const parser = new DOMParser();
-          const htmlDoc = parser.parseFromString(html, "text/html");
-          const note = htmlDoc.querySelector('main.content');
-          if (note !== null) {
-            // This should only happen for chapter cross references
-            // (since there is no id in the URL)
-            // remove the first header
-            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
-              note.children[0].remove();
-            }
-            const html = processXRef(null, note);
-            instance.setContent(html);
-          } 
-        }).finally(() => {
-          instance.enable();
-          instance.show();
-        });
-      }
-    }, function(instance) {
+      return note.innerHTML;
     });
   }
       let selectedAnnoteEl;
@@ -1362,7 +1142,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
-            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -1388,32 +1167,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
-        // Handle positioning of the toggle
-    window.addEventListener(
-      "resize",
-      throttle(() => {
-        elRect = undefined;
-        if (selectedAnnoteEl) {
-          selectCodeLines(selectedAnnoteEl);
-        }
-      }, 10)
-    );
-    function throttle(fn, ms) {
-    let throttle = false;
-    let timer;
-      return (...args) => {
-        if(!throttle) { // first call gets through
-            fn.apply(this, args);
-            throttle = true;
-        } else { // all the others get throttled
-            if(timer) clearTimeout(timer); // cancel #2
-            timer = setTimeout(() => {
-              fn.apply(this, args);
-              timer = throttle = false;
-            }, ms);
-        }
-      };
-    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -1475,13 +1228,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./exploratory-data-analysis.html" class="pagination-link" aria-label="Exploring with purpose">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Exploring with purpose</span></span>
+      <a href="./exploratory-data-analysis.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Exploring with purpose</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./mapping-text.html" class="pagination-link" aria-label="Text similarity and latent semantic space">
-        <span class="nav-page-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Text similarity and latent semantic space</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./mapping-text.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Text similarity and latent semantic space</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -1489,5 +1242,4 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
-
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/UWNETLAB/dcss_supplementary/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
+</body></html>

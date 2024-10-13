@@ -838,7 +838,7 @@ In later chapters, we will often produce "small multiples" that have a structure
 
 ## CONCLUSION
 
----
+
 
 ## Key Points 
 

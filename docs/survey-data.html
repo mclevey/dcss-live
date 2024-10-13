@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.56">
+<meta name="generator" content="quarto-1.3.450">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>7&nbsp; Survey Data – Doing Computational Social Science&lt;br&gt;[The **Continuous Development** Edition]{.small}</title>
+<title>Doing Computational Social ScienceThe Continuous Development Edition - 7&nbsp; Survey Data</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -22,7 +22,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -33,7 +33,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -58,7 +58,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
-  margin-bottom: 0em;
 }
 .hanging-indent div.csl-entry {
   margin-left:2em;
@@ -102,13 +101,7 @@ div.csl-indent {
   "collapse-after": 3,
   "panel-placement": "start",
   "type": "textbox",
-  "limit": 50,
-  "keyboard-shortcut": [
-    "f",
-    "/",
-    "s"
-  ],
-  "show-item-context": false,
+  "limit": 20,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -117,7 +110,6 @@ div.csl-indent {
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
-    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
@@ -134,13 +126,13 @@ div.csl-indent {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./survey-data.html"><strong>DATA</strong></a></li><li class="breadcrumb-item"><a href="./survey-data.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Survey Data</span></a></li></ol></nav>
-        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-        </a>
-      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./survey-data.html"><strong>DATA</strong></a></li><li class="breadcrumb-item"><a href="./survey-data.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Survey Data</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -149,7 +141,7 @@ div.csl-indent {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
       <a href="./index.html" class="sidebar-logo-link">
       <img src="./figures/logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
@@ -157,25 +149,25 @@ div.csl-indent {
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Doing Computational Social Science<br><span class="small">The <strong>Continuous Development</strong> Edition</span></a> 
         <div class="sidebar-tools-main">
-    <a href="https://github.com/UWNETLAB/dcss_supplementary/tree/master/book/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="https://github.com/UWNETLAB/dcss_supplementary/tree/master/book/" rel="" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
     <div class="dropdown">
-      <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
+      <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Share"><i class="bi bi-share"></i></a>
       <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
           <li>
             <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=|url|">
-              <i class="bi bi-twitter pe-1"></i>
+              <i class="bi bi-bi-twitter pe-1"></i>
             Twitter
             </a>
           </li>
           <li>
             <a class="dropdown-item sidebar-tools-main-item" href="https://www.facebook.com/sharer/sharer.php?u=|url|">
-              <i class="bi bi-facebook pe-1"></i>
+              <i class="bi bi-bi-facebook pe-1"></i>
             Facebook
             </a>
           </li>
           <li>
             <a class="dropdown-item sidebar-tools-main-item" href="https://www.linkedin.com/sharing/share-offsite/?url=|url|">
-              <i class="bi bi-linkedin pe-1"></i>
+              <i class="bi bi-bi-linkedin pe-1"></i>
             LinkedIn
             </a>
           </li>
@@ -205,9 +197,9 @@ div.csl-indent {
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
  <span class="menu-text"><strong>COMPUTING</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -240,9 +232,9 @@ div.csl-indent {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
  <span class="menu-text"><strong>WORKFLOW</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -263,9 +255,9 @@ div.csl-indent {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
  <span class="menu-text"><strong>DATA</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -310,9 +302,9 @@ div.csl-indent {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
  <span class="menu-text"><strong>DISCOVERY</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -351,9 +343,9 @@ div.csl-indent {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
  <span class="menu-text"><strong>PREDICTION &amp; INFERENCE</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -398,9 +390,9 @@ div.csl-indent {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true">
  <span class="menu-text"><strong>MODELING</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -457,9 +449,9 @@ div.csl-indent {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true">
  <span class="menu-text"><strong>DEEP LEARNING</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -492,9 +484,9 @@ div.csl-indent {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" aria-expanded="true">
  <span class="menu-text"><strong>RESPONSIBILITIES</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -540,7 +532,7 @@ div.csl-indent {
     </ul>
     </div>
 </nav>
-<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
@@ -551,8 +543,13 @@ div.csl-indent {
   <li><a href="#how-survey-research-has-evolved" id="toc-how-survey-research-has-evolved" class="nav-link" data-scroll-target="#how-survey-research-has-evolved"><span class="header-section-number">7.2</span> How survey research has evolved</a>
   <ul class="collapse">
   <li><a href="#sampling-and-representation" id="toc-sampling-and-representation" class="nav-link" data-scroll-target="#sampling-and-representation"><span class="header-section-number">7.2.1</span> Sampling and representation</a></li>
-  <li><a href="#the-science-of-asking-questions-past-and-present" id="toc-the-science-of-asking-questions-past-and-present" class="nav-link" data-scroll-target="#the-science-of-asking-questions-past-and-present"><span class="header-section-number">7.2.2</span> The science of asking questions: past and present</a></li>
-  <li><a href="#linked-data" id="toc-linked-data" class="nav-link" data-scroll-target="#linked-data"><span class="header-section-number">7.2.3</span> Linked data</a></li>
+  <li><a href="#the-science-of-asking-questions-past-and-present" id="toc-the-science-of-asking-questions-past-and-present" class="nav-link" data-scroll-target="#the-science-of-asking-questions-past-and-present"><span class="header-section-number">7.2.2</span> The Science of Asking Questions: Past and Present</a></li>
+  <li><a href="#components-of-a-survey-question" id="toc-components-of-a-survey-question" class="nav-link" data-scroll-target="#components-of-a-survey-question"><span class="header-section-number">7.2.3</span> Components of a Survey Question</a></li>
+  <li><a href="#the-question-characteristics-framework" id="toc-the-question-characteristics-framework" class="nav-link" data-scroll-target="#the-question-characteristics-framework"><span class="header-section-number">7.2.4</span> The Question Characteristics Framework</a></li>
+  <li><a href="#evaluating-and-testing-survey-questions" id="toc-evaluating-and-testing-survey-questions" class="nav-link" data-scroll-target="#evaluating-and-testing-survey-questions"><span class="header-section-number">7.2.5</span> Evaluating and Testing Survey Questions</a></li>
+  <li><a href="#working-with-ordered-categories" id="toc-working-with-ordered-categories" class="nav-link" data-scroll-target="#working-with-ordered-categories"><span class="header-section-number">7.2.6</span> Working with Ordered Categories</a></li>
+  <li><a href="#implications-for-computational-social-scientists-and-data-scientists" id="toc-implications-for-computational-social-scientists-and-data-scientists" class="nav-link" data-scroll-target="#implications-for-computational-social-scientists-and-data-scientists"><span class="header-section-number">7.2.7</span> Implications for Computational Social Scientists and Data Scientists</a></li>
+  <li><a href="#linked-data" id="toc-linked-data" class="nav-link" data-scroll-target="#linked-data"><span class="header-section-number">7.2.8</span> Linked data</a></li>
   </ul></li>
   <li><a href="#processing-survey-data" id="toc-processing-survey-data" class="nav-link" data-scroll-target="#processing-survey-data"><span class="header-section-number">7.3</span> Processing Survey Data</a>
   <ul class="collapse">
@@ -577,12 +574,12 @@ div.csl-indent {
   <li><a href="#reproducibility-and-non-destructive-workflows" id="toc-reproducibility-and-non-destructive-workflows" class="nav-link" data-scroll-target="#reproducibility-and-non-destructive-workflows"><span class="header-section-number">7.7</span> Reproducibility and Non-destructive Workflows</a></li>
   <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">7.8</span> Conclusion</a></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/UWNETLAB/dcss_supplementary/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/UWNETLAB/dcss_supplementary/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./survey-data.html"><strong>DATA</strong></a></li><li class="breadcrumb-item"><a href="./survey-data.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Survey Data</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Survey Data</span></h1>
 </div>
@@ -597,9 +594,7 @@ div.csl-indent {
   </div>
   
 
-
 </header>
-
 
 <!-- And open data portals, Toronto shelters, etc.? -->
 <div class="callout callout-style-default callout-warning callout-titled">
@@ -608,11 +603,11 @@ div.csl-indent {
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-In Progress
+Planned Updates
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>This is a “<a href="https://www.amazon.ca/Bird-Some-Instructions-Writing-Life/dp/0385480016">shitty first draft</a>,” with some sections being shittier than others. Normally I wouldn’t share work so early in it’s development, but I’m interested in your feedback. Feel free to skim, but know that I am actively developing this chapter and it will be going through some very extensive changes in the coming weeks.</p>
+<p>This is a new chapter. I am actively working on it in fall 2024. Stay tuned!</p>
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -641,57 +636,41 @@ Learning Objectives
 <p>This chapter will address all of these themes to varying degrees, with a heavy emphasis on cleaning survey data for future analysis. We’ll start with…</p>
 <section id="foundations-of-survey-methodology-the-total-survey-error-framework" class="level2" data-number="7.1">
 <h2 data-number="7.1" class="anchored" data-anchor-id="foundations-of-survey-methodology-the-total-survey-error-framework"><span class="header-section-number">7.1</span> Foundations of survey methodology: The total survey error framework</h2>
-<p>The <strong>Total Survey Error (TSE)</strong> framework is a comprehensive approach used in survey methodology to identify, evaluate, and minimize the errors that can occur throughout the survey process, compromising validity and reliability. These series of figures below – reproduced / adapted from Groves et al. <span class="citation" data-cites="groves2011survey">(<a href="references.html#ref-groves2011survey" role="doc-biblioref">2011</a>)</span> <em>Survey Methodology</em> – illustrate different aspects of the survey lifecycle and identifies critical points where errors may arise, both in the design and execution of a survey.</p>
-<div id="fig-survey-design-perspective" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-survey-design-perspective-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/groves_surveys_pdf__page_31_of_42__pdf__page_1_of_1_.png" class="img-fluid figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-survey-design-perspective-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;7.1: Remake this.
-</figcaption>
+<p>The <strong>Total Survey Error (TSE)</strong> framework is a comprehensive approach used in survey methodology to identify, evaluate, and minimize the errors that can occur throughout the survey process, compromising validity and reliability. These series of figures below – reproduced / adapted from Groves et al. <span class="citation" data-cites="groves2011survey">(<a href="#ref-groves2011survey" role="doc-biblioref">2011</a>)</span> <em>Survey Methodology</em> – illustrate different aspects of the survey lifecycle and identifies critical points where errors may arise, both in the design and execution of a survey.</p>
+<div id="fig-survey-design-perspective" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="figures/groves_surveys_pdf__page_31_of_42__pdf__page_1_of_1_.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;7.1: Remake this.</figcaption>
 </figure>
 </div>
-<p><a href="#fig-survey-design-perspective" class="quarto-xref">Figure&nbsp;<span>7.1</span></a> illustrates the survey lifecycle from a design perspective<strong>, broken down into two main components: </strong>measurement** and <strong>representation</strong>. On one hand, <strong>measurement</strong> starts from the construct—the concept researchers aim to measure—and moves through the stages of actual response collection to the final <strong>survey statistic</strong>. Errors in this part of the process include <strong>measurement error</strong>, which occurs when there is a discrepancy between the concept researchers want to measure and what is actually measured (due to poorly designed questions, interviewer bias, etc.). On the other hand, <strong>Representation</strong> starts with the target population and moves through sampling to the final <strong>respondents</strong> who actually complete the survey. At each stage, <strong>sampling error</strong>, <strong>coverage error</strong>, and <strong>nonresponse error</strong> can occur, affecting how well the sample represents the broader population. Finally, <strong>post-survey adjustments</strong> help mitigate errors from nonresponse or misrepresentation but can also introduce <strong>adjustment error</strong> if done incorrectly.</p>
-<div id="fig-survey-process-perspective" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-survey-process-perspective-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/groves_surveys_pdf__page_33_of_42__pdf__page_1_of_1_.png" class="img-fluid figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-survey-process-perspective-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;7.2: Remake this.
-</figcaption>
+<p><a href="#fig-survey-design-perspective">Figure&nbsp;<span class="quarto-unresolved-ref">fig-survey-design-perspective</span></a> illustrates the survey lifecycle from a design perspective<strong>, broken down into two main components: </strong>measurement** and <strong>representation</strong>. On one hand, <strong>measurement</strong> starts from the construct—the concept researchers aim to measure—and moves through the stages of actual response collection to the final <strong>survey statistic</strong>. Errors in this part of the process include <strong>measurement error</strong>, which occurs when there is a discrepancy between the concept researchers want to measure and what is actually measured (due to poorly designed questions, interviewer bias, etc.). On the other hand, <strong>Representation</strong> starts with the target population and moves through sampling to the final <strong>respondents</strong> who actually complete the survey. At each stage, <strong>sampling error</strong>, <strong>coverage error</strong>, and <strong>nonresponse error</strong> can occur, affecting how well the sample represents the broader population. Finally, <strong>post-survey adjustments</strong> help mitigate errors from nonresponse or misrepresentation but can also introduce <strong>adjustment error</strong> if done incorrectly.</p>
+<div id="fig-survey-process-perspective" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="figures/groves_surveys_pdf__page_33_of_42__pdf__page_1_of_1_.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;7.2: Remake this.</figcaption>
 </figure>
 </div>
-<p><a href="#fig-survey-process-perspective" class="quarto-xref">Figure&nbsp;<span>7.2</span></a> outlines the stages involved in conducting a survey, starting with <strong>defining research objectives</strong>, and moving through sampling, questionnaire construction, data collection, data processing, and analysis. At the beginning of this process, researchers define research objectives that guide decisions about the sampling frame and mode of collection (in-person, telephone, online, etc.). These decisions influence both <strong>coverage</strong> and <strong>nonresponse errors</strong>. The process also includes <strong>pretesting the questionnaire</strong> to ensure clarity and reliability, which is an important step to minimize <strong>measurement error</strong>—errors that arise due to poorly worded questions or ambiguous response options. Finally, <strong>data adjustments</strong> and <strong>post-survey edits</strong> address additional errors that might occur, such as processing errors or misreporting during data entry.</p>
-<div id="fig-survey-quality-perspective" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-survey-quality-perspective-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/groves_surveys_pdf__page_34_of_42__pdf__page_1_of_1_.png" class="img-fluid figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-survey-quality-perspective-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;7.3: Remake this.
-</figcaption>
+<p><a href="#fig-survey-process-perspective">Figure&nbsp;<span class="quarto-unresolved-ref">fig-survey-process-perspective</span></a> outlines the stages involved in conducting a survey, starting with <strong>defining research objectives</strong>, and moving through sampling, questionnaire construction, data collection, data processing, and analysis. At the beginning of this process, researchers define research objectives that guide decisions about the sampling frame and mode of collection (in-person, telephone, online, etc.). These decisions influence both <strong>coverage</strong> and <strong>nonresponse errors</strong>. The process also includes <strong>pretesting the questionnaire</strong> to ensure clarity and reliability, which is an important step to minimize <strong>measurement error</strong>—errors that arise due to poorly worded questions or ambiguous response options. Finally, <strong>data adjustments</strong> and <strong>post-survey edits</strong> address additional errors that might occur, such as processing errors or misreporting during data entry.</p>
+<div id="fig-survey-quality-perspective" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="figures/groves_surveys_pdf__page_34_of_42__pdf__page_1_of_1_.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;7.3: Remake this.</figcaption>
 </figure>
 </div>
-<p><a href="#fig-survey-quality-perspective" class="quarto-xref">Figure&nbsp;<span>7.3</span></a> offers a closer look at the survey lifecycle, specifically through the lens of errors that can affect measurement and representation. On <strong>the measurement side</strong>, errors are introduced from the moment the construct is conceptualized through measurement validity (whether the survey measures what it is supposed to) and measurement error (differences between the true value and the reported value). These can arise due to issues like unclear questions, recall bias, or misunderstanding by respondents. On <strong>the representation side</strong>, errors can occur at several stages:</p>
+<p><a href="#fig-survey-quality-perspective">Figure&nbsp;<span class="quarto-unresolved-ref">fig-survey-quality-perspective</span></a> offers a closer look at the survey lifecycle, specifically through the lens of errors that can affect measurement and representation. On <strong>the measurement side</strong>, errors are introduced from the moment the construct is conceptualized through measurement validity (whether the survey measures what it is supposed to) and measurement error (differences between the true value and the reported value). These can arise due to issues like unclear questions, recall bias, or misunderstanding by respondents. On <strong>the representation side</strong>, errors can occur at several stages:</p>
 <ul>
 <li><strong>Coverage error</strong> happens when the sampling frame doesn’t fully cover the target population, leading to undercoverage or overcoverage.</li>
 <li><strong>Sampling error</strong> occurs due to random chance when selecting a sample from the population.</li>
 <li><strong>Nonresponse error</strong> is when certain individuals from the sample do not respond, potentially leading to biased results if non-respondents differ significantly from respondents.</li>
 <li><strong>Adjustment error</strong> can arise during weighting or imputation when researchers attempt to correct for nonresponse or other biases.</li>
 </ul>
-<div id="fig-survey-coverage" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-survey-coverage-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/groves_surveys_pdf__page_37_of_42__pdf__page_1_of_1_.png" class="img-fluid figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-survey-coverage-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;7.4: Remake this.
-</figcaption>
+<div id="fig-survey-coverage" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="figures/groves_surveys_pdf__page_37_of_42__pdf__page_1_of_1_.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;7.4: Remake this.</figcaption>
 </figure>
 </div>
-<p>Finally, <a href="#fig-survey-coverage" class="quarto-xref">Figure&nbsp;<span>7.4</span></a> highlights <strong>coverage error</strong>, more specifically the relationship between a <strong>target population</strong> (the group you want to generalize to) and the <strong>frame population</strong> (the group you can actually sample from). The <strong>covered population</strong> is the overlap between the target and frame populations, representing the portion of the target population that is actually included in the sampling frame. <strong>Undercoverage</strong> occurs when parts of the target population are not included in the sampling frame, meaning some eligible respondents are left out of the survey. A related problem is <strong>overcoverage</strong>, which can result when <strong>ineligible units</strong> are mistakenly included in the sampling frame even though they do not belong to the target population. Minimizing coverage error is critical for ensuring that survey results can be generalized accurately to the broader population.</p>
+<p>Finally, <a href="#fig-survey-coverage">Figure&nbsp;<span class="quarto-unresolved-ref">fig-survey-coverage</span></a> highlights <strong>coverage error</strong>, more specifically the relationship between a <strong>target population</strong> (the group you want to generalize to) and the <strong>frame population</strong> (the group you can actually sample from). The <strong>covered population</strong> is the overlap between the target and frame populations, representing the portion of the target population that is actually included in the sampling frame. <strong>Undercoverage</strong> occurs when parts of the target population are not included in the sampling frame, meaning some eligible respondents are left out of the survey. A related problem is <strong>overcoverage</strong>, which can result when <strong>ineligible units</strong> are mistakenly included in the sampling frame even though they do not belong to the target population. Minimizing coverage error is critical for ensuring that survey results can be generalized accurately to the broader population.</p>
 <p>Overall, the Total Survey Error framework emphasizes that errors can arise at all stages of the survey process, from design to data collection, and from data processing to analysis. It classifies errors broadly into <strong>representation errors</strong> (which occur due to issues with sampling and coverage) and <strong>measurement errors</strong> (which arise due to problems in how responses are collected and interpreted). Understanding and mitigating each type of error is crucial for improving survey accuracy. For example, careful question design (addressed in the article content you referenced on question characteristics and methods for assessing them) can reduce <strong>measurement error</strong>, while using appropriate sampling methods and post-survey adjustments can mitigate problems with <strong>coverage error</strong> and <strong>nonresponse error</strong>.</p>
 </section>
 <section id="how-survey-research-has-evolved" class="level2" data-number="7.2">
@@ -721,26 +700,99 @@ Figure&nbsp;7.4: Remake this.
 </ul>
 <p>By combining non-probability samples with advanced techniques like post-stratification and Bayesian modeling, contemporary researchers can make surprisingly accurate inferences about the broader population, even from biased or incomplete samples. This represents a major evolution from the quota sampling methods of the early 20th century, highlighting the power of modern statistical methods to overcome the limitations of non-probability sampling.</p>
 <p>In sum, while early attempts at survey sampling, like the 1936 Readers Digest poll, illustrated the pitfalls of non-representative samples, modern techniques have transformed the way we handle survey data. Non-probability samples, once considered unreliable, can now produce accurate results through methods like post-stratification and Bayesian multilevel modeling, as shown in the Xbox study. These advances mark a major shift in survey research, allowing us to better navigate the challenges of representation and make more informed inferences about public opinion and behavior. We will learn about both in this book, <em>but not yet</em>! There’s a good amount of foundational work to do first.</p>
+<!-- UPDATED VERION -- EDIT ME -->
 </section>
 <section id="the-science-of-asking-questions-past-and-present" class="level3" data-number="7.2.2">
-<h3 data-number="7.2.2" class="anchored" data-anchor-id="the-science-of-asking-questions-past-and-present"><span class="header-section-number">7.2.2</span> The science of asking questions: past and present</h3>
-<p>The second major change in survey methodology is related to how we ask questions. The way questions are phrased can dramatically influence responses—a phenomenon known as <strong>question wording effects</strong>. Even small changes in phrasing can lead to different answers. For example, asking “Do you approve of the government’s handling of the economy?” might yield different results than “Do you think the government has done a good job managing the economy?” This is partly due to <strong>social desirability bias</strong>, where respondents may choose answers they think are socially acceptable rather than ones that reflect their true thoughts. Moreover, <strong>context effects</strong>, such as the order in which questions are asked or the types of response options available, can further bias responses by subtly guiding respondents toward certain answers.</p>
-<p>The structure of <strong>response options</strong> has long played a critical role in survey design. Researchers have known for decades that the placement of response options can lead to <strong>order effects</strong> (respondents are more likely to choose options that appear at the beginning or end of a list). Similarly, the way response options are framed, such as presenting extreme versus moderate choices, can nudge respondents toward particular answers. For example, if a question offers responses ranging from “terrible” to “excellent,” respondents may gravitate toward moderate choices. Effective survey design must account for these influences to minimize bias and elicit more reliable and valid responses. Crafting survey questions is both an art and a science.</p>
-<p>While the fundamental challenges of question design have persisted over time, the science of asking questions has evolved significantly. In a recent review article, <span class="citation" data-cites="schaeffer2020advances">Schaeffer and Dykema (<a href="references.html#ref-schaeffer2020advances" role="doc-biblioref">2020</a>)</span> highlighted how survey design and methodology has moved toward <strong>decision-based frameworks</strong> that seek to identify question characteristics that influence respondent behavior. This marks a shift from earlier research that often focused on isolated elements like question wording, toward a more comprehensive approach that accounts for the co-occurrence of question characteristics. (<strong>TODO</strong>: Provide an example here.)</p>
-<p>One significant change is the expanded use of <strong>fully labelled options for response categories</strong>. In the past, it was common to rely on numeric scales or partial labeling, but recent research shows that using fully labeled response categories, like “not at all” to “extremely,” increases <strong>reliability</strong> across diverse modes of data collection, particularly in self-administered surveys. The use of five response categories has become a standard, as this number strikes a balance between providing enough granularity for nuanced responses without overwhelming the respondent.</p>
-<p>Another important shift in recent years is that <strong>item-specific (IS) response formats</strong> that ask respondents about the topic in question directly (e.g., “How satisfied are you with your job?”) are now heavily favoured over traditional <strong>agree-disagree (AD) scales</strong> that pose a statement and ask the respondent whether they agree (e.g.&nbsp;“I am satisfied with my job” — agree or disagree?).</p>
-<p>AS scales such as these are falling out of favour for several reasons, most importantly their susceptibility to biases like <strong>acquiescence</strong> (the tendency to agree with statements) and <strong>extreme responding</strong>. IS formats have been shown to providing more accurate data by reducing these biases. This shift represents an important development in the field, addressing long-standing issues with response quality.</p>
-<p>The rise of <strong>self-administered web and mobile surveys</strong> has also brought new challenges and innovations in question design. In earlier decades, most surveys were administered face-to-face or via telephone, which allowed interviewers to clarify questions and guide respondents through the survey process. With the shift toward self-administered surveys, researchers have had to design questions that work across diverse modes and platforms, including small mobile screens where question length, complexity, and presentation can significantly impact data quality.</p>
-<p>One response to this challenge has been the development of <strong>dynamic filtering</strong>, which allows follow-up questions to be triggered based on respondents’ initial answers. This technique reduces cognitive load and improves data quality by preventing respondents from having to answer irrelevant questions. Similarly, <strong>yes-no checklists</strong> are now preferred over traditional <strong>check-all-that-apply (CATA)</strong> formats, which tend to under-report responses. Yes-no checklists prompt respondents to actively consider each option, leading to more complete and accurate answers.</p>
-<ul>
-<li><strong>TODO</strong> Add some screenshots of old and new designs here to help clarify these points.</li>
-</ul>
-<p>Additionally, the shift to mobile-first design has led to a reconsideration of <strong>grid formats</strong> and <strong>question batteries</strong>. While early research suggested that grids, which present multiple related questions in a single visual format, could save time and reduce respondent burden, more recent research shows that grids can lead to <strong>straightlining</strong>, where respondents provide the same answer across all questions to expedite the process. This is particularly problematic in mobile surveys, where the small screen size makes grids harder to navigate. Presenting questions individually has been found to improve data quality, especially in mobile contexts.</p>
-<p>As researchers continue to refine methods for assessing data quality, new challenges will emerge, particularly in an era of <strong>mixed-mode</strong> and <strong>mobile-first surveys</strong>. The current state of the art includes innovations like <strong>item-specific formats</strong>, <strong>fully labeled response scales</strong>, and adaptive technologies such as <strong>dynamic filtering</strong>, all of which reflect an ongoing effort to optimize survey design across modes and respondent groups. These advancements show a clear trajectory toward more respondent-friendly surveys that reduce bias and improve the validity of the data collected.</p>
-<p>In sum, the field of survey question design has moved from focusing on individual elements of question structure to a holistic, decision-based approach that accounts for the complexities of modern data collection environments. This evolution reflects broader changes in the landscape of survey research, where technological advancements and an increasingly diverse respondent base demand ever-more sophisticated tools for capturing reliable, valid data.</p>
+<h3 data-number="7.2.2" class="anchored" data-anchor-id="the-science-of-asking-questions-past-and-present"><span class="header-section-number">7.2.2</span> The Science of Asking Questions: Past and Present</h3>
+<p>The second major change in survey methodology is related to how we ask questions. The way questions are phrased can dramatically influence responses—a phenomenon known as <strong>question wording effects</strong>. Even small changes in phrasing can lead to different answers. For example, asking “Do you approve of the government’s handling of the economy?” might yield different results than “Do you think the government has done a good job managing the economy?” This is partly due to <strong>social desirability bias</strong>, where respondents may choose answers they think are socially acceptable rather than ones that reflect their true thoughts. Moreover, <strong>context effects</strong>, such as the order in which questions are asked or the types of response options available, can further bias responses by subtly guiding respondents toward certain answers. The structure of <strong>response options</strong> plays a critical role here, with placement of options potentially leading to <strong>order effects</strong>, where respondents are more likely to choose options that appear at the beginning or end of a list. Similarly, response options that include extreme choices might push respondents toward moderate answers.</p>
+<p>While these challenges have long been recognized, the field has made significant strides in improving the <strong>reliability</strong> and <strong>validity</strong> of questions through better design. <strong>Reliability</strong> refers to the consistency of responses over time or across different samples, while <strong>validity</strong> is about ensuring that a question accurately measures what it is intended to. Advances in <strong>pretesting methods</strong> such as cognitive interviews and split-ballot experiments have enabled researchers to refine questions in ways that reduce bias and improve clarity. <strong>Cognitive interviews</strong> allow respondents to verbalize their thought processes, helping to identify areas where questions may be misinterpreted. <strong>Pilot testing</strong> and <strong>split-ballot experiments</strong> compare different wordings and formats to understand how subtle changes influence responses.</p>
+<p>In a recent review article, Schaeffer (2020) highlights how survey design and methodology has moved toward <strong>decision-based frameworks</strong> that seek to identify question characteristics that influence respondent behavior. This marks a shift from earlier research that often focused on isolated elements like question wording toward a more comprehensive approach that accounts for the co-occurrence of various question characteristics. For example, the interaction between response option labeling and the cognitive load imposed on respondents is now better understood, allowing for more effective question design across different platforms.</p>
 </section>
-<section id="linked-data" class="level3" data-number="7.2.3">
-<h3 data-number="7.2.3" class="anchored" data-anchor-id="linked-data"><span class="header-section-number">7.2.3</span> Linked data</h3>
+<section id="components-of-a-survey-question" class="level3" data-number="7.2.3">
+<h3 data-number="7.2.3" class="anchored" data-anchor-id="components-of-a-survey-question"><span class="header-section-number">7.2.3</span> Components of a Survey Question</h3>
+<p>Every survey question consists of several key elements, each of which can influence how respondents interpret and answer the question:</p>
+<ol type="1">
+<li><strong>Question Stem</strong>: This is the main body of the question that asks for specific information. For example, “How satisfied are you with the cleanliness of your neighborhood?”</li>
+<li><strong>Response Options</strong>: These provide the range of possible answers. They may take many forms, such as a Likert scale (e.g., “Very satisfied,” “Somewhat satisfied”) or binary options (e.g., “Yes/No”).</li>
+<li><strong>Instructions</strong>: Additional text guiding the respondent on how to answer. For instance, “Please select the option that best reflects your opinion.”</li>
+<li><strong>Answer Format</strong>: The format that specifies how the answer is provided, such as checkboxes, radio buttons, or sliders.</li>
+</ol>
+<p>The way these components are designed can significantly impact the <strong>cognitive burden</strong> placed on respondents and, consequently, the quality of the data. For example, questions that ask for specific, fact-based recall (e.g., “How many times did you visit the doctor in the past year?”) place a higher <strong>cognitive demand</strong> than those asking for general opinions (e.g., “How satisfied are you with your healthcare?”). Understanding how different elements interact helps researchers create more reliable and valid questions.</p>
+</section>
+<section id="the-question-characteristics-framework" class="level3" data-number="7.2.4">
+<h3 data-number="7.2.4" class="anchored" data-anchor-id="the-question-characteristics-framework"><span class="header-section-number">7.2.4</span> The Question Characteristics Framework</h3>
+<p>The <strong>Question Characteristics Framework</strong> provides a comprehensive guide for understanding the factors that influence how respondents interpret and answer survey questions. This framework considers four main elements:</p>
+<ol type="1">
+<li><strong>Cognitive Demand</strong>: This refers to the mental effort required to understand and respond to the question. Questions that are too complex or vague increase cognitive demand and lead to less reliable responses.</li>
+<li><strong>Comprehension</strong>: This addresses whether respondents understand the question the same way the researcher intended. Avoiding ambiguous language and jargon is crucial here.</li>
+<li><strong>Retrieval and Judgment</strong>: Some questions require respondents to recall information from memory or make a judgment based on past experiences, which can introduce <strong>recall bias</strong> or errors in judgment.</li>
+<li><strong>Response Formatting</strong>: The design of response options can either facilitate or hinder respondents’ ability to provide accurate answers. For instance, long lists of response options or poorly labeled categories can overwhelm respondents, reducing data quality.</li>
+</ol>
+<p>Recent research has shown that improving <strong>comprehension</strong> and reducing <strong>cognitive demand</strong>—such as by using simpler wording and fully labeling response options—can increase both reliability and validity across different survey modes.</p>
+</section>
+<section id="evaluating-and-testing-survey-questions" class="level3" data-number="7.2.5">
+<h3 data-number="7.2.5" class="anchored" data-anchor-id="evaluating-and-testing-survey-questions"><span class="header-section-number">7.2.5</span> Evaluating and Testing Survey Questions</h3>
+<p>Survey researchers use a variety of methods to evaluate and improve the quality of their questions:</p>
+<ul>
+<li><strong>Cognitive Interviews</strong>: In this method, respondents are asked to verbalize their thought processes as they answer questions, which allows researchers to identify and address potential issues in comprehension or retrieval.</li>
+<li><strong>Pilot Testing</strong>: Conducting small-scale tests of the survey to see how it performs in the field, providing real-world data on how respondents engage with questions.</li>
+<li><strong>Split-Ballot Experiments</strong>: These involve administering different versions of the same question to different groups to see which wording or format yields the most reliable responses.</li>
+<li><strong>Item Response Theory (IRT)</strong>: A statistical method that helps to assess the quality of individual survey items by examining how well they discriminate between respondents with varying levels of the trait or opinion being measured.</li>
+</ul>
+<p>By applying these methods, researchers can fine-tune their questions to reduce bias and improve both the reliability and validity of the data collected.</p>
+</section>
+<section id="working-with-ordered-categories" class="level3" data-number="7.2.6">
+<h3 data-number="7.2.6" class="anchored" data-anchor-id="working-with-ordered-categories"><span class="header-section-number">7.2.6</span> Working with Ordered Categories</h3>
+<p>When working with <strong>ordered categorical data</strong>, such as Likert scales, researchers face specific challenges related to how respondents interpret the gradations between response options. For instance, the difference between “Strongly agree” and “Agree” may not be perceived as equal to the difference between “Agree” and “Neutral.” Recent innovations have focused on improving the clarity and balance of response categories:</p>
+<ul>
+<li><strong>Fully labeled response options</strong>: Using labels for each point on a Likert scale, rather than just the endpoints, helps clarify the meaning of intermediate options.</li>
+<li><strong>Balanced scales</strong>: Ensuring that scales have an equal number of positive and negative response options to prevent biased responses.</li>
+<li><strong>Reducing cognitive overload</strong>: Simplifying the number of response categories (often five or seven options) reduces the risk of <strong>response bias</strong> and helps respondents differentiate between options more effectively.</li>
+</ul>
+<p>These techniques have proven particularly valuable in mobile and web-based surveys, where limited screen space and ease of use are critical concerns. Presenting questions in a mobile-friendly, intuitive format helps reduce <strong>straightlining</strong>—the tendency to select the same answer across multiple items—and improves overall data quality.</p>
+</section>
+<section id="implications-for-computational-social-scientists-and-data-scientists" class="level3" data-number="7.2.7">
+<h3 data-number="7.2.7" class="anchored" data-anchor-id="implications-for-computational-social-scientists-and-data-scientists"><span class="header-section-number">7.2.7</span> Implications for Computational Social Scientists and Data Scientists</h3>
+<p>Advances in question design have significant implications for computational social scientists and data scientists, who rely on survey data to build predictive models, explore causal relationships, and draw inferences:</p>
+<ol type="1">
+<li><strong>Data Quality</strong>: The adoption of better question formats, like <strong>item-specific response scales</strong> and <strong>fully labeled categories</strong>, leads to higher-quality data. This, in turn, improves the robustness of machine learning models, Bayesian inference, and other statistical analyses.</li>
+<li><strong>Bias Detection</strong>: Data scientists must be aware of how question structure can introduce biases, such as <strong>acquiescence</strong> or <strong>extreme responding</strong>, and account for these biases during data preprocessing and modeling.</li>
+<li><strong>Ordinal Data Analysis</strong>: When working with ordered categorical data, it is critical to use the correct models, such as <strong>ordinal logistic regression</strong> or <strong>Bayesian hierarchical models</strong>, rather than treating the data as continuous. Understanding the nature of ordinal data and its specific challenges can lead to more accurate and reliable models.</li>
+<li><strong>Measurement Error</strong>: Understanding and accounting for <strong>measurement error</strong> in survey responses is crucial for constructing reliable models. For Bayesian modeling, this might involve explicitly incorporating uncertainty in measurement as part of the model itself.</li>
+</ol>
+<p>In summary, the evolution of question design reflects broader trends in survey methodology and data collection. With the rise of <strong>mixed-mode surveys</strong> and <strong>mobile-first designs</strong>, researchers are increasingly focused on designing questions that are both user-friendly and capable of capturing accurate, reliable data across diverse respondent groups. These developments not only improve the quality of survey data but also provide computational social scientists and data scientists with more powerful tools for analysis.</p>
+<!-- END OF UPDATED VERSION, INITIAL DRAFT BELOW -->
+
+<!-- 
+### The science of asking questions: past and present
+
+The second major change in survey methodology is related to how we ask questions. The way questions are phrased can dramatically influence responses—a phenomenon known as **question wording effects**. Even small changes in phrasing can lead to different answers. For example, asking "Do you approve of the government's handling of the economy?" might yield different results than "Do you think the government has done a good job managing the economy?" This is partly due to **social desirability bias**, where respondents may choose answers they think are socially acceptable rather than ones that reflect their true thoughts. Moreover, **context effects**, such as the order in which questions are asked or the types of response options available, can further bias responses by subtly guiding respondents toward certain answers. 
+
+The structure of **response options** has long played a critical role in survey design. Researchers have known for decades that the placement of response options can lead to **order effects** (respondents are more likely to choose options that appear at the beginning or end of a list). Similarly, the way response options are framed, such as presenting extreme versus moderate choices, can nudge respondents toward particular answers. For example, if a question offers responses ranging from "terrible" to "excellent," respondents may gravitate toward moderate choices. Effective survey design must account for these influences to minimize bias and elicit more reliable and valid responses. Crafting survey questions is both an art and a science. 
+
+While the fundamental challenges of question design have persisted over time, the science of asking questions has evolved significantly. In a recent review article, @schaeffer2020advances highlighted how survey design and methodology has moved toward **decision-based frameworks** that seek to identify question characteristics that influence respondent behavior. This marks a shift from earlier research that often focused on isolated elements like question wording, toward a more comprehensive approach that accounts for the co-occurrence of question characteristics. (**TODO**: Provide an example here.)
+
+One significant change is the expanded use of **fully labelled options for response categories**. In the past, it was common to rely on numeric scales or partial labeling, but recent research shows that using fully labeled response categories, like "not at all" to "extremely," increases **reliability** across diverse modes of data collection, particularly in self-administered surveys. The use of five response categories has become a standard, as this number strikes a balance between providing enough granularity for nuanced responses without overwhelming the respondent.
+
+Another important shift in recent years is that **item-specific (IS) response formats** that ask respondents about the topic in question directly (e.g., "How satisfied are you with your job?") are now heavily favoured over traditional **agree-disagree (AD) scales** that pose a statement and ask the respondent whether they agree (e.g. "I am satisfied with my job" — agree or disagree?). 
+
+AS scales such as these are falling out of favour for several reasons, most importantly their susceptibility to biases like **acquiescence** (the tendency to agree with statements) and **extreme responding**. IS formats have been shown to providing more accurate data by reducing these biases. This shift represents an important development in the field, addressing long-standing issues with response quality.
+
+The rise of **self-administered web and mobile surveys** has also brought new challenges and innovations in question design. In earlier decades, most surveys were administered face-to-face or via telephone, which allowed interviewers to clarify questions and guide respondents through the survey process. With the shift toward self-administered surveys, researchers have had to design questions that work across diverse modes and platforms, including small mobile screens where question length, complexity, and presentation can significantly impact data quality.
+
+One response to this challenge has been the development of **dynamic filtering**, which allows follow-up questions to be triggered based on respondents' initial answers. This technique reduces cognitive load and improves data quality by preventing respondents from having to answer irrelevant questions. Similarly, **yes-no checklists** are now preferred over traditional **check-all-that-apply (CATA)** formats, which tend to under-report responses. Yes-no checklists prompt respondents to actively consider each option, leading to more complete and accurate answers.
+
+- **TODO** Add some screenshots of old and new designs here to help clarify these points.
+
+Additionally, the shift to mobile-first design has led to a reconsideration of **grid formats** and **question batteries**. While early research suggested that grids, which present multiple related questions in a single visual format, could save time and reduce respondent burden, more recent research shows that grids can lead to **straightlining**, where respondents provide the same answer across all questions to expedite the process. This is particularly problematic in mobile surveys, where the small screen size makes grids harder to navigate. Presenting questions individually has been found to improve data quality, especially in mobile contexts.
+
+As researchers continue to refine methods for assessing data quality, new challenges will emerge, particularly in an era of **mixed-mode** and **mobile-first surveys**. The current state of the art includes innovations like **item-specific formats**, **fully labeled response scales**, and adaptive technologies such as **dynamic filtering**, all of which reflect an ongoing effort to optimize survey design across modes and respondent groups. These advancements show a clear trajectory toward more respondent-friendly surveys that reduce bias and improve the validity of the data collected.
+
+In sum, the field of survey question design has moved from focusing on individual elements of question structure to a holistic, decision-based approach that accounts for the complexities of modern data collection environments. This evolution reflects broader changes in the landscape of survey research, where technological advancements and an increasingly diverse respondent base demand ever-more sophisticated tools for capturing reliable, valid data.
+ -->
+</section>
+<section id="linked-data" class="level3" data-number="7.2.8">
+<h3 data-number="7.2.8" class="anchored" data-anchor-id="linked-data"><span class="header-section-number">7.2.8</span> Linked data</h3>
 <p>A third and final development in modern survey research is a greater reliance on <strong>linking</strong> survey data with other datasets.</p>
 <p>Another exciting development in recent years has been the integration of <strong>social media data</strong> into surveys. Researchers like <strong>Chris Bail</strong> have pioneered methods for linking social media behavior with survey responses, allowing us to explore how online activity shapes opinions and behaviors. In my own work with David, we’ve taken this a step further by asking survey respondents to provide their social media handles, allowing us to combine <strong>readymade</strong> and <strong>custommade</strong> data sources in innovative ways. This combination of direct and passive data collection opens up new possibilities for understanding complex social phenomena.</p>
 <ul>
@@ -755,7 +807,7 @@ Figure&nbsp;7.4: Remake this.
 <p>Now that we’ve covered the broader context of survey methodology, past and present, let’s dive into the practical side of working with survey data. Before you can even begin to analyze your data, there are a number of essential tasks you’ll need to complete to ensure your data is clean and ready for analysis. This data processing work is a crucial part of any research project; talk to anyone with experience doing this kind of work and they’ll tell you how important, and time consuming, this work can be.</p>
 <p>Some of these tasks are common to all datasets, while others are specific to survey data, such as dealing with missing responses or applying survey weights. In this chapter, we’ll go through these steps one by one, using a panel survey from Canada as our working example.</p>
 <p>As always, we’ll start by importing packages.</p>
-<div id="03af2edc" class="cell" data-execution_count="1">
+<div class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> dcss</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -791,7 +843,7 @@ Figure&nbsp;7.4: Remake this.
 </ul></li>
 </ul>
 <p>Alternatively, you can use the <code>download_dataset</code> function from <code>dcss</code>, which will download and file the datasets for you.</p>
-<div id="d074346e" class="cell" data-execution_count="2">
+<div class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>ces_url <span class="op">=</span> <span class="st">"https://www.dropbox.com/scl/fo/hdqfapeqaiwk47t885iwg/ANjnpc8u4rnuMQ83TXExzQ4?rlkey=t6olw4xekzjm46mx8ndjgqrit&amp;st=dlunronk&amp;dl=0"</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>dcss.download_dataset(</span>
@@ -805,19 +857,19 @@ Figure&nbsp;7.4: Remake this.
 <section id="load-the-data" class="level3" data-number="7.3.3">
 <h3 data-number="7.3.3" class="anchored" data-anchor-id="load-the-data"><span class="header-section-number">7.3.3</span> Load the Data</h3>
 <p>In this case, the researchers <strong>CITE</strong> have made the data available as <code>.dta</code> files, which are a format used by the proprietary software Stata. We can read these files into memory using Pandas <code>read_stata()</code> function, which we do for the 2021 survey data below.</p>
-<div id="1b70320d" class="cell" data-execution_count="3">
+<div class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>ces21 <span class="op">=</span> pd.read_stata(</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'data/canadian_election_studies/Canadian-Election-Study-2021/2021 Canadian Election Study v2.0.dta'</span>, convert_categoricals<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Once the data is loaded, one of the first things you’ll want to check is the size of the dataset—how many rows and columns are there? This will give you a sense of how large the survey is and help you plan your analysis. We can do this using the <code>.shape</code> attribute for dataframes.</p>
-<div id="1d068696" class="cell" data-execution_count="4">
+<div class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>ces21.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="4">
 <pre><code>(20968, 1059)</code></pre>
 </div>
 </div>
 <p>We can also get a quick overview of the dataset by using the <code>.info()</code> function, which will show us the number of columns, their data types, and whether there are any missing values.</p>
-<div id="afe6d3df" class="cell" data-execution_count="5">
+<div class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>ces21.info()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
@@ -848,7 +900,7 @@ memory usage: 142.1+ MB</code></pre>
 <ul>
 <li><strong>TODO</strong>: Add an example to illustrate how applying weights can shift survey results. For instance, show a comparison between unweighted vs.&nbsp;weighted means or proportions in a simple analysis, using the CES dataset.</li>
 </ul>
-<div id="713e4367" class="cell" data-execution_count="6">
+<div class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Example here</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
@@ -856,15 +908,15 @@ memory usage: 142.1+ MB</code></pre>
 <h3 data-number="7.4.3" class="anchored" data-anchor-id="assessing-data-quality"><span class="header-section-number">7.4.3</span> Assessing Data Quality</h3>
 <p>Once you’ve familiarized yourself with the sample design and applied the necessary weights, your next step should be to carefully assess the quality of the survey data. There are a few common problems to look out for, including inconsistencies, outliers, and missing data.</p>
 <p>Survey data often contains inconsistencies, particularly in <strong>panel surveys</strong> where the same respondents are surveyed multiple times. For example, a respondent’s age or region of residence might be reported differently across waves. It’s important to identify and correct these inconsistencies before proceeding with analysis.</p>
-<div id="4d725175" class="cell" data-execution_count="7">
+<div class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Example here</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>In addition to inconsistencies, you should also check for <strong>outliers</strong>—extreme values that might skew your results. In survey data, these can sometimes be caused by respondents rushing through the survey or providing inaccurate answers. One way to detect this is by checking the <strong>distribution of survey completion times</strong>. Respondents who completed the survey in an unusually short time may not have been paying full attention.</p>
-<div id="76fb3159" class="cell" data-execution_count="8">
+<div class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Example here</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Speeders—respondents who rush through the survey—can introduce bias into your data. There are a number of techniques for identifying speeders, including setting a minimum threshold for survey completion time or using <strong>attention-check questions</strong> to detect inattentiveness. If you suspect that certain respondents weren’t paying attention, you may want to exclude them from your analysis.</p>
-<div id="4f3383aa" class="cell" data-execution_count="9">
+<div class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Example here</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Another common issue in survey data is <strong>response bias</strong>, where respondents may answer questions in a way that reflects social desirability rather than their true opinions. For example, people might be reluctant to express unpopular views or admit to certain behaviors. While it’s difficult to eliminate response bias entirely, being aware of it and using techniques like <strong>randomized response</strong> – <strong>DEFINE</strong> – can help mitigate its effects.</p>
@@ -889,14 +941,14 @@ memory usage: 142.1+ MB</code></pre>
 <ul>
 <li><strong>TODO</strong>: Missing data in this chapter specifically…</li>
 </ul>
-<div id="42a089e0" class="cell" data-execution_count="10">
+<div class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Example here</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <section id="recoding-variables" class="level3" data-number="7.5.1">
 <h3 data-number="7.5.1" class="anchored" data-anchor-id="recoding-variables"><span class="header-section-number">7.5.1</span> Recoding Variables</h3>
 <p>One of the most common tasks in survey data processing is <strong>recoding variables</strong>. This is especially important for categorical variables, where you might need to <strong>collapse categories</strong> or <strong>create dummy variables</strong>. For example, if you have a variable with multiple levels of education, you might want to recode it into a simpler variable with just two categories: “college degree” vs.&nbsp;“no college degree.”</p>
 <p>In addition to recoding categories, you may also need to <strong>reverse score</strong> some variables. This is common with <strong>Likert-scale questions</strong>, where higher values indicate more agreement or approval. If some items are negatively worded, you’ll need to reverse the scale so that all items point in the same direction.</p>
-<div id="894d7c70" class="cell" data-execution_count="11">
+<div class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Example here</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
@@ -905,14 +957,15 @@ memory usage: 142.1+ MB</code></pre>
 <h2 data-number="7.6" class="anchored" data-anchor-id="grid-questions"><span class="header-section-number">7.6</span> Grid Questions</h2>
 <p>As I mentioned earlier, grid questions are falling out of favour in survey methodology. However, you’ve very likely to encounter them, especially if you are working with longitudinal data or older surveys. With these questions, respondents are asked to rate a series of items on the same scale (e.g., a series of agree/disagree statements). These questions can present some challenges when it comes to data processing, particularly if there are missing responses. One approach is to <strong>collapse related questions into indices</strong> or <strong>standardize scales</strong> so that the responses are comparable across different items.</p>
 <p>The CES survey data contains several such questions, including…</p>
-<div id="6c6d92ae" class="cell" data-execution_count="12">
+<div class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Example here</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <section id="categorical-data" class="level3" data-number="7.6.1">
 <h3 data-number="7.6.1" class="anchored" data-anchor-id="categorical-data"><span class="header-section-number">7.6.1</span> Categorical Data</h3>
 <p>Most surveys include quite a lot of categorical data, which should be handled very carefully in any modeling.</p>
-<p>When working with categorical data in Pandas, it’s important to make sure that our categorical variables are <strong>ordered</strong> properly and that “Don’t know / prefer not to answer” responses – which don’t fit neatly into ordinal data – are handled consistently. You’ll also need to decide how to represent your categorical variables in your analysis. In nearly all cases you’ll want to treat categories as <strong>index variables</strong>, but in some cases you may wish to do things the old-fashioned way and use <strong>one-hot encoding</strong> (i.e., creating dummy variables). The implications of this choice will become clear a little later in the book, when we get to multilevel models. For now, we’ll …</p>
-<div id="04c72d5a" class="cell" data-execution_count="13">
+<p>When working with categorical data in Pandas, it’s important to make sure that our categorical variables are <strong>ordered</strong> properly and that “Don’t know / prefer not to answer” responses – which don’t fit neatly into ordinal data – are handled consistently. You’ll also need to decide how to represent your categorical variables in your analysis. In some cases, such as when your variable is an ordered category or represents a context that could be modelled with a multilevel approach, you’ll want treat categories as <strong>index variables</strong>. In other cases, such as when your variable is a <strong>nominal / unordered category</strong>, you might prefer to represent it as a series of binary “dummy” variables using <strong>one-hot encoding</strong>.</p>
+<p>The implications of this choice will become clear a little later in the book, when we get to multilevel models. For now, we’ll …</p>
+<div class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Example here</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <!-- 
@@ -931,12 +984,9 @@ Finally, we return to the question of representation and sampling. Survey weight
 <p>In this chapter, we’ve covered the essential steps in processing and cleaning survey data, from understanding the sample design and applying weights to handling missing data and recoding variables. These are the foundational tasks that will set you up for more advanced analysis in future chapters. In the next chapter, we’ll explore web and document data, where we’ll encounter many of the same issues—like missing data and recoding—but in a different context. Stay tuned!</p>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="refs" class="references csl-bib-body hanging-indent" role="list">
 <div id="ref-groves2011survey" class="csl-entry" role="listitem">
 Groves, Robert, Floyd Fowler Jr, Mick Couper, James Lepkowski, Eleanor Singer, and Roger Tourangeau. 2011. <em>Survey Methodology</em>. John Wiley &amp; Sons.
-</div>
-<div id="ref-schaeffer2020advances" class="csl-entry" role="listitem">
-Schaeffer, Nora Cate, and Jennifer Dykema. 2020. <span>“Advances in the Science of Asking Questions.”</span> <em>Annual Review of Sociology</em> 46 (1): 37–60.
 </div>
 </div>
 </section>
@@ -983,7 +1033,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const onCopySuccess = function(e) {
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -1015,50 +1076,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
-  }
-  const getTextToCopy = function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-  }
-  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-    text: getTextToCopy
   });
-  clipboard.on('success', onCopySuccess);
-  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
-    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-      text: getTextToCopy,
-      container: window.document.getElementById('quarto-embedded-source-code-modal')
-    });
-    clipboardModal.on('success', onCopySuccess);
-  }
-    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-    var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp('/' + window.location.host + '/');
-    var isInternal = (href) => {
-        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
-    }
-    // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
-    for (var i=0; i<links.length; i++) {
-      const link = links[i];
-      if (!isInternal(link.href)) {
-        // undo the damage that might have been done by quarto-nav.js in the case of
-        // links that we want to consider external
-        if (link.dataset.originalHref !== undefined) {
-          link.href = link.dataset.originalHref;
-        }
-      }
-    }
-  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+  function tippyHover(el, contentFn) {
     const config = {
       allowHTML: true,
+      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -1068,17 +1090,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start',
+      placement: 'bottom-start'
     };
-    if (contentFn) {
-      config.content = contentFn;
-    }
-    if (onTriggerFn) {
-      config.onTrigger = onTriggerFn;
-    }
-    if (onUntriggerFn) {
-      config.onUntrigger = onUntriggerFn;
-    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -1090,130 +1103,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      if (note) {
-        return note.innerHTML;
-      } else {
-        return "";
-      }
-    });
-  }
-  const xrefs = window.document.querySelectorAll('a.quarto-xref');
-  const processXRef = (id, note) => {
-    // Strip column container classes
-    const stripColumnClz = (el) => {
-      el.classList.remove("page-full", "page-columns");
-      if (el.children) {
-        for (const child of el.children) {
-          stripColumnClz(child);
-        }
-      }
-    }
-    stripColumnClz(note)
-    if (id === null || id.startsWith('sec-')) {
-      // Special case sections, only their first couple elements
-      const container = document.createElement("div");
-      if (note.children && note.children.length > 2) {
-        container.appendChild(note.children[0].cloneNode(true));
-        for (let i = 1; i < note.children.length; i++) {
-          const child = note.children[i];
-          if (child.tagName === "P" && child.innerText === "") {
-            continue;
-          } else {
-            container.appendChild(child.cloneNode(true));
-            break;
-          }
-        }
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(container);
-        }
-        return container.innerHTML
-      } else {
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(note);
-        }
-        return note.innerHTML;
-      }
-    } else {
-      // Remove any anchor links if they are present
-      const anchorLink = note.querySelector('a.anchorjs-link');
-      if (anchorLink) {
-        anchorLink.remove();
-      }
-      if (window.Quarto?.typesetMath) {
-        window.Quarto.typesetMath(note);
-      }
-      // TODO in 1.5, we should make sure this works without a callout special case
-      if (note.classList.contains("callout")) {
-        return note.outerHTML;
-      } else {
-        return note.innerHTML;
-      }
-    }
-  }
-  for (var i=0; i<xrefs.length; i++) {
-    const xref = xrefs[i];
-    tippyHover(xref, undefined, function(instance) {
-      instance.disable();
-      let url = xref.getAttribute('href');
-      let hash = undefined; 
-      if (url.startsWith('#')) {
-        hash = url;
-      } else {
-        try { hash = new URL(url).hash; } catch {}
-      }
-      if (hash) {
-        const id = hash.replace(/^#\/?/, "");
-        const note = window.document.getElementById(id);
-        if (note !== null) {
-          try {
-            const html = processXRef(id, note.cloneNode(true));
-            instance.setContent(html);
-          } finally {
-            instance.enable();
-            instance.show();
-          }
-        } else {
-          // See if we can fetch this
-          fetch(url.split('#')[0])
-          .then(res => res.text())
-          .then(html => {
-            const parser = new DOMParser();
-            const htmlDoc = parser.parseFromString(html, "text/html");
-            const note = htmlDoc.getElementById(id);
-            if (note !== null) {
-              const html = processXRef(id, note);
-              instance.setContent(html);
-            } 
-          }).finally(() => {
-            instance.enable();
-            instance.show();
-          });
-        }
-      } else {
-        // See if we can fetch a full url (with no hash to target)
-        // This is a special case and we should probably do some content thinning / targeting
-        fetch(url)
-        .then(res => res.text())
-        .then(html => {
-          const parser = new DOMParser();
-          const htmlDoc = parser.parseFromString(html, "text/html");
-          const note = htmlDoc.querySelector('main.content');
-          if (note !== null) {
-            // This should only happen for chapter cross references
-            // (since there is no id in the URL)
-            // remove the first header
-            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
-              note.children[0].remove();
-            }
-            const html = processXRef(null, note);
-            instance.setContent(html);
-          } 
-        }).finally(() => {
-          instance.enable();
-          instance.show();
-        });
-      }
-    }, function(instance) {
+      return note.innerHTML;
     });
   }
       let selectedAnnoteEl;
@@ -1257,7 +1147,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
-            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -1283,32 +1172,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
-        // Handle positioning of the toggle
-    window.addEventListener(
-      "resize",
-      throttle(() => {
-        elRect = undefined;
-        if (selectedAnnoteEl) {
-          selectCodeLines(selectedAnnoteEl);
-        }
-      }, 10)
-    );
-    function throttle(fn, ms) {
-    let throttle = false;
-    let timer;
-      return (...args) => {
-        if(!throttle) { // first call gets through
-            fn.apply(this, args);
-            throttle = true;
-        } else { // all the others get throttled
-            if(timer) clearTimeout(timer); // cancel #2
-            timer = setTimeout(() => {
-              fn.apply(this, args);
-              timer = throttle = false;
-            }, ms);
-        }
-      };
-    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -1370,12 +1233,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./iteration.html" class="pagination-link" aria-label="~~Sequential~~ iterative modelling">
+      <a href="./iteration.html" class="pagination-link">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title"><del>Sequential</del> iterative modelling</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./web-data-apis.html" class="pagination-link" aria-label="Web data (APIs)">
+      <a href="./web-data-apis.html" class="pagination-link">
         <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Web data (APIs)</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
@@ -1384,5 +1247,4 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
-
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/UWNETLAB/dcss_supplementary/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
+</body></html>

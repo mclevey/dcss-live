@@ -394,7 +394,7 @@ While the initial setup requires effort, investing time in learning these tools 
 
 Remember, it's perfectly normal to feel a bit lost when diving into something new. Take it step by step, refer back to this chapter as needed, and don't hesitate to seek out additional resources or ask questions. Soon enough, using these tools will become second nature, and you'll be well-equipped to tackle any computational challenge in your research.
 
----
+
 
 ## Key Points
 

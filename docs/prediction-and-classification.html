@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.56">
+<meta name="generator" content="quarto-1.3.450">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>18&nbsp; Prediction and classification – Doing Computational Social Science&lt;br&gt;[The **Continuous Development** Edition]{.small}</title>
+<title>Doing Computational Social ScienceThe Continuous Development Edition - 19&nbsp; Prediction and classification</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -22,7 +22,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -33,7 +33,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -58,7 +58,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
-  margin-bottom: 0em;
 }
 .hanging-indent div.csl-entry {
   margin-left:2em;
@@ -102,13 +101,7 @@ div.csl-indent {
   "collapse-after": 3,
   "panel-placement": "start",
   "type": "textbox",
-  "limit": 50,
-  "keyboard-shortcut": [
-    "f",
-    "/",
-    "s"
-  ],
-  "show-item-context": false,
+  "limit": 20,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -117,42 +110,14 @@ div.csl-indent {
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
-    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
 }</script>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="custom.css">
 </head>
@@ -163,13 +128,13 @@ window.Quarto = {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./supervised-learning.html">**PREDICTION &amp; INFERENCE**</a></li><li class="breadcrumb-item"><a href="./prediction-and-classification.html"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Prediction and classification</span></a></li></ol></nav>
-        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-        </a>
-      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./supervised-learning.html"><strong>PREDICTION &amp; INFERENCE</strong></a></li><li class="breadcrumb-item"><a href="./prediction-and-classification.html"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Prediction and classification</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -178,7 +143,7 @@ window.Quarto = {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
       <a href="./index.html" class="sidebar-logo-link">
       <img src="./figures/logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
@@ -186,25 +151,25 @@ window.Quarto = {
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Doing Computational Social Science<br><span class="small">The <strong>Continuous Development</strong> Edition</span></a> 
         <div class="sidebar-tools-main">
-    <a href="https://github.com/UWNETLAB/dcss_supplementary/tree/master/book/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="https://github.com/UWNETLAB/dcss_supplementary/tree/master/book/" rel="" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
     <div class="dropdown">
-      <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
+      <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Share"><i class="bi bi-share"></i></a>
       <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
           <li>
             <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=|url|">
-              <i class="bi bi-twitter pe-1"></i>
+              <i class="bi bi-bi-twitter pe-1"></i>
             Twitter
             </a>
           </li>
           <li>
             <a class="dropdown-item sidebar-tools-main-item" href="https://www.facebook.com/sharer/sharer.php?u=|url|">
-              <i class="bi bi-facebook pe-1"></i>
+              <i class="bi bi-bi-facebook pe-1"></i>
             Facebook
             </a>
           </li>
           <li>
             <a class="dropdown-item sidebar-tools-main-item" href="https://www.linkedin.com/sharing/share-offsite/?url=|url|">
-              <i class="bi bi-linkedin pe-1"></i>
+              <i class="bi bi-bi-linkedin pe-1"></i>
             LinkedIn
             </a>
           </li>
@@ -226,19 +191,25 @@ window.Quarto = {
  <span class="menu-text">🏠</span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction</span></a>
+  </div>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
- <span class="menu-text"><strong>RESEARCH COMPUTING</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text"><strong>COMPUTING</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./getting-started.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Getting Started</span></span></a>
+  <a href="./setting-up.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Setting up</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -253,71 +224,89 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Python 102</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./processing-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Processing Data</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
- <span class="menu-text"><strong>MINDFUL MODELING</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text"><strong>WORKFLOW</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./metaphor-map-reduction.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Modeling as metaphor, map, and reduction</span></span></a>
+  <a href="./mindful-modelling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Mindful modelling</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./iterative-workflow.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Iterative workflows</span></span></a>
+  <a href="./iteration.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title"><del>Sequential</del> iterative modelling</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
- <span class="menu-text"><strong>OBTAINING DATA</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+ <span class="menu-text"><strong>DATA</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./sampling-and-survey-data.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title"><del>Processing Structured Data</del> Sampling and Survey Data</span></span></a>
+  <a href="./survey-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Survey Data</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./web-data-apis.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Web data (APIs)</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Web data (APIs)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./web-data-scraping.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Web data (Scraping)</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Web data (Scraping)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./audio-files-and-documents.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Audio files and documents</span></span></a>
+  <a href="./audio-and-document-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Audio and document data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./text-as-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Text as Data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./relational-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Relational data</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
- <span class="menu-text"><strong>EXPLORING</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+ <span class="menu-text"><strong>DISCOVERY</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -325,52 +314,40 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./exploratory-data-analysis.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Exploratory data analysis (EDA) <!-- Exploring with purpose --></span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Exploring with purpose</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./association-and-latent-variables.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Association and latent variables</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./text-as-data.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Text as Data</span></span></a>
+  <a href="./reduction-and-latent-dimensions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Reduction and latent dimensions</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./mapping-text.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Text similarity and latent semantic space</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./networks-as-not-data.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Networks and relational thinking</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Text similarity and latent semantic space</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./centrality.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Centrality</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Centrality</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./mapping-network-structure.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Mapping network structure</span></span></a>
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Mapping network structure</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
  <span class="menu-text"><strong>PREDICTION &amp; INFERENCE</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -378,46 +355,46 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./supervised-learning.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Supervised Machine Learning</span></span></a>
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Supervised Machine Learning</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./prediction-and-classification.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Prediction and classification</span></span></a>
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Prediction and classification</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./causality.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Causality</span></span></a>
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Causality</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./probability.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Probability 101</span></span></a>
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Probability 101</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./credibility.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Credibility</span></span></a>
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Credibility</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./measurement-and-missingness.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Measurement and missingness</span></span></a>
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Measurement and missingness</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true">
  <span class="menu-text"><strong>MODELING</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -425,58 +402,58 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./linear-regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Bayesian Regression Models with Probabilistic Programming</span></span></a>
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Bayesian Regression Models with Probabilistic Programming</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./multilevel-regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Multilevel regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Multilevel regression</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./generalized-linear-models.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Generalized Linear Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Generalized Linear Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./structural-causal-models.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Structural causal models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Structural causal models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./modeling-texts-lda.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Modeling text with LDA topic models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Modeling text with LDA topic models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./modeling-networks.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Latent structure in networks</span></span></a>
+ <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Latent structure in networks</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./agent-based-models.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Agent-based models (ABMs)</span></span></a>
+ <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Agent-based models (ABMs)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./diffusion-opinion-cultural-cognition.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Diffusion, opinion dynamics, and cultural cognition</span></span></a>
+ <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Diffusion, opinion dynamics, and cultural cognition</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true">
  <span class="menu-text"><strong>DEEP LEARNING</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -484,34 +461,34 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./artificial-neural-networks-fnn-rnn-cnn.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Artificial neural networks 101</span></span></a>
+ <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Artificial neural networks</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./language-models-and-embeddings.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Processing Natural Language Data</span></span></a>
+ <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Language models and word embeddings</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./transformer-revolution.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">The transformer revolution</span></span></a>
+ <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">The transformer revolution</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./modeling-text-transformer-topic-models.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Modeling text: transformer topic models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Modeling text: transformer topic models</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
- <span class="menu-text"><strong>PROFESSIONAL RESPONSIBILITIES</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" aria-expanded="true">
+ <span class="menu-text"><strong>RESPONSIBILITIES</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -519,19 +496,19 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ethical-css.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Research Ethics, Politics, and Practices</span></span></a>
+ <span class="menu-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">Ethical CSS</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./open-css.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">Open computational social science</span></span></a>
+ <span class="menu-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">Open CSS</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./future-css.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">Future computational social science</span></span></a>
+ <span class="menu-text"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">Future CSS</span></span></a>
   </div>
 </li>
       </ul>
@@ -551,54 +528,54 @@ window.Quarto = {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./courses.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">Courses and Workshops</span></span></a>
+ <span class="menu-text"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title">Courses and Workshops</span></span></a>
   </div>
 </li>
     </ul>
     </div>
 </nav>
-<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link active" data-scroll-target="#learning-objectives"><span class="header-section-number">18.1</span> LEARNING OBJECTIVES</a></li>
-  <li><a href="#learning-materials" id="toc-learning-materials" class="nav-link" data-scroll-target="#learning-materials"><span class="header-section-number">18.2</span> LEARNING MATERIALS</a></li>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction"><span class="header-section-number">18.3</span> INTRODUCTION</a>
+  <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link active" data-scroll-target="#learning-objectives"><span class="header-section-number">19.1</span> LEARNING OBJECTIVES</a></li>
+  <li><a href="#learning-materials" id="toc-learning-materials" class="nav-link" data-scroll-target="#learning-materials"><span class="header-section-number">19.2</span> LEARNING MATERIALS</a></li>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction"><span class="header-section-number">19.3</span> INTRODUCTION</a>
   <ul class="collapse">
-  <li><a href="#imports" id="toc-imports" class="nav-link" data-scroll-target="#imports"><span class="header-section-number">18.3.1</span> Imports</a></li>
-  <li><a href="#preparing-the-data" id="toc-preparing-the-data" class="nav-link" data-scroll-target="#preparing-the-data"><span class="header-section-number">18.3.2</span> Preparing the Data</a></li>
-  <li><a href="#the-train-test-split-and-cross-validation" id="toc-the-train-test-split-and-cross-validation" class="nav-link" data-scroll-target="#the-train-test-split-and-cross-validation"><span class="header-section-number">18.3.3</span> The Train-Test Split and Cross-Validation</a></li>
+  <li><a href="#imports" id="toc-imports" class="nav-link" data-scroll-target="#imports"><span class="header-section-number">19.3.1</span> Imports</a></li>
+  <li><a href="#preparing-the-data" id="toc-preparing-the-data" class="nav-link" data-scroll-target="#preparing-the-data"><span class="header-section-number">19.3.2</span> Preparing the Data</a></li>
+  <li><a href="#the-train-test-split-and-cross-validation" id="toc-the-train-test-split-and-cross-validation" class="nav-link" data-scroll-target="#the-train-test-split-and-cross-validation"><span class="header-section-number">19.3.3</span> The Train-Test Split and Cross-Validation</a></li>
   </ul></li>
-  <li><a href="#rules-based-learning-with-trees" id="toc-rules-based-learning-with-trees" class="nav-link" data-scroll-target="#rules-based-learning-with-trees"><span class="header-section-number">18.4</span> RULES-BASED LEARNING WITH TREES</a>
+  <li><a href="#rules-based-learning-with-trees" id="toc-rules-based-learning-with-trees" class="nav-link" data-scroll-target="#rules-based-learning-with-trees"><span class="header-section-number">19.4</span> RULES-BASED LEARNING WITH TREES</a>
   <ul class="collapse">
-  <li><a href="#decision-trees" id="toc-decision-trees" class="nav-link" data-scroll-target="#decision-trees"><span class="header-section-number">18.4.1</span> Decision Trees</a></li>
+  <li><a href="#decision-trees" id="toc-decision-trees" class="nav-link" data-scroll-target="#decision-trees"><span class="header-section-number">19.4.1</span> Decision Trees</a></li>
   </ul></li>
-  <li><a href="#ensemble-learning" id="toc-ensemble-learning" class="nav-link" data-scroll-target="#ensemble-learning"><span class="header-section-number">18.5</span> ENSEMBLE LEARNING</a>
+  <li><a href="#ensemble-learning" id="toc-ensemble-learning" class="nav-link" data-scroll-target="#ensemble-learning"><span class="header-section-number">19.5</span> ENSEMBLE LEARNING</a>
   <ul class="collapse">
-  <li><a href="#random-forests" id="toc-random-forests" class="nav-link" data-scroll-target="#random-forests"><span class="header-section-number">18.5.1</span> Random Forests</a></li>
-  <li><a href="#gradient-boosted-machines" id="toc-gradient-boosted-machines" class="nav-link" data-scroll-target="#gradient-boosted-machines"><span class="header-section-number">18.5.2</span> Gradient Boosted Machines</a></li>
+  <li><a href="#random-forests" id="toc-random-forests" class="nav-link" data-scroll-target="#random-forests"><span class="header-section-number">19.5.1</span> Random Forests</a></li>
+  <li><a href="#gradient-boosted-machines" id="toc-gradient-boosted-machines" class="nav-link" data-scroll-target="#gradient-boosted-machines"><span class="header-section-number">19.5.2</span> Gradient Boosted Machines</a></li>
   </ul></li>
-  <li><a href="#evaluation-beyond-accuracy" id="toc-evaluation-beyond-accuracy" class="nav-link" data-scroll-target="#evaluation-beyond-accuracy"><span class="header-section-number">18.6</span> EVALUATION BEYOND ACCURACY</a>
+  <li><a href="#evaluation-beyond-accuracy" id="toc-evaluation-beyond-accuracy" class="nav-link" data-scroll-target="#evaluation-beyond-accuracy"><span class="header-section-number">19.6</span> EVALUATION BEYOND ACCURACY</a>
   <ul class="collapse">
-  <li><a href="#balancing-false-positives-and-false-negatives-in-classification-models" id="toc-balancing-false-positives-and-false-negatives-in-classification-models" class="nav-link" data-scroll-target="#balancing-false-positives-and-false-negatives-in-classification-models"><span class="header-section-number">18.6.1</span> Balancing False Positives and False Negatives in Classification Models</a></li>
-  <li><a href="#improving-binary-classification-with-curves" id="toc-improving-binary-classification-with-curves" class="nav-link" data-scroll-target="#improving-binary-classification-with-curves"><span class="header-section-number">18.6.2</span> Improving Binary Classification with Curves</a></li>
+  <li><a href="#balancing-false-positives-and-false-negatives-in-classification-models" id="toc-balancing-false-positives-and-false-negatives-in-classification-models" class="nav-link" data-scroll-target="#balancing-false-positives-and-false-negatives-in-classification-models"><span class="header-section-number">19.6.1</span> Balancing False Positives and False Negatives in Classification Models</a></li>
+  <li><a href="#improving-binary-classification-with-curves" id="toc-improving-binary-classification-with-curves" class="nav-link" data-scroll-target="#improving-binary-classification-with-curves"><span class="header-section-number">19.6.2</span> Improving Binary Classification with Curves</a></li>
   </ul></li>
-  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">18.7</span> CONCLUSION</a>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">19.7</span> CONCLUSION</a>
   <ul class="collapse">
-  <li><a href="#key-points" id="toc-key-points" class="nav-link" data-scroll-target="#key-points"><span class="header-section-number">18.7.1</span> Key Points</a></li>
+  <li><a href="#key-points" id="toc-key-points" class="nav-link" data-scroll-target="#key-points"><span class="header-section-number">19.7.1</span> Key Points</a></li>
   </ul></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/UWNETLAB/dcss_supplementary/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/UWNETLAB/dcss_supplementary/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./supervised-learning.html">**PREDICTION &amp; INFERENCE**</a></li><li class="breadcrumb-item"><a href="./prediction-and-classification.html"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Prediction and classification</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Prediction and classification</span></h1>
+<h1 class="title"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Prediction and classification</span></h1>
 </div>
 
 
@@ -611,14 +588,12 @@ window.Quarto = {
   </div>
   
 
-
 </header>
-
 
 <!-- Some of the regression stuff too, maybe -->
 <!-- Supervised Learning with Trees, Ensembles -->
-<section id="learning-objectives" class="level2" data-number="18.1">
-<h2 data-number="18.1" class="anchored" data-anchor-id="learning-objectives"><span class="header-section-number">18.1</span> LEARNING OBJECTIVES</h2>
+<section id="learning-objectives" class="level2" data-number="19.1">
+<h2 data-number="19.1" class="anchored" data-anchor-id="learning-objectives"><span class="header-section-number">19.1</span> LEARNING OBJECTIVES</h2>
 <ul>
 <li>Explain how Decision Trees classify data</li>
 <li>Describe how to regularize (or trim) Decision Trees</li>
@@ -626,15 +601,15 @@ window.Quarto = {
 <li>Explore how leveraging different metrics can help provide a better sense of how your classification models are performing</li>
 </ul>
 </section>
-<section id="learning-materials" class="level2" data-number="18.2">
-<h2 data-number="18.2" class="anchored" data-anchor-id="learning-materials"><span class="header-section-number">18.2</span> LEARNING MATERIALS</h2>
+<section id="learning-materials" class="level2" data-number="19.2">
+<h2 data-number="19.2" class="anchored" data-anchor-id="learning-materials"><span class="header-section-number">19.2</span> LEARNING MATERIALS</h2>
 <p>You can find the online learning materials for this chapter in <code>doing_computational_social_science/Chapter_22</code>. <code>cd</code> into the directory and launch your Jupyter Server.</p>
 </section>
-<section id="introduction" class="level2" data-number="18.3">
-<h2 data-number="18.3" class="anchored" data-anchor-id="introduction"><span class="header-section-number">18.3</span> INTRODUCTION</h2>
+<section id="introduction" class="level2" data-number="19.3">
+<h2 data-number="19.3" class="anchored" data-anchor-id="introduction"><span class="header-section-number">19.3</span> INTRODUCTION</h2>
 <p>In the previous chapter, we worked on some supervised machine learning algorithms based on relatively familiar statistical models that arose out of the symbolic paradigm of machine learning, OLS, Lasso, and Ridge linear regression models, and logistic regression models. This chapter will continue that discussion with decision trees, ensemble learning, Random Forests, and gradient boosted machines. We will finish with a description of model evaluation metrics, comparing accuracy, Precision, Recall and some ways we can make better use of these metrics.</p>
-<section id="imports" class="level3" data-number="18.3.1">
-<h3 data-number="18.3.1" class="anchored" data-anchor-id="imports"><span class="header-section-number">18.3.1</span> Imports</h3>
+<section id="imports" class="level3" data-number="19.3.1">
+<h3 data-number="19.3.1" class="anchored" data-anchor-id="imports"><span class="header-section-number">19.3.1</span> Imports</h3>
 <div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd </span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -648,16 +623,16 @@ window.Quarto = {
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>set_style()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="preparing-the-data" class="level3" data-number="18.3.2">
-<h3 data-number="18.3.2" class="anchored" data-anchor-id="preparing-the-data"><span class="header-section-number">18.3.2</span> Preparing the Data</h3>
+<section id="preparing-the-data" class="level3" data-number="19.3.2">
+<h3 data-number="19.3.2" class="anchored" data-anchor-id="preparing-the-data"><span class="header-section-number">19.3.2</span> Preparing the Data</h3>
 <p>As in earlier chapters, we will be using the VDEM data on a country’s political and electoral freedoms to predict Internet freedoms drawn from the Freeman House dataset.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># data downloaded in the previous chapter</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>forml <span class="op">=</span> pd.read_csv(</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"data/vdem_internet_freedom_combined/vdem_fh_combined.csv"</span></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="the-train-test-split-and-cross-validation" class="level3" data-number="18.3.3">
-<h3 data-number="18.3.3" class="anchored" data-anchor-id="the-train-test-split-and-cross-validation"><span class="header-section-number">18.3.3</span> The Train-Test Split and Cross-Validation</h3>
+<section id="the-train-test-split-and-cross-validation" class="level3" data-number="19.3.3">
+<h3 data-number="19.3.3" class="anchored" data-anchor-id="the-train-test-split-and-cross-validation"><span class="header-section-number">19.3.3</span> The Train-Test Split and Cross-Validation</h3>
 <p>As discussed in Chapter 21, developing supervised machine learning models requires splitting our data into different sets: some for training the model, others for testing and validating the model. The most practical way to perform this split involves using cross-validation (introduced in the previous chapter).</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -676,12 +651,12 @@ window.Quarto = {
 <span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 </section>
-<section id="rules-based-learning-with-trees" class="level2" data-number="18.4">
-<h2 data-number="18.4" class="anchored" data-anchor-id="rules-based-learning-with-trees"><span class="header-section-number">18.4</span> RULES-BASED LEARNING WITH TREES</h2>
-<section id="decision-trees" class="level3" data-number="18.4.1">
-<h3 data-number="18.4.1" class="anchored" data-anchor-id="decision-trees"><span class="header-section-number">18.4.1</span> Decision Trees</h3>
+<section id="rules-based-learning-with-trees" class="level2" data-number="19.4">
+<h2 data-number="19.4" class="anchored" data-anchor-id="rules-based-learning-with-trees"><span class="header-section-number">19.4</span> RULES-BASED LEARNING WITH TREES</h2>
+<section id="decision-trees" class="level3" data-number="19.4.1">
+<h3 data-number="19.4.1" class="anchored" data-anchor-id="decision-trees"><span class="header-section-number">19.4.1</span> Decision Trees</h3>
 <p>Decision trees, and some more sophisticated models based on decision trees that we will discuss shortly, are the workhorse models of rules-based learning. They can be used for classification and regression tasks. We will focus on a classification task in the example here, but the process is more or less the same for a regression problem.</p>
-<p>In machine learning, a decision tree is a directed network that starts with a single node ‘containing’ every instance in your dataset. From there on, it’s like playing a <em>highly</em> skilled game of twenty questions, to borrow a clever analogy from Pedro Domingos <span class="citation" data-cites="domingos2015master">(<a href="references.html#ref-domingos2015master" role="doc-biblioref">2015</a>)</span>. In this game, the model is going to ‘ask’ a series of ‘questions’ to figure out the correct label if it’s a classification problem, or the correct value if it’s a regression problem. In a moment, we will learn how the model decides which question to ask, but for now just know that the model will <em>always</em> ask the most informative question possible. The questions will always concern the value for some specific feature for each instance, such as ‘does Canada hold free and fair elections’ or ‘is Canada’s score for freedom on the press higher than the median score?’</p>
+<p>In machine learning, a decision tree is a directed network that starts with a single node ‘containing’ every instance in your dataset. From there on, it’s like playing a <em>highly</em> skilled game of twenty questions, to borrow a clever analogy from Pedro Domingos <span class="citation" data-cites="domingos2015master">(<a href="#ref-domingos2015master" role="doc-biblioref">2015</a>)</span>. In this game, the model is going to ‘ask’ a series of ‘questions’ to figure out the correct label if it’s a classification problem, or the correct value if it’s a regression problem. In a moment, we will learn how the model decides which question to ask, but for now just know that the model will <em>always</em> ask the most informative question possible. The questions will always concern the value for some specific feature for each instance, such as ‘does Canada hold free and fair elections’ or ‘is Canada’s score for freedom on the press higher than the median score?’</p>
 <p>Everytime the model asks a question, a node containing some subset of instances in our dataset splits off into two new nodes. Depending on the answer to the question, each observation moves from the parent node into one of the two child nodes. This process continues until (a) all of the observations contained in a node share the same value for the outcome you want the model to be able to predict, or (b) your tree model runs out of room to ask more questions. When one of these two conditions is met, the branch of the tree terminates in a node called a ‘<strong>leaf</strong>’. The path from the root node (every instance in the dataset) to each leaf in the tree constitutes a rule. We can collect all of these rules into a single hierarchical <strong>rule base</strong> that is relatively easy for humans to interpret and understand.</p>
 <p>Now that we understand the basics, it’s time to answer a critical question: <em>how does the model decide which question to ask next?</em> How does it know what the “most informative” question is? The most common method is to use the concept of <strong>entropy</strong> from <strong>information theory</strong>. In information theory, entropy is a measure of how much information something contains, expressed in terms of uncertainty.</p>
 <p>To use a simplified example, let’s say we want to figure out which of the nations in the vdem dataset are democracies. If you think elections are all you need to be considered a democracy, then you could just ask one question for each case – do they hold elections? <em>However</em>, not all elections are the same, and democracies are about much more than elections. So you keep asking questions until you are confident you can make a judgement. The more questions you need to ask to arrive at a confident judgement, the more accurate your classificaiton of the observations into ‘democracies’ and ‘autocracies’ will be. The more purely separated those two classes become, the lower ‘<strong>entropy</strong>’ in your model. In the context of a decision tree analysis, the model will <em>always</em> ask the question that will result in the biggest decrease in entropy, usually expressed in terms of ‘<strong>information gain</strong>’, which quantifies the decrease in entropy that resulted from asking the question.</p>
@@ -739,7 +714,7 @@ window.Quarto = {
 <span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(dt_scores)</span>
 <span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Mean: </span><span class="sc">{</span>dt_scores<span class="sc">.</span>mean()<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Not bad! In order to get a sense of what our tree is doing under the hood, the below diagram represents our decision tree. You start at the top node, which contains all of the observations (countries in this case). The top line in that node (and every non-leaf node in the remainder of the tree) indicates the rule it will use to split the data. All of the countries for which that statement is true will travel along the ‘True’ path for further subdivision. All of the nations for whom this condition does not apply travel along the ‘False’ path.</p>
-<p><a href="#fig-21_01" class="quarto-xref">Figure&nbsp;<span>18.1</span></a> shows the resulting image without color because it keeps the cost of the print book down. If you change the argument <code>filled=False</code> below to <code>True</code>, you can get a color version. In the color versions, the ‘strength’ of the colour represents how ‘pure’ each node is. If there’s an equal mix of both classes, the colour should desaturate entirely. The code below also writes the figure to disk. To display it in a notebook, wrap the entire function in <code>graphviz.Source()</code>. The same is true for the other decision trees later in the chapter.</p>
+<p><a href="#fig-21_01">Figure&nbsp;<span class="quarto-unresolved-ref">fig-21_01</span></a> shows the resulting image without color because it keeps the cost of the print book down. If you change the argument <code>filled=False</code> below to <code>True</code>, you can get a color version. In the color versions, the ‘strength’ of the colour represents how ‘pure’ each node is. If there’s an equal mix of both classes, the colour should desaturate entirely. The code below also writes the figure to disk. To display it in a notebook, wrap the entire function in <code>graphviz.Source()</code>. The same is true for the other decision trees later in the chapter.</p>
 <ul>
 <li><strong>TODO</strong>: Update this.</li>
 </ul>
@@ -755,18 +730,14 @@ window.Quarto = {
 <span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    feature_names<span class="op">=</span>interpretable_names,</span>
 <span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    class_names<span class="op">=</span>le.classes_,</span>
 <span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div id="fig-21_01" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-21_01-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/classified_1.png" class="img-fluid figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-21_01-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;18.1: cap
-</figcaption>
+<div id="fig-21_01" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="figures/classified_1.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;19.1: cap</figcaption>
 </figure>
 </div>
-<section id="what-about-overfitting" class="level4" data-number="18.4.1.1">
-<h4 data-number="18.4.1.1" class="anchored" data-anchor-id="what-about-overfitting"><span class="header-section-number">18.4.1.1</span> What About Overfitting?</h4>
+<section id="what-about-overfitting" class="level4" data-number="19.4.1.1">
+<h4 data-number="19.4.1.1" class="anchored" data-anchor-id="what-about-overfitting"><span class="header-section-number">19.4.1.1</span> What About Overfitting?</h4>
 <p>As you may be starting to suspect, decision trees are prone to overfitting. The tree grows bigger with every question, and by the time we’ve reached the leaves, we know everything we need to know to make predictions that are 100% right 100% of the time… <em>for the data we trained the model on</em>. This extreme overfitting is sometimes called “memorizing” the training data. We don’t want to do that.</p>
 <p>One way to address the overfitting problem with decision trees is to “prune” them. Remember that the model <em>always</em> asks the most informative question first. This means that as the trees get deeper and deeper – as we ask more questions – each feature is weaker or less predictive than those that came before it. As we move further and further out, we risk making decisions based on noise and overfitting the model to the data we have. The full tree, then, is typically <em>worse</em> than a pruned tree because it includes weak features that could be specific to our dataset.</p>
 <p>We constrain the depth of the tree by restricting the number of questions or decisions that the model is allowed to ask, and in doing so, we improve the ability of our model to generalize to data it hasn’t seen before. If we set the maximum depth of our tree to 6, for example, the models can only ask the 6 most informative questions, at which point it must make its prediction. Obviously this reduces the accuracy on the training data, but not as much as you might think. It’s the unseen data we care most about, and the pruned model will make much better predictions when it is not overfitted.</p>
@@ -792,23 +763,19 @@ Figure&nbsp;18.1: cap
 <span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    class_names<span class="op">=</span>le.classes_,</span>
 <span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>dtclass_pruned.score(X_test, y_test)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Looking good! We’ve already seen a modest improvement, which probably represents a slight reduction in overfitting (something that cross-validation automatically assesses). Let’s examine the tree again (<a href="#fig-21_02" class="quarto-xref">Figure&nbsp;<span>18.2</span></a>):</p>
-<div id="fig-21_02" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-21_02-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/pruned.png" class="img-fluid figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-21_02-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;18.2: cap
-</figcaption>
+<p>Looking good! We’ve already seen a modest improvement, which probably represents a slight reduction in overfitting (something that cross-validation automatically assesses). Let’s examine the tree again (<a href="#fig-21_02">Figure&nbsp;<span class="quarto-unresolved-ref">fig-21_02</span></a>):</p>
+<div id="fig-21_02" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="figures/pruned.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;19.2: cap</figcaption>
 </figure>
 </div>
 <p>You can see the influence of setting the <code>max_depth</code> parameter to 3 in the tree: rather than a sprawling monstrosity, we now have a tree that neatly terminates each branch at the same level. Decisioin Trees have other parameters you can tweak, such as <code>min_samples_leaf</code>; it’s worth looking at the documentation to see the options available to you! Using only <code>max_depth</code>, we managed to get a good result, but we’re unlikely to be able to do much better using regularization alone. As we saw with Ridge and Lasso regression, regularization usually reaches a ‘sweet spot’ at some modest value, but as the strength of the regularization increases, the model’s performance nosedives. Decision trees have, by their nature, low granularity. You can’t perform fine-grained regularization on a single decision tree the same way you could for an ‘alpha’ parameter on a Ridge or Lasso regression (what would a <code>max_depth</code> of 3.5 even look like?). It’s likely that no regularization of a single-tree model will eliminate overfitting entirely. Instead, we’ll have to turn to a method which will allow us to combine many, many trees.</p>
 </section>
 </section>
 </section>
-<section id="ensemble-learning" class="level2" data-number="18.5">
-<h2 data-number="18.5" class="anchored" data-anchor-id="ensemble-learning"><span class="header-section-number">18.5</span> ENSEMBLE LEARNING</h2>
+<section id="ensemble-learning" class="level2" data-number="19.5">
+<h2 data-number="19.5" class="anchored" data-anchor-id="ensemble-learning"><span class="header-section-number">19.5</span> ENSEMBLE LEARNING</h2>
 <p>One very effective way to get around the over-fitting problem is to take an ensemble approach, which combines predictions from multiple models into a single prediction that is better than that of any individual model. As you will soon learn, this approach tends to produce excellent results and does not require any pruning. Ensembles of decision trees produce better results than any one decision tree, including any of the decision trees in the ensemble.</p>
 <p>To work with an ensemble of decision trees, we first draw many bootstrapped samples of instances from our overall dataset. In a bootstrapped sample, replacement is allowed, which means that the same instance can be sampled more than once. For each sample we fit a decision tree and record the model’s predictions. The final predictions are made by an ‘election’ of sorts, where each tree ‘votes’ on the class they think each observation belongs to. If we take 200 samples, we would fit 200 decision trees. These modes are used collectively – as an <strong>ensemble</strong> – to make predictions on new instances by taking averages of the predictions made by the models that make up the ensemble. This process is called ‘<strong>bagging</strong>’ or ‘<strong>bootstrapped aggregation</strong>’, and it can be applied not only to decision trees, but to a wide variety of the classification models implemented in scikit learn! For now, we’ll stick to applying it to decision trees.</p>
 <p>Bagging / bootstrapped aggregation goes a very long way in addressing the overfitting problem. One major advantage is that we don’t have to prune our decision trees. In fact, it’s better if we don’t! If we let each tree grow to be as deep and complex as it likes, we will end up with an ensemble that has high variance but low bias. That’s exactly what we want when we go to make our final aggregated predictions. The important choice you must make is how many bags to use, or rather, how many bootstrapped samples of instances to draw, and the number of total trees we want to end up with. Let’s see what the combination of 100 trees can bring us:</p>
@@ -828,8 +795,8 @@ Figure&nbsp;18.2: cap
 <span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(bt_scores)</span>
 <span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Mean: </span><span class="sc">{</span>bt_scores<span class="sc">.</span>mean()<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>The unregularized bagging classifier has produced an even better score than regularized decision tree did! There may yet be more room for improvement if we alter how each of the trees functions using a Random Forest model.</p>
-<section id="random-forests" class="level3" data-number="18.5.1">
-<h3 data-number="18.5.1" class="anchored" data-anchor-id="random-forests"><span class="header-section-number">18.5.1</span> Random Forests</h3>
+<section id="random-forests" class="level3" data-number="19.5.1">
+<h3 data-number="19.5.1" class="anchored" data-anchor-id="random-forests"><span class="header-section-number">19.5.1</span> Random Forests</h3>
 <p>One issue with the bagging approach we just learned is that the resulting trees tend to be correlated with one another, mainly due to the fact that they are all trying to maximize the same thing when they ask questions – information gain. If there are some very powerful attributes in our dataset, as there almost always are, the tree we fit for each bag will lean heavily on those features, which makes the whole ensemble approach a lot less useful and degrades the quality of the final prediction. It would be much better for us if the trees are not correlated, or are at best weakly correlated.</p>
 <p>Random Forests accomplish this with one simple, but highly effective, modification: <em>they constrain the features that any given node is allowed to ask questions about</em>. The result is a collection of decision trees that are uncorrelated, or weakly correlated, with one another, and this leads to more accurate predictions when they are aggregated.</p>
 <p>Random Forests are straightforward to train, and because of their clever design, they do a good job of dealing with noise and preventing overfitting, so it is not necessary to trim / prune our trees. They also only take two hyperparameters: the number of trees in your forest (i.e.&nbsp;the number of samples of instances to draw) and size of the random sample to draw when sampling the features that any given decision tree will select from. You can and should experiment with cross-validation to select values for these hyperparameters that result in the most accurate predictions (we’re not doing so here because space is limited).</p>
@@ -848,7 +815,7 @@ Figure&nbsp;18.2: cap
 <span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(rforest_scores)</span>
 <span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Mean: </span><span class="sc">{</span>rforest_scores<span class="sc">.</span>mean()<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>It would appear that our Random Forest model, with modest parameters, is producing the <em>exact same result</em> as we got with our bagging classifier.</p>
-<p>The downside of Random Forests is that – unlike garden-variety decision trees – the results are not so easy to interpret. For this reason, Random Forests and other ensemble models are generally considered to be less “interpretable” than simple decision trees, linear and logistic regressions, or <span class="math inline">\(k\)</span>-nearest neighbours. It’s worth knowing that you can inspect any of the trees in your Random Forest Classifier! This process is complicated somewhat by the fact that our model contains 100 distinct trees, meaning that you can’t easily determine how significant any one tree was to the overall decision making process. Nevertheless, it’s a good idea to select a tree at random and take a look at what it has done with the data. Of course, you can do this many different times, if you like. Just select different trees each time. One such tree is shown in <a href="#fig-21_03" class="quarto-xref">Figure&nbsp;<span>18.3</span></a>.</p>
+<p>The downside of Random Forests is that – unlike garden-variety decision trees – the results are not so easy to interpret. For this reason, Random Forests and other ensemble models are generally considered to be less “interpretable” than simple decision trees, linear and logistic regressions, or <span class="math inline">\(k\)</span>-nearest neighbours. It’s worth knowing that you can inspect any of the trees in your Random Forest Classifier! This process is complicated somewhat by the fact that our model contains 100 distinct trees, meaning that you can’t easily determine how significant any one tree was to the overall decision making process. Nevertheless, it’s a good idea to select a tree at random and take a look at what it has done with the data. Of course, you can do this many different times, if you like. Just select different trees each time. One such tree is shown in <a href="#fig-21_03">Figure&nbsp;<span class="quarto-unresolved-ref">fig-21_03</span></a>.</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>rforest.fit(X_train, y_train)</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>export_graphviz(</span>
@@ -859,22 +826,18 @@ Figure&nbsp;18.2: cap
 <span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    feature_names<span class="op">=</span>interpretable_names,</span>
 <span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>    class_names<span class="op">=</span>le.classes_,</span>
 <span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div id="fig-21_03" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-21_03-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/rf_classified.png" class="img-fluid figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-21_03-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;18.3: cap
-</figcaption>
+<div id="fig-21_03" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="figures/rf_classified.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;19.3: cap</figcaption>
 </figure>
 </div>
 <p>There are other ways you that can help you interpret your Random Forest models, such as using <code>rforest.feature_importances</code> to get a sense of which features in your dataset had the greatest impact on predictive power.</p>
 <p>While our Random Forest classifier has outperformed decision trees, regularized decision trees, and tied the bagging classifier, there’s one last technique we might use to squeeze out a bit more performance…</p>
 </section>
-<section id="gradient-boosted-machines" class="level3" data-number="18.5.2">
-<h3 data-number="18.5.2" class="anchored" data-anchor-id="gradient-boosted-machines"><span class="header-section-number">18.5.2</span> Gradient Boosted Machines</h3>
-<p>While Random Forests remain one of the best and most widely-used approaches to supervised machine learning, a slightly newer approach to ensembling decision trees has recently started outperforming Random Forests and is widely considered to be one of the best algorithms for doing machine learning on anything other than image / perception data <span class="citation" data-cites="francois2017deep">(<a href="references.html#ref-francois2017deep" role="doc-biblioref">Chollet 2018</a>)</span>. This technique is called “Gradient Boosting”, and it differs from the Random Forest approach in that, rather than allowing all of the decision trees to randomly pursue the best answer possible in isolation (as Random Forest does), it attempts to fit trees that better account for the mis-classified observations from previous trees. In this way, each tree tackles the ‘room for improvement’ left behind by the tree that immediately preceded it. The effect here is that Gradient Boosted Trees can reach a remarkably high degree of accuracy using only a small handful of estimators (but are accordingly prone to overfitting). Let’s try creating one now:</p>
+<section id="gradient-boosted-machines" class="level3" data-number="19.5.2">
+<h3 data-number="19.5.2" class="anchored" data-anchor-id="gradient-boosted-machines"><span class="header-section-number">19.5.2</span> Gradient Boosted Machines</h3>
+<p>While Random Forests remain one of the best and most widely-used approaches to supervised machine learning, a slightly newer approach to ensembling decision trees has recently started outperforming Random Forests and is widely considered to be one of the best algorithms for doing machine learning on anything other than image / perception data <span class="citation" data-cites="francois2017deep">(<a href="#ref-francois2017deep" role="doc-biblioref">Chollet 2018</a>)</span>. This technique is called “Gradient Boosting”, and it differs from the Random Forest approach in that, rather than allowing all of the decision trees to randomly pursue the best answer possible in isolation (as Random Forest does), it attempts to fit trees that better account for the mis-classified observations from previous trees. In this way, each tree tackles the ‘room for improvement’ left behind by the tree that immediately preceded it. The effect here is that Gradient Boosted Trees can reach a remarkably high degree of accuracy using only a small handful of estimators (but are accordingly prone to overfitting). Let’s try creating one now:</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.ensemble <span class="im">import</span> GradientBoostingClassifier</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>gboost <span class="op">=</span> GradientBoostingClassifier(</span>
@@ -906,15 +869,15 @@ Figure&nbsp;18.3: cap
 <span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(model.score(X_test, y_test))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 </section>
-<section id="evaluation-beyond-accuracy" class="level2" data-number="18.6">
-<h2 data-number="18.6" class="anchored" data-anchor-id="evaluation-beyond-accuracy"><span class="header-section-number">18.6</span> EVALUATION BEYOND ACCURACY</h2>
+<section id="evaluation-beyond-accuracy" class="level2" data-number="19.6">
+<h2 data-number="19.6" class="anchored" data-anchor-id="evaluation-beyond-accuracy"><span class="header-section-number">19.6</span> EVALUATION BEYOND ACCURACY</h2>
 <p>So far, we have been using accuracy to evaluate the quality of our machine learning models. While accuracy is important, <em>it isn’t everything</em>. Consider two issues.</p>
 <p>First, bad models can have high accuracy rates. This can happen when the events we want to predict are rare, or the categories we want to classify instances into are very imbalanced. In such scenarios, we can achieve very high accuracy rates by making the same guess all the time. We haven’t actually learned anything useful, we just learned that if something is rare, predicting the rare thing didn’t happen is often correct. Similarly, bad models can achieve high accuracy rates by learning from the wrong things. For example, a deep learning model differentiating pictures of huskies from pictures of wolves – with a high level of accuracy, of course – was shown to be relying on whether or not the image contained snow. That’s a <em>bad</em> model. We will return to this example later in the chapter.</p>
 <p>Second, depending on the purpose of your machine learning, there may be aspects of your model’s performance that are more important to optimize than accuracy. Imagine you were tasked with designing a machine learning algorithm capable of detecting when a patient in a hospital requires a dose of analgesic medication; although false negatives in such a setting would be bad, false positives could be deadly and should be avoided at all costs. In that case, we could set a hard constraint on the ratio of false positives to false negatives and ignore any marginal increases that break that constraint.</p>
 <p>There are a number of useful measures we can use when accuracy is not ideal. Selecting the best from among them depends on factors such as the data you have, the types of question you are trying to answer, the consequences of false positives or false negatives, and so on. In other words, once again, you need to know what you are trying to do, why you are doing it, and where the risks are. Your evaluation measures should be aligned with those larger goals.</p>
 <p>Let’s work through some examples of other evaluation measures. In the examples below, we will focus primarily on evaluation measures for classification models, but we will also discuss evaluation for regression models.</p>
-<section id="balancing-false-positives-and-false-negatives-in-classification-models" class="level3" data-number="18.6.1">
-<h3 data-number="18.6.1" class="anchored" data-anchor-id="balancing-false-positives-and-false-negatives-in-classification-models"><span class="header-section-number">18.6.1</span> Balancing False Positives and False Negatives in Classification Models</h3>
+<section id="balancing-false-positives-and-false-negatives-in-classification-models" class="level3" data-number="19.6.1">
+<h3 data-number="19.6.1" class="anchored" data-anchor-id="balancing-false-positives-and-false-negatives-in-classification-models"><span class="header-section-number">19.6.1</span> Balancing False Positives and False Negatives in Classification Models</h3>
 <p>We can evaluate the quality of a machine learning model in terms of the balance between false positives and false negatives, or Type I and Type II errors, respectively. In the context of binary classification, false positives are when we predict that a negative instance is positive, and false negatives are when we predict that a positive instance is negative. Imagine you have a binary classification model to predict whether any given country is an autocracy. In this model, ‘autocracy’ is the “positive” class and ‘not autocracy’ (i.e.&nbsp;democracy) is the “negative class.” If your model predicted that New Zealand was an autocracy in 2020, that’s a false positive / Type I error. If it predicted that North Korea was a not an autocracy in 2020, that’s a false negative / Type II error.</p>
 <p>In some cases, we may prefer a model with slightly lower accuracy if it minimizes false positives or false negatives while still having good overall accuracy. This is especially important in models that might have some kind of real-world impact. Think about whether there are any potentially negative consequences that could result from one type of error versus the other, and if so, how much overall accuracy would you be willing to accept to reduce the risk of false positives or negatives?</p>
 <p>Generally, it’s easier to work with single score summaries-+ for evaluation metrics, like accuracy. The most common alternative single score evaluation metrics are Precision and Recall.</p>
@@ -933,32 +896,32 @@ F_1 = \frac{2}{Recall^{-1} + Precision^{-1}}
 <p>Recalling that Precision and recall are proportions, and therefore range between 0 and 1, as Precision and recall improve (get closer to 1), the F-Score will approach 1. As Precision and recall get closer to 0, the sum of their inverses grows towards infinity and the F-score will approach 0. In short: F-Scores that are close to 0 are bad, close to 1 are good.</p>
 <p>Sklearn’s implementation can be imported from the <code>metrics</code> module. Conveniently for us, Sklearn will report the Precision, Recall, and F-Score together in a <code>classification report</code>. The final column in the report – ‘support’ – is the number of true instances in that class, or the ‘ground truth’. Each class category in the report has it’s own line, as this is an example of binary classification.</p>
 </section>
-<section id="improving-binary-classification-with-curves" class="level3" data-number="18.6.2">
-<h3 data-number="18.6.2" class="anchored" data-anchor-id="improving-binary-classification-with-curves"><span class="header-section-number">18.6.2</span> Improving Binary Classification with Curves</h3>
+<section id="improving-binary-classification-with-curves" class="level3" data-number="19.6.2">
+<h3 data-number="19.6.2" class="anchored" data-anchor-id="improving-binary-classification-with-curves"><span class="header-section-number">19.6.2</span> Improving Binary Classification with Curves</h3>
 <p>Predictions about class labels – was New Zealand an autocracy in 2020? – depend on some underlying probability threshold. When our models classifies New Zealand as <em>not</em> an autocracy, it predicted the negative class because New Zealand is above some probability threshold that separates the boundaries between classes. In other words, the probability of it being a “not autocracy” is greater than the probability of it being an autocracy. For example, if the probability of a country being an autocracy is greater than .5, classify it as an autocracy, otherwise classify it as not an autocracy.</p>
 <p>What if there was a different probability threshold? What if, instead, our model would only classify countries as autocracies if the probability of them being in the autocratic class was above .8 instead of above .5? Shifting the threshold in this way reduces the false positive rate because it would make it harder for any given case to be classified as positive, i.e.&nbsp;autocratic. But what would that do to our rate of false negatives? Does it really matter if we inaccurately classify some autocracies as not autocracies if we prevent our models from incorrectly classifying some non-autocracies as autocracies?</p>
 <p>As always, it depends on your case, the questions you are trying to answer, the problems you are solving, and – more than anything else – the consequences of both types of error. You need to think carefully about these questions every time you begin a machine learning project. Once you have a sense of what an ideal model might look like (e.g.&nbsp;one with very few false positives), you can use Precision-Recall Curves to understand how different probability thresholds separating the positive and negative cases change the balance between false positives and false positives. We will briefly discuss these, as a full exploration is beyond the scope of this chapter.</p>
-<section id="precision-recall-curves" class="level4" data-number="18.6.2.1">
-<h4 data-number="18.6.2.1" class="anchored" data-anchor-id="precision-recall-curves"><span class="header-section-number">18.6.2.1</span> Precision-Recall Curves</h4>
+<section id="precision-recall-curves" class="level4" data-number="19.6.2.1">
+<h4 data-number="19.6.2.1" class="anchored" data-anchor-id="precision-recall-curves"><span class="header-section-number">19.6.2.1</span> Precision-Recall Curves</h4>
 <p>How good would your model be if you needed to ensure a minimum of 90% Recall – that is, if you needed to correctly identify at least 90% of the true positives in the data? Again, depending on the specifics of your project, maximizing your models performance on one dimension, <em>while still being good enough on other dimensions</em>, is better than relentlessly pursuing small improvements in overall accuracy.</p>
 <p>Precision-Recall curves let us visualize the tradeoffs between these two metrics and understand their impact on the quality of our classifiers at various probability thresholds. Models with high Precision and high Recall are better, so what we are looking for is a model where the curve is as close as possible to 1 on both axes. Note, however, that we will never <em>actually</em> get to <code>1,1</code> because of the inherent tradeoff between these two measures.</p>
 <p>Alternatively, we can compute the area under the curve, or <strong>AUC</strong>, to get a one-number summary of the quality of this model. The AUC is not necessarily a better approach when we are assessing one model, but since it is a single number summary it does make it easier to compare the performance of multiple models. Very simply, consider a randomly chosen pair of a true positive <span class="math inline">\(p\)</span> and a true negative <span class="math inline">\(q\)</span>: The AUC is a measure of how likely the model is to rank <span class="math inline">\(p\)</span> higher than <span class="math inline">\(q\)</span>, ranging between 0 and 1. A perfect classifier would always rank true positives higher than true negatives, so scores closer to 1 are better. Precision-Recall Curves are very helpful and informative when the number of cases in each class label are imbalanced.</p>
-<p>If you want further information and examples on Precision-Recall Curves, and ROC Curves, I suggest looking into <span class="citation" data-cites="geron2019hands">(<a href="references.html#ref-geron2019hands" role="doc-biblioref">Géron 2019</a>)</span> and <span class="citation" data-cites="muller2016introduction">(<a href="references.html#ref-muller2016introduction" role="doc-biblioref">Müller and Guido 2016</a>)</span>.</p>
+<p>If you want further information and examples on Precision-Recall Curves, and ROC Curves, I suggest looking into <span class="citation" data-cites="geron2019hands">(<a href="#ref-geron2019hands" role="doc-biblioref">Géron 2019</a>)</span> and <span class="citation" data-cites="muller2016introduction">(<a href="#ref-muller2016introduction" role="doc-biblioref">Müller and Guido 2016</a>)</span>.</p>
 </section>
-<section id="beyond-binary-classifiers" class="level4" data-number="18.6.2.2">
-<h4 data-number="18.6.2.2" class="anchored" data-anchor-id="beyond-binary-classifiers"><span class="header-section-number">18.6.2.2</span> Beyond Binary Classifiers</h4>
+<section id="beyond-binary-classifiers" class="level4" data-number="19.6.2.2">
+<h4 data-number="19.6.2.2" class="anchored" data-anchor-id="beyond-binary-classifiers"><span class="header-section-number">19.6.2.2</span> Beyond Binary Classifiers</h4>
 <p>So far we have only considered measures for evaluating binary classifiers, but the evaluation metrics for multi-class predictions build on those of the binary tasks, so we can extend what we have just learned to these more complex models. We don’t have the room to cover them here, but if you’re interested in exploring multi-class evaluation metrics, feel free to check out our section on them which can be found in the <em>online supplemental material</em> for this textbook. Looks like the training results match up nicely with the test results!</p>
 <blockquote class="blockquote">
 <p><strong>Further Reading</strong></p>
-<p>As with the previous chapter, if you want to learn more about doing supervised machine learning with the models covered in this chapter, and many others, I recommend consulting the relevant chapters from Andreas M{"u}ller and Sarah Guido’s <span class="citation" data-cites="muller2016introduction">(<a href="references.html#ref-muller2016introduction" role="doc-biblioref">2016</a>)</span> <em>Introduction to Machine Learning with Python: A Guide for Data Scientists</em> or Aur{'e}lien G{'e}ron’s <span class="citation" data-cites="geron2019hands">(<a href="references.html#ref-geron2019hands" role="doc-biblioref">2019</a>)</span> <em>Hands-on machine learning with Scikit-Learn, Keras, and TensorFlow: Concepts, tools, and techniques to build intelligent systems</em>.</p>
+<p>As with the previous chapter, if you want to learn more about doing supervised machine learning with the models covered in this chapter, and many others, I recommend consulting the relevant chapters from Andreas M{"u}ller and Sarah Guido’s <span class="citation" data-cites="muller2016introduction">(<a href="#ref-muller2016introduction" role="doc-biblioref">2016</a>)</span> <em>Introduction to Machine Learning with Python: A Guide for Data Scientists</em> or Aur{'e}lien G{'e}ron’s <span class="citation" data-cites="geron2019hands">(<a href="#ref-geron2019hands" role="doc-biblioref">2019</a>)</span> <em>Hands-on machine learning with Scikit-Learn, Keras, and TensorFlow: Concepts, tools, and techniques to build intelligent systems</em>.</p>
 </blockquote>
 </section>
 </section>
 </section>
-<section id="conclusion" class="level2" data-number="18.7">
-<h2 data-number="18.7" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">18.7</span> CONCLUSION</h2>
-<section id="key-points" class="level3" data-number="18.7.1">
-<h3 data-number="18.7.1" class="anchored" data-anchor-id="key-points"><span class="header-section-number">18.7.1</span> Key Points</h3>
+<section id="conclusion" class="level2" data-number="19.7">
+<h2 data-number="19.7" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">19.7</span> CONCLUSION</h2>
+<section id="key-points" class="level3" data-number="19.7.1">
+<h3 data-number="19.7.1" class="anchored" data-anchor-id="key-points"><span class="header-section-number">19.7.1</span> Key Points</h3>
 <ul>
 <li>Learned how to set up, build, fit, and interpret supervised learning tree-based classifiers, including decision trees and ensemble classifiers</li>
 <li>Explored how pipelines help prevent data leakage while also facilitating grid searches and cross-validation</li>
@@ -968,7 +931,7 @@ F_1 = \frac{2}{Recall^{-1} + Precision^{-1}}
 </ul>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="refs" class="references csl-bib-body hanging-indent" role="list">
 <div id="ref-francois2017deep" class="csl-entry" role="listitem">
 Chollet, Francois. 2018. <em>Deep Learning with Python</em>. Vol. 361. Manning New York.
 </div>
@@ -1021,7 +984,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const onCopySuccess = function(e) {
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -1053,50 +1027,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
-  }
-  const getTextToCopy = function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-  }
-  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-    text: getTextToCopy
   });
-  clipboard.on('success', onCopySuccess);
-  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
-    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-      text: getTextToCopy,
-      container: window.document.getElementById('quarto-embedded-source-code-modal')
-    });
-    clipboardModal.on('success', onCopySuccess);
-  }
-    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-    var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp('/' + window.location.host + '/');
-    var isInternal = (href) => {
-        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
-    }
-    // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
-    for (var i=0; i<links.length; i++) {
-      const link = links[i];
-      if (!isInternal(link.href)) {
-        // undo the damage that might have been done by quarto-nav.js in the case of
-        // links that we want to consider external
-        if (link.dataset.originalHref !== undefined) {
-          link.href = link.dataset.originalHref;
-        }
-      }
-    }
-  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+  function tippyHover(el, contentFn) {
     const config = {
       allowHTML: true,
+      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -1106,17 +1041,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start',
+      placement: 'bottom-start'
     };
-    if (contentFn) {
-      config.content = contentFn;
-    }
-    if (onTriggerFn) {
-      config.onTrigger = onTriggerFn;
-    }
-    if (onUntriggerFn) {
-      config.onUntrigger = onUntriggerFn;
-    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -1128,130 +1054,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      if (note) {
-        return note.innerHTML;
-      } else {
-        return "";
-      }
-    });
-  }
-  const xrefs = window.document.querySelectorAll('a.quarto-xref');
-  const processXRef = (id, note) => {
-    // Strip column container classes
-    const stripColumnClz = (el) => {
-      el.classList.remove("page-full", "page-columns");
-      if (el.children) {
-        for (const child of el.children) {
-          stripColumnClz(child);
-        }
-      }
-    }
-    stripColumnClz(note)
-    if (id === null || id.startsWith('sec-')) {
-      // Special case sections, only their first couple elements
-      const container = document.createElement("div");
-      if (note.children && note.children.length > 2) {
-        container.appendChild(note.children[0].cloneNode(true));
-        for (let i = 1; i < note.children.length; i++) {
-          const child = note.children[i];
-          if (child.tagName === "P" && child.innerText === "") {
-            continue;
-          } else {
-            container.appendChild(child.cloneNode(true));
-            break;
-          }
-        }
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(container);
-        }
-        return container.innerHTML
-      } else {
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(note);
-        }
-        return note.innerHTML;
-      }
-    } else {
-      // Remove any anchor links if they are present
-      const anchorLink = note.querySelector('a.anchorjs-link');
-      if (anchorLink) {
-        anchorLink.remove();
-      }
-      if (window.Quarto?.typesetMath) {
-        window.Quarto.typesetMath(note);
-      }
-      // TODO in 1.5, we should make sure this works without a callout special case
-      if (note.classList.contains("callout")) {
-        return note.outerHTML;
-      } else {
-        return note.innerHTML;
-      }
-    }
-  }
-  for (var i=0; i<xrefs.length; i++) {
-    const xref = xrefs[i];
-    tippyHover(xref, undefined, function(instance) {
-      instance.disable();
-      let url = xref.getAttribute('href');
-      let hash = undefined; 
-      if (url.startsWith('#')) {
-        hash = url;
-      } else {
-        try { hash = new URL(url).hash; } catch {}
-      }
-      if (hash) {
-        const id = hash.replace(/^#\/?/, "");
-        const note = window.document.getElementById(id);
-        if (note !== null) {
-          try {
-            const html = processXRef(id, note.cloneNode(true));
-            instance.setContent(html);
-          } finally {
-            instance.enable();
-            instance.show();
-          }
-        } else {
-          // See if we can fetch this
-          fetch(url.split('#')[0])
-          .then(res => res.text())
-          .then(html => {
-            const parser = new DOMParser();
-            const htmlDoc = parser.parseFromString(html, "text/html");
-            const note = htmlDoc.getElementById(id);
-            if (note !== null) {
-              const html = processXRef(id, note);
-              instance.setContent(html);
-            } 
-          }).finally(() => {
-            instance.enable();
-            instance.show();
-          });
-        }
-      } else {
-        // See if we can fetch a full url (with no hash to target)
-        // This is a special case and we should probably do some content thinning / targeting
-        fetch(url)
-        .then(res => res.text())
-        .then(html => {
-          const parser = new DOMParser();
-          const htmlDoc = parser.parseFromString(html, "text/html");
-          const note = htmlDoc.querySelector('main.content');
-          if (note !== null) {
-            // This should only happen for chapter cross references
-            // (since there is no id in the URL)
-            // remove the first header
-            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
-              note.children[0].remove();
-            }
-            const html = processXRef(null, note);
-            instance.setContent(html);
-          } 
-        }).finally(() => {
-          instance.enable();
-          instance.show();
-        });
-      }
-    }, function(instance) {
+      return note.innerHTML;
     });
   }
       let selectedAnnoteEl;
@@ -1295,7 +1098,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
-            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -1321,32 +1123,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
-        // Handle positioning of the toggle
-    window.addEventListener(
-      "resize",
-      throttle(() => {
-        elRect = undefined;
-        if (selectedAnnoteEl) {
-          selectCodeLines(selectedAnnoteEl);
-        }
-      }, 10)
-    );
-    function throttle(fn, ms) {
-    let throttle = false;
-    let timer;
-      return (...args) => {
-        if(!throttle) { // first call gets through
-            fn.apply(this, args);
-            throttle = true;
-        } else { // all the others get throttled
-            if(timer) clearTimeout(timer); // cancel #2
-            timer = setTimeout(() => {
-              fn.apply(this, args);
-              timer = throttle = false;
-            }, ms);
-        }
-      };
-    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -1408,13 +1184,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./supervised-learning.html" class="pagination-link" aria-label="Supervised Machine Learning">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Supervised Machine Learning</span></span>
+      <a href="./supervised-learning.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Supervised Machine Learning</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./causality.html" class="pagination-link" aria-label="Causality">
-        <span class="nav-page-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Causality</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./causality.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Causality</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -1422,5 +1198,4 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
-
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/UWNETLAB/dcss_supplementary/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
+</body></html>

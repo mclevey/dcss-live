@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.56">
+<meta name="generator" content="quarto-1.3.450">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>20&nbsp; Probability 101 – Doing Computational Social Science&lt;br&gt;[The **Continuous Development** Edition]{.small}</title>
+<title>Doing Computational Social ScienceThe Continuous Development Edition - 21&nbsp; Probability 101</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -22,7 +22,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -33,7 +33,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -82,13 +82,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   "collapse-after": 3,
   "panel-placement": "start",
   "type": "textbox",
-  "limit": 50,
-  "keyboard-shortcut": [
-    "f",
-    "/",
-    "s"
-  ],
-  "show-item-context": false,
+  "limit": 20,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -97,42 +91,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
-    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
 }</script>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="custom.css">
 </head>
@@ -143,13 +109,13 @@ window.Quarto = {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./supervised-learning.html">**PREDICTION &amp; INFERENCE**</a></li><li class="breadcrumb-item"><a href="./probability.html"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Probability 101</span></a></li></ol></nav>
-        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-        </a>
-      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./supervised-learning.html"><strong>PREDICTION &amp; INFERENCE</strong></a></li><li class="breadcrumb-item"><a href="./probability.html"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Probability 101</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -158,7 +124,7 @@ window.Quarto = {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
       <a href="./index.html" class="sidebar-logo-link">
       <img src="./figures/logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
@@ -166,25 +132,25 @@ window.Quarto = {
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Doing Computational Social Science<br><span class="small">The <strong>Continuous Development</strong> Edition</span></a> 
         <div class="sidebar-tools-main">
-    <a href="https://github.com/UWNETLAB/dcss_supplementary/tree/master/book/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="https://github.com/UWNETLAB/dcss_supplementary/tree/master/book/" rel="" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
     <div class="dropdown">
-      <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
+      <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Share"><i class="bi bi-share"></i></a>
       <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
           <li>
             <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=|url|">
-              <i class="bi bi-twitter pe-1"></i>
+              <i class="bi bi-bi-twitter pe-1"></i>
             Twitter
             </a>
           </li>
           <li>
             <a class="dropdown-item sidebar-tools-main-item" href="https://www.facebook.com/sharer/sharer.php?u=|url|">
-              <i class="bi bi-facebook pe-1"></i>
+              <i class="bi bi-bi-facebook pe-1"></i>
             Facebook
             </a>
           </li>
           <li>
             <a class="dropdown-item sidebar-tools-main-item" href="https://www.linkedin.com/sharing/share-offsite/?url=|url|">
-              <i class="bi bi-linkedin pe-1"></i>
+              <i class="bi bi-bi-linkedin pe-1"></i>
             LinkedIn
             </a>
           </li>
@@ -206,19 +172,25 @@ window.Quarto = {
  <span class="menu-text">🏠</span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction</span></a>
+  </div>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
- <span class="menu-text"><strong>RESEARCH COMPUTING</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text"><strong>COMPUTING</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./getting-started.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Getting Started</span></span></a>
+  <a href="./setting-up.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Setting up</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -233,71 +205,89 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Python 102</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./processing-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Processing Data</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
- <span class="menu-text"><strong>MINDFUL MODELING</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text"><strong>WORKFLOW</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./metaphor-map-reduction.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Modeling as metaphor, map, and reduction</span></span></a>
+  <a href="./mindful-modelling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Mindful modelling</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./iterative-workflow.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Iterative workflows</span></span></a>
+  <a href="./iteration.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title"><del>Sequential</del> iterative modelling</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
- <span class="menu-text"><strong>OBTAINING DATA</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+ <span class="menu-text"><strong>DATA</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./sampling-and-survey-data.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title"><del>Processing Structured Data</del> Sampling and Survey Data</span></span></a>
+  <a href="./survey-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Survey Data</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./web-data-apis.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Web data (APIs)</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Web data (APIs)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./web-data-scraping.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Web data (Scraping)</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Web data (Scraping)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./audio-files-and-documents.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Audio files and documents</span></span></a>
+  <a href="./audio-and-document-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Audio and document data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./text-as-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Text as Data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./relational-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Relational data</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
- <span class="menu-text"><strong>EXPLORING</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+ <span class="menu-text"><strong>DISCOVERY</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -305,52 +295,40 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./exploratory-data-analysis.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Exploratory data analysis (EDA) <!-- Exploring with purpose --></span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Exploring with purpose</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./association-and-latent-variables.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Association and latent variables</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./text-as-data.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Text as Data</span></span></a>
+  <a href="./reduction-and-latent-dimensions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Reduction and latent dimensions</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./mapping-text.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Text similarity and latent semantic space</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./networks-as-not-data.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Networks and relational thinking</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Text similarity and latent semantic space</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./centrality.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Centrality</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Centrality</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./mapping-network-structure.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Mapping network structure</span></span></a>
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Mapping network structure</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
  <span class="menu-text"><strong>PREDICTION &amp; INFERENCE</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -358,46 +336,46 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./supervised-learning.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Supervised Machine Learning</span></span></a>
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Supervised Machine Learning</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./prediction-and-classification.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Prediction and classification</span></span></a>
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Prediction and classification</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./causality.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Causality</span></span></a>
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Causality</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./probability.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Probability 101</span></span></a>
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Probability 101</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./credibility.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Credibility</span></span></a>
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Credibility</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./measurement-and-missingness.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Measurement and missingness</span></span></a>
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Measurement and missingness</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true">
  <span class="menu-text"><strong>MODELING</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -405,58 +383,58 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./linear-regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Bayesian Regression Models with Probabilistic Programming</span></span></a>
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Bayesian Regression Models with Probabilistic Programming</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./multilevel-regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Multilevel regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Multilevel regression</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./generalized-linear-models.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Generalized Linear Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Generalized Linear Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./structural-causal-models.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Structural causal models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Structural causal models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./modeling-texts-lda.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Modeling text with LDA topic models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Modeling text with LDA topic models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./modeling-networks.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Latent structure in networks</span></span></a>
+ <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Latent structure in networks</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./agent-based-models.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Agent-based models (ABMs)</span></span></a>
+ <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Agent-based models (ABMs)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./diffusion-opinion-cultural-cognition.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Diffusion, opinion dynamics, and cultural cognition</span></span></a>
+ <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Diffusion, opinion dynamics, and cultural cognition</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true">
  <span class="menu-text"><strong>DEEP LEARNING</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -464,34 +442,34 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./artificial-neural-networks-fnn-rnn-cnn.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Artificial neural networks 101</span></span></a>
+ <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Artificial neural networks</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./language-models-and-embeddings.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Processing Natural Language Data</span></span></a>
+ <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Language models and word embeddings</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./transformer-revolution.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">The transformer revolution</span></span></a>
+ <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">The transformer revolution</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./modeling-text-transformer-topic-models.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Modeling text: transformer topic models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Modeling text: transformer topic models</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
- <span class="menu-text"><strong>PROFESSIONAL RESPONSIBILITIES</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" aria-expanded="true">
+ <span class="menu-text"><strong>RESPONSIBILITIES</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -499,19 +477,19 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ethical-css.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Research Ethics, Politics, and Practices</span></span></a>
+ <span class="menu-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">Ethical CSS</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./open-css.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">Open computational social science</span></span></a>
+ <span class="menu-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">Open CSS</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./future-css.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">Future computational social science</span></span></a>
+ <span class="menu-text"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">Future CSS</span></span></a>
   </div>
 </li>
       </ul>
@@ -531,58 +509,58 @@ window.Quarto = {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./courses.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">Courses and Workshops</span></span></a>
+ <span class="menu-text"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title">Courses and Workshops</span></span></a>
   </div>
 </li>
     </ul>
     </div>
 </nav>
-<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link active" data-scroll-target="#learning-objectives"><span class="header-section-number">20.1</span> LEARNING OBJECTIVES</a></li>
-  <li><a href="#learning-materials" id="toc-learning-materials" class="nav-link" data-scroll-target="#learning-materials"><span class="header-section-number">20.2</span> LEARNING MATERIALS</a></li>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction"><span class="header-section-number">20.3</span> INTRODUCTION</a>
+  <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link active" data-scroll-target="#learning-objectives"><span class="header-section-number">21.1</span> LEARNING OBJECTIVES</a></li>
+  <li><a href="#learning-materials" id="toc-learning-materials" class="nav-link" data-scroll-target="#learning-materials"><span class="header-section-number">21.2</span> LEARNING MATERIALS</a></li>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction"><span class="header-section-number">21.3</span> INTRODUCTION</a>
   <ul class="collapse">
-  <li><a href="#imports" id="toc-imports" class="nav-link" data-scroll-target="#imports"><span class="header-section-number">20.3.1</span> Imports</a></li>
+  <li><a href="#imports" id="toc-imports" class="nav-link" data-scroll-target="#imports"><span class="header-section-number">21.3.1</span> Imports</a></li>
   </ul></li>
-  <li><a href="#foundational-concepts-in-probability-theory" id="toc-foundational-concepts-in-probability-theory" class="nav-link" data-scroll-target="#foundational-concepts-in-probability-theory"><span class="header-section-number">20.4</span> FOUNDATIONAL CONCEPTS IN PROBABILITY THEORY</a></li>
-  <li><a href="#probability-distributions-and-likelihood-functions" id="toc-probability-distributions-and-likelihood-functions" class="nav-link" data-scroll-target="#probability-distributions-and-likelihood-functions"><span class="header-section-number">20.5</span> PROBABILITY DISTRIBUTIONS AND LIKELIHOOD FUNCTIONS</a>
+  <li><a href="#foundational-concepts-in-probability-theory" id="toc-foundational-concepts-in-probability-theory" class="nav-link" data-scroll-target="#foundational-concepts-in-probability-theory"><span class="header-section-number">21.4</span> FOUNDATIONAL CONCEPTS IN PROBABILITY THEORY</a></li>
+  <li><a href="#probability-distributions-and-likelihood-functions" id="toc-probability-distributions-and-likelihood-functions" class="nav-link" data-scroll-target="#probability-distributions-and-likelihood-functions"><span class="header-section-number">21.5</span> PROBABILITY DISTRIBUTIONS AND LIKELIHOOD FUNCTIONS</a>
   <ul class="collapse">
-  <li><a href="#discrete-distributions-probability-mass-functions" id="toc-discrete-distributions-probability-mass-functions" class="nav-link" data-scroll-target="#discrete-distributions-probability-mass-functions"><span class="header-section-number">20.5.1</span> Discrete Distributions, Probability Mass Functions</a></li>
+  <li><a href="#discrete-distributions-probability-mass-functions" id="toc-discrete-distributions-probability-mass-functions" class="nav-link" data-scroll-target="#discrete-distributions-probability-mass-functions"><span class="header-section-number">21.5.1</span> Discrete Distributions, Probability Mass Functions</a></li>
   </ul></li>
-  <li><a href="#continuous-distributions-probability-density-functions" id="toc-continuous-distributions-probability-density-functions" class="nav-link" data-scroll-target="#continuous-distributions-probability-density-functions"><span class="header-section-number">20.6</span> CONTINUOUS DISTRIBUTIONS, PROBABILITY DENSITY FUNCTIONS</a>
+  <li><a href="#continuous-distributions-probability-density-functions" id="toc-continuous-distributions-probability-density-functions" class="nav-link" data-scroll-target="#continuous-distributions-probability-density-functions"><span class="header-section-number">21.6</span> CONTINUOUS DISTRIBUTIONS, PROBABILITY DENSITY FUNCTIONS</a>
   <ul class="collapse">
-  <li><a href="#the-normal-distribution" id="toc-the-normal-distribution" class="nav-link" data-scroll-target="#the-normal-distribution"><span class="header-section-number">20.6.1</span> The Normal Distribution</a></li>
+  <li><a href="#the-normal-distribution" id="toc-the-normal-distribution" class="nav-link" data-scroll-target="#the-normal-distribution"><span class="header-section-number">21.6.1</span> The Normal Distribution</a></li>
   </ul></li>
-  <li><a href="#joint-and-conditional-probabilities" id="toc-joint-and-conditional-probabilities" class="nav-link" data-scroll-target="#joint-and-conditional-probabilities"><span class="header-section-number">20.7</span> JOINT AND CONDITIONAL PROBABILITIES</a>
+  <li><a href="#joint-and-conditional-probabilities" id="toc-joint-and-conditional-probabilities" class="nav-link" data-scroll-target="#joint-and-conditional-probabilities"><span class="header-section-number">21.7</span> JOINT AND CONDITIONAL PROBABILITIES</a>
   <ul class="collapse">
-  <li><a href="#joint-probabilities" id="toc-joint-probabilities" class="nav-link" data-scroll-target="#joint-probabilities"><span class="header-section-number">20.7.1</span> Joint Probabilities</a></li>
-  <li><a href="#conditional-probability" id="toc-conditional-probability" class="nav-link" data-scroll-target="#conditional-probability"><span class="header-section-number">20.7.2</span> Conditional Probability</a></li>
+  <li><a href="#joint-probabilities" id="toc-joint-probabilities" class="nav-link" data-scroll-target="#joint-probabilities"><span class="header-section-number">21.7.1</span> Joint Probabilities</a></li>
+  <li><a href="#conditional-probability" id="toc-conditional-probability" class="nav-link" data-scroll-target="#conditional-probability"><span class="header-section-number">21.7.2</span> Conditional Probability</a></li>
   </ul></li>
-  <li><a href="#bayesian-inference" id="toc-bayesian-inference" class="nav-link" data-scroll-target="#bayesian-inference"><span class="header-section-number">20.8</span> BAYESIAN INFERENCE</a>
+  <li><a href="#bayesian-inference" id="toc-bayesian-inference" class="nav-link" data-scroll-target="#bayesian-inference"><span class="header-section-number">21.8</span> BAYESIAN INFERENCE</a>
   <ul class="collapse">
-  <li><a href="#bayes-theorem" id="toc-bayes-theorem" class="nav-link" data-scroll-target="#bayes-theorem"><span class="header-section-number">20.8.1</span> Bayes’ Theorem</a></li>
-  <li><a href="#the-components-of-bayes-theorem" id="toc-the-components-of-bayes-theorem" class="nav-link" data-scroll-target="#the-components-of-bayes-theorem"><span class="header-section-number">20.8.2</span> The Components of Bayes’ Theorem:</a></li>
+  <li><a href="#bayes-theorem" id="toc-bayes-theorem" class="nav-link" data-scroll-target="#bayes-theorem"><span class="header-section-number">21.8.1</span> Bayes’ Theorem</a></li>
+  <li><a href="#the-components-of-bayes-theorem" id="toc-the-components-of-bayes-theorem" class="nav-link" data-scroll-target="#the-components-of-bayes-theorem"><span class="header-section-number">21.8.2</span> The Components of Bayes’ Theorem:</a></li>
   </ul></li>
-  <li><a href="#posterior-probability" id="toc-posterior-probability" class="nav-link" data-scroll-target="#posterior-probability"><span class="header-section-number">20.9</span> POSTERIOR PROBABILITY</a></li>
-  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">20.10</span> CONCLUSION</a>
+  <li><a href="#posterior-probability" id="toc-posterior-probability" class="nav-link" data-scroll-target="#posterior-probability"><span class="header-section-number">21.9</span> POSTERIOR PROBABILITY</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">21.10</span> CONCLUSION</a>
   <ul class="collapse">
-  <li><a href="#key-points" id="toc-key-points" class="nav-link" data-scroll-target="#key-points"><span class="header-section-number">20.10.1</span> Key Points</a></li>
+  <li><a href="#key-points" id="toc-key-points" class="nav-link" data-scroll-target="#key-points"><span class="header-section-number">21.10.1</span> Key Points</a></li>
   </ul></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/UWNETLAB/dcss_supplementary/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/UWNETLAB/dcss_supplementary/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./supervised-learning.html">**PREDICTION &amp; INFERENCE**</a></li><li class="breadcrumb-item"><a href="./probability.html"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Probability 101</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Probability 101</span></h1>
+<h1 class="title"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Probability 101</span></h1>
 </div>
 
 
@@ -595,16 +573,14 @@ window.Quarto = {
   </div>
   
 
-
 </header>
-
 
 <p>::: ## Planned Changes</p>
 <p>A full rewrite.</p>
 <!-- {{< include _statistical-machine-learning-and-generative-modelling.qmd >}} -->
 <p>:::</p>
-<section id="learning-objectives" class="level2" data-number="20.1">
-<h2 data-number="20.1" class="anchored" data-anchor-id="learning-objectives"><span class="header-section-number">20.1</span> LEARNING OBJECTIVES</h2>
+<section id="learning-objectives" class="level2" data-number="21.1">
+<h2 data-number="21.1" class="anchored" data-anchor-id="learning-objectives"><span class="header-section-number">21.1</span> LEARNING OBJECTIVES</h2>
 <ul>
 <li>Explain the meaning of key concepts in probability theory, including
 <ul>
@@ -617,16 +593,16 @@ window.Quarto = {
 <li>Understand Bayes’ theorem and its component parts</li>
 </ul>
 </section>
-<section id="learning-materials" class="level2" data-number="20.2">
-<h2 data-number="20.2" class="anchored" data-anchor-id="learning-materials"><span class="header-section-number">20.2</span> LEARNING MATERIALS</h2>
+<section id="learning-materials" class="level2" data-number="21.2">
+<h2 data-number="21.2" class="anchored" data-anchor-id="learning-materials"><span class="header-section-number">21.2</span> LEARNING MATERIALS</h2>
 <p>You can find the online learning materials for this chapter in <code>doing_computational_social_science/Chapter_26</code>. <code>cd</code> into the directory and launch your Jupyter Server.</p>
 </section>
-<section id="introduction" class="level2" data-number="20.3">
-<h2 data-number="20.3" class="anchored" data-anchor-id="introduction"><span class="header-section-number">20.3</span> INTRODUCTION</h2>
+<section id="introduction" class="level2" data-number="21.3">
+<h2 data-number="21.3" class="anchored" data-anchor-id="introduction"><span class="header-section-number">21.3</span> INTRODUCTION</h2>
 <p>In the previous chapter, we discussed how the Frequentist paradigm differs from the Bayesian interpretation probability and contrasted discriminative models with generative models. Throughout that discussion, we didn’t actually discuss the mathematics of probability, which are the same regardless of your philosophical persuasion, or the role that probabilities play in the models you develop.</p>
 <p>This chapter is a primer on probability theory. Unlike other introductions to probability, we won’t be getting into any mathematical proofs; there are plenty of those available elsewhere. Instead, we will clarify some foundational concepts and aim to build a bit of intuition about how different types of probability distributions work through simple simulations. Though not especially broad or deep, this introduction will provide enough knowledge of probability that you will be able to understand, develop, critique, interpret, and revise generative models for structured, network / relational, and text data.</p>
-<section id="imports" class="level3" data-number="20.3.1">
-<h3 data-number="20.3.1" class="anchored" data-anchor-id="imports"><span class="header-section-number">20.3.1</span> Imports</h3>
+<section id="imports" class="level3" data-number="21.3.1">
+<h3 data-number="21.3.1" class="anchored" data-anchor-id="imports"><span class="header-section-number">21.3.1</span> Imports</h3>
 <div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> math</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">42</span>)</span>
@@ -639,8 +615,8 @@ window.Quarto = {
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>set_style()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 </section>
-<section id="foundational-concepts-in-probability-theory" class="level2" data-number="20.4">
-<h2 data-number="20.4" class="anchored" data-anchor-id="foundational-concepts-in-probability-theory"><span class="header-section-number">20.4</span> FOUNDATIONAL CONCEPTS IN PROBABILITY THEORY</h2>
+<section id="foundational-concepts-in-probability-theory" class="level2" data-number="21.4">
+<h2 data-number="21.4" class="anchored" data-anchor-id="foundational-concepts-in-probability-theory"><span class="header-section-number">21.4</span> FOUNDATIONAL CONCEPTS IN PROBABILITY THEORY</h2>
 <p>Frequentists and Bayesians differ in their philosophies but not in their mathematics. Both paradigms are built on a solid mathematical foundation of <strong>probability distributions</strong> that define the relative probability of <em>all</em> potential events that could result from some pre-defined system, experiment, or trial.</p>
 <p>The starting point for probability theory is the <strong>sample space</strong>, sometimes referred to using the symbol <span class="math inline">\(S\)</span>. The sample space is simply an exhaustive list of all the possible <strong>events</strong> (or outcomes) that could result from some trial or experiment. The sample space for a coin toss, for example, consists of Heads and Tails, but not 42 or a bag of catnip. Once we have defined the sample space, we assign probabilities to every possible event.</p>
 <p>Probability distributions are just sample spaces where every possible event has an associated probability. They are governed by three axioms:</p>
@@ -657,7 +633,7 @@ window.Quarto = {
 <p><span class="math display">\[
 \cap P(A_{i}) = \emptyset, \text{ then } \cup P(A_i) = P(A_1) + P(A_2) + ... + P(A_n)
 \]</span></p>
-<p>These two expressions are saying the same thing. The <span class="math inline">\(\cup\)</span> represents the set theoretic concept of the union of two events and the <span class="math inline">\(\cap\)</span> symbol represents their intersection. Consider the simple venn diagram in <a href="#fig-25_01" class="quarto-xref">Figure&nbsp;<span>20.1</span></a>.</p>
+<p>These two expressions are saying the same thing. The <span class="math inline">\(\cup\)</span> represents the set theoretic concept of the union of two events and the <span class="math inline">\(\cap\)</span> symbol represents their intersection. Consider the simple venn diagram in <a href="#fig-25_01">Figure&nbsp;<span class="quarto-unresolved-ref">fig-25_01</span></a>.</p>
 <p><embed src="figures/sets.pdf" class="img-fluid"></p>
 <p>Two events, A and B, intersect in the top of the figure. The point at which they intersect is the portion of the venn diagram where the two events overlap one another. This intersection is represented by the symbol <span class="math inline">\(\cap\)</span>. If the two events do <em>not</em> intersect, as in the bottom of the figure, then the intersection (<span class="math inline">\(\cap\)</span>) of the two sets is empty. We represent this emptiness with the symbol <span class="math inline">\(\emptyset\)</span>. In essence, all the third axiom is saying is that if two events are disjoint, then the probability of either of those two events happening is the probability of the first event plus the probability of the second event. That’s it.</p>
 <p>These iron-clad rules are paraphrased versions of the original trio, known as ‘Kolmogorov Axioms’ after the mathematician Andrey Kolmogorov. Together, they produce a number of useful features that we’ll explore and exploit throughout the rest of this book.</p>
@@ -666,14 +642,14 @@ window.Quarto = {
 <p>Now, let’s start learning about the properties of some specific probability distributions. I’ll be perfectly honest, most of this is not inherently interesting to applied researchers, but a bit of knowledge here goes a <em>very</em> long way. In the chapters that follow, I will assume you know the contents of this chapter in particular, even though you might be flipping back to it from time to time to remind yourself of the details. That’s perfectly fine!</p>
 <p>Finally, as with other chapters in this book we’ll be discussing some equations. As promised at the start of the book, these equations are not meant to carry the explanatory weight here. If you are used to seeing and thinking about equations, great. If not, that’s OK too. You still need to understand how the distributions work and what kinds of parameters they take, but it’s possible to gain that knowledge from the simulations instead of the formulas. Ideally, the simulations will help you understand the equations, and the two can work together.</p>
 </section>
-<section id="probability-distributions-and-likelihood-functions" class="level2" data-number="20.5">
-<h2 data-number="20.5" class="anchored" data-anchor-id="probability-distributions-and-likelihood-functions"><span class="header-section-number">20.5</span> PROBABILITY DISTRIBUTIONS AND LIKELIHOOD FUNCTIONS</h2>
+<section id="probability-distributions-and-likelihood-functions" class="level2" data-number="21.5">
+<h2 data-number="21.5" class="anchored" data-anchor-id="probability-distributions-and-likelihood-functions"><span class="header-section-number">21.5</span> PROBABILITY DISTRIBUTIONS AND LIKELIHOOD FUNCTIONS</h2>
 <p>The mathematics of probability vary depending on whether we are working with discrete or continuous distributions, and then there are further differences based on the specific discrete or continuous distributions. To help you understand some of the differences and build some intuition, we’ll walk through a few examples of widely-used distributions. We’ll start with discrete distributions and “probability mass functions,” which represents the probability that a discrete random variable for a probability distribution is a specific value. Then we’ll move on to continuous distributions and “probability density functions.”</p>
-<section id="discrete-distributions-probability-mass-functions" class="level3" data-number="20.5.1">
-<h3 data-number="20.5.1" class="anchored" data-anchor-id="discrete-distributions-probability-mass-functions"><span class="header-section-number">20.5.1</span> Discrete Distributions, Probability Mass Functions</h3>
+<section id="discrete-distributions-probability-mass-functions" class="level3" data-number="21.5.1">
+<h3 data-number="21.5.1" class="anchored" data-anchor-id="discrete-distributions-probability-mass-functions"><span class="header-section-number">21.5.1</span> Discrete Distributions, Probability Mass Functions</h3>
 <p>Discrete distributions are used when we have a limited number of distinct countable outcomes. For example, we can flip Heads or Tails on a coin, but nothing in between. Similarly, we can roll a 3 or a 4 on a regular die, but we can’t roll a 3.5. Below, we will learn a bit about three discrete probability distributions that are commonly used in models: the Uniform, Bernoulli, and Binomial distributions.</p>
-<section id="everything-is-equally-likely-the-uniform-distribution" class="level4" data-number="20.5.1.1">
-<h4 data-number="20.5.1.1" class="anchored" data-anchor-id="everything-is-equally-likely-the-uniform-distribution"><span class="header-section-number">20.5.1.1</span> Everything is Equally Likely: The Uniform Distribution</h4>
+<section id="everything-is-equally-likely-the-uniform-distribution" class="level4" data-number="21.5.1.1">
+<h4 data-number="21.5.1.1" class="anchored" data-anchor-id="everything-is-equally-likely-the-uniform-distribution"><span class="header-section-number">21.5.1.1</span> Everything is Equally Likely: The Uniform Distribution</h4>
 <p>The uniform distribution is probably familiar to you in practice, if not by name. <strong>A uniform probability distribution describes a collection of possible outcomes for a random process where each outcome is equally (uniformly) likely.</strong> To compute the probability of an event given this assumption that all events are equally likely, we simply divide by the number of possible events,</p>
 <p><span class="math display">\[
 P(x) = \frac{1}{n}
@@ -692,7 +668,7 @@ P(7) = \frac{1}{10} = 0.1
 <div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>n_possible_events <span class="op">=</span> <span class="dv">6</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>samples <span class="op">=</span> np.random.randint(<span class="dv">1</span>, n_possible_events<span class="op">+</span><span class="dv">1</span>, <span class="dv">10_000</span>)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>Counter(samples)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Good! That’s exactly what we would expect to see (<code>1 / n_possible_events * 10_000 = 1666.666</code>) when drawing so many samples from a uniform distribution. But what if we had drawn a smaller number of samples? Let’s do few more simulations and visualize the results (<span class="quarto-unresolved-ref">?fig-25_02</span>). We will add a red line showing <span class="math inline">\(E[X]\)</span>, the expected value.</p>
+<p>Good! That’s exactly what we would expect to see (<code>1 / n_possible_events * 10_000 = 1666.666</code>) when drawing so many samples from a uniform distribution. But what if we had drawn a smaller number of samples? Let’s do few more simulations and visualize the results (<a href="#fig-25_02">Figure&nbsp;<span class="quarto-unresolved-ref">fig-25_02</span></a>). We will add a red line showing <span class="math inline">\(E[X]\)</span>, the expected value.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>uniform_sim_1 <span class="op">=</span> np.random.randint(<span class="dv">1</span>, n_possible_events<span class="op">+</span><span class="dv">1</span>, <span class="dv">6</span>)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>uniform_sim_2 <span class="op">=</span> np.random.randint(<span class="dv">1</span>, n_possible_events<span class="op">+</span><span class="dv">1</span>, <span class="dv">100</span>)</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>uniform_sim_3 <span class="op">=</span> np.random.randint(<span class="dv">1</span>, n_possible_events<span class="op">+</span><span class="dv">1</span>, <span class="dv">1_000</span>)</span>
@@ -743,20 +719,16 @@ P(7) = \frac{1}{10} = 0.1
 <span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
 <span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
 <span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'figures/25_01.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div id="fig-25_01" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-25_01-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/25_01.png" class="img-fluid figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-25_01-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;20.1: png
-</figcaption>
+<div id="fig-25_01" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="figures/25_01.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;21.1: png</figcaption>
 </figure>
 </div>
 <p>These four simple simulations show that we get closer and closer to the expected value the more samples we draw. Go ahead and vary the number of samples and re-run the code. You’ll find that the red line is always on the same y-value. Given a uniform distribution and in the case where the number of possible events is 6, the probability of any specific outcome of rolling our die is ~0.1666…, or ~16.67%.</p>
 </section>
-<section id="the-bernoulli-and-binomial-distributions" class="level4" data-number="20.5.1.2">
-<h4 data-number="20.5.1.2" class="anchored" data-anchor-id="the-bernoulli-and-binomial-distributions"><span class="header-section-number">20.5.1.2</span> The Bernoulli and Binomial Distributions</h4>
+<section id="the-bernoulli-and-binomial-distributions" class="level4" data-number="21.5.1.2">
+<h4 data-number="21.5.1.2" class="anchored" data-anchor-id="the-bernoulli-and-binomial-distributions"><span class="header-section-number">21.5.1.2</span> The Bernoulli and Binomial Distributions</h4>
 <p>The <strong>Bernoulli distribution</strong> is a bit different than the other distributions we examine in this chapter. It’s actually special case of the binomial distribution, which we will discuss in a moment. The Bernoulli distribution describes an experiment <em>with only a single sample</em>, where the outcome of the experiment is binary (e.g., 0 or 1, yes or no, heads or tails, tested positive for COVID-19 or not), and described by a single probability <span class="math inline">\(p\)</span>. Since we only have two possible outcomes, we only need to know the probability of <em>one</em> of those outcomes because the sum of the probabilities of all outcomes must equal 1. Necessarily, if the probability of testing positive for COVID-19 is 20%, the probability of testing negative is 80%.</p>
 <p>The <strong>binomial distribution</strong> is the extended case of the Bernoulli distribution. The binomial distribution models observing certain events over some kind of interval. Specifically, the events are Bernoulli trials: events with binary outcomes with a probability <span class="math inline">\(p\)</span> describing one outcome and <span class="math inline">\(q\)</span> describing the other. The interval is a discrete range of number of trials.</p>
 <p>The PMF for the binomial distribution models the number of events corresponding to probability <span class="math inline">\(p\)</span> observed over <span class="math inline">\(n\)</span> trials. The formula is:</p>
@@ -782,7 +754,7 @@ P(3) &amp;= 0.1171875
 <p>Again, let’s use simulations to deepen our understanding. We’ll need to provide the number of Bernoulli trials we would like to run. Since we can calculate the one probability using the other, we only need the probability of the “success” outcome, <span class="math inline">\(p\)</span>, of our Bernoulli trial. We also provide the number of random samples we draw from the binomial distribution.</p>
 <p>It is worth stressing the difference between the number of Bernoulli trials and the number of samples we draw. In the above example, <span class="math inline">\(n\)</span> is the number of Bernoulli trials, or coin flips. The number of samples we draw does not feature in the equation: each time we draw a sample, we are essentially flipping 10 coins and tallying the results.</p>
 <p>Before running the simulations, consider what would you <em>expect</em> to see given different values for the probability of the success condition, <span class="math inline">\(p\)</span>. If <span class="math inline">\(p\)</span> were 0.8, for example, what do you think you might see with an <span class="math inline">\(n\)</span> of 40? How do you think distribution would change with different values for <span class="math inline">\(n\)</span> and <span class="math inline">\(p\)</span>?</p>
-<p>The results are shown in <a href="#fig-25_03" class="quarto-xref">Figure&nbsp;<span>20.2</span></a>.</p>
+<p>The results are shown in <a href="#fig-25_03">Figure&nbsp;<span class="quarto-unresolved-ref">fig-25_03</span></a>.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>binomial_sim_1 <span class="op">=</span> np.random.binomial(<span class="dv">20</span>, <span class="fl">0.5</span>, <span class="dv">10_000</span>)</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>binomial_sim_2 <span class="op">=</span> np.random.binomial(<span class="dv">20</span>, <span class="fl">0.8</span>, <span class="dv">10_000</span>)</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>binomial_sim_3 <span class="op">=</span> np.random.binomial(<span class="dv">10</span>, <span class="fl">0.5</span>, <span class="dv">10_000</span>)</span>
@@ -826,25 +798,21 @@ P(3) &amp;= 0.1171875
 <span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
 <span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'figures/25_03.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div id="fig-25_03" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-25_03-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/25_03.png" class="img-fluid figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-25_03-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;20.2: png
-</figcaption>
+<div id="fig-25_03" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="figures/25_03.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;21.2: png</figcaption>
 </figure>
 </div>
 <p>There are, of course, other discrete probability distributions that are commonly used in probabilistic models. There is little to no point in trying to introduce them all here, and there are many fine introductions that go into considerable technical depth. But now you should have a pretty good understanding of the basic concepts and ideas, and you should know to expect unfamiliar distributions to have (<em>i</em>) some set of assumptions that make them more or less appropriate to use given the nature of what you are trying to model, and (<em>ii</em>) some set of parameters that govern the distribution, and which can be used to compute probabilities for different samples.</p>
 </section>
 </section>
 </section>
-<section id="continuous-distributions-probability-density-functions" class="level2" data-number="20.6">
-<h2 data-number="20.6" class="anchored" data-anchor-id="continuous-distributions-probability-density-functions"><span class="header-section-number">20.6</span> CONTINUOUS DISTRIBUTIONS, PROBABILITY DENSITY FUNCTIONS</h2>
+<section id="continuous-distributions-probability-density-functions" class="level2" data-number="21.6">
+<h2 data-number="21.6" class="anchored" data-anchor-id="continuous-distributions-probability-density-functions"><span class="header-section-number">21.6</span> CONTINUOUS DISTRIBUTIONS, PROBABILITY DENSITY FUNCTIONS</h2>
 <p>Everything we’ve seen so far in this chapter pertains to discrete distributions. Things are a bit different with continuous distributions, as there are an uncountably infinite number of different values a continuous distribution can take on. Counterintuitively, this means that the probability of any <em>specific</em> value in any continuous distribution (e.g., 8.985452) is 0; instead, we must describe the probability present across a <em>range</em> of values. Instead of using Probability Mass Functions (PMFs) to compute probabilities, we use <strong>Probability Density Functions</strong> (<strong>PDFs</strong>). Let’s see how this works by focusing on the ubiquitous normal distribution.</p>
-<section id="the-normal-distribution" class="level3" data-number="20.6.1">
-<h3 data-number="20.6.1" class="anchored" data-anchor-id="the-normal-distribution"><span class="header-section-number">20.6.1</span> The Normal Distribution</h3>
+<section id="the-normal-distribution" class="level3" data-number="21.6.1">
+<h3 data-number="21.6.1" class="anchored" data-anchor-id="the-normal-distribution"><span class="header-section-number">21.6.1</span> The Normal Distribution</h3>
 <p>The <strong>normal distribution</strong> (often called the <strong>‘Gaussian’ distribution</strong>) is foundational to traditional statistics. We don’t have the room to cover why it appears so frequently (in both nature and the scientific study thereof), but you’ve almost certainly seen it many times before. Regardless of the moniker we apply, the Normal Distribution describes a process that trends towards some mean value (<span class="math inline">\(\mu\)</span>) with data evenly spread around it in proportions that diminish the further away from the mean they are. We use the term ‘Standard Deviation’ (<span class="math inline">\(\sigma\)</span>) to describe how quickly the data diminishes; you might also encounter publications and software that describe it as ‘width’ or ‘scale’. The PDF for the normal distribution is this monstrosity:</p>
 <p><span class="math display">\[
 P(x) = \frac{1}{\sigma\sqrt{2\pi}}e^{-\frac{1}{2}(\frac{x-\mu}{\sigma})^2}
@@ -857,7 +825,7 @@ P(x) = \frac{1}{\sigma\sqrt{2\pi}}e^{-\frac{1}{2}(\frac{x-\mu}{\sigma})^2}
 <li><span class="math inline">\(\pi\)</span> is the mathematical constant pi (<span class="math inline">\(\approx\)</span> 3.14159…)</li>
 </ul>
 <p>A standard deviation of 0 indicates that every observation is the same as the mean value. The larger the standard deviation, the further away from the mean the average observation will be.</p>
-<p>Let’s start simulating! We’ll use Numpy’s <code>random.normal()</code> to perform four simulations, each pulling 10,000 samples from normal distributions with slightly different parameters. The first two arguments indicate the mean and standard deviation for the normal distribution, and the third indicates the number of samples we’ll draw. Results are shown in <a href="#fig-25_04" class="quarto-xref">Figure&nbsp;<span>20.3</span></a>.</p>
+<p>Let’s start simulating! We’ll use Numpy’s <code>random.normal()</code> to perform four simulations, each pulling 10,000 samples from normal distributions with slightly different parameters. The first two arguments indicate the mean and standard deviation for the normal distribution, and the third indicates the number of samples we’ll draw. Results are shown in <a href="#fig-25_04">Figure&nbsp;<span class="quarto-unresolved-ref">fig-25_04</span></a>.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>normal_sim_1 <span class="op">=</span> np.random.normal(<span class="dv">0</span>, <span class="fl">0.1</span>, <span class="dv">10_000</span>)</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>normal_sim_2 <span class="op">=</span> np.random.normal(<span class="dv">0</span>, <span class="fl">0.2</span>, <span class="dv">10_000</span>)</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>normal_sim_3 <span class="op">=</span> np.random.normal(<span class="dv">0</span>, <span class="fl">0.3</span>, <span class="dv">10_000</span>)</span>
@@ -881,19 +849,15 @@ P(x) = \frac{1}{\sigma\sqrt{2\pi}}e^{-\frac{1}{2}(\frac{x-\mu}{\sigma})^2}
 <span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>sns.despine(left<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
 <span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'figures/25_04.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div id="fig-25_04" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-25_04-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/25_04.png" class="img-fluid figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-25_04-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;20.3: png
-</figcaption>
+<div id="fig-25_04" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="figures/25_04.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;21.3: png</figcaption>
 </figure>
 </div>
 <p>As usual, deepen your understanding of how the normal distribution behaves by experimenting with different values of mu (<span class="math inline">\(\mu\)</span>) and sigma (<span class="math inline">\(\sigma\)</span>).</p>
-<section id="the-exponential-distribution" class="level4" data-number="20.6.1.1">
-<h4 data-number="20.6.1.1" class="anchored" data-anchor-id="the-exponential-distribution"><span class="header-section-number">20.6.1.1</span> The Exponential Distribution</h4>
+<section id="the-exponential-distribution" class="level4" data-number="21.6.1.1">
+<h4 data-number="21.6.1.1" class="anchored" data-anchor-id="the-exponential-distribution"><span class="header-section-number">21.6.1.1</span> The Exponential Distribution</h4>
 <p>Another important continuous distribution is the <strong>exponential distribution</strong>. Among other things, the exponential distribution is often used to model the half-life of radionuclide decay, which describes the amount of time it takes for half of a given mass of radioactive atoms to decay into other atoms. Like the other distributions that have shown up so far, we’ll be using it a few times in the chapters that follow.</p>
 <p>The PDF of the exponential distribution is normally given as:</p>
 <p><span class="math display">\[
@@ -911,7 +875,7 @@ P(x) = \lambda e^{\lambda x}
 <p><span class="math display">\[
 P(x) = \frac{1}{\beta} e^{-\frac{x}{\beta}}
 \]</span></p>
-<p>Let’s jump right into the simulations. Results shown in <a href="#fig-25_05" class="quarto-xref">Figure&nbsp;<span>20.4</span></a>.</p>
+<p>Let’s jump right into the simulations. Results shown in <a href="#fig-25_05">Figure&nbsp;<span class="quarto-unresolved-ref">fig-25_05</span></a>.</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>exponential_sim_1 <span class="op">=</span> np.random.exponential(<span class="dv">1</span>, <span class="dv">10000</span>)</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>exponential_sim_2 <span class="op">=</span> np.random.exponential(<span class="dv">2</span>, <span class="dv">10000</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots()</span>
@@ -927,14 +891,10 @@ P(x) = \frac{1}{\beta} e^{-\frac{x}{\beta}}
 <span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
 <span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
 <span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'figures/25_05.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div id="fig-25_05" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-25_05-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/25_05.png" class="img-fluid figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-25_05-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;20.4: png
-</figcaption>
+<div id="fig-25_05" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="figures/25_05.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;21.4: png</figcaption>
 </figure>
 </div>
 <p>As you can see from the simulations above, the Exponential distribution always assigns the greatest probability density to values closest to 0, with a long tail to the right. The value of <span class="math inline">\(\beta\)</span> or <span class="math inline">\(\lambda\)</span> influences how much of the probability density is in the tail.</p>
@@ -942,10 +902,10 @@ Figure&nbsp;20.4: png
 </section>
 </section>
 </section>
-<section id="joint-and-conditional-probabilities" class="level2" data-number="20.7">
-<h2 data-number="20.7" class="anchored" data-anchor-id="joint-and-conditional-probabilities"><span class="header-section-number">20.7</span> JOINT AND CONDITIONAL PROBABILITIES</h2>
-<section id="joint-probabilities" class="level3" data-number="20.7.1">
-<h3 data-number="20.7.1" class="anchored" data-anchor-id="joint-probabilities"><span class="header-section-number">20.7.1</span> Joint Probabilities</h3>
+<section id="joint-and-conditional-probabilities" class="level2" data-number="21.7">
+<h2 data-number="21.7" class="anchored" data-anchor-id="joint-and-conditional-probabilities"><span class="header-section-number">21.7</span> JOINT AND CONDITIONAL PROBABILITIES</h2>
+<section id="joint-probabilities" class="level3" data-number="21.7.1">
+<h3 data-number="21.7.1" class="anchored" data-anchor-id="joint-probabilities"><span class="header-section-number">21.7.1</span> Joint Probabilities</h3>
 <p>Up to this point, we’ve been primarily focused on <em>marginal probabilities</em>, though we haven’t called them that. <strong>Marginal probabilities</strong> describe events that are unconditional on other events (which is why you’ll also see us use <strong>unconditional probability</strong> to refer to the same kind of thing – the two terms are interchangeable). <strong>Joint probabilities</strong>, on the other hand, describe two or more events occurring together. Let us consider some simple examples.</p>
 <p>Think of a standard deck of cards without jokers: 52 cards with two colours (red and black) divided into 4 suits (Clubs, Diamonds, Hearts, Spades), each with 13 cards having values of Ace through 10, Jack, Queen, and King. If we wanted to know the probability of randomly drawing a single Jack of any suit from the deck, then we are talking about a <em>marginal</em> probability, because the probability of drawing a Jack is independent of other events in this scenario. As there are 4 Jacks in the 52 cards, we can express this probability with the following:</p>
 <p><span class="math display">\[\begin{align}
@@ -969,8 +929,8 @@ P(\text{Jack} \cap \text{Diamond}) &amp;= \frac{4}{52} \times \frac{13}{52} = \f
 \end{align}\]</span></p>
 <p>Finally, we have been representing joint probabilities here with the <span class="math inline">\(\cap\)</span> symbol. You may also see joint probabilities represented with commas, such as <span class="math inline">\(P(\text{Jack},\text{Diamond})\)</span>. There are no differences between the two; they mean the same thing.</p>
 </section>
-<section id="conditional-probability" class="level3" data-number="20.7.2">
-<h3 data-number="20.7.2" class="anchored" data-anchor-id="conditional-probability"><span class="header-section-number">20.7.2</span> Conditional Probability</h3>
+<section id="conditional-probability" class="level3" data-number="21.7.2">
+<h3 data-number="21.7.2" class="anchored" data-anchor-id="conditional-probability"><span class="header-section-number">21.7.2</span> Conditional Probability</h3>
 <p>Whereas marginal probabilities represent the probability of an event independent of other events and joint probabilities represent the probability of two or more events occurring together, <strong>conditional probabilities</strong> represent the probability of an event occurring <em>given that another has already occurred</em>. You’ll often see this relationship expressed using a statement like “the probability of A conditional upon B” or “the probability of A given B”.</p>
 <p>Once again we’ll think of drawing Jack of Diamonds from a deck of 52 cards, but under slightly different circumstances. Imagine this time that someone has already drawn a card and informed us that it’s a Diamond, and we would like to know the the probability that the card in their hand is the <em>Jack</em> of Diamonds. We’ll assuming our friend is honest and the card they’ve removed is indeed a Diamond, which means that <span class="math inline">\(P(Diamond) = 1\)</span>. Now we need to update our probabilities to account for this new certainty. Since that we know we’re dealing with Diamonds only, there is only one Jack that we could have drawn. But it could only have been drawn from the pool of 13 Diamonds.</p>
 <p>To represent the probability of an event, say <span class="math inline">\(A\)</span>, <em>given that another event</em>, say <span class="math inline">\(B\)</span><em>, has occurred,</em> we use the notation <span class="math inline">\(P(A \mid B)\)</span>. You can read the <span class="math inline">\(\mid\)</span> as “given;” in this case, the probability of observing a specific value for <span class="math inline">\(A\)</span> given a specific value for <span class="math inline">\(B\)</span> that you have already observed. Knowing these new pieces of information, we can adjust our previous probabilities to the following:</p>
@@ -988,11 +948,11 @@ P(\text{Jack} \mid \text{Diamond}) = \frac{\frac{1}{52}}{\frac{1}{4}} = \frac{1}
 \]</span></p>
 </section>
 </section>
-<section id="bayesian-inference" class="level2" data-number="20.8">
-<h2 data-number="20.8" class="anchored" data-anchor-id="bayesian-inference"><span class="header-section-number">20.8</span> BAYESIAN INFERENCE</h2>
+<section id="bayesian-inference" class="level2" data-number="21.8">
+<h2 data-number="21.8" class="anchored" data-anchor-id="bayesian-inference"><span class="header-section-number">21.8</span> BAYESIAN INFERENCE</h2>
 <p>So far, we’ve played around with the nuts and bolts of a few discrete and continuous probability distributions to better understand how they work. But all of this is, of course, just a means to an end. We want to understand how these distributions work <em>because we want to use them to develop models!</em> To develop models that are more interesting than the distributions we’ve considered to this point, we need to introduce one more piece of probability theory: Bayes’ theorem.</p>
-<section id="bayes-theorem" class="level3" data-number="20.8.1">
-<h3 data-number="20.8.1" class="anchored" data-anchor-id="bayes-theorem"><span class="header-section-number">20.8.1</span> Bayes’ Theorem</h3>
+<section id="bayes-theorem" class="level3" data-number="21.8.1">
+<h3 data-number="21.8.1" class="anchored" data-anchor-id="bayes-theorem"><span class="header-section-number">21.8.1</span> Bayes’ Theorem</h3>
 <p>The term “Bayesian” is derived from the surname of Reverend Thomas Bayes – a British statistician and Presbyterian minister of the first half of the 18th century. He’s primarily famous for two things:</p>
 <ol type="1">
 <li>Articulating a special-case solution for finding the probability of an unobserved random variable</li>
@@ -1006,8 +966,8 @@ P(A|B) = \frac{P(B|A)\times P(A)}{P(B)}
 <p>You can read this as “The probability of A conditional on B is equal to the probability of B conditional upon A, times the marginal probability of A, all divided by the marginal probability of B.”</p>
 <p>With the theorem introduced, I have some potentially surprising news to share. There’s nothing uniquely – or even distinctly – Bayesian about using Bayes’ Theorem! Using it doesn’t make you a Bayesian. Much of what we cover in later chapters will use Bayes’ theorem in some capacity, <em>but the same would be true if you were using Frequentist methods</em>! Understanding Bayes’ Theorem is an important and necessary stepping stone along the path to working with a more flexible view of probability (which <em>is</em> a distinct feature of Bayesian analysis), but it is not a sufficient one. Not by itself, at least.</p>
 <p>Now that I’ve spilled “The Big Dirty Secret of Bayes’ Theorem,” the natural next step is to explain what, exactly, we need to do to make Bayes’ theorem “Bayesian.”</p>
-<section id="how-to-make-bayes-theorem-bayesian" class="level4" data-number="20.8.1.1">
-<h4 data-number="20.8.1.1" class="anchored" data-anchor-id="how-to-make-bayes-theorem-bayesian"><span class="header-section-number">20.8.1.1</span> How To Make Bayes’ Theorem Bayesian</h4>
+<section id="how-to-make-bayes-theorem-bayesian" class="level4" data-number="21.8.1.1">
+<h4 data-number="21.8.1.1" class="anchored" data-anchor-id="how-to-make-bayes-theorem-bayesian"><span class="header-section-number">21.8.1.1</span> How To Make Bayes’ Theorem Bayesian</h4>
 <p>Simply put, the best way to make Bayes’ theorem Bayesian is to apply it to a hypothesis or a state of knowledge. In other words, we assign a probability to a hypothesis and then use Bayes’ theorem to determine the probability of that hypothesis given the data we’ve observed. Isn’t that a beautiful idea?</p>
 <p>In the Bayesian paradigm, Bayes’ theorem can be applied to hypotheses and data. In other words, just as we might use Bayes’ theorem to compute <span class="math inline">\(P(\text{Jack} \mid \text{Diamond})\)</span>, we can compute <span class="math inline">\(P(\text{Hypothesis} \mid \text{Data})\)</span>, or expressed another way, <span class="math inline">\(P(\text{Hypothesis} \mid \text{Evidence})\)</span>.</p>
 <p>In order to introduce a little more clarity into our equations, you’ll often find a slightly different form of notation used for the hypothesis-based version of Bayes’ theorem. Below, we use the symbols <span class="math inline">\(\theta\)</span> or <span class="math inline">\(\text{H}\)</span> to represent a hypothesis. We represent data with <span class="math inline">\(\text{D}\)</span>, or evidence with <span class="math inline">\(\text{E}\)</span>.</p>
@@ -1022,8 +982,8 @@ P(H|E) = \frac{P(E|H)\times P(H)}{P(E)}
 <p>This hypothesis form of Bayes Theorm has several components, and each component has a specific name that you’ll need to know if you want to be conversant in Bayesian inference and data analysis, and to think deeply and systematically about probabilistic / generative modelling. We’ll cover each of them shortly, but first, an apology: the terminology we must cover now is, for lack of a better word, <em>tragic</em>. Among other things it will involve drawing a distinction between two words that are near-perfect synonyms in colloquial English. The distinction between them only matters in the specialized setting we currently operate within, and the differences in their meanings are confusing and oblique. I’ll do my best to differentiate between them clearly, as the distinction is vitally important, but I’m sorry to have to ruin two perfectly good words for you. Those words are ‘Probability’ and ‘Likelihood’.</p>
 </section>
 </section>
-<section id="the-components-of-bayes-theorem" class="level3" data-number="20.8.2">
-<h3 data-number="20.8.2" class="anchored" data-anchor-id="the-components-of-bayes-theorem"><span class="header-section-number">20.8.2</span> The Components of Bayes’ Theorem:</h3>
+<section id="the-components-of-bayes-theorem" class="level3" data-number="21.8.2">
+<h3 data-number="21.8.2" class="anchored" data-anchor-id="the-components-of-bayes-theorem"><span class="header-section-number">21.8.2</span> The Components of Bayes’ Theorem:</h3>
 <p>In this final part of the chapter I’m going to walk through each of the components of Bayes’ Theorem. Specifically, the</p>
 <ol type="1">
 <li>the <strong>prior probability</strong>, or “<strong>priors</strong>,”</li>
@@ -1032,8 +992,8 @@ P(H|E) = \frac{P(E|H)\times P(H)}{P(E)}
 </ol>
 <p>Together, these three components are used to compute something called the “posterior probability.” <em>Everything we do is in search of understanding the posterior.</em></p>
 <p>When people think of the Bayesian paradigm, they generally think of two things: (<em>i</em>) Bayes’ theorem (which, as we’ve established, isn’t especially Bayesian), and (<em>ii</em>) the use of prior probabilities. While it is certainly true that Bayesian methods make extensive use of priors, they aren’t the <em>point</em> of Bayesian methods. Having the ability to manipulate priors can be useful, but you should think of them as the price that Bayesians pay in order to enjoy principled access to the complete distribution of posterior probabilities (which we will get to soon) as opposed to the point estimates and confidence intervals that Frequentists use. So when thinking about what makes something Bayesian, don’t focus on the priors - they’re just the cost of entry, and you can develop models that minimize their influence anyhow. Instead, focus on the posteriors. Since you can’t really make much sense of posteriors before understanding the other components, we’ll save them for last.</p>
-<section id="prior-probability-or-priors" class="level4" data-number="20.8.2.1">
-<h4 data-number="20.8.2.1" class="anchored" data-anchor-id="prior-probability-or-priors"><span class="header-section-number">20.8.2.1</span> Prior Probability, or “Priors”</h4>
+<section id="prior-probability-or-priors" class="level4" data-number="21.8.2.1">
+<h4 data-number="21.8.2.1" class="anchored" data-anchor-id="prior-probability-or-priors"><span class="header-section-number">21.8.2.1</span> Prior Probability, or “Priors”</h4>
 <p>A ‘Prior Probability’ is a probability that Bayesians place on any unobserved variable. In the strictest sense, Bayesian priors are intended to serve as a quantified representation of an individual’s “state of belief” about a hypothesis under examination.</p>
 <blockquote class="blockquote">
 <p><strong>Further Reading</strong></p>
@@ -1046,8 +1006,8 @@ P(\theta) = 0.5
 \]</span></p>
 <p>If you knew about those trick coins, however, you might have a good reason to adjust your prior upwards somewhat. You’d do this to account for the slim but nonzero chance that the coin you randomly grabbed from among all the coins in your jar would produce many more heads than tails. With that additional knowledge, maybe you hypothesize that the probability of getting heads is actually 0.65, for example.</p>
 </section>
-<section id="likelihood" class="level4" data-number="20.8.2.2">
-<h4 data-number="20.8.2.2" class="anchored" data-anchor-id="likelihood"><span class="header-section-number">20.8.2.2</span> Likelihood</h4>
+<section id="likelihood" class="level4" data-number="21.8.2.2">
+<h4 data-number="21.8.2.2" class="anchored" data-anchor-id="likelihood"><span class="header-section-number">21.8.2.2</span> Likelihood</h4>
 <p>Likelihood is, in many ways, the opposite of probability. For our purposes, Likelihood describes the relative plausibility of some data <em>if we assume a given hypothesis is true</em>. All of the Likelihoods we’re going to consider are going to be <em>conditional</em> upon a hypothesis, which as a brief reminder is “the probability of thing A in light of the fact that we know thing B has already occurred.” In this case, we’re not talking about conditioning on cards that we’ve observed, we’re talking about conditioning data we’ve observed upon a hypothesis. In Bayes’ theorem, it’s this part:</p>
 <p><span class="math display">\[
 P(D|\theta)
@@ -1062,16 +1022,16 @@ P(\text{D = Tails} | \theta \text{ = 0.8}) = 0.2
 \]</span></p>
 <p>An important thing to keep in mind here is that Likelihoods are useful in that they let us compare the <em>plausibility</em> of data given a hypothesis <em>relative to the same data given other hypotheses</em>. Likelihood is <strong>not</strong>, however, equivalent to probability. There are many implications that stem from this distinction, but one of the more salient ones is that likelihoods do not need to sum (or integrate) to 1; an individual likelihood can, in fact, be greater than 1! Even when multiplied by a prior (which is a probability), a likelihood isn’t ready to be used as a probability just yet. For that, we need to add one more piece of the puzzle.</p>
 </section>
-<section id="the-normalizing-constant" class="level4" data-number="20.8.2.3">
-<h4 data-number="20.8.2.3" class="anchored" data-anchor-id="the-normalizing-constant"><span class="header-section-number">20.8.2.3</span> The Normalizing Constant</h4>
+<section id="the-normalizing-constant" class="level4" data-number="21.8.2.3">
+<h4 data-number="21.8.2.3" class="anchored" data-anchor-id="the-normalizing-constant"><span class="header-section-number">21.8.2.3</span> The Normalizing Constant</h4>
 <p>The normalizing constant is what converts the unstandardized ‘<strong>Bayes numerator</strong>’ (a term that refers to the product of the likelihood and the prior: <span class="math inline">\(P(D|\theta) \times P(\theta)\)</span>) back into a standardized probability. If you recall, all probabilities must sum to 1, and the product of the prior and the likelihood very rarely do. In Bayes’ theorem, the normalizing constant is <span class="math inline">\(P(D)\)</span>, or <span class="math inline">\(P(E)\)</span>, and is often referred to as the ‘<strong>Total Probability</strong>’.</p>
 <p>The normalizing constant is interesting because it’s simultaneously the least important element in Bayes’ Theorem and the most difficult to calculate. It’s the least important because Bayes’ theorem is capable of working at nearly full power without it. <span class="math inline">\(P(D|\theta) \times P(\theta)\)</span> often won’t sum (or integrate) to 1, so it can’t be a probability, but it’ll be exactly the same shape as the standardized posterior. From an inferential standpoint, they’re <em>almost</em> identical. The normalizing constant is the most difficult to calculate because it is often unclear what the marginal probability of any given data was. What’s more: even if one <em>knows</em> the marginal probability of the data, determining an exact analytical solution often involves performing some truly horrific multiple integrals, some of which have no closed-form solution (read: can’t be solved exactly, and must be estimated).</p>
 <p>Nevertheless, one the great advantages offered by the Bayesian paradigm is the ability to take the result from one model (in the form of the Posterior probability) and use it as the prior for another model (a process called Bayesian updating, which we’ll introduce later). In order to do that, we must make use of the normalizing constant.</p>
 </section>
 </section>
 </section>
-<section id="posterior-probability" class="level2" data-number="20.9">
-<h2 data-number="20.9" class="anchored" data-anchor-id="posterior-probability"><span class="header-section-number">20.9</span> POSTERIOR PROBABILITY</h2>
+<section id="posterior-probability" class="level2" data-number="21.9">
+<h2 data-number="21.9" class="anchored" data-anchor-id="posterior-probability"><span class="header-section-number">21.9</span> POSTERIOR PROBABILITY</h2>
 <p>We’ve saved the best for last. The whole point of <em>all</em> of this is to compute the <strong>posterior probability</strong>, which represents our “belief” in the hypothesis (<span class="math inline">\(\theta\)</span>) once we’ve considered it in light of the empirical evidence, our data. It is typically depicted like so:</p>
 <p><span class="math display">\[
 P(\theta|D)
@@ -1080,10 +1040,10 @@ P(\theta|D)
 <p>Bayesians don’t skip immediately to summarizing model outputs like the Frequentists do; instead, Bayesian data analysis requires that you report the <em>entire posterior probability</em> of your model. In other words, we are not just interested in knowing what the “best” estimate is and a bit about how much certainty to place in that estimate. We want to know the relative plausability of <em>every</em> hypothesis in the form of a distribution. That’s what working with Bayes gives us.</p>
 <p>Once you have the posterior probability, you can easily calculate statistics that mimic what the Frequentists report directly – it’s generally simple to calculate the mean or median value of an effect size, its variance, credible intervals (the Bayesian equivalent of confidence intervals), and so on. The important thing here is that a Bayesian has delivered the fullest and most complete answer they can once they’ve produced a posterior. Everything else is just designed to make the posterior easier to digest.</p>
 </section>
-<section id="conclusion" class="level2" data-number="20.10">
-<h2 data-number="20.10" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">20.10</span> CONCLUSION</h2>
-<section id="key-points" class="level3" data-number="20.10.1">
-<h3 data-number="20.10.1" class="anchored" data-anchor-id="key-points"><span class="header-section-number">20.10.1</span> Key Points</h3>
+<section id="conclusion" class="level2" data-number="21.10">
+<h2 data-number="21.10" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">21.10</span> CONCLUSION</h2>
+<section id="key-points" class="level3" data-number="21.10.1">
+<h3 data-number="21.10.1" class="anchored" data-anchor-id="key-points"><span class="header-section-number">21.10.1</span> Key Points</h3>
 <ul>
 <li>Probability distributions are the cornerstone of most statistical analysis, and use Probability Mass Functions (for discrete distributions) or Probability Density Functions (for continuous functions) to describe how their probability is distributed</li>
 <li>Joint and conditional probability are useful tools for describing how the probabilities of dependent random variables are related</li>
@@ -1130,7 +1090,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const onCopySuccess = function(e) {
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -1162,50 +1133,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
-  }
-  const getTextToCopy = function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-  }
-  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-    text: getTextToCopy
   });
-  clipboard.on('success', onCopySuccess);
-  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
-    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-      text: getTextToCopy,
-      container: window.document.getElementById('quarto-embedded-source-code-modal')
-    });
-    clipboardModal.on('success', onCopySuccess);
-  }
-    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-    var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp('/' + window.location.host + '/');
-    var isInternal = (href) => {
-        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
-    }
-    // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
-    for (var i=0; i<links.length; i++) {
-      const link = links[i];
-      if (!isInternal(link.href)) {
-        // undo the damage that might have been done by quarto-nav.js in the case of
-        // links that we want to consider external
-        if (link.dataset.originalHref !== undefined) {
-          link.href = link.dataset.originalHref;
-        }
-      }
-    }
-  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+  function tippyHover(el, contentFn) {
     const config = {
       allowHTML: true,
+      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -1215,17 +1147,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start',
+      placement: 'bottom-start'
     };
-    if (contentFn) {
-      config.content = contentFn;
-    }
-    if (onTriggerFn) {
-      config.onTrigger = onTriggerFn;
-    }
-    if (onUntriggerFn) {
-      config.onUntrigger = onUntriggerFn;
-    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -1237,130 +1160,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      if (note) {
-        return note.innerHTML;
-      } else {
-        return "";
-      }
-    });
-  }
-  const xrefs = window.document.querySelectorAll('a.quarto-xref');
-  const processXRef = (id, note) => {
-    // Strip column container classes
-    const stripColumnClz = (el) => {
-      el.classList.remove("page-full", "page-columns");
-      if (el.children) {
-        for (const child of el.children) {
-          stripColumnClz(child);
-        }
-      }
-    }
-    stripColumnClz(note)
-    if (id === null || id.startsWith('sec-')) {
-      // Special case sections, only their first couple elements
-      const container = document.createElement("div");
-      if (note.children && note.children.length > 2) {
-        container.appendChild(note.children[0].cloneNode(true));
-        for (let i = 1; i < note.children.length; i++) {
-          const child = note.children[i];
-          if (child.tagName === "P" && child.innerText === "") {
-            continue;
-          } else {
-            container.appendChild(child.cloneNode(true));
-            break;
-          }
-        }
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(container);
-        }
-        return container.innerHTML
-      } else {
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(note);
-        }
-        return note.innerHTML;
-      }
-    } else {
-      // Remove any anchor links if they are present
-      const anchorLink = note.querySelector('a.anchorjs-link');
-      if (anchorLink) {
-        anchorLink.remove();
-      }
-      if (window.Quarto?.typesetMath) {
-        window.Quarto.typesetMath(note);
-      }
-      // TODO in 1.5, we should make sure this works without a callout special case
-      if (note.classList.contains("callout")) {
-        return note.outerHTML;
-      } else {
-        return note.innerHTML;
-      }
-    }
-  }
-  for (var i=0; i<xrefs.length; i++) {
-    const xref = xrefs[i];
-    tippyHover(xref, undefined, function(instance) {
-      instance.disable();
-      let url = xref.getAttribute('href');
-      let hash = undefined; 
-      if (url.startsWith('#')) {
-        hash = url;
-      } else {
-        try { hash = new URL(url).hash; } catch {}
-      }
-      if (hash) {
-        const id = hash.replace(/^#\/?/, "");
-        const note = window.document.getElementById(id);
-        if (note !== null) {
-          try {
-            const html = processXRef(id, note.cloneNode(true));
-            instance.setContent(html);
-          } finally {
-            instance.enable();
-            instance.show();
-          }
-        } else {
-          // See if we can fetch this
-          fetch(url.split('#')[0])
-          .then(res => res.text())
-          .then(html => {
-            const parser = new DOMParser();
-            const htmlDoc = parser.parseFromString(html, "text/html");
-            const note = htmlDoc.getElementById(id);
-            if (note !== null) {
-              const html = processXRef(id, note);
-              instance.setContent(html);
-            } 
-          }).finally(() => {
-            instance.enable();
-            instance.show();
-          });
-        }
-      } else {
-        // See if we can fetch a full url (with no hash to target)
-        // This is a special case and we should probably do some content thinning / targeting
-        fetch(url)
-        .then(res => res.text())
-        .then(html => {
-          const parser = new DOMParser();
-          const htmlDoc = parser.parseFromString(html, "text/html");
-          const note = htmlDoc.querySelector('main.content');
-          if (note !== null) {
-            // This should only happen for chapter cross references
-            // (since there is no id in the URL)
-            // remove the first header
-            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
-              note.children[0].remove();
-            }
-            const html = processXRef(null, note);
-            instance.setContent(html);
-          } 
-        }).finally(() => {
-          instance.enable();
-          instance.show();
-        });
-      }
-    }, function(instance) {
+      return note.innerHTML;
     });
   }
       let selectedAnnoteEl;
@@ -1404,7 +1204,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
-            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -1430,32 +1229,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
-        // Handle positioning of the toggle
-    window.addEventListener(
-      "resize",
-      throttle(() => {
-        elRect = undefined;
-        if (selectedAnnoteEl) {
-          selectCodeLines(selectedAnnoteEl);
-        }
-      }, 10)
-    );
-    function throttle(fn, ms) {
-    let throttle = false;
-    let timer;
-      return (...args) => {
-        if(!throttle) { // first call gets through
-            fn.apply(this, args);
-            throttle = true;
-        } else { // all the others get throttled
-            if(timer) clearTimeout(timer); // cancel #2
-            timer = setTimeout(() => {
-              fn.apply(this, args);
-              timer = throttle = false;
-            }, ms);
-        }
-      };
-    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -1517,13 +1290,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./causality.html" class="pagination-link" aria-label="Causality">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Causality</span></span>
+      <a href="./causality.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Causality</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./credibility.html" class="pagination-link" aria-label="Credibility">
-        <span class="nav-page-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Credibility</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./credibility.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Credibility</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -1531,5 +1304,4 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
-
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/UWNETLAB/dcss_supplementary/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
+</body></html>

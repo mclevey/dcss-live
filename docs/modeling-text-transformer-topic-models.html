@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.56">
+<meta name="generator" content="quarto-1.3.450">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>34&nbsp; Modeling text: transformer topic models – Doing Computational Social Science&lt;br&gt;[The **Continuous Development** Edition]{.small}</title>
+<title>Doing Computational Social ScienceThe Continuous Development Edition - 35&nbsp; Modeling text: transformer topic models</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -22,7 +22,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -33,7 +33,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -82,13 +82,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   "collapse-after": 3,
   "panel-placement": "start",
   "type": "textbox",
-  "limit": 50,
-  "keyboard-shortcut": [
-    "f",
-    "/",
-    "s"
-  ],
-  "show-item-context": false,
+  "limit": 20,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -97,7 +91,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
-    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
@@ -114,13 +107,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./artificial-neural-networks-fnn-rnn-cnn.html"><strong>DEEP LEARNING</strong></a></li><li class="breadcrumb-item"><a href="./modeling-text-transformer-topic-models.html"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Modeling text: transformer topic models</span></a></li></ol></nav>
-        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-        </a>
-      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./artificial-neural-networks-fnn-rnn-cnn.html"><strong>DEEP LEARNING</strong></a></li><li class="breadcrumb-item"><a href="./modeling-text-transformer-topic-models.html"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Modeling text: transformer topic models</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -129,7 +122,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
       <a href="./index.html" class="sidebar-logo-link">
       <img src="./figures/logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
@@ -137,25 +130,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Doing Computational Social Science<br><span class="small">The <strong>Continuous Development</strong> Edition</span></a> 
         <div class="sidebar-tools-main">
-    <a href="https://github.com/UWNETLAB/dcss_supplementary/tree/master/book/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="https://github.com/UWNETLAB/dcss_supplementary/tree/master/book/" rel="" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
     <div class="dropdown">
-      <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
+      <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Share"><i class="bi bi-share"></i></a>
       <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
           <li>
             <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=|url|">
-              <i class="bi bi-twitter pe-1"></i>
+              <i class="bi bi-bi-twitter pe-1"></i>
             Twitter
             </a>
           </li>
           <li>
             <a class="dropdown-item sidebar-tools-main-item" href="https://www.facebook.com/sharer/sharer.php?u=|url|">
-              <i class="bi bi-facebook pe-1"></i>
+              <i class="bi bi-bi-facebook pe-1"></i>
             Facebook
             </a>
           </li>
           <li>
             <a class="dropdown-item sidebar-tools-main-item" href="https://www.linkedin.com/sharing/share-offsite/?url=|url|">
-              <i class="bi bi-linkedin pe-1"></i>
+              <i class="bi bi-bi-linkedin pe-1"></i>
             LinkedIn
             </a>
           </li>
@@ -177,19 +170,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">🏠</span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction</span></a>
+  </div>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
- <span class="menu-text"><strong>RESEARCH COMPUTING</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text"><strong>COMPUTING</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./getting-started.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Getting Started</span></span></a>
+  <a href="./setting-up.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Setting up</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -204,71 +203,89 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Python 102</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./processing-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Processing Data</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
- <span class="menu-text"><strong>MINDFUL MODELING</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text"><strong>WORKFLOW</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./metaphor-map-reduction.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Modeling as metaphor, map, and reduction</span></span></a>
+  <a href="./mindful-modelling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Mindful modelling</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./iterative-workflow.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Iterative workflows</span></span></a>
+  <a href="./iteration.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title"><del>Sequential</del> iterative modelling</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
- <span class="menu-text"><strong>OBTAINING DATA</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+ <span class="menu-text"><strong>DATA</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./sampling-and-survey-data.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title"><del>Processing Structured Data</del> Sampling and Survey Data</span></span></a>
+  <a href="./survey-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Survey Data</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./web-data-apis.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Web data (APIs)</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Web data (APIs)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./web-data-scraping.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Web data (Scraping)</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Web data (Scraping)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./audio-files-and-documents.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Audio files and documents</span></span></a>
+  <a href="./audio-and-document-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Audio and document data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./text-as-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Text as Data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./relational-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Relational data</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
- <span class="menu-text"><strong>EXPLORING</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+ <span class="menu-text"><strong>DISCOVERY</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -276,52 +293,40 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./exploratory-data-analysis.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Exploratory data analysis (EDA) <!-- Exploring with purpose --></span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Exploring with purpose</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./association-and-latent-variables.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Association and latent variables</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./text-as-data.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Text as Data</span></span></a>
+  <a href="./reduction-and-latent-dimensions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Reduction and latent dimensions</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./mapping-text.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Text similarity and latent semantic space</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./networks-as-not-data.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Networks and relational thinking</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Text similarity and latent semantic space</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./centrality.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Centrality</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Centrality</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./mapping-network-structure.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Mapping network structure</span></span></a>
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Mapping network structure</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
  <span class="menu-text"><strong>PREDICTION &amp; INFERENCE</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -329,46 +334,46 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./supervised-learning.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Supervised Machine Learning</span></span></a>
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Supervised Machine Learning</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./prediction-and-classification.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Prediction and classification</span></span></a>
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Prediction and classification</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./causality.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Causality</span></span></a>
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Causality</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./probability.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Probability 101</span></span></a>
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Probability 101</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./credibility.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Credibility</span></span></a>
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Credibility</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./measurement-and-missingness.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Measurement and missingness</span></span></a>
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Measurement and missingness</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true">
  <span class="menu-text"><strong>MODELING</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -376,58 +381,58 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./linear-regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Bayesian Regression Models with Probabilistic Programming</span></span></a>
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Bayesian Regression Models with Probabilistic Programming</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./multilevel-regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Multilevel regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Multilevel regression</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./generalized-linear-models.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Generalized Linear Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Generalized Linear Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./structural-causal-models.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Structural causal models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Structural causal models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./modeling-texts-lda.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Modeling text with LDA topic models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Modeling text with LDA topic models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./modeling-networks.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Latent structure in networks</span></span></a>
+ <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Latent structure in networks</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./agent-based-models.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Agent-based models (ABMs)</span></span></a>
+ <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Agent-based models (ABMs)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./diffusion-opinion-cultural-cognition.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Diffusion, opinion dynamics, and cultural cognition</span></span></a>
+ <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Diffusion, opinion dynamics, and cultural cognition</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true">
  <span class="menu-text"><strong>DEEP LEARNING</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -435,34 +440,34 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./artificial-neural-networks-fnn-rnn-cnn.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Artificial neural networks 101</span></span></a>
+ <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Artificial neural networks</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./language-models-and-embeddings.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Processing Natural Language Data</span></span></a>
+ <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Language models and word embeddings</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./transformer-revolution.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">The transformer revolution</span></span></a>
+ <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">The transformer revolution</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./modeling-text-transformer-topic-models.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Modeling text: transformer topic models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Modeling text: transformer topic models</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
- <span class="menu-text"><strong>PROFESSIONAL RESPONSIBILITIES</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" aria-expanded="true">
+ <span class="menu-text"><strong>RESPONSIBILITIES</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -470,19 +475,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ethical-css.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Research Ethics, Politics, and Practices</span></span></a>
+ <span class="menu-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">Ethical CSS</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./open-css.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">Open computational social science</span></span></a>
+ <span class="menu-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">Open CSS</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./future-css.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">Future computational social science</span></span></a>
+ <span class="menu-text"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">Future CSS</span></span></a>
   </div>
 </li>
       </ul>
@@ -502,56 +507,56 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./courses.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">Courses and Workshops</span></span></a>
+ <span class="menu-text"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title">Courses and Workshops</span></span></a>
   </div>
 </li>
     </ul>
     </div>
 </nav>
-<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link active" data-scroll-target="#learning-objectives"><span class="header-section-number">34.1</span> Learning Objectives</a></li>
-  <li><a href="#setup" id="toc-setup" class="nav-link" data-scroll-target="#setup"><span class="header-section-number">35</span> Setup</a></li>
-  <li><a href="#the-british-hansard" id="toc-the-british-hansard" class="nav-link" data-scroll-target="#the-british-hansard"><span class="header-section-number">36</span> The British Hansard</a>
+  <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link active" data-scroll-target="#learning-objectives"><span class="header-section-number">35.1</span> Learning Objectives</a></li>
+  <li><a href="#setup" id="toc-setup" class="nav-link" data-scroll-target="#setup"><span class="header-section-number">36</span> Setup</a></li>
+  <li><a href="#the-british-hansard" id="toc-the-british-hansard" class="nav-link" data-scroll-target="#the-british-hansard"><span class="header-section-number">37</span> The British Hansard</a>
   <ul class="collapse">
-  <li><a href="#data-processing" id="toc-data-processing" class="nav-link" data-scroll-target="#data-processing"><span class="header-section-number">36.1</span> Data Processing</a></li>
-  <li><a href="#party-breakdown" id="toc-party-breakdown" class="nav-link" data-scroll-target="#party-breakdown"><span class="header-section-number">36.2</span> Party Breakdown</a>
+  <li><a href="#data-processing" id="toc-data-processing" class="nav-link" data-scroll-target="#data-processing"><span class="header-section-number">37.1</span> Data Processing</a></li>
+  <li><a href="#party-breakdown" id="toc-party-breakdown" class="nav-link" data-scroll-target="#party-breakdown"><span class="header-section-number">37.2</span> Party Breakdown</a>
   <ul class="collapse">
-  <li><a href="#stratified-random-sample-of-political-speeches" id="toc-stratified-random-sample-of-political-speeches" class="nav-link" data-scroll-target="#stratified-random-sample-of-political-speeches"><span class="header-section-number">36.2.1</span> Stratified Random Sample of Political Speeches</a></li>
-  <li><a href="#speech-length-by-party" id="toc-speech-length-by-party" class="nav-link" data-scroll-target="#speech-length-by-party"><span class="header-section-number">36.2.2</span> Speech Length by Party</a></li>
+  <li><a href="#stratified-random-sample-of-political-speeches" id="toc-stratified-random-sample-of-political-speeches" class="nav-link" data-scroll-target="#stratified-random-sample-of-political-speeches"><span class="header-section-number">37.2.1</span> Stratified Random Sample of Political Speeches</a></li>
+  <li><a href="#speech-length-by-party" id="toc-speech-length-by-party" class="nav-link" data-scroll-target="#speech-length-by-party"><span class="header-section-number">37.2.2</span> Speech Length by Party</a></li>
   </ul></li>
-  <li><a href="#text-processing" id="toc-text-processing" class="nav-link" data-scroll-target="#text-processing"><span class="header-section-number">36.3</span> Text Processing</a></li>
-  <li><a href="#creating-a-document-term-matrix" id="toc-creating-a-document-term-matrix" class="nav-link" data-scroll-target="#creating-a-document-term-matrix"><span class="header-section-number">36.4</span> Creating a Document-Term Matrix</a></li>
+  <li><a href="#text-processing" id="toc-text-processing" class="nav-link" data-scroll-target="#text-processing"><span class="header-section-number">37.3</span> Text Processing</a></li>
+  <li><a href="#creating-a-document-term-matrix" id="toc-creating-a-document-term-matrix" class="nav-link" data-scroll-target="#creating-a-document-term-matrix"><span class="header-section-number">37.4</span> Creating a Document-Term Matrix</a></li>
   </ul></li>
-  <li><a href="#topic-modeling-pre-history" id="toc-topic-modeling-pre-history" class="nav-link" data-scroll-target="#topic-modeling-pre-history"><span class="header-section-number">37</span> Topic Modeling Pre-history</a>
+  <li><a href="#topic-modeling-pre-history" id="toc-topic-modeling-pre-history" class="nav-link" data-scroll-target="#topic-modeling-pre-history"><span class="header-section-number">38</span> Topic Modeling Pre-history</a>
   <ul class="collapse">
-  <li><a href="#counting-and-comparing-manifest-content" id="toc-counting-and-comparing-manifest-content" class="nav-link" data-scroll-target="#counting-and-comparing-manifest-content"><span class="header-section-number">37.1</span> Counting and Comparing Manifest Content</a></li>
+  <li><a href="#counting-and-comparing-manifest-content" id="toc-counting-and-comparing-manifest-content" class="nav-link" data-scroll-target="#counting-and-comparing-manifest-content"><span class="header-section-number">38.1</span> Counting and Comparing Manifest Content</a></li>
   </ul></li>
-  <li><a href="#first-wave-topic-models-latent-semantic-analysis-lsa" id="toc-first-wave-topic-models-latent-semantic-analysis-lsa" class="nav-link" data-scroll-target="#first-wave-topic-models-latent-semantic-analysis-lsa"><span class="header-section-number">38</span> First Wave Topic Models: Latent Semantic Analysis (LSA)</a></li>
-  <li><a href="#second-wave-topic-models-latent-dirichlet-allocation-lda" id="toc-second-wave-topic-models-latent-dirichlet-allocation-lda" class="nav-link" data-scroll-target="#second-wave-topic-models-latent-dirichlet-allocation-lda"><span class="header-section-number">39</span> Second Wave Topic Models: Latent Dirichlet Allocation (LDA)</a></li>
-  <li><a href="#third-wave-topic-models-transformer-based" id="toc-third-wave-topic-models-transformer-based" class="nav-link" data-scroll-target="#third-wave-topic-models-transformer-based"><span class="header-section-number">40</span> Third Wave Topic Models: Transformer-based</a>
+  <li><a href="#first-wave-topic-models-latent-semantic-analysis-lsa" id="toc-first-wave-topic-models-latent-semantic-analysis-lsa" class="nav-link" data-scroll-target="#first-wave-topic-models-latent-semantic-analysis-lsa"><span class="header-section-number">39</span> First Wave Topic Models: Latent Semantic Analysis (LSA)</a></li>
+  <li><a href="#second-wave-topic-models-latent-dirichlet-allocation-lda" id="toc-second-wave-topic-models-latent-dirichlet-allocation-lda" class="nav-link" data-scroll-target="#second-wave-topic-models-latent-dirichlet-allocation-lda"><span class="header-section-number">40</span> Second Wave Topic Models: Latent Dirichlet Allocation (LDA)</a></li>
+  <li><a href="#third-wave-topic-models-transformer-based" id="toc-third-wave-topic-models-transformer-based" class="nav-link" data-scroll-target="#third-wave-topic-models-transformer-based"><span class="header-section-number">41</span> Third Wave Topic Models: Transformer-based</a>
   <ul class="collapse">
-  <li><a href="#topic-assignments-and-probabilities" id="toc-topic-assignments-and-probabilities" class="nav-link" data-scroll-target="#topic-assignments-and-probabilities"><span class="header-section-number">40.1</span> Topic Assignments and Probabilities</a></li>
-  <li><a href="#topic-lookup" id="toc-topic-lookup" class="nav-link" data-scroll-target="#topic-lookup"><span class="header-section-number">40.2</span> Topic Lookup</a></li>
-  <li><a href="#topic-information" id="toc-topic-information" class="nav-link" data-scroll-target="#topic-information"><span class="header-section-number">40.3</span> Topic Information</a></li>
-  <li><a href="#document-info" id="toc-document-info" class="nav-link" data-scroll-target="#document-info"><span class="header-section-number">40.4</span> Document Info</a></li>
+  <li><a href="#topic-assignments-and-probabilities" id="toc-topic-assignments-and-probabilities" class="nav-link" data-scroll-target="#topic-assignments-and-probabilities"><span class="header-section-number">41.1</span> Topic Assignments and Probabilities</a></li>
+  <li><a href="#topic-lookup" id="toc-topic-lookup" class="nav-link" data-scroll-target="#topic-lookup"><span class="header-section-number">41.2</span> Topic Lookup</a></li>
+  <li><a href="#topic-information" id="toc-topic-information" class="nav-link" data-scroll-target="#topic-information"><span class="header-section-number">41.3</span> Topic Information</a></li>
+  <li><a href="#document-info" id="toc-document-info" class="nav-link" data-scroll-target="#document-info"><span class="header-section-number">41.4</span> Document Info</a></li>
   </ul></li>
-  <li><a href="#transformer-based-topic-models-applied-to-the-youtube-data" id="toc-transformer-based-topic-models-applied-to-the-youtube-data" class="nav-link" data-scroll-target="#transformer-based-topic-models-applied-to-the-youtube-data"><span class="header-section-number">41</span> Transformer-based Topic Models Applied to the YouTube Data</a></li>
-  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">42</span> Conclusion</a></li>
+  <li><a href="#transformer-based-topic-models-applied-to-the-youtube-data" id="toc-transformer-based-topic-models-applied-to-the-youtube-data" class="nav-link" data-scroll-target="#transformer-based-topic-models-applied-to-the-youtube-data"><span class="header-section-number">42</span> Transformer-based Topic Models Applied to the YouTube Data</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">43</span> Conclusion</a></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/UWNETLAB/dcss_supplementary/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/UWNETLAB/dcss_supplementary/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./artificial-neural-networks-fnn-rnn-cnn.html"><strong>DEEP LEARNING</strong></a></li><li class="breadcrumb-item"><a href="./modeling-text-transformer-topic-models.html"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Modeling text: transformer topic models</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Modeling text: transformer topic models</span></h1>
+<h1 class="title"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Modeling text: transformer topic models</span></h1>
 </div>
 
 
@@ -564,9 +569,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </div>
   
 
-
 </header>
-
 
 <ul>
 <li>TODO: Keep the full notebook as an appendix and example of workshop materials</li>
@@ -575,8 +578,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>This tutorial is focused on modelling latent topics – or hidden thematic structure – in text data. We’ll start our introduction to topic models by focusing on simple count-based methods for manifest content. Since these count-based approaches have a <em>very</em> long history pre-dating topics, I’ve characterized them here as part of the “pre-history” topic modelling. Understanding these approaches first is usually a good way to understand more complex models.</p>
 <p>Once we’ve discussed count-based analyses of manifest content, we’ll discuss a deterministic approach to topic modelling known as Latent Semantic Analysis (LSA), which was arguably the “first wave” of modern topic models.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> Then we’ll discuss probabilistic Latent Dirichlet Allocation (LDA) models, which represent the “second wave.” Finally, we’ll learn about transformer-based topic modells, specifically BERTopic, which represent the “third wave.”</p>
 <p>We’ll use a corpus of political speeches from the British Parliament for most of this tutorial, and will shift to the YouTube data at the end.</p>
-<section id="learning-objectives" class="level2" data-number="34.1">
-<h2 data-number="34.1" class="anchored" data-anchor-id="learning-objectives"><span class="header-section-number">34.1</span> Learning Objectives</h2>
+<section id="learning-objectives" class="level2" data-number="35.1">
+<h2 data-number="35.1" class="anchored" data-anchor-id="learning-objectives"><span class="header-section-number">35.1</span> Learning Objectives</h2>
 <p>By the end of this tutorial, you should be able to:</p>
 <ol type="1">
 <li>Understand the Evolution of Topic Modeling
@@ -603,8 +606,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul></li>
 </ol>
 </section>
-<section id="setup" class="level1" data-number="35">
-<h1 data-number="35"><span class="header-section-number">35</span> Setup</h1>
+<section id="setup" class="level1" data-number="36">
+<h1 data-number="36"><span class="header-section-number">36</span> Setup</h1>
 <div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> spacy</span>
@@ -630,8 +633,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>python <span class="op">-</span>m spacy download en_core_web_sm  <span class="co"># shell</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>nlp <span class="op">=</span> spacy.load(<span class="st">"en_core_web_sm"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="the-british-hansard" class="level1" data-number="36">
-<h1 data-number="36"><span class="header-section-number">36</span> The British Hansard</h1>
+<section id="the-british-hansard" class="level1" data-number="37">
+<h1 data-number="37"><span class="header-section-number">37</span> The British Hansard</h1>
 <p>For the first part of this tutorial, we’ll work with a collection of political speeches from the British Parliament, focusing on speeches given between 2016 and 2020. We’ll load the data using the command line utility wget.</p>
 <blockquote class="blockquote">
 <p>Download the Data</p>
@@ -662,8 +665,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>bh1620.info()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>The data subset we are working with contains <code>{python} len(bh1620)</code> speeches.</p>
-<section id="data-processing" class="level2" data-number="36.1">
-<h2 data-number="36.1" class="anchored" data-anchor-id="data-processing"><span class="header-section-number">36.1</span> Data Processing</h2>
+<section id="data-processing" class="level2" data-number="37.1">
+<h2 data-number="37.1" class="anchored" data-anchor-id="data-processing"><span class="header-section-number">37.1</span> Data Processing</h2>
 <p>Let’s confirm that we have the correct years.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>bh1620[<span class="st">'year'</span>].<span class="bu">min</span>(), bh1620[<span class="st">'year'</span>].<span class="bu">max</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Let’s do some initial processing by selecting the subset of columns we are interested in and dropping rows that are missing data from crucial columns.</p>
@@ -672,8 +675,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>bh1620.info()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Dropping missing data leaves us with <code>{python} len(bh1620)</code> speeches.</p>
 </section>
-<section id="party-breakdown" class="level2" data-number="36.2">
-<h2 data-number="36.2" class="anchored" data-anchor-id="party-breakdown"><span class="header-section-number">36.2</span> Party Breakdown</h2>
+<section id="party-breakdown" class="level2" data-number="37.2">
+<h2 data-number="37.2" class="anchored" data-anchor-id="party-breakdown"><span class="header-section-number">37.2</span> Party Breakdown</h2>
 <p>Let’s take a look at the breakdown of speeches by party.</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>bh1620[<span class="st">'party'</span>].value_counts().reset_index()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>We’ll focus only on speeches made by MPs from parties that collectively gave more than 400 speeches within our four-year window.</p>
@@ -693,8 +696,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>total_speech_counts <span class="op">=</span> party_subset[<span class="st">'party'</span>].value_counts()</span>
 <span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>total_speech_counts</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<section id="stratified-random-sample-of-political-speeches" class="level3" data-number="36.2.1">
-<h3 data-number="36.2.1" class="anchored" data-anchor-id="stratified-random-sample-of-political-speeches"><span class="header-section-number">36.2.1</span> Stratified Random Sample of Political Speeches</h3>
+<section id="stratified-random-sample-of-political-speeches" class="level3" data-number="37.2.1">
+<h3 data-number="37.2.1" class="anchored" data-anchor-id="stratified-random-sample-of-political-speeches"><span class="header-section-number">37.2.1</span> Stratified Random Sample of Political Speeches</h3>
 <p>Given the size of the dataset, you may want to work with a smaller sample. We can draw a <strong>stratified random sample</strong> where the strata are political parties so that that each party is proportionally represented in our sample.</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>sample_size_fraction <span class="op">=</span> <span class="fl">0.1</span>  <span class="co"># let's just take 10% for now</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -716,8 +719,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>sample_sizes</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="speech-length-by-party" class="level3" data-number="36.2.2">
-<h3 data-number="36.2.2" class="anchored" data-anchor-id="speech-length-by-party"><span class="header-section-number">36.2.2</span> Speech Length by Party</h3>
+<section id="speech-length-by-party" class="level3" data-number="37.2.2">
+<h3 data-number="37.2.2" class="anchored" data-anchor-id="speech-length-by-party"><span class="header-section-number">37.2.2</span> Speech Length by Party</h3>
 <p>Let’s compare the length of speeches across political parties by computing the number of tokens in each speech.</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>sampled_speeches[<span class="st">'speech_len'</span>] <span class="op">=</span> sampled_speeches[<span class="st">'speech'</span>].<span class="bu">apply</span>(</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">lambda</span> x: <span class="bu">len</span>(x.split(<span class="st">" "</span>))</span>
@@ -745,8 +748,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'output/speech_length_by_party.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 </section>
-<section id="text-processing" class="level2" data-number="36.3">
-<h2 data-number="36.3" class="anchored" data-anchor-id="text-processing"><span class="header-section-number">36.3</span> Text Processing</h2>
+<section id="text-processing" class="level2" data-number="37.3">
+<h2 data-number="37.3" class="anchored" data-anchor-id="text-processing"><span class="header-section-number">37.3</span> Text Processing</h2>
 <p>Text processing is a crucial step before applying the kinds of text analysis techniques we will apply here.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> Common steps include removing stopwords, converting to lowercase, lemmatization, and detecting bigrams. We will use the preprocess() function from the course package to perform these operations.</p>
 <p>Note that the code block below will take some time to run, primarily because of the bigram detection. You’ll see several progress bars appear (one at a time) to give you a sense of how long this code needs to run on your machine.</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>docs <span class="op">=</span> sampled_speeches[<span class="st">'speech'</span>]</span>
@@ -775,8 +778,8 @@ Note
 <div class="sourceCode" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>sampled_speeches[<span class="st">'processed_text'</span>] <span class="op">=</span> processed_texts</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>We now have two Series with text data: the original full speech text and the processed version. I know the processed text doesn’t look better from a human perspective, but it will help out these initial models quite a bit.</p>
 </section>
-<section id="creating-a-document-term-matrix" class="level2" data-number="36.4">
-<h2 data-number="36.4" class="anchored" data-anchor-id="creating-a-document-term-matrix"><span class="header-section-number">36.4</span> Creating a Document-Term Matrix</h2>
+<section id="creating-a-document-term-matrix" class="level2" data-number="37.4">
+<h2 data-number="37.4" class="anchored" data-anchor-id="creating-a-document-term-matrix"><span class="header-section-number">37.4</span> Creating a Document-Term Matrix</h2>
 <p>Creating a document-term matrix (DTM) is the first step in many text analysis workflows. It allows us to represent our text data in a structured format where each document is represented as a vector of word counts or TF-IDF scores.</p>
 <div class="sourceCode" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>count_vectorizer <span class="op">=</span> CountVectorizer(</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>    max_df<span class="op">=</span><span class="fl">0.1</span>,</span>
@@ -791,10 +794,10 @@ Note
 <p>Now that we’ve processed our data, let’s start digging into topic modeling, starting with the early deterministic methods and progressing to the latest transformer-based models!</p>
 </section>
 </section>
-<section id="topic-modeling-pre-history" class="level1" data-number="37">
-<h1 data-number="37"><span class="header-section-number">37</span> Topic Modeling Pre-history</h1>
-<section id="counting-and-comparing-manifest-content" class="level2" data-number="37.1">
-<h2 data-number="37.1" class="anchored" data-anchor-id="counting-and-comparing-manifest-content"><span class="header-section-number">37.1</span> Counting and Comparing Manifest Content</h2>
+<section id="topic-modeling-pre-history" class="level1" data-number="38">
+<h1 data-number="38"><span class="header-section-number">38</span> Topic Modeling Pre-history</h1>
+<section id="counting-and-comparing-manifest-content" class="level2" data-number="38.1">
+<h2 data-number="38.1" class="anchored" data-anchor-id="counting-and-comparing-manifest-content"><span class="header-section-number">38.1</span> Counting and Comparing Manifest Content</h2>
 <p>We can start by exploring simple count-based methods and difference of proportions analysis. This provides a foundation for understanding more complex topic models.</p>
 <div class="sourceCode" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>count_data <span class="op">=</span> pd.DataFrame.sparse.from_spmatrix(count_matrix)</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>count_data.columns <span class="op">=</span> vocabulary</span>
@@ -831,8 +834,8 @@ Note
 <p>Try running this analysis this with other search terms!</p>
 </section>
 </section>
-<section id="first-wave-topic-models-latent-semantic-analysis-lsa" class="level1" data-number="38">
-<h1 data-number="38"><span class="header-section-number">38</span> First Wave Topic Models: Latent Semantic Analysis (LSA)</h1>
+<section id="first-wave-topic-models-latent-semantic-analysis-lsa" class="level1" data-number="39">
+<h1 data-number="39"><span class="header-section-number">39</span> First Wave Topic Models: Latent Semantic Analysis (LSA)</h1>
 <p>Latent Semantic Analysis (LSA) is an early method for uncovering latent structures in text data. It uses dimensionality reduction methods – specifically truncated Singular Value Decomposition (SVD) – to decompose a (normalized) term-document matrix into a set of orthogonal components that are interpreted as latent topics.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> First, let’s create a TF-IDF matrix, which, to oversimplify things, weights word counts by how common they are across documents.</p>
 <div class="sourceCode" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>tfidf_vectorizer <span class="op">=</span> TfidfVectorizer(strip_accents<span class="op">=</span><span class="st">'ascii'</span>, sublinear_tf<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -891,8 +894,8 @@ Note
 <li>Interpreting these plots involves understanding the association between each term and the latent topics identified by the LSA model.</li>
 </ul>
 </section>
-<section id="second-wave-topic-models-latent-dirichlet-allocation-lda" class="level1" data-number="39">
-<h1 data-number="39"><span class="header-section-number">39</span> Second Wave Topic Models: Latent Dirichlet Allocation (LDA)</h1>
+<section id="second-wave-topic-models-latent-dirichlet-allocation-lda" class="level1" data-number="40">
+<h1 data-number="40"><span class="header-section-number">40</span> Second Wave Topic Models: Latent Dirichlet Allocation (LDA)</h1>
 <p>Latent Dirichlet Allocation (LDA) is a probabilistic model that treats documents as mixtures of topics and topics as mixtures of words. This allows for a more flexible and nuanced understanding of thematic structures in text data compared to deterministic models like LSA.</p>
 <p>Unlike with LSA, we <strong>don’t</strong> want to use a TF-IDF matrix, and we don’t want to do any normalization. The reason is because LDA is a fully Bayesian generative model, and transforming the count data conflicts with the model’s priors; by breaking with assumptions about the data generating process, we end up with less interpretable results.</p>
 <p>Let’s start by creating a corpus vocabulary with Gensim.</p>
@@ -928,29 +931,29 @@ Note
 <div class="sourceCode" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>ldamod_s.show_topic(<span class="dv">47</span>, topn<span class="op">=</span><span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="sourceCode" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>ldamod_s.show_topic(<span class="dv">48</span>, topn<span class="op">=</span><span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="third-wave-topic-models-transformer-based" class="level1" data-number="40">
-<h1 data-number="40"><span class="header-section-number">40</span> Third Wave Topic Models: Transformer-based</h1>
+<section id="third-wave-topic-models-transformer-based" class="level1" data-number="41">
+<h1 data-number="41"><span class="header-section-number">41</span> Third Wave Topic Models: Transformer-based</h1>
 <p>Transformers have revolutionized natural language processing in general, and topic modelling is a great example of an area of computational social science that are benefited enormously from these new models.</p>
 <p>Unlike the models we’ve run so far, transformers are almost always at their best with unprocessed data. So, let’s return to our unprocessed text data for this example.</p>
 <div class="sourceCode" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>docs <span class="op">=</span> sampled_speeches[<span class="st">'speech'</span>]</span>
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>topic_model <span class="op">=</span> BERTopic()</span>
 <span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>topics, probs <span class="op">=</span> topic_model.fit_transform(docs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<section id="topic-assignments-and-probabilities" class="level2" data-number="40.1">
-<h2 data-number="40.1" class="anchored" data-anchor-id="topic-assignments-and-probabilities"><span class="header-section-number">40.1</span> Topic Assignments and Probabilities</h2>
+<section id="topic-assignments-and-probabilities" class="level2" data-number="41.1">
+<h2 data-number="41.1" class="anchored" data-anchor-id="topic-assignments-and-probabilities"><span class="header-section-number">41.1</span> Topic Assignments and Probabilities</h2>
 <p>We can explore the topic assignments and their associated probabilities for each document.</p>
 <div class="sourceCode" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>sampled_speeches[<span class="st">'topic'</span>] <span class="op">=</span> topics</span>
 <span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>sampled_speeches[<span class="st">'p(topic)'</span>] <span class="op">=</span> probs</span>
 <span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>sampled_speeches[[<span class="st">'speech'</span>, <span class="st">'topic'</span>, <span class="st">'p(topic)'</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="sourceCode" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>sampled_speeches</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="topic-lookup" class="level2" data-number="40.2">
-<h2 data-number="40.2" class="anchored" data-anchor-id="topic-lookup"><span class="header-section-number">40.2</span> Topic Lookup</h2>
+<section id="topic-lookup" class="level2" data-number="41.2">
+<h2 data-number="41.2" class="anchored" data-anchor-id="topic-lookup"><span class="header-section-number">41.2</span> Topic Lookup</h2>
 <p>We can quickly look up the top words associated with any given topic.</p>
 <div class="sourceCode" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>topic_model.get_topic(<span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="topic-information" class="level2" data-number="40.3">
-<h2 data-number="40.3" class="anchored" data-anchor-id="topic-information"><span class="header-section-number">40.3</span> Topic Information</h2>
+<section id="topic-information" class="level2" data-number="41.3">
+<h2 data-number="41.3" class="anchored" data-anchor-id="topic-information"><span class="header-section-number">41.3</span> Topic Information</h2>
 <p>Let’s retrieve and explore information about the topics identified by the model.</p>
 <div class="sourceCode" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>topic_info <span class="op">=</span> topic_model.get_topic_info()</span>
 <span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>topic_info</span>
@@ -961,8 +964,8 @@ Note
 <span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f'Topic </span><span class="sc">{</span>i<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>topic_model<span class="sc">.</span>get_topic(i)<span class="sc">}</span><span class="ss">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="sourceCode" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>topic_info</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="document-info" class="level2" data-number="40.4">
-<h2 data-number="40.4" class="anchored" data-anchor-id="document-info"><span class="header-section-number">40.4</span> Document Info</h2>
+<section id="document-info" class="level2" data-number="41.4">
+<h2 data-number="41.4" class="anchored" data-anchor-id="document-info"><span class="header-section-number">41.4</span> Document Info</h2>
 <p>Finally, we can get information about how documents are classified into topics.</p>
 <div class="sourceCode" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>topic_model.get_document_info(docs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>We can also visualize the distribution of topics <strong>per document</strong>. BERTopic has a function to do this, <code>visualize_distribution()</code>. To see the topic distribution for the first document in our corpus,</p>
@@ -972,8 +975,8 @@ Note
 <div class="sourceCode" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>plot_topic_distribution(topic_distr, topic_model, <span class="dv">0</span>, filename<span class="op">=</span><span class="st">'output/topic_distribution_document_0.png'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 </section>
-<section id="transformer-based-topic-models-applied-to-the-youtube-data" class="level1" data-number="41">
-<h1 data-number="41"><span class="header-section-number">41</span> Transformer-based Topic Models Applied to the YouTube Data</h1>
+<section id="transformer-based-topic-models-applied-to-the-youtube-data" class="level1" data-number="42">
+<h1 data-number="42"><span class="header-section-number">42</span> Transformer-based Topic Models Applied to the YouTube Data</h1>
 <p>To end this tutorial, let’s apply what we’ve learned to fit a topic model to the talksatgoogle YouTube data we collected yesterday. We’ll be brief and develop this further in the live session.</p>
 <p>We’’ start by reading in the video description data we collected yesterday.</p>
 <div class="sourceCode" id="cb48"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">'output/videos.csv'</span>)</span>
@@ -1019,8 +1022,8 @@ Note
 <div class="sourceCode" id="cb54"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(yt_topic_info)):</span>
 <span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f'Topic </span><span class="sc">{</span>i<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>yt_topic_model<span class="sc">.</span>get_topic(i)<span class="sc">}</span><span class="ss">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="conclusion" class="level1" data-number="42">
-<h1 data-number="42"><span class="header-section-number">42</span> Conclusion</h1>
+<section id="conclusion" class="level1" data-number="43">
+<h1 data-number="43"><span class="header-section-number">43</span> Conclusion</h1>
 <p>As usual, we did a lot here! We learned about simple count-based analysis of manifest content that precede modern latent topic models, and then learned about the most important and influential topic models in several waves of advances in topic modelling. For the first (pre-history) approaches, we learned about difference of proportion analysis. Then we learned about the first wave of topic models by conducting a deterministic Latent Semantic Analysis (LSA). Following LSA, we learned about probabilistic approaches, specifically Latent Dirichlet Allocation (LDA), which was the first Bayesian generative model of latent topics. LDA has dominated topic modelling for decades, but we’re on the verge of the third wave: transformer-based topic models. We learned how to fit and interpret transformer-based models using BERTopic.</p>
 <p>Finally, we applied what we’ve learned to a new dataset: YouTube video descriptions. This exercise demonstrated the flexibility of topic models and how they can be applied to various types of text data. As you saw, the differences in the dataset can lead to differences in the topics and their interpretability, highlighting the importance of understanding your data and choosing the right preprocessing and modeling approach.</p>
 <p>Throughout this tutorial, I’ve emphasized the value of understanding how these approaches have evolved, and how they relate to one another. As you continue to explore and apply topic modeling in your work, remember that the choice of method should be guided by your data, your research goals, and an understanding of the assumptions and limitations inherent in each approach. As a next step, you might want to look into the different variations of topic models that have developed from each of these approaches. I especially recommend learning about <strong>structural topic models</strong> and all the extensions of BERTopic, such as semi-supervised and dynamic topic models.</p>
@@ -1073,7 +1076,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const onCopySuccess = function(e) {
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -1105,50 +1119,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
-  }
-  const getTextToCopy = function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-  }
-  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-    text: getTextToCopy
   });
-  clipboard.on('success', onCopySuccess);
-  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
-    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-      text: getTextToCopy,
-      container: window.document.getElementById('quarto-embedded-source-code-modal')
-    });
-    clipboardModal.on('success', onCopySuccess);
-  }
-    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-    var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp('/' + window.location.host + '/');
-    var isInternal = (href) => {
-        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
-    }
-    // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
-    for (var i=0; i<links.length; i++) {
-      const link = links[i];
-      if (!isInternal(link.href)) {
-        // undo the damage that might have been done by quarto-nav.js in the case of
-        // links that we want to consider external
-        if (link.dataset.originalHref !== undefined) {
-          link.href = link.dataset.originalHref;
-        }
-      }
-    }
-  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+  function tippyHover(el, contentFn) {
     const config = {
       allowHTML: true,
+      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -1158,17 +1133,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start',
+      placement: 'bottom-start'
     };
-    if (contentFn) {
-      config.content = contentFn;
-    }
-    if (onTriggerFn) {
-      config.onTrigger = onTriggerFn;
-    }
-    if (onUntriggerFn) {
-      config.onUntrigger = onUntriggerFn;
-    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -1180,130 +1146,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      if (note) {
-        return note.innerHTML;
-      } else {
-        return "";
-      }
-    });
-  }
-  const xrefs = window.document.querySelectorAll('a.quarto-xref');
-  const processXRef = (id, note) => {
-    // Strip column container classes
-    const stripColumnClz = (el) => {
-      el.classList.remove("page-full", "page-columns");
-      if (el.children) {
-        for (const child of el.children) {
-          stripColumnClz(child);
-        }
-      }
-    }
-    stripColumnClz(note)
-    if (id === null || id.startsWith('sec-')) {
-      // Special case sections, only their first couple elements
-      const container = document.createElement("div");
-      if (note.children && note.children.length > 2) {
-        container.appendChild(note.children[0].cloneNode(true));
-        for (let i = 1; i < note.children.length; i++) {
-          const child = note.children[i];
-          if (child.tagName === "P" && child.innerText === "") {
-            continue;
-          } else {
-            container.appendChild(child.cloneNode(true));
-            break;
-          }
-        }
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(container);
-        }
-        return container.innerHTML
-      } else {
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(note);
-        }
-        return note.innerHTML;
-      }
-    } else {
-      // Remove any anchor links if they are present
-      const anchorLink = note.querySelector('a.anchorjs-link');
-      if (anchorLink) {
-        anchorLink.remove();
-      }
-      if (window.Quarto?.typesetMath) {
-        window.Quarto.typesetMath(note);
-      }
-      // TODO in 1.5, we should make sure this works without a callout special case
-      if (note.classList.contains("callout")) {
-        return note.outerHTML;
-      } else {
-        return note.innerHTML;
-      }
-    }
-  }
-  for (var i=0; i<xrefs.length; i++) {
-    const xref = xrefs[i];
-    tippyHover(xref, undefined, function(instance) {
-      instance.disable();
-      let url = xref.getAttribute('href');
-      let hash = undefined; 
-      if (url.startsWith('#')) {
-        hash = url;
-      } else {
-        try { hash = new URL(url).hash; } catch {}
-      }
-      if (hash) {
-        const id = hash.replace(/^#\/?/, "");
-        const note = window.document.getElementById(id);
-        if (note !== null) {
-          try {
-            const html = processXRef(id, note.cloneNode(true));
-            instance.setContent(html);
-          } finally {
-            instance.enable();
-            instance.show();
-          }
-        } else {
-          // See if we can fetch this
-          fetch(url.split('#')[0])
-          .then(res => res.text())
-          .then(html => {
-            const parser = new DOMParser();
-            const htmlDoc = parser.parseFromString(html, "text/html");
-            const note = htmlDoc.getElementById(id);
-            if (note !== null) {
-              const html = processXRef(id, note);
-              instance.setContent(html);
-            } 
-          }).finally(() => {
-            instance.enable();
-            instance.show();
-          });
-        }
-      } else {
-        // See if we can fetch a full url (with no hash to target)
-        // This is a special case and we should probably do some content thinning / targeting
-        fetch(url)
-        .then(res => res.text())
-        .then(html => {
-          const parser = new DOMParser();
-          const htmlDoc = parser.parseFromString(html, "text/html");
-          const note = htmlDoc.querySelector('main.content');
-          if (note !== null) {
-            // This should only happen for chapter cross references
-            // (since there is no id in the URL)
-            // remove the first header
-            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
-              note.children[0].remove();
-            }
-            const html = processXRef(null, note);
-            instance.setContent(html);
-          } 
-        }).finally(() => {
-          instance.enable();
-          instance.show();
-        });
-      }
-    }, function(instance) {
+      return note.innerHTML;
     });
   }
       let selectedAnnoteEl;
@@ -1347,7 +1190,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
-            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -1373,32 +1215,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
-        // Handle positioning of the toggle
-    window.addEventListener(
-      "resize",
-      throttle(() => {
-        elRect = undefined;
-        if (selectedAnnoteEl) {
-          selectCodeLines(selectedAnnoteEl);
-        }
-      }, 10)
-    );
-    function throttle(fn, ms) {
-    let throttle = false;
-    let timer;
-      return (...args) => {
-        if(!throttle) { // first call gets through
-            fn.apply(this, args);
-            throttle = true;
-        } else { // all the others get throttled
-            if(timer) clearTimeout(timer); // cancel #2
-            timer = setTimeout(() => {
-              fn.apply(this, args);
-              timer = throttle = false;
-            }, ms);
-        }
-      };
-    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -1460,13 +1276,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./transformer-revolution.html" class="pagination-link" aria-label="The transformer revolution">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">The transformer revolution</span></span>
+      <a href="./transformer-revolution.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">The transformer revolution</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./ethical-css.html" class="pagination-link" aria-label="Research Ethics, Politics, and Practices">
-        <span class="nav-page-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Research Ethics, Politics, and Practices</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./ethical-css.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">Ethical CSS</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -1474,5 +1290,4 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
-
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/UWNETLAB/dcss_supplementary/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
+</body></html>

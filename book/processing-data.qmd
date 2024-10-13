@@ -16,7 +16,7 @@ By the end of this chapter, you should be able to:
 
 <br>
 
-It's time to shift from using Python as a general programming language to using it to process data using specialized data management and analysis packages. We're going to rely primarily on two important packages from Python's "scientific stack." The first is Pandas, which was created by Wes McKinney for analyzing **pan**el **da**ta (hence the name). It comes with special data structures, functions, and methods that you can use to take care of the vast majority of data processing operations for structured quantitative data. The second is Numpy, which is a lower-level package for efficient computation and maths. Numpy is the foundation that many other packages, including Pandas, are built on. We're not going to cover Numpy in any significant detail here, but it's worth knowing that Numpy provides arrays of arbitrary size and dimensionality, and is one of the pillars upon which Pandas is built.
+It's time to shift from using Python as a general programming language to using it to process data using specialized data management and analysis packages. We're going to rely primarily on two important packages from Python's "scientific stack." The first is Pandas, which was created by Wes McKinney for analyzing **pan**el **da**ta (hence the name). It comes with special data structures, functions, and methods that you can use to take care of the vast majority of data processing operations for structured quantitative data. The second is Numpy, which is a lower-level package for efficient computation and maths. Numpy is the foundation that many other packages, including Pandas, are built on. We're not going to cover Numpy in any significant detail here, but it's worth knowing that Numpy provides arrays of arbitrary size and dimensionality, and is one of the pillars upon which Pandas is built.^[Testing footnote location... huh?]
 
 In this chapter, I will start with the basics of getting data in and out of Pandas dataframes, and previewing subsets of data. Next, I will dig deeper into Pandas core data structures (`Series` and `dataframes`), as well as `index` and `datetime` objects. I then discuss more advanced operations, such as grouping data for systematic comparisons, working with `datetime` objects for time series analysis, and combining dataframes.
 
@@ -105,7 +105,21 @@ I will create a list of the variable names I want to retain, and call the origin
 I will call the new dataframe `sdf`, for 'subsetted dataframe.' Of course, you can call it anything you like. If you are going to be working with multiple dataframes in the same script or notebook, then it's a good idea to give them much more descriptive names. For now, I am only working with two, so I will use `df` for the full dataframe and `sdf` for the dataframe with a subset of the original variables. I will make careful note of any dataframes I add.
 
 ```python
-subset_vars = ['country_name', 'country_text_id', 'e_regiongeo', 'year', 'v2x_polyarchy', 'v2x_libdem', 'v2x_partipdem', 'v2x_delibdem', 'v2x_egaldem', 'v2smprivex', 'v2smpolsoc', 'v2caviol', 'e_boix_regime']
+subset_vars = [
+    'country_name', 
+    'country_text_id', 
+    'e_regiongeo', 
+    'year', 
+    'v2x_polyarchy', 
+    'v2x_libdem', 
+    'v2x_partipdem', 
+    'v2x_delibdem', 
+    'v2x_egaldem', 
+    'v2smprivex', 
+    'v2smpolsoc', 
+    'v2caviol', 
+    'e_boix_regime'
+]
 sdf = df[subset_vars]
 sdf.shape
 ```
@@ -261,6 +275,7 @@ Sometimes, the new columns created are transformations of a Series that already 
 
 ```python
 fsdf['missing_political_violence_data'] = fsdf['v2caviol'].isna()
+
 fsdf['missing_political_violence_data'].value_counts().reset_index()
 ```
 
@@ -327,6 +342,7 @@ We can use the `get_group()` method to pull a group from the grouped object. (No
 
 ```python
 south_east_asia = grouped.get_group(13)
+
 south_east_asia[['country_name', 'year', 'e_boix_regime']].head()
 ```
 
@@ -438,8 +454,13 @@ One further thing to note about this dataset: each row is a tweet from a specifi
 We can convert date strings from a column or `Series` into Timestamps using the `to_datetime` function. We will do that here, assigning the new `datetime` objects to new variables. Note that this code will take a bit of time to run when executed on all 3 million tweets (if your computer isn't the strongest, you might want to consider first using `tweets_df.sample()` to reduce the size of the dataframe).
 
 ```python
-tweets_df['dt_publish_date'] = pd.to_datetime(tweets_df['publish_date'])
-tweets_df['dt_harvested_date'] = pd.to_datetime(tweets_df['harvested_date'])
+tweets_df['dt_publish_date'] = pd.to_datetime(
+    tweets_df['publish_date']
+)
+
+tweets_df['dt_harvested_date'] = pd.to_datetime(
+    tweets_df['harvested_date']
+)
 ```
 
 ```python
@@ -465,6 +486,7 @@ We can also add and subtract datetime columns to create new columns.
 
 ```python
 tweets_df['days_until_harvest'] = tweets_df['dt_harvested_date'] - tweets_df['dt_publish_date']
+
 tweets_df['days_until_harvest'].sample(10)
 ```
 
@@ -654,7 +676,7 @@ If this "more advanced" approach to combining datasets is of interest, I highly 
 
 ## CONCLUSION
 
----
+
 
 ## Key Points
 
@@ -662,5 +684,3 @@ If this "more advanced" approach to combining datasets is of interest, I highly 
 - We covered the basic Pandas data structures, Series and dataframes, and the `index` and `datetime` objects
 - We discussed how to subset dataframes by selecting columns and filtering rows, followed by a discussion of how to do systematic comparisons by performing operations on grouped dataframes
 - We then discussed how to combine multiple dataframes using `merge` and `concatenate` and introduced the general idea of record linkage.
-
----

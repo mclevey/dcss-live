@@ -1,6 +1,6 @@
 figure.figsize: 7.2, 4.8
 figure.dpi: 100.0
-figure.facecolor: none  # Set figure background to light gray (#F5F5F5) or transparent (none)
+figure.facecolor: whitesmoke
 figure.constrained_layout.use: True
 text.color: .15
 axes.labelcolor: .15
@@ -23,7 +23,7 @@ ytick.labelsize: 14
 legend.fontsize: 12
 
 axes.grid: True
-axes.facecolor: none  # Set axes background to light gray (#F5F5F5) or transparent (none)
+axes.facecolor: none  # none  # Set axes background to light gray (#F5F5F5) or transparent (none)
 axes.edgecolor: black
 axes.linewidth: 0
 grid.color: eeeeee

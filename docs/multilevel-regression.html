@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.56">
+<meta name="generator" content="quarto-1.3.450">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>24&nbsp; Multilevel regression – Doing Computational Social Science&lt;br&gt;[The **Continuous Development** Edition]{.small}</title>
+<title>Doing Computational Social ScienceThe Continuous Development Edition - 25&nbsp; Multilevel regression</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -22,7 +22,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -33,7 +33,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -58,7 +58,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
-  margin-bottom: 0em;
 }
 .hanging-indent div.csl-entry {
   margin-left:2em;
@@ -102,13 +101,7 @@ div.csl-indent {
   "collapse-after": 3,
   "panel-placement": "start",
   "type": "textbox",
-  "limit": 50,
-  "keyboard-shortcut": [
-    "f",
-    "/",
-    "s"
-  ],
-  "show-item-context": false,
+  "limit": 20,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -117,42 +110,14 @@ div.csl-indent {
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
-    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
 }</script>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="custom.css">
 </head>
@@ -163,13 +128,13 @@ window.Quarto = {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./linear-regression.html"><strong>MODELING</strong></a></li><li class="breadcrumb-item"><a href="./multilevel-regression.html"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Multilevel regression</span></a></li></ol></nav>
-        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-        </a>
-      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./linear-regression.html"><strong>MODELING</strong></a></li><li class="breadcrumb-item"><a href="./multilevel-regression.html"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Multilevel regression</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -178,7 +143,7 @@ window.Quarto = {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
       <a href="./index.html" class="sidebar-logo-link">
       <img src="./figures/logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
@@ -186,25 +151,25 @@ window.Quarto = {
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Doing Computational Social Science<br><span class="small">The <strong>Continuous Development</strong> Edition</span></a> 
         <div class="sidebar-tools-main">
-    <a href="https://github.com/UWNETLAB/dcss_supplementary/tree/master/book/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="https://github.com/UWNETLAB/dcss_supplementary/tree/master/book/" rel="" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
     <div class="dropdown">
-      <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
+      <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Share"><i class="bi bi-share"></i></a>
       <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
           <li>
             <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=|url|">
-              <i class="bi bi-twitter pe-1"></i>
+              <i class="bi bi-bi-twitter pe-1"></i>
             Twitter
             </a>
           </li>
           <li>
             <a class="dropdown-item sidebar-tools-main-item" href="https://www.facebook.com/sharer/sharer.php?u=|url|">
-              <i class="bi bi-facebook pe-1"></i>
+              <i class="bi bi-bi-facebook pe-1"></i>
             Facebook
             </a>
           </li>
           <li>
             <a class="dropdown-item sidebar-tools-main-item" href="https://www.linkedin.com/sharing/share-offsite/?url=|url|">
-              <i class="bi bi-linkedin pe-1"></i>
+              <i class="bi bi-bi-linkedin pe-1"></i>
             LinkedIn
             </a>
           </li>
@@ -226,19 +191,25 @@ window.Quarto = {
  <span class="menu-text">🏠</span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction</span></a>
+  </div>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
- <span class="menu-text"><strong>RESEARCH COMPUTING</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text"><strong>COMPUTING</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./getting-started.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Getting Started</span></span></a>
+  <a href="./setting-up.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Setting up</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -253,71 +224,89 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Python 102</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./processing-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Processing Data</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
- <span class="menu-text"><strong>MINDFUL MODELING</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text"><strong>WORKFLOW</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./metaphor-map-reduction.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Modeling as metaphor, map, and reduction</span></span></a>
+  <a href="./mindful-modelling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Mindful modelling</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./iterative-workflow.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Iterative workflows</span></span></a>
+  <a href="./iteration.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title"><del>Sequential</del> iterative modelling</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
- <span class="menu-text"><strong>OBTAINING DATA</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+ <span class="menu-text"><strong>DATA</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./sampling-and-survey-data.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title"><del>Processing Structured Data</del> Sampling and Survey Data</span></span></a>
+  <a href="./survey-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Survey Data</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./web-data-apis.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Web data (APIs)</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Web data (APIs)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./web-data-scraping.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Web data (Scraping)</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Web data (Scraping)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./audio-files-and-documents.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Audio files and documents</span></span></a>
+  <a href="./audio-and-document-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Audio and document data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./text-as-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Text as Data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./relational-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Relational data</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
- <span class="menu-text"><strong>EXPLORING</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+ <span class="menu-text"><strong>DISCOVERY</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -325,52 +314,40 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./exploratory-data-analysis.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Exploratory data analysis (EDA) <!-- Exploring with purpose --></span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Exploring with purpose</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./association-and-latent-variables.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Association and latent variables</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./text-as-data.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Text as Data</span></span></a>
+  <a href="./reduction-and-latent-dimensions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Reduction and latent dimensions</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./mapping-text.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Text similarity and latent semantic space</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./networks-as-not-data.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Networks and relational thinking</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Text similarity and latent semantic space</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./centrality.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Centrality</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Centrality</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./mapping-network-structure.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Mapping network structure</span></span></a>
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Mapping network structure</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
  <span class="menu-text"><strong>PREDICTION &amp; INFERENCE</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -378,46 +355,46 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./supervised-learning.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Supervised Machine Learning</span></span></a>
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Supervised Machine Learning</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./prediction-and-classification.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Prediction and classification</span></span></a>
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Prediction and classification</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./causality.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Causality</span></span></a>
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Causality</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./probability.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Probability 101</span></span></a>
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Probability 101</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./credibility.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Credibility</span></span></a>
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Credibility</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./measurement-and-missingness.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Measurement and missingness</span></span></a>
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Measurement and missingness</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true">
  <span class="menu-text"><strong>MODELING</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -425,58 +402,58 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./linear-regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Bayesian Regression Models with Probabilistic Programming</span></span></a>
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Bayesian Regression Models with Probabilistic Programming</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./multilevel-regression.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Multilevel regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Multilevel regression</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./generalized-linear-models.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Generalized Linear Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Generalized Linear Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./structural-causal-models.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Structural causal models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Structural causal models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./modeling-texts-lda.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Modeling text with LDA topic models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Modeling text with LDA topic models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./modeling-networks.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Latent structure in networks</span></span></a>
+ <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Latent structure in networks</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./agent-based-models.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Agent-based models (ABMs)</span></span></a>
+ <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Agent-based models (ABMs)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./diffusion-opinion-cultural-cognition.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Diffusion, opinion dynamics, and cultural cognition</span></span></a>
+ <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Diffusion, opinion dynamics, and cultural cognition</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true">
  <span class="menu-text"><strong>DEEP LEARNING</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -484,34 +461,34 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./artificial-neural-networks-fnn-rnn-cnn.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Artificial neural networks 101</span></span></a>
+ <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Artificial neural networks</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./language-models-and-embeddings.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Processing Natural Language Data</span></span></a>
+ <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Language models and word embeddings</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./transformer-revolution.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">The transformer revolution</span></span></a>
+ <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">The transformer revolution</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./modeling-text-transformer-topic-models.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Modeling text: transformer topic models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Modeling text: transformer topic models</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
- <span class="menu-text"><strong>PROFESSIONAL RESPONSIBILITIES</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" aria-expanded="true">
+ <span class="menu-text"><strong>RESPONSIBILITIES</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -519,19 +496,19 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ethical-css.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Research Ethics, Politics, and Practices</span></span></a>
+ <span class="menu-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">Ethical CSS</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./open-css.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">Open computational social science</span></span></a>
+ <span class="menu-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">Open CSS</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./future-css.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">Future computational social science</span></span></a>
+ <span class="menu-text"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">Future CSS</span></span></a>
   </div>
 </li>
       </ul>
@@ -551,49 +528,49 @@ window.Quarto = {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./courses.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">Courses and Workshops</span></span></a>
+ <span class="menu-text"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title">Courses and Workshops</span></span></a>
   </div>
 </li>
     </ul>
     </div>
 </nav>
-<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link active" data-scroll-target="#learning-objectives"><span class="header-section-number">24.1</span> LEARNING OBJECTIVES</a></li>
-  <li><a href="#learning-materials" id="toc-learning-materials" class="nav-link" data-scroll-target="#learning-materials"><span class="header-section-number">24.2</span> LEARNING MATERIALS</a></li>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction"><span class="header-section-number">24.3</span> INTRODUCTION</a>
+  <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link active" data-scroll-target="#learning-objectives"><span class="header-section-number">25.1</span> LEARNING OBJECTIVES</a></li>
+  <li><a href="#learning-materials" id="toc-learning-materials" class="nav-link" data-scroll-target="#learning-materials"><span class="header-section-number">25.2</span> LEARNING MATERIALS</a></li>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction"><span class="header-section-number">25.3</span> INTRODUCTION</a>
   <ul class="collapse">
-  <li><a href="#imports" id="toc-imports" class="nav-link" data-scroll-target="#imports"><span class="header-section-number">24.3.1</span> Imports</a></li>
+  <li><a href="#imports" id="toc-imports" class="nav-link" data-scroll-target="#imports"><span class="header-section-number">25.3.1</span> Imports</a></li>
   </ul></li>
-  <li><a href="#so-whats-a-hierarchical-model" id="toc-so-whats-a-hierarchical-model" class="nav-link" data-scroll-target="#so-whats-a-hierarchical-model"><span class="header-section-number">24.4</span> SO, WHAT’S A HIERARCHICAL MODEL?</a></li>
-  <li><a href="#goldilocks-and-the-three-pools" id="toc-goldilocks-and-the-three-pools" class="nav-link" data-scroll-target="#goldilocks-and-the-three-pools"><span class="header-section-number">24.5</span> GOLDILOCKS AND THE THREE POOLS</a>
+  <li><a href="#so-whats-a-hierarchical-model" id="toc-so-whats-a-hierarchical-model" class="nav-link" data-scroll-target="#so-whats-a-hierarchical-model"><span class="header-section-number">25.4</span> SO, WHAT’S A HIERARCHICAL MODEL?</a></li>
+  <li><a href="#goldilocks-and-the-three-pools" id="toc-goldilocks-and-the-three-pools" class="nav-link" data-scroll-target="#goldilocks-and-the-three-pools"><span class="header-section-number">25.5</span> GOLDILOCKS AND THE THREE POOLS</a>
   <ul class="collapse">
-  <li><a href="#load-data" id="toc-load-data" class="nav-link" data-scroll-target="#load-data"><span class="header-section-number">24.5.1</span> Load Data</a></li>
-  <li><a href="#no-pooling-model" id="toc-no-pooling-model" class="nav-link" data-scroll-target="#no-pooling-model"><span class="header-section-number">24.5.2</span> No Pooling Model</a></li>
-  <li><a href="#informative-priors-a-spoonful-of-information-makes-the-sampler-calm-down" id="toc-informative-priors-a-spoonful-of-information-makes-the-sampler-calm-down" class="nav-link" data-scroll-target="#informative-priors-a-spoonful-of-information-makes-the-sampler-calm-down"><span class="header-section-number">24.5.3</span> Informative Priors: A Spoonful of Information Makes the Sampler Calm Down</a></li>
-  <li><a href="#shrinkage" id="toc-shrinkage" class="nav-link" data-scroll-target="#shrinkage"><span class="header-section-number">24.5.4</span> Shrinkage</a></li>
-  <li><a href="#does-the-model-fit-posterior-predictive-plots" id="toc-does-the-model-fit-posterior-predictive-plots" class="nav-link" data-scroll-target="#does-the-model-fit-posterior-predictive-plots"><span class="header-section-number">24.5.5</span> Does the Model Fit? Posterior Predictive Plots</a></li>
+  <li><a href="#load-data" id="toc-load-data" class="nav-link" data-scroll-target="#load-data"><span class="header-section-number">25.5.1</span> Load Data</a></li>
+  <li><a href="#no-pooling-model" id="toc-no-pooling-model" class="nav-link" data-scroll-target="#no-pooling-model"><span class="header-section-number">25.5.2</span> No Pooling Model</a></li>
+  <li><a href="#informative-priors-a-spoonful-of-information-makes-the-sampler-calm-down" id="toc-informative-priors-a-spoonful-of-information-makes-the-sampler-calm-down" class="nav-link" data-scroll-target="#informative-priors-a-spoonful-of-information-makes-the-sampler-calm-down"><span class="header-section-number">25.5.3</span> Informative Priors: A Spoonful of Information Makes the Sampler Calm Down</a></li>
+  <li><a href="#shrinkage" id="toc-shrinkage" class="nav-link" data-scroll-target="#shrinkage"><span class="header-section-number">25.5.4</span> Shrinkage</a></li>
+  <li><a href="#does-the-model-fit-posterior-predictive-plots" id="toc-does-the-model-fit-posterior-predictive-plots" class="nav-link" data-scroll-target="#does-the-model-fit-posterior-predictive-plots"><span class="header-section-number">25.5.5</span> Does the Model Fit? Posterior Predictive Plots</a></li>
   </ul></li>
-  <li><a href="#the-best-model-our-data-can-buy" id="toc-the-best-model-our-data-can-buy" class="nav-link" data-scroll-target="#the-best-model-our-data-can-buy"><span class="header-section-number">24.6</span> THE BEST MODEL OUR DATA CAN BUY</a></li>
-  <li><a href="#the-fault-in-our-lack-of-stars" id="toc-the-fault-in-our-lack-of-stars" class="nav-link" data-scroll-target="#the-fault-in-our-lack-of-stars"><span class="header-section-number">24.7</span> THE FAULT IN OUR (LACK OF) STARS</a></li>
-  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">24.8</span> CONCLUSION</a>
+  <li><a href="#the-best-model-our-data-can-buy" id="toc-the-best-model-our-data-can-buy" class="nav-link" data-scroll-target="#the-best-model-our-data-can-buy"><span class="header-section-number">25.6</span> THE BEST MODEL OUR DATA CAN BUY</a></li>
+  <li><a href="#the-fault-in-our-lack-of-stars" id="toc-the-fault-in-our-lack-of-stars" class="nav-link" data-scroll-target="#the-fault-in-our-lack-of-stars"><span class="header-section-number">25.7</span> THE FAULT IN OUR (LACK OF) STARS</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">25.8</span> CONCLUSION</a>
   <ul class="collapse">
-  <li><a href="#key-points" id="toc-key-points" class="nav-link" data-scroll-target="#key-points"><span class="header-section-number">24.8.1</span> Key Points</a></li>
+  <li><a href="#key-points" id="toc-key-points" class="nav-link" data-scroll-target="#key-points"><span class="header-section-number">25.8.1</span> Key Points</a></li>
   </ul></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/UWNETLAB/dcss_supplementary/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/UWNETLAB/dcss_supplementary/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./linear-regression.html"><strong>MODELING</strong></a></li><li class="breadcrumb-item"><a href="./multilevel-regression.html"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Multilevel regression</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Multilevel regression</span></h1>
+<h1 class="title"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Multilevel regression</span></h1>
 </div>
 
 
@@ -606,12 +583,10 @@ window.Quarto = {
   </div>
   
 
-
 </header>
 
-
-<section id="learning-objectives" class="level2" data-number="24.1">
-<h2 data-number="24.1" class="anchored" data-anchor-id="learning-objectives"><span class="header-section-number">24.1</span> LEARNING OBJECTIVES</h2>
+<section id="learning-objectives" class="level2" data-number="25.1">
+<h2 data-number="25.1" class="anchored" data-anchor-id="learning-objectives"><span class="header-section-number">25.1</span> LEARNING OBJECTIVES</h2>
 <ul>
 <li>Explain what a Hierarchical linear regression model is</li>
 <li>Specify a Hierarchical linear regression model using mathematical notation</li>
@@ -623,15 +598,15 @@ window.Quarto = {
 <li>Interpret the results of a Hierarchical model</li>
 </ul>
 </section>
-<section id="learning-materials" class="level2" data-number="24.2">
-<h2 data-number="24.2" class="anchored" data-anchor-id="learning-materials"><span class="header-section-number">24.2</span> LEARNING MATERIALS</h2>
+<section id="learning-materials" class="level2" data-number="25.2">
+<h2 data-number="25.2" class="anchored" data-anchor-id="learning-materials"><span class="header-section-number">25.2</span> LEARNING MATERIALS</h2>
 <p>You can find the online learning materials for this chapter in <code>doing_computational_social_science/Chapter_29</code>. <code>cd</code> into the directory and launch your Jupyter Server.</p>
 </section>
-<section id="introduction" class="level2" data-number="24.3">
-<h2 data-number="24.3" class="anchored" data-anchor-id="introduction"><span class="header-section-number">24.3</span> INTRODUCTION</h2>
+<section id="introduction" class="level2" data-number="25.3">
+<h2 data-number="25.3" class="anchored" data-anchor-id="introduction"><span class="header-section-number">25.3</span> INTRODUCTION</h2>
 <p>Generally speaking, most introductory and intermediate quantitative methods classes for social science students do not teach hierarchical linear regression models except as a special case of ‘default’ linear regression models. This is probably due to the fact that simple linear models are much easier to teach than complex ones, and because of the wise notion that, where possible, we should favour simple models over complex models. And so hierarchical linear models are banished to “advanced” electives that you <em>might</em> get to after years of learning ANOVA-like statistical tests (now with 300+ flavours!). This is all a bit silly given the philosophical gymnastics required of “simple” statistical tests and linear models in the Frequentist tradition. We need a new normal in which our “default” regressions are hierarchical. I’m going to assume that you, like me, were not taught statistics this way and that you may not even know what a hierarchical regression is. Let’s change that.</p>
-<section id="imports" class="level3" data-number="24.3.1">
-<h3 data-number="24.3.1" class="anchored" data-anchor-id="imports"><span class="header-section-number">24.3.1</span> Imports</h3>
+<section id="imports" class="level3" data-number="25.3.1">
+<h3 data-number="25.3.1" class="anchored" data-anchor-id="imports"><span class="header-section-number">25.3.1</span> Imports</h3>
 <div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
@@ -646,15 +621,15 @@ window.Quarto = {
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dcss.bayes <span class="im">import</span> plot_2020_no_pool, plot_2020_partial_pool</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 </section>
-<section id="so-whats-a-hierarchical-model" class="level2" data-number="24.4">
-<h2 data-number="24.4" class="anchored" data-anchor-id="so-whats-a-hierarchical-model"><span class="header-section-number">24.4</span> SO, WHAT’S A HIERARCHICAL MODEL?</h2>
+<section id="so-whats-a-hierarchical-model" class="level2" data-number="25.4">
+<h2 data-number="25.4" class="anchored" data-anchor-id="so-whats-a-hierarchical-model"><span class="header-section-number">25.4</span> SO, WHAT’S A HIERARCHICAL MODEL?</h2>
 <p>Linear regression models of any variety can justifiably be called “<strong>hierarchical</strong>” if they use data at different ‘levels’ to estimate parameters and make predictions. I’ll come back to ‘data at different levels’ in a moment, but first I want to acknowledge a very common source of confusion. For no good reason, hierarchical models go by a wide variety of different names, including ‘<strong>random effects</strong>’, ‘<strong>mixed effects</strong>,’ and ‘<strong>multilevel</strong>.’ There are many others as well. The terminology here is hopelessly and inextricably muddled. In some fields, the various terms have specific meanings; in others, they don’t. Sometimes the specific meanings are at odds with one another.</p>
 <p>Thankfully none of that really matters for our purposes here. Most of the time I’ll stick with hierarchical, but when I don’t, I mean the same thing. Since you have now been introduced to two different languages for describing your models with precision: code and mathematical notation. A description of your model using either of these two languages is enough to banish any ambiguity about the type of model you’re working with.</p>
 <p>What do I mean when I say ‘data at different levels?’ Good question. Anytime I mention something along those lines (including references to ‘<strong>pools</strong>,’ ‘<strong>clusters</strong>,’ etc.), I’m referring to data where observations can be reasonably grouped together because they share some sort of <strong>context</strong>. (You might remember me alluding to this type of model when I introduced relational thinking in Chapter 14, where I compared network analysis to multilevel analysis.) The model we were working with last chapter – the one that investigated if you could predict a Democratic candidate’s margin of victory (or loss) from the amount by which the Democrats outspent (or were outspent by) the Republicans – used clustered data: each of the observations was drawn from one of the United States of America’s 435 Federal Congressional Districts, and each of those districts belonged to one of the 50 States. In this way, the State variable could have acted as a ‘cluster’, in the sense that two Congressional Districts from within the same state are more likely to share similarities with one another than two Congressional Districts chosen at random from the entire dataset.</p>
 <p>The real power of a hierarchical model stems from its ability to balance the influence of individual level observations (individual congressional districts) with the influence of whole clusters (each individual state). Bayesian hierarchical models permit this tradeoff between countervailing influences by permitting the slopes (<span class="math inline">\(\beta\)</span>) and intercepts (<span class="math inline">\(\alpha\)</span>) of each cluster to vary from one another, while still forcing all of the slopes and intercepts to be drawn from a simultaneously-estimated prior. This is all getting a little too abstract, so let’s get practical.</p>
 </section>
-<section id="goldilocks-and-the-three-pools" class="level2" data-number="24.5">
-<h2 data-number="24.5" class="anchored" data-anchor-id="goldilocks-and-the-three-pools"><span class="header-section-number">24.5</span> GOLDILOCKS AND THE THREE POOLS</h2>
+<section id="goldilocks-and-the-three-pools" class="level2" data-number="25.5">
+<h2 data-number="25.5" class="anchored" data-anchor-id="goldilocks-and-the-three-pools"><span class="header-section-number">25.5</span> GOLDILOCKS AND THE THREE POOLS</h2>
 <p>Whilst working your way through the previous chapter, you might have noticed the word ‘<strong>pool</strong>’ showing up in our model. I didn’t explain it at the time, but the nomenclature was indicative of the modelling strategy we were using. In a regression model, the ‘pooling’ you use determines how the various categorical variables in your model can influence one another. The election data we used had one categorical variable – <code>state</code> – that indicated which of the 50 US States each congressional district belonged to. It might not have seemed so at the time, but our decision to omit the <code>state</code> variable by excluding it from the model entirely was an intentional choice: by preventing our model from accessing the information contained therein, it was forced to treat every congressional district from every state as if they had all come from one giant state (or, equivalently, no state at all). Doing so might have <em>seemed</em> like the ‘default’ option, but the only reason we went that route was for the sake of simplicity.</p>
 <p>Now that we’ve seen a full example of developing a simple Bayesian regression model, it’s time to take our categorical data more seriously. The idea here, which I am taking from McElreath’s classic <em>Statistical Rethinking</em>, is that our modelling choices should reflect serious consideration of the options provided to us by the information available to us in our datasets. In this case, we should be asking ourselves: “<em>how should we handle the various U.S. states that appear in this dataset?</em>” Let’s discuss three primary options.</p>
 <p><strong>Option 1, Complete Pooling</strong>: All 50 U.S. States are identical.</p>
@@ -664,8 +639,8 @@ window.Quarto = {
 <p><strong>Option 3, Partial Pooling</strong>: The U.S. States differ from one another, but there are commonalities about them that we can infer and apply productively.</p>
 <p>This approach – which we’ll call ‘Partial Pooling’ – allows states to differ from one another, but places limitations on how they may differ. Rather than giving each state free rein over its own parameters, this approach allows the model to simultaneously learn about each state’s parameters from the data, as well as overall trends for the states in general by way of shared priors.</p>
 <p>Logically and statistically, this approach usually makes the most sense: each state differs, but all are political entities within the United States of America, carrying all of the shared norms, values, and traditions incumbent upon belonging to the Union. This is the approach we primarily will use as we dive into hierarchical modelling. Before we do, though, let’s take a brief detour to examine what a ‘No Pooling’ model might look like.</p>
-<section id="load-data" class="level3" data-number="24.5.1">
-<h3 data-number="24.5.1" class="anchored" data-anchor-id="load-data"><span class="header-section-number">24.5.1</span> Load Data</h3>
+<section id="load-data" class="level3" data-number="25.5.1">
+<h3 data-number="25.5.1" class="anchored" data-anchor-id="load-data"><span class="header-section-number">25.5.1</span> Load Data</h3>
 <p>Since our exploration of Bayesian hierarchical linear models builds off of the model we developed in the previous chapter, we’re going to re-use the same 2020 House of Representatives Election dataset. We’ll start by loading, standardizing, and previewing the data:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'data/2020_election/2020_districts_combined.csv'</span></span>
@@ -714,8 +689,8 @@ window.Quarto = {
 <p>Feel free to go check what state the corresponding row in the dataset belongs to; you should see that it’s a perfect match!</p>
 <p>Now that we’ve specified our model mathematically, let’s feed it into PyMC:</p>
 </section>
-<section id="no-pooling-model" class="level3" data-number="24.5.2">
-<h3 data-number="24.5.2" class="anchored" data-anchor-id="no-pooling-model"><span class="header-section-number">24.5.2</span> No Pooling Model</h3>
+<section id="no-pooling-model" class="level3" data-number="25.5.2">
+<h3 data-number="25.5.2" class="anchored" data-anchor-id="no-pooling-model"><span class="header-section-number">25.5.2</span> No Pooling Model</h3>
 <p>We’ll start by specifying the full model. We won’t go through it step by step, though, as we’re tight on space and we’ve only made a few changes from the model in the previous chapter. Those changes are:</p>
 <ul>
 <li>We added a <code>shape=n_states</code> parameter to our <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span> priors</li>
@@ -736,21 +711,17 @@ window.Quarto = {
 <span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Run Sample Traces</span></span>
 <span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    trace_no_pool <span class="op">=</span> pm.sample()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>If everything works correctly, PyMC should sample without issues. Let’s check the trace plots for the hyperparameters (<a href="#fig-28_01" class="quarto-xref">Figure&nbsp;<span>24.1</span></a>):</p>
+<p>If everything works correctly, PyMC should sample without issues. Let’s check the trace plots for the hyperparameters (<a href="#fig-28_01">Figure&nbsp;<span class="quarto-unresolved-ref">fig-28_01</span></a>):</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> no_pool_model:</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    az.plot_trace(trace_no_pool, [<span class="st">'sigma'</span>], compact<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    plt.savefig(<span class="st">'figures/28_01.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div id="fig-28_01" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-28_01-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/28_01.png" class="img-fluid figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-28_01-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;24.1: png
-</figcaption>
+<div id="fig-28_01" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="figures/28_01.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;25.1: png</figcaption>
 </figure>
 </div>
-<p>Even though we can’t display all the traces for <code>alpha</code> and <code>beta</code> (since there are 48 of each), a quick glance at our trace for <code>sigma</code> seems to indicate that everything is well and good. This assumption is backed up by the fact that the PyMC sampler didn’t have any grievances to air. Operating under the assumption that our model was well-sampled, let’s proceed with our examination of the results (<a href="#fig-28_02" class="quarto-xref">Figure&nbsp;<span>24.2</span></a>):</p>
+<p>Even though we can’t display all the traces for <code>alpha</code> and <code>beta</code> (since there are 48 of each), a quick glance at our trace for <code>sigma</code> seems to indicate that everything is well and good. This assumption is backed up by the fact that the PyMC sampler didn’t have any grievances to air. Operating under the assumption that our model was well-sampled, let’s proceed with our examination of the results (<a href="#fig-28_02">Figure&nbsp;<span class="quarto-unresolved-ref">fig-28_02</span></a>):</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> no_pool_model:</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    ppc <span class="op">=</span> pm.sample_posterior_predictive(trace_no_pool, var_names<span class="op">=</span>[<span class="st">'votes'</span>, <span class="st">'alpha'</span>, <span class="st">'beta'</span>, <span class="st">'sigma'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>plot_2020_no_pool(</span>
@@ -764,21 +735,17 @@ Figure&nbsp;24.1: png
 <span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    state_cat</span>
 <span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'figures/28_02.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div id="fig-28_02" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-28_02-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/28_02.png" class="img-fluid figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-28_02-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;24.2: png
-</figcaption>
+<div id="fig-28_02" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="figures/28_02.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;25.2: png</figcaption>
 </figure>
 </div>
 <p>Each state in the model has a different average regression line, and all of them seem to be doing a good job of fitting the data. While most of the states still show a positive relationship between spending differential and vote differential, not all do: Maine, Alabama, Massachusetts, and New Mexico have completely reversed the trend. Our model has determined that Democrats who outspend Republicans in these states tend to do worse than their colleagues who don’t. According to our model, the only thing the Democrats would have to do to sweep Alabama is stop spending any money there! Though hilarious, this is clearly not a reasonable conclusion for the model to draw. Such is the peril of allowing a model to fit the data as closely as it can.</p>
 <p>If you squint and look closely, you might be able to see some small bands around each of the regression lines, covering the interval that we have data for. It might come as little surprise, then, that those little bands are the exact same as the bands we used to surround our regression line from the previous chapter. As a brief refresher: the bands represent the model’s uncertainty about the best-fit regression line (inner band, 94% HDI) and its uncertainty about where the data points themselves lay in relation to the regression line (outer band, 94% HDI; parameterized as ‘<span class="math inline">\(\sigma\)</span>’ in our model’s likelihood, a.k.a. the standard deviation of the normal distribution in our likelihood).</p>
 <p>We’re not going to dwell too much on the specifics here: the important takeaway is that our unpooled model has allowed the data for each state to completely determine their own intercept and slope parameters, even when there are only a small number of observations. The only regularizing forces present are the relatively uninformative (and, therefore, weak) priors that we established for this model in the previous chapters (they haven’t changed between now and then). With nothing stopping the model from rushing straight for the best possible fit, we’ve allowed it to descend into the dread valley of overfitting. Damn. Our model does an excellent job at fitting the data we have, but it is, in effect, painting a bullseye around an arrow that had already lodged itself into a wall. In order to curb these tendencies in a principled way, we’re going to turn to the regularizing properties of the hierarchical linear model.</p>
-<section id="partially-pooled-model" class="level4" data-number="24.5.2.1">
-<h4 data-number="24.5.2.1" class="anchored" data-anchor-id="partially-pooled-model"><span class="header-section-number">24.5.2.1</span> Partially Pooled Model</h4>
+<section id="partially-pooled-model" class="level4" data-number="25.5.2.1">
+<h4 data-number="25.5.2.1" class="anchored" data-anchor-id="partially-pooled-model"><span class="header-section-number">25.5.2.1</span> Partially Pooled Model</h4>
 <p>Our objective for the hierarchical election model we are developing here is to permit slopes and intercepts to vary between States, but to ensure that each is being drawn from a set of higher-level distributions that encode our model’s knowledge of the States <em>in general</em>. This means that we’re going to have to do away with the numbers (<span class="math inline">\(\mu\)</span> and <span class="math inline">\(\sigma\)</span>) we’ve been using thus far to specify our <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span> priors and replace them with parameters. Let’s do that now, even though the result will be incomplete:</p>
 <p><span class="math display">\[\begin{align}
 \text{vote}_i &amp;\sim \text{Normal}(\mu_i, \sigma)\\
@@ -848,22 +815,18 @@ Figure&nbsp;24.2: png
 <div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> partial_pool_model:</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    trace_partial_pool <span class="op">=</span> pm.sample(random_seed<span class="op">=</span><span class="dv">42</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Something went wrong when we attempted to fit this model.</p>
-<section id="the-peril-is-in-the-priors" class="level5" data-number="24.5.2.1.1">
-<h5 data-number="24.5.2.1.1" class="anchored" data-anchor-id="the-peril-is-in-the-priors"><span class="header-section-number">24.5.2.1.1</span> The Peril is in the Priors</h5>
+<section id="the-peril-is-in-the-priors" class="level5" data-number="25.5.2.1.1">
+<h5 data-number="25.5.2.1.1" class="anchored" data-anchor-id="the-peril-is-in-the-priors"><span class="header-section-number">25.5.2.1.1</span> The Peril is in the Priors</h5>
 <p>Roughly translated, the series of warnings we received can be interpreted as: “The sampling process didn’t go well”. One of the benefits to working with PyMC’s default sampler is that it is <em>very</em> noisy. It will loudly complain whenever anything goes wrong. As annoying as it can be sometimes, you would do well to view this behaviour as a good thing: whenever your sampler is having trouble with your model, it means there’s probably something wrong with your model.</p>
 <p>Our largest cause for concern is the number of ‘divergences’ that the sampling process returned. The sampler records a divergence whenever the proverbial marble in the idiomatic skate bowl ends up somewhere that shouldn’t be physically possible: it has ended up buried beneath the terrain, or bounced completely clear of the skate park and is zipping around the city causing chaos.</p>
-<p>Let’s examine our trace plot (<a href="#fig-28_03" class="quarto-xref">Figure&nbsp;<span>24.3</span></a>) to see the extent of the damage:</p>
+<p>Let’s examine our trace plot (<a href="#fig-28_03">Figure&nbsp;<span class="quarto-unresolved-ref">fig-28_03</span></a>) to see the extent of the damage:</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> partial_pool_model:</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    az.plot_trace(trace_partial_pool, [<span class="st">'alpha_mu'</span>, <span class="st">'beta_mu'</span>, <span class="st">'alpha_sigma'</span>, <span class="st">'beta_sigma'</span>, <span class="st">'sigma'</span>], compact<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    plt.savefig(<span class="st">'figures/28_03.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div id="fig-28_03" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-28_03-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/28_03.png" class="img-fluid figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-28_03-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;24.3: png
-</figcaption>
+<div id="fig-28_03" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="figures/28_03.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;25.3: png</figcaption>
 </figure>
 </div>
 <p>This isn’t a completely unmitigated disaster, but the problems are apparent enough that we should go through them in detail. The first thing you might notice here is that our traces don’t meet the criteria we laid out last chapter:</p>
@@ -876,8 +839,8 @@ Figure&nbsp;24.3: png
 </section>
 </section>
 </section>
-<section id="informative-priors-a-spoonful-of-information-makes-the-sampler-calm-down" class="level3" data-number="24.5.3">
-<h3 data-number="24.5.3" class="anchored" data-anchor-id="informative-priors-a-spoonful-of-information-makes-the-sampler-calm-down"><span class="header-section-number">24.5.3</span> Informative Priors: A Spoonful of Information Makes the Sampler Calm Down</h3>
+<section id="informative-priors-a-spoonful-of-information-makes-the-sampler-calm-down" class="level3" data-number="25.5.3">
+<h3 data-number="25.5.3" class="anchored" data-anchor-id="informative-priors-a-spoonful-of-information-makes-the-sampler-calm-down"><span class="header-section-number">25.5.3</span> Informative Priors: A Spoonful of Information Makes the Sampler Calm Down</h3>
 <p>There are many ways to tame a rebellious model. We don’t have the space here to cover some of the better ones (reparameterization is the usual go-to), but we wanted to show that informative priors can be used to improve sampling.</p>
 <p>In order to keep things simple, we’ve specified each of our spend-vote models thus far using only two different distributions:</p>
 <ol type="1">
@@ -911,18 +874,14 @@ Figure&nbsp;24.3: png
 <span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>    trace_partial_pool_regularized <span class="op">=</span> pm.sample(</span>
 <span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>        random_seed<span class="op">=</span><span class="dv">42</span></span>
 <span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Boom! No more divergences! The sampler still had a few grievances to air (at least one of our parameters was sampled very inefficiently), but we should interpret the lack of divergences as permission to manually examine our trace plots (<a href="#fig-28_04" class="quarto-xref">Figure&nbsp;<span>24.4</span></a>):</p>
+<p>Boom! No more divergences! The sampler still had a few grievances to air (at least one of our parameters was sampled very inefficiently), but we should interpret the lack of divergences as permission to manually examine our trace plots (<a href="#fig-28_04">Figure&nbsp;<span class="quarto-unresolved-ref">fig-28_04</span></a>):</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> partial_pool_model_regularized:</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    az.plot_trace(trace_partial_pool_regularized, [<span class="st">'alpha_mu'</span>, <span class="st">'beta_mu'</span>, <span class="st">'alpha_sigma'</span>, <span class="st">'beta_sigma'</span>, <span class="st">'sigma'</span>], compact<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    plt.savefig(<span class="st">'figures/28_04.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div id="fig-28_04" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-28_04-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/28_04.png" class="img-fluid figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-28_04-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;24.4: png
-</figcaption>
+<div id="fig-28_04" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="figures/28_04.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;25.4: png</figcaption>
 </figure>
 </div>
 <p>There are a couple of hiccups, and the <code>alpha_sigma</code> traces are verging on non-convergence, but there’s nothing to be too concerned about.</p>
@@ -934,7 +893,7 @@ Figure&nbsp;24.4: png
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>summary[[<span class="st">'mean'</span>, <span class="st">'sd'</span>, <span class="st">'r_hat'</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>It appears that there was a bit of an issue with <code>beta_sigma</code>; our assessment of <code>beta_sigma</code> is backed by the r_hat value of 1.01 (anything noticeably greater than 1.00 indicates something’s amiss). It’s not high enough to be a true cause for concern, but it’s worth pointing out.</p>
-<p>Now that we’ve fit our hierarchical model, let’s visualize the results (<a href="#fig-28_05" class="quarto-xref">Figure&nbsp;<span>24.5</span></a>):</p>
+<p>Now that we’ve fit our hierarchical model, let’s visualize the results (<a href="#fig-28_05">Figure&nbsp;<span class="quarto-unresolved-ref">fig-28_05</span></a>):</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>plot_2020_partial_pool(</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    partial_pool_model_regularized,</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    trace_partial_pool_regularized,</span>
@@ -947,14 +906,10 @@ Figure&nbsp;24.4: png
 <span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>    state_cat</span>
 <span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'figures/28_05.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div id="fig-28_05" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-28_05-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/28_05.png" class="img-fluid figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-28_05-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;24.5: png
-</figcaption>
+<div id="fig-28_05" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="figures/28_05.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;25.5: png</figcaption>
 </figure>
 </div>
 <p>The above plots should look familiar: they’re very similar to the ones we used to investigate the results from our unpooled model above. All of the elements they share in common are the same, only for our latest model:</p>
@@ -965,18 +920,18 @@ Figure&nbsp;24.5: png
 </ul>
 <p>There’s one additional element here, though. The grey lines represent the regression lines from the unpooled model; I included them here to facilitate comparison between the partially-pooled and unpooled models.</p>
 </section>
-<section id="shrinkage" class="level3" data-number="24.5.4">
-<h3 data-number="24.5.4" class="anchored" data-anchor-id="shrinkage"><span class="header-section-number">24.5.4</span> Shrinkage</h3>
+<section id="shrinkage" class="level3" data-number="25.5.4">
+<h3 data-number="25.5.4" class="anchored" data-anchor-id="shrinkage"><span class="header-section-number">25.5.4</span> Shrinkage</h3>
 <p>Let’s dig into these lines a little. First of all, a cursory glance at the previous model’s more outlandish conclusions shows that things have been calmed down considerably. Each of the states with downward-sloping regression lines (predicting worse voting outcomes in districts where Democrats spent more) – such as Alabama, Maine, and New Mexico – have been pulled back from the brink. In the opposite direction, some of the more steeply positive states (such as Kentucky, where the unpooled model predicted that a single standard deviation increase in relative spending for the Democrats would net two standard deviations’ worth of votes) have been reined in.</p>
 <p>Another thing you might notice is that each of the single-district states<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> (Wyoming, Vermont, Rhode Island, etc.) have had their regression lines change from perfect fits (where the grey line travels straight through the sole point of data) to more ‘standard’ fits (where the black line misses the point, often by a good margin). That’s not to claim that all of their black lines are identical: they’re not (compare Rhode Island with Montana). Instead, what the model is telling us is that the posterior distribution for each of these individual states isn’t all that much different from the distribution all states are drawing from.</p>
 <p>What’s happening here is that all of the states who have had their regression lines ‘calmed down’ by the model are being regularized by the impact of our model’s prior. Unlike a single-level model, however, <em>we didn’t choose this prior: the model learned it from the data</em>!</p>
 <p>This is the power of the hierarchical model; it adaptively learns how to straddle the line between underfitting and overfitting, leveraging regularizing probability distributions to calm down overeager predictions. The net effect is that our partially pooled model, at least compared with the unpooled model, has ‘shrunk’ the posterior distribution, causing the model’s predictions to crowd more tightly around a more conservative predictor. This phenomenon is known as ‘<strong>shrinkage</strong>’.</p>
 <p>A final parting thought on this topic: you may have noticed that the larger states such as Texas, New York, and California – all of which already had fairly reasonable regression lines – barely changed at all. Each of them were endowed with enough observations that they could largely overwhelm the regularizing influence of the priors.</p>
 </section>
-<section id="does-the-model-fit-posterior-predictive-plots" class="level3" data-number="24.5.5">
-<h3 data-number="24.5.5" class="anchored" data-anchor-id="does-the-model-fit-posterior-predictive-plots"><span class="header-section-number">24.5.5</span> Does the Model Fit? Posterior Predictive Plots</h3>
+<section id="does-the-model-fit-posterior-predictive-plots" class="level3" data-number="25.5.5">
+<h3 data-number="25.5.5" class="anchored" data-anchor-id="does-the-model-fit-posterior-predictive-plots"><span class="header-section-number">25.5.5</span> Does the Model Fit? Posterior Predictive Plots</h3>
 <p>Adding variables to a model can be an excellent way to explore relationships that simply couldn’t be tackled without some form of multivariate regression. It is unfortunate, then, that adding even a small handful of variables results in a model that the human brain can no longer perceive visually. A regression with just a predictor and an outcome variable is simple: you can capture everything in a two-dimensional scatterplot, with the predictor on the horizontal axis and the outcome on the vertical. A regression with two independent variables (say, a predictor and a control) and one outcome variable is less simple, but doable: you’ll occasionally see them visualized as a 3-dimensional plot with the two independents on the horizontal axes, and with a plane representing the regressor. Anything more than this is practically impossible, as the ‘line’ of best fit becomes a hyperplane that our brains are incapable of visualizing.</p>
-<p>In this sad state of affairs, we’re forced to turn to plots that collapse high-dimensional space back down into a 2-dimensional plane that allows us to see the distance between our model’s predictions and the true value of the observations. The resulting plot is called a ‘<strong>posterior predictive plot</strong>’, and is useful for assessing how well our model has fit the data. The main strength of this method is that it scales well into an arbitrarily large number of dimensions: we can picture all of the observations using a single plot. The downside is that we lose some of the nuance that we’d get from other visualizations. Here’s how to make one (results shown in <a href="#fig-28_06" class="quarto-xref">Figure&nbsp;<span>24.6</span></a>):</p>
+<p>In this sad state of affairs, we’re forced to turn to plots that collapse high-dimensional space back down into a 2-dimensional plane that allows us to see the distance between our model’s predictions and the true value of the observations. The resulting plot is called a ‘<strong>posterior predictive plot</strong>’, and is useful for assessing how well our model has fit the data. The main strength of this method is that it scales well into an arbitrarily large number of dimensions: we can picture all of the observations using a single plot. The downside is that we lose some of the nuance that we’d get from other visualizations. Here’s how to make one (results shown in <a href="#fig-28_06">Figure&nbsp;<span class="quarto-unresolved-ref">fig-28_06</span></a>):</p>
 <div class="sourceCode" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>mu_hpd <span class="op">=</span> az.hdi(ppc.posterior_predictive[<span class="st">"mu"</span>], <span class="fl">0.89</span>)</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>D_sim <span class="op">=</span> ppc.posterior_predictive[<span class="st">"votes"</span>].mean(dim<span class="op">=</span>(<span class="st">"chain"</span>, <span class="st">"draw"</span>)).values</span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -1005,22 +960,18 @@ Figure&nbsp;24.5: png
 <span id="cb18-26"><a href="#cb18-26" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb18-27"><a href="#cb18-27" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
 <span id="cb18-28"><a href="#cb18-28" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'figures/28_06.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div id="fig-28_06" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-28_06-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/28_06.png" class="img-fluid figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-28_06-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;24.6: png
-</figcaption>
+<div id="fig-28_06" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="figures/28_06.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;25.6: png</figcaption>
 </figure>
 </div>
 <p>Each of the points is an observation from our dataset. They’re arranged along the horizontal axis according to their observed (actual) value, and along the vertical axis according to where our model thinks they should be. The vertical lines around each point indicate the range that contains 94% of the posterior probability for that particular observation (remember, in a Bayesian model, <em>everything comes with a healthy dose of uncertainty</em>).</p>
 <p>Examining the plot above, we can see that our model does a passable job of retrodicting the voting data using nothing but the ‘state’ and ‘spend’ variables. We can, however, see some real problems at the far-right side of the plot: not only is our model incorrect about almost every district which lays more than ~1.5 standard deviations above the mean, it is <em>confidently</em> incorrect about them. In the next section, we’re going to see if we can do better.</p>
 </section>
 </section>
-<section id="the-best-model-our-data-can-buy" class="level2" data-number="24.6">
-<h2 data-number="24.6" class="anchored" data-anchor-id="the-best-model-our-data-can-buy"><span class="header-section-number">24.6</span> THE BEST MODEL OUR DATA CAN BUY</h2>
+<section id="the-best-model-our-data-can-buy" class="level2" data-number="25.6">
+<h2 data-number="25.6" class="anchored" data-anchor-id="the-best-model-our-data-can-buy"><span class="header-section-number">25.6</span> THE BEST MODEL OUR DATA CAN BUY</h2>
 <p>Now that we have established a Hierarchical baseline and introduced a method for visualizing results from models whose regression ‘lines’ are in higher dimensions (and, thus, aren’t lines any longer, but rather hyperplanes), we can start to add variables in an effort to improve model fit. Unfortunately, we don’t have the room here to report all the proper checks every time we add a variable. Instead, I’ll run you through how to add each of the remaining variables in the dataset and then present the finished model.</p>
 <div class="sourceCode" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> pm.Model() <span class="im">as</span> full_hierarchical_model:</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>    </span>
@@ -1057,7 +1008,7 @@ Figure&nbsp;24.6: png
 <span id="cb19-33"><a href="#cb19-33" aria-hidden="true" tabindex="-1"></a>        target_accept<span class="op">=</span><span class="fl">0.97</span>,</span>
 <span id="cb19-34"><a href="#cb19-34" aria-hidden="true" tabindex="-1"></a>        random_seed<span class="op">=</span><span class="dv">42</span></span>
 <span id="cb19-35"><a href="#cb19-35" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Let’s produce the trace plots for our <code>full_hierarchical_model</code> (<a href="#fig-28_07" class="quarto-xref">Figure&nbsp;<span>24.7</span></a>).</p>
+<p>Let’s produce the trace plots for our <code>full_hierarchical_model</code> (<a href="#fig-28_07">Figure&nbsp;<span class="quarto-unresolved-ref">fig-28_07</span></a>).</p>
 <div class="sourceCode" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> full_hierarchical_model:</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>    az.plot_trace(trace_full_hierarchical_model, </span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>                  [</span>
@@ -1071,17 +1022,13 @@ Figure&nbsp;24.6: png
 <span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>                      <span class="st">'sigma'</span>,</span>
 <span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>                  ], compact<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>    plt.savefig(<span class="st">'figures/28_07.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div id="fig-28_07" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-28_07-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/28_07.png" class="img-fluid figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-28_07-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;24.7: png
-</figcaption>
+<div id="fig-28_07" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="figures/28_07.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;25.7: png</figcaption>
 </figure>
 </div>
-<p>There are a few worrying signs here (the <code>alpha_mu_state</code> isn’t sampling as efficiently as we would prefer), but nothing serious enough to call the model into question entirely! Time to take a peek at our model fit (<a href="#fig-28_08" class="quarto-xref">Figure&nbsp;<span>24.8</span></a>):</p>
+<p>There are a few worrying signs here (the <code>alpha_mu_state</code> isn’t sampling as efficiently as we would prefer), but nothing serious enough to call the model into question entirely! Time to take a peek at our model fit (<a href="#fig-28_08">Figure&nbsp;<span class="quarto-unresolved-ref">fig-28_08</span></a>):</p>
 <div class="sourceCode" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> full_hierarchical_model:</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>    ppc <span class="op">=</span> pm.sample_posterior_predictive(trace_full_hierarchical_model, var_names<span class="op">=</span>[<span class="st">'votes'</span>, <span class="st">'mu'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="sourceCode" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>mu_hpd_mean <span class="op">=</span> mu_hpd[<span class="st">'mu'</span>].mean(dim<span class="op">=</span><span class="st">"hdi"</span>).values</span>
@@ -1105,18 +1052,14 @@ Figure&nbsp;24.7: png
 <span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a>sns.despine()</span>
 <span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'figures/28_06.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div id="fig-28_08" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-28_08-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/28_08.png" class="img-fluid figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-28_08-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;24.8: png
-</figcaption>
+<div id="fig-28_08" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="figures/28_08.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;25.8: png</figcaption>
 </figure>
 </div>
 <p>Much, much better. The addition of two categorical variables (Democratic and Republican incumbency), and one continuous variable (the Cook Partisan Voting Index) has allowed our model’s predictions to fall closer to the observed values across the board.</p>
-<p>Even though the above plot does a good job of showing us how well our model fit the data in general, it tells us nothing about the parameters of interest! For that, we’re going to need to turn to a form of plot that can condense large amounts of coefficient information into a relatively small space (we have 51 to examine, after all). It’s called a <strong>forest plot</strong>. <a href="#fig-28_09" class="quarto-xref">Figure&nbsp;<span>24.9</span></a> is the forest plot for our model.</p>
+<p>Even though the above plot does a good job of showing us how well our model fit the data in general, it tells us nothing about the parameters of interest! For that, we’re going to need to turn to a form of plot that can condense large amounts of coefficient information into a relatively small space (we have 51 to examine, after all). It’s called a <strong>forest plot</strong>. <a href="#fig-28_09">Figure&nbsp;<span class="quarto-unresolved-ref">fig-28_09</span></a> is the forest plot for our model.</p>
 <div class="sourceCode" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>state_labels <span class="op">=</span> <span class="bu">list</span>(state_cat.categories) </span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>additional_labels <span class="op">=</span> [<span class="st">'PVI'</span>, <span class="st">'Democratic Incumbency'</span>, <span class="st">'Republican Incumbency'</span>, <span class="st">'Spending Differential'</span>]</span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>all_labels <span class="op">=</span> state_labels <span class="op">+</span> additional_labels</span>
@@ -1139,14 +1082,10 @@ Figure&nbsp;24.8: png
 <span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb23-21"><a href="#cb23-21" aria-hidden="true" tabindex="-1"></a>sns.despine(left<span class="op">=</span><span class="va">False</span>, bottom<span class="op">=</span><span class="va">False</span>, top<span class="op">=</span><span class="va">False</span>, right<span class="op">=</span><span class="va">False</span>)</span>
 <span id="cb23-22"><a href="#cb23-22" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div id="fig-28_09" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-28_09-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="figures/28_09.png" class="img-fluid figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-28_09-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;24.9: png
-</figcaption>
+<div id="fig-28_09" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="figures/28_09.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;25.9: png</figcaption>
 </figure>
 </div>
 <p>After all that, we can finally settle down to the task of interpreting our handiwork.</p>
@@ -1160,22 +1099,22 @@ Figure&nbsp;24.9: png
 <p>Another problem is that our model is helpless to tell us if the presumed causal relationship underpinning the whole shebang (namely, that money helps win elections) is justifiable. It’d be just as easy to claim that our predictor (money spent) and outcome (votes received) variables share no direct causal link, and instead share ‘political popularity’ as a common cause. The logic there being that popular candidates might be more likely to attract donations AND votes. Modelling can’t help us here. The best regression model in the world, be it Bayesian or Frequentist, wouldn’t be able to help you determine if there’s any validity to your assumptions of causality. If you’re interested, computational social science is in the midst of a causal inference renaissance, and thanks primarily to people like the brilliant computer scientist Judea Pearl, that renaissance is Bayesian. Unfortunately, this is another area of computational social science that we simply don’t have the space to cover in this book.</p>
 <p>There is, in fact, a lot more we <em>could</em> get into here, but our hands are tied by space constraints and by the fact that this book is not a Bayesian regression textbook. Hopefully you’ve seen that it is possible, and even fun, to build an interesting, functional, and sophisticated statistical model from scratch. Its imperfections represent room for improvement, not something to be feared or ashamed of.</p>
 </section>
-<section id="the-fault-in-our-lack-of-stars" class="level2" data-number="24.7">
-<h2 data-number="24.7" class="anchored" data-anchor-id="the-fault-in-our-lack-of-stars"><span class="header-section-number">24.7</span> THE FAULT IN OUR (LACK OF) STARS</h2>
+<section id="the-fault-in-our-lack-of-stars" class="level2" data-number="25.7">
+<h2 data-number="25.7" class="anchored" data-anchor-id="the-fault-in-our-lack-of-stars"><span class="header-section-number">25.7</span> THE FAULT IN OUR (LACK OF) STARS</h2>
 <p>Somewhere, someone in the world is saying something like “Hold up, John. This is a chapter on regression analysis! Where are the hypothesis tests!? Where are the little stars that tell me if I can publish my findings or not?”</p>
 <p>As these chapters have probably made abundantly clear, that’s not what we’re doing here. The Bayesian statistical paradigm is capable of comparing hypotheses in the way Frequentists think of such things, but are generally loath to do so. This is because we already have access to a very broad <em>range</em> of hypotheses defined by a posterior probability distribution, and that distribution already contains all of the information we can possibly derive from our model for a given set of data. Anything else we do – plotting, calculating HDI, hypothesis testing – is simply a summarization of that posterior distribution.</p>
 <p>If you feel like comparing hypotheses in the style of a Frequentist, go for it. All of the Bayesian regression models we fit today contain infinite hypotheses (in multiple dimensions!) and the probability of any individual from among them (say, <span class="math inline">\(\beta = 3\)</span>) being ‘true’ (whatever that means) is 0. We’ve already covered why that’s the case.</p>
 <p>You could compare ranges of hypotheses against a ‘null’ of sorts, but the Bayesian paradigm ensures that a simple posterior plot is all that is needed to quickly ascertain whether or not most of the posterior probability for any given parameter is credibly distant from 0, which is all null-hypothesis significance testing does really does anyhow.</p>
-<p>Instead of using null-hypothesis significance testing, consider treating each model as its own ‘hypothesis’ of sorts. Gelman and Shalizi <span class="citation" data-cites="gelman2013philosophy">(<a href="references.html#ref-gelman2013philosophy" role="doc-biblioref">2013</a>)</span> advocate a paradigm wherein whole models are judged by how well they fit data (both in-sample and out-of-sample). Accepted models are used until their flaws become too egregious to ignore, at which point new, better models are developed using insights from the failings of the previous one. It’s a different way of doing science than you might be used to, but it’s worth knowing about: the winds of change are blowing decisively away from the traditional null hypothesis testing paradigm.</p>
+<p>Instead of using null-hypothesis significance testing, consider treating each model as its own ‘hypothesis’ of sorts. Gelman and Shalizi <span class="citation" data-cites="gelman2013philosophy">(<a href="#ref-gelman2013philosophy" role="doc-biblioref">2013</a>)</span> advocate a paradigm wherein whole models are judged by how well they fit data (both in-sample and out-of-sample). Accepted models are used until their flaws become too egregious to ignore, at which point new, better models are developed using insights from the failings of the previous one. It’s a different way of doing science than you might be used to, but it’s worth knowing about: the winds of change are blowing decisively away from the traditional null hypothesis testing paradigm.</p>
 <blockquote class="blockquote">
 <p><strong>Further Reading</strong></p>
-<p>As I mentioned in several previous chapters, there are a number of outstanding resources that you can now turn to to continue your journey into Bayesian regression analysis. I especially recommend <span class="citation" data-cites="mcelreath2020statistical">McElreath (<a href="references.html#ref-mcelreath2020statistical" role="doc-biblioref">2020</a>)</span>, <span class="citation" data-cites="lambert2018student">Lambert (<a href="references.html#ref-lambert2018student" role="doc-biblioref">2018</a>)</span>, <span class="citation" data-cites="kruschke2014doing">Kruschke (<a href="references.html#ref-kruschke2014doing" role="doc-biblioref">2014</a>)</span>, and <span class="citation" data-cites="martin2018bayesian">Martin (<a href="references.html#ref-martin2018bayesian" role="doc-biblioref">2018</a>)</span>. Finally, <span class="citation" data-cites="lynch2019bayesian">Lynch and Bartlett (<a href="references.html#ref-lynch2019bayesian" role="doc-biblioref">2019</a>)</span> offer a literature review of the use of Bayesian statistics in sociology.</p>
+<p>As I mentioned in several previous chapters, there are a number of outstanding resources that you can now turn to to continue your journey into Bayesian regression analysis. I especially recommend <span class="citation" data-cites="mcelreath2020statistical">McElreath (<a href="#ref-mcelreath2020statistical" role="doc-biblioref">2020</a>)</span>, <span class="citation" data-cites="lambert2018student">Lambert (<a href="#ref-lambert2018student" role="doc-biblioref">2018</a>)</span>, <span class="citation" data-cites="kruschke2014doing">Kruschke (<a href="#ref-kruschke2014doing" role="doc-biblioref">2014</a>)</span>, and <span class="citation" data-cites="martin2018bayesian">Martin (<a href="#ref-martin2018bayesian" role="doc-biblioref">2018</a>)</span>. Finally, <span class="citation" data-cites="lynch2019bayesian">Lynch and Bartlett (<a href="#ref-lynch2019bayesian" role="doc-biblioref">2019</a>)</span> offer a literature review of the use of Bayesian statistics in sociology.</p>
 </blockquote>
 </section>
-<section id="conclusion" class="level2" data-number="24.8">
-<h2 data-number="24.8" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">24.8</span> CONCLUSION</h2>
-<section id="key-points" class="level3" data-number="24.8.1">
-<h3 data-number="24.8.1" class="anchored" data-anchor-id="key-points"><span class="header-section-number">24.8.1</span> Key Points</h3>
+<section id="conclusion" class="level2" data-number="25.8">
+<h2 data-number="25.8" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">25.8</span> CONCLUSION</h2>
+<section id="key-points" class="level3" data-number="25.8.1">
+<h3 data-number="25.8.1" class="anchored" data-anchor-id="key-points"><span class="header-section-number">25.8.1</span> Key Points</h3>
 <ul>
 <li>Any regression dataset that features at least one clustering variable should be modelled, by default, using partially pooled hierarchical regression; any simpler models should only be used if justified</li>
 <li>Wide, uninformative priors can cause a large number of divergences during sampling using an HMC sampler; using tighter, more informative priors can help ameliorate this.</li>
@@ -1184,7 +1123,7 @@ Figure&nbsp;24.9: png
 </ul>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="refs" class="references csl-bib-body hanging-indent" role="list">
 <div id="ref-gelman2013philosophy" class="csl-entry" role="listitem">
 Gelman, Andrew, and Cosma Rohilla Shalizi. 2013. <span>“Philosophy and the Practice of Bayesian Statistics.”</span> <em>British Journal of Mathematical and Statistical Psychology</em> 66 (1): 8–38.
 </div>
@@ -1249,7 +1188,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const onCopySuccess = function(e) {
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -1281,50 +1231,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
-  }
-  const getTextToCopy = function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-  }
-  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-    text: getTextToCopy
   });
-  clipboard.on('success', onCopySuccess);
-  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
-    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-      text: getTextToCopy,
-      container: window.document.getElementById('quarto-embedded-source-code-modal')
-    });
-    clipboardModal.on('success', onCopySuccess);
-  }
-    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-    var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp('/' + window.location.host + '/');
-    var isInternal = (href) => {
-        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
-    }
-    // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
-    for (var i=0; i<links.length; i++) {
-      const link = links[i];
-      if (!isInternal(link.href)) {
-        // undo the damage that might have been done by quarto-nav.js in the case of
-        // links that we want to consider external
-        if (link.dataset.originalHref !== undefined) {
-          link.href = link.dataset.originalHref;
-        }
-      }
-    }
-  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+  function tippyHover(el, contentFn) {
     const config = {
       allowHTML: true,
+      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -1334,17 +1245,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start',
+      placement: 'bottom-start'
     };
-    if (contentFn) {
-      config.content = contentFn;
-    }
-    if (onTriggerFn) {
-      config.onTrigger = onTriggerFn;
-    }
-    if (onUntriggerFn) {
-      config.onUntrigger = onUntriggerFn;
-    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -1356,130 +1258,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      if (note) {
-        return note.innerHTML;
-      } else {
-        return "";
-      }
-    });
-  }
-  const xrefs = window.document.querySelectorAll('a.quarto-xref');
-  const processXRef = (id, note) => {
-    // Strip column container classes
-    const stripColumnClz = (el) => {
-      el.classList.remove("page-full", "page-columns");
-      if (el.children) {
-        for (const child of el.children) {
-          stripColumnClz(child);
-        }
-      }
-    }
-    stripColumnClz(note)
-    if (id === null || id.startsWith('sec-')) {
-      // Special case sections, only their first couple elements
-      const container = document.createElement("div");
-      if (note.children && note.children.length > 2) {
-        container.appendChild(note.children[0].cloneNode(true));
-        for (let i = 1; i < note.children.length; i++) {
-          const child = note.children[i];
-          if (child.tagName === "P" && child.innerText === "") {
-            continue;
-          } else {
-            container.appendChild(child.cloneNode(true));
-            break;
-          }
-        }
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(container);
-        }
-        return container.innerHTML
-      } else {
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(note);
-        }
-        return note.innerHTML;
-      }
-    } else {
-      // Remove any anchor links if they are present
-      const anchorLink = note.querySelector('a.anchorjs-link');
-      if (anchorLink) {
-        anchorLink.remove();
-      }
-      if (window.Quarto?.typesetMath) {
-        window.Quarto.typesetMath(note);
-      }
-      // TODO in 1.5, we should make sure this works without a callout special case
-      if (note.classList.contains("callout")) {
-        return note.outerHTML;
-      } else {
-        return note.innerHTML;
-      }
-    }
-  }
-  for (var i=0; i<xrefs.length; i++) {
-    const xref = xrefs[i];
-    tippyHover(xref, undefined, function(instance) {
-      instance.disable();
-      let url = xref.getAttribute('href');
-      let hash = undefined; 
-      if (url.startsWith('#')) {
-        hash = url;
-      } else {
-        try { hash = new URL(url).hash; } catch {}
-      }
-      if (hash) {
-        const id = hash.replace(/^#\/?/, "");
-        const note = window.document.getElementById(id);
-        if (note !== null) {
-          try {
-            const html = processXRef(id, note.cloneNode(true));
-            instance.setContent(html);
-          } finally {
-            instance.enable();
-            instance.show();
-          }
-        } else {
-          // See if we can fetch this
-          fetch(url.split('#')[0])
-          .then(res => res.text())
-          .then(html => {
-            const parser = new DOMParser();
-            const htmlDoc = parser.parseFromString(html, "text/html");
-            const note = htmlDoc.getElementById(id);
-            if (note !== null) {
-              const html = processXRef(id, note);
-              instance.setContent(html);
-            } 
-          }).finally(() => {
-            instance.enable();
-            instance.show();
-          });
-        }
-      } else {
-        // See if we can fetch a full url (with no hash to target)
-        // This is a special case and we should probably do some content thinning / targeting
-        fetch(url)
-        .then(res => res.text())
-        .then(html => {
-          const parser = new DOMParser();
-          const htmlDoc = parser.parseFromString(html, "text/html");
-          const note = htmlDoc.querySelector('main.content');
-          if (note !== null) {
-            // This should only happen for chapter cross references
-            // (since there is no id in the URL)
-            // remove the first header
-            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
-              note.children[0].remove();
-            }
-            const html = processXRef(null, note);
-            instance.setContent(html);
-          } 
-        }).finally(() => {
-          instance.enable();
-          instance.show();
-        });
-      }
-    }, function(instance) {
+      return note.innerHTML;
     });
   }
       let selectedAnnoteEl;
@@ -1523,7 +1302,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
-            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -1549,32 +1327,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
-        // Handle positioning of the toggle
-    window.addEventListener(
-      "resize",
-      throttle(() => {
-        elRect = undefined;
-        if (selectedAnnoteEl) {
-          selectCodeLines(selectedAnnoteEl);
-        }
-      }, 10)
-    );
-    function throttle(fn, ms) {
-    let throttle = false;
-    let timer;
-      return (...args) => {
-        if(!throttle) { // first call gets through
-            fn.apply(this, args);
-            throttle = true;
-        } else { // all the others get throttled
-            if(timer) clearTimeout(timer); // cancel #2
-            timer = setTimeout(() => {
-              fn.apply(this, args);
-              timer = throttle = false;
-            }, ms);
-        }
-      };
-    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -1636,13 +1388,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./linear-regression.html" class="pagination-link" aria-label="Bayesian Regression Models with Probabilistic Programming">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Bayesian Regression Models with Probabilistic Programming</span></span>
+      <a href="./linear-regression.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Bayesian Regression Models with Probabilistic Programming</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./generalized-linear-models.html" class="pagination-link" aria-label="Generalized Linear Models">
-        <span class="nav-page-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Generalized Linear Models</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./generalized-linear-models.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Generalized Linear Models</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -1650,5 +1402,4 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
-
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/UWNETLAB/dcss_supplementary/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
+</body></html>

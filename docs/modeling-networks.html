@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.56">
+<meta name="generator" content="quarto-1.3.450">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>28&nbsp; Latent structure in networks – Doing Computational Social Science&lt;br&gt;[The **Continuous Development** Edition]{.small}</title>
+<title>Doing Computational Social ScienceThe Continuous Development Edition - 29&nbsp; Latent structure in networks</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -22,7 +22,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -33,7 +33,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -58,7 +58,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
-  margin-bottom: 0em;
 }
 .hanging-indent div.csl-entry {
   margin-left:2em;
@@ -102,13 +101,7 @@ div.csl-indent {
   "collapse-after": 3,
   "panel-placement": "start",
   "type": "textbox",
-  "limit": 50,
-  "keyboard-shortcut": [
-    "f",
-    "/",
-    "s"
-  ],
-  "show-item-context": false,
+  "limit": 20,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -117,42 +110,14 @@ div.csl-indent {
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
-    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
 }</script>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="custom.css">
 </head>
@@ -163,13 +128,13 @@ window.Quarto = {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./linear-regression.html"><strong>MODELING</strong></a></li><li class="breadcrumb-item"><a href="./modeling-networks.html"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Latent structure in networks</span></a></li></ol></nav>
-        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-        </a>
-      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./linear-regression.html"><strong>MODELING</strong></a></li><li class="breadcrumb-item"><a href="./modeling-networks.html"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Latent structure in networks</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -178,7 +143,7 @@ window.Quarto = {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
       <a href="./index.html" class="sidebar-logo-link">
       <img src="./figures/logo.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
@@ -186,25 +151,25 @@ window.Quarto = {
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Doing Computational Social Science<br><span class="small">The <strong>Continuous Development</strong> Edition</span></a> 
         <div class="sidebar-tools-main">
-    <a href="https://github.com/UWNETLAB/dcss_supplementary/tree/master/book/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="https://github.com/UWNETLAB/dcss_supplementary/tree/master/book/" rel="" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
     <div class="dropdown">
-      <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
+      <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Share"><i class="bi bi-share"></i></a>
       <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
           <li>
             <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=|url|">
-              <i class="bi bi-twitter pe-1"></i>
+              <i class="bi bi-bi-twitter pe-1"></i>
             Twitter
             </a>
           </li>
           <li>
             <a class="dropdown-item sidebar-tools-main-item" href="https://www.facebook.com/sharer/sharer.php?u=|url|">
-              <i class="bi bi-facebook pe-1"></i>
+              <i class="bi bi-bi-facebook pe-1"></i>
             Facebook
             </a>
           </li>
           <li>
             <a class="dropdown-item sidebar-tools-main-item" href="https://www.linkedin.com/sharing/share-offsite/?url=|url|">
-              <i class="bi bi-linkedin pe-1"></i>
+              <i class="bi bi-bi-linkedin pe-1"></i>
             LinkedIn
             </a>
           </li>
@@ -226,19 +191,25 @@ window.Quarto = {
  <span class="menu-text">🏠</span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction</span></a>
+  </div>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
- <span class="menu-text"><strong>RESEARCH COMPUTING</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text"><strong>COMPUTING</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./getting-started.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Getting Started</span></span></a>
+  <a href="./setting-up.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Setting up</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -253,71 +224,89 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Python 102</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./processing-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Processing Data</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
- <span class="menu-text"><strong>MINDFUL MODELING</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text"><strong>WORKFLOW</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./metaphor-map-reduction.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Modeling as metaphor, map, and reduction</span></span></a>
+  <a href="./mindful-modelling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Mindful modelling</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./iterative-workflow.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Iterative workflows</span></span></a>
+  <a href="./iteration.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title"><del>Sequential</del> iterative modelling</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
- <span class="menu-text"><strong>OBTAINING DATA</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+ <span class="menu-text"><strong>DATA</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./sampling-and-survey-data.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title"><del>Processing Structured Data</del> Sampling and Survey Data</span></span></a>
+  <a href="./survey-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Survey Data</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./web-data-apis.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Web data (APIs)</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Web data (APIs)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./web-data-scraping.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Web data (Scraping)</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Web data (Scraping)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./audio-files-and-documents.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Audio files and documents</span></span></a>
+  <a href="./audio-and-document-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Audio and document data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./text-as-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Text as Data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./relational-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Relational data</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
- <span class="menu-text"><strong>EXPLORING</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+ <span class="menu-text"><strong>DISCOVERY</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -325,52 +314,40 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./exploratory-data-analysis.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Exploratory data analysis (EDA) <!-- Exploring with purpose --></span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Exploring with purpose</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./association-and-latent-variables.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Association and latent variables</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./text-as-data.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Text as Data</span></span></a>
+  <a href="./reduction-and-latent-dimensions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Reduction and latent dimensions</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./mapping-text.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Text similarity and latent semantic space</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./networks-as-not-data.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Networks and relational thinking</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Text similarity and latent semantic space</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./centrality.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Centrality</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Centrality</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./mapping-network-structure.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Mapping network structure</span></span></a>
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Mapping network structure</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
  <span class="menu-text"><strong>PREDICTION &amp; INFERENCE</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -378,46 +355,46 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./supervised-learning.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Supervised Machine Learning</span></span></a>
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Supervised Machine Learning</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./prediction-and-classification.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Prediction and classification</span></span></a>
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Prediction and classification</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./causality.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Causality</span></span></a>
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Causality</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./probability.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Probability 101</span></span></a>
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Probability 101</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./credibility.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Credibility</span></span></a>
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Credibility</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./measurement-and-missingness.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Measurement and missingness</span></span></a>
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Measurement and missingness</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true">
  <span class="menu-text"><strong>MODELING</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -425,58 +402,58 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./linear-regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Bayesian Regression Models with Probabilistic Programming</span></span></a>
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Bayesian Regression Models with Probabilistic Programming</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./multilevel-regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Multilevel regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Multilevel regression</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./generalized-linear-models.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Generalized Linear Models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Generalized Linear Models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./structural-causal-models.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Structural causal models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Structural causal models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./modeling-texts-lda.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Modeling text with LDA topic models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Modeling text with LDA topic models</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./modeling-networks.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Latent structure in networks</span></span></a>
+ <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Latent structure in networks</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./agent-based-models.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Agent-based models (ABMs)</span></span></a>
+ <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Agent-based models (ABMs)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./diffusion-opinion-cultural-cognition.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Diffusion, opinion dynamics, and cultural cognition</span></span></a>
+ <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Diffusion, opinion dynamics, and cultural cognition</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true">
  <span class="menu-text"><strong>DEEP LEARNING</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -484,34 +461,34 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./artificial-neural-networks-fnn-rnn-cnn.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Artificial neural networks 101</span></span></a>
+ <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Artificial neural networks</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./language-models-and-embeddings.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Processing Natural Language Data</span></span></a>
+ <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Language models and word embeddings</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./transformer-revolution.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">The transformer revolution</span></span></a>
+ <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">The transformer revolution</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./modeling-text-transformer-topic-models.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Modeling text: transformer topic models</span></span></a>
+ <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Modeling text: transformer topic models</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
- <span class="menu-text"><strong>PROFESSIONAL RESPONSIBILITIES</strong></span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" aria-expanded="true">
+ <span class="menu-text"><strong>RESPONSIBILITIES</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -519,19 +496,19 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ethical-css.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Research Ethics, Politics, and Practices</span></span></a>
+ <span class="menu-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">Ethical CSS</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./open-css.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">Open computational social science</span></span></a>
+ <span class="menu-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">Open CSS</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./future-css.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">Future computational social science</span></span></a>
+ <span class="menu-text"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">Future CSS</span></span></a>
   </div>
 </li>
       </ul>
@@ -551,66 +528,66 @@ window.Quarto = {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./courses.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">Courses and Workshops</span></span></a>
+ <span class="menu-text"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title">Courses and Workshops</span></span></a>
   </div>
 </li>
     </ul>
     </div>
 </nav>
-<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#imports-and-setup" id="toc-imports-and-setup" class="nav-link active" data-scroll-target="#imports-and-setup"><span class="header-section-number">28.1</span> Imports and Setup</a></li>
-  <li><a href="#load-the-enron-data" id="toc-load-the-enron-data" class="nav-link" data-scroll-target="#load-the-enron-data"><span class="header-section-number">28.2</span> Load the Enron Data</a></li>
-  <li><a href="#prepare-for-modelling" id="toc-prepare-for-modelling" class="nav-link" data-scroll-target="#prepare-for-modelling"><span class="header-section-number">28.3</span> Prepare for Modelling</a></li>
-  <li><a href="#model-1-a-nested-sbm-with-binary-edges" id="toc-model-1-a-nested-sbm-with-binary-edges" class="nav-link" data-scroll-target="#model-1-a-nested-sbm-with-binary-edges"><span class="header-section-number">28.4</span> Model 1: A Nested SBM with Binary Edges</a></li>
-  <li><a href="#model-1-a-nested-sbm-with-binary-edges-1" id="toc-model-1-a-nested-sbm-with-binary-edges-1" class="nav-link" data-scroll-target="#model-1-a-nested-sbm-with-binary-edges-1"><span class="header-section-number">28.5</span> Model 1: A Nested SBM with Binary Edges</a></li>
-  <li><a href="#model-1-a-nested-sbm-with-binary-edges-2" id="toc-model-1-a-nested-sbm-with-binary-edges-2" class="nav-link" data-scroll-target="#model-1-a-nested-sbm-with-binary-edges-2"><span class="header-section-number">28.6</span> Model 1: A Nested SBM with Binary Edges</a></li>
-  <li><a href="#model-1-a-nested-sbm-with-binary-edges-3" id="toc-model-1-a-nested-sbm-with-binary-edges-3" class="nav-link" data-scroll-target="#model-1-a-nested-sbm-with-binary-edges-3"><span class="header-section-number">28.7</span> Model 1: A Nested SBM with Binary Edges</a></li>
-  <li><a href="#model-1-a-nested-sbm-with-binary-edges-4" id="toc-model-1-a-nested-sbm-with-binary-edges-4" class="nav-link" data-scroll-target="#model-1-a-nested-sbm-with-binary-edges-4"><span class="header-section-number">28.8</span> Model 1: A Nested SBM with Binary Edges</a></li>
-  <li><a href="#model-2-a-nested-sbm-with-edge-weights" id="toc-model-2-a-nested-sbm-with-edge-weights" class="nav-link" data-scroll-target="#model-2-a-nested-sbm-with-edge-weights"><span class="header-section-number">28.9</span> Model 2: A Nested SBM with Edge Weights</a></li>
-  <li><a href="#model-2-a-nested-sbm-with-edge-weights-1" id="toc-model-2-a-nested-sbm-with-edge-weights-1" class="nav-link" data-scroll-target="#model-2-a-nested-sbm-with-edge-weights-1"><span class="header-section-number">28.10</span> Model 2: A Nested SBM with Edge Weights</a></li>
-  <li><a href="#model-2-a-nested-sbm-with-edge-weights-2" id="toc-model-2-a-nested-sbm-with-edge-weights-2" class="nav-link" data-scroll-target="#model-2-a-nested-sbm-with-edge-weights-2"><span class="header-section-number">28.11</span> Model 2: A Nested SBM with Edge Weights</a></li>
-  <li><a href="#model-2-a-nested-sbm-with-edge-weights-3" id="toc-model-2-a-nested-sbm-with-edge-weights-3" class="nav-link" data-scroll-target="#model-2-a-nested-sbm-with-edge-weights-3"><span class="header-section-number">28.12</span> Model 2: A Nested SBM with Edge Weights</a></li>
-  <li><a href="#model-2-a-nested-sbm-with-edge-weights-4" id="toc-model-2-a-nested-sbm-with-edge-weights-4" class="nav-link" data-scroll-target="#model-2-a-nested-sbm-with-edge-weights-4"><span class="header-section-number">28.13</span> Model 2: A Nested SBM with Edge Weights</a></li>
-  <li><a href="#model-2-a-nested-sbm-with-edge-weights-5" id="toc-model-2-a-nested-sbm-with-edge-weights-5" class="nav-link" data-scroll-target="#model-2-a-nested-sbm-with-edge-weights-5"><span class="header-section-number">28.14</span> Model 2: A Nested SBM with Edge Weights</a></li>
-  <li><a href="#model-3-weighted-poisson-distributed-refined" id="toc-model-3-weighted-poisson-distributed-refined" class="nav-link" data-scroll-target="#model-3-weighted-poisson-distributed-refined"><span class="header-section-number">28.15</span> Model 3: Weighted, Poisson-distributed, Refined</a></li>
-  <li><a href="#model-3-weighted-poisson-distributed-refined-1" id="toc-model-3-weighted-poisson-distributed-refined-1" class="nav-link" data-scroll-target="#model-3-weighted-poisson-distributed-refined-1"><span class="header-section-number">28.16</span> Model 3: Weighted, Poisson-distributed, Refined</a></li>
-  <li><a href="#posterior-inference" id="toc-posterior-inference" class="nav-link" data-scroll-target="#posterior-inference"><span class="header-section-number">28.17</span> Posterior Inference</a>
+  <li><a href="#imports-and-setup" id="toc-imports-and-setup" class="nav-link active" data-scroll-target="#imports-and-setup"><span class="header-section-number">29.1</span> Imports and Setup</a></li>
+  <li><a href="#load-the-enron-data" id="toc-load-the-enron-data" class="nav-link" data-scroll-target="#load-the-enron-data"><span class="header-section-number">29.2</span> Load the Enron Data</a></li>
+  <li><a href="#prepare-for-modelling" id="toc-prepare-for-modelling" class="nav-link" data-scroll-target="#prepare-for-modelling"><span class="header-section-number">29.3</span> Prepare for Modelling</a></li>
+  <li><a href="#model-1-a-nested-sbm-with-binary-edges" id="toc-model-1-a-nested-sbm-with-binary-edges" class="nav-link" data-scroll-target="#model-1-a-nested-sbm-with-binary-edges"><span class="header-section-number">29.4</span> Model 1: A Nested SBM with Binary Edges</a></li>
+  <li><a href="#model-1-a-nested-sbm-with-binary-edges-1" id="toc-model-1-a-nested-sbm-with-binary-edges-1" class="nav-link" data-scroll-target="#model-1-a-nested-sbm-with-binary-edges-1"><span class="header-section-number">29.5</span> Model 1: A Nested SBM with Binary Edges</a></li>
+  <li><a href="#model-1-a-nested-sbm-with-binary-edges-2" id="toc-model-1-a-nested-sbm-with-binary-edges-2" class="nav-link" data-scroll-target="#model-1-a-nested-sbm-with-binary-edges-2"><span class="header-section-number">29.6</span> Model 1: A Nested SBM with Binary Edges</a></li>
+  <li><a href="#model-1-a-nested-sbm-with-binary-edges-3" id="toc-model-1-a-nested-sbm-with-binary-edges-3" class="nav-link" data-scroll-target="#model-1-a-nested-sbm-with-binary-edges-3"><span class="header-section-number">29.7</span> Model 1: A Nested SBM with Binary Edges</a></li>
+  <li><a href="#model-1-a-nested-sbm-with-binary-edges-4" id="toc-model-1-a-nested-sbm-with-binary-edges-4" class="nav-link" data-scroll-target="#model-1-a-nested-sbm-with-binary-edges-4"><span class="header-section-number">29.8</span> Model 1: A Nested SBM with Binary Edges</a></li>
+  <li><a href="#model-2-a-nested-sbm-with-edge-weights" id="toc-model-2-a-nested-sbm-with-edge-weights" class="nav-link" data-scroll-target="#model-2-a-nested-sbm-with-edge-weights"><span class="header-section-number">29.9</span> Model 2: A Nested SBM with Edge Weights</a></li>
+  <li><a href="#model-2-a-nested-sbm-with-edge-weights-1" id="toc-model-2-a-nested-sbm-with-edge-weights-1" class="nav-link" data-scroll-target="#model-2-a-nested-sbm-with-edge-weights-1"><span class="header-section-number">29.10</span> Model 2: A Nested SBM with Edge Weights</a></li>
+  <li><a href="#model-2-a-nested-sbm-with-edge-weights-2" id="toc-model-2-a-nested-sbm-with-edge-weights-2" class="nav-link" data-scroll-target="#model-2-a-nested-sbm-with-edge-weights-2"><span class="header-section-number">29.11</span> Model 2: A Nested SBM with Edge Weights</a></li>
+  <li><a href="#model-2-a-nested-sbm-with-edge-weights-3" id="toc-model-2-a-nested-sbm-with-edge-weights-3" class="nav-link" data-scroll-target="#model-2-a-nested-sbm-with-edge-weights-3"><span class="header-section-number">29.12</span> Model 2: A Nested SBM with Edge Weights</a></li>
+  <li><a href="#model-2-a-nested-sbm-with-edge-weights-4" id="toc-model-2-a-nested-sbm-with-edge-weights-4" class="nav-link" data-scroll-target="#model-2-a-nested-sbm-with-edge-weights-4"><span class="header-section-number">29.13</span> Model 2: A Nested SBM with Edge Weights</a></li>
+  <li><a href="#model-2-a-nested-sbm-with-edge-weights-5" id="toc-model-2-a-nested-sbm-with-edge-weights-5" class="nav-link" data-scroll-target="#model-2-a-nested-sbm-with-edge-weights-5"><span class="header-section-number">29.14</span> Model 2: A Nested SBM with Edge Weights</a></li>
+  <li><a href="#model-3-weighted-poisson-distributed-refined" id="toc-model-3-weighted-poisson-distributed-refined" class="nav-link" data-scroll-target="#model-3-weighted-poisson-distributed-refined"><span class="header-section-number">29.15</span> Model 3: Weighted, Poisson-distributed, Refined</a></li>
+  <li><a href="#model-3-weighted-poisson-distributed-refined-1" id="toc-model-3-weighted-poisson-distributed-refined-1" class="nav-link" data-scroll-target="#model-3-weighted-poisson-distributed-refined-1"><span class="header-section-number">29.16</span> Model 3: Weighted, Poisson-distributed, Refined</a></li>
+  <li><a href="#posterior-inference" id="toc-posterior-inference" class="nav-link" data-scroll-target="#posterior-inference"><span class="header-section-number">29.17</span> Posterior Inference</a>
   <ul class="collapse">
-  <li><a href="#model-4-weighted-poisson-distributed-consensus-partition" id="toc-model-4-weighted-poisson-distributed-consensus-partition" class="nav-link" data-scroll-target="#model-4-weighted-poisson-distributed-consensus-partition"><span class="header-section-number">28.17.1</span> Model 4: Weighted, Poisson-distributed, Consensus Partition</a></li>
-  <li><a href="#competing-explanations" id="toc-competing-explanations" class="nav-link" data-scroll-target="#competing-explanations"><span class="header-section-number">28.17.2</span> Competing Explanations?</a></li>
-  <li><a href="#competing-explanations-1" id="toc-competing-explanations-1" class="nav-link" data-scroll-target="#competing-explanations-1"><span class="header-section-number">28.17.3</span> Competing Explanations?</a></li>
-  <li><a href="#bayesian-hierarchical-stochastic-blockmodels" id="toc-bayesian-hierarchical-stochastic-blockmodels" class="nav-link" data-scroll-target="#bayesian-hierarchical-stochastic-blockmodels"><span class="header-section-number">28.17.4</span> Bayesian Hierarchical Stochastic Blockmodels</a></li>
+  <li><a href="#model-4-weighted-poisson-distributed-consensus-partition" id="toc-model-4-weighted-poisson-distributed-consensus-partition" class="nav-link" data-scroll-target="#model-4-weighted-poisson-distributed-consensus-partition"><span class="header-section-number">29.17.1</span> Model 4: Weighted, Poisson-distributed, Consensus Partition</a></li>
+  <li><a href="#competing-explanations" id="toc-competing-explanations" class="nav-link" data-scroll-target="#competing-explanations"><span class="header-section-number">29.17.2</span> Competing Explanations?</a></li>
+  <li><a href="#competing-explanations-1" id="toc-competing-explanations-1" class="nav-link" data-scroll-target="#competing-explanations-1"><span class="header-section-number">29.17.3</span> Competing Explanations?</a></li>
+  <li><a href="#bayesian-hierarchical-stochastic-blockmodels" id="toc-bayesian-hierarchical-stochastic-blockmodels" class="nav-link" data-scroll-target="#bayesian-hierarchical-stochastic-blockmodels"><span class="header-section-number">29.17.4</span> Bayesian Hierarchical Stochastic Blockmodels</a></li>
   </ul></li>
-  <li><a href="#blockmodelling-with-graph-tool" id="toc-blockmodelling-with-graph-tool" class="nav-link" data-scroll-target="#blockmodelling-with-graph-tool"><span class="header-section-number">28.18</span> BLOCKMODELLING WITH GRAPH-TOOL</a>
+  <li><a href="#blockmodelling-with-graph-tool" id="toc-blockmodelling-with-graph-tool" class="nav-link" data-scroll-target="#blockmodelling-with-graph-tool"><span class="header-section-number">29.18</span> BLOCKMODELLING WITH GRAPH-TOOL</a>
   <ul class="collapse">
-  <li><a href="#installing-graph-tool" id="toc-installing-graph-tool" class="nav-link" data-scroll-target="#installing-graph-tool"><span class="header-section-number">28.18.1</span> Installing graph-tool</a></li>
-  <li><a href="#understanding-property-maps" id="toc-understanding-property-maps" class="nav-link" data-scroll-target="#understanding-property-maps"><span class="header-section-number">28.18.2</span> Understanding Property Maps</a></li>
-  <li><a href="#imports" id="toc-imports" class="nav-link" data-scroll-target="#imports"><span class="header-section-number">28.18.3</span> Imports</a></li>
-  <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data"><span class="header-section-number">28.18.4</span> Data</a></li>
-  <li><a href="#developing-stochastic-blockmodels" id="toc-developing-stochastic-blockmodels" class="nav-link" data-scroll-target="#developing-stochastic-blockmodels"><span class="header-section-number">28.18.5</span> Developing Stochastic Blockmodels</a></li>
-  <li><a href="#model-selection-and-optimization" id="toc-model-selection-and-optimization" class="nav-link" data-scroll-target="#model-selection-and-optimization"><span class="header-section-number">28.18.6</span> Model Selection and Optimization</a></li>
-  <li><a href="#more-mcmc" id="toc-more-mcmc" class="nav-link" data-scroll-target="#more-mcmc"><span class="header-section-number">28.18.7</span> More MCMC</a></li>
-  <li><a href="#visualizing-block-connections-as-a-radial-tree" id="toc-visualizing-block-connections-as-a-radial-tree" class="nav-link" data-scroll-target="#visualizing-block-connections-as-a-radial-tree"><span class="header-section-number">28.18.8</span> Visualizing Block Connections as a Radial Tree</a></li>
+  <li><a href="#installing-graph-tool" id="toc-installing-graph-tool" class="nav-link" data-scroll-target="#installing-graph-tool"><span class="header-section-number">29.18.1</span> Installing graph-tool</a></li>
+  <li><a href="#understanding-property-maps" id="toc-understanding-property-maps" class="nav-link" data-scroll-target="#understanding-property-maps"><span class="header-section-number">29.18.2</span> Understanding Property Maps</a></li>
+  <li><a href="#imports" id="toc-imports" class="nav-link" data-scroll-target="#imports"><span class="header-section-number">29.18.3</span> Imports</a></li>
+  <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data"><span class="header-section-number">29.18.4</span> Data</a></li>
+  <li><a href="#developing-stochastic-blockmodels" id="toc-developing-stochastic-blockmodels" class="nav-link" data-scroll-target="#developing-stochastic-blockmodels"><span class="header-section-number">29.18.5</span> Developing Stochastic Blockmodels</a></li>
+  <li><a href="#model-selection-and-optimization" id="toc-model-selection-and-optimization" class="nav-link" data-scroll-target="#model-selection-and-optimization"><span class="header-section-number">29.18.6</span> Model Selection and Optimization</a></li>
+  <li><a href="#more-mcmc" id="toc-more-mcmc" class="nav-link" data-scroll-target="#more-mcmc"><span class="header-section-number">29.18.7</span> More MCMC</a></li>
+  <li><a href="#visualizing-block-connections-as-a-radial-tree" id="toc-visualizing-block-connections-as-a-radial-tree" class="nav-link" data-scroll-target="#visualizing-block-connections-as-a-radial-tree"><span class="header-section-number">29.18.8</span> Visualizing Block Connections as a Radial Tree</a></li>
   </ul></li>
-  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">28.19</span> CONCLUSION</a>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">29.19</span> CONCLUSION</a>
   <ul class="collapse">
-  <li><a href="#key-points" id="toc-key-points" class="nav-link" data-scroll-target="#key-points"><span class="header-section-number">28.19.1</span> Key Points</a></li>
+  <li><a href="#key-points" id="toc-key-points" class="nav-link" data-scroll-target="#key-points"><span class="header-section-number">29.19.1</span> Key Points</a></li>
   </ul></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/UWNETLAB/dcss_supplementary/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/UWNETLAB/dcss_supplementary/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./linear-regression.html"><strong>MODELING</strong></a></li><li class="breadcrumb-item"><a href="./modeling-networks.html"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Latent structure in networks</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Latent structure in networks</span></h1>
+<h1 class="title"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Latent structure in networks</span></h1>
 </div>
 
 
@@ -623,9 +600,7 @@ window.Quarto = {
   </div>
   
 
-
 </header>
-
 
 <p>Full rewrite (basically new) chapter coming in fall 2024.</p>
 <!-- - **TODO**: The old NSBM content is appended to the end. Merge these, etc. -->
@@ -641,8 +616,8 @@ window.Quarto = {
 <li>iteratively fit, improve, and compare Nested Stochastic Blockmodels by analyzing a directed email communication network between Enron employees</li>
 <li>conduct rigorous posterior inference about the network from a generative modelling perspective</li>
 </ul>
-<section id="imports-and-setup" class="level2" data-number="28.1">
-<h2 data-number="28.1" class="anchored" data-anchor-id="imports-and-setup"><span class="header-section-number">28.1</span> Imports and Setup</h2>
+<section id="imports-and-setup" class="level2" data-number="29.1">
+<h2 data-number="29.1" class="anchored" data-anchor-id="imports-and-setup"><span class="header-section-number">29.1</span> Imports and Setup</h2>
 <div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> math</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pickle</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> random</span>
@@ -668,9 +643,9 @@ window.Quarto = {
 <span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>icsspy.set_style()</span>
 <span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Using graph-tool version </span><span class="sc">{</span>gt<span class="sc">.</span>__version__<span class="sc">}</span><span class="ss">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="load-the-enron-data" class="level2" data-number="28.2">
-<h2 data-number="28.2" class="anchored" data-anchor-id="load-the-enron-data"><span class="header-section-number">28.2</span> Load the Enron Data</h2>
-<p>We can load the Enron email data <span class="citation" data-cites="crick2022enron">(<a href="references.html#ref-crick2022enron" role="doc-biblioref"><strong>crick2022enron?</strong></a>)</span> from the <code>icsspy</code> course package. The network itself has already been prepared and can be loaded directly into <code>graph-tool</code>.</p>
+<section id="load-the-enron-data" class="level2" data-number="29.2">
+<h2 data-number="29.2" class="anchored" data-anchor-id="load-the-enron-data"><span class="header-section-number">29.2</span> Load the Enron Data</h2>
+<p>We can load the Enron email data <span class="citation" data-cites="crick2022enron">(<a href="#ref-crick2022enron" role="doc-biblioref"><strong>crick2022enron?</strong></a>)</span> from the <code>icsspy</code> course package. The network itself has already been prepared and can be loaded directly into <code>graph-tool</code>.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>enron_email_network <span class="op">=</span> <span class="bu">str</span>(enron <span class="op">/</span> <span class="st">'enron_graph.gt'</span>)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>g <span class="op">=</span> gt.load_graph(enron_email_network)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(g)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -682,8 +657,8 @@ window.Quarto = {
 <li><code>edge weight</code> are counts of the number of emails that vertex <span class="math inline">\(i\)</span> sent vertex <span class="math inline">\(j\)</span> (since this is a directed network).</li>
 </ul>
 </section>
-<section id="prepare-for-modelling" class="level2" data-number="28.3">
-<h2 data-number="28.3" class="anchored" data-anchor-id="prepare-for-modelling"><span class="header-section-number">28.3</span> Prepare for Modelling</h2>
+<section id="prepare-for-modelling" class="level2" data-number="29.3">
+<h2 data-number="29.3" class="anchored" data-anchor-id="prepare-for-modelling"><span class="header-section-number">29.3</span> Prepare for Modelling</h2>
 <p>Since we’ll be creating a series of identical visualizations for each model, let’s define a simple visualization function so we can avoid repeating ourselves. <a href="https://en.wikipedia.org/wiki/Don%27t_repeat_yourself">☂︎</a></p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> draw_state(state, g, hvprops, heprops, filename<span class="op">=</span><span class="va">None</span>):</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    state.draw(</span>
@@ -699,22 +674,22 @@ window.Quarto = {
 <div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>model_mdl_scores <span class="op">=</span> {}</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>model_homogeneity_scores <span class="op">=</span> {}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="model-1-a-nested-sbm-with-binary-edges" class="level2" data-number="28.4">
-<h2 data-number="28.4" class="anchored" data-anchor-id="model-1-a-nested-sbm-with-binary-edges"><span class="header-section-number">28.4</span> Model 1: A Nested SBM with Binary Edges</h2>
+<section id="model-1-a-nested-sbm-with-binary-edges" class="level2" data-number="29.4">
+<h2 data-number="29.4" class="anchored" data-anchor-id="model-1-a-nested-sbm-with-binary-edges"><span class="header-section-number">29.4</span> Model 1: A Nested SBM with Binary Edges</h2>
 <p>As before, let’s start with a simple nested SBM and visualization. We’ll use <code>gt.minimize_nested_blockmodel_dl()</code> with the default parameters, which is the same default nested SBM we fit in our analysis of the political blogs networks in the previous notebook. This model will select the best fitting posterior partition, where “best fitting” means the posterior partition with the shortest Minimum Description Length (MDL).</p>
 <p>Since we have not passed an argument for edge weights, the model will treat this network as binary; the only information we are using to estimate the latent hierarchical block structure of this network is the presence or absence of edges.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>model_1 <span class="op">=</span> gt.minimize_nested_blockmodel_dl(g)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Now that we’ve fit the model, let’s visualize the results.</p>
 </section>
-<section id="model-1-a-nested-sbm-with-binary-edges-1" class="level2" data-number="28.5">
-<h2 data-number="28.5" class="anchored" data-anchor-id="model-1-a-nested-sbm-with-binary-edges-1"><span class="header-section-number">28.5</span> Model 1: A Nested SBM with Binary Edges</h2>
+<section id="model-1-a-nested-sbm-with-binary-edges-1" class="level2" data-number="29.5">
+<h2 data-number="29.5" class="anchored" data-anchor-id="model-1-a-nested-sbm-with-binary-edges-1"><span class="header-section-number">29.5</span> Model 1: A Nested SBM with Binary Edges</h2>
 <div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>hvprops <span class="op">=</span> {<span class="st">"fill_color"</span>: <span class="st">"black"</span>, <span class="st">"size"</span>: <span class="dv">30</span>}</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>heprops <span class="op">=</span> {<span class="st">"color"</span>: <span class="st">"black"</span>, <span class="st">"pen_width"</span>: <span class="dv">2</span>}</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>draw_state(state<span class="op">=</span>model_1, g<span class="op">=</span>g, hvprops<span class="op">=</span>hvprops, heprops<span class="op">=</span>heprops)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>This visualization conveys a lot of information about the estimated network structure. Each node’s job title is printed on the node (although you’ll really have to squint to read it). You may notice that some blocks contain clusters of folks with the same or similar job titles. This makes some intuitive sense, especially when considered in terms of <strong>positional network analysis</strong> and the concept of <strong>stochastic equivalence</strong>. It’s plausible, likely even, that the formal roles people hold in the organization generate different relational patterns, however noisy, and that these patterns would be picked up by the blockmodel.</p>
 </section>
-<section id="model-1-a-nested-sbm-with-binary-edges-2" class="level2" data-number="28.6">
-<h2 data-number="28.6" class="anchored" data-anchor-id="model-1-a-nested-sbm-with-binary-edges-2"><span class="header-section-number">28.6</span> Model 1: A Nested SBM with Binary Edges</h2>
+<section id="model-1-a-nested-sbm-with-binary-edges-2" class="level2" data-number="29.6">
+<h2 data-number="29.6" class="anchored" data-anchor-id="model-1-a-nested-sbm-with-binary-edges-2"><span class="header-section-number">29.6</span> Model 1: A Nested SBM with Binary Edges</h2>
 <p>To get a better sense of how homogeneous blocks are with respect to job titles, we can get the position labels from our internal property map <code>position</code> and compute a homogeneity score for the combination of job positions and block membership. To do so, we’ll iterate over the vertices in the graph and collect the information we need from the appropriate property maps.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>m1_l0_prop_map <span class="op">=</span> model_1.levels[<span class="dv">0</span>].b <span class="co"># block assignment property map</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -725,12 +700,12 @@ window.Quarto = {
 <span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>vertex_data <span class="op">=</span> pd.DataFrame(vertex_data)</span>
 <span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>vertex_data.columns <span class="op">=</span> [<span class="st">"VertexID"</span>, <span class="st">"JobPosition"</span>, <span class="st">"M1BlockID"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="model-1-a-nested-sbm-with-binary-edges-3" class="level2" data-number="28.7">
-<h2 data-number="28.7" class="anchored" data-anchor-id="model-1-a-nested-sbm-with-binary-edges-3"><span class="header-section-number">28.7</span> Model 1: A Nested SBM with Binary Edges</h2>
+<section id="model-1-a-nested-sbm-with-binary-edges-3" class="level2" data-number="29.7">
+<h2 data-number="29.7" class="anchored" data-anchor-id="model-1-a-nested-sbm-with-binary-edges-3"><span class="header-section-number">29.7</span> Model 1: A Nested SBM with Binary Edges</h2>
 <div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>vertex_data.head(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="model-1-a-nested-sbm-with-binary-edges-4" class="level2" data-number="28.8">
-<h2 data-number="28.8" class="anchored" data-anchor-id="model-1-a-nested-sbm-with-binary-edges-4"><span class="header-section-number">28.8</span> Model 1: A Nested SBM with Binary Edges</h2>
+<section id="model-1-a-nested-sbm-with-binary-edges-4" class="level2" data-number="29.8">
+<h2 data-number="29.8" class="anchored" data-anchor-id="model-1-a-nested-sbm-with-binary-edges-4"><span class="header-section-number">29.8</span> Model 1: A Nested SBM with Binary Edges</h2>
 <p>We’ll use <code>sklearn</code>’s homogeneity score to calculate the uncertainty (via entropy) of the job positions within each block ID. The closer the score is to 1, the more homogeneous the blocks are with respect to job titles.</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>m1_homogeneity <span class="op">=</span> homogeneity_score(</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    vertex_data[<span class="st">'JobPosition'</span>], vertex_data[<span class="st">'M1BlockID'</span>]</span>
@@ -740,8 +715,8 @@ window.Quarto = {
 <span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>pprint(model_homogeneity_scores)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Remember, this is not supervised learning! We are not <em>trying</em> to group nodes based on their job titles, we are just hypothesizing that at least some of the network structure is driven by the formal roles people in the network hold. In that sense, the score doesn’t tell us anything about how good or bad our model is, but once we’ve fit a few more models we can compare homogeneity scores to see whether some models result in more homogeneous blocks than others, and whether patterns show up across models.</p>
 </section>
-<section id="model-2-a-nested-sbm-with-edge-weights" class="level2" data-number="28.9">
-<h2 data-number="28.9" class="anchored" data-anchor-id="model-2-a-nested-sbm-with-edge-weights"><span class="header-section-number">28.9</span> Model 2: A Nested SBM with Edge Weights</h2>
+<section id="model-2-a-nested-sbm-with-edge-weights" class="level2" data-number="29.9">
+<h2 data-number="29.9" class="anchored" data-anchor-id="model-2-a-nested-sbm-with-edge-weights"><span class="header-section-number">29.9</span> Model 2: A Nested SBM with Edge Weights</h2>
 <p>We fit Model 1 using binary edges. In Model 2, we’ll complicate things a wee bit by including edge weights, which are counts. Before we model our edges, let’s get an initial sense of how they are distributed by plotting them as an <a href="https://en.wikipedia.org/wiki/Empirical_distribution_function">ECDF</a> (basically a cumulative histogram).</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>sns.ecdfplot(g.ep.edge_weight.a)</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"</span><span class="ch">\n</span><span class="st">No. of emails sent from $i$ to $j$"</span>)</span>
@@ -750,13 +725,13 @@ window.Quarto = {
 <span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>plt.gca().xaxis.set_major_formatter(ticker.FuncFormatter(<span class="kw">lambda</span> x, _: <span class="ss">f'</span><span class="sc">{</span><span class="bu">int</span>(x)<span class="sc">:,}</span><span class="ss">'</span>)) <span class="co"># comma format the x-axis</span></span>
 <span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'output/enron_edge_weight_ecdf.png'</span>, dpi<span class="op">=</span><span class="dv">300</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="model-2-a-nested-sbm-with-edge-weights-1" class="level2" data-number="28.10">
-<h2 data-number="28.10" class="anchored" data-anchor-id="model-2-a-nested-sbm-with-edge-weights-1"><span class="header-section-number">28.10</span> Model 2: A Nested SBM with Edge Weights</h2>
+<section id="model-2-a-nested-sbm-with-edge-weights-1" class="level2" data-number="29.10">
+<h2 data-number="29.10" class="anchored" data-anchor-id="model-2-a-nested-sbm-with-edge-weights-1"><span class="header-section-number">29.10</span> Model 2: A Nested SBM with Edge Weights</h2>
 <p>In the SBM framework, we can include edge weights as covariates in our generative model and assume that they are sampled from some probability distribution conditioned on the block partitions (i.e., a <strong>prior distribution</strong>).</p>
 <p>Given that this data is over-dispersed (i.e., the variance is greater than the mean), a <a href="https://en.wikipedia.org/wiki/Negative_binomial_distribution">Negative Binomial distribution</a> would be an appropriate choice to model these edges, but as of fall 2024 <a href="https://graph-tool.skewed.de/static/doc/demos/inference/inference.html#edge-weights-and-covariates">it is not implemented in <code>graph-tool</code></a>. While we can extend the distributions available in <code>graph-tool</code> by applying transformations,<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> we’ll keep things relatively simple here by modelling the edges with a <a href="https://en.wikipedia.org/wiki/Poisson_distribution">Poisson distribution</a>. This should still provide a reasonable approximation, though it may not do the best job of characterizing the heavy tail of the distribution. Be mindful of this model limitation!</p>
 </section>
-<section id="model-2-a-nested-sbm-with-edge-weights-2" class="level2" data-number="28.11">
-<h2 data-number="28.11" class="anchored" data-anchor-id="model-2-a-nested-sbm-with-edge-weights-2"><span class="header-section-number">28.11</span> Model 2: A Nested SBM with Edge Weights</h2>
+<section id="model-2-a-nested-sbm-with-edge-weights-2" class="level2" data-number="29.11">
+<h2 data-number="29.11" class="anchored" data-anchor-id="model-2-a-nested-sbm-with-edge-weights-2"><span class="header-section-number">29.11</span> Model 2: A Nested SBM with Edge Weights</h2>
 <p>We’ll use the <code>minimize_nested_blockmodel_dl()</code> function again to fit Model 2, but this time we’ll add an argument called <code>state_args</code>. <code>state_args</code> contains two important pieces of information:</p>
 <ul>
 <li>the edge weight property map, passed to <code>recs</code>, and</li>
@@ -780,9 +755,9 @@ window.Quarto = {
 <span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>vertex_data[<span class="st">'M2BlockID'</span>] <span class="op">=</span> vertex_data[<span class="st">'VertexID'</span>].<span class="bu">map</span>(m2_vertex_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Remember that the integer block IDs are just labels; they aren’t meaningful in any numerical sense. The labels that get assigned depend on the model itself, so it doesn’t mean anything if a new model puts a node in a block with a different integer label. It may be the case that the node has been assigned to a different block, but the labels do not tell us if that is the case.</p>
-<section id="mdl-and-homogeneity" class="level4" data-number="28.11.0.1">
-<h4 data-number="28.11.0.1" class="anchored" data-anchor-id="mdl-and-homogeneity"><span class="header-section-number">28.11.0.1</span> MDL and Homogeneity</h4>
-<p>Visually (<span class="quarto-unresolved-ref">?fig-enron_model_2</span>) we can already see that the inclusion of edge weights has changed the model’s best estimate of the latent block structure. What did it do the MDL?</p>
+<section id="mdl-and-homogeneity" class="level4" data-number="29.11.0.1">
+<h4 data-number="29.11.0.1" class="anchored" data-anchor-id="mdl-and-homogeneity"><span class="header-section-number">29.11.0.1</span> MDL and Homogeneity</h4>
+<p>Visually (<a href="#fig-enron_model_2">Figure&nbsp;<span class="quarto-unresolved-ref">fig-enron_model_2</span></a>) we can already see that the inclusion of edge weights has changed the model’s best estimate of the latent block structure. What did it do the MDL?</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>m2_mdl <span class="op">=</span> model_2.entropy()</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>model_mdl_scores[<span class="st">"Model 2"</span>] <span class="op">=</span> <span class="bu">int</span>(<span class="bu">round</span>(m2_mdl))</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>pprint(model_mdl_scores)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -792,9 +767,9 @@ window.Quarto = {
 <p>Although MDL is a model-agnostic way of comparing model fits, this doesn’t mean that the models using binary edges are to be preferred over weighted networks. We want to strike a good balance between having simple parsimonious models on the one hand and models that are complex enough to adequately explain our data on the other hand. This will often mean that, given the choice, we’ll want to a select models with the lowest MDL given a set of models that sufficiently capture our network, and it may be that models of binary networks are not considered sufficient when compared to their weighted counterparts. This is a matter of judgement.</p>
 </section>
 </section>
-<section id="model-2-a-nested-sbm-with-edge-weights-3" class="level2" data-number="28.12">
-<h2 data-number="28.12" class="anchored" data-anchor-id="model-2-a-nested-sbm-with-edge-weights-3"><span class="header-section-number">28.12</span> Model 2: A Nested SBM with Edge Weights</h2>
-<p>Let’s plot the MDLs for the models we’ve fit so far for easy comparison (<span class="quarto-unresolved-ref">?fig-model_comparison_mdl_M1_M2</span>). We’ll use the <code>plot_line_comparison()</code> function from the <code>icsspy</code> course package.</p>
+<section id="model-2-a-nested-sbm-with-edge-weights-3" class="level2" data-number="29.12">
+<h2 data-number="29.12" class="anchored" data-anchor-id="model-2-a-nested-sbm-with-edge-weights-3"><span class="header-section-number">29.12</span> Model 2: A Nested SBM with Edge Weights</h2>
+<p>Let’s plot the MDLs for the models we’ve fit so far for easy comparison (<a href="#fig-model_comparison_mdl_M1_M2">Figure&nbsp;<span class="quarto-unresolved-ref">fig-model_comparison_mdl_M1_M2</span></a>). We’ll use the <code>plot_line_comparison()</code> function from the <code>icsspy</code> course package.</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>plot_line_comparison(</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    models_dict<span class="op">=</span>model_mdl_scores,</span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    title<span class="op">=</span><span class="st">"Model Comparison</span><span class="ch">\n</span><span class="st">Minimum Description Length (MDL)</span><span class="ch">\n</span><span class="st">"</span>,</span>
@@ -802,8 +777,8 @@ window.Quarto = {
 <span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    padding<span class="op">=</span><span class="dv">5_000</span>,</span>
 <span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    filename <span class="op">=</span> <span class="st">'output/model_comparison_mdl_M1_M2.png'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="model-2-a-nested-sbm-with-edge-weights-4" class="level2" data-number="28.13">
-<h2 data-number="28.13" class="anchored" data-anchor-id="model-2-a-nested-sbm-with-edge-weights-4"><span class="header-section-number">28.13</span> Model 2: A Nested SBM with Edge Weights</h2>
+<section id="model-2-a-nested-sbm-with-edge-weights-4" class="level2" data-number="29.13">
+<h2 data-number="29.13" class="anchored" data-anchor-id="model-2-a-nested-sbm-with-edge-weights-4"><span class="header-section-number">29.13</span> Model 2: A Nested SBM with Edge Weights</h2>
 <p>What about the homogeneity of job titles within blocks?</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>m2_homogeneity <span class="op">=</span> homogeneity_score(</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    vertex_data[<span class="st">'JobPosition'</span>], vertex_data[<span class="st">'M2BlockID'</span>]</span>
@@ -813,8 +788,8 @@ window.Quarto = {
 <span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>pprint(model_homogeneity_scores)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>When we model edge weights rather than just presence/absence, the best posterior partition aligns more closely with the formal job descriptions themselves.</p>
 </section>
-<section id="model-2-a-nested-sbm-with-edge-weights-5" class="level2" data-number="28.14">
-<h2 data-number="28.14" class="anchored" data-anchor-id="model-2-a-nested-sbm-with-edge-weights-5"><span class="header-section-number">28.14</span> Model 2: A Nested SBM with Edge Weights</h2>
+<section id="model-2-a-nested-sbm-with-edge-weights-5" class="level2" data-number="29.14">
+<h2 data-number="29.14" class="anchored" data-anchor-id="model-2-a-nested-sbm-with-edge-weights-5"><span class="header-section-number">29.14</span> Model 2: A Nested SBM with Edge Weights</h2>
 <p>Let’s plot these as well.</p>
 <div class="sourceCode" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>plot_line_comparison(</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>    models_dict<span class="op">=</span>model_homogeneity_scores,</span>
@@ -824,19 +799,19 @@ window.Quarto = {
 <span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>    print_decimals<span class="op">=</span><span class="va">True</span>,</span>
 <span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>    filename <span class="op">=</span> <span class="st">'output/model_comparison_homogeneity_M1_M2.png'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="model-3-weighted-poisson-distributed-refined" class="level2" data-number="28.15">
-<h2 data-number="28.15" class="anchored" data-anchor-id="model-3-weighted-poisson-distributed-refined"><span class="header-section-number">28.15</span> Model 3: Weighted, Poisson-distributed, Refined</h2>
+<section id="model-3-weighted-poisson-distributed-refined" class="level2" data-number="29.15">
+<h2 data-number="29.15" class="anchored" data-anchor-id="model-3-weighted-poisson-distributed-refined"><span class="header-section-number">29.15</span> Model 3: Weighted, Poisson-distributed, Refined</h2>
 <p>Once again, we are modelling our edges as Poisson-distributed. The difference between Models 2 and 3 is that Model 3 includes some additional <strong>r</strong>efinements on the partition we found with Model 2. Let’s take a moment to understand what this means.</p>
-<section id="why-refine-nested-sbms" class="level4" data-number="28.15.0.1">
-<h4 data-number="28.15.0.1" class="anchored" data-anchor-id="why-refine-nested-sbms"><span class="header-section-number">28.15.0.1</span> Why Refine Nested SBMs?</h4>
+<section id="why-refine-nested-sbms" class="level4" data-number="29.15.0.1">
+<h4 data-number="29.15.0.1" class="anchored" data-anchor-id="why-refine-nested-sbms"><span class="header-section-number">29.15.0.1</span> Why Refine Nested SBMs?</h4>
 <p>Minimizing a model’s description length is equivalent to maximizing it’s posterior probability. In theory, when we find a good partition with minimal description length, we’ve also found the partition with maximum posterior probability. But this isn’t always the case, as our search space – the posterior distribution of all possible partitions – is vast and complex. It’s possible that the partition we find with <code>minimize_nested_blockmodel_dl()</code> came from a local minima rather than the global minima. If it came from a local minima, it may be very good but not the best.</p>
 <p>To improve out estimates, we’ll further explore the posterior distribution, enough to escape any local minima and to find the global minima. This involves making iterative refinements using Markov Chain Monte Carlo (MCMC) sampling. We sample from our posterior distribution to find partitions that further lower MDL and maximize posterior probability. This process <em>starts</em> with our initial partition, rather than randomly, which makes the MCMC sampling process in <code>graph-tool</code> very efficient.</p>
 <p>In short, you can think of the initial partition returned from the <code>minimize_nested_blockmodel_dl()</code> function as the best guess about the best partition, and the refined estimate as the best partition,<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> identified by more thoroughly exploring the posterior distribution.</p>
 <p>How do we do this in <code>graph-tool</code>? In short, we want to run a merge-split MCMC refinement algorithm multiple times, each time storing the resulting blockstates and description lengths. At the end, we select the model with the shortest description length. Let’s fit Model 3!</p>
 </section>
 </section>
-<section id="model-3-weighted-poisson-distributed-refined-1" class="level2" data-number="28.16">
-<h2 data-number="28.16" class="anchored" data-anchor-id="model-3-weighted-poisson-distributed-refined-1"><span class="header-section-number">28.16</span> Model 3: Weighted, Poisson-distributed, Refined</h2>
+<section id="model-3-weighted-poisson-distributed-refined-1" class="level2" data-number="29.16">
+<h2 data-number="29.16" class="anchored" data-anchor-id="model-3-weighted-poisson-distributed-refined-1"><span class="header-section-number">29.16</span> Model 3: Weighted, Poisson-distributed, Refined</h2>
 <p>Since this model is a refinement of Model 2, we use Model 2 as a base and accept new partitions only if they have shorter description lengths than the Model 2 partition.</p>
 <div class="sourceCode" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>model_3 <span class="op">=</span> model_2.copy() <span class="co"># will update if there are improvements to be had</span></span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>m3_mdl <span class="op">=</span> model_2.entropy()</span>
@@ -893,13 +868,13 @@ window.Quarto = {
 <span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>    print_decimals<span class="op">=</span><span class="va">True</span>,</span>
 <span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>    filename <span class="op">=</span> <span class="st">'output/model_comparison_homogeneity_M1_M2_M3.png'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="posterior-inference" class="level2" data-number="28.17">
-<h2 data-number="28.17" class="anchored" data-anchor-id="posterior-inference"><span class="header-section-number">28.17</span> Posterior Inference</h2>
+<section id="posterior-inference" class="level2" data-number="29.17">
+<h2 data-number="29.17" class="anchored" data-anchor-id="posterior-inference"><span class="header-section-number">29.17</span> Posterior Inference</h2>
 <p>In this next section of the notebook, we’ll do two things that require more intensive analysis of the posterior distribution of block partitions.</p>
 <p><strong>First</strong>, we’ll develop another Nested SBM that creates a “consensus partition” by averaging over a large sample of partitions from the posterior distribution, weighted by their posterior probabilities. This quantifies uncertainties in the blockmodelling process, including determining the number of blocks at each level, and block membership at each level (i.e.&nbsp;the block assignment marginal probabilities).</p>
 <p><strong>Second</strong>, we’ll perform some additional analyses of the posterior distribution with the goal of figuring out whether it contains other high-probability partitions that could represent plausible competing explanations, or “data stories,” for the network structure we’ve observed.</p>
-<section id="model-4-weighted-poisson-distributed-consensus-partition" class="level3" data-number="28.17.1">
-<h3 data-number="28.17.1" class="anchored" data-anchor-id="model-4-weighted-poisson-distributed-consensus-partition"><span class="header-section-number">28.17.1</span> Model 4: Weighted, Poisson-distributed, Consensus Partition</h3>
+<section id="model-4-weighted-poisson-distributed-consensus-partition" class="level3" data-number="29.17.1">
+<h3 data-number="29.17.1" class="anchored" data-anchor-id="model-4-weighted-poisson-distributed-consensus-partition"><span class="header-section-number">29.17.1</span> Model 4: Weighted, Poisson-distributed, Consensus Partition</h3>
 <p>In Model 3, we refined the partition from Model 2 by more thoroughly searching the posterior distribution of partitions. Those refinements are <em>optimizations</em> of the Model 2 partition. In other words, we searched the posterior distribution for ways to improve our best guess about the best partition. We can improve our analysis even further by <strong>averaging over many posterior partitions</strong>, weighted by their posterior probabilities, rather than attempting to find the single best fitting partition. This quantifies uncertainty in our node-level block assignments and accounts for variability across many different but plausible partitions. We can use <code>get_consensus_partition_from_posterior</code> from the course package to simplify this process.</p>
 <div class="sourceCode" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>model_4 <span class="op">=</span> get_consensus_partition_from_posterior(model_3, g, force_niter<span class="op">=</span><span class="dv">2000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Let’s take a look at our model’s MDL, and compare it to Models 1-3.</p>
@@ -956,14 +931,14 @@ window.Quarto = {
 <span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>    heprops<span class="op">=</span>heprops,</span>
 <span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="competing-explanations" class="level3" data-number="28.17.2">
-<h3 data-number="28.17.2" class="anchored" data-anchor-id="competing-explanations"><span class="header-section-number">28.17.2</span> Competing Explanations?</h3>
+<section id="competing-explanations" class="level3" data-number="29.17.2">
+<h3 data-number="29.17.2" class="anchored" data-anchor-id="competing-explanations"><span class="header-section-number">29.17.2</span> Competing Explanations?</h3>
 <p>When developing generative models, the posterior distribution may contain multiple explanations of the network structure with nearly equal probability. This is exactly why Bayesian generative modelling emphasizes analysis of the <em>full</em> posterior distribution rather than selecting a single best estimate.</p>
 <p>In the case of SBMs, even when we create a consensus partition from the posterior, we may still want to know whether the posterior contains clusters of similar partitions that differ from the one we selected, but which are still very plausible. Each these different partitions may be offering different generative explanations of the observed network, which is definitely something we would want to know!</p>
 <p>To determine whether this is the case, we can infer the modes of the posterior distribution to identify clusters of graph partitions that are similar to one another but different from those in other clusters (see <a href="https://journals.aps.org/prx/pdf/10.1103/PhysRevX.11.021003">Peixoto (2021)</a>).</p>
 </section>
-<section id="competing-explanations-1" class="level3" data-number="28.17.3">
-<h3 data-number="28.17.3" class="anchored" data-anchor-id="competing-explanations-1"><span class="header-section-number">28.17.3</span> Competing Explanations?</h3>
+<section id="competing-explanations-1" class="level3" data-number="29.17.3">
+<h3 data-number="29.17.3" class="anchored" data-anchor-id="competing-explanations-1"><span class="header-section-number">29.17.3</span> Competing Explanations?</h3>
 <div class="sourceCode" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>n_partitions_sample <span class="op">=</span> <span class="dv">5000</span> <span class="co"># the larger the number, the more accurate the estimates</span></span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>state <span class="op">=</span> gt.NestedBlockState(g) <span class="co"># initialize</span></span>
@@ -1011,11 +986,11 @@ window.Quarto = {
 <li><strong>TODO</strong>: This is the original text from the print edition. Update it / replace it with the new content I wrote for FCIT / GESIS. It’s much better.</li>
 </ul>
 </section>
-<section id="bayesian-hierarchical-stochastic-blockmodels" class="level3" data-number="28.17.4">
-<h3 data-number="28.17.4" class="anchored" data-anchor-id="bayesian-hierarchical-stochastic-blockmodels"><span class="header-section-number">28.17.4</span> Bayesian Hierarchical Stochastic Blockmodels</h3>
+<section id="bayesian-hierarchical-stochastic-blockmodels" class="level3" data-number="29.17.4">
+<h3 data-number="29.17.4" class="anchored" data-anchor-id="bayesian-hierarchical-stochastic-blockmodels"><span class="header-section-number">29.17.4</span> Bayesian Hierarchical Stochastic Blockmodels</h3>
 <p>Unlike their deterministic counterparts, Bayesian stochastic blockmodels conceptualize network structure as a latent variable problem to be addressed with a generative model. Just as LDA assumes that specific combination of words observed in documents are <em>generated</em> from shared latent themes, SBMs assume that specific patterns of ties between nodes in social networks are <em>generated</em> from some latent network structure that influences the formation and dissolution of relationships. The types of latent structure that we are interested in varies, and we can develop models for specific types of structure.</p>
 <p>Having a probabilistic model of how this works, grounded in plausible generative mechanisms, is an important part of developing models that don’t under or overfit our data. It helps us differentiate structure from random noise in the process of moving from concrete connections between concrete nodes to general connections between categories of nodes. This allows us to overcome some of the limitations of deterministic approaches, which can be tripped up by structure that is caused by random fluctuations rather than some meaningful network-driven social process.</p>
-<p>Tiago <span class="citation" data-cites="peixoto2019bayesian">T. P. Peixoto (<a href="references.html#ref-peixoto2019bayesian" role="doc-biblioref">2019</a>)</span> summarizes the Bayesian response to this problem in one pithy paragraph:</p>
+<p>Tiago <span class="citation" data-cites="peixoto2019bayesian">T. P. Peixoto (<a href="#ref-peixoto2019bayesian" role="doc-biblioref">2019</a>)</span> summarizes the Bayesian response to this problem in one pithy paragraph:</p>
 <blockquote class="blockquote">
 <p>“The remedy to this problem is to think probabilistically. We need to ascribe to each possible explanation of the data a probability that it is correct, which takes into account modeling assumptions, the statistical evidence available in the data, as well as any source of prior information we may have. Imbued in the whole procedure must be the principle of parsimony – or Occam’s razor – where a simpler model is preferred if the evidence is not sufficient to justify a more complicated one” (page 4).</p>
 </blockquote>
@@ -1029,17 +1004,17 @@ window.Quarto = {
 <p><span class="math display">\[\begin{align}
 P(\text{b}|\text{G})
 \end{align}\]</span></p>
-<p>As with all Bayesian models, we need to play the “what’s that” game, providing priors for all latent variables. The natural tendency here is to prefer uniform priors. If you recall from Chapter 28, using a uniform distribution for our priors means assigning an equal probability to every possible value of the latent variable. <span class="citation" data-cites="peixoto2019bayesian">T. P. Peixoto (<a href="references.html#ref-peixoto2019bayesian" role="doc-biblioref">2019</a>)</span> has shown, however, that this strategy often results in suboptimal results with network models, as it has an a priori preference for solutions with number of blocks comparable to the number of nodes in the network. Who wants that? Nobody. Instead, <span class="citation" data-cites="peixoto2019bayesian">T. P. Peixoto (<a href="references.html#ref-peixoto2019bayesian" role="doc-biblioref">2019</a>)</span> proposes a three-level hierarchical Bayesian approach where we sample (1) the number of blocks, (2) the sizes of each block, and the (3) the partition of the observed network into those blocks.</p>
-<p>This hierarchical model is much less likely to overfit our data, and it does so without requiring us to determine the number of groups in advance, or indeed making any assumptions about the higher-order structure of the networks we are interested in. We will use this model exclusively below. It’s known as a <strong>nested Stochastic Blockmodel</strong>. <span class="citation" data-cites="peixoto2014hierarchical">T. Peixoto (<a href="references.html#ref-peixoto2014hierarchical" role="doc-biblioref">2014</a>)</span> describes a number of interesting variations on inference algorithms for this hierarchical model. One <em>very</em> important thing to know about the SBM implementation in graph-tool is that rather than strictly considering equivalence, it also considers the probability of nodes connecting to other nodes, in the more standard sense of network models we’ve looked at previously. This means that the network partitions from graph-tool will be based on a mixture of assortative community structure (as we’ve seen in Chapter 15 with Louvain and Leiden) along with disassortative (structural equivalence). Incorporating edge weights into the SBM estimation tends to push the balance in the results towards the assortative side, which makes some intuitive sense - a highly weighted connection between two nodes could drown out the latent influence of structural equivalence. We will examine this shortly.</p>
+<p>As with all Bayesian models, we need to play the “what’s that” game, providing priors for all latent variables. The natural tendency here is to prefer uniform priors. If you recall from Chapter 28, using a uniform distribution for our priors means assigning an equal probability to every possible value of the latent variable. <span class="citation" data-cites="peixoto2019bayesian">T. P. Peixoto (<a href="#ref-peixoto2019bayesian" role="doc-biblioref">2019</a>)</span> has shown, however, that this strategy often results in suboptimal results with network models, as it has an a priori preference for solutions with number of blocks comparable to the number of nodes in the network. Who wants that? Nobody. Instead, <span class="citation" data-cites="peixoto2019bayesian">T. P. Peixoto (<a href="#ref-peixoto2019bayesian" role="doc-biblioref">2019</a>)</span> proposes a three-level hierarchical Bayesian approach where we sample (1) the number of blocks, (2) the sizes of each block, and the (3) the partition of the observed network into those blocks.</p>
+<p>This hierarchical model is much less likely to overfit our data, and it does so without requiring us to determine the number of groups in advance, or indeed making any assumptions about the higher-order structure of the networks we are interested in. We will use this model exclusively below. It’s known as a <strong>nested Stochastic Blockmodel</strong>. <span class="citation" data-cites="peixoto2014hierarchical">T. Peixoto (<a href="#ref-peixoto2014hierarchical" role="doc-biblioref">2014</a>)</span> describes a number of interesting variations on inference algorithms for this hierarchical model. One <em>very</em> important thing to know about the SBM implementation in graph-tool is that rather than strictly considering equivalence, it also considers the probability of nodes connecting to other nodes, in the more standard sense of network models we’ve looked at previously. This means that the network partitions from graph-tool will be based on a mixture of assortative community structure (as we’ve seen in Chapter 15 with Louvain and Leiden) along with disassortative (structural equivalence). Incorporating edge weights into the SBM estimation tends to push the balance in the results towards the assortative side, which makes some intuitive sense - a highly weighted connection between two nodes could drown out the latent influence of structural equivalence. We will examine this shortly.</p>
 <p>This has all been very abstract. Let’s get our hands dirty with some code.</p>
 </section>
 </section>
-<section id="blockmodelling-with-graph-tool" class="level2" data-number="28.18">
-<h2 data-number="28.18" class="anchored" data-anchor-id="blockmodelling-with-graph-tool"><span class="header-section-number">28.18</span> BLOCKMODELLING WITH GRAPH-TOOL</h2>
+<section id="blockmodelling-with-graph-tool" class="level2" data-number="29.18">
+<h2 data-number="29.18" class="anchored" data-anchor-id="blockmodelling-with-graph-tool"><span class="header-section-number">29.18</span> BLOCKMODELLING WITH GRAPH-TOOL</h2>
 <p>When it comes to the fitting Bayesian stochastic blockmodels, there’s no beating Tiago Peixoto’s graph-tool, in Python or otherwise. It has astonishing performance in terms of both speed and memory, and as a result it can handle exceptionally large networks efficiently. This performance is achieved by offloading most of the heavy lifting to C++ on the back-end. The cost of these performance improvements, however, is that using graph-tool is less “Pythonic” than you might be used to by this point in the book. Graph-tool is considerably more complex than the network analysis packages we’ve seen so far (Networkx and NDLib).</p>
 <p>The additional overhead and less Pythonic nature that gives graph-tool it’s superior performance capabilities also means that I have to spend more time upfront describing how things work. It is entirely possible some of this won’t really “sink in” until you start working with graph-tool. That’s OK! Once you get your hands dirty with some models and have built up a bit of intuition, you can always come back to this content to deepen your understanding.</p>
-<section id="installing-graph-tool" class="level3" data-number="28.18.1">
-<h3 data-number="28.18.1" class="anchored" data-anchor-id="installing-graph-tool"><span class="header-section-number">28.18.1</span> Installing graph-tool</h3>
+<section id="installing-graph-tool" class="level3" data-number="29.18.1">
+<h3 data-number="29.18.1" class="anchored" data-anchor-id="installing-graph-tool"><span class="header-section-number">29.18.1</span> Installing graph-tool</h3>
 <p>The easiest way to get up and running with graph-tool is to install it via conda-forge with the following command. Because of its numerous dependencies, I strongly recommend that you do this inside a Conda environment (such as the dcss environment, if you’ve been following along with the supplementary learning materials). As a reminder, Conda environments were introduced in Chapter 2.</p>
 <p><code>conda install -c conda-forge graph-tool</code></p>
 <p>If you haven’t been using an environment already, you can also install graph-tool inside a conda environment designed specifically for graph-tool. You can use that environment the same way you use any other conda environment. To download and activate the graph-tool environment, simple execute the following from the command line:</p>
@@ -1048,8 +1023,8 @@ P(\text{b}|\text{G})
 <p><code>conda activate gt</code></p>
 <p>When you do so, you should see your command prompt change; it will now start with <code>(gt)</code> (as opposed to <code>dcss</code> if you’ve been using the conda environment for this book). If you are using Jupyter, note that you’ll have to launch your Jupyter Notebook server inside that environment to access the packages inside the environment.</p>
 </section>
-<section id="understanding-property-maps" class="level3" data-number="28.18.2">
-<h3 data-number="28.18.2" class="anchored" data-anchor-id="understanding-property-maps"><span class="header-section-number">28.18.2</span> Understanding Property Maps</h3>
+<section id="understanding-property-maps" class="level3" data-number="29.18.2">
+<h3 data-number="29.18.2" class="anchored" data-anchor-id="understanding-property-maps"><span class="header-section-number">29.18.2</span> Understanding Property Maps</h3>
 <p>The most important graph-tool concept to understand is how its array-like “property maps” work. Rather than attaching information about a node (e.g., its ID / label or degree centrality) to the node itself, each node in the network is assigned a unique index. That same index is contained in a property map, and whenever we want to know some information about a node, we use the node index to find the relevant information in the property map. There’s a bit of extra friction here, though: because of the C++ backend, each property map object contains <em>only one type of data</em>, that you have to declare in advance. This is a pain, but it’s what allows us to enjoy some pretty remarkable performance improvements.</p>
 <p>Because graph-tool makes such heavy use of these array-like property maps, it’s easiest to think of a network in graph-tool as a collection of <em>associated arrays</em>. For example, in a network with three nodes – <code>['Lebron James', 'Anthony Davis', 'Kentavious Caldwell-Pope']</code> – and an associated property map of colours – <code>[Red, Green, Blue]</code> – <code>Lebron James</code> would be <code>Red</code>, <code>Antony Davis</code> would be <code>Green</code>, and <code>Kentavious Caldwell-Pope</code> would be <code>Blue</code>. We can encode just about anything in a property map, including vectors of values. For example, the <code>[Red, Green, Blue]</code> property map could also be stored as RGB values, <code>[[255,0,0], [0,128,0], [0,0,255]]</code>, which would associate <code>[255,0,0]</code> with <code>Lebron James</code>.</p>
 <p>It’s also very important to note that</p>
@@ -1069,8 +1044,8 @@ P(\text{b}|\text{G})
 <p>This might sound like a lot of additional overhead to worry about when conducting a network analysis, but you’ll likely find the impact fairly minimal once you get used to things. As with other network analysis packages, it makes it relatively easy to do a large amount of data processing outside of the package itself. For example, you can do a lot of work with the data that will eventually be stored as property maps using Pandas and Numpy. My main advice here is <em>take great care that all of the data in your lists and arrays are in the same order, and of equal lengths.</em></p>
 <p>Now, let’s model.</p>
 </section>
-<section id="imports" class="level3" data-number="28.18.3">
-<h3 data-number="28.18.3" class="anchored" data-anchor-id="imports"><span class="header-section-number">28.18.3</span> Imports</h3>
+<section id="imports" class="level3" data-number="29.18.3">
+<h3 data-number="29.18.3" class="anchored" data-anchor-id="imports"><span class="header-section-number">29.18.3</span> Imports</h3>
 <div class="sourceCode" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> graph_tool.<span class="bu">all</span> <span class="im">import</span> <span class="op">*</span></span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>pd.set_option(<span class="st">"display.notebook_repr_html"</span>, <span class="va">False</span>)</span>
@@ -1080,8 +1055,8 @@ P(\text{b}|\text{G})
 <span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pickle</span>
 <span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dcss.networks <span class="im">import</span> label_radial_blockmodel, get_block_membership</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="data" class="level3" data-number="28.18.4">
-<h3 data-number="28.18.4" class="anchored" data-anchor-id="data"><span class="header-section-number">28.18.4</span> Data</h3>
+<section id="data" class="level3" data-number="29.18.4">
+<h3 data-number="29.18.4" class="anchored" data-anchor-id="data"><span class="header-section-number">29.18.4</span> Data</h3>
 <p>As usual, I suggest refreshing yourself on the data we are using here by returning to the overview of datasets from Chapter 1. In brief, the Enron email data is provided as two CSV files, one with the edges between employees who have exchanged emails with one another, and one with the organizational position of Enron employees.</p>
 <p>When developing a blockmodel, we typically do so without having some external set of positions or roles that we want to approximate; the goal here is not supervised learning. However, for learning purposes, our goal will be to develop a blockmodel using relational data that mirrors job titles. The purpose of doing things this way is to illustrate the power of this approach to network analysis, as well as make the discussion of “positions” a bit less abstract. So, remember that when we talk about “positions” and “roles,” we don’t always (or even often) mean <em>official</em> positions or roles such as job titles.</p>
 <p>The two datasets below contain the relational data from employee email communications and information about the job title each employees held in the organization.</p>
@@ -1122,8 +1097,8 @@ Senior Manager               1
 COO                          1
 CFO                          1
 Name: position, dtype: int64</code></pre>
-<section id="constructing-the-communication-network" class="level4" data-number="28.18.4.1">
-<h4 data-number="28.18.4.1" class="anchored" data-anchor-id="constructing-the-communication-network"><span class="header-section-number">28.18.4.1</span> Constructing the Communication Network</h4>
+<section id="constructing-the-communication-network" class="level4" data-number="29.18.4.1">
+<h4 data-number="29.18.4.1" class="anchored" data-anchor-id="constructing-the-communication-network"><span class="header-section-number">29.18.4.1</span> Constructing the Communication Network</h4>
 <p>To create our network, let’s construct a weighted communication network between core employees using the edgelist and node attribute files above. First, we’ll aggregate and count edges to compute a weight. We’ll ignore any nodes that are not in the <code>employee_df</code> dataframe, narrowing our focus to core employees only. The “core employees” are those who were involved the legal proceedings following the Enron scandal.</p>
 <p>Since this is a <strong>directed communication network</strong>, <code>i,j</code> ties are different than <code>j,i</code> ties, so we can simply aggregate our edges dataframe by the combination of <code>'source'</code> and <code>'target'</code> columns and treat the count of their occurrences as our edge weight. We’ll also filter the resulting dataframe so that it only includes nodes that are part of the core employee subset.</p>
 <div class="sourceCode" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>edges_df <span class="op">=</span> edges_df.value_counts([<span class="st">'source'</span>, <span class="st">'target'</span>]).reset_index(name<span class="op">=</span><span class="st">'count'</span>).copy()</span>
@@ -1184,13 +1159,13 @@ Name: position, dtype: int64</code></pre>
 <p>And with that, we’re ready to start developing stochastic blockmodels!</p>
 </section>
 </section>
-<section id="developing-stochastic-blockmodels" class="level3" data-number="28.18.5">
-<h3 data-number="28.18.5" class="anchored" data-anchor-id="developing-stochastic-blockmodels"><span class="header-section-number">28.18.5</span> Developing Stochastic Blockmodels</h3>
+<section id="developing-stochastic-blockmodels" class="level3" data-number="29.18.5">
+<h3 data-number="29.18.5" class="anchored" data-anchor-id="developing-stochastic-blockmodels"><span class="header-section-number">29.18.5</span> Developing Stochastic Blockmodels</h3>
 <p>In the introduction, we discussed how there are some properties that stochastic blockmodels share with LDA. One of those properties is the process for developing, critiquing, improving, and eventually selecting the best model in an iterative fashion: Box’s loop. For example, in this case, after approximating the posterior distribution of the latent variables, we can test the fit of that posterior on the data, and repeat the process using the insight gained about what is and isn’t working in the model. In theory, enough iterations would produce the best model possible in terms of representing the data (<em>not</em> in terms of the usefulness of the results). In practice, we have to make a choice about when we’re satisfied with the results, because there’s no good way to know how many iterations it would take to produce the best model you can given the data you have.</p>
 <p>As I mentioned earlier, our goal here is to develop a blockmodel that will partition our network into a set of positions that mirror the job titles that the core employees held within Enron. The catch, of course, is that we want to do this using only information from the relational data itself.</p>
 <p>graph-tool has a very handy function, <code>minimize_nested_blockmodel_dl()</code>, that takes care of all the hard work for us. It’s fast to run, and tends to produce good results right out of the box. <code>minimize_nested_blockmodel_dl()</code> attempts to minimize something called the “<strong>description length</strong>” of a nested blockmodel. Let’s break this down, starting with the nested part. As you hopefully recall from earlier in this chapter, a <em>nested</em> stochastic blockmodel is a hierarchical Bayesian model. In other words, it embeds blocks inside other blocks in a <strong>multi-level hierarchy</strong>. Doing things this way makes it easier to find small blocks in a network that may contain a small number of nodes.</p>
 <p>The <code>minimize</code> and <code>dl</code> parts of <code>minimize_nested_blockmodel_dl()</code> are a shorthand for <strong>minimize the description length</strong>. Minimum description length is an operationalization of Occam’s razor; it suggests that the best model is one that can represent all of the data with the least amount of information required. It helps us select a model that fully explains the data but is as simple as possible given the observed data.</p>
-<p>Finally, the blockmodel we will fit here is also <strong>degree-corrected</strong> <span class="citation" data-cites="karrer2011stochastic">(<a href="references.html#ref-karrer2011stochastic" role="doc-biblioref">Karrer and Newman 2011</a>)</span>. A standard baseline SBM assumes that nodes within any given block tend to have very similar, if not identical, degrees. Since this is <em>extremely unrealistic</em> in real world networks, it is almost always better to use the degree-corrected implementation.</p>
+<p>Finally, the blockmodel we will fit here is also <strong>degree-corrected</strong> <span class="citation" data-cites="karrer2011stochastic">(<a href="#ref-karrer2011stochastic" role="doc-biblioref">Karrer and Newman 2011</a>)</span>. A standard baseline SBM assumes that nodes within any given block tend to have very similar, if not identical, degrees. Since this is <em>extremely unrealistic</em> in real world networks, it is almost always better to use the degree-corrected implementation.</p>
 <div class="sourceCode" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>state <span class="op">=</span> minimize_nested_blockmodel_dl(eG, deg_corr <span class="op">=</span> <span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>With that one line of code, we’ve executed our 3-level Hierarchical Bayesian Stochastic Blockmodel!</p>
 <p>The function we just executed created something called a <strong>blockstate</strong>, which is an object containing the results of partitioning the network running our blockmodel. We can print a summary of the blockstate for our nested degree-corrected description-length-minimized blockmodel to find out</p>
@@ -1204,7 +1179,7 @@ Name: position, dtype: int64</code></pre>
 l: 1, N: 13, B: 4
 l: 2, N: 4, B: 1</code></pre>
 <p>Remember that the model we just ran is a <em>stochastic generative model</em>, so the number of blocks will vary for each run of the model, but it typically finds 12-14 blocks at the bottom level. Remember, this is a nested variant where the “bottom level” consists of all the individual nodes, while the upper levels of the hierarchy are aggregate blocks, found by creating a new network where each block is a node and estimating a blockmodel based on that network. After some consideration, 12-14 blocks seems fairly reasonable. We have 17 job titles in the data but if we combined “Manager + Senior Manager”, “Senior Specialist + Specialist”, “Administrative Assistant + Employee”, and “CEO + CFO + COO”, we’d have 12 titles. This kind of combination would not impact the computation of the model at all and can be left until it’s time for interpretation.</p>
-<p>Finally, we can get a quick sense of how things went by visualizing the blockmodel (<span class="quarto-unresolved-ref">?fig-31_01</span>). I’m limited to a narrow colour palette in print, but you can access a full resolution colour version of the image (and others like it) in the supplementary online materials. I recommend looking at the color versions of these images, as colour is used very effectively in these blockmodel visualizations.</p>
+<p>Finally, we can get a quick sense of how things went by visualizing the blockmodel (<a href="#fig-31_01">Figure&nbsp;<span class="quarto-unresolved-ref">fig-31_01</span></a>). I’m limited to a narrow colour palette in print, but you can access a full resolution colour version of the image (and others like it) in the supplementary online materials. I recommend looking at the color versions of these images, as colour is used very effectively in these blockmodel visualizations.</p>
 <div class="sourceCode" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>state.draw(</span>
 <span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>    layout <span class="op">=</span> <span class="st">"sfdp"</span>, </span>
 <span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>    vertex_text <span class="op">=</span> eG.vertex_properties[<span class="st">'title'</span>], </span>
@@ -1217,7 +1192,7 @@ l: 2, N: 4, B: 1</code></pre>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><embed src="figures/core_enron_blockmodel_sfdp1.pdf" class="img-fluid"></p>
-<figcaption>Cap</figcaption>
+<figcaption class="figure-caption">Cap</figcaption>
 </figure>
 </div>
 <p>In this figure, each node is represented by an individual point (as in other network visualiztions), only the nodes are organized into blocks. The squares are points where blocks converge up the hierarchy to form the nested structure - the structure of email exchanges between blocks will decide whether a block should be grouped with another one. For example, if you look at the group of 6 blocks in the top left of the image, you might notice that there are only two traders present, but there are a lot of lawyers and vice presidents, as well as a CEO.</p>
@@ -1244,7 +1219,7 @@ l: 3, N: 2, B: 1</code></pre>
 l: 1, N: 12, B: 3
 l: 2, N: 3, B: 2
 l: 3, N: 2, B: 1</code></pre>
-<p>At first glance (<span class="quarto-unresolved-ref">?fig-31_02</span>), incorporating edge weight seems as though it produces more tightly-knit, smaller blocks, and only two distinct groups of blocks one level up the hierarchy where we had four with the first model. The larger blocks are also more heterogenous, with CEO’s grouped alongside many traders and even “employees”.</p>
+<p>At first glance (<a href="#fig-31_02">Figure&nbsp;<span class="quarto-unresolved-ref">fig-31_02</span></a>), incorporating edge weight seems as though it produces more tightly-knit, smaller blocks, and only two distinct groups of blocks one level up the hierarchy where we had four with the first model. The larger blocks are also more heterogenous, with CEO’s grouped alongside many traders and even “employees”.</p>
 <div class="sourceCode" id="cb54"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>state_w2.draw(</span>
 <span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>    layout <span class="op">=</span> <span class="st">"sfdp"</span>, </span>
 <span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>    vertex_text <span class="op">=</span> eG.vertex_properties[<span class="st">'title'</span>], </span>
@@ -1257,7 +1232,7 @@ l: 3, N: 2, B: 1</code></pre>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><embed src="figures/core_enron_blockmodel_sfdpw1.pdf" class="img-fluid"></p>
-<figcaption>Cap</figcaption>
+<figcaption class="figure-caption">Cap</figcaption>
 </figure>
 </div>
 <p>The use of edge weights in a blockmodel is a theoretical consideration more than it is a technical one, so it takes some careful thought and experimenting to see what the impact is. In our case, we have people with quite different roles in the company, so their email volume will be quite different. If we don’t use edge weights, we stick to a stricter definition of equivalence, closer to structural, and here this produces the most intuitive results. Nonetheless, we should have a way to compare the results beyond just looking at a graph - these graphs won’t be very helpful for huge networks. We can use the <code>get_block_membership</code> utility from the dcss package to add block assignment information to the employee dataframe.</p>
@@ -1354,8 +1329,8 @@ Name: position, dtype: float64</code></pre>
 <pre><code>0.15563023649762936</code></pre>
 <p>With this information in mind, let’s continue on with the unweighted network to see if we can optimize it more, then examine the end result.</p>
 </section>
-<section id="model-selection-and-optimization" class="level3" data-number="28.18.6">
-<h3 data-number="28.18.6" class="anchored" data-anchor-id="model-selection-and-optimization"><span class="header-section-number">28.18.6</span> Model Selection and Optimization</h3>
+<section id="model-selection-and-optimization" class="level3" data-number="29.18.6">
+<h3 data-number="29.18.6" class="anchored" data-anchor-id="model-selection-and-optimization"><span class="header-section-number">29.18.6</span> Model Selection and Optimization</h3>
 <p>Given the stochastic nature of these models, it is always advisable to run them a number of times and then select the model with the least entropy. Higher entropy is not <em>inherently</em> bad. <strong>Properly discuss entropy here, and why we care</strong>. For example, a compressed JPEG image with only two colours will have a lot less entropy than one with a thousand colours.</p>
 <p>In the case of stochastic block models, entropy returns the minimum description length, which is the amount of information the model needs to recreate the entire network. The goal of reducing entropy is fundamental to these models, with the assumption that minimizing entropy results in simpler models that do a better job of uncovering latent similarities in the data without overfitting. Below, we’ll execute 10 runs of <code>minimize_nested_blockmodel_dl</code> and print the entropy for each.</p>
 <div class="sourceCode" id="cb81"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a>states <span class="op">=</span> [minimize_nested_blockmodel_dl(eG, deg_corr<span class="op">=</span><span class="va">True</span>) </span>
@@ -1376,8 +1351,8 @@ Name: position, dtype: float64</code></pre>
 <p>We can automatically grab the lowest entropy state using <code>np.argmin</code>.</p>
 <div class="sourceCode" id="cb83"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a>state <span class="op">=</span> states[np.argmin([s.entropy() <span class="cf">for</span> s <span class="kw">in</span> states])]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="more-mcmc" class="level3" data-number="28.18.7">
-<h3 data-number="28.18.7" class="anchored" data-anchor-id="more-mcmc"><span class="header-section-number">28.18.7</span> More MCMC</h3>
+<section id="more-mcmc" class="level3" data-number="29.18.7">
+<h3 data-number="29.18.7" class="anchored" data-anchor-id="more-mcmc"><span class="header-section-number">29.18.7</span> More MCMC</h3>
 <p>At the expense of increased runtime, we can also follow-up the above model selection process by sampling from the posterior distribution and running <code>mcmc_equilibrate</code>, which performs random changes in the block assignments of the nodes, automatically handles the entropy calculations, and chooses the optimum values at the end. This step is also required to collect the block assignment posterior marginals, which tell us the likelihood (if any) that a node belongs to each block, based on the assignments it was given during the iterations. More iterations here will always improve the model, but with decreasing improvement/run-time payoffs.</p>
 <p>First, we will use the object <code>S1</code>, defined below, to keep track of the original entropy score to see how much we improved the model.</p>
 <div class="sourceCode" id="cb84"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a>S1 <span class="op">=</span> state.entropy()</span>
@@ -1420,14 +1395,14 @@ Name: position, dtype: float64</code></pre>
 <pre><code>0.1561547346951431</code></pre>
 <p>But the adjusted mutual info score below is actually slightly worse than it was before! This doesn’t necessarily mean the results are worse, though. We’ll take a look at a different layout for the blockmodel below and discuss some potential explanations for this.</p>
 </section>
-<section id="visualizing-block-connections-as-a-radial-tree" class="level3" data-number="28.18.8">
-<h3 data-number="28.18.8" class="anchored" data-anchor-id="visualizing-block-connections-as-a-radial-tree"><span class="header-section-number">28.18.8</span> Visualizing Block Connections as a Radial Tree</h3>
-<p>While the sfdp layout does a nice job of positioning nodes (and blocks) in spatial relation to each other, the radial tree layout can be very helpful for getting a sense of the connection patterns between the blocks and also keeps nodes together in a way that makes individual blocks very easy to distinguish. Since it is the default layout for printing a block state, we can easily obtain a simple representation using the <code>.draw()</code> method (see <span class="quarto-unresolved-ref">?fig-31_03</span>).</p>
+<section id="visualizing-block-connections-as-a-radial-tree" class="level3" data-number="29.18.8">
+<h3 data-number="29.18.8" class="anchored" data-anchor-id="visualizing-block-connections-as-a-radial-tree"><span class="header-section-number">29.18.8</span> Visualizing Block Connections as a Radial Tree</h3>
+<p>While the sfdp layout does a nice job of positioning nodes (and blocks) in spatial relation to each other, the radial tree layout can be very helpful for getting a sense of the connection patterns between the blocks and also keeps nodes together in a way that makes individual blocks very easy to distinguish. Since it is the default layout for printing a block state, we can easily obtain a simple representation using the <code>.draw()</code> method (see <a href="#fig-31_03">Figure&nbsp;<span class="quarto-unresolved-ref">fig-31_03</span></a>).</p>
 <div class="sourceCode" id="cb100"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb100-1"><a href="#cb100-1" aria-hidden="true" tabindex="-1"></a>state.draw()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><embed src="chapter_31_latent_network_structure_stochastic_block_models_files/chapter_31_latent_network_structure_stochastic_block_models_94_0.pdf" class="img-fluid"></p>
-<figcaption>png</figcaption>
+<figcaption class="figure-caption">png</figcaption>
 </figure>
 </div>
 <pre><code>(&lt;VertexPropertyMap object with value type 'vector&lt;double&gt;', for Graph 0x7f74c8ac3670, at 0x7f74c43f4a00&gt;,
@@ -1435,7 +1410,7 @@ Name: position, dtype: float64</code></pre>
  &lt;VertexPropertyMap object with value type 'vector&lt;double&gt;', for Graph 0x7f74c433b9d0, at 0x7f74c431ea90&gt;)</code></pre>
 <p>As is often the case, there are a few preparation steps we can do to improve the visualization of edges, as well as to add node labels to our figure. This process is a bit complex and is an adaptation of one that was devised by the author of graph-tool. The details aren’t particularly important, so we can use the utility function <code>label_radial_blockmodel</code> from the dcss package to take care of most of it.</p>
 <div class="sourceCode" id="cb102"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb102-1"><a href="#cb102-1" aria-hidden="true" tabindex="-1"></a>eG <span class="op">=</span> label_radial_blockmodel(eG, state)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>The resulting figure is much improved (<span class="quarto-unresolved-ref">?fig-31_04</span>), and clearly shows the relations between blocks, while also making it easier to examine which job titles were assigned to each block.</p>
+<p>The resulting figure is much improved (<a href="#fig-31_04">Figure&nbsp;<span class="quarto-unresolved-ref">fig-31_04</span></a>), and clearly shows the relations between blocks, while also making it easier to examine which job titles were assigned to each block.</p>
 <div class="sourceCode" id="cb103"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb103-1"><a href="#cb103-1" aria-hidden="true" tabindex="-1"></a>state.draw(</span>
 <span id="cb103-2"><a href="#cb103-2" aria-hidden="true" tabindex="-1"></a>    vertex_text <span class="op">=</span> eG.vertex_properties[<span class="st">'title'</span>], </span>
 <span id="cb103-3"><a href="#cb103-3" aria-hidden="true" tabindex="-1"></a>    eorder <span class="op">=</span> eG.edge_properties[<span class="st">'edge_weight'</span>],</span>
@@ -1456,17 +1431,17 @@ Name: position, dtype: float64</code></pre>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><embed src="figures/core_state_radial_tree_labels1.pdf" class="img-fluid"></p>
-<figcaption>Cap</figcaption>
+<figcaption class="figure-caption">Cap</figcaption>
 </figure>
 </div>
 <p>You’ll notice that some of the nodes are broken up into pie fractions - these indicate their probability of being assigned to a different block. In the full colour version, these fractions are coloured the same as the alternative block that the node might have been assigned to. You’ll also notice that the blocks have become significantly more heterogenous! Traders are in blocks with other traders, most lawyers are in a block that two other lawyers had some probability of being assigned to, and the CEOs are in fairly exclusive blocks. Although we no longer have 3 CEOs in one block with the COO, the block that one of the CEOs was moved to contains the other CEO, and their two respective blocks form a single block one level up the hierarchy! Earlier I mentioned that there are possible explanations for a decreased adjusted mutual information score and this is one example - that score doesn’t incorporate the higher levels of the hierarchy. Even though it’s probably actually a better model to have the four CEOs split evenly among two blocks, then put those two blocks together at the next hierarchy level, this would still negatively impact the mutual info score compared to the model where 3 CEOs were in one block.</p>
 <p>It’s quite clear from the results of these stochastic blockmodels that there’s some very powerful estimation going on, and that the Bayesian aspects of it allow a great deal of nuance. The versatility of the modeling that drives graph-tool has led to a collaborative extension for topic modeling. Given the relational nature of words in text, which is often analyzed in the same way as social relations, topics can be blockmodelled from text documents to great effect. We’ll explore this method in the section that follows.</p>
 </section>
 </section>
-<section id="conclusion" class="level2" data-number="28.19">
-<h2 data-number="28.19" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">28.19</span> CONCLUSION</h2>
-<section id="key-points" class="level3" data-number="28.19.1">
-<h3 data-number="28.19.1" class="anchored" data-anchor-id="key-points"><span class="header-section-number">28.19.1</span> Key Points</h3>
+<section id="conclusion" class="level2" data-number="29.19">
+<h2 data-number="29.19" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">29.19</span> CONCLUSION</h2>
+<section id="key-points" class="level3" data-number="29.19.1">
+<h3 data-number="29.19.1" class="anchored" data-anchor-id="key-points"><span class="header-section-number">29.19.1</span> Key Points</h3>
 <ul>
 <li>Hierarchical Stochastic Blockmodels are remarkably powerful models that provide a nearly unparalleled degree of insight into the structure of a network and nodes’ roles within it</li>
 <li>SBMs build on the Bayesian intuitions established earlier in this book; they employ a similar approach of using latent variables and prior distributions to model unknown/unobserved</li>
@@ -1474,7 +1449,7 @@ Name: position, dtype: float64</code></pre>
 </ul>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="refs" class="references csl-bib-body hanging-indent" role="list">
 <div id="ref-karrer2011stochastic" class="csl-entry" role="listitem">
 Karrer, Brian, and Mark Newman. 2011. <span>“Stochastic Blockmodels and Community Structure in Networks.”</span> <em>Physical Review E</em> 83 (1): 016107.
 </div>
@@ -1531,7 +1506,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const onCopySuccess = function(e) {
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -1563,50 +1549,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
-  }
-  const getTextToCopy = function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-  }
-  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-    text: getTextToCopy
   });
-  clipboard.on('success', onCopySuccess);
-  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
-    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-      text: getTextToCopy,
-      container: window.document.getElementById('quarto-embedded-source-code-modal')
-    });
-    clipboardModal.on('success', onCopySuccess);
-  }
-    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-    var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp('/' + window.location.host + '/');
-    var isInternal = (href) => {
-        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
-    }
-    // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
-    for (var i=0; i<links.length; i++) {
-      const link = links[i];
-      if (!isInternal(link.href)) {
-        // undo the damage that might have been done by quarto-nav.js in the case of
-        // links that we want to consider external
-        if (link.dataset.originalHref !== undefined) {
-          link.href = link.dataset.originalHref;
-        }
-      }
-    }
-  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+  function tippyHover(el, contentFn) {
     const config = {
       allowHTML: true,
+      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -1616,17 +1563,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start',
+      placement: 'bottom-start'
     };
-    if (contentFn) {
-      config.content = contentFn;
-    }
-    if (onTriggerFn) {
-      config.onTrigger = onTriggerFn;
-    }
-    if (onUntriggerFn) {
-      config.onUntrigger = onUntriggerFn;
-    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -1638,130 +1576,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      if (note) {
-        return note.innerHTML;
-      } else {
-        return "";
-      }
-    });
-  }
-  const xrefs = window.document.querySelectorAll('a.quarto-xref');
-  const processXRef = (id, note) => {
-    // Strip column container classes
-    const stripColumnClz = (el) => {
-      el.classList.remove("page-full", "page-columns");
-      if (el.children) {
-        for (const child of el.children) {
-          stripColumnClz(child);
-        }
-      }
-    }
-    stripColumnClz(note)
-    if (id === null || id.startsWith('sec-')) {
-      // Special case sections, only their first couple elements
-      const container = document.createElement("div");
-      if (note.children && note.children.length > 2) {
-        container.appendChild(note.children[0].cloneNode(true));
-        for (let i = 1; i < note.children.length; i++) {
-          const child = note.children[i];
-          if (child.tagName === "P" && child.innerText === "") {
-            continue;
-          } else {
-            container.appendChild(child.cloneNode(true));
-            break;
-          }
-        }
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(container);
-        }
-        return container.innerHTML
-      } else {
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(note);
-        }
-        return note.innerHTML;
-      }
-    } else {
-      // Remove any anchor links if they are present
-      const anchorLink = note.querySelector('a.anchorjs-link');
-      if (anchorLink) {
-        anchorLink.remove();
-      }
-      if (window.Quarto?.typesetMath) {
-        window.Quarto.typesetMath(note);
-      }
-      // TODO in 1.5, we should make sure this works without a callout special case
-      if (note.classList.contains("callout")) {
-        return note.outerHTML;
-      } else {
-        return note.innerHTML;
-      }
-    }
-  }
-  for (var i=0; i<xrefs.length; i++) {
-    const xref = xrefs[i];
-    tippyHover(xref, undefined, function(instance) {
-      instance.disable();
-      let url = xref.getAttribute('href');
-      let hash = undefined; 
-      if (url.startsWith('#')) {
-        hash = url;
-      } else {
-        try { hash = new URL(url).hash; } catch {}
-      }
-      if (hash) {
-        const id = hash.replace(/^#\/?/, "");
-        const note = window.document.getElementById(id);
-        if (note !== null) {
-          try {
-            const html = processXRef(id, note.cloneNode(true));
-            instance.setContent(html);
-          } finally {
-            instance.enable();
-            instance.show();
-          }
-        } else {
-          // See if we can fetch this
-          fetch(url.split('#')[0])
-          .then(res => res.text())
-          .then(html => {
-            const parser = new DOMParser();
-            const htmlDoc = parser.parseFromString(html, "text/html");
-            const note = htmlDoc.getElementById(id);
-            if (note !== null) {
-              const html = processXRef(id, note);
-              instance.setContent(html);
-            } 
-          }).finally(() => {
-            instance.enable();
-            instance.show();
-          });
-        }
-      } else {
-        // See if we can fetch a full url (with no hash to target)
-        // This is a special case and we should probably do some content thinning / targeting
-        fetch(url)
-        .then(res => res.text())
-        .then(html => {
-          const parser = new DOMParser();
-          const htmlDoc = parser.parseFromString(html, "text/html");
-          const note = htmlDoc.querySelector('main.content');
-          if (note !== null) {
-            // This should only happen for chapter cross references
-            // (since there is no id in the URL)
-            // remove the first header
-            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
-              note.children[0].remove();
-            }
-            const html = processXRef(null, note);
-            instance.setContent(html);
-          } 
-        }).finally(() => {
-          instance.enable();
-          instance.show();
-        });
-      }
-    }, function(instance) {
+      return note.innerHTML;
     });
   }
       let selectedAnnoteEl;
@@ -1805,7 +1620,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
-            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -1831,32 +1645,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
-        // Handle positioning of the toggle
-    window.addEventListener(
-      "resize",
-      throttle(() => {
-        elRect = undefined;
-        if (selectedAnnoteEl) {
-          selectCodeLines(selectedAnnoteEl);
-        }
-      }, 10)
-    );
-    function throttle(fn, ms) {
-    let throttle = false;
-    let timer;
-      return (...args) => {
-        if(!throttle) { // first call gets through
-            fn.apply(this, args);
-            throttle = true;
-        } else { // all the others get throttled
-            if(timer) clearTimeout(timer); // cancel #2
-            timer = setTimeout(() => {
-              fn.apply(this, args);
-              timer = throttle = false;
-            }, ms);
-        }
-      };
-    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -1918,13 +1706,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./modeling-texts-lda.html" class="pagination-link" aria-label="Modeling text with LDA topic models">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Modeling text with LDA topic models</span></span>
+      <a href="./modeling-texts-lda.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Modeling text with LDA topic models</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./agent-based-models.html" class="pagination-link" aria-label="Agent-based models (ABMs)">
-        <span class="nav-page-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Agent-based models (ABMs)</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./agent-based-models.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Agent-based models (ABMs)</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -1932,5 +1720,4 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
-
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/UWNETLAB/dcss_supplementary/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
+</body></html>

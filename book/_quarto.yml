@@ -82,7 +82,7 @@ book:
     - references.qmd
   # - appendices:
     - acknowledgements.qmd
-    - courses.qmd
+    - _courses.qmd
 bibliography: references.bib
     
 
@@ -92,5 +92,7 @@ format:
     code-fold: false
     css: custom.css
     backgroundcolor: "#F5F5F5"
+    reference-location: margin
+    citation-location: margin
   # pdf:
     # documentclass: tufte-book
