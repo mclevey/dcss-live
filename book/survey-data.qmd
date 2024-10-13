@@ -3,9 +3,9 @@
 <!-- And open data portals, Toronto shelters, etc.? -->
 
 ::: {.callout-warning}
-## In Progress
+## Planned Updates
 
-This is a "[shitty first draft](https://www.amazon.ca/Bird-Some-Instructions-Writing-Life/dp/0385480016)," with some sections being shittier than others. Normally I wouldn't share work so early in it's development, but I'm interested in your feedback. Feel free to skim, but know that I am actively developing this chapter and it will be going through some very extensive changes in the coming weeks.
+This is a new chapter. I am actively working on it in fall 2024. Stay tuned!
 :::
 
 ::: {.callout-note}
@@ -92,6 +92,73 @@ By combining non-probability samples with advanced techniques like post-stratifi
 
 In sum, while early attempts at survey sampling, like the 1936 Readers Digest poll, illustrated the pitfalls of non-representative samples, modern techniques have transformed the way we handle survey data. Non-probability samples, once considered unreliable, can now produce accurate results through methods like post-stratification and Bayesian multilevel modeling, as shown in the Xbox study. These advances mark a major shift in survey research, allowing us to better navigate the challenges of representation and make more informed inferences about public opinion and behavior. We will learn about both in this book, *but not yet*! There's a good amount of foundational work to do first.
 
+<!-- UPDATED VERION -- EDIT ME -->
+
+### The Science of Asking Questions: Past and Present
+
+The second major change in survey methodology is related to how we ask questions. The way questions are phrased can dramatically influence responses—a phenomenon known as **question wording effects**. Even small changes in phrasing can lead to different answers. For example, asking "Do you approve of the government's handling of the economy?" might yield different results than "Do you think the government has done a good job managing the economy?" This is partly due to **social desirability bias**, where respondents may choose answers they think are socially acceptable rather than ones that reflect their true thoughts. Moreover, **context effects**, such as the order in which questions are asked or the types of response options available, can further bias responses by subtly guiding respondents toward certain answers. The structure of **response options** plays a critical role here, with placement of options potentially leading to **order effects**, where respondents are more likely to choose options that appear at the beginning or end of a list. Similarly, response options that include extreme choices might push respondents toward moderate answers.
+
+While these challenges have long been recognized, the field has made significant strides in improving the **reliability** and **validity** of questions through better design. **Reliability** refers to the consistency of responses over time or across different samples, while **validity** is about ensuring that a question accurately measures what it is intended to. Advances in **pretesting methods** such as cognitive interviews and split-ballot experiments have enabled researchers to refine questions in ways that reduce bias and improve clarity. **Cognitive interviews** allow respondents to verbalize their thought processes, helping to identify areas where questions may be misinterpreted. **Pilot testing** and **split-ballot experiments** compare different wordings and formats to understand how subtle changes influence responses.
+
+In a recent review article, Schaeffer (2020) highlights how survey design and methodology has moved toward **decision-based frameworks** that seek to identify question characteristics that influence respondent behavior. This marks a shift from earlier research that often focused on isolated elements like question wording toward a more comprehensive approach that accounts for the co-occurrence of various question characteristics. For example, the interaction between response option labeling and the cognitive load imposed on respondents is now better understood, allowing for more effective question design across different platforms.
+
+### Components of a Survey Question
+
+Every survey question consists of several key elements, each of which can influence how respondents interpret and answer the question:
+
+1. **Question Stem**: This is the main body of the question that asks for specific information. For example, "How satisfied are you with the cleanliness of your neighborhood?"
+2. **Response Options**: These provide the range of possible answers. They may take many forms, such as a Likert scale (e.g., "Very satisfied," "Somewhat satisfied") or binary options (e.g., "Yes/No").
+3. **Instructions**: Additional text guiding the respondent on how to answer. For instance, "Please select the option that best reflects your opinion."
+4. **Answer Format**: The format that specifies how the answer is provided, such as checkboxes, radio buttons, or sliders.
+
+The way these components are designed can significantly impact the **cognitive burden** placed on respondents and, consequently, the quality of the data. For example, questions that ask for specific, fact-based recall (e.g., "How many times did you visit the doctor in the past year?") place a higher **cognitive demand** than those asking for general opinions (e.g., "How satisfied are you with your healthcare?"). Understanding how different elements interact helps researchers create more reliable and valid questions.
+
+### The Question Characteristics Framework
+
+The **Question Characteristics Framework** provides a comprehensive guide for understanding the factors that influence how respondents interpret and answer survey questions. This framework considers four main elements:
+
+1. **Cognitive Demand**: This refers to the mental effort required to understand and respond to the question. Questions that are too complex or vague increase cognitive demand and lead to less reliable responses.
+2. **Comprehension**: This addresses whether respondents understand the question the same way the researcher intended. Avoiding ambiguous language and jargon is crucial here.
+3. **Retrieval and Judgment**: Some questions require respondents to recall information from memory or make a judgment based on past experiences, which can introduce **recall bias** or errors in judgment.
+4. **Response Formatting**: The design of response options can either facilitate or hinder respondents' ability to provide accurate answers. For instance, long lists of response options or poorly labeled categories can overwhelm respondents, reducing data quality.
+
+Recent research has shown that improving **comprehension** and reducing **cognitive demand**—such as by using simpler wording and fully labeling response options—can increase both reliability and validity across different survey modes.
+
+### Evaluating and Testing Survey Questions
+
+Survey researchers use a variety of methods to evaluate and improve the quality of their questions:
+
+- **Cognitive Interviews**: In this method, respondents are asked to verbalize their thought processes as they answer questions, which allows researchers to identify and address potential issues in comprehension or retrieval.
+- **Pilot Testing**: Conducting small-scale tests of the survey to see how it performs in the field, providing real-world data on how respondents engage with questions.
+- **Split-Ballot Experiments**: These involve administering different versions of the same question to different groups to see which wording or format yields the most reliable responses.
+- **Item Response Theory (IRT)**: A statistical method that helps to assess the quality of individual survey items by examining how well they discriminate between respondents with varying levels of the trait or opinion being measured.
+
+By applying these methods, researchers can fine-tune their questions to reduce bias and improve both the reliability and validity of the data collected.
+
+### Working with Ordered Categories
+
+When working with **ordered categorical data**, such as Likert scales, researchers face specific challenges related to how respondents interpret the gradations between response options. For instance, the difference between "Strongly agree" and "Agree" may not be perceived as equal to the difference between "Agree" and "Neutral." Recent innovations have focused on improving the clarity and balance of response categories:
+
+- **Fully labeled response options**: Using labels for each point on a Likert scale, rather than just the endpoints, helps clarify the meaning of intermediate options.
+- **Balanced scales**: Ensuring that scales have an equal number of positive and negative response options to prevent biased responses.
+- **Reducing cognitive overload**: Simplifying the number of response categories (often five or seven options) reduces the risk of **response bias** and helps respondents differentiate between options more effectively.
+
+These techniques have proven particularly valuable in mobile and web-based surveys, where limited screen space and ease of use are critical concerns. Presenting questions in a mobile-friendly, intuitive format helps reduce **straightlining**—the tendency to select the same answer across multiple items—and improves overall data quality.
+
+### Implications for Computational Social Scientists and Data Scientists
+
+Advances in question design have significant implications for computational social scientists and data scientists, who rely on survey data to build predictive models, explore causal relationships, and draw inferences:
+
+1. **Data Quality**: The adoption of better question formats, like **item-specific response scales** and **fully labeled categories**, leads to higher-quality data. This, in turn, improves the robustness of machine learning models, Bayesian inference, and other statistical analyses.
+2. **Bias Detection**: Data scientists must be aware of how question structure can introduce biases, such as **acquiescence** or **extreme responding**, and account for these biases during data preprocessing and modeling.
+3. **Ordinal Data Analysis**: When working with ordered categorical data, it is critical to use the correct models, such as **ordinal logistic regression** or **Bayesian hierarchical models**, rather than treating the data as continuous. Understanding the nature of ordinal data and its specific challenges can lead to more accurate and reliable models.
+4. **Measurement Error**: Understanding and accounting for **measurement error** in survey responses is crucial for constructing reliable models. For Bayesian modeling, this might involve explicitly incorporating uncertainty in measurement as part of the model itself.
+
+In summary, the evolution of question design reflects broader trends in survey methodology and data collection. With the rise of **mixed-mode surveys** and **mobile-first designs**, researchers are increasingly focused on designing questions that are both user-friendly and capable of capturing accurate, reliable data across diverse respondent groups. These developments not only improve the quality of survey data but also provide computational social scientists and data scientists with more powerful tools for analysis.
+
+<!-- END OF UPDATED VERSION, INITIAL DRAFT BELOW -->
+
+<!-- 
 ### The science of asking questions: past and present
 
 The second major change in survey methodology is related to how we ask questions. The way questions are phrased can dramatically influence responses—a phenomenon known as **question wording effects**. Even small changes in phrasing can lead to different answers. For example, asking "Do you approve of the government's handling of the economy?" might yield different results than "Do you think the government has done a good job managing the economy?" This is partly due to **social desirability bias**, where respondents may choose answers they think are socially acceptable rather than ones that reflect their true thoughts. Moreover, **context effects**, such as the order in which questions are asked or the types of response options available, can further bias responses by subtly guiding respondents toward certain answers. 
@@ -117,6 +184,7 @@ Additionally, the shift to mobile-first design has led to a reconsideration of *
 As researchers continue to refine methods for assessing data quality, new challenges will emerge, particularly in an era of **mixed-mode** and **mobile-first surveys**. The current state of the art includes innovations like **item-specific formats**, **fully labeled response scales**, and adaptive technologies such as **dynamic filtering**, all of which reflect an ongoing effort to optimize survey design across modes and respondent groups. These advancements show a clear trajectory toward more respondent-friendly surveys that reduce bias and improve the validity of the data collected.
 
 In sum, the field of survey question design has moved from focusing on individual elements of question structure to a holistic, decision-based approach that accounts for the complexities of modern data collection environments. This evolution reflects broader changes in the landscape of survey research, where technological advancements and an increasingly diverse respondent base demand ever-more sophisticated tools for capturing reliable, valid data.
+ -->
 
 ### Linked data
 
@@ -297,7 +365,9 @@ The CES survey data contains several such questions, including...
 
 Most surveys include quite a lot of categorical data, which should be handled very carefully in any modeling. 
 
-When working with categorical data in Pandas, it's important to make sure that our categorical variables are **ordered** properly and that "Don't know / prefer not to answer" responses -- which don't fit neatly into ordinal data -- are handled consistently. You'll also need to decide how to represent your categorical variables in your analysis. In nearly all cases you'll want to treat categories as **index variables**, but in some cases you may wish to do things the old-fashioned way and use  **one-hot encoding** (i.e., creating dummy variables). The implications of this choice will become clear a little later in the book, when we get to multilevel models. For now, we'll ...
+When working with categorical data in Pandas, it's important to make sure that our categorical variables are **ordered** properly and that "Don't know / prefer not to answer" responses -- which don't fit neatly into ordinal data -- are handled consistently. You'll also need to decide how to represent your categorical variables in your analysis. In some cases, such as when your variable is an ordered category or represents a context that could be modelled with a multilevel approach, you'll want treat categories as **index variables**. In other cases, such as when your variable is a **nominal / unordered category**, you might prefer to represent it as a series of binary "dummy" variables using **one-hot encoding**. 
+
+The implications of this choice will become clear a little later in the book, when we get to multilevel models. For now, we'll ...
 
 ```{python}
 # Example here
